@@ -450,6 +450,22 @@ def send_mail_to_student(student, param_dict, language=None):
     message_type = param_dict['message']
 
     email_template_dict = {
+        'ilt_enrolled': (
+            'emails/ilt_enrolled_email_subject.txt',
+            'emails/ilt_enrolled_email_message.txt',
+        ),
+        'ilt_unenrolled': (
+            'emails/ilt_unenrolled_email_subject.txt',
+            'emails/ilt_unenrolled_email_message.txt',
+        ),
+        'ilt_session_canceled': (
+            'emails/ilt_session_canceled_email_subject.txt',
+            'emails/ilt_session_canceled_email_message.txt',
+        ),
+        'ilt_session_time_changed': (
+            'emails/ilt_session_time_changed_email_subject.txt',
+            'emails/ilt_session_time_changed_email_message.txt',
+        ),
         'allowed_enroll': (
             'emails/enroll_email_allowedsubject.txt',
             'emails/enroll_email_allowedmessage.txt'

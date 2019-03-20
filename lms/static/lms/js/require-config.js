@@ -52,6 +52,7 @@
         defineDependency('Vue', 'vue');
         defineDependency('Vue.http', 'vue-resource');
         defineDependency('jQuery', 'jquery-migrate');
+
         defineDependency('_', 'underscore');
         defineDependency('s', 'underscore.string');
         defineDependency('gettext', 'gettext');
@@ -97,6 +98,7 @@
             'jquery.url': 'js/vendor/url.min',
             'jquery.ui': 'js/vendor/jquery-ui.min',
             'jquery.iframe-transport': 'js/vendor/jQuery-File-Upload/js/jquery.iframe-transport',
+
             'jquery.fileupload': 'js/vendor/jQuery-File-Upload/js/jquery.fileupload',
             'vue': 'common/js/vendor/vue',
             'vue-resource': 'common/js/vendor/vue-resource',
