@@ -461,6 +461,94 @@ class PersistentSubsectionGrade(TimeStampedModel):
         events.subsection_grade_calculated(grade)
 
 
+class PersistentCourseProgress(TimeStampedModel):
+    """
+    A django model tracking persistent course progress
+    """
+
+    class Meta(object):
+        app_label = "grades"
+        unique_together = [
+            ('course_id', 'user_id'),
+        ]
+
+    # primary key will need to be large for this table
+    id = UnsignedBigIntAutoField(primary_key=True)
+    user_id = models.IntegerField(blank=False, db_index=True)
+    course_id = CourseKeyField(blank=False, max_length=255)
+
+    percent_progress = models.FloatField(default=0, blank=False)
+    _CACHE_NAMESPACE = u"grades.models.PersistentCourseProgress"
+
+    @classmethod
+    def prefetch(cls, course_id, users):
+        """
+        Prefetches course progress for the given users for the given course.
+        """
+        get_cache(cls._CACHE_NAMESPACE)[cls._cache_key(course_id)] = {
+            progress.user_id: progress
+            for progress in
+            cls.objects.filter(user_id__in=[user.id for user in users], course_id=course_id)
+        }
+
+    @classmethod
+    def read(cls, user_id, course_id):
+        """
+        Reads course progress from database
+
+        Arguments:
+            user_id: The user associated with the desired course progress
+            course_id: The id of the course associated with the desired course progress
+
+        Raises PersistentCourseProgress.DoesNotExist if applicable
+        """
+        try:
+            prefetched_progresses = get_cache(cls._CACHE_NAMESPACE)[cls._cache_key(course_id)]
+            try:
+                return prefetched_progresses[user_id]
+            except KeyError:
+                # user's course progress is not in the prefetched list, so
+                # we fetch it and update the cache
+                progress = cls.objects.get(user_id=user_id, course_id=course_id)
+                cls._update_cache(course_id, user_id, progress)
+                return progress
+        except KeyError:
+            # progresses were not prefetched for the course, so fetch it
+            return cls.objects.get(user_id=user_id, course_id=course_id)
+
+    @classmethod
+    def update_or_create(cls, user_id, course_id, **kwargs):
+        """
+        Creates a course grade in the database.
+        Returns a PersistedCourseGrade object.
+        """
+
+        progress, _ = cls.objects.update_or_create(
+            user_id=user_id,
+            course_id=course_id,
+            defaults=kwargs
+        )
+
+        cls._delete_cache(course_id, user_id)
+        return progress
+
+    @classmethod
+    def _delete_cache(cls, course_id, user_id):
+        course_cache = get_cache(cls._CACHE_NAMESPACE).get(cls._cache_key(course_id))
+        if course_cache is not None and user_id in course_cache:
+            course_cache.pop(user_id)
+
+    @classmethod
+    def _update_cache(cls, course_id, user_id, progress):
+        course_cache = get_cache(cls._CACHE_NAMESPACE).get(cls._cache_key(course_id))
+        if course_cache is not None:
+            course_cache[user_id] = progress
+
+    @classmethod
+    def _cache_key(cls, course_id):
+        return u"progresses_cache.{}".format(course_id)
+
+
 class PersistentCourseGrade(TimeStampedModel):
     """
     A django model tracking persistent course grades.
