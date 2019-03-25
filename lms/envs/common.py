@@ -1512,7 +1512,7 @@ credit_web_view_js = [
 PIPELINE_CSS = {
     'style-vendor': {
         'source_filenames': [
-            'css/vendor/font-awesome.css',
+            #'css/vendor/font-awesome.css',
             'css/vendor/jquery.qtip.min.css',
             'js/vendor/timepicker/jquery.timepicker.css'
         ],
@@ -1648,14 +1648,14 @@ PIPELINE_CSS = {
     'style-certificates': {
         'source_filenames': [
             'certificates/css/main-ltr.css',
-            'css/vendor/font-awesome.css',
+            #'css/vendor/font-awesome.css',
         ],
         'output_filename': 'css/certificates-style.css'
     },
     'style-certificates-rtl': {
         'source_filenames': [
             'certificates/css/main-rtl.css',
-            'css/vendor/font-awesome.css',
+            #'css/vendor/font-awesome.css',
         ],
         'output_filename': 'css/certificates-style-rtl.css'
     },

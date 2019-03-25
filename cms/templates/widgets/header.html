@@ -50,7 +50,7 @@
         <h2 class="sr">${_("Course Navigation")}</h2>
         <ol>
           <li class="nav-item nav-course-courseware">
-            <h3 class="title"><span class="label"><span class="label-prefix sr">${_("Course")} </span>${_("Content")}</span> <span class="icon fa fa-caret-down ui-toggle-dd" aria-hidden="true"></span></h3>
+            <h3 class="title"><span class="label"><span class="label-prefix sr">${_("Course")} </span><span class="icon far fa-edit" aria-hidden="true"></span>${_("Content")}</span> </h3>
 
             <div class="wrapper wrapper-nav-sub">
               <div class="nav-sub">
@@ -81,7 +81,7 @@
           </li>
 
           <li class="nav-item nav-course-settings">
-            <h3 class="title"><span class="label"><span class="label-prefix sr">${_("Course")} </span>${_("Settings")}</span> <span class="icon fa fa-caret-down ui-toggle-dd" aria-hidden="true"></span></h3>
+            <h3 class="title"><span class="label"><span class="icon fa fa-cogs" aria-hidden="true"></span>${_("Settings")}</span> </h3>
 
             <div class="wrapper wrapper-nav-sub">
               <div class="nav-sub">
@@ -112,7 +112,7 @@
           </li>
 
           <li class="nav-item nav-course-tools">
-            <h3 class="title"><span class="label">${_("Tools")}</span> <span class="icon fa fa-caret-down ui-toggle-dd" aria-hidden="true"></span></h3>
+            <h3 class="title"><span class="label"><span class="icon fa fa-wrench" aria-hidden="true"></span>${_("Tools")}</span> </h3>
             <div class="wrapper wrapper-nav-sub">
               <div class="nav-sub">
                 <ul>
@@ -159,7 +159,7 @@
         <ol>
 
           <li class="nav-item nav-library-settings">
-            <h3 class="title"><span class="label"><span class="label-prefix sr">${_("Library")} </span>${_("Settings")}</span> <span class="icon fa fa-caret-down ui-toggle-dd" aria-hidden="true"></span></h3>
+            <h3 class="title"><span class="label"><span class="label-prefix sr">${_("Library")} </span><span class="icon fa fa-cogs" aria-hidden="true"></span>${_("Settings")}</span></h3>
             <div class="wrapper wrapper-nav-sub">
               <div class="nav-sub">
                 <ul>
@@ -171,7 +171,7 @@
             </div>
           </li>
           <li class="nav-item nav-course-tools">
-            <h3 class="title"><span class="label">${_("Tools")}</span> <span class="icon fa fa-caret-down ui-toggle-dd" aria-hidden="true"></span></h3>
+            <h3 class="title"><span class="label"><span class="icon fa fa-wrench" aria-hidden="true"></span>${_("Tools")}</span></h3>
 
             <div class="wrapper wrapper-nav-sub">
               <div class="nav-sub">
@@ -195,28 +195,28 @@
       % if header_language_selector_is_enabled():
         <% languages = released_languages() %>
         % if len(languages) > 1:
-        <nav class="user-language-selector" aria-label="${_('Language preference')}">
-          <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
-              <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
-              % if user.is_authenticated:
-              <input title="preference api" type="hidden" id="preference-api-url" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
-              % else:
-              <input title="session update url" type="hidden" id="update-session-url" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
-              % endif
-              <label><span class="sr">${_("Choose Language")}</span>
-              <select class="input select language-selector" id="settings-language-value" name="language">
-              % for language in languages:
-                % if language[0] == LANGUAGE_CODE:
-                 <option value="${language[0]}" selected="selected">${language[1]}</option>
+          <nav class="user-language-selector" aria-label="${_('Language preference')}">
+            <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
+                <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+                % if user.is_authenticated:
+                <input title="preference api" type="hidden" id="preference-api-url" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
                 % else:
-                 <option value="${language[0]}" >${language[1]}</option>
+                <input title="session update url" type="hidden" id="update-session-url" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
                 % endif
-              % endfor
-              </select>
-              </label>
-          </form>
-        </nav>
-      % endif
+                <label><span class="sr">${_("Choose Language")}</span>
+                <select class="input select language-selector" id="settings-language-value" name="language">
+                % for language in languages:
+                  % if language[0] == LANGUAGE_CODE:
+                   <option value="${language[0]}" selected="selected">${language[1]}</option>
+                  % else:
+                   <option value="${language[0]}" >${language[1]}</option>
+                  % endif
+                % endfor
+                </select>
+                </label>
+            </form>
+          </nav>
+        % endif
       % endif
       % if user.is_authenticated:
       <nav class="nav-account nav-is-signedin nav-dd ui-right" aria-label="${_('Account')}">

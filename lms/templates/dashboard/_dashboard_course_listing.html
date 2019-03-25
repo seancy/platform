@@ -184,8 +184,8 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                     </span>
                   </a>
                 % elif not is_course_blocked:
-                  <a href="${course_target}" 
-                     class="enter-course ${'hidden' if is_unfulfilled_entitlement else ''}" 
+                  <a href="${course_target}"
+                     class="enter-course ${'hidden' if is_unfulfilled_entitlement else ''}"
                      data-course-key="${enrollment.course_id}">
                     ${_('View Course')}
                     <span class="sr">
