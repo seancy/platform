@@ -75,7 +75,12 @@ class TestPaverAssetTasks(PaverTestCase):
             expected_messages.append(
                 u'rtlcss cms/static/css/bootstrap/studio-main.css cms/static/css/bootstrap/studio-main-rtl.css'
             )
-
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/brands.css common/static/css/fontawesome/brands-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/v4-shims.css common/static/css/fontawesome/v4-shims-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/light.css common/static/css/fontawesome/light-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/regular.css common/static/css/fontawesome/regular-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/fontawesome.css common/static/css/fontawesome/fontawesome-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/solid.css common/static/css/fontawesome/solid-rtl.css')
         self.assertItemsEqual(self.task_messages, expected_messages)
 
 
@@ -192,6 +197,12 @@ class TestPaverThemeAssetTasks(PaverTestCase):
             expected_messages.append(
                 u'rtlcss cms/static/css/bootstrap/studio-main.css cms/static/css/bootstrap/studio-main-rtl.css'
             )
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/brands.css common/static/css/fontawesome/brands-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/v4-shims.css common/static/css/fontawesome/v4-shims-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/light.css common/static/css/fontawesome/light-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/regular.css common/static/css/fontawesome/regular-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/fontawesome.css common/static/css/fontawesome/fontawesome-rtl.css')
+        expected_messages.append(u'rtlcss common/static/css/fontawesome/solid.css common/static/css/fontawesome/solid-rtl.css')
 
         self.assertItemsEqual(self.task_messages, expected_messages)
 

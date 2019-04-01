@@ -1053,7 +1053,6 @@ class RegistrationViewTest(ThirdPartyAuthTestMixin, UserAPITestCase):
             "name": u'--',
             "value": u'',
             "default": True
-
         },
         {
             "value": "aerospace",
@@ -1867,28 +1866,12 @@ class RegistrationViewTest(ThirdPartyAuthTestMixin, UserAPITestCase):
             "confirm_email": "required",
         },
         REGISTRATION_FIELD_ORDER=[
-            "name",
-            "username",
-            "email",
-            "confirm_email",
-            "password",
-            "first_name",
-            "last_name",
-            "city",
-            "state",
-            "country",
-            "gender",
-            "year_of_birth",
-            "level_of_education",
-            "company",
-            "title",
-            "job_title",
-            "mailing_address",
-            "goals",
-            "honor_code",
-            "terms_of_service",
-            "specialty",
-            "profession",
+            "name", "username", "email", "confirm_email", "password", "first_name", "last_name",
+            "city", "state", "country", "gender", "year_of_birth", "level_of_education",
+            "company", "title", "job_title", "mailing_address", "goals", "honor_code",
+            "terms_of_service", "specialty", "profession",
+            "lt_phone_number", "lt_gdpr", "lt_company", "lt_job_code", "lt_job_description",
+            "lt_department", "lt_learning_group", "lt_comments"
         ],
     )
     def test_field_order_override(self):

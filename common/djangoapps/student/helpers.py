@@ -663,12 +663,30 @@ def do_create_account(form, custom_form=None):
     registration.register(user)
 
     profile_fields = [
-        "name", "level_of_education", "gender", "mailing_address", "city", "country", "goals",
-        "year_of_birth"
+        "name",
+        "level_of_education",
+        "gender",
+        "mailing_address",
+        "city",
+        "country",
+        "goals",
+        "year_of_birth",
+        "lt_address",
+        "lt_phone_number",
+        "lt_gdpr",
+        "lt_company",
+        "lt_job_code",
+        "lt_job_description",
+        "lt_department",
+        "lt_learning_group",
+        "lt_comments"
     ]
+    profile_properties = {key: form.cleaned_data.get(key) for key in profile_fields}
+    if not profile_properties.get('lt_gdpr'):
+        profile_properties.pop('lt_gdpr', None)
     profile = UserProfile(
         user=user,
-        **{key: form.cleaned_data.get(key) for key in profile_fields}
+        **profile_properties
     )
     extended_profile = form.cleaned_extended_profile
     if extended_profile:

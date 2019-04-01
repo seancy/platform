@@ -40,8 +40,6 @@ class TestHeader(TestCase):
         expected_url = get_home_url()
         self.assertEqual(marketing_link('ROOT'), expected_url)
 
-
-@unittest.skip()
 class TestFooter(TestCase):
     shard = 4
     maxDiff = None

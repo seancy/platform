@@ -410,6 +410,7 @@ class UserProfile(models.Model):
 
     # Location is no longer used, but is held here for backwards compatibility
     # for users imported from our first class.
+    # BUT USED BY TRIBOO
     language = models.CharField(blank=True, max_length=255, db_index=True)
     location = models.CharField(blank=True, max_length=255, db_index=True)
 
@@ -455,6 +456,28 @@ class UserProfile(models.Model):
     allow_certificate = models.BooleanField(default=1)
     bio = models.CharField(blank=True, null=True, max_length=3000, db_index=False)
     profile_image_uploaded_at = models.DateTimeField(null=True, blank=True)
+
+    lt_custom_country = models.CharField(verbose_name='Custom Country', max_length=255, blank=True, null=True)
+    lt_address = models.CharField(verbose_name='Address', max_length=255, blank=True, null=True)
+    lt_address_2 = models.CharField(verbose_name='Address 2', max_length=255, blank=True, null=True)
+    lt_phone_number = models.CharField(verbose_name='Phone Number', max_length=255, blank=True, null=True)
+    lt_gdpr = models.BooleanField(verbose_name='GDPR', default=0)
+
+    lt_company = models.CharField(verbose_name='Company', max_length=255, blank=True, null=True)
+    lt_employee_id = models.CharField(verbose_name='Employee ID', max_length=255, blank=True, null=True, db_index=True)
+    lt_hire_date = models.DateField(verbose_name='Hire Date', blank=True, null=True)
+    lt_level = models.CharField(verbose_name='Level', max_length=20, blank=True, null=True)
+    lt_job_code = models.CharField(verbose_name='Job Code', max_length=255, blank=True, null=True)
+    lt_job_description = models.CharField(verbose_name='Job Description', max_length=255, blank=True, null=True)
+    lt_department = models.CharField(verbose_name='Department', max_length=255, blank=True, null=True)
+    lt_supervisor = models.CharField(verbose_name='Supervisor', max_length=255, blank=True, null=True)
+    lt_learning_group = models.CharField(verbose_name='Learning Group', max_length=255, blank=True, null=True)
+
+    lt_exempt_status = models.BooleanField(verbose_name='Exempt Status', default=1)
+    lt_is_tos_agreed = models.BooleanField(verbose_name='TOS agreed', default=0)
+
+    lt_comments = models.TextField(verbose_name='Comments', blank=True, null=True)
+
 
     @property
     def has_profile_image(self):

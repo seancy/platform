@@ -6,6 +6,7 @@ JSON views which the instructor dashboard requests.
 Many of these GETs may become PUTs in the future.
 """
 import csv
+from datetime import datetime
 import decimal
 import json
 import logging
@@ -14,8 +15,8 @@ import re
 import string
 import StringIO
 import time
-
 import unicodecsv
+from django_countries import countries
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import (
@@ -83,6 +84,11 @@ from lms.djangoapps.instructor_task.models import ReportStore
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.course_groups.cohorts import is_course_cohorted
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.user_api.accounts import (
+    USERNAME_MIN_LENGTH,
+    USERNAME_MAX_LENGTH,
+    USERNAME_BAD_LENGTH_MSG
+)
 from openedx.core.djangoapps.user_api.preferences.api import get_user_preference, set_user_preference
 from openedx.core.djangolib.markup import HTML, Text
 from shoppingcart.models import (
@@ -94,6 +100,7 @@ from shoppingcart.models import (
     RegistrationCodeRedemption
 )
 from student import auth
+from student.forms import validate_username
 from student.models import (
     ALLOWEDTOENROLL_TO_ENROLLED,
     ALLOWEDTOENROLL_TO_UNENROLLED,
@@ -111,7 +118,8 @@ from student.models import (
     anonymous_id_for_user,
     get_user_by_username_or_email,
     unique_id_for_user,
-    is_email_retired
+    is_email_retired,
+    is_username_retired
 )
 from student.roles import CourseFinanceAdminRole, CourseSalesAdminRole
 from submissions import api as sub_api  # installed from the edx-submissions repository
@@ -288,10 +296,215 @@ def require_finance_admin(func):
     return wrapped
 
 
-EMAIL_INDEX = 0
-USERNAME_INDEX = 1
-NAME_INDEX = 2
-COUNTRY_INDEX = 3
+LT_CSV = {
+    'old_username': 0,
+    'old_email': 1,
+    'first_name': 0,
+    'last_name': 1,
+    'username': 2,
+    'email': 3,
+    'password': 4,
+    'gender': 5,
+    'year_of_birth': 6,
+    'language': 7,
+    'country': 8,
+    'city': 9,
+    'location': 10,
+    'company': 11,
+    'employee_id': 12,
+    'hire_date': 13,
+    'job_code': 14,
+    'department': 15,
+    'supervisor': 16,
+    'learning_group': 17,
+    'comments': 18,
+}
+
+def csv_student_fields_validation(first_name, last_name, username, email, password, gender,
+                                  year_of_birth, language, country, company, hire_date, row_num):
+    row_errors = []
+
+    if len(first_name) == 0:
+        row_errors.append({'response': _('Row #{row_num}: A first name is required.').format(row_num=row_num)})
+
+    if len(last_name) == 0:
+        row_errors.append({'response': _('Row #{row_num}: A last name is required.').format(row_num=row_num)})
+
+    valid_username = False
+    username_length = len(username)
+    if username_length > 0:
+        try:
+            validate_username(username)  # Raises ValidationError if invalid
+        except ValidationError:
+            row_errors.append({'response': _('Row #{row_num}: Invalid username.').format(row_num=row_num)})
+        else:
+            if (username_length < USERNAME_MIN_LENGTH
+                or username_length > USERNAME_MAX_LENGTH):
+                row_errors.append({'response': _(
+                    'Row #{row_num}: {error_msg}').format(error_msg=USERNAME_BAD_LENGTH_MSG)})
+            else:
+                valid_username = True
+    else:
+        row_errors.append({'response': _('Row #{row_num}: A username is required.').format(row_num=row_num)})
+
+    valid_email = False
+    if len(email) > 0:
+        try:
+            validate_email(email)  # Raises ValidationError if invalid
+        except ValidationError:
+            row_errors.append({'response': _('Row #{row_num}: Invalid email address.').format(row_num=row_num)})
+        else:
+            valid_email = True
+    else:
+        row_errors.append({'response': _('Row #{row_num}: An email address is required.').format(row_num=row_num)})
+
+    if len(password) == 0:
+        row_errors.append({'response': _('Row #{row_num}: A password is required.').format(row_num=row_num)})
+
+    if gender.lower() not in {'m', 'f', 'o'}:
+        row_errors.append({'response': _('Row #{row_num}: Genders must be \'m\', \'f\' or \'o\'.').format(row_num=row_num)})
+
+    if len(year_of_birth) > 0:
+        try:
+            yob = int(year_of_birth)
+            if yob < 1900 or yob > datetime.now().year:
+                raise ValueError
+        except ValueError:
+            row_errors.append({'response': _('Row #{row_num}: Invalid year of birth (expected format: YYYY).').format(row_num=row_num)})
+
+    if len(language) == 0:
+        row_errors.append({
+            'response': _('Row #{row_num}: Missing language, a language code is expected (e.g. en, fr, zh, pt).')
+                .format(row_num=row_num)
+        })
+    else:
+        if language not in dict(settings.ALL_LANGUAGES):
+            row_errors.append({
+                'response': _('Row #{row_num}: Invalid language, a language code is expected (e.g. en, fr, zh, pt).')
+                    .format(row_num=row_num)
+            })
+
+    if len(country) == 0:
+        row_errors.append({
+            'response': _('Row #{row_num}: Missing country, a 2-character country code is expected (e.g. FR, CN, US, BR).')
+                .format(row_num=row_num)
+        })
+    else:
+        if country not in dict(countries).keys():
+            row_errors.append({
+                'response': _('Row #{row_num}: Invalid country, a 2-character country code is expected (e.g. FR, CN, US, BR).')
+                    .format(row_num=row_num)
+            })
+
+    if len(company) == 0:
+        row_errors.append({'response': _('Row #{row_num}: A company is required.').format(row_num=row_num)})
+
+    if len(hire_date) > 0:
+        try:
+            time.strptime(hire_date, "%Y-%m-%d")
+        except ValueError:
+            row_errors.append({'response': _('Row #{row_num}: Invalid hire date (expected format: YYYY-MM-DD).').format(row_num=row_num)})
+
+    return row_errors, valid_username, valid_email
+
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+@require_level('staff')
+def register_and_enroll_students_precheck(request, course_id):
+    """
+    Check a CSV file that contains a list of students to warn the user of errors
+    that would rise if the file was passed to register_and_enroll_students.
+    Requires staff access.
+
+    Mandatory fields are: firstname, lastname, username, email, password,
+                          gender, language, country, company.
+
+    The email address and username must be unique in the file.
+    There should not be an existing user with the same username but a different email address,
+    or with the same email address but a different username.
+
+    The following fields must have the correct format:
+    username, email, gender, year of birth, language, country, hire date
+
+    """
+
+    if not configuration_helpers.get_value(
+            'ALLOW_AUTOMATED_SIGNUPS',
+            settings.FEATURES.get('ALLOW_AUTOMATED_SIGNUPS', False),):
+        return HttpResponseForbidden()
+
+    general_errors = []
+    row_errors = []
+
+    if 'students_list' in request.FILES:
+        students = []
+
+        try:
+            upload_file = request.FILES.get('students_list')
+            if upload_file.name.endswith('csv'):
+                students = [row for row in csv.reader(upload_file.read().splitlines())]
+            else:
+                general_errors.append({'response': _('Make sure that the file you upload is in CSV format.')})
+
+        except Exception as ex: #pylint: disable=broad-except
+            general_errors.append({'response': _('Could not read uploaded file.')})
+        finally:
+            upload_file.close()
+
+        row_num = 0
+        for student in students:
+            row_num = row_num + 1
+
+            expected_length = len(LT_CSV) - 2
+            if len(student) != expected_length:
+                if len(student) > 0:
+                    row_errors.append({
+                        'response': _('Row #{row_num}: Data must have exactly {expected_length} columns ('
+                            'first name, last name, username, email, password, gender, year of birth, '
+                            'language, country, city, location, company, employee id, hire date, job code, '
+                            'department, supervisor, learning group, comments).')
+                            .format(row_num=row_num, expected_length=expected_length)
+                    })
+                continue
+
+            first_name = student[LT_CSV['first_name']].strip()
+            last_name = student[LT_CSV['last_name']].strip()
+            username = student[LT_CSV['username']].strip()
+            email = student[LT_CSV['email']].strip()
+            password = student[LT_CSV['password']].strip()
+            gender = student[LT_CSV['gender']].strip()
+            year_of_birth = student[LT_CSV['year_of_birth']].strip()
+            language = student[LT_CSV['language']].strip().lower()
+            country = student[LT_CSV['country']].strip().upper()
+            company = student[LT_CSV['company']].strip()
+            hire_date = student[LT_CSV['hire_date']].strip()
+
+            validation_errors, valid_username, valid_email = csv_student_fields_validation(first_name, last_name,
+                                                                username, email, password, gender, year_of_birth,
+                                                                language, country, company, hire_date, row_num)
+
+            row_errors += validation_errors
+
+            if valid_username and valid_email:
+                if User.objects.filter(username=username).exists() and not User.objects.filter(email=email, username=username).exists():
+                    row_errors.append({
+                        'response': _('Row #{row_num}: An account with username {username} exists but the provided email {email} '
+                            'is different.').format(row_num=row_num)
+                    })
+
+                if User.objects.filter(email=email).exists() and not User.objects.filter(email=email, username=username).exists():
+                    row_errors.append({
+                        'response': _('Row #{row_num}: An account with email {email} exists but the provided username {username} '
+                            'is different.').format(row_num=row_num, email=email, username=username)
+                    })
+
+    else:
+        general_errors.append({'response': _('File is not attached.')})
+
+    results = {
+        'general_errors': general_errors,
+        'row_errors': row_errors,
+    }
+    return JsonResponse(results)
 
 
 @require_POST
@@ -302,19 +515,23 @@ def register_and_enroll_students(request, course_id):  # pylint: disable=too-man
     """
     Create new account and Enroll students in this course.
     Passing a csv file that contains a list of students.
-    Order in csv should be the following email = 0; username = 1; name = 2; country = 3.
     Requires staff access.
 
-    -If the email address and username already exists and the user is enrolled in the course,
-    do nothing (including no email gets sent out)
+    -If the email address and username don't exist, create the new account and enroll the user in the course
 
-    -If the email address already exists, but the username is different,
-    match on the email address only and continue to enroll the user in the course using the email address
-    as the matching criteria. Note the change of username as a warning message (but not a failure). Send a standard enrollment email
-    which is the same as the existing manual enrollment
+    -If the email address and username already exists and the user is not enrolled in the course,
+    enroll the user in the course
 
-    -If the username already exists (but not the email), assume it is a different user and fail to create the new account.
-     The failure will be messaged in a response in the browser.
+    -If the email address and username already exists and the user is already enrolled in the course,
+    do nothing
+
+    -If the email address already exists, but the username is different, assume there is an error and fail.
+    The failure will be messaged in a response in the browser.
+
+    -If the username already exists but the email is different, assume it is a different user and fail.
+    The failure will be messaged in a response in the browser.
+
+    The errors and the number of users created / enrolled is logged in the browser response.
     """
 
     if not configuration_helpers.get_value(
@@ -324,9 +541,11 @@ def register_and_enroll_students(request, course_id):  # pylint: disable=too-man
         return HttpResponseForbidden()
 
     course_id = CourseKey.from_string(course_id)
-    warnings = []
-    row_errors = []
     general_errors = []
+    row_errors = []
+    created_and_enrolled = []
+    only_enrolled = []
+    untouched = []
 
     # for white labels we use 'shopping cart' which uses CourseMode.DEFAULT_SHOPPINGCART_MODE_SLUG as
     # course mode for creating course enrollments.
@@ -344,111 +563,348 @@ def register_and_enroll_students(request, course_id):  # pylint: disable=too-man
                 students = [row for row in csv.reader(upload_file.read().splitlines())]
                 course = get_course_by_id(course_id)
             else:
-                general_errors.append({
-                    'username': '', 'email': '',
-                    'response': _('Make sure that the file you upload is in CSV format with no extraneous characters or rows.')
-                })
+                general_errors.append({'response': _(
+                    'Make sure that the file you upload is in CSV format with no extraneous characters or rows.')})
 
         except Exception:  # pylint: disable=broad-except
-            general_errors.append({
-                'username': '', 'email': '', 'response': _('Could not read uploaded file.')
-            })
+            general_errors.append({'response': _('Could not read uploaded file.')})
         finally:
             upload_file.close()
 
-        generated_passwords = []
         row_num = 0
         for student in students:
             row_num = row_num + 1
 
-            # verify that we have exactly four columns in every row but allow for blank lines
-            if len(student) != 4:
+            # verify that we have the right number of columns in every row but allow for blank lines
+            expected_length = len(LT_CSV) - 2
+            if len(student) != expected_length:
                 if len(student) > 0:
-                    general_errors.append({
-                        'username': '',
-                        'email': '',
-                        'response': _('Data in row #{row_num} must have exactly four columns: email, username, full name, and country').format(row_num=row_num)
+                    row_errors.append({
+                        'response': _('Row #{row_num}: Data must have exactly {expected_length} columns ('
+                            'first name, last name, username, email, password, gender, year of birth, '
+                            'language, country, city, location, company, employee id, hire date, job code, '
+                            'department, supervisor, learning group, comments).')
+                            .format(row_num=row_num, expected_length=expected_length)
                     })
                 continue
 
-            # Iterate each student in the uploaded csv file.
-            email = student[EMAIL_INDEX]
-            username = student[USERNAME_INDEX]
-            name = student[NAME_INDEX]
-            country = student[COUNTRY_INDEX][:2]
+            first_name = student[LT_CSV['first_name']].strip()
+            last_name = student[LT_CSV['last_name']].strip()
+            username = student[LT_CSV['username']].strip()
+            email = student[LT_CSV['email']].strip()
+            password = student[LT_CSV['password']].strip()
+            gender = student[LT_CSV['gender']].strip()
+            year_of_birth = student[LT_CSV['year_of_birth']].strip()
+            language = student[LT_CSV['language']].strip().lower()
+            country = student[LT_CSV['country']].strip().upper()
+            company = student[LT_CSV['company']].strip()
+            hire_date = student[LT_CSV['hire_date']].strip()
 
-            email_params = get_email_params(course, True, secure=request.is_secure())
-            try:
-                validate_email(email)  # Raises ValidationError if invalid
-            except ValidationError:
-                row_errors.append({
-                    'username': username, 'email': email, 'response': _('Invalid email {email_address}.').format(email_address=email)})
-            else:
-                if User.objects.filter(email=email).exists():
-                    # Email address already exists. assume it is the correct user
-                    # and just register the user in the course and send an enrollment email.
-                    user = User.objects.get(email=email)
+            validation_errors, valid_username, valid_email = csv_student_fields_validation(
+                                        first_name, last_name, username, email, password,
+                                        gender, year_of_birth, language, country, company, hire_date, row_num)
 
-                    # see if it is an exact match with email and username
-                    # if it's not an exact match then just display a warning message, but continue onwards
-                    if not User.objects.filter(email=email, username=username).exists():
-                        warning_message = _(
-                            'An account with email {email} exists but the provided username {username} '
-                            'is different. Enrolling anyway with {email}.'
-                        ).format(email=email, username=username)
+            row_errors += validation_errors
 
-                        warnings.append({
-                            'username': username, 'email': email, 'response': warning_message
+            if len(validation_errors) == 0:
+                try:
+                    if User.objects.filter(email=email).exists():
+                        # Email address already exists.
+                        # see if it is an exact match with email and username
+                        # if it's not an exact match then just display an error message
+                        if not User.objects.filter(email=email, username=username).exists():
+                            row_errors.append({
+                                'response': _('Row #{row_num}: An account with email {email} exists but the provided username {username} '
+                                    'is different.').format(row_num=row_num, email=email, username=username)
+                            })
+                        else:
+                            # user (username, email) already exists
+                            # enroll the user if not already enrolled
+                            user = User.objects.get(email=email, username= username)
+                            if not CourseEnrollment.is_enrolled(user, course_id):
+                                # Enroll user to the course and add manual enrollment audit trail
+                                create_manual_course_enrollment(user=user, course_id=course_id,
+                                    mode=course_mode, enrolled_by=request.user, reason='Enrolling via csv upload',
+                                    state_transition=UNENROLLED_TO_ENROLLED,)
+                                only_enrolled.append({
+                                    'response': _('Row #{row_num}: User with username {username} is now enrolled in this course.')
+                                        .format(row_num=row_num, username=username)
+                                })
+                            else:
+                                log.info(u'user %s already enrolled in the course %s', username, course.id,)
+                                untouched.append({
+                                    'response': _('Row #{row_num}: User with username {username} was already enrolled '\
+                                        'in this course so nothing has changed.').format(row_num=row_num, username=username)
+                                })
+
+                    elif is_email_retired(email):
+                        # We are either attempting to enroll a retired user or create a new user with
+                        # an email or a username which is already associated with a retired account.
+                        # Simply block these attempts.
+                        row_errors.append({
+                            'username': username,
+                            'email': email,
+                            'response': _('Row #{row_num}: Invalid email address.').format(row_num=row_num),
                         })
-                        log.warning(u'email %s already exist', email)
+                        log.warning(u'Email address %s or username %s is associated with a retired user, ' +
+                                    u'so course enrollment was blocked.', email, username)
                     else:
-                        log.info(
-                            u"user already exists with username '%s' and email '%s'",
-                            username,
-                            email
-                        )
+                        # This email does not yet exist, so we need to create a new account
+                        # If username already exists in the database, then it will raise an IntegrityError exception.
+                        hire_date = hire_date if len(hire_date) > 0 else None
+                        if User.objects.filter(username=username).exists():
+                            row_errors.append({
+                                'response': _('Row #{row_num}: An account with username {username} exists but the provided email {email} '
+                                    'is different.').format(row_num=row_num, username=username, email=email)
+                            })
+                        elif is_username_retired(username):
+                            row_errors.append({
+                                'username': username,
+                                'email': email,
+                                'response': _('Row #{row_num}: Invalid username.').format(row_num=row_num),
+                            })
+                            log.warning(u'Email address %s or username %s is associated with a retired user, ' +
+                                        u'so course enrollment was blocked.', email, username)
+                        else:
+                            year_of_birth = int(year_of_birth) if len(year_of_birth) > 0 else None
+                            user = lt_create_user_and_user_profile(
+                                    email, username, first_name, last_name, password,
+                                    gender, year_of_birth, language, country,
+                                    student[LT_CSV['city']].strip(),
+                                    student[LT_CSV['location']].strip(),
+                                    student[LT_CSV['company']].strip(),
+                                    student[LT_CSV['employee_id']].strip(),
+                                    hire_date,
+                                    student[LT_CSV['job_code']].strip(),
+                                    student[LT_CSV['department']].strip(),
+                                    student[LT_CSV['supervisor']].strip(),
+                                    student[LT_CSV['learning_group']].strip(),
+                                    student[LT_CSV['comments']].strip())
+                            create_manual_course_enrollment(user=user, course_id=course_id,
+                                mode=course_mode, enrolled_by=request.user, reason='Enrolling via csv upload',
+                                state_transition=UNENROLLED_TO_ENROLLED,)
 
-                    # enroll a user if it is not already enrolled.
-                    if not CourseEnrollment.is_enrolled(user, course_id):
-                        # Enroll user to the course and add manual enrollment audit trail
-                        create_manual_course_enrollment(
-                            user=user,
-                            course_id=course_id,
-                            mode=course_mode,
-                            enrolled_by=request.user,
-                            reason='Enrolling via csv upload',
-                            state_transition=UNENROLLED_TO_ENROLLED,
-                        )
-                        enroll_email(course_id=course_id, student_email=email, auto_enroll=True, email_students=True, email_params=email_params)
-                elif is_email_retired(email):
-                    # We are either attempting to enroll a retired user or create a new user with an email which is
-                    # already associated with a retired account.  Simply block these attempts.
-                    row_errors.append({
-                        'username': username,
-                        'email': email,
-                        'response': _('Invalid email {email_address}.').format(email_address=email),
-                    })
-                    log.warning(u'Email address %s is associated with a retired user, so course enrollment was ' +
-                                u'blocked.', email)
-                else:
-                    # This email does not yet exist, so we need to create a new account
-                    # If username already exists in the database, then create_and_enroll_user
-                    # will raise an IntegrityError exception.
-                    password = generate_unique_password(generated_passwords)
-                    errors = create_and_enroll_user(
-                        email, username, name, country, password, course_id, course_mode, request.user, email_params
-                    )
-                    row_errors.extend(errors)
+                            log.info(u'user %s created and enrolled in this course', username)
+                            created_and_enrolled.append({
+                                'response': _('Row #{row_num}: {username} / {email}')
+                                    .format(row_num=row_num, username=username, email=email)
+                            })
+                except Exception as ex:
+                    log.exception(type(ex).__name__)
+                    row_errors.append({'response': _('Row #{row_num}: {ex}').format(row_num=row_num, ex=type(ex).__name__)})
 
     else:
-        general_errors.append({
-            'username': '', 'email': '', 'response': _('File is not attached.')
-        })
+        general_errors.append({'response': _('File is not attached.')})
 
     results = {
-        'row_errors': row_errors,
         'general_errors': general_errors,
-        'warnings': warnings
+        'row_errors': row_errors,
+        'created_and_enrolled': created_and_enrolled,
+        'only_enrolled': only_enrolled,
+        'untouched': untouched
+    }
+    return JsonResponse(results)
+
+@require_POST
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+@require_level('staff')
+def batch_update_student(request, course_id):
+    """
+    This method allows the staff user to update user accounts and profiles by batch from a CSV file.
+    The purpose of this is to be able to update wrong data after a batch register and enroll.
+
+    Passing a CSV file that contains a list of students.
+    Requires staff access.
+    """
+    if not configuration_helpers.get_value(
+            'ALLOW_AUTOMATED_SIGNUPS',
+            settings.FEATURES.get('ALLOW_AUTOMATED_SIGNUPS', False),):
+        return HttpResponseForbidden()
+
+    general_errors = []
+    row_errors = []
+    updated = []
+
+    if 'students_list' in request.FILES:
+        students = []
+
+        try:
+            upload_file = request.FILES.get('students_list')
+            if upload_file.name.endswith('.csv'):
+                students = [row for row in csv.reader(upload_file.read().splitlines())]
+            else:
+                general_errors.append({'response': _('Make sure that the file you upload is in CSV format.')})
+
+        except Exception as ex:  # pylint: disable=broad-except
+            general_errors.append({'response': _('Could not read uploaded file.')})
+        finally:
+            upload_file.close()
+
+        row_num = 0
+        for student in students:
+            row_num = row_num + 1
+
+            expected_length = len(LT_CSV)
+            if len(student) != expected_length:
+                if len(student) > 0:
+                    row_errors.append({
+                        'response': _('Row #{row_num}: Data must have exactly {expected_length} columns ('
+                            'old username, old email, first name, last name, username, email, password, gender, '
+                            'year of birth, language, country, city, location, company, employee id, hire date, '
+                            'job code, department, supervisor, learning group, comments).')
+                            .format(row_num=row_num, expected_length=expected_length)
+                    })
+                continue
+
+            old_username = student[LT_CSV['old_username']].strip()
+            old_email = student[LT_CSV['old_email']].strip()
+            first_name = student[LT_CSV['first_name'] + 2].strip()
+            last_name = student[LT_CSV['last_name'] + 2].strip()
+            new_username = student[LT_CSV['username'] + 2].strip()
+            new_email = student[LT_CSV['email'] + 2].strip()
+            password = student[LT_CSV['password']].strip()
+            gender = student[LT_CSV['gender'] + 2].strip()
+            year_of_birth = student[LT_CSV['year_of_birth'] + 2].strip()
+            language = student[LT_CSV['language'] + 2].strip().lower()
+            country = student[LT_CSV['country'] + 2].strip().upper()
+            company = student[LT_CSV['company'] + 2].strip()
+            hire_date = student[LT_CSV['hire_date'] + 2].strip()
+
+            if len(old_username) < 2:
+                row_errors.append({'response': _('Row #{row_num}: An old username is required.').format(row_num=row_num)})
+                continue
+
+            if len(old_email) == 0:
+                row_errors.append({'response': _('Row #{row_num}: An old email address is required.').format(row_num=row_num)})
+                continue
+
+            if is_email_retired(old_email):
+                row_errors.append({
+                    'response': _('Row #{row_num}: Invalid old email address.').format(row_num=row_num),
+                })
+                continue
+
+            if is_username_retired(old_username):
+                row_errors.append({
+                    'response': _('Row #{row_num}: Invalid old username.').format(row_num=row_num),
+                })
+                continue
+
+            username_needs_update = False
+            username_to_check = old_username
+            if len(new_username) >= 2 and new_username != old_username:
+                username_needs_update = True
+                username_to_check = new_username
+
+            email_needs_update = False
+            email_to_check = old_email
+            if len(new_email) > 0 and new_email != old_email:
+                email_needs_update = True
+                email_to_check = new_email
+
+            validation_errors, valid_username, valid_email = csv_student_fields_validation(
+                                        first_name, last_name, username_to_check, email_to_check,
+                                        password, gender, year_of_birth, language, country, company, hire_date, row_num)
+
+            row_errors += validation_errors
+
+            if len(validation_errors) == 0:
+                if User.objects.filter(email=old_email).exists():
+                    # Email address already exists.
+                    # see if it is an exact match with email and username
+                    # if it's not an exact match then just display an error message
+                    if not User.objects.filter(email=old_email, username=old_username).exists():
+                        row_errors.append({
+                            'response': _(
+                                'Row #{row_num}: An account with email {email} exists but the provided username {username} '
+                                'is different.').format(row_num=row_num, email=old_email, username=old_username)
+                        })
+                    else:
+                        if email_needs_update:
+                            if User.objects.filter(email=new_email).exists():
+                                row_errors.append({
+                                    'response': _('Row #{row_num}: An other account with email {email} already exists.')
+                                        .format(row_num=row_num, email=new_email)
+                                })
+                            elif is_email_retired(new_email):
+                                row_errors.append({
+                                    'response': _('Row #{row_num}: Invalid new email address.').format(row_num=row_num),
+                                })
+                        if username_needs_update:
+                            if User.objects.filter(username=new_username).exists():
+                                row_errors.append({
+                                    'response': _('Row #{row_num}: An other account with username {username} already exists.')
+                                        .format(row_num=row_num, username=new_username)
+                                })
+                            elif is_username_retired(new_username):
+                                row_errors.append({
+                                    'response': _('Row #{row_num}: Invalid new username.').format(row_num=row_num),
+                                })
+                        if len(row_errors) == 0:
+                            user = User.objects.get(email=old_email, username= old_username)
+
+                            try:
+                                with transaction.atomic():
+                                    if username_needs_update:
+                                        user.username = new_username
+                                    if email_needs_update:
+                                        user.email = new_email
+                                    user.first_name = first_name
+                                    user.last_name = last_name
+                                    user.set_password(password)
+                                    user.save()
+
+                                    year_of_birth = int(year_of_birth) if len(year_of_birth) > 0 else None
+                                    lt_update_profile(
+                                        user.profile, first_name, last_name,
+                                        gender, year_of_birth, language, country,
+                                        student[LT_CSV['city'] + 2].strip(),
+                                        student[LT_CSV['location'] + 2].strip(),
+                                        student[LT_CSV['company'] + 2].strip(),
+                                        student[LT_CSV['employee_id'] + 2].strip(),
+                                        hire_date,
+                                        student[LT_CSV['job_code'] + 2].strip(),
+                                        student[LT_CSV['department'] + 2].strip(),
+                                        student[LT_CSV['supervisor'] + 2].strip(),
+                                        student[LT_CSV['learning_group'] + 2].strip(),
+                                        student[LT_CSV['comments'] + 2].strip())
+
+                            except Exception as ex:
+                                log.exception(type(ex).__name__)
+                                row_errors.append({'response': _('Row #{row_num}: {ex}').format(row_num=row_num, ex=type(ex).__name__)})
+                            else:
+                                # Successful update
+                                log.info(u'user profile updated for %s (now: %s)', old_username, new_username)
+                                if username_needs_update:
+                                    updated.append({
+                                        'response': _('Row #{row_num}: user {old} (now: {new}) successfully updated.')
+                                            .format(row_num=row_num, old=old_username, new=new_username)
+                                    })
+                                else:
+                                    updated.append({
+                                        'response': _('Row #{row_num}: user {old} successfully updated.')
+                                            .format(row_num=row_num, old=old_username)
+                                    })
+                else:
+                    # This email does not exist, so raise an error
+                    if User.objects.filter(username=old_username).exists():
+                        row_errors.append({
+                            'response': _('Row #{row_num}: An account with username {username} exits but the provided email {email} '
+                                'is different.').format(row_num=row_num, username=old_username, email=old_email)
+                        })
+                    else:
+                        row_errors.append({
+                            'response': _('Row #{row_num}: No account was found with the provided username and email.')
+                                .format(row_num=row_num)
+                        })
+
+    else:
+        general_errors.append({'response': _('File is not attached.')})
+
+    results = {
+        'general_errors': general_errors,
+        'row_errors': row_errors,
+        'updated': updated
     }
     return JsonResponse(results)
 
@@ -501,6 +957,50 @@ def create_user_and_user_profile(email, username, name, country, password):
     profile.save()
 
     return user
+
+def lt_create_user_and_user_profile(email, username, first_name, last_name,
+    password, gender, year_of_birth, language, country, city, location,
+    lt_company, lt_employee_id, lt_hire_date, lt_job_code, lt_department,
+    lt_supervisor, lt_learning_group, lt_comments):
+    user = User.objects.create_user(username, email, password)
+    reg = Registration()
+    reg.register(user)
+
+    user.first_name = first_name
+    user.last_name = last_name
+    user.is_active = True
+    user.save()
+
+    lt_update_profile(UserProfile(user=user), first_name, last_name,
+        gender, year_of_birth, language, country, city, location,
+        lt_company, lt_employee_id, lt_hire_date, lt_job_code, lt_department,
+        lt_supervisor, lt_learning_group, lt_comments)
+
+    return user
+
+
+def lt_update_profile(profile, first_name, last_name,
+    gender, year_of_birth, language, country, city, location,
+    lt_company, lt_employee_id, lt_hire_date, lt_job_code, lt_department,
+    lt_supervisor, lt_learning_group, lt_comments):
+    name = last_name + ' ' + first_name
+    profile.name = name
+    profile.gender = gender
+    profile.year_of_birth = year_of_birth
+    profile.language = language
+    profile.country = country
+    profile.city = city
+    profile.location = location
+    profile.lt_company = lt_company
+    profile.lt_employee_id = lt_employee_id
+    profile.lt_hire_date = lt_hire_date
+    profile.lt_job_code = lt_job_code
+    profile.lt_department = lt_department
+    profile.lt_supervisor = lt_supervisor
+    profile.lt_learning_group = lt_learning_group
+    profile.lt_comments = lt_comments
+    profile.save()
+
 
 
 def create_manual_course_enrollment(user, course_id, mode, enrolled_by, reason, state_transition):

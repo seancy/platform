@@ -205,6 +205,7 @@ INSTRUCTOR_POST_ENDPOINTS = set([
     'show_unit_extensions',
     'send_email',
     'spent_registration_codes',
+    'students_batch_update',
     'students_update_enrollment',
     'update_forum_role_membership',
     'override_problem_score',
@@ -669,74 +670,23 @@ class TestInstructorAPIBulkAccountCreationAndEnrollment(SharedModuleStoreTestCas
             last_name='Student'
         )
 
-    @patch('lms.djangoapps.instructor.views.api.log.info')
-    def test_account_creation_and_enrollment_with_csv(self, info_log):
+    def test_csv_file_not_attached(self):
         """
-        Happy path test to create a single new user
+        Test when the user does not attach a file
         """
-        csv_content = "test_student@example.com,test_student_1,tester1,USA"
+        csv_content = "test_student1@example.com,test_student_1,tester1,USA\n" \
+                      "test_student2@example.com,test_student_1,tester2,US"
+
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
-        response = self.client.post(self.url, {'students_list': uploaded_file})
+
+        response = self.client.post(self.url, {'file_not_found': uploaded_file})
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertEquals(len(data['row_errors']), 0)
-        self.assertEquals(len(data['warnings']), 0)
-        self.assertEquals(len(data['general_errors']), 0)
+        self.assertNotEquals(len(data['general_errors']), 0)
+        self.assertEquals(data['general_errors'][0]['response'], 'File is not attached.')
 
         manual_enrollments = ManualEnrollmentAudit.objects.all()
-        self.assertEqual(manual_enrollments.count(), 1)
-        self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
-
-        # test the log for email that's send to new created user.
-        info_log.assert_called_with('email sent to new created user at %s', 'test_student@example.com')
-
-    @patch('lms.djangoapps.instructor.views.api.log.info')
-    def test_account_creation_and_enrollment_with_csv_with_blank_lines(self, info_log):
-        """
-        Happy path test to create a single new user
-        """
-        csv_content = "\ntest_student@example.com,test_student_1,tester1,USA\n\n"
-        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
-        response = self.client.post(self.url, {'students_list': uploaded_file})
-        self.assertEqual(response.status_code, 200)
-        data = json.loads(response.content)
-        self.assertEquals(len(data['row_errors']), 0)
-        self.assertEquals(len(data['warnings']), 0)
-        self.assertEquals(len(data['general_errors']), 0)
-
-        manual_enrollments = ManualEnrollmentAudit.objects.all()
-        self.assertEqual(manual_enrollments.count(), 1)
-        self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
-
-        # test the log for email that's send to new created user.
-        info_log.assert_called_with('email sent to new created user at %s', 'test_student@example.com')
-
-    @patch('lms.djangoapps.instructor.views.api.log.info')
-    def test_email_and_username_already_exist(self, info_log):
-        """
-        If the email address and username already exists
-        and the user is enrolled in the course, do nothing (including no email gets sent out)
-        """
-        csv_content = "test_student@example.com,test_student_1,tester1,USA\n" \
-                      "test_student@example.com,test_student_1,tester2,US"
-        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
-        response = self.client.post(self.url, {'students_list': uploaded_file})
-        self.assertEqual(response.status_code, 200)
-        data = json.loads(response.content)
-        self.assertEquals(len(data['row_errors']), 0)
-        self.assertEquals(len(data['warnings']), 0)
-        self.assertEquals(len(data['general_errors']), 0)
-
-        manual_enrollments = ManualEnrollmentAudit.objects.all()
-        self.assertEqual(manual_enrollments.count(), 1)
-        self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
-
-        # test the log for email that's send to new created user.
-        info_log.assert_called_with(
-            u"user already exists with username '%s' and email '%s'",
-            'test_student_1',
-            'test_student@example.com'
-        )
+        self.assertEqual(manual_enrollments.count(), 0)
 
     def test_file_upload_type_not_csv(self):
         """
@@ -768,81 +718,370 @@ class TestInstructorAPIBulkAccountCreationAndEnrollment(SharedModuleStoreTestCas
 
     def test_insufficient_data(self):
         """
-        Try uploading a CSV file which does not have the exact four columns of data
+        Try uploading a CSV file which does not have the exact number of columns of data
         """
         csv_content = "test_student@example.com,test_student_1\n"
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.url, {'students_list': uploaded_file})
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertEquals(len(data['row_errors']), 0)
-        self.assertEquals(len(data['warnings']), 0)
-        self.assertEquals(len(data['general_errors']), 1)
-        self.assertEquals(data['general_errors'][0]['response'], 'Data in row #1 must have exactly four columns: email, username, full name, and country')
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Data must have exactly 19 columns ('
+            'first name, last name, username, email, password, gender, year of birth, '
+            'language, country, city, location, company, employee id, hire date, job code, '
+            'department, supervisor, learning group, comments).')
 
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 0)
 
-    def test_invalid_email_in_csv(self):
+    def test_missing_first_in_csv(self):
+        csv_content = (",Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: A first name is required.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_missing_last_in_csv(self):
+        csv_content = ("First,,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: A last name is required.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_missing_username_in_csv(self):
+        csv_content = ("First,Last,,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: A username is required.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_username_bad_format_in_csv(self):
+        csv_content = ("First,Last,étudiant,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Invalid username.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_missing_email_in_csv(self):
+        csv_content = ("First,Last,test_student_1,,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: An email address is required.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_email_bad_format_in_csv(self):
         """
         Test failure case of a poorly formatted email field
         """
-        csv_content = "test_student.example.com,test_student_1,tester1,USA"
+        csv_content = ("First,Last,test_student_1,test_student_1@example,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
 
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.url, {'students_list': uploaded_file})
         data = json.loads(response.content)
         self.assertEqual(response.status_code, 200)
-        self.assertNotEquals(len(data['row_errors']), 0)
-        self.assertEquals(len(data['warnings']), 0)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
         self.assertEquals(len(data['general_errors']), 0)
-        self.assertEquals(data['row_errors'][0]['response'], 'Invalid email {0}.'.format('test_student.example.com'))
-
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Invalid email address.')
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 0)
 
-    @patch('lms.djangoapps.instructor.views.api.log.info')
-    def test_csv_user_exist_and_not_enrolled(self, info_log):
-        """
-        If the email address and username already exists
-        and the user is not enrolled in the course, enrolled him/her and iterate to next one.
-        """
-        csv_content = "nonenrolled@test.com,NotEnrolledStudent,tester1,USA"
+    def test_missing_password_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
 
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
         self.assertEqual(response.status_code, 200)
-        info_log.assert_called_with(
-            u'user %s enrolled in the course %s',
-            u'NotEnrolledStudent',
-            self.course.id
-        )
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: A password is required.')
         manual_enrollments = ManualEnrollmentAudit.objects.all()
-        self.assertEqual(manual_enrollments.count(), 1)
-        self.assertTrue(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
+        self.assertEqual(manual_enrollments.count(), 0)
 
-    def test_user_with_already_existing_email_in_csv(self):
+    def test_gender_missing_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Genders must be \'m\', \'f\' or \'o\'.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_gender_bad_format_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,other,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Genders must be \'m\', \'f\' or \'o\'.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_yob_bad_format_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,88,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Invalid year of birth (expected format: YYYY).')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_language_missing_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        ",FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Missing language, a language code is expected (e.g. en, fr, zh, pt).')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_language_bad_format_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "French,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Invalid language, a language code is expected (e.g. en, fr, zh, pt).')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_country_missing_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Missing country, a 2-character country code is expected (e.g. FR, CN, US, BR).')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_country_bad_format_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FRANCE,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Invalid country, a 2-character country code is expected (e.g. FR, CN, US, BR).')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_company_missing_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: A company is required.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_hire_date_bad_format_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,27/11/18,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        data = json.loads(response.content)
+        self.assertEqual(response.status_code, 200)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Invalid hire date (expected format: YYYY-MM-DD).')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+
+    def test_user_with_already_existing_username_but_email_mismatch(self):
         """
-        If the email address already exists, but the username is different,
-        assume it is the correct user and just register the user in the course.
+        If the username already exists (but not the email),
+        assume it is a different user and fail to create the new account.
         """
-        csv_content = "test_student@example.com,test_student_1,tester1,USA\n" \
-                      "test_student@example.com,test_student_2,tester2,US"
+        csv_content = ("First1,Last1,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First2,Last2,test_student_1,test_student_2@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
 
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.url, {'students_list': uploaded_file})
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        warning_message = 'An account with email {email} exists but the provided username {username} ' \
-                          'is different. Enrolling anyway with {email}.'.format(email='test_student@example.com', username='test_student_2')
-        self.assertNotEquals(len(data['warnings']), 0)
-        self.assertEquals(data['warnings'][0]['response'], warning_message)
-        user = User.objects.get(email='test_student@example.com')
-        self.assertTrue(CourseEnrollment.is_enrolled(user, self.course.id))
-
+        self.assertEquals(len(data['created_and_enrolled']), 1)
+        self.assertEquals(data['created_and_enrolled'][0]['response'], 'Row #1: test_student_1 / test_student_1@example.com')
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #2: An account with username test_student_1 exists '
+            'but the provided email test_student_2@example.com is different.')
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 1)
-        self.assertTrue(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
+
+    def test_user_with_already_existing_email_but_username_mismatch(self):
+        """
+        If the email address already exists, but the username is different,
+        assume it is the different user and fail to create the new account.
+        """
+        csv_content = ("First1,Last1,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First2,Last2,test_student_2,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['created_and_enrolled']), 1)
+        self.assertEquals(data['created_and_enrolled'][0]['response'], 'Row #1: test_student_1 / test_student_1@example.com')
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #2: An account with email test_student_1@example.com exists '
+            'but the provided username test_student_2 is different.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 1)
 
     def test_user_with_retired_email_in_csv(self):
         """
@@ -861,59 +1100,194 @@ class TestInstructorAPIBulkAccountCreationAndEnrollment(SharedModuleStoreTestCas
         user.is_active = False
         user.save()
 
-        csv_content = "{email},{username},tester,USA".format(email=conflicting_email, username='new_test_student')
+        csv_content = ("First1,Last1,new_test_student,%s,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments" % conflicting_email)
 
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.url, {'students_list': uploaded_file})
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertNotEquals(len(data['row_errors']), 0)
-        self.assertEquals(
-            data['row_errors'][0]['response'],
-            'Invalid email {email}.'.format(email=conflicting_email)
-        )
-        self.assertFalse(User.objects.filter(email=conflicting_email).exists())
-
-    def test_user_with_already_existing_username_in_csv(self):
-        """
-        If the username already exists (but not the email),
-        assume it is a different user and fail to create the new account.
-        """
-        csv_content = "test_student1@example.com,test_student_1,tester1,USA\n" \
-                      "test_student2@example.com,test_student_1,tester2,US"
-
-        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
-
-        response = self.client.post(self.url, {'students_list': uploaded_file})
-        self.assertEqual(response.status_code, 200)
-        data = json.loads(response.content)
-        self.assertNotEquals(len(data['row_errors']), 0)
-        self.assertEquals(data['row_errors'][0]['response'], 'Username {user} already exists.'.format(user='test_student_1'))
-
-    def test_csv_file_not_attached(self):
-        """
-        Test when the user does not attach a file
-        """
-        csv_content = "test_student1@example.com,test_student_1,tester1,USA\n" \
-                      "test_student2@example.com,test_student_1,tester2,US"
-
-        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
-
-        response = self.client.post(self.url, {'file_not_found': uploaded_file})
-        self.assertEqual(response.status_code, 200)
-        data = json.loads(response.content)
-        self.assertNotEquals(len(data['general_errors']), 0)
-        self.assertEquals(data['general_errors'][0]['response'], 'File is not attached.')
-
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Invalid email address.')
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 0)
+        self.assertFalse(User.objects.filter(email=conflicting_email).exists())
+
+    def test_user_with_retired_username_in_csv(self):
+        # This email address is re-used to create a retired account and another account.
+        retired_username = 'old_test_student'
+
+        # prep a retired user
+        user = UserFactory.create(username=retired_username, email='test_student@example.com')
+        user.email = get_retired_email_by_email(user.email)
+        user.username = get_retired_username_by_username(user.username)
+        user.is_active = False
+        user.save()
+
+        csv_content = ("First1,Last1,%s,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments" % retired_username)
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: Invalid username.')
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 0)
+        self.assertFalse(User.objects.filter(username=retired_username).exists())
+
+    @patch('lms.djangoapps.instructor.views.api.log.info')
+    def test_account_creation_and_enrollment_with_csv(self, info_log):
+        """
+        Happy path test to create a single new user
+        """
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['created_and_enrolled']), 1)
+        self.assertEquals(data['created_and_enrolled'][0]['response'], 'Row #1: test_student_1 / test_student_1@example.com')
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 0)
+
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 1)
+        self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
+
+        info_log.assert_called_with('user %s created and enrolled in this course', 'test_student_1')
+
+        user = User.objects.get(email='test_student_1@example.com')
+        self.assertEquals(user.first_name, "First")
+        self.assertEquals(user.last_name, "Last")
+        self.assertEquals(user.profile.name, "Last First")
+        self.assertEquals(user.profile.gender, "o")
+        self.assertEquals(user.profile.year_of_birth, 1988)
+        self.assertEquals(user.profile.language, "fr")
+        self.assertEquals("%s" % user.profile.country, "FR")
+        self.assertEquals(user.profile.city, "Paris")
+        self.assertEquals(user.profile.location, "Site1")
+        self.assertEquals(user.profile.lt_company, "Company")
+        self.assertEquals(user.profile.lt_employee_id, "123456")
+        self.assertEquals("%s" % user.profile.lt_hire_date, "2018-11-27")
+        self.assertEquals(user.profile.lt_job_code, "Job")
+        self.assertEquals(user.profile.lt_department, "Department")
+        self.assertEquals(user.profile.lt_supervisor, "Supervisor")
+        self.assertEquals(user.profile.lt_learning_group, "group1")
+        self.assertEquals(user.profile.lt_comments, "comments")
+
+        self.assertTrue(self.client.login(username='test_student_1', password='password'))
+
+    @patch('lms.djangoapps.instructor.views.api.log.info')
+    def test_account_creation_and_enrollment_with_csv_with_blank_lines(self, info_log):
+        """
+        Happy path test to create a single new user
+        """
+        csv_content = ("\nFirst,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                       "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                       "group1,comments\n\n")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['created_and_enrolled']), 1)
+        self.assertEquals(data['created_and_enrolled'][0]['response'], 'Row #2: test_student_1 / test_student_1@example.com')
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 0)
+
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 1)
+        self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
+
+        info_log.assert_called_with('user %s created and enrolled in this course', 'test_student_1')
+
+    @patch('lms.djangoapps.instructor.views.api.log.info')
+    def test_csv_user_exist_and_not_enrolled(self, info_log):
+        """
+        If the email address and username already exists
+        and the user is not enrolled in the course, enrolled him/her and iterate to next one.
+        """
+        csv_content = ("First,Last,NotEnrolledStudent,nonenrolled@test.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 1)
+        self.assertEquals(data['only_enrolled'][0]['response'],
+            'Row #1: User with username NotEnrolledStudent is now enrolled in this course.')
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 0)
+        info_log.assert_called_with(u'user %s enrolled in the course %s',
+            u'NotEnrolledStudent', self.course.id
+        )
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 1)
+        self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
+
+    @patch('lms.djangoapps.instructor.views.api.log.info')
+    def test_csv_user_exist_and_enrolled(self, info_log):
+        """
+        If the email address and username already exists
+        and the user is enrolled in the course, do nothing (including no email gets sent out)
+        """
+        csv_content = ("First1,Last1,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First1,Last1,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['created_and_enrolled']), 1)
+        self.assertEquals(data['created_and_enrolled'][0]['response'],
+            'Row #1: test_student_1 / test_student_1@example.com')
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 1)
+        self.assertEquals(data['untouched'][0]['response'],
+            'Row #2: User with username test_student_1 was already enrolled in this course so nothing has changed.')
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 0)
+        manual_enrollments = ManualEnrollmentAudit.objects.all()
+        self.assertEqual(manual_enrollments.count(), 1)
+        info_log.assert_called_with(
+            u"user %s already enrolled in the course %s",
+            'test_student_1', self.course.id)
 
     def test_raising_exception_in_auto_registration_and_enrollment_case(self):
         """
         Test that exceptions are handled well
         """
-        csv_content = "test_student1@example.com,test_student_1,tester1,USA\n" \
-                      "test_student2@example.com,test_student_1,tester2,US"
+        csv_content = ("First1,Last1,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First2,Last2,test_student_2,test_student_2@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
 
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         with patch('lms.djangoapps.instructor.views.api.create_manual_course_enrollment') as mock:
@@ -922,69 +1296,82 @@ class TestInstructorAPIBulkAccountCreationAndEnrollment(SharedModuleStoreTestCas
 
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertNotEquals(len(data['row_errors']), 0)
-        self.assertEquals(data['row_errors'][0]['response'], 'NonExistentCourseError')
-
+        self.assertEquals(len(data['created_and_enrolled']), 0)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 2)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #1: NonExistentCourseError')
+        self.assertEquals(data['row_errors'][1]['response'], 'Row #2: NonExistentCourseError')
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 0)
 
-    def test_generate_unique_password(self):
-        """
-        generate_unique_password should generate a unique password string that excludes certain characters.
-        """
-        password = generate_unique_password([], 12)
-        self.assertEquals(len(password), 12)
-        for letter in password:
-            self.assertNotIn(letter, 'aAeEiIoOuU1l')
+    # def test_generate_unique_password(self):
+    #     """
+    #     generate_unique_password should generate a unique password string that excludes certain characters.
+    #     """
+    #     password = generate_unique_password([], 12)
+    #     self.assertEquals(len(password), 12)
+    #     for letter in password:
+    #         self.assertNotIn(letter, 'aAeEiIoOuU1l')
+
+    # @patch.object(lms.djangoapps.instructor.views.api, 'generate_random_string',
+    #               Mock(side_effect=['first', 'first', 'second']))
+    # def test_generate_unique_password_no_reuse(self):
+    #     """
+    #     generate_unique_password should generate a unique password string that hasn't been generated before.
+    #     """
+    #     generated_password = ['first']
+    #     password = generate_unique_password(generated_password, 12)
+    #     self.assertNotEquals(password, 'first')
 
     def test_users_created_and_enrolled_successfully_if_others_fail(self):
-
         # prep a retired user
-        user = UserFactory.create(username='old_test_student_4', email='test_student4@example.com')
+        user = UserFactory.create(username='old_test_student', email='test_student_4@example.com')
         user.email = get_retired_email_by_email(user.email)
         user.username = get_retired_username_by_username(user.username)
         user.is_active = False
         user.save()
 
-        csv_content = "test_student1@example.com,test_student_1,tester1,USA\n" \
-                      "test_student3@example.com,test_student_1,tester3,CA\n" \
-                      "test_student4@example.com,test_student_4,tester4,USA\n" \
-                      "test_student2@example.com,test_student_2,tester2,USA"
+        csv_content = ("First1,Last1,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First3,Last3,test_student_1,test_student_3@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First4,Last4,test_student_4,test_student_4@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First2,Last2,test_student_2,test_student_2@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
 
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.url, {'students_list': uploaded_file})
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertNotEquals(len(data['row_errors']), 0)
-        self.assertEquals(
-            data['row_errors'][0]['response'],
-            'Username {user} already exists.'.format(user='test_student_1')
-        )
-        self.assertEquals(
-            data['row_errors'][1]['response'],
-            'Invalid email {email}.'.format(email='test_student4@example.com')
-        )
-        self.assertTrue(User.objects.filter(username='test_student_1', email='test_student1@example.com').exists())
-        self.assertTrue(User.objects.filter(username='test_student_2', email='test_student2@example.com').exists())
-        self.assertFalse(User.objects.filter(email='test_student3@example.com').exists())
-        self.assertFalse(User.objects.filter(email='test_student4@example.com').exists())
+        self.assertEquals(len(data['created_and_enrolled']), 2)
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 2)
+        self.assertEquals(data['row_errors'][0]['response'], 'Row #2: An account with username test_student_1 exists '
+            'but the provided email test_student_3@example.com is different.')
+        self.assertEquals(data['row_errors'][1]['response'], 'Row #3: Invalid email address.')
+        self.assertTrue(User.objects.filter(username='test_student_1', email='test_student_1@example.com').exists())
+        self.assertTrue(User.objects.filter(username='test_student_2', email='test_student_2@example.com').exists())
+        self.assertFalse(User.objects.filter(email='test_student_3@example.com').exists())
+        self.assertFalse(User.objects.filter(email='test_student_4@example.com').exists())
 
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 2)
 
-    @patch.object(lms.djangoapps.instructor.views.api, 'generate_random_string',
-                  Mock(side_effect=['first', 'first', 'second']))
-    def test_generate_unique_password_no_reuse(self):
-        """
-        generate_unique_password should generate a unique password string that hasn't been generated before.
-        """
-        generated_password = ['first']
-        password = generate_unique_password(generated_password, 12)
-        self.assertNotEquals(password, 'first')
-
     @patch.dict(settings.FEATURES, {'ALLOW_AUTOMATED_SIGNUPS': False})
     def test_allow_automated_signups_flag_not_set(self):
-        csv_content = "test_student1@example.com,test_student_1,tester1,USA"
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                "group1,comments")
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.url, {'students_list': uploaded_file})
         self.assertEquals(response.status_code, 403)
@@ -1000,16 +1387,19 @@ class TestInstructorAPIBulkAccountCreationAndEnrollment(SharedModuleStoreTestCas
         # Login Audit Course instructor
         self.client.login(username=self.audit_course_instructor.username, password='test')
 
-        csv_content = "test_student_wl@example.com,test_student_wl,Test Student,USA"
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.audit_course_url, {'students_list': uploaded_file})
-
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertEquals(len(data['row_errors']), 0)
-        self.assertEquals(len(data['warnings']), 0)
+        self.assertEquals(len(data['created_and_enrolled']), 1)
+        self.assertEquals(data['created_and_enrolled'][0]['response'], 'Row #1: test_student_1 / test_student_1@example.com')
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
         self.assertEquals(len(data['general_errors']), 0)
-
+        self.assertEquals(len(data['row_errors']), 0)
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 1)
         self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
@@ -1031,16 +1421,20 @@ class TestInstructorAPIBulkAccountCreationAndEnrollment(SharedModuleStoreTestCas
         # Login Audit Course instructor
         self.client.login(username=self.white_label_course_instructor.username, password='test')
 
-        csv_content = "test_student_wl@example.com,test_student_wl,Test Student,USA"
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.white_label_course_url, {'students_list': uploaded_file})
 
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertEquals(len(data['row_errors']), 0)
-        self.assertEquals(len(data['warnings']), 0)
+        self.assertEquals(len(data['created_and_enrolled']), 1)
+        self.assertEquals(data['created_and_enrolled'][0]['response'], 'Row #1: test_student_1 / test_student_1@example.com')
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
         self.assertEquals(len(data['general_errors']), 0)
-
+        self.assertEquals(len(data['row_errors']), 0)
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 1)
         self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
@@ -1057,16 +1451,20 @@ class TestInstructorAPIBulkAccountCreationAndEnrollment(SharedModuleStoreTestCas
         # Login white label course instructor
         self.client.login(username=self.white_label_course_instructor.username, password='test')
 
-        csv_content = "test_student_wl@example.com,test_student_wl,Test Student,USA"
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
         uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
         response = self.client.post(self.white_label_course_url, {'students_list': uploaded_file})
 
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
-        self.assertEquals(len(data['row_errors']), 0)
-        self.assertEquals(len(data['warnings']), 0)
+        self.assertEquals(len(data['created_and_enrolled']), 1)
+        self.assertEquals(data['created_and_enrolled'][0]['response'], 'Row #1: test_student_1 / test_student_1@example.com')
+        self.assertEquals(len(data['only_enrolled']), 0)
+        self.assertEquals(len(data['untouched']), 0)
         self.assertEquals(len(data['general_errors']), 0)
-
+        self.assertEquals(len(data['row_errors']), 0)
         manual_enrollments = ManualEnrollmentAudit.objects.all()
         self.assertEqual(manual_enrollments.count(), 1)
         self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ENROLLED)
@@ -1075,6 +1473,306 @@ class TestInstructorAPIBulkAccountCreationAndEnrollment(SharedModuleStoreTestCas
         for enrollment in manual_enrollments:
             self.assertEqual(enrollment.enrollment.mode, CourseMode.DEFAULT_SHOPPINGCART_MODE_SLUG)
 
+@attr(shard=5)
+@patch.dict(settings.FEATURES, {'ALLOW_AUTOMATED_SIGNUPS': True})
+class TestInstructorAPIBulkAccountUpdate(SharedModuleStoreTestCase, LoginEnrollmentTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestInstructorAPIBulkAccountUpdate, cls).setUpClass()
+        cls.course = CourseFactory.create()
+        cls.url = reverse(
+            'students_batch_update', kwargs={'course_id': unicode(cls.course.id)}
+        )
+        cls.url_register_enroll = reverse(
+            'register_and_enroll_students', kwargs={'course_id': unicode(cls.course.id)}
+        )
+
+    def setUp(self):
+        super(TestInstructorAPIBulkAccountUpdate, self).setUp()
+
+        self.request = RequestFactory().request()
+        self.instructor = InstructorFactory(course_key=self.course.id)
+
+        self.client.login(username=self.instructor.username, password='test')
+
+    def test_old_username_missing_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url_register_enroll, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username='test_student_1').exists())
+
+        csv_content = (",test_student_1@example.com,"
+                        "New_First,New_Last,New_test_student_1,New_test_student_1@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], "Row #1: An old username is required.")
+        self.assertEquals(len(data['updated']), 0)
+
+    def test_old_email_missing_in_csv(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url_register_enroll, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username='test_student_1').exists())
+
+        csv_content = ("test_student_1,,"
+                        "New_First,New_Last,New_test_student_1,New_test_student_1@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], "Row #1: An old email address is required.")
+        self.assertEquals(len(data['updated']), 0)
+
+    def test_new_email_already_exist(self):
+        csv_content = ("First1,Last1,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First2,Last2,test_student_2,test_student_2@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url_register_enroll, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username='test_student_1').exists())
+        self.assertTrue(User.objects.filter(username='test_student_2').exists())
+
+        csv_content = ("test_student_1,test_student_1@example.com,"
+                        "New_First,New_Last,New_test_student_1,test_student_2@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], "Row #1: An other account with email test_student_2@example.com already exists.")
+        self.assertEquals(len(data['updated']), 0)
+
+    def test_new_username_already_exist(self):
+        csv_content = ("First1,Last1,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "First2,Last2,test_student_2,test_student_2@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url_register_enroll, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username='test_student_1').exists())
+        self.assertTrue(User.objects.filter(username='test_student_2').exists())
+
+        csv_content = ("test_student_1,test_student_1@example.com,"
+                        "New_First,New_Last,test_student_2,New_test_student_1@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], "Row #1: An other account with username test_student_2 already exists.")
+        self.assertEquals(len(data['updated']), 0)
+
+    def test_old_email_or_username_retired(self):
+        retired_email = 'retired_student@example.com'
+        retired_username = 'retired_student'
+
+        # prep 2 retired users
+        user1 = UserFactory.create(username='old_test_student', email=retired_email)
+        user1.email = get_retired_email_by_email(user1.email)
+        user1.username = get_retired_username_by_username(user1.username)
+        user1.is_active = False
+        user1.save()
+        user2 = UserFactory.create(username=retired_username, email='old_test_student@example.com')
+        user2.email = get_retired_email_by_email(user2.email)
+        user2.username = get_retired_username_by_username(user2.username)
+        user2.is_active = False
+        user2.save()
+
+        csv_content = ("test_student_1,%s,"
+                        "First,Last,test_student_1,test_student_1@example,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments\n"
+                        "%s,test_student_1@example.com,"
+                        "First,Last,test_student_1,test_student_1@example,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments" % (retired_email, retired_username))
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 2)
+        self.assertEquals(data['row_errors'][0]['response'], "Row #1: Invalid old email address.")
+        self.assertEquals(data['row_errors'][1]['response'], "Row #2: Invalid old username.")
+        self.assertEquals(len(data['updated']), 0)
+
+    def test_new_email_retired(self):
+        # This email address is re-used to create a retired account and another account.
+        retired_email = 'retired_student@example.com'
+
+        # prep a retired user
+        user = UserFactory.create(username='old_test_student', email=retired_email)
+        user.email = get_retired_email_by_email(user.email)
+        user.username = get_retired_username_by_username(user.username)
+        user.is_active = False
+        user.save()
+
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url_register_enroll, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username='test_student_1').exists())
+
+        csv_content = ("test_student_1,test_student_1@example.com,"
+                        "New_First,New_Last,New_test_student_1,%s,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments" % retired_email)
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], "Row #1: Invalid new email address.")
+        self.assertEquals(len(data['updated']), 0)
+
+    def test_new_username_retired(self):
+        # This username is re-used to create a retired account and another account.
+        retired_username = 'retired_student'
+
+        # prep a retired user
+        user = UserFactory.create(username=retired_username, email='retired_student@example.com')
+        user.email = get_retired_email_by_email(user.email)
+        user.username = get_retired_username_by_username(user.username)
+        user.is_active = False
+        user.save()
+
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url_register_enroll, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username='test_student_1').exists())
+
+        csv_content = ("test_student_1,test_student_1@example.com,"
+                        "New_First,New_Last,%s,New_test_student_1@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments" % retired_username)
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 1)
+        self.assertEquals(data['row_errors'][0]['response'], "Row #1: Invalid new username.")
+        self.assertEquals(len(data['updated']), 0)
+
+    def test_happy_update(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                        "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                        "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url_register_enroll, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username='test_student_1').exists())
+        old_user = User.objects.get(username='test_student_1')
+        old_id = old_user.id
+        old_password = old_user.password
+
+        csv_content = ("test_student_1,test_student_1@example.com,New_First,New_Last,New_test_student_1,New_test_student_1@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 0)
+        self.assertEquals(len(data['updated']), 1)
+        self.assertEquals(data['updated'][0]['response'], "Row #1: user test_student_1 (now: New_test_student_1) successfully updated.")
+
+        self.assertFalse(User.objects.filter(email='test_student_1@example.com').exists())
+        self.assertFalse(User.objects.filter(username='test_student_1').exists())
+        self.assertTrue(User.objects.filter(email='New_test_student_1@example.com').exists())
+        self.assertTrue(User.objects.filter(username='New_test_student_1').exists())
+        user = User.objects.get(email='New_test_student_1@example.com')
+        self.assertEquals(user.id, old_id)
+        self.assertEquals(user.first_name, "New_First")
+        self.assertEquals(user.last_name, "New_Last")
+        self.assertEquals(user.profile.name, "New_Last New_First")
+        self.assertEquals(user.profile.gender, "f")
+        self.assertEquals(user.profile.year_of_birth, 1978)
+        self.assertEquals(user.profile.language, "en")
+        self.assertEquals("%s" % user.profile.country, "US")
+        self.assertEquals(user.profile.city, "New_Paris")
+        self.assertEquals(user.profile.location, "New_Site")
+        self.assertEquals(user.profile.lt_company, "New_Company")
+        self.assertEquals(user.profile.lt_employee_id, "98765")
+        self.assertEquals("%s" % user.profile.lt_hire_date, "2019-11-27")
+        self.assertEquals(user.profile.lt_job_code, "New_Job")
+        self.assertEquals(user.profile.lt_department, "New_Department")
+        self.assertEquals(user.profile.lt_supervisor, "New_Supervisor")
+        self.assertEquals(user.profile.lt_learning_group, "New_group")
+        self.assertEquals(user.profile.lt_comments, "New_comments")
+
+        self.assertNotEquals(user.password, old_password)
+
+    def test_old_username_or_email_not_found(self):
+        csv_content = ("First,Last,test_student_1,test_student_1@example.com,password,o,1988,"
+                "fr,FR,Paris,Site1,Company,123456,2018-11-27,Job,Department,Supervisor,"
+                "group1,comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url_register_enroll, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(User.objects.filter(username='test_student_1').exists())
+
+        csv_content = ("test_student_0,test_student_1@example.com,"
+                        "New_First,New_Last,New_test_student_1,New_test_student_1@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments\n"
+                        "test_student_1,test_student_0@example.com,"
+                        "New_First,New_Last,New_test_student_1,New_test_student_1@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments\n"
+                        "test_student_0,test_student_0@example.com,"
+                        "New_First,New_Last,New_test_student_1,New_test_student_1@example.com,New_password,f,1978,"
+                        "en,US,New_Paris,New_Site,New_Company,98765,2019-11-27,New_Job,New_Department,New_Supervisor,"
+                        "New_group,New_comments")
+        uploaded_file = SimpleUploadedFile("temp.csv", csv_content)
+        response = self.client.post(self.url, {'students_list': uploaded_file})
+        self.assertEqual(response.status_code, 200)
+        data = json.loads(response.content)
+        self.assertEquals(len(data['general_errors']), 0)
+        self.assertEquals(len(data['row_errors']), 3)
+        self.assertEquals(data['row_errors'][0]['response'], "Row #1: An account with email test_student_1@example.com exists "\
+                                    "but the provided username test_student_0 is different.")
+        self.assertEquals(data['row_errors'][1]['response'], "Row #2: An account with username test_student_1 exits but "\
+                                    "the provided email test_student_0@example.com is different.")
+        self.assertEquals(data['row_errors'][2]['response'], "Row #3: No account was found with the provided username and email.")
+        self.assertEquals(len(data['updated']), 0)
 
 @attr(shard=5)
 @ddt.ddt

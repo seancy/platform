@@ -9,6 +9,9 @@ from lms.djangoapps.instructor.views import api, gradebook_api
 urlpatterns = [
     url(r'^students_update_enrollment$', api.students_update_enrollment, name='students_update_enrollment'),
     url(r'^register_and_enroll_students$', api.register_and_enroll_students, name='register_and_enroll_students'),
+    url(r'^register_and_enroll_students_precheck$', api.register_and_enroll_students_precheck,
+        name='register_and_enroll_students_precheck'),
+    url(r'^students_batch_update$', api.batch_update_student, name='students_batch_update'),
     url(r'^list_course_role_members$', api.list_course_role_members, name='list_course_role_members'),
     url(r'^modify_access$', api.modify_access, name='modify_access'),
     url(r'^bulk_beta_modify_access$', api.bulk_beta_modify_access, name='bulk_beta_modify_access'),

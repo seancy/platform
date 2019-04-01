@@ -190,6 +190,14 @@ class RegistrationFormFactory(object):
         "terms_of_service",
         "profession",
         "specialty",
+        "lt_phone_number",
+        "lt_gdpr",
+        "lt_company",
+        "lt_job_code",
+        "lt_job_description",
+        "lt_department",
+        "lt_learning_group",
+        "lt_comments",
     ]
 
     def _is_field_visible(self, field_name):
@@ -901,6 +909,66 @@ class RegistrationFormFactory(object):
             },
         )
 
+    def _add_lt_phone_number_field(self, form_desc, required=False):
+        form_desc.add_field(
+            "lt_phone_number",
+            label=_(u"Phone number"),
+            required=required
+        )
+
+    def _add_lt_gdpr_field(self, form_desc, required=False):
+        gdpr_label = _(u"I agree to be contacted by email or phone as part of a recruitment process.")
+        form_desc.add_field(
+            "lt_gdpr",
+            label=gdpr_label,
+            field_type="checkbox",
+            default=False,
+            required=required
+        )
+
+    def _add_lt_company_field(self, form_desc, required=False):
+        form_desc.add_field(
+            "lt_company",
+            label=_(u"Company"),
+            required=required
+        )
+
+    def _add_lt_job_code_field(self, form_desc, required=False):
+        form_desc.add_field(
+            "lt_job_code",
+            label=_(u"Job Code"),
+            required=required
+        )
+
+    def _add_lt_job_description_field(self, form_desc, required=False):
+        form_desc.add_field(
+            "lt_job_description",
+            label=_(u"Job Description"),
+            required=required
+        )
+
+    def _add_lt_department_field(self, form_desc, required=False):
+        form_desc.add_field(
+            "lt_department",
+            label=_(u"Department"),
+            required=required
+        )
+
+    def _add_lt_learning_group_field(self, form_desc, required=False):
+        form_desc.add_field(
+            "lt_learning_group",
+            label=_(u"Learning Group"),
+            required=required
+        )
+
+    def _add_lt_comments_field(self, form_desc, required=False):
+        form_desc.add_field(
+            "lt_comments",
+            label=_(u"Comments"),
+            required=required
+        )
+
+
     def _apply_third_party_auth_overrides(self, request, form_desc):
         """Modify the registration form if the user has authenticated with a third-party provider.
         If a user has successfully authenticated with a third-party provider,
@@ -971,3 +1039,5 @@ class RegistrationFormFactory(object):
                         default=current_provider.name if current_provider.name else "Third Party",
                         required=False,
                     )
+
+
