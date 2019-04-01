@@ -9,10 +9,7 @@ services:
     image: mongo:3.2.16
   edxapp${BUILD_TAG}:
     command: >
-      bash -c "rm -rf ~/.pip
-      && mkdir -p ~/.vnc
-      && x11vnc -storepasswd password ~/.vnc/passwd
-      && /opt/bin/entry_point.sh"
+      /bin/bash
     container_name: "edxapp${BUILD_TAG}"
     depends_on:
       - "mongo${BUILD_TAG}"
