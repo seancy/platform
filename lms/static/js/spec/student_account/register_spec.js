@@ -488,14 +488,18 @@
                     expect(view.$submitButton).toHaveAttr('disabled');
                 });
 
-                it('hides optional fields by default', function() {
-                    createRegisterView(this);
-                    expect(view.$('.optional-fields')).toHaveClass('hidden');
-                });
+                // it('hides optional fields by default', function() {
+                //     createRegisterView(this);
+                //     expect(view.$('.optional-fields')).toHaveClass('hidden');
+                // });
 
-                it('displays optional fields when checkbox is selected', function() {
+                // it('displays optional fields when checkbox is selected', function() {
+                //     createRegisterView(this);
+                //     $('#toggle_optional_fields').click();
+                //     expect(view.$('.optional-fields')).not.toHaveClass('hidden');
+                // });
+                it('displays optional fields by default', function() {
                     createRegisterView(this);
-                    $('#toggle_optional_fields').click();
                     expect(view.$('.optional-fields')).not.toHaveClass('hidden');
                 });
 

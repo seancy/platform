@@ -303,13 +303,13 @@ class TestIndex(SiteMixin, TestCase):
 
     def test_index_does_not_redirect_without_site_override(self):
         """ Test index view does not redirect if MKTG_URLS['ROOT'] is not set """
-        response = self.client.get(reverse("root"))
+        response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
 
     def test_index_redirects_to_marketing_site_with_site_override(self):
         """ Test index view redirects if MKTG_URLS['ROOT'] is set in SiteConfiguration """
         self.use_site(self.site_other)
-        response = self.client.get(reverse("root"))
+        response = self.client.get(reverse('branding_index'))
         self.assertRedirects(
             response,
             self.site_configuration_other.values["MKTG_URLS"]["ROOT"],

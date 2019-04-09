@@ -77,27 +77,27 @@ class I18nTestCase(BaseI18nTestCase):
     """
     def test_default_is_en(self):
         self.release_languages('fr')
-        response = self.client.get('/')
+        response = self.client.get(reverse('branding_index'))
         self.assert_tag_has_attr(response.content, "html", "lang", "en")
         self.assertEqual(response['Content-Language'], 'en')
         self.assert_tag_has_attr(response.content, "body", "class", "lang_en")
 
     def test_esperanto(self):
         self.release_languages('fr, eo')
-        response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='eo')
+        response = self.client.get(reverse('branding_index'), HTTP_ACCEPT_LANGUAGE='eo')
         self.assert_tag_has_attr(response.content, "html", "lang", "eo")
         self.assertEqual(response['Content-Language'], 'eo')
         self.assert_tag_has_attr(response.content, "body", "class", "lang_eo")
 
     def test_switching_languages_bidi(self):
         self.release_languages('ar, eo')
-        response = self.client.get('/')
+        response = self.client.get(reverse('branding_index'))
         self.assert_tag_has_attr(response.content, "html", "lang", "en")
         self.assertEqual(response['Content-Language'], 'en')
         self.assert_tag_has_attr(response.content, "body", "class", "lang_en")
         self.assert_tag_has_attr(response.content, "body", "class", "ltr")
 
-        response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='ar')
+        response = self.client.get(reverse('branding_index'), HTTP_ACCEPT_LANGUAGE='ar')
         self.assert_tag_has_attr(response.content, "html", "lang", "ar")
         self.assertEqual(response['Content-Language'], 'ar')
         self.assert_tag_has_attr(response.content, "body", "class", "lang_ar")
@@ -112,7 +112,7 @@ class I18nRegressionTests(BaseI18nTestCase):
     def test_es419_acceptance(self):
         # Regression test; LOC-72, and an issue with Django
         self.release_languages('es-419')
-        response = self.client.get('/', HTTP_ACCEPT_LANGUAGE='es-419')
+        response = self.client.get(reverse('branding_index'), HTTP_ACCEPT_LANGUAGE='es-419')
         self.assert_tag_has_attr(response.content, "html", "lang", "es-419")
 
     def test_unreleased_lang_resolution(self):

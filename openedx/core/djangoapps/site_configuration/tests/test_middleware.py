@@ -9,7 +9,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.test.client import Client
 from django.test.utils import override_settings
-
+from django.urls import reverse
 from student.tests.factories import UserFactory
 from microsite_configuration.microsite import (
     get_backend,
@@ -63,7 +63,7 @@ class SessionCookieDomainMicrositeOverrideTests(DatabaseMicrositeTestCase):
         """
         with patch('microsite_configuration.microsite.BACKEND',
                    get_backend(site_backend, BaseMicrositeBackend)):
-            response = self.client.get('/')
+            response = self.client.get(reverse('branding_index'))
             self.assertNotIn('test_site.localhost', str(response.cookies['sessionid']))
             self.assertNotIn('Domain', str(response.cookies['sessionid']))
 
@@ -75,7 +75,7 @@ class SessionCookieDomainMicrositeOverrideTests(DatabaseMicrositeTestCase):
         """
         with patch('microsite_configuration.microsite.BACKEND',
                    get_backend(site_backend, BaseMicrositeBackend)):
-            response = self.client.get('/', HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
+            response = self.client.get(reverse('branding_index'), HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
             self.assertIn('test_site.localhost', str(response.cookies['sessionid']))
 
     @ddt.data(*MICROSITE_BACKENDS)
@@ -88,7 +88,7 @@ class SessionCookieDomainMicrositeOverrideTests(DatabaseMicrositeTestCase):
             mock_get_value.side_effect = side_effect_for_get_value('SESSION_COOKIE_DOMAIN', None)
             with patch('microsite_configuration.microsite.BACKEND',
                        get_backend(site_backend, BaseMicrositeBackend)):
-                response = self.client.get('/', HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
+                response = self.client.get(reverse('branding_index'), HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
                 self.assertNotIn('test_site.localhost', str(response.cookies['sessionid']))
                 self.assertNotIn('Domain', str(response.cookies['sessionid']))
 
@@ -121,9 +121,10 @@ class SessionCookieDomainSiteConfigurationOverrideTests(TestCase):
         self.client = Client()
         self.client.login(username=self.user.username, password="password")
 
+    @skip_unless_lms
     def test_session_cookie_domain_with_site_configuration_override(self):
         """
         Makes sure that the cookie being set is for the overridden domain
         """
-        response = self.client.get('/', HTTP_HOST=self.site.domain)
+        response = self.client.get(reverse('branding_index'), HTTP_HOST=self.site.domain)
         self.assertIn(self.site.domain, str(response.cookies['sessionid']))

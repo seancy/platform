@@ -203,10 +203,13 @@
                 },
 
                 passwordEmailSent: function() {
-                    var $loginAnchorElement = $('#login-anchor');
-                    this.element.hide($(this.el).find('#password-reset-anchor'));
-                    this.element.show($loginAnchorElement);
-                    this.element.scrollTop($loginAnchorElement);
+                    let $el = $(this.el);
+                    let $passwordResetForm = $el.find('#password-reset-anchor .form-wrapper');
+                    let $loginForm = $el.find('#login-anchor .form-wrapper');
+
+                    this.element.hide($passwordResetForm)
+                    this.element.show($loginForm)
+                    this.element.scrollTop($loginForm);
                 },
 
                 resetPassword: function() {
@@ -214,20 +217,18 @@
                         category: 'user-engagement'
                     });
 
-                    this.element.hide($(this.el).find('#login-anchor'));
-                    this.loadForm('reset');
-                    this.element.scrollTop($('#password-reset-anchor'));
+                    this._toggleForm('reset', false);
                 },
 
-                toggleForm: function(e) {
-                    var type = $(e.currentTarget).data('type'),
-                        $form = $('#' + type + '-form'),
-                        scrollX = window.scrollX,
+                _toggleForm: function (type, isChangeRoute = true) {
+                    let $form = $('#' + type + '-form');
+                    if (type == 'reset') {
+                        $form = $('#password-reset-form');
+                    }
+                    var scrollX = window.scrollX,
                         scrollY = window.scrollY,
                         queryParams = url('?'),
                         queryStr = queryParams.length > 0 ? '?' + queryParams : '';
-
-                    e.preventDefault();
 
                     window.analytics.track('edx.bi.' + type + '_form.toggled', {
                         category: 'user-engagement'
@@ -242,9 +243,10 @@
                     this.element.hide($(this.el).find('.submission-success'));
                     this.element.hide($(this.el).find('.form-wrapper'));
                     this.element.show($form);
+                    $form.find('article').animate({scrollTop: 0});
 
                 // Update url without reloading page
-                    if (type != 'institution_login') {
+                    if (type != 'institution_login' && isChangeRoute) {
                         History.pushState(null, document.title, '/' + type + queryStr);
                     }
                     analytics.page('login_and_registration', type);
@@ -256,14 +258,20 @@
                     window.scrollTo(scrollX, scrollY);
                 },
 
-            /**
-             * Once authentication has completed successfully:
-             *
-             * If we're in a third party auth pipeline, we must complete the pipeline.
-             * Otherwise, redirect to the specified next step.
-             *
-             */
-                authComplete: function() {
+                toggleForm: function (e) {
+                    let type = $(e.currentTarget).data('type');
+                    e.preventDefault();
+                    this._toggleForm(type);
+                },
+
+                /**
+                 * Once authentication has completed successfully:
+                 *
+                 * If we're in a third party auth pipeline, we must complete the pipeline.
+                 * Otherwise, redirect to the specified next step.
+                 *
+                 */
+                authComplete: function () {
                     if (this.thirdPartyAuth && this.thirdPartyAuth.finishAuthUrl) {
                         this.redirect(this.thirdPartyAuth.finishAuthUrl);
                     // Note: the third party auth URL likely contains another redirect URL embedded inside

@@ -60,17 +60,17 @@ class AnonymousIndexPageTest(ModuleStoreTestCase):
         test as it solves the issue in a different way
         """
         self.client.logout()
-        response = self.client.get(reverse('root'))
+        response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FEATURES=FEATURES_WITH_STARTDATE)
     def test_anon_user_with_startdate_index(self):
-        response = self.client.get('/')
+        response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FEATURES=FEATURES_WO_STARTDATE)
     def test_anon_user_no_startdate_index(self):
-        response = self.client.get('/')
+        response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
 
     def test_allow_x_frame_options(self):
@@ -79,7 +79,7 @@ class AnonymousIndexPageTest(ModuleStoreTestCase):
         """
 
         # check to see that the default setting is to ALLOW iframing
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEquals(resp['X-Frame-Options'], 'ALLOW')
 
     @override_settings(X_FRAME_OPTIONS='DENY')
@@ -89,7 +89,7 @@ class AnonymousIndexPageTest(ModuleStoreTestCase):
         """
 
         # check to see that the override value is honored
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEquals(resp['X-Frame-Options'], 'DENY')
 
     def test_edge_redirect_to_login(self):
@@ -97,7 +97,7 @@ class AnonymousIndexPageTest(ModuleStoreTestCase):
         Test edge homepage redirect to lms login.
         """
 
-        request = self.factory.get('/')
+        request = self.factory.get(reverse('branding_index'))
         request.user = AnonymousUser()
 
         # HTTP Host changed to edge.
@@ -149,7 +149,7 @@ class PreRequisiteCourseCatalog(ModuleStoreTestCase, LoginEnrollmentTestCase, Mi
         )
         set_prerequisite_courses(course.id, pre_requisite_courses)
 
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEqual(resp.status_code, 200)
 
         # make sure both courses are visible in the catalog
@@ -202,7 +202,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         Asserts that the Course Discovery UI elements follow the
         feature flag settings
         """
-        response = self.client.get('/')
+        response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
         # assert that the course discovery UI is not present
         self.assertNotIn('Search for a course', response.content)
@@ -226,7 +226,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         Asserts that the Course Discovery UI elements follow the
         feature flag settings
         """
-        response = self.client.get('/')
+        response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
         # assert that the course discovery UI is not present
         self.assertIn('Search for a course', response.content)
@@ -240,12 +240,11 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         self.assertIn('<aside aria-label="Refine Your Search" class="search-facets phone-menu">', response.content)
         self.assertIn('<div class="courses"', response.content)
 
-    @pytest.mark.skip('TODO invalid test from edx')
     @patch('student.views.management.render_to_response', RENDER_MOCK)
     @patch('courseware.views.views.render_to_response', RENDER_MOCK)
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': False})
     def test_course_cards_sorted_by_default_sorting(self):
-        response = self.client.get('/')
+        response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
         ((template, context), _) = RENDER_MOCK.call_args  # pylint: disable=unpacking-non-sequence
         self.assertEqual(template, 'index.html')
@@ -266,13 +265,12 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         self.assertEqual(context['courses'][1].id, self.starting_later.id)
         self.assertEqual(context['courses'][2].id, self.course_with_default_start_date.id)
 
-    @pytest.mark.skip('TODO invalid test from edx')
     @patch('student.views.management.render_to_response', RENDER_MOCK)
     @patch('courseware.views.views.render_to_response', RENDER_MOCK)
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_SORTING_BY_START_DATE': False})
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': False})
     def test_course_cards_sorted_by_start_date_disabled(self):
-        response = self.client.get('/')
+        response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
         ((template, context), _) = RENDER_MOCK.call_args  # pylint: disable=unpacking-non-sequence
         self.assertEqual(template, 'index.html')
@@ -301,7 +299,7 @@ class IndexPageProgramsTests(SiteMixin, ModuleStoreTestCase):
     """
     def test_get_programs_with_type_called(self):
         views = [
-            (reverse('root'), 'student.views.get_programs_with_type'),
+            (reverse('branding_index'), 'student.views.get_programs_with_type'),
             (reverse('courses'), 'courseware.views.views.get_programs_with_type'),
         ]
         for url, dotted_path in views:

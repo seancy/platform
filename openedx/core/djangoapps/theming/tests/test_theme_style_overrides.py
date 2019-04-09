@@ -36,7 +36,7 @@ class TestComprehensiveThemeLMS(TestCase):
         """
         Test that theme footer is used instead of default footer.
         """
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEqual(resp.status_code, 200)
         # This string comes from header.html of test-theme
         self.assertContains(resp, "This is a footer for test-theme.")
@@ -235,7 +235,7 @@ class TestStanfordTheme(TestCase):
         """
         Test stanford theme footer.
         """
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEqual(resp.status_code, 200)
         # This string comes from header.html of test-theme
         self.assertContains(resp, "footer overrides for stanford theme go here")
@@ -261,7 +261,7 @@ class TestStanfordTheme(TestCase):
         """
         Test custom theme overrides for index page.
         """
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEqual(resp.status_code, 200)
         # This string comes from header.html of test-theme
         self.assertContains(resp, "Free courses from <strong>Stanford</strong>")

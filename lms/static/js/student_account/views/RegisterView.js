@@ -114,7 +114,7 @@
                             requiredFields.push(field);
                         } else {
                             if (field.type !== 'hidden') {
-                                // For the purporse of displaying the optional field toggle,
+                                // For the purpose of displaying the optional field toggle,
                                 // the form should be considered to have optional fields
                                 // only if all of the optional fields are being rendering as
                                 // input elements that are visible on the page.
@@ -236,24 +236,26 @@
                         };
 
                     FormView.prototype.postRender.call(this);
-                    $('.optional-fields').addClass('hidden');
-                    $('#toggle_optional_fields').change(function() {
-                        window.analytics.track('edx.bi.user.register.optional_fields_selected');
-                        $('.optional-fields').toggleClass('hidden');
-                    });
+                    // $('.optional-fields').addClass('hidden');
+                    // $('#toggle_optional_fields').change(function() {
+                    //     window.analytics.track('edx.bi.user.register.optional_fields_selected');
+                    //     $('.optional-fields').toggleClass('hidden');
+                    // });
 
                     // We are swapping the order of these elements here because the honor code agreement
                     // is a required checkbox field and the optional fields toggle is a cosmetic
                     // improvement so that we don't have to show all the optional fields.
                     // xss-lint: disable=javascript-jquery-insert-into-target
-                    $('.checkbox-optional_fields_toggle').insertAfter('.required-fields');
-                    if (!this.hasOptionalFields) {
-                        $('.checkbox-optional_fields_toggle').addClass('hidden');
-                    }
+                    // $('.checkbox-optional_fields_toggle').insertAfter('.required-fields');
+                    // if (!this.hasOptionalFields) {
+                    //     $('.checkbox-optional_fields_toggle').addClass('hidden');
+                    // }
                     // xss-lint: disable=javascript-jquery-insert-into-target
                     $('.checkbox-honor_code').insertAfter('.optional-fields');
                     // xss-lint: disable=javascript-jquery-insert-into-target
                     $('.checkbox-terms_of_service').insertAfter('.optional-fields');
+                    // xss-lint: disable=javascript-jquery-insert-into-target
+                    $('.plaintext-honor_code').insertAfter('.optional-fields');
 
                     // Clicking on links inside a label should open that link.
                     $('label a').click(function(ev) {

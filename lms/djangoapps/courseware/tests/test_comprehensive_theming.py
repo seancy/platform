@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.contrib import staticfiles
 from django.test import TestCase
+from django.urls import reverse
 from path import Path
 
 import edxmako
@@ -27,7 +28,7 @@ class TestComprehensiveTheming(TestCase):
         `red-theme` has header.html and footer.html so this test
         asserts presence of the content from header.html and footer.html
         """
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEqual(resp.status_code, 200)
         # This string comes from footer.html
         self.assertContains(resp, "super-ugly")
@@ -53,7 +54,7 @@ class TestComprehensiveTheming(TestCase):
         @with_comprehensive_theme(tmp_theme)
         def do_the_test(self):
             """A function to do the work so we can use the decorator."""
-            resp = self.client.get('/')
+            resp = self.client.get(reverse('branding_index'))
             self.assertEqual(resp.status_code, 200)
             self.assertContains(resp, "TEMPORARY THEME")
 

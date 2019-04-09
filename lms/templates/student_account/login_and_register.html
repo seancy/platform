@@ -25,7 +25,6 @@
             // traces though.
             newrelic.addPageAction('xfinished');
         }
-        $('#main .account-creation').click($.proxy(accessView.toggleForm, accessView));
     </%static:require_module>
     % if configuration_helpers.get_value('DISPLAY_TOS_IN_MODAL_ON_REGISTRATION_PAGE', False):
     <script type="text/javascript" src="${static.url('js/student_account/tos_modal.js')}"></script>
@@ -44,13 +43,6 @@
         ##${reverse('signup')}
         ##.format(studio_name=settings.STUDIO_SHORT_NAME)
 
-        <aside>
-          <figure>
-            <img src='${static.url("images/login-illustration.jpg")}' />
-            <figcaption><span class="text">First time here</span><a href="#login" data-type="register" class="account-creation">Create an Account.</a>
-            ##<a href="" class="action action-signin">${_("Don't have a {studio_name} Account? Sign up!")}</a></figcaption>
-          </figure>
-        </aside>
         <div id="content-container" class="login-register-content">
             % if enable_enterprise_sidebar:
                 <%include file="enterprise_sidebar.html" />
@@ -62,10 +54,6 @@
                     border_class = ''
                 %>
             % endif
-            <figure class="welcome-text">
-              <a class="brand-link" href="/"><img src="/static/images/studio-logo.png"></a>
-              <figcaption>Welcome to your training platform, log in to find your training space!</figcaption>
-            </figure>
             <div id="login-and-registration-container" class="login-register ${border_class}"></div>
         </div>
     </main>

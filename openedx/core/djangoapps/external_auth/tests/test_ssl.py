@@ -26,6 +26,9 @@ from student.tests.factories import UserFactory
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
 
+from django.test.client import RedirectCycleError
+import pytest
+
 FEATURES_WITH_SSL_AUTH = settings.FEATURES.copy()
 FEATURES_WITH_SSL_AUTH['AUTH_USE_CERTIFICATES'] = True
 FEATURES_WITH_SSL_AUTH_IMMEDIATE_SIGNUP = FEATURES_WITH_SSL_AUTH.copy()
@@ -180,8 +183,14 @@ class SSLClientTest(ModuleStoreTestCase):
         self.assertIn(reverse('signin_user'), response['location'])
 
         response = self.client.get(
-            reverse('dashboard'), follow=True,
-            SSL_CLIENT_S_DN=self.AUTH_DN.format(self.USER_NAME, self.USER_EMAIL))
+                reverse('dashboard'), follow=True,
+                SSL_CLIENT_S_DN=self.AUTH_DN.format(self.USER_NAME, self.USER_EMAIL))
+        # try:
+        #     response = self.client.get(
+        #         reverse('dashboard'), follow=True,
+        #         SSL_CLIENT_S_DN=self.AUTH_DN.format(self.USER_NAME, self.USER_EMAIL))
+        # except RedirectCycleError, ex:
+        #     print ex.last_response.redirect_chain
         self.assertEquals(('/dashboard', 302),
                           response.redirect_chain[-1])
         self.assertIn(SESSION_KEY, self.client.session)

@@ -3,6 +3,7 @@
 """
 from django.conf import settings
 from django.test import TestCase
+from django.urls import reverse
 from django.contrib.sites.models import Site
 
 from openedx.core.djangoapps.theming.models import SiteTheme
@@ -33,7 +34,7 @@ class TestComprehensiveThemeLMS(TestCase):
 
         # Test that requesting on a host, where both theme and microsite is applied
         # theme gets priority over microsite.
-        resp = self.client.get('/', HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
+        resp = self.client.get(reverse('branding_index'), HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
         self.assertEqual(resp.status_code, 200)
         # This string comes from footer.html of test-theme
         self.assertContains(resp, "This is a footer for test-theme.")
@@ -44,7 +45,7 @@ class TestComprehensiveThemeLMS(TestCase):
         """
         # Test that if theming is enabled but there is no SiteTheme for the current site, then
         # DEFAULT_SITE_THEME does not interfere with microsites
-        resp = self.client.get('/', HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
+        resp = self.client.get(reverse('branding_index'), HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
         self.assertEqual(resp.status_code, 200)
         # This string comes from footer.html of test_site, which is a microsite
         self.assertContains(resp, "This is a Test Site footer")

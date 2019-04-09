@@ -4,6 +4,7 @@ Test helpers for Comprehensive Theming.
 from mock import patch, Mock
 
 from django.test import TestCase, override_settings
+from django.urls import reverse
 from django.conf import settings
 
 from openedx.core.djangoapps.theming.tests.test_util import with_comprehensive_theme

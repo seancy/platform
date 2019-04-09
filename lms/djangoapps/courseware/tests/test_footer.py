@@ -8,6 +8,7 @@ import unittest
 from django.conf import settings
 from django.test import TestCase
 from django.test.utils import override_settings
+from django.urls import reverse
 from nose.plugins.attrib import attr
 
 from openedx.core.djangoapps.theming.tests.test_util import with_comprehensive_theme
@@ -47,7 +48,7 @@ class TestFooter(TestCase):
         """
         Verify that the homepage, when accessed at edx.org, has the edX footer
         """
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, 'footer-edx-v3')
 
@@ -56,7 +57,7 @@ class TestFooter(TestCase):
         Verify that the homepage, when accessed at something other than
         edx.org, has the Open edX footer
         """
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, 'footer-openedx')
 
@@ -66,7 +67,7 @@ class TestFooter(TestCase):
         SOCIAL_MEDIA_FOOTER_URLS=SOCIAL_MEDIA_URLS
     )
     def test_edx_footer_social_links(self):
-        resp = self.client.get('/')
+        resp = self.client.get(reverse('branding_index'))
         for name, url in self.SOCIAL_MEDIA_URLS.iteritems():
             self.assertContains(resp, url)
             self.assertContains(resp, settings.SOCIAL_MEDIA_FOOTER_DISPLAY[name]['title'])

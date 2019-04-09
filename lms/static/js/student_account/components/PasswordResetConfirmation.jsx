@@ -7,6 +7,7 @@ import React from 'react';
 import { Button, StatusAlert } from '@edx/paragon/static';
 
 import PasswordResetInput from './PasswordResetInput';
+import Aside from './Aside';
 
 // NOTE: Use static paragon with this because some internal classes (StatusAlert at least)
 // conflict with some standard LMS ones ('alert' at least). This means that you need to do
@@ -74,7 +75,9 @@ class PasswordResetConfirmation extends React.Component {
   render() {
     return (
       <section id="password-reset-confirm-anchor" className="form-type">
-        <div id="password-reset-confirm-form" className="form-wrapper" aria-live="polite">
+        <Aside/>
+
+        <article id="password-reset-confirm-form" className="form-wrapper" aria-live="polite">
           <StatusAlert
             alertType="danger"
             dismissible={false}
@@ -96,7 +99,7 @@ class PasswordResetConfirmation extends React.Component {
             <PasswordResetInput
               name="new_password1"
               describedBy="new_password_help_text"
-              label={gettext('New Password')}
+              label={gettext('New Password *')}
               onBlur={this.onBlurPassword1}
               isValid={this.state.isValid}
               validationMessage={this.state.validationMessage}
@@ -105,7 +108,7 @@ class PasswordResetConfirmation extends React.Component {
             <PasswordResetInput
               name="new_password2"
               describedBy="new_password_help_text"
-              label={gettext('Confirm Password')}
+              label={gettext('Confirm Password *')}
               onBlur={this.onBlurPassword2}
               isValid={!this.state.showMatchError}
               validationMessage={gettext('Passwords do not match.')}
@@ -124,7 +127,7 @@ class PasswordResetConfirmation extends React.Component {
               label={gettext('Reset My Password')}
             />
           </form>
-        </div>
+        </article>
       </section>
     );
   }

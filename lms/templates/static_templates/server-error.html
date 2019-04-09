@@ -6,8 +6,17 @@ from openedx.core.djangolib.markup import HTML, Text
 %>
 <%inherit file="../main.html" />
 
-<main id="main" aria-label="Content" tabindex="-1">
-    <section class="outside-app">
+<%block name="header"></%block>
+<%block name="footer"></%block>
+
+<main id="main" aria-label="Content" tabindex="-1" class="error-page">
+    <aside>
+        <figure class="instruction-text">
+        <img src='${static.url("images/500-illustration.jpg")}' />
+        </figure>
+        <a class="brand-link" href="/"><img src="/static/images/studio-logo.png"></a>
+    </aside>
+    <article>
         <h1>
             <%block name="pageheader">
                 % if page_header:
@@ -24,13 +33,17 @@ from openedx.core.djangolib.markup import HTML, Text
                 % if page_content:
                     ${page_content}
                 % else:
-                    ${Text(_('Please wait a few seconds and then reload the page. If the problem persists, please email us at {email}.')).format(
-                    email=HTML('<a href="mailto:{email}">{email}</a>').format(
-                    email=Text(static.get_tech_support_email_address())
+                    <%
+                    notification = Text(_('Please wait a few seconds and then reload the page. If the problem persists, please email us at {email}.')).format(
+                            email=HTML('<a href="mailto:{email}">{email}</a>').format(
+                            email=Text(static.get_tech_support_email_address())
+                        )
                     )
-                    )}
+                    %>
+                    ${notification}
                 % endif
             </%block>
         </p>
-    </section>
+        <a href="#" class="btn" onclick="window.location.reload()">${_("Reload Page")}</a>
+    </article>
 </main>
