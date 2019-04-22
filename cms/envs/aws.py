@@ -588,6 +588,11 @@ RETIREMENT_SERVICE_WORKER_USERNAME = ENV_TOKENS.get(
 )
 RETIREMENT_STATES = ENV_TOKENS.get('RETIREMENT_STATES', RETIREMENT_STATES)
 
+################### Settings for elastic-apm ###################
+if "ELASTIC_APM" in ENV_TOKENS:
+    INSTALLED_APPS += ('elasticapm.contrib.django',)
+    ELASTIC_APM = ENV_TOKENS.get('ELASTIC_APM')
+
 ####################### Plugin Settings ##########################
 
 from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants
