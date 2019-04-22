@@ -52,7 +52,8 @@ class CourseGradingModel(object):
                     "min_count": 0,
                     "drop_count": 0,
                     "short_label": None,
-                    "weight": 0
+                    "weight": 0,
+                    "threshold": 100
                     }
 
     @staticmethod
@@ -233,7 +234,8 @@ class CourseGradingModel(object):
                   "min_count": int(json_grader.get('min_count', 0)),
                   "drop_count": int(json_grader.get('drop_count', 0)),
                   "short_label": json_grader.get('short_label', None),
-                  "weight": float(json_grader.get('weight', 0)) / 100.0
+                  "weight": float(json_grader.get('weight', 0)) / 100.0,
+                  "threshold": float(json_grader.get('threshold', 100)) / 100.0
                   }
 
         return result
@@ -250,6 +252,7 @@ class CourseGradingModel(object):
             "drop_count": grader.get('drop_count', 0),
             "short_label": grader.get('short_label', ""),
             "weight": grader.get('weight', 0) * 100,
+            "threshold": grader.get('threshold', 1) * 100
         }
 
 

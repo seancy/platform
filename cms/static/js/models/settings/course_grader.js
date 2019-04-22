@@ -5,6 +5,7 @@ define(['backbone', 'underscore', 'gettext'], function(Backbone, _, gettext) {
             min_count: 1,
             drop_count: 0,
             short_label: '', // what to use in place of type if space is an issue
+            threshold: 100,
             weight: 0 // int 0..100
         },
         parse: function(attrs) {
@@ -17,6 +18,9 @@ define(['backbone', 'underscore', 'gettext'], function(Backbone, _, gettext) {
             }
             if (attrs.drop_count) {
                 attrs.drop_count = Math.round(attrs.drop_count);
+            }
+            if (attrs.threshold) {
+                attrs.threshold = Math.round(attrs.threshold)
             }
             return attrs;
         },
@@ -46,6 +50,14 @@ define(['backbone', 'underscore', 'gettext'], function(Backbone, _, gettext) {
 //                  if ((this.collection.sumWeights() + attrs.weight - this.get('weight')) > 100)
 //                  errors.weight = "The weights cannot add to more than 100.";
                     }
+                }
+            }
+            if (_.has(attrs, 'threshold')) {
+                var intThreshold = Math.round(attrs.threshold);
+                if (!isFinite(intThreshold) || /\D+/.test(attrs.threshold) || intThreshold < 0 || intThreshold > 100) {
+                    errors.threshold = gettext('Please enter an integer between 0 and 100.');
+                } else {
+                    attrs.threshold = intThreshold;
                 }
             }
             if (_.has(attrs, 'min_count')) {

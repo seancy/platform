@@ -7,9 +7,11 @@ from __future__ import absolute_import, division, unicode_literals
 from completion import models, waffle
 from completion.test_utils import CompletionWaffleTestMixin, submit_completions_for_testing
 from django.core.exceptions import ValidationError
+from django.db.models import signals
 from django.test import TestCase
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
+from lms.djangoapps.grades.signals.handlers import recalculate_course_completion_percentage
 from openedx.core.djangolib.testing.utils import skip_unless_lms
 from student.tests.factories import CourseEnrollmentFactory, UserFactory
 
@@ -52,6 +54,7 @@ class SubmitCompletionTestCase(CompletionSetUpMixin, TestCase):
     """
     def setUp(self):
         super(SubmitCompletionTestCase, self).setUp()
+        signals.post_save.disconnect(receiver=recalculate_course_completion_percentage, sender=models.BlockCompletion)
         self.override_waffle_switch(True)
         self.set_up_completion()
 

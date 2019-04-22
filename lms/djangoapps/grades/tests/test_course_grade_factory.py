@@ -184,6 +184,42 @@ class TestCourseGradeFactory(GradeTestBase):
             ))
         self.assertEqual(mock_update.called, force_update)
 
+    def test_course_progress(self):
+        grading_policy = self.grading_policy
+
+        grading_policy['GRADER'][0]['min_count'] = 2
+        self.course.set_grading_policy(grading_policy)
+        with mock_get_score(1, 2):
+            self.subsection_grade_factory.update(self.course_structure[self.sequence.location])
+        CourseGradeFactory().update(self.request.user, self.course)
+        course_grade = CourseGradeFactory().read(self.request.user, self.course)
+        course_progress = CourseGradeFactory().get_progress(self.request.user, self.course, grade_summary=course_grade)
+        self.assertEqual(course_progress['current_score'], 25)
+        self.assertEqual(course_progress['nb_trophies_earned'], 0)
+        self.assertEqual(course_progress['nb_trophies_possible'], 2)
+
+        grading_policy['GRADER'][0]['min_count'] = 3
+        self.course.set_grading_policy(grading_policy)
+        with mock_get_score(1, 3):
+            self.subsection_grade_factory.update(self.course_structure[self.sequence.location])
+        CourseGradeFactory().update(self.request.user, self.course)
+        course_grade = CourseGradeFactory().read(self.request.user, self.course)
+        course_progress = CourseGradeFactory().get_progress(self.request.user, self.course, grade_summary=course_grade)
+        self.assertEqual(course_progress['current_score'], 16)
+        self.assertEqual(course_progress['nb_trophies_earned'], 0)
+        self.assertEqual(course_progress['nb_trophies_possible'], 3)
+
+        grading_policy['GRADER'][0]['drop_count'] = 1
+        grading_policy['GRADER'][0]['threshold'] = 0.3
+        self.course.set_grading_policy(grading_policy)
+        with mock_get_score(1, 3):
+            self.subsection_grade_factory.update(self.course_structure[self.sequence.location])
+        CourseGradeFactory().update(self.request.user, self.course)
+        course_grade = CourseGradeFactory().read(self.request.user, self.course)
+        course_progress = CourseGradeFactory().get_progress(self.request.user, self.course, grade_summary=course_grade)
+        self.assertEqual(course_progress['current_score'], 17)
+        self.assertEqual(course_progress['nb_trophies_possible'], 3)
+
     def test_course_grade_summary(self):
         with mock_get_score(1, 2):
             self.subsection_grade_factory.update(self.course_structure[self.sequence.location])

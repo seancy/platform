@@ -5,14 +5,18 @@ from contextlib import contextmanager
 from logging import getLogger
 
 import six
+from completion.models import BlockCompletion
 from courseware.model_data import get_score, set_score
+from datetime import datetime
+from django.contrib.auth.models import User
+from django.db import models
 from django.dispatch import receiver
 from submissions.models import score_reset, score_set
 from xblock.scorable import ScorableXBlockMixin, Score
 
 from openedx.core.djangoapps.course_groups.signals.signals import COHORT_MEMBERSHIP_UPDATED
 from openedx.core.lib.grade_utils import is_score_higher_or_equal
-from student.models import user_by_anonymous_id
+from student.models import CourseEnrollment, user_by_anonymous_id
 from student.signals import ENROLLMENT_TRACK_UPDATED
 from track.event_transaction_utils import get_event_transaction_id, get_event_transaction_type
 from util.date_utils import to_timestamp
@@ -23,6 +27,7 @@ from .signals import (
     SUBSECTION_SCORE_CHANGED,
     SUBSECTION_OVERRIDE_CHANGED,
 )
+from ..models import PersistentSubsectionGradeOverride
 from .. import events
 from ..constants import ScoreDatabaseTableEnum
 from ..course_grade_factory import CourseGradeFactory
@@ -236,7 +241,29 @@ def recalculate_course_grade_only(sender, course, course_structure, user, **kwar
     Updates a saved course grade, but does not update the subsection
     grades the user has in this course.
     """
-    CourseGradeFactory().update(user, course=course, course_structure=course_structure)
+    course_grade = CourseGradeFactory().update(user, course=course, course_structure=course_structure)
+    overrides = PersistentSubsectionGradeOverride.objects.filter(
+        grade__user_id=user.id,
+        grade__course_id=course.id,
+    )
+    if overrides.exists():
+        enrollment = CourseEnrollment.get_enrollment(user, course.id)
+        passed = course_grade.passed
+        try:
+            # in case that it fails to fetch courseenrollment and returns None
+            if passed:
+                if not enrollment.completed:
+                    completion_date = datetime.today()
+                    enrollment.completed = completion_date
+                    enrollment.save()
+                    log.info("Create completion date for user id %d / %s: %s" % (user.id, course.id, completion_date))
+            else:
+                if enrollment.completed:
+                    enrollment.completed = None
+                    enrollment.save()
+                    log.info("Delete completion date for user id %d / %s" % (user.id, course.id))
+        except AttributeError:
+            pass
 
 
 @receiver(ENROLLMENT_TRACK_UPDATED)
@@ -253,3 +280,19 @@ def recalculate_course_and_subsection_grades(sender, user, course_key, countdown
             course_key=six.text_type(course_key)
         )
     )
+
+
+@receiver(models.signals.post_save, sender=BlockCompletion)
+def recalculate_course_completion_percentage(**kwargs):
+    """
+    Receives the BlockCompletion signal and triggers the
+    evaluation of course progress.
+    """
+    instance = kwargs['instance']
+    course_key = instance.course_key
+    user = User.objects.get(id=instance.user_id)
+    CourseGradeFactory().update_course_completion_percentage(course_key, user)
+
+
+def enrollment_completed_handler():
+    pass

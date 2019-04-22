@@ -563,7 +563,7 @@ class CourseGradingTest(CourseTestCase):
                     'user_id': unicode(self.user.id),
                     'event_transaction_id': 'mockUUID',
                 }
-            ) for policy_hash in {grading_policy_1, grading_policy_2, grading_policy_3}
+            ) for policy_hash in [grading_policy_1, grading_policy_2, grading_policy_3]
         ])
 
     @mock.patch('track.event_transaction_utils.uuid4')
@@ -718,6 +718,7 @@ class CourseGradingTest(CourseTestCase):
             "drop_count": 2,
             "short_label": None,
             "weight": 15,
+            "threshold": 30
         }
 
         response = self.client.ajax_post(
@@ -1203,6 +1204,7 @@ class CourseGraderUpdatesTest(CourseTestCase):
             "drop_count": 10,
             "short_label": "yo momma",
             "weight": 17.3,
+            "threshold": 60
         }
         resp = self.client.ajax_post(self.url + '/0', grader)
         self.assertEqual(resp.status_code, 200)
@@ -1222,6 +1224,7 @@ class CourseGraderUpdatesTest(CourseTestCase):
             "drop_count": 10,
             "short_label": "yo momma",
             "weight": 17.3,
+            "threshold": 50.5
         }
         resp = self.client.ajax_post('{}/{}'.format(self.url, len(self.starting_graders) + 1), grader)
         self.assertEqual(resp.status_code, 200)

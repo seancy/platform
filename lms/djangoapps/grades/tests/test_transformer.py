@@ -362,8 +362,8 @@ class GradesTransformerTestCase(CourseStructureTestCase):
 
     def test_grading_policy_collected(self):
         # the calculated hash of the original and updated grading policies of the test course
-        original_grading_policy_hash = u'ChVp0lHGQGCevD0t4njna/C44zQ='
-        updated_grading_policy_hash = u'TsbX04qWOy1WRnC0NHy+94upPd4='
+        original_grading_policy_hash = u'HAtIeHwH3KNe421rwzEAzNKaEHI='
+        updated_grading_policy_hash = u'QTNas9G3POrY6ZPfwkgMA9zC4Lc='
 
         blocks = self.build_course_with_problems()
         course_block = blocks[u'course']

@@ -1,18 +1,23 @@
 """
 Course Grade Factory Class
 """
+from __future__ import division
 from collections import namedtuple
+from datetime import datetime
 from logging import getLogger
 
 import dogstats_wrapper as dog_stats_api
 from six import text_type
 
 from openedx.core.djangoapps.signals.signals import COURSE_GRADE_CHANGED, COURSE_GRADE_NOW_PASSED
+from openedx.core.lib.gating.api import get_subsection_completion_percentage
+from student.models import CourseEnrollment
+from xmodule.modulestore.django import modulestore
 
 from .config import assume_zero_if_absent, should_persist_grades
 from .course_data import CourseData
 from .course_grade import CourseGrade, ZeroCourseGrade
-from .models import PersistentCourseGrade, prefetch
+from .models import PersistentCourseGrade, PersistentCourseProgress, PersistentSubsectionGradeOverride, prefetch
 
 log = getLogger(__name__)
 
@@ -213,3 +218,146 @@ class CourseGradeFactory(object):
         )
 
         return course_grade
+
+    def update_course_completion_percentage(self, course_key, user, course_grade=None, enrollment=None):
+        course_usage_key = modulestore().make_course_usage_key(course_key)
+        percent_progress = get_subsection_completion_percentage(course_usage_key, user)
+        log.info(u'Course Progress Calculate: %s, User: %s', unicode(course_key), user.id)
+        if not enrollment:
+            enrollment = CourseEnrollment.get_enrollment(user, course_key)
+
+        overrides = PersistentSubsectionGradeOverride.objects.filter(
+            grade__user_id=user.id,
+            grade__course_id=course_key,
+        )
+        if overrides.exists():
+            if not course_grade:
+                course_grade = self.read(user, course_key=course_key)
+            passed = course_grade.passed
+            try:
+                # in case that it fails to fetch courseenrollment and returns None
+                if passed:
+                    if not enrollment.completed:
+                        completion_date = datetime.today()
+                        enrollment.completed = completion_date
+                        enrollment.save()
+                        log.info(
+                            "Create completion date for user id %d / %s: %s" % (user.id, course_key, completion_date))
+                else:
+                    if enrollment.completed:
+                        enrollment.completed = None
+                        enrollment.save()
+                        log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
+            except AttributeError:
+                pass
+        else:
+            try:
+                # in case that it fails to fetch courseenrollment and returns None
+                if percent_progress == 100:
+                    if not enrollment.completed:
+                        completion_date = datetime.today()
+                        enrollment.completed = completion_date
+                        enrollment.save()
+                        log.info("Create completion date for user id %d / %s: %s" % (
+                            user.id, course_key, completion_date))
+                else:
+                    if enrollment.completed:
+                        enrollment.completed = None
+                        enrollment.save()
+                        log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
+            except AttributeError:
+                pass
+        if should_persist_grades(course_key):
+            PersistentCourseProgress.update_or_create(
+                user_id=user.id,
+                course_id=course_key,
+                percent_progress=round(percent_progress / 100, 2)
+            )
+        return round(percent_progress / 100, 2)
+
+    def get_course_completion_percentage(self, user, course_key, course_grade=None, enrollment=None):
+        """
+        return the completed percentage of the given course
+        """
+        try:
+            persistent_progress = PersistentCourseProgress.read(user.id, course_key)
+            log.info(u'Course Progress Read: %s, User: %s', unicode(course_key), user.id)
+            return persistent_progress.percent_progress
+        except PersistentCourseProgress.DoesNotExist:
+            return self.update_course_completion_percentage(
+                course_key, user, course_grade=course_grade, enrollment=enrollment)
+
+    def get_progress(self, user, course, course_key=None, progress=None, grade_summary=None, enrollment=None):
+        if not course_key:
+            course_key = course.id
+        if not grade_summary:
+            grade_summary = self.read(user, course)
+        if not progress:
+            progress = self.get_course_completion_percentage(
+                user, course_key, course_grade=grade_summary, enrollment=enrollment)
+
+        nb_trophies_attempted = 0
+        nb_trophies_earned = 0
+        nb_trophies_possible = 0
+        current_total_weight = 0
+        trophies_by_chapter = []
+
+        grading_rules = course.raw_grader
+        grading_rules_dict = {}
+        for rule in grading_rules:
+            nb_trophies_possible += rule.get('min_count', 0)
+            rule['available_count'] = rule.get('min_count') - rule.get('drop_count')
+            if not rule.get('threshold'):
+                rule['threshold'] = 1
+            grading_rules_dict.update({
+                rule.get('type'): rule
+            })
+
+        chapter_grades = grade_summary.chapter_grades.values()
+        for chapter in chapter_grades:
+            trophies = []
+            for section in chapter['sections']:
+                if section.graded:
+                    grader = grading_rules_dict[section.format]
+                    trophy = {
+                        'result': section.percent_graded,
+                        'attempted': section.attempted_graded,
+                        'section_format': section.format,
+                        'section_name': section.display_name,
+                        'section_url': section.url_name,
+                        'threshold': grader['threshold'],
+                        'trophy_img': grader['short_label']
+                    }
+                    trophy['passed'] = trophy['result'] >= trophy['threshold']
+                    trophies.append(trophy)
+                    if trophy['attempted']:
+                        nb_trophies_attempted += 1
+                        if grader['available_count'] > 0:
+                            current_total_weight += grader['weight'] / (grader['min_count'] - grader['drop_count'])
+                            grader['available_count'] += -1
+                        if trophy['passed']:
+                            nb_trophies_earned += 1
+            if len(trophies) > 0:
+                trophies_by_chapter.append({
+                    'url': chapter['url_name'],
+                    'chapter_name': chapter['display_name'],
+                    'trophies': trophies
+                })
+        current_total_weight = round(current_total_weight, 2)
+        if current_total_weight > 0:
+            current_score = round(grade_summary.percent * 100 / current_total_weight)
+            # sometime the round function doesn't work as expected
+            if current_score > 100:
+                current_score = 100
+        else:
+            current_score = 0
+
+        return {
+            'current_score': current_score,
+            'is_course_passed': grade_summary.passed,
+            'progress': progress,
+            'nb_trophies_attempted': nb_trophies_attempted,
+            'nb_trophies_earned': nb_trophies_earned,
+            'nb_trophies_possible': nb_trophies_possible,
+            'trophies_by_chapter': trophies_by_chapter
+        }

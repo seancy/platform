@@ -9,6 +9,7 @@ from completion import waffle
 from completion.models import BlockCompletion
 from completion.test_utils import CompletionWaffleTestMixin
 from django.contrib.sites.models import Site
+from django.db.models import signals
 from django.urls import reverse
 from django.test import override_settings
 from mock import Mock, patch
@@ -19,6 +20,7 @@ from waffle.testutils import override_switch
 from courseware.tests.factories import StaffFactory
 from gating import api as lms_gating_api
 from lms.djangoapps.course_api.blocks.transformers.milestones import MilestonesAndSpecialExamsTransformer
+from lms.djangoapps.grades.signals.handlers import recalculate_course_completion_percentage
 from milestones.tests.utils import MilestonesTestCaseMixin
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
@@ -490,6 +492,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
         there are no sequentials left in the vertical.
 
         """
+        signals.post_save.disconnect(receiver=recalculate_course_completion_percentage, sender=BlockCompletion)
         course = self.create_test_course()
 
         # first navigate to a sequential to make it the last accessed

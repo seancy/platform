@@ -11,6 +11,12 @@
     <span class="tip tip-stacked"><%= gettext("This short name for the assignment type (for example, HW or Midterm) appears next to assignments on a learner's Progress page.") %></span>
   </div>
 
+  <div class="field text" id="field-course-grading-assignment-threshold">
+    <label for="course-grading-assignment-threshold"><%= gettext("Threshold") %></label>
+    <input type="text" class="short" id="course-grading-assignment-threshold" value="<%= model.get('threshold') %>" />
+    <span class="tip tip-stacked"><%= gettext("The threshold of all assignments of this type, by default it is 100. Do not include the percent symbol.") %></span>
+  </div>
+
   <div class="field text" id="field-course-grading-assignment-gradeweight">
     <label for="course-grading-assignment-gradeweight"><%= gettext("Weight of Total Grade") %></label>
     <input type="text" class="short" id="course-grading-assignment-gradeweight" value = "<%= model.get('weight') %>" />

@@ -3,12 +3,14 @@ Tests for BlockCompletionTransformer.
 """
 from completion.models import BlockCompletion
 from completion.test_utils import CompletionWaffleTestMixin
+from django.db.models import signals
 from xblock.core import XBlock
 from xblock.completable import CompletableXBlockMixin, XBlockCompletionMode
 
 from lms.djangoapps.course_blocks.api import get_course_blocks
 from lms.djangoapps.course_api.blocks.transformers.block_completion import BlockCompletionTransformer
 from lms.djangoapps.course_blocks.transformers.tests.helpers import ModuleStoreTestCase, TransformerRegistryTestMixin
+from lms.djangoapps.grades.signals.handlers import recalculate_course_completion_percentage
 from student.tests.factories import UserFactory
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
 
@@ -77,6 +79,7 @@ class BlockCompletionTransformerTestCase(TransformerRegistryTestMixin, Completio
 
     @XBlock.register_temp_plugin(StubCompletableXBlock, identifier='comp')
     def test_transform_gives_value_for_completable(self):
+        signals.post_save.disconnect(receiver=recalculate_course_completion_percentage, sender=BlockCompletion)
         course = CourseFactory.create()
         block = ItemFactory.create(category='comp', parent=course)
         BlockCompletion.objects.submit_completion(
