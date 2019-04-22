@@ -1,6 +1,12 @@
 <%page expression_filter="h"/>
 <%namespace name='static' file='static_content.html'/>
 <%! from django.utils.translation import ugettext as _ %>
+<%! from django.conf import settings %>
+<%! from openedx.core.djangolib.js_utils import dump_js_escaped_json %>
+
+<script type="application/javascript">
+    window.COURSE_CATEGORIES = ${dict(settings.COURSE_CATEGORIES) | n, dump_js_escaped_json};
+</script>
 
 <section class="courses-container">
   <section class="highlighted-courses">

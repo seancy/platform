@@ -336,6 +336,8 @@ class TestMyMoocCatalog(TestCase):
         self.disable_mymooc_config_2 = {"ENABLE_MYMOOC_CATALOG": True, "MYMOOC_URL": ""}
         self.enable_redirection_config = {"ENABLE_MYMOOC_CATALOG": True, "MYMOOC_URL": "http://test.com",
                                           "ENABLE_MYMOOC_REDIRECTION": True}
+        self.user = UserFactory()
+        self.client.login(username=self.user.username, password="test")
 
     def test_with_mymooc_catalog_disabled(self):
         """ Test mymooc_catalog view returns 404 if ENABLE_MYMOOC_CATALOG=False """

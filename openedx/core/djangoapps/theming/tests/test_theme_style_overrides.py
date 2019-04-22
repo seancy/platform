@@ -5,6 +5,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.test import TestCase
 from django.contrib import staticfiles
+from mock import patch
 
 from openedx.core.djangoapps.theming.tests.test_util import with_comprehensive_theme
 from openedx.core.djangolib.testing.utils import skip_unless_cms, skip_unless_lms
@@ -89,6 +90,7 @@ class TestComprehensiveThemeLMS(TestCase):
         self.assertContains(resp, "Overriden Body Extra!")
 
     @with_comprehensive_theme("test-theme")
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_parent_content_in_self_inherited_template(self):
         """
         Test that parent's body is present in self inherited template.
@@ -101,6 +103,7 @@ class TestComprehensiveThemeLMS(TestCase):
         self.assertContains(resp, "Explore courses")
 
     @with_comprehensive_theme("test-theme")
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_include_default_template(self):
         """
         Test that theme template can include template which is not part of the theme.
@@ -114,6 +117,7 @@ class TestComprehensiveThemeLMS(TestCase):
         self.assertContains(resp, "this module is temporarily unavailable")
 
     @with_comprehensive_theme("test-theme")
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_include_overridden_template(self):
         """
         Test that theme template can include template which is overridden in the active theme.
@@ -126,6 +130,7 @@ class TestComprehensiveThemeLMS(TestCase):
         self.assertContains(resp, "This overrides the courseware/info.html template.")
 
     @with_comprehensive_theme("test-theme")
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_include_custom_template(self):
         """
         Test that theme template can include template which is only present in the theme, but has no standard LMS

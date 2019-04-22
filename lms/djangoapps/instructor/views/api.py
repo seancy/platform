@@ -70,11 +70,13 @@ from edxmako.shortcuts import render_to_string
 from lms.djangoapps.instructor.access import ROLES, allow_access, list_with_level, revoke_access, update_forum_role
 from lms.djangoapps.instructor.enrollment import (
     enroll_email,
+    enroll_user,
     get_email_params,
     get_user_email_language,
     send_beta_role_email,
     send_mail_to_student,
-    unenroll_email
+    unenroll_email,
+    unenroll_user
 )
 from lms.djangoapps.instructor.views import INVOICE_KEY
 from lms.djangoapps.instructor.views.instructor_task_helpers import extract_email_features, extract_task_features
@@ -1186,44 +1188,83 @@ def students_update_enrollment(request, course_id):
             # validity (obviously, cannot check if email actually /exists/,
             # simply that it is plausibly valid)
             validate_email(email)  # Raises ValidationError if invalid
+            no_email_address = getattr(settings, 'LEARNER_NO_EMAIL')
             if action == 'enroll':
-                before, after, enrollment_obj = enroll_email(
-                    course_id, email, auto_enroll, email_students, email_params, language=language
-                )
-                before_enrollment = before.to_dict()['enrollment']
-                before_user_registered = before.to_dict()['user']
-                before_allowed = before.to_dict()['allowed']
-                after_enrollment = after.to_dict()['enrollment']
-                after_allowed = after.to_dict()['allowed']
-
-                if before_user_registered:
-                    if after_enrollment:
-                        if before_enrollment:
-                            state_transition = ENROLLED_TO_ENROLLED
-                        else:
-                            if before_allowed:
-                                state_transition = ALLOWEDTOENROLL_TO_ENROLLED
-                            else:
-                                state_transition = UNENROLLED_TO_ENROLLED
+                if (no_email_address and email == no_email_address
+                    and auto_enroll and not email_students):
+                    before, after, enrollment_obj = enroll_user(course_id, user)
+                    results.append({
+                        'identifier': identifier,
+                        'before': {
+                            'user': True,
+                            'enrollment': before,
+                            'allowed': False,
+                            'auto_enroll': False,
+                        },
+                        'after': {
+                            'user': True,
+                            'enrollment': after,
+                            'allowed': False,
+                            'auto_enroll': False,
+                        }
+                    })
                 else:
-                    if after_allowed:
-                        state_transition = UNENROLLED_TO_ALLOWEDTOENROLL
+                    before, after, enrollment_obj = enroll_email(
+                        course_id, email, auto_enroll, email_students, email_params, language=language
+                    )
+                    before_enrollment = before.to_dict()['enrollment']
+                    before_user_registered = before.to_dict()['user']
+                    before_allowed = before.to_dict()['allowed']
+                    after_enrollment = after.to_dict()['enrollment']
+                    after_allowed = after.to_dict()['allowed']
+
+                    if before_user_registered:
+                        if after_enrollment:
+                            if before_enrollment:
+                                state_transition = ENROLLED_TO_ENROLLED
+                            else:
+                                if before_allowed:
+                                    state_transition = ALLOWEDTOENROLL_TO_ENROLLED
+                                else:
+                                    state_transition = UNENROLLED_TO_ENROLLED
+                    else:
+                        if after_allowed:
+                            state_transition = UNENROLLED_TO_ALLOWEDTOENROLL
 
             elif action == 'unenroll':
-                before, after = unenroll_email(
-                    course_id, email, email_students, email_params, language=language
-                )
-                before_enrollment = before.to_dict()['enrollment']
-                before_allowed = before.to_dict()['allowed']
-                enrollment_obj = CourseEnrollment.get_enrollment(user, course_id) if user else None
-
-                if before_enrollment:
-                    state_transition = ENROLLED_TO_UNENROLLED
+                if (no_email_address and email == no_email_address
+                    and not email_students):
+                    before, after = unenroll_user(course_id, user)
+                    results.append({
+                        'identifier': identifier,
+                        'before': {
+                            'user': True,
+                            'enrollment': before,
+                            'allowed': False,
+                            'auto_enroll': False,
+                        },
+                        'after': {
+                            'user': True,
+                            'enrollment': after,
+                            'allowed': False,
+                            'auto_enroll': False,
+                        }
+                    })
                 else:
-                    if before_allowed:
-                        state_transition = ALLOWEDTOENROLL_TO_UNENROLLED
+                    before, after = unenroll_email(
+                        course_id, email, email_students, email_params, language=language
+                    )
+                    before_enrollment = before.to_dict()['enrollment']
+                    before_allowed = before.to_dict()['allowed']
+                    enrollment_obj = CourseEnrollment.get_enrollment(user, course_id) if user else None
+
+                    if before_enrollment:
+                        state_transition = ENROLLED_TO_UNENROLLED
                     else:
-                        state_transition = UNENROLLED_TO_UNENROLLED
+                        if before_allowed:
+                            state_transition = ALLOWEDTOENROLL_TO_UNENROLLED
+                        else:
+                            state_transition = UNENROLLED_TO_UNENROLLED
 
             else:
                 return HttpResponseBadRequest(strip_tags(
@@ -1249,14 +1290,15 @@ def students_update_enrollment(request, course_id):
             })
 
         else:
-            ManualEnrollmentAudit.create_manual_enrollment_audit(
-                request.user, email, state_transition, reason, enrollment_obj, role
-            )
-            results.append({
-                'identifier': identifier,
-                'before': before.to_dict(),
-                'after': after.to_dict(),
-            })
+            if email != no_email_address:
+                ManualEnrollmentAudit.create_manual_enrollment_audit(
+                    request.user, email, state_transition, reason, enrollment_obj, role
+                )
+                results.append({
+                    'identifier': identifier,
+                    'before': before.to_dict(),
+                    'after': after.to_dict(),
+                })
 
     response_payload = {
         'action': action,

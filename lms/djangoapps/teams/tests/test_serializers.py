@@ -52,9 +52,10 @@ class MembershipSerializerTestCase(SerializerTestCase):
             'request': RequestFactory().get('/api/team/v0/team_membership')
         }).data
         username = self.user.username
-        self.assertEqual(data['user'], {
-            'url': 'http://testserver/api/user/v1/accounts/' + username,
+        expected = {
             'username': username,
+            'name': self.user.profile.name,
+            'url': 'http://testserver/api/user/v1/accounts/' + username,
             'profile_image': {
                 'image_url_full': 'http://testserver/static/default_500.png',
                 'image_url_large': 'http://testserver/static/default_120.png',
@@ -62,8 +63,10 @@ class MembershipSerializerTestCase(SerializerTestCase):
                 'image_url_small': 'http://testserver/static/default_30.png',
                 'has_image': False
             },
+            'location': None,
             'account_privacy': 'private'
-        })
+        }
+        self.assertEqual(data['user'], expected)
         self.assertNotIn('membership', data['team'])
 
 

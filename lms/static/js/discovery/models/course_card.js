@@ -14,9 +14,14 @@
                     number: ''
                 },
                 start: '',
+                end: '',
                 image_url: '',
                 org: '',
-                id: ''
+                id: '',
+                course_category: '',
+                vendor: '',
+                language: '',
+                duration: ''
             }
         });
     });

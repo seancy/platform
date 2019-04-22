@@ -259,7 +259,8 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
         with mock.patch.dict('django.conf.settings.FEATURES', {
             'ENABLE_MKTG_SITE': True,
             'ENTRANCE_EXAMS': False,
-            'ENABLE_PREREQUISITE_COURSES': False
+            'ENABLE_PREREQUISITE_COURSES': False,
+            'ENABLE_EXTENDED_COURSE_DETAILS': False
         }):
             response = self.client.get_html(settings_details_url)
             self.assertNotContains(response, "Course Summary Page")

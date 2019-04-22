@@ -40,6 +40,7 @@ git+https://github.com/edx-solutions/xblock-drag-and-drop-v2@v2.1.6#egg=xblock-d
 git+https://github.com/open-craft/xblock-poll@add89e14558c30f3c8dc7431e5cd6536fff6d941#egg=xblock-poll==1.5.1
 git+https://github.com/Learningtribes/xblock-utils.git@ec95e5e718c4144dc8a43d116a545f210d929667#egg=xblock-utils
 git+https://github.com/Learningtribes/django-pyfs.git@d52e58dc88d755e332bdcc4ab1dd0b004e11ad11#egg=django-pyfs
+git+https://github.com/Learningtribes/edx-search.git@lt-master#egg=edx-search
 -e common/lib/xmodule
 amqp==1.4.9               # via kombu
 analytics-python==1.1.0
@@ -124,7 +125,6 @@ edx-opaque-keys[django]==0.4.4
 edx-organizations==0.4.10
 edx-proctoring==1.4.0
 edx-rest-api-client==1.7.1
-edx-search==1.2.1
 edx-submissions==2.0.12
 edx-user-state-client==1.0.4
 edxval==0.1.16

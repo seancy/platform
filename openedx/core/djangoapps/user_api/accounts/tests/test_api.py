@@ -322,6 +322,7 @@ class AccountSettingsOnCreationTest(TestCase):
             'account_privacy': PRIVATE_VISIBILITY,
             'accomplishments_shared': False,
             'extended_profile': [],
+            'location': None,
         })
 
 

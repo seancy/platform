@@ -127,6 +127,7 @@ from lms.envs.common import (
     DEFAULT_MOBILE_AVAILABLE,
 
     CONTACT_EMAIL,
+    DEFAULT_FROM_EMAIL_ALIAS,
 
     DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH,
     # Video Image settings
@@ -248,6 +249,9 @@ FEATURES = {
 
     # Milestones application flag
     'MILESTONES_APP': False,
+
+    # Extended course details flag
+    'ENABLE_EXTENDED_COURSE_DETAILS': True,
 
     # Prerequisite courses feature flag
     'ENABLE_PREREQUISITE_COURSES': False,
@@ -715,7 +719,6 @@ PIPELINE_CSS = {
     'style-vendor': {
         'source_filenames': [
             'css/vendor/normalize.css',
-            #'css/vendor/font-awesome.css',
             'css/vendor/html5-input-polyfills/number-polyfill.css',
             'js/vendor/CodeMirror/codemirror.css',
             'css/vendor/ui-lightness/jquery-ui-1.8.22.custom.css',
@@ -1488,6 +1491,12 @@ ENTERPRISE_REPORTING_SECRET = '0000000000000000'
 ############## Settings for the Discovery App ######################
 
 COURSE_CATALOG_API_URL = None
+COURSE_CATEGORIES = (
+    ('online', 'Online'),
+    ('offline', 'Offline'),
+    ('live_session', 'Live session'),
+    ('session_recorded', 'Session recorded'),
+)
 
 ############################# Persistent Grades ####################################
 

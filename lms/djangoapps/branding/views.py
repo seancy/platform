@@ -3,6 +3,7 @@ import logging
 import urllib
 
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.cache import cache
 from django.urls import reverse
@@ -84,9 +85,11 @@ def index(request):
 @cache_if_anonymous()
 def courses(request):
     """
-    Render the "find courses" page. If the marketing site is enabled, redirect
-    to that. Otherwise, if subdomain branding is on, this is the university
-    profile page. Otherwise, it's the edX courseware.views.views.courses page
+    Render the "find courses" page.
+    If the marketing site is enabled, redirect to that.
+    Otherwise, if subdomain branding is on and the user is not part of the CATALOG_DENIED_GROUP,
+    this is the university profile page.
+    Otherwise, it's the edX courseware.views.views.courses page
     """
     enable_mktg_site = configuration_helpers.get_value(
         'ENABLE_MKTG_SITE',
@@ -96,13 +99,11 @@ def courses(request):
     if enable_mktg_site:
         return redirect(marketing_link('COURSES'), permanent=True)
 
-    if not configuration_helpers.get_value('COURSES_ARE_BROWSABLE',
-                                           settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)):
-        raise Http404
+    if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False))
+        and CATALOG_DENIED_GROUP not in [group.name for group in request.user.groups.all()]):
+        return courseware.views.views.courses(request)
 
-    #  we do not expect this case to be reached in cases where
-    #  marketing is enabled or the courses are not browsable
-    return courseware.views.views.courses(request)
+    raise Http404
 
 
 def _footer_static_url(request, name):
@@ -316,6 +317,7 @@ def footer(request):
 
 
 @ensure_csrf_cookie
+@login_required
 @cache_if_anonymous()
 def mymooc_catalog(request):
     """

@@ -46,6 +46,22 @@ define(['js/views/validation',
 
                 var policyValues = listEle$.find('.json');
                 _.each(policyValues, this.attachJSONEditor, this);
+                _.each($(listEle$).find('select'), function(select) {
+                    $(select).change(function(event) {
+                        $select = $(event.target);
+
+                        var obj = self.model.get($select.data('name'));
+                        obj['value'] = $select.val();
+                        self.model.set($select.data('name'), obj);
+
+                        if ($select.val() !== $select.data('value')) {
+                            var message = gettext("Your changes will not take effect until you save your progress. Take care with key and value formatting, as validation is not implemented.");
+                            self.showNotificationBar(message,
+                                                     _.bind(self.saveView, self),
+                                                     _.bind(self.revertView, self));
+                        }
+                    });
+                });
                 return this;
             },
             attachJSONEditor: function(textarea) {
@@ -153,7 +169,7 @@ define(['js/views/validation',
                 var newKeyId = _.uniqueId('policy_key_'),
                     newEle = this.template({key: key, display_name: model.display_name, help: model.help,
                         value: JSON.stringify(model.value, null, 4), deprecated: model.deprecated,
-                        keyUniqueId: newKeyId, valueUniqueId: _.uniqueId('policy_value_')});
+                        keyUniqueId: newKeyId, valueUniqueId: _.uniqueId('policy_value_'), options: model.options});
 
                 this.fieldToSelectorMap[key] = newKeyId;
                 this.selectorToField[newKeyId] = key;

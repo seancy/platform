@@ -107,7 +107,7 @@ if STATIC_URL_BASE:
     STATIC_URL += 'studio/'
 
 # DEFAULT_COURSE_ABOUT_IMAGE_URL specifies the default image to show for courses that don't provide one
-DEFAULT_COURSE_ABOUT_IMAGE_URL = ENV_TOKENS.get('DEFAULT_COURSE_ABOUT_IMAGE_URL', DEFAULT_COURSE_ABOUT_IMAGE_URL)
+DEFAULT_COURSE_ABOUT_IMAGE_URL = ENV_TOKENS.get('DEFAULT_COURSE_ABOUT_IMAGE_URL', '')
 
 DEFAULT_COURSE_VISIBILITY_IN_CATALOG = ENV_TOKENS.get(
     'DEFAULT_COURSE_VISIBILITY_IN_CATALOG',
@@ -596,3 +596,5 @@ plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.CMS, plugin_c
 ########################## Derive Any Derived Settings  #######################
 
 derive_settings(__name__)
+
+

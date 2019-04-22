@@ -78,7 +78,6 @@ edx-oauth2-provider
 edx-organizations
 edx-proctoring
 edx-rest-api-client
-edx-search
 edx-submissions
 edx-user-state-client
 edxval

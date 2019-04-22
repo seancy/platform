@@ -130,7 +130,7 @@ FEATURES = {
     'ENABLE_CORS_HEADERS': False,
 
     # Can be turned off if course lists need to be hidden. Effects views and templates.
-    'COURSES_ARE_BROWSABLE': True,
+    'COURSES_ARE_BROWSABLE': False,
 
     # Set to hide the courses list on the Learner Dashboard if they are not enrolled in any courses yet.
     'HIDE_DASHBOARD_COURSES_UNTIL_ACTIVATED': False,
@@ -308,7 +308,7 @@ FEATURES = {
     'CERTIFICATES_HTML_VIEW': False,
 
     # Course discovery feature
-    'ENABLE_COURSE_DISCOVERY': False,
+    'ENABLE_COURSE_DISCOVERY': True,
 
     # Setting for overriding default filtering facets for Course discovery
     # COURSE_DISCOVERY_FILTERS = ["org", "language", "modes"]
@@ -931,6 +931,8 @@ BUGS_EMAIL = 'bugs@example.com'
 UNIVERSITY_EMAIL = 'university@example.com'
 PRESS_EMAIL = 'press@example.com'
 FINANCE_EMAIL = ''
+LEARNER_NO_EMAIL = None
+DEFAULT_FROM_EMAIL_ALIAS = ''
 
 # Platform mailing address
 CONTACT_MAILING_ADDRESS = ''
@@ -1423,6 +1425,7 @@ base_application_js = [
     'js/src/accessibility_tools.js',
     'js/toggle_login_modal.js',
     'js/src/lang_edx.js',
+    'js/ring.js',
 ]
 
 dashboard_js = (
@@ -1512,7 +1515,6 @@ credit_web_view_js = [
 PIPELINE_CSS = {
     'style-vendor': {
         'source_filenames': [
-            #'css/vendor/font-awesome.css',
             'css/vendor/jquery.qtip.min.css',
             'js/vendor/timepicker/jquery.timepicker.css'
         ],
@@ -3007,11 +3009,13 @@ ACCOUNT_VISIBILITY_CONFIGURATION = {
     # The list of all fields that can be shared with other users
     "shareable_fields": [
         'username',
+        'name',
         'profile_image',
         'country',
         'time_zone',
         'date_joined',
         'language_proficiencies',
+        'location',
         'bio',
         'social_links',
         'account_privacy',
@@ -3022,8 +3026,10 @@ ACCOUNT_VISIBILITY_CONFIGURATION = {
     # The list of account fields that are always public
     "public_fields": [
         'username',
+        'name',
         'profile_image',
         'account_privacy',
+        'location'
     ],
 
     # The list of account fields that are visible only to staff and users viewing their own profiles
@@ -3033,6 +3039,7 @@ ACCOUNT_VISIBILITY_CONFIGURATION = {
         "is_active",
         "bio",
         "country",
+        "location",
         "date_joined",
         "profile_image",
         "language_proficiencies",
@@ -3047,6 +3054,7 @@ ACCOUNT_VISIBILITY_CONFIGURATION = {
         "account_privacy",
         "accomplishments_shared",
         "extended_profile",
+
     ]
 }
 
@@ -3417,6 +3425,12 @@ COURSE_ENROLLMENT_MODES = {
 ############## Settings for the Discovery App ######################
 
 COURSES_API_CACHE_TIMEOUT = 3600  # Value is in seconds
+COURSE_CATEGORIES = (
+    ('online', 'Online'),
+    ('offline', 'Offline'),
+    ('live_session', 'Live session'),
+    ('session_recorded', 'Session recorded'),
+)
 
 ############## Settings for CourseGraph ############################
 COURSEGRAPH_JOB_QUEUE = LOW_PRIORITY_QUEUE

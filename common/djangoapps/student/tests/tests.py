@@ -580,17 +580,17 @@ class DashboardTest(ModuleStoreTestCase):
             response_2 = self.client.get(reverse('dashboard'))
             self.assertEquals(response_2.status_code, 200)
 
-    @unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
-    def test_dashboard_header_nav_has_find_courses(self):
-        self.client.login(username="jack", password="test")
-        response = self.client.get(reverse("dashboard"))
+    # @unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
+    # def test_dashboard_header_nav_has_find_courses(self):
+    #     self.client.login(username="jack", password="test")
+    #     response = self.client.get(reverse("dashboard"))
 
-        # "Explore courses" is shown in the side panel
-        self.assertContains(response, "Explore courses")
+    #     # "Explore courses" is shown in the side panel
+    #     self.assertContains(response, "Explore courses")
 
-        # But other links are hidden in the navigation
-        self.assertNotContains(response, "How it Works")
-        self.assertNotContains(response, "Schools & Partners")
+    #     # But other links are hidden in the navigation
+    #     self.assertNotContains(response, "How it Works")
+    #     self.assertNotContains(response, "Schools & Partners")
 
     def test_course_mode_info_with_honor_enrollment(self):
         """It will be true only if enrollment mode is honor and course has verified mode."""

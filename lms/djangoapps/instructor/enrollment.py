@@ -164,6 +164,37 @@ def enroll_email(course_id, student_email, auto_enroll=False, email_students=Fal
     return previous_state, after_state, enrollment_obj
 
 
+def enroll_user(course_id, student):
+    """
+    Enroll a student by user.
+
+    `student` is student's user
+
+    returns the enrollment state before and after enrollment and the enrollment object.
+    """
+    # if the student is currently unenrolled, don't enroll them in their
+    # previous mode
+
+    # for now, White Labels use 'shoppingcart' which is based on the
+    # "honor" course_mode. Given the change to use "audit" as the default
+    # course_mode in Open edX, we need to be backwards compatible with
+    # how White Labels approach enrollment modes.
+    if CourseMode.is_white_label(course_id):
+        course_mode = CourseMode.DEFAULT_SHOPPINGCART_MODE_SLUG
+    else:
+        course_mode = None
+
+    mode, is_active = CourseEnrollment.enrollment_mode_for_user(student, course_id)
+    # is_active is `None` if the user is not enrolled in the course
+    before_enrollment = is_active is not None and is_active
+    if before_enrollment:
+        course_mode = mode
+
+    enrollment_obj = CourseEnrollment.enroll(student, course_id, course_mode)
+    after_enrollment = enrollment_obj.is_active
+    return before_enrollment, after_enrollment, enrollment_obj
+
+
 def unenroll_email(course_id, student_email, email_students=False, email_params=None, language=None):
     """
     Unenroll a student by email.
@@ -196,6 +227,24 @@ def unenroll_email(course_id, student_email, email_students=False, email_params=
     after_state = EmailEnrollmentState(course_id, student_email)
 
     return previous_state, after_state
+
+
+def unenroll_user(course_id, student):
+    """
+    Unenroll a student by user.
+
+    `student` is student's user
+
+    returns the enrollment state before and after unenrollment.
+    """
+    _, before_is_active = CourseEnrollment.enrollment_mode_for_user(student, course_id)
+    # is_active is `None` if the user is not enrolled in the course
+    if before_is_active is not None and before_is_active:
+        CourseEnrollment.unenroll(student, course_id)
+
+    _, after_is_active = CourseEnrollment.enrollment_mode_for_user(student, course_id)
+
+    return before_is_active, after_is_active
 
 
 def send_beta_role_email(action, user, email_params):

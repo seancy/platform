@@ -238,6 +238,7 @@ def get_course_about_section(request, course, section_key):
     - effort
     - more_info
     - ocw_links
+    - duration
     """
 
     # Many of these are stored as html files instead of some semantic
@@ -261,7 +262,8 @@ def get_course_about_section(request, course, section_key):
         'end_date',
         'prerequisites',
         'about_sidebar_html',
-        'ocw_links'
+        'ocw_links',
+        'duration',
     }
 
     if section_key in html_sections:

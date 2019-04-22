@@ -117,7 +117,7 @@ class CourseCreatorAdminTest(TestCase):
                     mock_render_to_string('emails/course_creator_admin_user_pending.txt', context),
                     sent_mail.body
                 )
-                self.assertEquals(self.studio_request_email, sent_mail.from_email)
+                self.assertEquals("{} <%s>" % self.studio_request_email, sent_mail.from_email)
                 self.assertEqual([self.studio_request_email], sent_mail.to)
             else:
                 self.assertEquals(base_num_emails, len(mail.outbox))

@@ -785,6 +785,8 @@ PDF_RECEIPT_COBRAND_LOGO_HEIGHT_MM = ENV_TOKENS.get(
     'PDF_RECEIPT_COBRAND_LOGO_HEIGHT_MM', PDF_RECEIPT_COBRAND_LOGO_HEIGHT_MM
 )
 
+FEATURES['ENABLE_COURSE_DISCOVERY'] = True
+
 if FEATURES.get('ENABLE_COURSEWARE_SEARCH') or \
    FEATURES.get('ENABLE_DASHBOARD_SEARCH') or \
    FEATURES.get('ENABLE_COURSE_DISCOVERY') or \
@@ -1045,6 +1047,33 @@ COURSES_API_CACHE_TIMEOUT = ENV_TOKENS.get('COURSES_API_CACHE_TIMEOUT', COURSES_
 
 # Add an ICP license for serving content in China if your organization is registered to do so
 ICP_LICENSE = ENV_TOKENS.get('ICP_LICENSE', None)
+
+LANGUAGE_MAP = {'terms': {lang: display for lang, display in ALL_LANGUAGES}, 'name': 'Language'}
+
+COURSE_DISCOVERY_FILTERS = ["language", "start", "course_category", "vendor"]
+
+COURSE_DISCOVERY_MEANINGS = {
+    'language': LANGUAGE_MAP,
+    'start': {
+        'name': 'Availability',
+        'terms': {
+            'current': 'Current',
+            'new': 'New',
+            'soon': 'Starts soon',
+            'future': 'Future'
+        },
+    },
+    'course_category': {
+        'name': 'Course Type',
+        'terms': dict(COURSE_CATEGORIES),
+    },
+    'vendor': {
+        'name': 'Label'
+    }
+
+}
+
+SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
 
 ############## Settings for CourseGraph ############################
 COURSEGRAPH_JOB_QUEUE = ENV_TOKENS.get('COURSEGRAPH_JOB_QUEUE', LOW_PRIORITY_QUEUE)

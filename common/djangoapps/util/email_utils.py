@@ -6,13 +6,18 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
 def send_mail_with_alias(*args, **kwargs):
     """
-    change the alia name of the from_email
+    change the alias name of the from_email
     eg. Support <triboo@example.com>
     """
     args_list = list(args)
     try:
-        email_showname = configuration_helpers.get_value('email_from_showname', settings.DEFAULT_FROM_EMAIL_SHOW_NAME)
-        args_list[2] = "{} <{}>".format(email_showname, args_list[2])
+        from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
+        args_list[2] = "{} <{}>".format(from_alias, args_list[2])
+        no_email_address = getattr(settings, 'LEARNER_NO_EMAIL')
+        if no_email_address:
+            args_list[3] = [x for x in args_list[3] if x != no_email_address ]
+            if len(args_list[3]) == 0:
+                return
     except AttributeError:
         pass
     return send_mail(*args_list, **kwargs)

@@ -5,7 +5,16 @@
 
   <div class="field text value">
     <label class="sr" for="<%= valueUniqueId %>"><%= display_name %></label>
-    <textarea class="json text" id="<%= valueUniqueId %>"><%= value %></textarea>
+    <% if (options) { %>
+      <select class="text" data-name="<%= key %>" data-value=<%= value %> id="<%= valueUniqueId %>">
+        <% options.forEach(function(item) { %>
+          <% if ('"'+item[0]+'"' == value) var selected = 'selected'; else var selected = ''; %>
+          <option value="<%= item[0] %>" <%= selected %>><%= item[1] %></option>
+        <% }) %>
+      </select>
+    <% } else { %>
+      <textarea class="json text" id="<%= valueUniqueId %>"><%= value %></textarea>
+    <% } %>
     <span class="tip tip-stacked"><%= help %></span>
   </div>
   <% if (deprecated) { %>

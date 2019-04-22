@@ -30,7 +30,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   ## Dashboard, Catalogue, My courses, Analytics, Studio
   <div class="main">
     % if show_dashboard_tabs:
-        <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab dashboard-tab">
           <a class="${'active ' if reverse('dashboard') == request.path else ''}tab-nav-link" href="${reverse('dashboard')}">
             <span class="label"><span class="icon far fa-home-alt" aria-hidden="true"></span></span>
             ${_("Dashboard")}
@@ -39,7 +39,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 
       % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
         and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
-        <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab catalog-tab">
           <a class="tab-nav-link" href="${marketing_link('COURSES')}">
             <span class="label"><span class="icon far fa-book-open" aria-hidden="true"></span></span>
             ${_("Explore")}
@@ -51,7 +51,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
       % if (configuration_helpers.get_value('ENABLE_MYMOOC_CATALOG', settings.FEATURES.get('ENABLE_MYMOOC_CATALOG', False)) \
         and configuration_helpers.get_value('MYMOOC_URL', None) \
         and MYMOOC_DENIED_GROUP not in [group.name for group in user.groups.all()]):
-        <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab mymooc-tab">
           <a class="tab-nav-link" href="${reverse('mymooc_catalog')}">
             <span class="label"><span class="icon far fa-book-open" aria-hidden="true"></span></span>
             ${_("My Mooc")}
@@ -60,7 +60,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
       % endif
 
 
-        <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab my-courses-tab">
           <a class="tab-nav-link" href="${reverse('dashboard')}">
             <span class="label"><span class="icon far fa-file-alt" aria-hidden="true"></span></span>
             ${_("My Courses")}
@@ -70,7 +70,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
       % if (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
         and (ANALYTICS_ACCESS_GROUP in [group.name for group in user.groups.all()] \
         or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in user.groups.all()])):
-        <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab analytics-tab">
           <a class="tab-nav-link" href="${reverse('analytics_microsite')}">
             <span class="label"><span class="icon far fa-analytics" aria-hidden="true"></span></span>
             ${_("Analytics")}
@@ -78,7 +78,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
         </div>
       % endif
 
-        <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab studio-tab">
           <a class="tab-nav-link" href="${getattr(settings, 'CMS_BASE')}">
             <span class="label"><span class="icon far fa-edit" aria-hidden="true"></span></span>
             ${_("Studio")}

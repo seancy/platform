@@ -12,7 +12,7 @@
             initialize: function() {
                 this.$searchField = this.$el.find('input');
                 this.$searchButton = this.$el.find('button');
-                this.$message = this.$el.find('#discovery-message');
+                this.$message = $('#discovery-message');
                 this.$loadingIndicator = this.$el.find('#loading-indicator');
             },
 
@@ -44,8 +44,8 @@
 
             showFoundMessage: function(count) {
                 var msg = ngettext(
-                'Viewing %s course',
-                'Viewing %s courses',
+                '%s course found',
+                '%s courses found',
                 count
             );
                 this.$message.html(interpolate(msg, [count]));

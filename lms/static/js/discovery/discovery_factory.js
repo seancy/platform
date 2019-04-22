@@ -41,7 +41,7 @@
 
                 dispatcher.listenTo(filterBar, 'clearFilter', removeFilter);
 
-                dispatcher.listenTo(filterBar, 'clearAll', function() {
+                dispatcher.listenTo(refineSidebar, 'clearAll', function() {
                     form.doSearch('');
                 });
 

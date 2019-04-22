@@ -22,6 +22,7 @@ from openedx.core.djangoapps.site_configuration.tests.mixins import SiteMixin
 from util.milestones_helpers import set_prerequisite_courses
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
+from student.tests.factories import UserFactory
 
 FEATURES_WITH_STARTDATE = settings.FEATURES.copy()
 FEATURES_WITH_STARTDATE['DISABLE_START_DATES'] = False
@@ -193,10 +194,12 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
             emit_signals=True,
         )
         self.factory = RequestFactory()
+        self.user = UserFactory()
 
     @patch('student.views.management.render_to_response', RENDER_MOCK)
     @patch('courseware.views.views.render_to_response', RENDER_MOCK)
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': False})
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_course_discovery_off(self):
         """
         Asserts that the Course Discovery UI elements follow the
@@ -208,6 +211,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         self.assertNotIn('Search for a course', response.content)
 
         # check the /courses view
+        self.client.login(username=self.user.username, password='test')
         response = self.client.get(reverse('courses'))
         self.assertEqual(response.status_code, 200)
 
@@ -221,6 +225,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
     @patch('student.views.management.render_to_response', RENDER_MOCK)
     @patch('courseware.views.views.render_to_response', RENDER_MOCK)
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': True})
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_course_discovery_on(self):
         """
         Asserts that the Course Discovery UI elements follow the
@@ -232,8 +237,10 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         self.assertIn('Search for a course', response.content)
 
         # check the /courses view
+        self.client.login(username=self.user.username, password='test')
         response = self.client.get(reverse('courses'))
         self.assertEqual(response.status_code, 200)
+
 
         # assert that the course discovery UI is present
         self.assertIn('Search for a course', response.content)
@@ -243,6 +250,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
     @patch('student.views.management.render_to_response', RENDER_MOCK)
     @patch('courseware.views.views.render_to_response', RENDER_MOCK)
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': False})
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_course_cards_sorted_by_default_sorting(self):
         response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
@@ -255,6 +263,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         self.assertEqual(context['courses'][2].id, self.course_with_default_start_date.id)
 
         # check the /courses view
+        self.client.login(username=self.user.username, password='test')
         response = self.client.get(reverse('courses'))
         self.assertEqual(response.status_code, 200)
         ((template, context), _) = RENDER_MOCK.call_args  # pylint: disable=unpacking-non-sequence
@@ -269,6 +278,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
     @patch('courseware.views.views.render_to_response', RENDER_MOCK)
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_SORTING_BY_START_DATE': False})
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': False})
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_course_cards_sorted_by_start_date_disabled(self):
         response = self.client.get(reverse('branding_index'))
         self.assertEqual(response.status_code, 200)
@@ -281,6 +291,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         self.assertEqual(context['courses'][2].id, self.course_with_default_start_date.id)
 
         # check the /courses view as well
+        self.client.login(username=self.user.username, password='test')
         response = self.client.get(reverse('courses'))
         self.assertEqual(response.status_code, 200)
         ((template, context), _) = RENDER_MOCK.call_args  # pylint: disable=unpacking-non-sequence
@@ -297,13 +308,17 @@ class IndexPageProgramsTests(SiteMixin, ModuleStoreTestCase):
     """
     Tests for Programs List in Marketing Pages.
     """
+
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_get_programs_with_type_called(self):
-        views = [
-            (reverse('branding_index'), 'student.views.get_programs_with_type'),
-            (reverse('courses'), 'courseware.views.views.get_programs_with_type'),
-        ]
-        for url, dotted_path in views:
-            with patch(dotted_path) as mock_get_programs_with_type:
-                response = self.client.get(url)
-                self.assertEqual(response.status_code, 200)
-                mock_get_programs_with_type.assert_called_once()
+        with patch('student.views.get_programs_with_type') as mock_get_programs_with_type:
+            response = self.client.get(reverse('branding_index'))
+            self.assertEqual(response.status_code, 200)
+            mock_get_programs_with_type.assert_called_once()
+
+        with patch('courseware.views.views.get_programs_with_type') as mock_get_programs_with_type:
+            user = UserFactory.create(username="username", password="password")
+            self.client.login(username=user.username, password="password")
+            response = self.client.get(reverse('courses'))
+            self.assertEqual(response.status_code, 200)
+            mock_get_programs_with_type.assert_called_once()

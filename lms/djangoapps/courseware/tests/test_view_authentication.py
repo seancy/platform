@@ -1,6 +1,7 @@
 import datetime
 
 import pytz
+from django.conf import settings
 from django.urls import reverse
 from mock import patch
 from nose.plugins.attrib import attr
@@ -303,6 +304,7 @@ class TestViewAuth(EnterpriseTestConsentRequired, ModuleStoreTestCase, LoginEnro
             self.assert_request_status_code(200, url)
 
     @patch.dict('courseware.access.settings.FEATURES', {'DISABLE_START_DATES': False})
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_dark_launch_enrolled_student(self):
         """
         Make sure that before course start, students can't access course
@@ -330,6 +332,7 @@ class TestViewAuth(EnterpriseTestConsentRequired, ModuleStoreTestCase, LoginEnro
         self._check_non_staff_dark(self.test_course)
 
     @patch.dict('courseware.access.settings.FEATURES', {'DISABLE_START_DATES': False})
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_dark_launch_instructor(self):
         """
         Make sure that before course start instructors can access the

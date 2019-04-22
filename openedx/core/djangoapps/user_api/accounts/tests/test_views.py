@@ -239,7 +239,7 @@ class TestAccountsAPI(CacheIsolationTestCase, UserAPITestCase):
         Verify that the shareable fields from the account are returned
         """
         data = response.data
-        self.assertEqual(10, len(data))
+        self.assertEqual(12, len(data))
         self.assertEqual(self.user.username, data["username"])
         self.assertEqual("US", data["country"])
         self._verify_profile_image_data(data, True)
@@ -254,7 +254,7 @@ class TestAccountsAPI(CacheIsolationTestCase, UserAPITestCase):
         Verify that only the public fields are returned if a user does not want to share account fields
         """
         data = response.data
-        self.assertEqual(3, len(data))
+        self.assertEqual(5, len(data))
         self.assertEqual(self.user.username, data["username"])
         self._verify_profile_image_data(data, not requires_parental_consent)
         self.assertEqual(account_privacy, data["account_privacy"])
@@ -264,7 +264,7 @@ class TestAccountsAPI(CacheIsolationTestCase, UserAPITestCase):
         Verify that all account fields are returned (even those that are not shareable).
         """
         data = response.data
-        self.assertEqual(19, len(data))
+        self.assertEqual(20, len(data))
         self.assertEqual(self.user.username, data["username"])
         self.assertEqual(self.user.first_name + " " + self.user.last_name, data["name"])
         self.assertEqual("US", data["country"])
@@ -393,7 +393,7 @@ class TestAccountsAPI(CacheIsolationTestCase, UserAPITestCase):
             with self.assertNumQueries(queries):
                 response = self.send_get(self.client)
             data = response.data
-            self.assertEqual(19, len(data))
+            self.assertEqual(20, len(data))
             self.assertEqual(self.user.username, data["username"])
             self.assertEqual(self.user.first_name + " " + self.user.last_name, data["name"])
             for empty_field in ("year_of_birth", "level_of_education", "mailing_address", "bio"):
@@ -786,7 +786,7 @@ class TestAccountsAPI(CacheIsolationTestCase, UserAPITestCase):
         response = self.send_get(client)
         if has_full_access:
             data = response.data
-            self.assertEqual(19, len(data))
+            self.assertEqual(20, len(data))
             self.assertEqual(self.user.username, data["username"])
             self.assertEqual(self.user.first_name + " " + self.user.last_name, data["name"])
             self.assertEqual(self.user.email, data["email"])

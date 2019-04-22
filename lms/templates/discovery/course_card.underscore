@@ -3,8 +3,13 @@
         <header class="course-image">
             <div class="cover-image">
                 <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
-                <div class="learn-more" aria-hidden="true"><%- gettext("LEARN MORE") %></div>
+              <% if (language != "") { %>
+                <img src="/static/images/country-icons/<%- language %>.png" alt="<%- language %>" class="course-language">
+              <% } %>
             </div>
+            <% if (course_category) { %>
+            <div class="course-category"><%- gettext(course_category) %></div>
+            <% } %>
         </header>
         <section class="course-info" aria-hidden="true">
             <h2 class="course-name">
@@ -13,12 +18,33 @@
                 <span class="course-title"><%- content.display_name %></span>
             </h2>
             <div class="course-date" aria-hidden="true">
-                <%- interpolate(
-                      gettext("Starts: %(start_date)s"),
-                      { start_date: start }, true
-                    ) %>
+                <%- start %>
+                <% if (typeof(end) != "undefined") { %>
+                    - <%- end %>
+                <% } %>
             </div>
         </section>
+        <section class="progress-icon">
+            <svg class="progress-ring" data-percent="60">
+                <circle class="progress-ring__circle-bg" r="12" cx="16" y="15"/>
+                <circle class="progress-ring__circle" r="12" cx="13" cy="16"/>
+            </svg>
+            <span>0%</span>
+        </section>
+        <section class="sub-info">
+            <div class="badge">
+                <i class="far fa-trophy"></i>
+                <span><%- gettext("badges") %></span>
+            </div>
+            <div class="spliter"></div>
+            <div class="hour">
+                <i class="far fa-clock"></i>
+                <span><%- content.duration %></span>
+            </div>
+        </section>
+        <div class="course-actions" aria-hidden="true">
+            <div class="learn-more"><%- gettext("Learn More") %></div>
+        </div>
         <div class="sr">
             <ul>
                 <li><%- org %></li>

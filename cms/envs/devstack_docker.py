@@ -14,9 +14,10 @@ CMS_BASE = 'edx.devstack.studio:18010'
 LMS_ROOT_URL = 'http://{}'.format(LMS_BASE)
 
 FEATURES.update({
-    'ENABLE_COURSEWARE_INDEX': False,
+    'ENABLE_COURSEWARE_INDEX': True,
     'ENABLE_LIBRARY_INDEX': False,
     'ENABLE_DISCUSSION_SERVICE': True,
+    'ENABLE_EXTENDED_COURSE_DETAILS': True
 })
 
 CREDENTIALS_SERVICE_USERNAME = 'credentials_worker'

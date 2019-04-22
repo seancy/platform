@@ -46,11 +46,19 @@
                         userTimezone
                     );
                 }
+                data.end = formatDate(
+                    new Date(data.end),
+                    userLanguage,
+                    userTimezone
+                );
                 data.enrollment_start = formatDate(
                     new Date(data.enrollment_start),
                     userLanguage,
                     userTimezone
                 );
+                if (data.course_category) {
+                    data.course_category = window.COURSE_CATEGORIES[data.course_category];
+                }
                 this.$el.html(this.tpl(data));
                 return this;
             }

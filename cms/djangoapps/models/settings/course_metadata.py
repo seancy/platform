@@ -150,6 +150,8 @@ class CourseMetadata(object):
                 'help': field_help,
                 'deprecated': field.runtime_options.get('deprecated', False)
             }
+            if field.name == 'course_category':
+                result[field.name]['options'] = getattr(settings, 'COURSE_CATEGORIES', tuple())
         return result
 
     @classmethod

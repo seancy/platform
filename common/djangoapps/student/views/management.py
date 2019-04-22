@@ -268,6 +268,9 @@ def compose_and_send_activation_email(user, profile, user_registration=None):
     message_for_activation = render_to_string('emails/activation_email.txt', context)
     from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
     from_address = configuration_helpers.get_value('ACTIVATION_EMAIL_FROM_ADDRESS', from_address)
+    from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
+    if from_alias:
+        from_address = "%s <%s>" % (from_alias, from_address)
     if settings.FEATURES.get('REROUTE_ACTIVATION_EMAIL'):
         dest_addr = settings.FEATURES['REROUTE_ACTIVATION_EMAIL']
         message_for_activation = ("Activation for %s (%s): %s\n" % (user, user.email, profile.name) +
@@ -1293,8 +1296,8 @@ def do_email_change_request(user, new_email, activation_key=None):
         settings.DEFAULT_FROM_EMAIL
     )
     try:
-        email_showname = configuration_helpers.get_value('email_from_showname', settings.DEFAULT_FROM_EMAIL_SHOW_NAME)
-        from_address = "{} <{}>".format(email_showname, from_address)
+        from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
+        from_address = "{} <{}>".format(from_alias, from_address)
     except AttributeError:
         pass
 

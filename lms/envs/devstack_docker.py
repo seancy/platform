@@ -43,8 +43,9 @@ JWT_AUTH.update({
 
 FEATURES.update({
     'AUTOMATIC_AUTH_FOR_TESTING': True,
+    'COURSES_ARE_BROWSABLE': True,
     'ENABLE_COURSEWARE_SEARCH': False,
-    'ENABLE_COURSE_DISCOVERY': False,
+    'ENABLE_COURSE_DISCOVERY': True,
     'ENABLE_DASHBOARD_SEARCH': False,
     'ENABLE_DISCUSSION_SERVICE': True,
     'SHOW_HEADER_LANGUAGE_SELECTOR': True,
@@ -83,3 +84,24 @@ MKTG_URLS = {
 CREDENTIALS_SERVICE_USERNAME = 'credentials_worker'
 
 COURSE_CATALOG_API_URL = 'http://edx.devstack.discovery:18381/api/v1/'
+
+COURSE_DISCOVERY_MEANINGS = {
+    'language': LANGUAGE_MAP,
+    'start': {
+        'name': 'Availability',
+        'terms': {
+            'current': 'Current',
+            'new': 'New',
+            'soon': 'Starts soon',
+            'future': 'Future'
+        },
+    },
+    'course_category': {
+        'name': 'Course Type',
+        'terms': dict(COURSE_CATEGORIES),
+    },
+    'vendor': {
+        'name': 'Label'
+    }
+
+}

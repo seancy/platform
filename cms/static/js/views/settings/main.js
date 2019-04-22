@@ -29,6 +29,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                initialize: function(options) {
                    options = options || {};
         // fill in fields
+                   this.$el.find("#course-vendor").val(this.model.get('vendor'));
+                   this.$el.find("#course-category").val(this.model.get('course_category'));
                    this.$el.find('#course-language').val(this.model.get('language'));
                    this.$el.find('#course-organization').val(this.model.get('org'));
                    this.$el.find('#course-number').val(this.model.get('course_id'));
@@ -160,6 +162,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    language: 'course-language',
                    start_date: 'course-start',
                    end_date: 'course-end',
+                   course_category: 'course-category',
+                   vendor: 'course-vendor',
                    enrollment_start: 'enrollment-start',
                    enrollment_end: 'enrollment-end',
                    certificate_available_date: 'certificate-available',
@@ -301,6 +305,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        this.model.set('self_paced', JSON.parse(event.currentTarget.value));
                        break;
                    case 'course-language':
+                   case 'course-category':
+                   case 'course-vendor':
                    case 'course-effort':
                    case 'course-title':
                    case 'course-subtitle':

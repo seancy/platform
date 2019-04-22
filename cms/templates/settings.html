@@ -308,7 +308,21 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                   <option value="${lang}">${label}</option>
                 % endfor
               </select>
-              <span class="tip tip-stacked">${_("Identify the course language here. This is used to assist users find courses that are taught in a specific language. It is also used to localize the 'From:' field in bulk emails.")}</span>
+              <span class="tip tip-stacked">${_("Identify the course language here. This is used to assist users find courses that are taught in a specific language.")}</span>
+            </li>
+            <li class="field" id="field-course-category">
+              <label for="course-category">${_("Course Type")}</label>
+              <select id="course-category">
+                % for category, label in category_options:
+                  <option value="${category}">${label}</option>
+                % endfor
+              </select>
+              <span class="tip tip-stacked">${_("Identify the Course Type here.")}</span>
+            </li>
+            <li class="field" id="field-course-vendor">
+              <label for="course-vendor">${_("Label")}</label>
+                <input type="text" id="course-vendor">
+              <span class="tip tip-stacked">${_("Identify the course label here.")}</span>
             </li>
           </ol>
         </div>

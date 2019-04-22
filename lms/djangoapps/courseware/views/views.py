@@ -231,7 +231,8 @@ def courses(request):
         {
             'courses': courses_list,
             'course_discovery_meanings': course_discovery_meanings,
-            'programs_list': programs_list
+            'programs_list': programs_list,
+            'show_dashboard_tabs': True
         }
     )
 

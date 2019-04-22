@@ -2,6 +2,7 @@
   import json
   from django.utils.translation import ugettext as _
   from openedx.core.djangolib.js_utils import dump_js_escaped_json
+  from django.conf import settings
 %>
 <%inherit file="../main.html" />
 <%
@@ -30,30 +31,74 @@
 % endif
 
 <%block name="pagetitle">${_("Courses")}</%block>
+<%block name="bodyclass">view-catalog</%block>
+
+<script type="application/javascript">
+    window.COURSE_CATEGORIES = ${dict(settings.COURSE_CATEGORIES) | n, dump_js_escaped_json};
+</script>
 
 <main id="main" aria-label="Content" tabindex="-1">
+
     <section class="find-courses">
+      <section class="banner">
+        <section class="welcome-wrapper">
+          <h2>Explore Courses</h2>
+        </section>
+      </section>
       <section class="courses-container">
         % if course_discovery_enabled:
-        <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
-          <div id="discovery-message" class="search-status-label"></div>
-          <form class="wrapper-search-input">
-            <label for="discovery-input" class="sr">${_('Search for a course')}</label>
-            <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text"/>
-            <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
-              <span class="icon fa fa-search" aria-hidden="true"></span>
-              <div aria-live="polite" aria-relevant="all">
-                <div id="loading-indicator" class="loading-spinner hidden">
-                  <span class="icon fa fa-spinner fa-spin" aria-hidden="true"></span>
-                  <span class="sr">${_('Loading')}</span>
-                </div>
-              </div>
-            </button>
-          </form>
-        </div>
+        ##<section class="search-form"></section>
+        ##<%static:webpack entry="CourseSearchFormInitializer"></%static:webpack>
+        <section class="search-form">
+          <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
+            <form class="wrapper-search-input">
+              <label for="discovery-input" class="sr">${_('Search for a course')}</label>
+              <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text"/>
+              <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
+                <span class="icon fa fa-search" aria-hidden="true"></span>
 
-        <div id="filter-bar" class="filters hide-phone is-collapsed">
-        </div>
+              </button>
+              <div aria-live="polite" aria-relevant="all">
+                  <div id="loading-indicator" class="loading-spinner ">
+                    <span class="icon fa fa-spinner fa-spin" aria-hidden="true"></span>
+                    <span class="sr">${_('Loading')}</span>
+                  </div>
+                </div>
+            </form>
+          </div>
+
+          <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
+            ##<h2 class="header-search-facets">${_('Refine Your Search')}</h2>
+            <section class="search-facets-lists">
+            </section>
+            <button id="clear-all-filters" class="clear-filters flt-right discovery-button"><i class="fa fa-refresh icon"></i>${_('Reset')}</button>
+          </aside>
+
+          <div id="filter-bar" class="filters hide-phone is-collapsed"></div>
+
+          <div id="discovery-message" class="search-status-label"></div>
+
+        </section>
+
+        ##<div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
+        ##  <div id="discovery-message" class="search-status-label"></div>
+        ##  <form class="wrapper-search-input">
+        ##    <label for="discovery-input" class="sr">${_('Search for a course')}</label>
+        ##    <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text"/>
+        ##    <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
+        ##      <span class="icon fa fa-search" aria-hidden="true"></span>
+        ##      <div aria-live="polite" aria-relevant="all">
+        ##        <div id="loading-indicator" class="loading-spinner hidden">
+        ##          <span class="icon fa fa-spinner fa-spin" aria-hidden="true"></span>
+        ##          <span class="sr">${_('Loading')}</span>
+        ##        </div>
+        ##      </div>
+        ##    </button>
+        ##  </form>
+        ##</div>
+
+        ##<div id="filter-bar" class="filters hide-phone is-collapsed">
+        ##</div>
         % endif
 
         <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
@@ -67,13 +112,13 @@
         </div>
 
 
-        % if course_discovery_enabled:
-        <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
-          <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
-          <section class="search-facets-lists">
-          </section>
-        </aside>
-        % endif
+        ##% if course_discovery_enabled:
+        ##<aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
+        ##  <h2 class="header-search-facets">${_('Refine Your Search')}</h2>
+        ##  <section class="search-facets-lists">
+        ##  </section>
+        ##</aside>
+        ##% endif
 
       </section>
     </section>

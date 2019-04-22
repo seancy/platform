@@ -73,6 +73,7 @@ class TestSites(SharedModuleStoreTestCase, LoginEnrollmentTestCase):
             self.activate_user(email)
 
     @override_settings(SITE_NAME=settings.MICROSITE_TEST_HOSTNAME)
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_site_anonymous_homepage_content(self):
         """
         Verify that the homepage, when accessed via a Site domain, returns
@@ -112,6 +113,7 @@ class TestSites(SharedModuleStoreTestCase, LoginEnrollmentTestCase):
         self.assertNotContains(resp, 'Explore free courses from')
 
     @pytest.mark.skip('TODO invalid test from edx')
+    @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_no_configuration_anonymous_homepage_content(self):
         """
         Make sure we see the right content on the homepage if there is no site configuration defined.
@@ -121,7 +123,6 @@ class TestSites(SharedModuleStoreTestCase, LoginEnrollmentTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # assert various branding definitions on this Site ARE NOT VISIBLE
-
         self.assertNotContains(resp, 'This is a Test Site Overlay')   # Overlay test message
         self.assertNotContains(resp, 'test_site/images/header-logo.png')  # logo swap
         self.assertNotContains(resp, 'test_site/css/test_site')  # css override
