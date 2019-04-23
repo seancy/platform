@@ -39,7 +39,7 @@ for log_name, log_level in LOG_OVERRIDES:
 
 ################################ EMAIL ########################################
 
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_FILE_PATH = '/edx/src/ace_messages/'
 
 ############################ PYFS XBLOCKS SERVICE #############################

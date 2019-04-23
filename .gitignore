@@ -113,6 +113,7 @@ lms/static/themed_sass/
 cms/static/sass/*.css
 cms/static/sass/*.css.map
 cms/static/themed_sass/
+common/static/css/fontawesome/
 themes/**/css
 common/static/css/fontawesome/
 

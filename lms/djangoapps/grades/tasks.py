@@ -12,14 +12,17 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.utils import DatabaseError
+
 from lms.djangoapps.course_blocks.api import get_course_blocks
 from lms.djangoapps.grades.config.models import ComputeGradesSetting
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import CourseLocator
 from openedx.core.djangoapps.monitoring_utils import set_custom_metric, set_custom_metrics_for_course_key
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from student.models import CourseEnrollment
 from submissions import api as sub_api
 from track.event_transaction_utils import set_event_transaction_id, set_event_transaction_type
+from util.email_utils import send_mail_with_alias as send_mail
 from util.date_utils import from_timestamp
 from xmodule.modulestore.django import modulestore
 
@@ -163,6 +166,51 @@ def recalculate_subsection_grade_v3(self, **kwargs):
     _recalculate_subsection_grade(self, **kwargs)
 
 
+@task(
+    bind=True,
+    base=LoggedPersistOnFailureTask,
+    time_limit=SUBSECTION_GRADE_TIMEOUT_SECONDS,
+    max_retries=2,
+    default_retry_delay=RETRY_DELAY_SECONDS,
+    routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
+)
+def send_grade_override_email(self, **kwargs):
+    student_info = kwargs['student_info']
+    transcript = kwargs['transcript_link']
+    course_name = kwargs['course_name']
+    platform_name = kwargs['platform_name']
+
+    from lms.djangoapps.instructor.enrollment import render_message_to_string
+    for student in student_info:
+        sections = [] if student['all_pass'] else ', '.join(student['sections'])
+        params = {'name': student['name'],
+                  'transcript': transcript,
+                  'sections': sections,
+                  'platform_name': platform_name,
+                  'course_name': course_name}
+
+        subject, message = render_message_to_string(
+            'emails/manually_change_grade_email_subject.txt',
+            'emails/manually_change_grade_email_message.txt',
+            params
+        )
+
+        subject = subject.strip('\n')
+        try:
+            log.info(
+                u'Sending course/section - complete email to {email}'.format(email=student['email'])
+            )
+            from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
+            send_mail(subject, message, from_address, [student['email']], fail_silently=False)
+        except Exception as e:
+            log.error(
+                u'Failed to send email to {email}, Reason: {reason}'.format(
+                    email=student['email'],
+                    reason=e
+                )
+            )
+
+
 def _recalculate_subsection_grade(self, **kwargs):
     """
     Updates a saved subsection grade.
@@ -216,6 +264,7 @@ def _recalculate_subsection_grade(self, **kwargs):
             kwargs['only_if_higher'],
             kwargs['user_id'],
             kwargs['score_deleted'],
+            kwargs.get('force_update_subsections', False),
         )
     except Exception as exc:
         if not isinstance(exc, KNOWN_RETRY_ERRORS):
@@ -275,7 +324,8 @@ def _has_db_updated_with_new_score(self, scored_block_usage_key, **kwargs):
     return db_is_updated
 
 
-def _update_subsection_grades(course_key, scored_block_usage_key, only_if_higher, user_id, score_deleted):
+def _update_subsection_grades(
+        course_key, scored_block_usage_key, only_if_higher, user_id, score_deleted, force_update_subsections=False):
     """
     A helper function to update subsection grades in the database
     for each subsection containing the given block, and to signal
@@ -300,7 +350,8 @@ def _update_subsection_grades(course_key, scored_block_usage_key, only_if_higher
                 subsection_grade = subsection_grade_factory.update(
                     course_structure[subsection_usage_key],
                     only_if_higher,
-                    score_deleted
+                    score_deleted,
+                    force_update_subsections,
                 )
                 SUBSECTION_SCORE_CHANGED.send(
                     sender=None,

@@ -69,10 +69,12 @@ def get_grade_book_page(request, course, course_key):
     """
     # Unsanitized offset
     current_offset = request.GET.get('offset', 0)
+    search_query = request.GET.get('learner_name', '')
     enrolled_students = User.objects.filter(
         courseenrollment__course_id=course_key,
-        courseenrollment__is_active=1
-    ).order_by('username').select_related("profile")
+        courseenrollment__is_active=1,
+        profile__name__icontains=search_query
+    ).order_by('profile__name').select_related("profile")
 
     total_students = enrolled_students.count()
     page = calculate_page_info(current_offset, total_students)
@@ -84,15 +86,29 @@ def get_grade_book_page(request, course, course_key):
         enrolled_students = enrolled_students[offset: offset + MAX_STUDENTS_PER_PAGE_GRADE_BOOK]
 
     with modulestore().bulk_operations(course.location.course_key):
-        student_info = [
-            {
-                'username': student.username,
+        student_info = []
+        for student in enrolled_students:
+            course_grade = CourseGradeFactory().read(student, course)
+            grade_summary = course_grade.summary
+            graded_subsections = course_grade.graded_subsections_by_format
+            section_breakdown = grade_summary['section_breakdown']
+            for section in section_breakdown:
+                sections_by_format = graded_subsections.get(section.get('category'))
+                if sections_by_format:
+                    pair = sections_by_format.popitem(last=False)
+                    section['usage_key'] = unicode(pair[0])
+                    if pair[1].override is not None:
+                        section['override'] = True
+                        grade_summary['override'] = True
+                else:
+                    continue
+            info = {
+                'username': student.profile.name,
                 'id': student.id,
                 'email': student.email,
-                'grade_summary': CourseGradeFactory().read(student, course).summary
+                'grade_summary': grade_summary
             }
-            for student in enrolled_students
-        ]
+            student_info.append(info)
     return student_info, page
 
 
@@ -109,13 +125,23 @@ def spoc_gradebook(request, course_id):
     course = get_course_with_access(request.user, 'staff', course_key, depth=None)
     student_info, page = get_grade_book_page(request, course, course_key)
 
-    return render_to_response('courseware/gradebook.html', {
-        'page': page,
-        'page_url': reverse('spoc_gradebook', kwargs={'course_id': unicode(course_key)}),
-        'students': student_info,
-        'course': course,
-        'course_id': course_key,
-        # Checked above
-        'staff_access': True,
-        'ordered_grades': sorted(course.grade_cutoffs.items(), key=lambda i: i[1], reverse=True),
-    })
+    if request.method == 'GET':
+        page_url = request.get_full_path()
+        if page_url.rfind('offset') > -1:
+            page_url = page_url[0:page_url.rfind('offset')]
+        else:
+            if 'learner_name' in page_url:
+                page_url = page_url + '&'
+            else:
+                page_url = page_url + '?'
+
+        return render_to_response('courseware/gradebook.html', {
+            'page': page,
+            'page_url': page_url,
+            'students': student_info,
+            'course': course,
+            'course_id': course_key,
+            # Checked above
+            'staff_access': True,
+            'ordered_grades': sorted(course.grade_cutoffs.items(), key=lambda i: i[1], reverse=True),
+        })

@@ -2,11 +2,12 @@
 <%namespace name='static' file='/static_content.html'/>
 <%!
 from django.utils.translation import ugettext as _
-from django.urls import reverse
-from six import text_type
+from django.core.urlresolvers import reverse
 %>
 
+<%block name="bodyclass">view-gradebook</%block>
 <%block name="js_extra">
+  <script src="https://cdn.bootcss.com/notify/0.4.2/notify.js"></script>
   <script type="text/javascript" src="${static.url('js/vendor/flot/jquery.flot.js')}"></script>
   <script type="text/javascript" src="${static.url('js/vendor/flot/jquery.flot.stack.js')}"></script>
   <script type="text/javascript" src="${static.url('js/vendor/flot/jquery.flot.symbol.js')}"></script>
@@ -17,63 +18,97 @@ from six import text_type
 <%static:css group='style-course-vendor'/>
 <%static:css group='style-course'/>
 
-  <style type="text/css">
-  % for (grade, _), color in zip(ordered_grades, ['green', 'Chocolate']):
-  .grade_${grade} {color:${color};}
-  % endfor
-  % for (grade, _) in ordered_grades[2:]:
-  .grade_${grade} {color:DarkSlateGray;}
-  % endfor
-  .grade_F {color:DimGray;}
-  .grade_None {color:LightGray;}
-  </style>
-
   <script type="text/javascript">
     $(document).ready(function() {
       var gradebook = new Gradebook($('.gradebook-content'));
+      $.notify.defaults({ className: "success" });
     });
   </script>
 
+  <style type="text/css">
+      .indicate-icon a {
+          display: inline-block;
+      }
+      .indicate-icon {
+          display: inline-block;
+      }
+      .indicate-icon a.promote-section {
+        display: none;
+      }
+      .indicate-icon a.undo-grade {
+        display: none;
+      }
+      div.gradebook-wrapper section.gradebook-content .high-column {
+
+          background-color: rgba(231,76,60,0.1) !important;
+
+      }
+      .student-table .indicate-icon {
+
+        width: 18px;
+        display: inline-block;
+
+      }
+  </style>
 </%block>
 
-<%include file="/courseware/course_navigation.html" args="active_page=''" />
+
 
 <section class="container">
 <div class="gradebook-wrapper">
   <section class="gradebook-content">
-    <h1>${_("Gradebook")}</h1>
-
+    <div class="title_gradebook">${_("Gradebook")}</div>
+    <div class="search">
+      <form class="student-search">
+        <input type="search" name="learner_name" class="student-search-field" placeholder="${_('Search students')}" />
+        <input type="submit" value="${_("Filter")}">
+      </form>
+      <div class="export-edit">
+        <button class="edit_gradebook edit-grade">${_("Edit")}</button>
+        <button class="edit_gradebook confirm-grade" style="display: none">${_("Save")}</button>
+        <button class="edit_gradebook confirm-grade cancel-grade" style="display: none">${_("Cancel")}</button>
+      </div>
+      <div style="clear: both"></div>
+    </div>
+    <ul class="gradebook-instructions">
+        ${_("Instructions")}:
+        <li>1. ${_("The grade can only be manually changed to 100")}</li>
+        <li>2. ${_("The check icon on the right side of grade means the grade is manually changed")}</li>
+        <li>3. ${_("Please be careful when you try to edit learners' grade. Once you click the save button, this action is non reversible, a notification email will be sent the leaner.")}</li>
+    </ul>
     <table class="student-table">
       <thead>
         <tr>
           <th>
-            <form class="student-search">
-              <input type="search" class="student-search-field" placeholder="${_('Search students')}" />
-            </form>
+            ${_("Name")}
           </th>
         </tr>
       </thead>
       <tbody>
         %for student in students:
-        <tr>
+        <tr data-id="${student['id']}">
           <td>
-            <a href="${reverse('student_progress', kwargs=dict(course_id=text_type(course_id), student_id=student['id']))}">${student['username']}</a>
+            <div class="indicate-icon" title="${_("This learner's grade has been manually changed")}">
+                %if student['grade_summary'].get('override'):
+                  <i class="fa fa-check"></i>
+                %endif
+            </div>
+            <a href="${reverse('student_progress', kwargs=dict(course_id=course_id.to_deprecated_string(), student_id=student['id']))}">${student['username']}</a>
           </td>
         </tr>
         %endfor
       </tbody>
     </table>
 
-
-
     %if len(students) > 0:
     <div class="grades">
-      <table class="grade-table">
         <%
         templateSummary = students[0]['grade_summary']
         %>
+      <table class="grade-table">
         <thead>
           <tr> <!-- Header Row -->
+            <th class="high-column" title="${_('Total')}"><div class="assignment-label">${_('Total')}</div></th>
             %for section in templateSummary['section_breakdown']:
               <%
                 tooltip_str = section['detail']
@@ -85,54 +120,67 @@ from six import text_type
 
                 if "-" in tooltip_str:
                     tooltip_str = tooltip_str[0: tooltip_str.rfind('-')]
+                if 'Avg' in tooltip_str:
+                    data_class = 'high-column'
+                else:
+                    data_class = ''
+                index = section['label'][section['label'].rfind(' '):] if section['label'].rfind(' ') > -1 else ''
+                sec_name = section['category'] + index
               %>
-              <th title="${tooltip_str}"><div class="assignment-label">${section['label']}</div></th>
+              <th class="${data_class}" title="${sec_name}"><div class="assignment-label">${tooltip_str}</div></th>
             %endfor
-            <th title="${_('Total')}"><div class="assignment-label">${_('Total')}</div></th>
           </tr>
         </thead>
 
-        <%def name="percent_data(fraction, label)">
+        <%def name="percent_data(fraction, category, label, detail, override=False, usage_key='')">
           <%
-            letter_grade = 'None'
-            if fraction > 0:
-              letter_grade = 'F'
-              for (grade, cutoff) in ordered_grades:
-                if fraction >= cutoff:
-                  letter_grade = grade
-                  break
-
-            data_class = "grade_" + letter_grade
+            data_class = ''
+            if 'Avg' in label or 'Total' in label:
+                data_class = 'high-column'
           %>
-          <td class="${data_class}" data-percent="${fraction}" title="${label}">${ "{0:.0f}".format( 100 * fraction ) }</td>
+          <td class="${data_class}" data-category="${category}" data-percent="${fraction}" data-label="${label}" title="${detail}" data-usage-id="${usage_key}">
+              <span>${ "{0:.0f}".format( 100 * fraction ) }</span>
+              <div class="indicate-icon">
+              %if fraction < 1.0:
+
+                  <a class="promote-section" title="${_('promote')}" href="javascript:void(0);"><span class="fa fa-arrow-up"></span></a>
+                  <a class="undo-grade" title="${_('undo')}" href="javascript:void(0);"><span class="fa fa-undo"></span></a>
+              %endif
+              %if override:
+                  <i class="fa fa-check"></i>
+              %endif
+              </div>
+          </td>
         </%def>
 
         <tbody>
           %for student in students:
-          <tr>
+          <tr id="${student['id']}" data-id="${student['id']}">
+            ${percent_data( student['grade_summary']['percent'], 'Total', 'Total', _('Total'), student['grade_summary'].get('override', False))}
             %for section in student['grade_summary']['section_breakdown']:
-              ${percent_data( section['percent'], section['detail'] )}
+              ${percent_data( section['percent'], section['category'], section['label'], section['detail'], section.get('override', False), section.get('usage_key', '') )}
             %endfor
-            ${percent_data( student['grade_summary']['percent'], _('Total'))}
           </tr>
           %endfor
         </tbody>
       </table>
     </div>
+
     <span class="grade-book-footer">
         %if page["previous_offset"] is not None:
-          <a href="${page_url}?offset=${page['previous_offset']}"
+          <a href="${page_url}offset=${page['previous_offset']}"
              class="sequence-nav-button button-previous">
-            <span class="icon fa fa-chevron-left" aria-hidden="true"></span><span class="sr">${_('previous page')}</span>
+            <span class="icon fa fa-chevron-left" aria-hidden="true"></span><span class="sr">${_("previous page")}</span>
           </a>
         %endif
 
-        ${_('Page')} ${page["page_num"]} ${_('of')} ${page["total_pages"]}
+        ${_("Page {current_page} of {total_pages}").format(
+            current_page=page["page_num"], total_pages=page["total_pages"])}
 
         %if page["next_offset"] is not None:
-          <a href="${page_url}?offset=${page['next_offset']}"
+          <a href="${page_url}offset=${page['next_offset']}"
              class="sequence-nav-button button-next">
-            <span class="icon fa fa-chevron-right" aria-hidden="true"></span><span class="sr">${_('next page')}</span>
+            <span class="icon fa fa-chevron-right" aria-hidden="true"></span><span class="sr">${_("next page")}</span>
           </a>
         %endif
     </span>
@@ -140,5 +188,3 @@ from six import text_type
   </section>
 </div>
 </section>
-
-

@@ -1,0 +1,12 @@
+<%! from django.utils.translation import ugettext as _ %>
+
+% if sections:
+    ${_("You have just passed a session in the course {course_name} on {platform_name}!").format(
+        course_name=course_name,
+        platform_name=platform_name
+    )}
+% else:
+    ${_("You have just passed a course on {platform_name}!").format(
+        platform_name=platform_name
+    )}
+% endif
