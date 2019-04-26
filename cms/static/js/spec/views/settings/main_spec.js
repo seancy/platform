@@ -11,7 +11,9 @@ define([
         add_course_learning_info: '.add-course-learning-info',
         delete_course_learning_info: '.delete-course-learning-info',
         add_course_instructor_info: '.add-course-instructor-info',
-        remove_instructor_data: '.remove-instructor-data'
+        remove_instructor_data: '.remove-instructor-data',
+        add_course_reminder_info: '.add-course-reminder-info',
+        delete_course_reminder_info: '.delete-course-reminder-info'
     };
 
     describe('Settings/Main', function() {
@@ -49,12 +51,19 @@ define([
                 instructor_info: {
                     instructors: [{name: '', title: '', organization: '', image: '', bio: ''}]
                 },
-                self_paced: false
+                self_paced: false,
+                reminder_info: [''],
+                course_finish_days: '',
+                course_re_enroll_time: '',
+                re_enroll_time_unit: 'year',
+                periodic_reminder_enabled: '',
+                periodic_reminder_day: 1
             },
 
             mockSettingsPage = readFixtures('mock/mock-settings-page.underscore'),
             learningInfoTpl = readFixtures('course-settings-learning-fields.underscore'),
-            instructorInfoTpl = readFixtures('course-instructor-details.underscore');
+            instructorInfoTpl = readFixtures('course-instructor-details.underscore'),
+            reminderInfoTpl = readFixtures('course-reminder-details-fields.underscore');
 
         beforeEach(function() {
             TemplateHelpers.installTemplates(['course-settings-learning-fields', 'course-instructor-details'], true);
@@ -64,6 +73,9 @@ define([
             );
             appendSetFixtures(
                 $('<script>', {id: 'basic-instructor-info-tpl', type: 'text/template'}).text(instructorInfoTpl)
+            );
+            appendSetFixtures(
+                $("<script>", { id: "basic-reminder-info-tpl", type: "text/template" }).text(reminderInfoTpl)
             );
 
 
@@ -349,6 +361,15 @@ define([
             );
             AjaxHelpers.respondWithJson(requests, expectedJson);
         });
+
+        it('can add reminder information', function () {
+            this.view.$(SELECTORS.add_course_reminder_info).click();
+            expect(this.model.get('reminder_info').reminders.length).toEqual(2);
+            this.view.$(SELECTORS.add_course_reminder_info).click();
+            expect(this.model.get('reminder_info').reminders.length).toEqual(3);
+
+        });
+
         it('should disallow save with a certificate available date before end date', function() {
             this.model.showCertificateAvailableDate = true;
             $('#course-end-date').val('01/01/2030').trigger('change');

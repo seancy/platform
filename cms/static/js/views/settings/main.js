@@ -1,10 +1,10 @@
 define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui', 'js/utils/date_utils',
     'js/models/uploads', 'js/views/uploads', 'js/views/license', 'js/models/license',
     'common/js/components/views/feedback_notification', 'jquery.timepicker', 'date', 'gettext',
-    'js/views/learning_info', 'js/views/instructor_info', 'edx-ui-toolkit/js/utils/string-utils'],
+    'js/views/learning_info', 'js/views/instructor_info', "js/views/reminder_info", 'edx-ui-toolkit/js/utils/string-utils'],
        function(ValidatingView, CodeMirror, _, $, ui, DateUtils, FileUploadModel,
                 FileUploadDialog, LicenseView, LicenseModel, NotificationView,
-                timepicker, date, gettext, LearningInfoView, InstructorInfoView, StringUtils) {
+                timepicker, date, gettext, LearningInfoView, InstructorInfoView, ReminderInfoView, StringUtils) {
            var DetailsView = ValidatingView.extend({
     // Model class is CMS.Models.Settings.CourseDetails
                events: {
@@ -23,7 +23,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'blur :input': 'inputUnfocus',
                    'click .action-upload-image': 'uploadImage',
                    'click .add-course-learning-info': 'addLearningFields',
-                   'click .add-course-instructor-info': 'addInstructorFields'
+                   'click .add-course-instructor-info': 'addInstructorFields',
+                   'click .add-course-reminder-info': "addReminderFields"
                },
 
                initialize: function(options) {
@@ -74,6 +75,11 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        el: $('.course-instructor-details-fields'),
                        model: this.model
                    });
+
+                   this.reminder_info_view = new ReminderInfoView({
+                       el: $(".course-reminder-details-fields"),
+                       model: this.model
+                   });
                },
 
                render: function() {
@@ -95,6 +101,18 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        var displayName = this.$el.find('#' + this.fieldToSelectorMap.title).attr('data-display-name');
                        this.$el.find('#' + this.fieldToSelectorMap.title).val(displayName);
                    }
+
+                   this.$el.find('#' + this.fieldToSelectorMap.course_finish_days).val(this.model.get('course_finish_days'));
+                   this.$el.find('#' + this.fieldToSelectorMap.course_re_enroll_time).val(this.model.get('course_re_enroll_time'));
+                   this.$el.find('#' + this.fieldToSelectorMap.re_enroll_time_unit).val(this.model.get('re_enroll_time_unit'));
+                   this.$el.find('#' + this.fieldToSelectorMap.periodic_reminder_day).val(this.model.get('periodic_reminder_day'));
+                   if (this.model.get('periodic_reminder_enabled')) {
+                       this.$('#' + this.fieldToSelectorMap['periodic_reminder_enabled']).attr('checked', this.model.get('periodic_reminder_enabled'));
+                   }
+                   else {
+                       this.$('#' + this.fieldToSelectorMap['periodic_reminder_enabled']).removeAttr('checked')
+                   }
+
                    this.$el.find('#' + this.fieldToSelectorMap.subtitle).val(this.model.get('subtitle'));
                    this.$el.find('#' + this.fieldToSelectorMap.duration).val(this.model.get('duration'));
                    this.$el.find('#' + this.fieldToSelectorMap.description).val(this.model.get('description'));
@@ -155,6 +173,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.licenseView.render();
                    this.learning_info_view.render();
                    this.instructor_info_view.render();
+                   this.reminder_info_view.render();
 
                    return this;
                },
@@ -185,7 +204,14 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    course_settings_learning_fields: 'course-settings-learning-fields',
                    add_course_learning_info: 'add-course-learning-info',
                    add_course_instructor_info: 'add-course-instructor-info',
-                   course_learning_info: 'course-learning-info'
+                   course_learning_info: 'course-learning-info',
+                   add_course_reminder_info: 'add-course-reminder-info',
+                   course_learning_info: 'course-learning-info',
+                   course_finish_days: 'course-finish-days',
+                   course_re_enroll_time: 'course-re-enroll-time',
+                   re_enroll_time_unit: 're-enroll-time-unit',
+                   periodic_reminder_enabled: 'periodic-reminder-enabled',
+                   periodic_reminder_day: 'periodic-reminder-day'
                },
 
                addLearningFields: function() {
@@ -212,6 +238,15 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.model.set('instructor_info', {instructors: instructors});
                },
 
+               addReminderFields: function() {
+                /*
+                * Add new course email reminder fields.
+                * */
+                    var existingInfo = _.clone(this.model.get('reminder_info'));
+                    existingInfo.push('');
+                    this.model.set('reminder_info', existingInfo);
+                },
+
                updateTime: function(e) {
                    var now = new Date(),
                        hours = now.getUTCHours(),
@@ -234,6 +269,12 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        value = $(event.currentTarget).val();
                        var learningInfo = this.model.get('learning_info');
                        learningInfo[index] = value;
+                       this.showNotificationBar();
+                       break;
+                   case 'course-reminder-info-' + index:
+                       value = $(event.currentTarget).val();
+                       var reminderInfo = this.model.get('reminder_info');
+                       reminderInfo[index] = value;
                        this.showNotificationBar();
                        break;
                    case 'course-instructor-name-' + index:
@@ -304,6 +345,12 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    case 'course-pace-instructor-paced':
                        this.model.set('self_paced', JSON.parse(event.currentTarget.value));
                        break;
+
+                   case 'periodic-reminder-enabled':
+                   case 'periodic-reminder-day':
+                   case 'course-re-enroll-time':
+                   case 're-enroll-time-unit':
+                   case 'course-finish-days':
                    case 'course-language':
                    case 'course-category':
                    case 'course-vendor':

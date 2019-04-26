@@ -1,0 +1,47 @@
+<%! from django.utils.translation import ugettext as _ %>
+<%! from django.utils.translation import ungettext %>
+
+${_("Dear student,")}
+
+${_("You are receiving this message because you have been automatically re-enrolled in the course {course_name} at {site_name}.").format(
+		course_name=display_name,
+		site_name=site_name
+	)}
+
+% if finish_days:
+${ungettext(
+    "The course must be completed within {finish_days} day.",
+    "The course must be completed within {finish_days} days.",
+    finish_days
+    ).format(
+        finish_days=finish_days
+        )}
+% endif
+% if re_enroll_time and time_unit == "month":
+${ungettext(
+    "You will be automatically re-enrolled in this course after {re_enroll_time} month after completion.",
+    "You will be automatically re-enrolled in this course after {re_enroll_time} months after completion.",
+    re_enroll_time
+    ).format(
+        re_enroll_time=re_enroll_time
+    )}
+% elif re_enroll_time and time_unit == "year":
+${ungettext(
+    "You will be automatically re-enrolled in this course after {re_enroll_time} year after completion.",
+    "You will be automatically re-enrolled in this course after {re_enroll_time} years after completion.",
+    re_enroll_time
+    ).format(
+        re_enroll_time=re_enroll_time
+    )}
+% endif
+
+${_("To access the course visit {course_url} and login.").format(course_url=course_url)}
+
+
+${_("Best regards")}
+
+----
+${_("This email was automatically sent from {site_name} to "
+	"{email_address}").format(
+		site_name=site_name, email_address=email_address
+	)}

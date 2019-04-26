@@ -17,7 +17,7 @@
 %>
 
 <%block name="header_extras">
-% for template_name in ["basic-modal", "modal-button", "upload-dialog", "license-selector", "course-settings-learning-fields", "course-instructor-details"]:
+% for template_name in ["basic-modal", "modal-button", "upload-dialog", "license-selector", "course-settings-learning-fields", "course-instructor-details", "course-reminder-details-fields"]:
   <script type="text/template" id="${template_name}-tpl">
     <%static:include path="js/${template_name}.underscore" />
   </script>
@@ -290,6 +290,46 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <span class="tip tip-stacked timezone">${_("(UTC)")}</span>
               </div>
             </li>
+          </ol>
+        </div>
+
+        <div class="group-settings course-reminders">
+          <header>
+            <h2 class="title-2">${_('Course Reminders')}</h2>
+            <span class="tip">${_('Configure reminders to students who enroll in this course')}</span>
+          </header>
+
+          <ol class="list-input">
+            <li id="course-due">
+              <span>${_("The course must be finished within")}</span>
+              <input type="text" id="course-finish-days" />
+              <span>${_("day(s)")}</span>
+            </li>
+            <li id="course-re-enroll">
+              <span>${_("Learners will be automatically re-enrolled in this course after")}</span>
+              <input type="text" id="course-re-enroll-time" />
+              <select id="re-enroll-time-unit">
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+              </select>
+              <span>${_("after completion")}</span>
+            </li>
+            <li id="periodic-reminder">
+              <input type="checkbox" id="periodic-reminder-enabled">
+              <span>${_("Send a reminder email every")}</span>
+              <input type="text" id="periodic-reminder-day" placeholder="1">
+              <span>${_("day(s)")}</span>
+            </li>
+
+          </ol>
+          <ol class="list-input enum">
+            <li class="course-reminder-details-fields"></li>
+
+            <div class="actions">
+              <button type="button" class="action action-primary button new-button add-course-reminder-info">
+                <span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>${_("Add an Email Reminder")}
+              </button>
+            </div>
           </ol>
         </div>
 

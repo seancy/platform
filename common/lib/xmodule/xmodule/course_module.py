@@ -905,6 +905,48 @@ class CourseFields(object):
         ),
         scope=Scope.settings, default=False
     )
+    reminder_info = List(
+        display_name=_("Course Reminder Information"),
+        help=_("Configure reminders to students who enroll in this course"),
+        default=[],
+        scope=Scope.settings
+    )
+
+    course_finish_days = Integer(
+        display_name=_("Course Finish Days"),
+        help=_("Students have to finish the course within the required days above"),
+        default=None,
+        scope=Scope.settings
+    )
+
+    course_re_enroll_time = Integer(
+        display_name=_("Course Re-enroll Time"),
+        help="",
+        default=None,
+        scope=Scope.settings
+    )
+
+    re_enroll_time_unit = String(
+        display_name=_("Course Re-enroll Time Unit"),
+        help=_("Students will be automatically re-enrolled in this course after the given time above after completion"),
+        default="month",
+        scope=Scope.settings
+    )
+
+    periodic_reminder_enabled = Boolean(
+        display_name=_("Periodic Reminder Enabled"),
+        help=_(
+            "Enabled the periodic reminder."
+        ),
+        default=False,
+        scope=Scope.settings,
+    )
+    periodic_reminder_day = Integer(
+        display_name=_("Periodic Reminder Day"),
+        help="",
+        default=1,
+        scope=Scope.settings
+    )
 
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method

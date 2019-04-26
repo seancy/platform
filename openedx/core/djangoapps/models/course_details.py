@@ -75,6 +75,12 @@ class CourseDetails(object):
         self.self_paced = None
         self.learning_info = []
         self.instructor_info = []
+        self.reminder_info = []
+        self.course_finish_days = ''
+        self.course_re_enroll_time = ''
+        self.re_enroll_time_unit = 'month'
+        self.periodic_reminder_enabled = ''
+        self.periodic_reminder_day = 1
 
     @classmethod
     def fetch_about_attribute(cls, course_key, attribute):
@@ -124,6 +130,12 @@ class CourseDetails(object):
         course_details.self_paced = course_descriptor.self_paced
         course_details.learning_info = course_descriptor.learning_info
         course_details.instructor_info = course_descriptor.instructor_info
+        course_details.reminder_info = course_descriptor.reminder_info
+        course_details.course_finish_days = course_descriptor.course_finish_days
+        course_details.course_re_enroll_time = course_descriptor.course_re_enroll_time
+        course_details.re_enroll_time_unit = course_descriptor.re_enroll_time_unit
+        course_details.periodic_reminder_enabled = course_descriptor.periodic_reminder_enabled
+        course_details.periodic_reminder_day = course_descriptor.periodic_reminder_day
 
         # Default course license is "All Rights Reserved"
         course_details.license = getattr(course_descriptor, "license", "all-rights-reserved")
@@ -279,6 +291,40 @@ class CourseDetails(object):
         if 'language' in jsondict and jsondict['language'] != descriptor.language:
             descriptor.language = jsondict['language']
             dirty = True
+
+        if 'reminder_info' in jsondict:
+            reminder = jsondict['reminder_info']
+            tmp = []
+            for i in reminder:
+                try:
+                    tmp.append(int(i))
+                except ValueError:
+                    pass
+            tmp.sort()
+            descriptor.reminder_info = tmp
+            dirty = True
+
+        if 'course_finish_days' in jsondict and jsondict['course_finish_days'] != descriptor.course_finish_days:
+            descriptor.course_finish_days = jsondict['course_finish_days']
+            dirty = True
+
+        if 'course_re_enroll_time' in jsondict and \
+                jsondict['course_re_enroll_time'] != descriptor.course_re_enroll_time:
+            descriptor.course_re_enroll_time = jsondict['course_re_enroll_time']
+            dirty = True
+
+        if 're_enroll_time_unit' in jsondict and jsondict['re_enroll_time_unit'] != descriptor.re_enroll_time_unit:
+            descriptor.re_enroll_time_unit = jsondict['re_enroll_time_unit']
+            dirty = True
+
+        if 'periodic_reminder_enabled' in jsondict and \
+                jsondict['periodic_reminder_enabled'] != descriptor.periodic_reminder_enabled:
+            descriptor.periodic_reminder_enabled = jsondict['periodic_reminder_enabled']
+            dirty = True
+
+        if 'periodic_reminder_day' in jsondict and \
+                jsondict['periodic_reminder_day'] != descriptor.periodic_reminder_day:
+            descriptor.periodic_reminder_day = jsondict['periodic_reminder_day']
 
         if 'course_category' in jsondict and jsondict['course_category'] != descriptor.course_category:
             descriptor.course_category = jsondict['course_category']
