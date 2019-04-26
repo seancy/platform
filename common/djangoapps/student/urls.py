@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^course_run/{}/refund_status$'.format(settings.COURSE_ID_PATTERN),
         views.course_run_refund_status,
         name="course_run_refund_status"),
+    url(r'^enrolled_ilt_sessions$', views.get_enrolled_ilt, name="enrolled_ilt_sessions"),
 ]
 
 # enable automatic login

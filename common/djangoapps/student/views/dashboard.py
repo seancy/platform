@@ -4,6 +4,7 @@ Dashboard view and supporting methods
 
 import datetime
 import logging
+import json
 from collections import defaultdict
 
 from completion.exceptions import UnavailableCompletionData
@@ -11,6 +12,7 @@ from completion.utilities import get_key_to_last_completed_course_block
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http.response import JsonResponse
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.utils.translation import ugettext as _
@@ -24,6 +26,7 @@ import track.views
 from bulk_email.models import BulkEmailFlag, Optout  # pylint: disable=import-error
 from course_modes.models import CourseMode
 from courseware.access import has_access
+from courseware.models import XModuleUserStateSummaryField
 from edxmako.shortcuts import render_to_response, render_to_string
 from entitlements.models import CourseEntitlement
 from lms.djangoapps.commerce.utils import EcommerceService  # pylint: disable=import-error
@@ -54,6 +57,7 @@ from student.models import (
 )
 from util.milestones_helpers import get_pre_requisite_courses_not_completed
 from xmodule.modulestore.django import modulestore
+from xmodule.modulestore.exceptions import ItemNotFoundError
 
 log = logging.getLogger("edx.student")
 
@@ -848,3 +852,62 @@ def student_dashboard(request):
     response = render_to_response('dashboard.html', context)
     set_user_info_cookie(response, request)
     return response
+
+
+@login_required
+@ensure_csrf_cookie
+def get_enrolled_ilt(request):
+    user = request.user
+
+    # we want to filter and only show enrollments for courses within
+    # the 'ORG' defined in configuration.
+    course_org_filter = configuration_helpers.get_value('course_org_filter')
+    extra_course_org_filters = configuration_helpers.get_configuration_value('extra_course_org_filters', [])
+
+    # Let's filter out any courses in an "org" that has been declared to be
+    # in a configuration
+    org_filter_out_set = configuration_helpers.get_all_orgs()
+
+    # remove our current org from the "filter out" list, if applicable
+    if course_org_filter:
+        org_filter_out_set.remove(course_org_filter)
+    for org_filter in extra_course_org_filters:
+        if org_filter in org_filter_out_set:
+            org_filter_out_set.remove(org_filter)
+
+    # Build our (course, enrollment) list for the user, but ignore any courses that no
+    # longer exist (because the course IDs have changed). Still, we don't delete those
+    # enrollments, because it could have been a data push snafu.
+    course_enrollments = list(get_course_enrollments(user, course_org_filter, org_filter_out_set))
+    for org_filter in extra_course_org_filters:
+        course_enrollments += list(get_course_enrollments(user, org_filter, org_filter_out_set))
+
+    enrolled_course_ids = [enrollment.course_id for enrollment in course_enrollments]
+
+    # get ilt xblocks data
+    ilt_sessions = []
+
+    for n in enrolled_course_ids:
+        ilt_summaries = XModuleUserStateSummaryField.objects.filter(
+            usage_id__contains=unicode(n).replace('course', 'block', 1) + '+type@ilt+block',
+        )
+        for summary in ilt_summaries.filter(field_name='enrolled_users'):
+            try:
+                ilt_block = modulestore().get_item(summary.usage_id)
+                value = json.loads(summary.value)
+                for k, v in value.items():
+                    if request.user.id in v:
+                        sessions = ilt_summaries.get(field_name='sessions',
+                                                     usage_id=summary.usage_id)
+                        sessions_data = json.loads(sessions.value)
+                        if k in sessions_data:
+                            enrolled_session = sessions_data[k]
+                            section_id = ilt_block.get_parent().parent.block_id
+                            chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+                            url = reverse('courseware_section', args=[unicode(n), chapter_id, section_id])
+                            enrolled_session.update({'title': ilt_block.tooltip_title, 'url': url})
+                            ilt_sessions.append(enrolled_session)
+                            break
+            except ItemNotFoundError, AttributeError:
+                pass
+    return JsonResponse({'ilt_sessions': ilt_sessions})
