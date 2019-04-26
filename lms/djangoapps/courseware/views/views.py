@@ -90,6 +90,7 @@ from openedx.core.djangolib.markup import HTML, Text
 from openedx.features.course_experience import UNIFIED_COURSE_TAB_FLAG, course_home_url_name
 from openedx.features.course_experience.course_tools import CourseToolsPluginManager
 from openedx.features.course_experience.views.course_dates import CourseDatesFragmentView
+from openedx.features.course_experience.views.course_outline import CourseOutlineFragmentView
 from openedx.features.course_experience.waffle import waffle as course_experience_waffle
 from openedx.features.course_experience.waffle import ENABLE_COURSE_ABOUT_SIDEBAR_HTML
 from openedx.features.enterprise_support.api import data_sharing_consent_required
@@ -754,11 +755,12 @@ def course_about(request, course_id):
 
     # If a user is not able to enroll in a course then redirect
     # them away from the about page to the dashboard.
-    if not can_self_enroll_in_course(course_key):
-        return redirect(reverse('dashboard'))
+    # if not can_self_enroll_in_course(course_key):
+    #     return redirect(reverse('dashboard'))
 
     with modulestore().bulk_operations(course_key):
         permission = get_permission_for_course_about()
+
         course = get_course_with_access(request.user, permission, course_key)
         course_details = CourseDetails.populate(course)
         modes = CourseMode.modes_for_course_dict(course_key)
@@ -848,6 +850,11 @@ def course_about(request, course_id):
         # Embed the course reviews tool
         reviews_fragment_view = CourseReviewsModuleFragmentView().render_to_fragment(request, course=course)
 
+        outline_fragment = None
+        if request.user.is_authenticated:
+            outline_fragment = CourseOutlineFragmentView().render_to_fragment(
+                                    request, course_id=course_id, check_access=False)
+
         context = {
             'course': course,
             'course_details': course_details,
@@ -878,8 +885,10 @@ def course_about(request, course_id):
             'course_image_urls': overview.image_urls,
             'reviews_fragment_view': reviews_fragment_view,
             'sidebar_html_enabled': sidebar_html_enabled,
+            'user': request.user,
+            'show_dashboard_tabs': True,
+            'outline_fragment': outline_fragment
         }
-
         return render_to_response('courseware/course_about.html', context)
 
 

@@ -37,7 +37,7 @@
                 <span><%- gettext("badges") %></span>
             </div>
             <div class="spliter"></div>
-            <div class="hour">
+            <div class="duration">
                 <i class="far fa-clock"></i>
                 <span><%- content.duration %></span>
             </div>

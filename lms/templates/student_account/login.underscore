@@ -13,7 +13,7 @@
     <div class="header-space-fillder"></div>
 
     <figure class="welcome-text">
-      <a class="brand-link" href="/"><img src="/static/images/logo.png"></a>
+      <a class="brand-link" href="/"><img src="<%- context.static_url %>/logo.png"></a>
       <figcaption>Welcome to your training platform, log in to find your learning space!</figcaption>
     </figure>
 

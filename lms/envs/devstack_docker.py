@@ -103,5 +103,6 @@ COURSE_DISCOVERY_MEANINGS = {
     'vendor': {
         'name': 'Label'
     }
-
 }
+
+COURSE_ABOUT_VISIBILITY_PERMISSION = "see_private_about_page"

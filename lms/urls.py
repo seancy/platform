@@ -142,6 +142,8 @@ urlpatterns = [
 
     url(r'^dashboard/', include('learner_dashboard.urls')),
     url(r'^api/experiments/', include('experiments.urls', namespace='api_experiments')),
+
+    url(r'^analytics/', include('triboo_analytics.urls')),
 ]
 
 # TODO: This needs to move to a separate urls.py once the student_account and

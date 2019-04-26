@@ -437,7 +437,7 @@ class ViewsTestCase(ModuleStoreTestCase):
     @unittest.skipUnless(settings.FEATURES.get('ENABLE_SHOPPING_CART'), "Shopping Cart not enabled in settings")
     @patch.dict(settings.FEATURES, {'ENABLE_PAID_COURSE_REGISTRATION': True})
     def test_course_about_in_cart(self):
-        in_cart_span = '<span class="add-to-cart">'
+        in_cart_span = '<a href="/shoppingcart/">View Cart</a>'
         # don't mock this course due to shopping cart existence checking
         course = CourseFactory.create(org="new", number="unenrolled", display_name="course")
 

@@ -311,6 +311,7 @@ def _has_access_course(user, action, courselike):
     'staff' -- staff access to course.
     'see_in_catalog' -- user is able to see the course listed in the course catalog.
     'see_about_page' -- user is able to see the course about page.
+    'see_private_about_page' -- user is able to see the course about page if authenticated.
     """
     def can_load():
         """
@@ -365,6 +366,20 @@ def _has_access_course(user, action, courselike):
             or _has_staff_access_to_descriptor(user, courselike, courselike.id)
         )
 
+    def can_see_private_about_page():
+        """
+        Implements the "can see course about page" logic if a course about page should be visible
+        In this case we use the catalog_visibility property on the course descriptor
+        but also allow course staff to see this.
+        """
+        return (
+            user.is_authenticated and (
+                _has_catalog_visibility(courselike, CATALOG_VISIBILITY_CATALOG_AND_ABOUT)
+                or _has_catalog_visibility(courselike, CATALOG_VISIBILITY_ABOUT)
+                or _has_staff_access_to_descriptor(user, courselike, courselike.id)
+            )
+        )
+
     checkers = {
         'load': can_load,
         'load_mobile': lambda: can_load() and _can_load_course_on_mobile(user, courselike),
@@ -374,6 +389,7 @@ def _has_access_course(user, action, courselike):
         'instructor': lambda: _has_instructor_access_to_descriptor(user, courselike, courselike.id),
         'see_in_catalog': can_see_in_catalog,
         'see_about_page': can_see_about_page,
+        'see_private_about_page': can_see_private_about_page,
     }
 
     return _dispatch(checkers, action, user, courselike)

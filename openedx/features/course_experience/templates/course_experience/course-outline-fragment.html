@@ -17,13 +17,16 @@ course_sections = blocks.get('children')
 %>
 <main role="main" class="course-outline" id="main" tabindex="-1">
     % if course_sections is not None:
-        <button class="btn btn-primary"
+        <div class="course-outline-nav">
+            <h2>Course Outline</h2>
+            <button class="btn btn-primary"
                 id="expand-collapse-outline-all-button"
                 aria-expanded="false"
                 aria-controls="course-outline-block-tree"
                 >
-          <span class="expand-collapse-outline-all-extra-padding" id="expand-collapse-outline-all-span">${_("Expand All")}</span>
-        </button>
+              <span class="expand-collapse-outline-all-extra-padding" id="expand-collapse-outline-all-span">${_("Expand All")}</span>
+            </button>
+        </div>
         <ol class="block-tree accordion"
             id="course-outline-block-tree"
             aria-labelledby="expand-collapse-outline-all-button">
@@ -41,6 +44,8 @@ course_sections = blocks.get('children')
             % if section.get('complete'):
                             <span class="complete-checkmark fa fa-check"></span>
             % endif
+                        <span class="circle fa fa-circle"></span>
+                        <span class="bookmark fa fa-bookmark"></span>
                     </button>
                     <ol class="outline-item accordion-panel ${ '' if section_is_auto_opened else 'is-hidden' }"
                         id="${ section['id'] }_contents"

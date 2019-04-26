@@ -14,6 +14,7 @@ from waffle.models import Switch
 from web_fragments.fragment import Fragment
 
 from courseware.courses import get_course_overview_with_access
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
 from student.models import CourseEnrollment
 
@@ -30,12 +31,15 @@ class CourseOutlineFragmentView(EdxFragmentView):
     Course outline fragment to be shown in the unified course view.
     """
 
-    def render_to_fragment(self, request, course_id=None, page_context=None, **kwargs):
+    def render_to_fragment(self, request, course_id=None, page_context=None, check_access=True, **kwargs):
         """
         Renders the course outline as a fragment.
         """
         course_key = CourseKey.from_string(course_id)
-        course_overview = get_course_overview_with_access(request.user, 'load', course_key, check_if_enrolled=True)
+        if check_access:
+            course_overview = get_course_overview_with_access(request.user, 'load', course_key, check_if_enrolled=True)
+        else:
+            course_overview = course_overview = CourseOverview.get_from_id(course_key)
         course = modulestore().get_course(course_key)
 
         course_block_tree = get_course_outline_block_tree(request, course_id)

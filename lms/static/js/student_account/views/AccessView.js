@@ -83,6 +83,7 @@
                         method: 'GET',
                         url: '#'
                     });
+                    this.static_url = options.static_url || '/static/images/'
 
                     this.render();
 
@@ -137,7 +138,8 @@
                             createAccountOption: this.createAccountOption,
                             hideAuthWarnings: this.hideAuthWarnings,
                             pipelineUserDetails: this.pipelineUserDetails,
-                            enterpriseName: this.enterpriseName
+                            enterpriseName: this.enterpriseName,
+                            static_url: this.static_url
                         });
 
                     // Listen for 'password-help' event to toggle sub-views
@@ -153,7 +155,8 @@
 
                         this.subview.passwordHelp = new PasswordResetView({
                             fields: data.fields,
-                            model: this.resetModel
+                            model: this.resetModel,
+                            static_url: this.static_url
                         });
 
                     // Listen for 'password-email-sent' event to toggle sub-views
@@ -174,7 +177,8 @@
                             model: model,
                             thirdPartyAuth: this.thirdPartyAuth,
                             platformName: this.platformName,
-                            hideAuthWarnings: this.hideAuthWarnings
+                            hideAuthWarnings: this.hideAuthWarnings,
+                            static_url: this.static_url
                         });
 
                     // Listen for 'auth-complete' event so we can enroll/redirect the user appropriately.

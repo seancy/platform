@@ -21,10 +21,20 @@
 
                 submitButton: '.js-reset',
 
-                preRender: function() {
+                preRender: function(data) {
+                    this.static_url = data.static_url;
                     this.element.show($(this.el));
                     this.element.show($(this.el).parent());
                     this.listenTo(this.model, 'sync', this.saveSuccess);
+                },
+
+                render: function(html) {
+                    $(this.el).html(_.template(this.tpl)({
+                        context: {
+                            static_url: this.static_url
+                        }
+                    }));
+                    return this;
                 },
 
                 saveSuccess: function() {

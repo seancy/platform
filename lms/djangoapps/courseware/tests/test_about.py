@@ -111,7 +111,7 @@ class AboutTestCase(LoginEnrollmentTestCase, SharedModuleStoreTestCase, EventTra
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn("You are enrolled in this course", resp.content)
-        self.assertIn("View Course", resp.content)
+        self.assertIn("Resume Course", resp.content)
 
     @override_settings(COURSE_ABOUT_VISIBILITY_PERMISSION="see_about_page")
     def test_visible_about_page_settings(self):
@@ -330,7 +330,7 @@ class AboutWithInvitationOnly(SharedModuleStoreTestCase):
         url = reverse('about_course', args=[text_type(self.course.id)])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
-        self.assertIn(u"Enroll in {}".format(self.course.id.course), resp.content.decode('utf-8'))
+        self.assertIn('<a href="#" class="register">Start Course</a>', resp.content)
 
         # Check that registration button is present
         self.assertIn(REG_STR, resp.content)
@@ -360,7 +360,7 @@ class AboutTestCaseShibCourse(LoginEnrollmentTestCase, SharedModuleStoreTestCase
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn("OOGIE BLOOGIE", resp.content)
-        self.assertIn(u"Enroll in {}".format(self.course.id.course), resp.content.decode('utf-8'))
+        self.assertIn('<a href="#" class="register">Start Course</a>', resp.content)
         self.assertIn(SHIB_ERROR_STR, resp.content)
         self.assertIn(REG_STR, resp.content)
 
@@ -372,7 +372,7 @@ class AboutTestCaseShibCourse(LoginEnrollmentTestCase, SharedModuleStoreTestCase
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn("OOGIE BLOOGIE", resp.content)
-        self.assertIn(u"Enroll in {}".format(self.course.id.course), resp.content.decode('utf-8'))
+        self.assertIn('<a href="#" class="register">Start Course</a>', resp.content)
         self.assertIn(SHIB_ERROR_STR, resp.content)
         self.assertIn(REG_STR, resp.content)
 
@@ -513,7 +513,7 @@ class AboutPurchaseCourseTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
         url = reverse('about_course', args=[text_type(self.course.id)])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("Add buyme to Cart <span>($10 USD)</span>", resp.content)
+        self.assertIn("Add to Cart <span>($10 USD)</span>", resp.content)
 
     def test_logged_in(self):
         """
@@ -523,7 +523,7 @@ class AboutPurchaseCourseTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
         url = reverse('about_course', args=[text_type(self.course.id)])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("Add buyme to Cart <span>($10 USD)</span>", resp.content)
+        self.assertIn("Add to Cart <span>($10 USD)</span>", resp.content)
 
     def test_already_in_cart(self):
         """
@@ -537,8 +537,8 @@ class AboutPurchaseCourseTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
         url = reverse('about_course', args=[text_type(self.course.id)])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("This course is in your", resp.content)
-        self.assertNotIn("Add buyme to Cart <span>($10 USD)</span>", resp.content)
+        self.assertIn("View Cart", resp.content)
+        self.assertNotIn("Add to Cart <span>($10 USD)</span>", resp.content)
 
     def test_already_enrolled(self):
         """
@@ -556,8 +556,8 @@ class AboutPurchaseCourseTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn("You are enrolled in this course", resp.content)
-        self.assertIn("View Course", resp.content)
-        self.assertNotIn("Add buyme to Cart <span>($10 USD)</span>", resp.content)
+        self.assertIn("Resume Course", resp.content)
+        self.assertNotIn("Add to Cart <span>($10 USD)</span>", resp.content)
 
     def test_closed_enrollment(self):
         """
@@ -570,7 +570,7 @@ class AboutPurchaseCourseTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn("Enrollment is Closed", resp.content)
-        self.assertNotIn("Add closed to Cart <span>($10 USD)</span>", resp.content)
+        self.assertNotIn("Add to Cart <span>($10 USD)</span>", resp.content)
 
         # course price is visible ihe course_about page when the course
         # mode is set to honor and it's price is set
@@ -607,7 +607,7 @@ class AboutPurchaseCourseTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
         url = reverse('about_course', args=[text_type(course.id)])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
-        self.assertIn("Add buyme to Cart <span>($10 USD)</span>", resp.content)
+        self.assertIn("Add to Cart <span>($10 USD)</span>", resp.content)
 
         # note that we can't call self.enroll here since that goes through
         # the Django student views, which doesn't allow for enrollments
@@ -627,7 +627,7 @@ class AboutPurchaseCourseTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
         self.assertIn("Course is full", resp.content)
-        self.assertNotIn("Add buyme to Cart ($10)", resp.content)
+        self.assertNotIn("Add to Cart ($10)", resp.content)
 
     def test_free_course_display(self):
         """
@@ -640,7 +640,7 @@ class AboutPurchaseCourseTestCase(LoginEnrollmentTestCase, SharedModuleStoreTest
 
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
-        self.assertNotIn("Add free to Cart (Free)", resp.content)
+        self.assertNotIn("Add to Cart (Free)", resp.content)
         self.assertNotIn('<p class="important-dates-item-title">Price</p>', resp.content)
 
 
