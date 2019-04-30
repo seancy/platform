@@ -260,10 +260,10 @@ class TestInstructorDashboard(ModuleStoreTestCase, LoginEnrollmentTestCase, XssT
 
         # enrollment information visible
         self.assertIn('<h4 class="hd hd-4">Enrollment Information</h4>', response.content)
-        self.assertIn('<th scope="row">Verified</th>', response.content)
-        self.assertIn('<th scope="row">Audit</th>', response.content)
-        self.assertIn('<th scope="row">Honor</th>', response.content)
-        self.assertIn('<th scope="row">Professional</th>', response.content)
+        self.assertIn('<label>Verified</label>', response.content)
+        self.assertIn('<label>Audit</label>', response.content)
+        self.assertIn('<label>Honor</label>', response.content)
+        self.assertIn('<label>Professional</label>', response.content)
 
         # dashboard link hidden
         self.assertNotIn(self.get_dashboard_enrollment_message(), response.content)
@@ -280,7 +280,7 @@ class TestInstructorDashboard(ModuleStoreTestCase, LoginEnrollmentTestCase, XssT
         response = self.client.get(self.url)
 
         # Check that the number of professional enrollments is two
-        self.assertContains(response, '<th scope="row">Professional</th><td>2</td>')
+        self.assertContains(response, '<label>Professional</label>\n            <b>2</b>')
 
     @patch.dict(settings.FEATURES, {'DISPLAY_ANALYTICS_ENROLLMENTS': False})
     @override_settings(ANALYTICS_DASHBOARD_URL='http://example.com')
@@ -292,10 +292,10 @@ class TestInstructorDashboard(ModuleStoreTestCase, LoginEnrollmentTestCase, XssT
         response = self.client.get(self.url)
 
         # enrollment information hidden
-        self.assertNotIn('<th scope="row">Verified</th>', response.content)
-        self.assertNotIn('<th scope="row">Audit</th>', response.content)
-        self.assertNotIn('<th scope="row">Honor</th>', response.content)
-        self.assertNotIn('<th scope="row">Professional</th>', response.content)
+        self.assertNotIn('<label>Verified</label>', response.content)
+        self.assertNotIn('<label>Audit</label>', response.content)
+        self.assertNotIn('<label>Honor</label>', response.content)
+        self.assertNotIn('<label>Professional</label>', response.content)
 
         # link to dashboard shown
         expected_message = self.get_dashboard_enrollment_message()
@@ -382,7 +382,7 @@ class TestInstructorDashboard(ModuleStoreTestCase, LoginEnrollmentTestCase, XssT
         Verify that grade cutoffs are displayed in the correct order.
         """
         response = self.client.get(self.url)
-        self.assertIn('D: 0.5, C: 0.57, B: 0.63, A: 0.75', response.content)
+        self.assertIn('<b>D: 50%</b>\n          <b>C: 57%</b>\n          <b>B: 63%</b>\n          <b>A: 75%</b>\n', response.content)
 
     @patch('lms.djangoapps.instructor.views.gradebook_api.MAX_STUDENTS_PER_PAGE_GRADE_BOOK', 2)
     def test_calculate_page_info(self):

@@ -397,7 +397,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
 
         response = self.client.get(course_home_url(course))
         content = pq(response.content)
-        self.assertEqual(len(content('.fa-check')), 0)
+        self.assertEqual(len(content('.fa-check-circle')), 0)
 
         self.complete_sequential(self.course, vertical)
 
@@ -405,7 +405,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
         content = pq(response.content)
 
         # vertical and its parent should be checked
-        self.assertEqual(len(content('.fa-check')), 2)
+        self.assertEqual(len(content('.fa-check-circle')), 2)
 
     def test_start_course(self):
         """

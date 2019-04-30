@@ -42,10 +42,8 @@ course_sections = blocks.get('children')
                         <span class="fa fa-chevron-right ${ 'fa-rotate-90' if section_is_auto_opened else '' }" aria-hidden="true"></span>
                         <h3 class="section-title">${ section['display_name'] }</h3>
             % if section.get('complete'):
-                            <span class="complete-checkmark fa fa-check"></span>
+                            <span class="complete-checkmark far fa-check-circle"></span>
             % endif
-                        <span class="circle fa fa-circle"></span>
-                        <span class="bookmark fa fa-bookmark"></span>
                     </button>
                     <ol class="outline-item accordion-panel ${ '' if section_is_auto_opened else 'is-hidden' }"
                         id="${ section['id'] }_contents"
@@ -86,7 +84,7 @@ course_sections = blocks.get('children')
                                             ${ subsection['display_name'] }
                                         </h4>
                     % if subsection.get('complete'):
-                                        <span class="complete-checkmark fa fa-check"></span>
+                                        <span class="complete-checkmark far fa-check-circle"></span>
                     % endif
                 % endif
                                         <div class="details">
@@ -166,7 +164,7 @@ course_sections = blocks.get('children')
                                               </div>
                                             </div>
                         % if vertical.get('complete'):
-                                                <span class="complete-checkmark fa fa-check"></span>
+                                                <span class="complete-checkmark far fa-check-circle"></span>
                         % endif
                                         </a>
                                     </li>

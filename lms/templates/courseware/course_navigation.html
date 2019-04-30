@@ -66,7 +66,14 @@ if course is not None:
                     <%include file="${tabs_tmpl}" args="tab_list=tab_list,active_page=active_page,default_tab=default_tab,tab_image=tab_image" />
                     <%block name="extratabs" />
                 </ol>
+                <div class="wrap-instructor-info studio-view">
+                  %if studio_url:
+                    <a class="instructor-info-action" href="${studio_url}">${_("View Course in Studio")}</a>
+                  %endif
+                </div>
             </div>
         </nav>
     % endif
 %endif
+
+
