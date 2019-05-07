@@ -13,6 +13,7 @@ def themes = null
 def vars = "LT_KEY_FILE=/root/.ssh/id_rsa "
 def machine = null
 def proceed = true
+def key_file = '/opt/password.txt'
 
 pipeline {
     agent any
@@ -126,7 +127,7 @@ pipeline {
                     . /tmp/.venv/bin/activate
                     ansible-playbook --ssh-common-args='-o "StrictHostKeyChecking no"' \
                     -u ubuntu -i ${selectedIpAddress}, --key-file="/tmp/STAGING_SG.pem" \
-                    -e "@/tmp/${machine}_password.yml" -e "@/tmp/${machine}_host.yml" -e "@/tmp/themes.yml" -e "${vars}" \
+                    -e "@/tmp/${machine}_password.yml" -e "@/tmp/${machine}_host.yml" -e "@/tmp/themes.yml" -e "${vars}" --vault-password-file "${key_file}" \
                     -t ${tags} lt_edxapp_with_worker.yml
                     """
                 }
