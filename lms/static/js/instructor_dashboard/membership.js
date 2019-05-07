@@ -108,7 +108,7 @@ such that the value can be defined later than this assignment (file load order).
         function AuthListWidget($container, rolename, $errorSection) {  // eslint-disable-line no-shadow
             var msg,
                 authListWidget = this,
-                labelsList = [gettext('Username'), gettext('Email'), gettext('Revoke access')];
+                labelsList = ['', gettext('Username'), gettext('Email'), gettext('Revoke access')];
             this.rolename = rolename;
             this.$errorSection = $errorSection;
             this.list_enabled = true;
@@ -119,6 +119,7 @@ such that the value can be defined later than this assignment (file load order).
                 title: $container.data('display-name'),
                 info: $container.data('info-text'),
                 labels: labelsList,
+                add_title:gettext('Add new team member'),
                 add_placeholder: gettext('Enter username or email'),
                 add_btn_label: $container.data('add-button-label'),
                 add_handler: function(input) {
@@ -186,6 +187,8 @@ such that the value can be defined later than this assignment (file load order).
                             authListWidgetReloadList.reload_list();
                         });
                     });
+                    const $img = $('<img class="portrait"/>');
+                    $img.attr('src', member.profile_image_url);
                     if (authListWidgetReloadList.rolename === 'Group Moderator') {
                         if (divisionScheme !== undefined && divisionScheme === 'none') {
                             // There is No discussion division scheme selected so the Group Moderator role
@@ -201,12 +204,12 @@ such that the value can be defined later than this assignment (file load order).
                         } else {
                             authListWidgetReloadList.list_enabled = true;
                             enableAddButton(true, authListWidgetReloadList);
-                            authListWidgetReloadList.add_row([member.username, member.email,
+                            authListWidgetReloadList.add_row([member.name, member.email,
                                 member.group_name, $revokeBtn]
                             );
                         }
                     } else {
-                        authListWidgetReloadList.add_row([member.username, member.email, $revokeBtn]);
+                        authListWidgetReloadList.add_row([$img, member.name, member.email, $revokeBtn]);
                     }
                 });
             });
@@ -220,7 +223,15 @@ such that the value can be defined later than this assignment (file load order).
 
         AuthListWidget.prototype.show_errors = function(msg) {
             var result;
-            result = this.$errorSection !== undefined ? this.$errorSection.text(msg) : undefined;
+            result = undefined
+            if (this.$errorSection !== undefined) {
+                var $taskResSection;
+                $taskResSection = $('<div/>', {
+                    class: 'request-res-error-section'
+                });
+                $taskResSection.text(msg);
+                result = this.$errorSection.append($taskResSection);
+            }
             return result;
         };
 
@@ -293,11 +304,10 @@ such that the value can be defined later than this assignment (file load order).
         function AutoEnrollmentViaCsv($container) {
             var autoenrollviacsv = this;
             this.$container = $container;
-            this.$student_enrollment_form = this.$container.find('#student-auto-enroll-form');
-            this.$enrollment_signup_button = this.$container.find('#submitBtn-auto_enroll_csv');
-            this.$students_list_file = this.$container.find("input[name='students_list']");
+            this.$enrollment_signup_button = this.$container.find("input[name='enrollment-signup-button']");
+            this.$students_list_file = this.$container.find("input[name='auto_enroll_students_list']")[0];
             this.$csrf_token = this.$container.find("input[name='csrfmiddlewaretoken']");
-            this.$results = this.$container.find('div.results');
+            this.$results = this.$container.find('#register-enroll-results');
             this.$browse_button = this.$container.find('#browseBtn-auto-enroll');
             this.$browse_file = this.$container.find('#browseFile');
             this.processing = false;
@@ -309,100 +319,85 @@ such that the value can be defined later than this assignment (file load order).
                 }
                 return false;
             });
-            this.$enrollment_signup_button.click(function() {
-                return autoenrollviacsv.$student_enrollment_form.submit(function(event) {
-                    var data;
-                    if (autoenrollviacsv.processing) {
-                        return false;
-                    }
-                    autoenrollviacsv.processing = true;
-                    event.preventDefault();
-                    data = new FormData(event.currentTarget);
-                    $.ajax({
-                        dataType: 'json',
-                        type: 'POST',
-                        url: event.currentTarget.action,
-                        data: data,
-                        processData: false,
-                        contentType: false,
-                        success: function(responsedata) {
-                            autoenrollviacsv.processing = false;
-                            return autoenrollviacsv.display_response(responsedata);
-                        }
-                    });
+            this.$enrollment_signup_button.click(function(event) {
+                var data;
+                if (autoenrollviacsv.processing) {
                     return false;
+                }
+                autoenrollviacsv.processing = true;
+                event.preventDefault();
+                data = new FormData();
+                if (autoenrollviacsv.$students_list_file.files.length === 1) {
+                    data.append('students_list', autoenrollviacsv.$students_list_file.files[0]);
+                }
+                return $.ajax({
+                    dataType: 'json',
+                    type: 'POST',
+                    url: $(event.target).data('endpoint'),
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function(responsedata) {
+                        autoenrollviacsv.processing = false;
+                        return autoenrollviacsv.display_response(responsedata, $(event.target).data('action'));
+                    },
+                    error: function(responsedata) {
+                        autoenrollviacsv.processing = false;
+                        return autoenrollviacsv.display_response(responsedata, $(event.target).data('action'));
+                    }
                 });
             });
         }
 
-        AutoEnrollmentViaCsv.prototype.display_response = function(dataFromServer) {
-            var error, errors, generalError, renderResponse,
-                resultFromServerIsSuccess, warning, warnings,
-                i, j, k, len, len1, len2, ref, ref1, ref2,
+
+        AutoEnrollmentViaCsv.prototype.display_response = function(dataFromServer, action) {
+            var renderResponse,
                 displayResponse = this;
             this.$results.empty();
-            errors = [];
-            warnings = [];
-            resultFromServerIsSuccess = true;
-            if (dataFromServer.general_errors.length) {
-                resultFromServerIsSuccess = false;
-                ref = dataFromServer.general_errors;
-                for (i = 0, len = ref.length; i < len; i++) {
-                    generalError = ref[i];
-                    generalError.is_general_error = true;
-                    errors.push(generalError);
-                }
-            }
-            if (dataFromServer.row_errors.length) {
-                resultFromServerIsSuccess = false;
-                ref1 = dataFromServer.row_errors;
-                for (j = 0, len1 = ref1.length; j < len1; j++) {
-                    error = ref1[j];
-                    error.is_general_error = false;
-                    errors.push(error);
-                }
-            }
-            if (dataFromServer.warnings.length) {
-                resultFromServerIsSuccess = false;
-                ref2 = dataFromServer.warnings;
-                for (k = 0, len2 = ref2.length; k < len2; k++) {
-                    warning = ref2[k];
-                    warning.is_general_error = false;
-                    warnings.push(warning);
-                }
-            }
+
             renderResponse = function(title, message, type, studentResults) {
                 var details, responseMessage, studentResult, l, len3;
                 details = [];
                 for (l = 0, len3 = studentResults.length; l < len3; l++) {
                     studentResult = studentResults[l];
-                    if (studentResult.is_general_error) {
-                        details.push(studentResult.response);
-                    } else {
-                        responseMessage = studentResult.username + '  (' + studentResult.email + '):  ' + '   (' + studentResult.response + ')';   // eslint-disable-line max-len, no-useless-concat
-                        details.push(responseMessage);
-                    }
+                    details.push(studentResult.response);
                 }
                 return edx.HtmlUtils.append(displayResponse.$results,
                     edx.HtmlUtils.HTML(displayResponse.render_notification_view(type, title, message, details))
                 );
             };
-            if (errors.length) {
-                renderResponse(gettext('Errors'),
-                    gettext('The following errors were generated:'), 'error', errors
-                );
+
+            if (dataFromServer.general_errors.length) {
+                renderResponse(gettext('Errors'), "", 'error', dataFromServer.general_errors);
             }
-            if (warnings.length) {
-                renderResponse(gettext('Warnings'),
-                    gettext('The following warnings were generated:'), 'warning', warnings
-                );
+
+            if (dataFromServer.row_errors.length) {
+                renderResponse(gettext('Errors'), "", 'error', dataFromServer.row_errors);
             }
-            if (resultFromServerIsSuccess) {
-                return renderResponse(gettext('Success'),
-                    gettext('All accounts were created successfully.'), 'confirmation', []
-                );
+
+            if (action == 'precheck') {
+                if (dataFromServer.general_errors.length == 0 && dataFromServer.row_errors.length == 0) {
+                    renderResponse(gettext('CSV file ready for upload'), "", 'confirmation', []);
+                }
             }
-            return renderResponse();
+            if (action == "register-enroll") {
+                if (dataFromServer.created_and_enrolled.length) {
+                    renderResponse(gettext('Users successfully created and enrolled:'),
+                        "", 'confirmation', dataFromServer.created_and_enrolled);
+                }
+
+                if (dataFromServer.only_enrolled.length) {
+                    renderResponse(gettext('Registered users now enrolled in this course:',
+                        "", 'confirmation', dataFromServer.only_enrolled));
+                }
+
+                if (dataFromServer.untouched.length) {
+                    renderResponse(gettext('Registered users who were already enrolled (no changes):'),
+                        "", 'confirmation', dataFromServer.untouched);
+                }
+            }
+
+            return false;
         };
 
         AutoEnrollmentViaCsv.prototype.render_notification_view = function(type, title, message, details) {
@@ -422,6 +417,108 @@ such that the value can be defined later than this assignment (file load order).
         };
 
         return AutoEnrollmentViaCsv;
+    }());
+
+    this.AutoUpdateViaCsv = (function() {
+        function AutoUpdateViaCsv($container) {
+            var autoupdateviacsv = this;
+            this.$container = $container;
+            this.$update_button = this.$container.find("input[name='update_button']");
+            this.$students_list_file = this.$container.find("input[name='auto_update_students_list']")[0];
+            this.$csrf_token = this.$container.find("input[name='csrfmiddlewaretoken']");
+            this.$results = this.$container.find('#update-results');
+            this.$browse_button = this.$container.find('#browseBtn-auto-update');
+            this.$browse_file = this.$container.find('#browseFileUpdate');
+            this.processing = false;
+            this.$browse_button.on('change', function(event) {
+                if (event.currentTarget.files.length === 1) {
+                    return autoupdateviacsv.$browse_file.val(
+                        event.currentTarget.value.substring(event.currentTarget.value.lastIndexOf('\\') + 1)
+                    );
+                }
+                return false;
+            });
+            this.$update_button.click(function(event) {
+                var data;
+                if (autoupdateviacsv.processing) {
+                    return false;
+                }
+                autoupdateviacsv.processing = true;
+                event.preventDefault();
+                data = new FormData();
+                if (autoupdateviacsv.$students_list_file.files.length === 1) {
+                    data.append('students_list', autoupdateviacsv.$students_list_file.files[0]);
+                }
+                return $.ajax({
+                    dataType: 'json',
+                    type: 'POST',
+                    url: $(event.target).data('endpoint'),
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function(responsedata) {
+                        autoupdateviacsv.processing = false;
+                        return autoupdateviacsv.display_response(responsedata, $(event.target).data('action'));
+                    },
+                    error: function(responsedata) {
+                        autoupdateviacsv.processing = false;
+                        return autoupdateviacsv.display_response(responsedata, $(event.target).data('action'));
+                    }
+                });
+            });
+        }
+
+        AutoUpdateViaCsv.prototype.display_response = function(dataFromServer, action) {
+            var renderResponse,
+                displayResponse = this;
+            this.$results.empty();
+
+            renderResponse = function(title, message, type, studentResults) {
+                var details, responseMessage, studentResult, l, len3;
+                details = [];
+                for (l = 0, len3 = studentResults.length; l < len3; l++) {
+                    studentResult = studentResults[l];
+                    details.push(studentResult.response);
+                }
+                return edx.HtmlUtils.append(displayResponse.$results,
+                    edx.HtmlUtils.HTML(displayResponse.render_notification_view(type, title, message, details))
+                );
+            };
+
+            if (dataFromServer.general_errors.length) {
+                renderResponse(gettext('Errors'), "", 'error', dataFromServer.general_errors);
+            }
+
+            if (dataFromServer.row_errors.length) {
+                renderResponse(gettext('Errors'), "", 'error', dataFromServer.row_errors);
+            }
+
+            if (dataFromServer.updated.length) {
+                renderResponse(gettext('User accounts successfully updated:'),
+                    "", 'confirmation', dataFromServer.updated);
+            }
+
+            return false;
+        };
+
+        AutoUpdateViaCsv.prototype.render_notification_view = function(type, title, message, details) {
+            var notificationModel, view;
+            notificationModel = new NotificationModel();
+            notificationModel.set({
+                type: type,
+                title: title,
+                message: message,
+                details: details
+            });
+            view = new NotificationView({
+                model: notificationModel
+            });
+            view.render();
+            return view.$el.html();
+        };
+
+        return AutoUpdateViaCsv;
+
     }());
 
     BetaTesterBulkAddition = (function() {
@@ -469,7 +566,12 @@ such that the value can be defined later than this assignment (file load order).
             this.clear_input();
             this.$task_response.empty();
             this.$request_response_error.empty();
-            return this.$request_response_error.text(msg);
+            var $taskResSection;
+            $taskResSection = $('<div/>', {
+                class: 'request-res-error-section'
+            });
+            $taskResSection.text(msg);
+            return this.$request_response_error.append($taskResSection);
         };
 
         betaTesterBulkAddition.prototype.display_response = function(dataFromServer) {
@@ -647,7 +749,12 @@ such that the value can be defined later than this assignment (file load order).
             this.clear_input();
             this.$task_response.empty();
             this.$request_response_error.empty();
-            return this.$request_response_error.text(msg);
+            var $taskResSection;
+            $taskResSection = $('<div/>', {
+                class: 'request-res-error-section'
+            });
+            $taskResSection.text(msg);
+            return this.$request_response_error.append($taskResSection);
         };
 
         batchEnrollment.prototype.display_response = function(dataFromServer) {
@@ -981,6 +1088,9 @@ such that the value can be defined later than this assignment (file load order).
             });
             plantTimeout(0, function() {
                 return new AutoEnrollmentViaCsv(thismembership.$section.find('.auto_enroll_csv'));
+            });
+            plantTimeout(0, function() {
+                return new AutoUpdateViaCsv(thismembership.$section.find('.auto_update_csv'));
             });
             plantTimeout(0, function() {
                 return new BetaTesterBulkAddition(thismembership.$section.find('.batch-beta-testers'));

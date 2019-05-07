@@ -58,37 +58,62 @@ from openedx.core.djangolib.markup import HTML, Text
             </div>
         </label>
     </div>
-    <div>
-        <input type="button" name="enrollment-button" class="enrollment-button" value="${pgettext('someone','Enroll')}" data-endpoint="${ section_data['enroll_button_url'] }" data-action="enroll" >
+    <div class="action-wrapper">
         <input type="button" name="enrollment-button" class="enrollment-button" value="${_("Unenroll")}" data-endpoint="${ section_data['unenroll_button_url'] }" data-action="unenroll" >
+        <input type="button" name="enrollment-button" class="enrollment-button" value="${pgettext('someone','Enroll')}" data-endpoint="${ section_data['enroll_button_url'] }" data-action="enroll" >
     </div>
     <div class="request-response"></div>
     <div class="request-response-error"></div>
 </fieldset>
 
 %if static.get_value('ALLOW_AUTOMATED_SIGNUPS', settings.FEATURES.get('ALLOW_AUTOMATED_SIGNUPS', False)):
-<hr class="divider" />
+  <hr/>
 
-  <div class="auto_enroll auto_enroll_csv membership-section">
-    <h3 class="hd hd-3">${_("Register/Enroll Students")}</h3>
-    <p>${_("To register and enroll a list of users in this course, choose a CSV file that contains the following columns in this exact order: email, username, name, and country. Please include one student per row and do not include any headers, footers, or blank lines.")}</p>
-    <form id="student-auto-enroll-form" method="post" action="${ section_data['upload_student_csv_button_url'] }" enctype="multipart/form-data">
-      <div class="customBrowseBtn">
-        <label for="browseBtn-auto-enroll">${_("Upload a CSV for bulk enrollment")}</label>
-        <span id="browseFile" class="enhanced-input-file"></span>
-        <div class="file-browse btn btn-primary" aria-hidden="true">
-            <span class="browse">${('Browse')}</span>
-            <input class="file_field" id="browseBtn-auto-enroll" name="students_list" type="file" accept=".csv"/>
-        </div>
+  <fieldset class="auto_enroll auto_enroll_csv membership-section">
+    <legend class="hd hd-3">${_("Register/Enroll Students")}</legend>
+    <p>
+      ${_("To register and enroll a list of users in this course, choose a CSV file based on the following template:")}
+      <a href="${static.url('documents/batch_register_enroll_template.csv')}">batch_register_enroll_template.csv</a><br/>
+      ${_("Please include one student per row and do not include any headers, footers, or blank lines.")}
+    </p>
+    <div class="customBrowseBtn">
+      <label for="browseBtn-auto-enroll">${_("Upload a CSV for bulk enrollment")}</label>
+      <span id="browseFile" class="enhanced-input-file"></span>
+      <div class="file-browse btn btn-primary" aria-hidden="true">
+          <span class="browse">${('Browse')}</span>
+          <input class="file_field" id="browseBtn-auto-enroll" name="auto_enroll_students_list" type="file" accept=".csv"/>
       </div>
-      <button type="submit" class="btn-blue" id="submitBtn-auto_enroll_csv" name="enrollment_signup_button">${_("Upload CSV")}</button>
+    </div>
+    <div class="action-wrapper">
+      <input type="button" name="enrollment-signup-button" value="${_("Test CSV file")}" data-endpoint="${ section_data['precheck_upload_student_csv_button_url'] }" data-action="precheck">
+      <input type="button" name="enrollment-signup-button" value="${_("Register/Enroll")}" data-endpoint="${ section_data['upload_student_csv_button_url'] }" data-action="register-enroll">
       <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
-    </form>
-    <div class="results"></div>
-</div>
+    </div>
+    <div class="results" id="register-enroll-results"></div>
+  </fieldset>
+
+  <fieldset class="auto_update_csv membership-section">
+    <p>
+      ${_("To update a list of user accounts, choose a CSV file based on the following template:")}
+      <a href="${static.url('documents/batch_update_template.csv')}">batch_update_template.csv</a><br/>
+      ${_("Please include one student per row and do not include any headers, footers, or blank lines.")}<br/>
+      ${_("Note that users must have an activated {platform_name} account prior to this update.").format(platform_name=settings.PLATFORM_NAME)}
+    </p>
+    <div class="customBrowseBtn">
+      <label for="browseBtn-auto-update">${_("Upload a CSV for bulk enrollment")}</label>
+      <span id="browseFileUpdate" class="enhanced-input-file"></span>
+      <div class="file-browse btn btn-primary" aria-hidden="true">
+          <span class="browse">${('Browse')}</span>
+          <input class="file_field" id="browseBtn-auto-update" name="auto_update_students_list" type="file" accept=".csv"/>
+      </div>
+    </div>
+    <input type="button" name="update_button" value="${_("Update user accounts")}" data-endpoint="${ section_data['update_student_csv_button_url'] }">
+    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
+    <div class="results" id="update-results"></div>
+  </fieldset>
 %endif
 
-<hr class="divider" />
+<hr/>
 
 %if section_data['access']['instructor']:
 <fieldset class="batch-beta-testers membership-section">
@@ -124,15 +149,15 @@ from openedx.core.djangolib.markup import HTML, Text
             </div>
         </label>
     </div>
-    <div>
-        <input type="button" name="beta-testers" class="enrollment-button" value="${_("Add beta testers")}" data-endpoint="${ section_data['modify_beta_testers_button_url'] }" data-action="add" >
-        <input type="button" name="beta-testers" class="enrollment-button" value="${_("Remove beta testers")}" data-endpoint="${ section_data['modify_beta_testers_button_url'] }" data-action="remove" >
+    <div class="action-wrapper">
+        <input type="button" name="beta-testers" class="enrollment-button btn-secondary" value="${_("Remove beta testers")}" data-endpoint="${ section_data['modify_beta_testers_button_url'] }" data-action="remove" >
+        <input type="button" name="beta-testers" class="enrollment-button btn-primary" value="${_("Add beta testers")}" data-endpoint="${ section_data['modify_beta_testers_button_url'] }" data-action="add" >
     </div>
     <div class="request-response"></div>
     <div class="request-response-error"></div>
 </fieldset>
 
-<hr class="divider" />
+<hr/>
 %endif
 
 <div class="member-lists-management membership-section" aria-live="polite">

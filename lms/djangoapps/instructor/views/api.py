@@ -91,6 +91,7 @@ from openedx.core.djangoapps.user_api.accounts import (
     USERNAME_MAX_LENGTH,
     USERNAME_BAD_LENGTH_MSG
 )
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
 from openedx.core.djangoapps.user_api.preferences.api import get_user_preference, set_user_preference
 from openedx.core.djangolib.markup import HTML, Text
 from shoppingcart.models import (
@@ -1004,7 +1005,6 @@ def lt_update_profile(profile, first_name, last_name,
     profile.save()
 
 
-
 def create_manual_course_enrollment(user, course_id, mode, enrolled_by, reason, state_transition):
     """
     Create course enrollment for the given student and create manual enrollment audit trail.
@@ -1515,6 +1515,8 @@ def list_course_role_members(request, course_id):
             'email': user.email,
             'first_name': user.first_name,
             'last_name': user.last_name,
+            'name': user.profile.name,
+            'profile_image_url': get_profile_image_urls_for_user(user)['medium']
         }
 
     response_payload = {

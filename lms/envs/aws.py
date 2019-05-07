@@ -1138,4 +1138,8 @@ plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.LMS, plugin_c
 
 derive_settings(__name__)
 
+################# Batch Enrollment ###########################################
+
+FEATURES['BATCH_ENROLLMENT_NOTIFY_USERS_DEFAULT'] = False
+FEATURES['ALLOW_AUTOMATED_SIGNUPS'] = True
 

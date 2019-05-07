@@ -18,6 +18,7 @@
     <div class="bottom-bar">
         <label>
             <span class="label-text sr"><%- add_placeholder %></span>
+            <label class="note"><%- add_title %></label>
             <input type="text" name="add-field" class="add-field" placeholder="<%- add_placeholder %>">
         </label>
         <input type="button" name="add" class="add" value="<%- add_btn_label %>">

@@ -74,6 +74,7 @@ from shoppingcart.models import (
     PaidCourseRegistration,
     RegistrationCodeRedemption
 )
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
 from shoppingcart.pdf import PDFInvoice
 from student.models import (
     ALLOWEDTOENROLL_TO_ENROLLED,
@@ -3032,6 +3033,8 @@ class TestInstructorAPILevelsAccess(SharedModuleStoreTestCase, LoginEnrollmentTe
                     'email': self.other_staff.email,
                     'first_name': self.other_staff.first_name,
                     'last_name': self.other_staff.last_name,
+                    'name': self.other_staff.profile.name,
+                    'profile_image_url': get_profile_image_urls_for_user(self.other_staff)['medium'],
                 }
             ]
         }
