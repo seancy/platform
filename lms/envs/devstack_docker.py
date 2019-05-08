@@ -104,6 +104,9 @@ COURSE_DISCOVERY_MEANINGS = {
     },
     'vendor': {
         'name': 'Label'
+    },
+    'course_mandatory_enabled': {
+        'name': 'Mandatory'
     }
 }
 

@@ -543,7 +543,7 @@ class DashboardTest(ModuleStoreTestCase):
 
         self.assertContains(response, escape(expected_url))
 
-    @unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
+    @unittest.skip("skip this test, cause we call modulestore in dashboard")
     @ddt.data(ModuleStoreEnum.Type.mongo, ModuleStoreEnum.Type.split)
     def test_dashboard_metadata_caching(self, modulestore_type):
         """

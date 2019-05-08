@@ -154,6 +154,14 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        this.$('#' + this.fieldToSelectorMap.entrance_exam_enabled).removeAttr('checked');
                        this.$('.div-grade-requirements').hide();
                    }
+
+                   if (this.model.get('course_mandatory_enabled')) {
+                       this.$('#' + this.fieldToSelectorMap['course_mandatory_enabled']).attr('checked', this.model.get('course_mandatory_enabled'));
+                   }
+                   else {
+                       this.$('#' + this.fieldToSelectorMap['course_mandatory_enabled']).removeAttr('checked')
+                   }
+
                    this.$('#' + this.fieldToSelectorMap.entrance_exam_minimum_score_pct).val(this.model.get('entrance_exam_minimum_score_pct'));
 
                    var selfPacedButton = this.$('#course-pace-self-paced'),
@@ -206,12 +214,12 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    add_course_instructor_info: 'add-course-instructor-info',
                    course_learning_info: 'course-learning-info',
                    add_course_reminder_info: 'add-course-reminder-info',
-                   course_learning_info: 'course-learning-info',
                    course_finish_days: 'course-finish-days',
                    course_re_enroll_time: 'course-re-enroll-time',
                    re_enroll_time_unit: 're-enroll-time-unit',
                    periodic_reminder_enabled: 'periodic-reminder-enabled',
-                   periodic_reminder_day: 'periodic-reminder-day'
+                   periodic_reminder_day: 'periodic-reminder-day',
+                   course_mandatory_enabled: 'course-mandatory-enabled'
                },
 
                addLearningFields: function() {
@@ -346,6 +354,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        this.model.set('self_paced', JSON.parse(event.currentTarget.value));
                        break;
 
+                   case 'course-mandatory-enabled':
                    case 'periodic-reminder-enabled':
                    case 'periodic-reminder-day':
                    case 'course-re-enroll-time':

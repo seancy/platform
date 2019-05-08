@@ -7,6 +7,9 @@
                 <img src="/static/images/country-icons/<%- language %>.png" alt="<%- language %>" class="course-language">
               <% } %>
             </div>
+            <% if (course_mandatory_enabled) { %>
+            <div class="course-mandatory"><i class="fa fa-exclamation"></i></div>
+            <% } %>
             <% if (course_category) { %>
             <div class="course-category"><%- gettext(course_category) %></div>
             <% } %>

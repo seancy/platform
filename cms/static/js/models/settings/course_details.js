@@ -40,7 +40,8 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
                 course_re_enroll_time: '',
                 re_enroll_time_unit: '',
                 periodic_reminder_enabled: '',
-                periodic_reminder_day: 1
+                periodic_reminder_day: 1,
+                course_mandatory_enabled: ''
             },
 
             validate: function(newattrs) {

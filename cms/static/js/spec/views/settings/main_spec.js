@@ -13,7 +13,8 @@ define([
         add_course_instructor_info: '.add-course-instructor-info',
         remove_instructor_data: '.remove-instructor-data',
         add_course_reminder_info: '.add-course-reminder-info',
-        delete_course_reminder_info: '.delete-course-reminder-info'
+        delete_course_reminder_info: '.delete-course-reminder-info',
+        course_mandatory_enabled_field: '#course-mandatory-enabled'
     };
 
     describe('Settings/Main', function() {
@@ -57,7 +58,8 @@ define([
                 course_re_enroll_time: '',
                 re_enroll_time_unit: 'year',
                 periodic_reminder_enabled: '',
-                periodic_reminder_day: 1
+                periodic_reminder_day: 1,
+                course_mandatory_enabled: ''
             },
 
             mockSettingsPage = readFixtures('mock/mock-settings-page.underscore'),

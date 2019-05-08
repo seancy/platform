@@ -63,6 +63,7 @@
                 return HtmlUtils.joinHtml.apply(this, _.map(options, function (option) {
                     var data = _.clone(option.attributes);
                     data.name = this.termName(data.facet, data.term);
+                    console.log(data);
                     return this.facetOptionTpl(data);
                 }, this));
             },

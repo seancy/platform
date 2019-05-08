@@ -1,4 +1,4 @@
-<%page args="course_overview, enrollment, entitlement, entitlement_session, course_card_index, is_unfulfilled_entitlement, is_fulfilled_entitlement, entitlement_available_sessions, entitlement_expiration_date, entitlement_expired_at, show_courseware_link, cert_status, can_refund_entitlement, can_unenroll, credit_status, show_email_settings, course_mode_info, is_paid_course, is_course_blocked, verification_status, course_requirements, dashboard_index, share_settings, related_programs, display_course_modes_on_dashboard, show_consent_link, enterprise_customer_name, resume_button_url" expression_filter="h"/>
+<%page args="is_mandatory, course_overview, enrollment, entitlement, entitlement_session, course_card_index, is_unfulfilled_entitlement, is_fulfilled_entitlement, entitlement_available_sessions, entitlement_expiration_date, entitlement_expired_at, show_courseware_link, cert_status, can_refund_entitlement, can_unenroll, credit_status, show_email_settings, course_mode_info, is_paid_course, is_course_blocked, verification_status, course_requirements, dashboard_index, share_settings, related_programs, display_course_modes_on_dashboard, show_consent_link, enterprise_customer_name, resume_button_url" expression_filter="h"/>
 
 <%!
 import urllib
@@ -89,7 +89,10 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         </span>
       % endif
     </div>
-      <div class="wrapper-course-details">
+    % if is_mandatory:
+    <div class="course-mandatory"><i class="fa fa-exclamation"></i></div>
+    % endif
+    <div class="wrapper-course-details">
         <h3 class="course-title" id="course-title-${enrollment.course_id}">
           % if show_courseware_link and not is_unfulfilled_entitlement:
             % if not is_course_blocked:

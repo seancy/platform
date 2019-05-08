@@ -19,6 +19,7 @@
                 org: '',
                 id: '',
                 course_category: '',
+                course_mandatory_enabled: '',
                 vendor: '',
                 language: '',
                 duration: ''

@@ -1052,7 +1052,7 @@ ICP_LICENSE = ENV_TOKENS.get('ICP_LICENSE', None)
 
 LANGUAGE_MAP = {'terms': {lang: display for lang, display in ALL_LANGUAGES}, 'name': 'Language'}
 
-COURSE_DISCOVERY_FILTERS = ["language", "start", "course_category", "vendor"]
+COURSE_DISCOVERY_FILTERS = ["language", "start", "course_category", "vendor", "course_mandatory_enabled"]
 
 COURSE_DISCOVERY_MEANINGS = {
     'language': LANGUAGE_MAP,
@@ -1071,8 +1071,10 @@ COURSE_DISCOVERY_MEANINGS = {
     },
     'vendor': {
         'name': 'Label'
+    },
+    'course_mandatory_enabled': {
+        'name': 'Mandatory'
     }
-
 }
 
 SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
