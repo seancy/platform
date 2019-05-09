@@ -77,14 +77,19 @@ from openedx.core.djangolib.markup import HTML, Text
       ${_("Please include one student per row and do not include any headers, footers, or blank lines.")}
     </p>
     <div class="customBrowseBtn">
+        <i class="fa fa-file-csv csv-file"></i>
       <label for="browseBtn-auto-enroll">${_("Upload a CSV for bulk enrollment")}</label>
       <span id="browseFile" class="enhanced-input-file"></span>
       <div class="file-browse btn btn-primary" aria-hidden="true">
-          <span class="browse">${('Browse')}</span>
-          <input class="file_field" id="browseBtn-auto-enroll" name="auto_enroll_students_list" type="file" accept=".csv"/>
+          <label class="browse" for="browseBtn-auto-enroll"><i class="fal fa-upload"></i>${('Browse')}</label>
       </div>
     </div>
     <div class="action-wrapper">
+        <div class="file-field-wrapper">
+            <input class="file_field" id="browseBtn-auto-enroll" name="auto_enroll_students_list" type="file" accept=".csv"/>
+            <span class="file-size"></span>
+            <div class="progress-bar" data-percent="40%" percent="40"><i></i></div>
+        </div>
       <input type="button" name="enrollment-signup-button" value="${_("Test CSV file")}" data-endpoint="${ section_data['precheck_upload_student_csv_button_url'] }" data-action="precheck">
       <input type="button" name="enrollment-signup-button" value="${_("Register/Enroll")}" data-endpoint="${ section_data['upload_student_csv_button_url'] }" data-action="register-enroll">
       <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
@@ -100,15 +105,23 @@ from openedx.core.djangolib.markup import HTML, Text
       ${_("Note that users must have an activated {platform_name} account prior to this update.").format(platform_name=settings.PLATFORM_NAME)}
     </p>
     <div class="customBrowseBtn">
+        <i class="fa fa-file-csv csv-file"></i>
       <label for="browseBtn-auto-update">${_("Upload a CSV for bulk enrollment")}</label>
       <span id="browseFileUpdate" class="enhanced-input-file"></span>
       <div class="file-browse btn btn-primary" aria-hidden="true">
-          <span class="browse">${('Browse')}</span>
-          <input class="file_field" id="browseBtn-auto-update" name="auto_update_students_list" type="file" accept=".csv"/>
+          <label class="browse" for="browseBtn-auto-update"><i class="fal fa-upload"></i>${('Browse')}</label>
+
       </div>
     </div>
-    <input type="button" name="update_button" value="${_("Update user accounts")}" data-endpoint="${ section_data['update_student_csv_button_url'] }">
-    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
+    <div class="action-wrapper">
+        <div class="file-field-wrapper">
+            <input class="file_field" id="browseBtn-auto-update" name="auto_update_students_list" type="file" accept=".csv"/>
+            <span class="file-size"></span>
+            <div class="progress-bar" data-percent="40%" percent="40"><i></i></div>
+        </div>
+      <input type="button" name="update_button" value="${_("Update user accounts")}" data-endpoint="${ section_data['update_student_csv_button_url'] }">
+      <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
+    </div>
     <div class="results" id="update-results"></div>
   </fieldset>
 %endif

@@ -310,9 +310,13 @@ such that the value can be defined later than this assignment (file load order).
             this.$results = this.$container.find('#register-enroll-results');
             this.$browse_button = this.$container.find('#browseBtn-auto-enroll');
             this.$browse_file = this.$container.find('#browseFile');
+            this.$progress_bar = this.$container.find('.progress-bar');
+            this.$file_size = this.$container.find('.file-size');
             this.processing = false;
             this.$browse_button.on('change', function(event) {
                 if (event.currentTarget.files.length === 1) {
+                    let fileSize = (autoenrollviacsv.$browse_button[0].files[0].size/1000).toFixed(3);
+                    autoenrollviacsv.$file_size.text(fileSize+'KB');
                     return autoenrollviacsv.$browse_file.val(
                         event.currentTarget.value.substring(event.currentTarget.value.lastIndexOf('\\') + 1)
                     );
@@ -340,6 +344,19 @@ such that the value can be defined later than this assignment (file load order).
                     success: function(responsedata) {
                         autoenrollviacsv.processing = false;
                         return autoenrollviacsv.display_response(responsedata, $(event.target).data('action'));
+                    },
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+
+                        xhr.upload.addEventListener("progress", function(evt) {
+                          if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            autoenrollviacsv.$progress_bar.find('i').width(percentComplete+'%');
+                          }
+                        }, false);
+
+                        return xhr;
                     },
                     error: function(responsedata) {
                         autoenrollviacsv.processing = false;
@@ -429,9 +446,13 @@ such that the value can be defined later than this assignment (file load order).
             this.$results = this.$container.find('#update-results');
             this.$browse_button = this.$container.find('#browseBtn-auto-update');
             this.$browse_file = this.$container.find('#browseFileUpdate');
+            this.$progress_bar = this.$container.find('.progress-bar');
+            this.$file_size = this.$container.find('.file-size');
             this.processing = false;
             this.$browse_button.on('change', function(event) {
                 if (event.currentTarget.files.length === 1) {
+                    let fileSize = (autoupdateviacsv.$browse_button[0].files[0].size/1000).toFixed(3);
+                    autoupdateviacsv.$file_size.text(fileSize+'KB');
                     return autoupdateviacsv.$browse_file.val(
                         event.currentTarget.value.substring(event.currentTarget.value.lastIndexOf('\\') + 1)
                     );
@@ -459,6 +480,19 @@ such that the value can be defined later than this assignment (file load order).
                     success: function(responsedata) {
                         autoupdateviacsv.processing = false;
                         return autoupdateviacsv.display_response(responsedata, $(event.target).data('action'));
+                    },
+                    xhr: function() {
+                        var xhr = new window.XMLHttpRequest();
+
+                        xhr.upload.addEventListener("progress", function(evt) {
+                          if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            autoupdateviacsv.$progress_bar.find('i').width(percentComplete+'%');
+                          }
+                        }, false);
+
+                        return xhr;
                     },
                     error: function(responsedata) {
                         autoupdateviacsv.processing = false;
