@@ -12,7 +12,7 @@
                         checked
                         <% } %>
                         >
-                        <%- availableSchemes[i].displayName %>
+                        <span><%- availableSchemes[i].displayName %></span>
                     </label>
                     <p class='field-message' id="<%- availableSchemes[i].key %>-description"><%- availableSchemes[i].descriptiveText %></p>
                 </div>
