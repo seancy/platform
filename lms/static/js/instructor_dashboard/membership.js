@@ -315,7 +315,7 @@ such that the value can be defined later than this assignment (file load order).
             this.processing = false;
             this.$browse_button.on('change', function(event) {
                 if (event.currentTarget.files.length === 1) {
-                    let fileSize = (autoenrollviacsv.$browse_button[0].files[0].size/1000).toFixed(3);
+                    var fileSize = (autoenrollviacsv.$browse_button[0].files[0].size/1000).toFixed(3);
                     autoenrollviacsv.$file_size.text(fileSize+'KB');
                     return autoenrollviacsv.$browse_file.val(
                         event.currentTarget.value.substring(event.currentTarget.value.lastIndexOf('\\') + 1)
@@ -451,7 +451,7 @@ such that the value can be defined later than this assignment (file load order).
             this.processing = false;
             this.$browse_button.on('change', function(event) {
                 if (event.currentTarget.files.length === 1) {
-                    let fileSize = (autoupdateviacsv.$browse_button[0].files[0].size/1000).toFixed(3);
+                    var fileSize = (autoupdateviacsv.$browse_button[0].files[0].size/1000).toFixed(3);
                     autoupdateviacsv.$file_size.text(fileSize+'KB');
                     return autoupdateviacsv.$browse_file.val(
                         event.currentTarget.value.substring(event.currentTarget.value.lastIndexOf('\\') + 1)
