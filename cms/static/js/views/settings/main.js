@@ -24,7 +24,9 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'click .action-upload-image': 'uploadImage',
                    'click .add-course-learning-info': 'addLearningFields',
                    'click .add-course-instructor-info': 'addInstructorFields',
-                   'click .add-course-reminder-info': "addReminderFields"
+                   'click .add-course-reminder-info': "addReminderFields",
+                   'click #course-order-increase': "increaseCourseOrder",
+                   'click #course-order-decrease': "decreaseCourseOrder"
                },
 
                initialize: function(options) {
@@ -112,6 +114,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    else {
                        this.$('#' + this.fieldToSelectorMap['periodic_reminder_enabled']).removeAttr('checked')
                    }
+
+                   this.$el.find("#course-order").val(this.model.get('course_order'));
 
                    this.$el.find('#' + this.fieldToSelectorMap.subtitle).val(this.model.get('subtitle'));
                    this.$el.find('#' + this.fieldToSelectorMap.duration).val(this.model.get('duration'));
@@ -219,6 +223,9 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    re_enroll_time_unit: 're-enroll-time-unit',
                    periodic_reminder_enabled: 'periodic-reminder-enabled',
                    periodic_reminder_day: 'periodic-reminder-day',
+                   course_order: 'course-order',
+                   course_order_increase: 'course-order-increase',
+                   course_order_decrease: 'course-order-decrease',
                    course_mandatory_enabled: 'course-mandatory-enabled'
                },
 
@@ -253,6 +260,34 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                     var existingInfo = _.clone(this.model.get('reminder_info'));
                     existingInfo.push('');
                     this.model.set('reminder_info', existingInfo);
+                },
+
+               increaseCourseOrder: function() {
+                    var order = this.model.get('course_order');
+                    if (order == null) {
+                        this.$el.find('#course-order').val(10);
+                        this.model.set('course_order', 10);
+                    }
+                    else {
+                        this.$el.find('#course-order').val(parseInt(order)+10);
+                        this.model.set('course_order', parseInt(order)+10);
+                    }
+                },
+
+                decreaseCourseOrder: function() {
+                    var order = this.model.get('course_order');
+                    if (order == "0") {
+
+                    }
+                    else if (order == null || parseInt(order) - 10 <= 0) {
+                        this.$el.find('#course-order').val(0);
+                        this.model.set('course_order', 0);
+                    }
+
+                    else {
+                        this.$el.find('#course-order').val(parseInt(order)-10);
+                        this.model.set('course_order', parseInt(order)-10);
+                    }
                 },
 
                updateTime: function(e) {
@@ -354,6 +389,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        this.model.set('self_paced', JSON.parse(event.currentTarget.value));
                        break;
 
+                   case 'course-order':
                    case 'course-mandatory-enabled':
                    case 'periodic-reminder-enabled':
                    case 'periodic-reminder-day':

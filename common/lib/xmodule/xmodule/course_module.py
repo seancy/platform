@@ -948,13 +948,20 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
+    course_order = Integer(
+        display_name=_("Course Order"),
+        help=_("Sort the courses to display on dashboard in ascending order."),
+        default=None,
+        scope=Scope.settings
+    )
+
     course_mandatory_enabled = Boolean(
         display_name=_("Course Mandatory Enabled"),
         help=_(
             "Indicate to the learners that the course is important and required for their training."
         ),
         default=False,
-        scope=Scope.settings,
+        scope=Scope.settings
     )
 
 

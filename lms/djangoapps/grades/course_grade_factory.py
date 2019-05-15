@@ -287,6 +287,17 @@ class CourseGradeFactory(object):
             return self.update_course_completion_percentage(
                 course_key, user, course_grade=course_grade, enrollment=enrollment)
 
+    def get_nb_trophies_possible(self, course):
+        """
+        return the number of badges of the given course
+        course :: CourseDescriptor
+        """
+        nb_trophies_possible = 0
+        grading_rules = course.raw_grader
+        for rule in grading_rules:
+            nb_trophies_possible += rule.get('min_count', 0)
+        return nb_trophies_possible
+
     def get_progress(self, user, course, course_key=None, progress=None, grade_summary=None, enrollment=None):
         if not course_key:
             course_key = course.id

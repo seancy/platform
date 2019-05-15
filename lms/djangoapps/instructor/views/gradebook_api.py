@@ -71,6 +71,7 @@ def get_grade_book_page(request, course, course_key):
     current_offset = request.GET.get('offset', 0)
     search_query = request.GET.get('learner_name', '')
     enrolled_students = User.objects.filter(
+        is_active=True,
         courseenrollment__course_id=course_key,
         courseenrollment__is_active=1,
         profile__name__icontains=search_query
@@ -103,7 +104,7 @@ def get_grade_book_page(request, course, course_key):
                 else:
                     continue
             info = {
-                'username': student.profile.name,
+                'username': student.profile.name or student.username,
                 'id': student.id,
                 'email': student.email,
                 'grade_summary': grade_summary

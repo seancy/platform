@@ -59,6 +59,7 @@ define([
                 re_enroll_time_unit: 'year',
                 periodic_reminder_enabled: '',
                 periodic_reminder_day: 1,
+                course_order: '',
                 course_mandatory_enabled: ''
             },
 

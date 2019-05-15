@@ -22,7 +22,8 @@
                 course_mandatory_enabled: '',
                 vendor: '',
                 language: '',
-                duration: ''
+                duration: '',
+                badges: ''
             }
         });
     });

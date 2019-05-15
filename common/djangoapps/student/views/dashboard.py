@@ -2,6 +2,7 @@
 Dashboard view and supporting methods
 """
 
+import copy
 import datetime
 import logging
 import json
@@ -596,6 +597,37 @@ def student_dashboard(request):
     # Sort the enrollment pairs by the enrollment date
     course_enrollments.sort(key=lambda x: x.created, reverse=True)
 
+    # sort the enrollment by course_order
+    def is_unordered(enrollment):
+        """
+        This helper function is created to avoid NoneType error raised in test.
+        In production, it will return a CourseDescriptor object when we call
+        modulestore().get_course
+        """
+        course = modulestore().get_course(enrollment.course_id)
+        if course:
+            return course.course_order is None
+        return False
+
+    def order(enrollment):
+        """
+        This helper function is created to avoid NoneType error raised in test.
+        In production, it will return a CourseDescriptor object when we call
+        modulestore().get_course
+        """
+        course = modulestore().get_course(enrollment.course_id)
+        if course:
+            if course.course_order is None:
+                return 999
+            else:
+                return course.course_order
+        return 999
+
+    no_order_enrollments = filter(is_unordered, course_enrollments)
+    ordered_enrollments = [n for n in course_enrollments if n not in no_order_enrollments]
+    ordered_enrollments.sort(key=order)
+    course_enrollments = ordered_enrollments + no_order_enrollments
+
     # Retrieve the course modes for each course
     enrolled_course_ids = [enrollment.course_id for enrollment in course_enrollments]
     __, unexpired_course_modes = CourseMode.all_and_unexpired_modes_for_courses(enrolled_course_ids)
@@ -659,7 +691,8 @@ def student_dashboard(request):
     # Find programs associated with course runs being displayed. This information
     # is passed in the template context to allow rendering of program-related
     # information on the dashboard.
-    meter = ProgramProgressMeter(request.site, user, enrollments=course_enrollments)
+    # we use shallow copy here, to make sure PrgramProgressMeter doesn't sort the course_enrollments again
+    meter = ProgramProgressMeter(request.site, user, enrollments=copy.copy(course_enrollments))
     ecommerce_service = EcommerceService()
     inverted_programs = meter.invert_programs()
 
@@ -852,6 +885,173 @@ def student_dashboard(request):
     response = render_to_response('dashboard.html', context)
     set_user_info_cookie(response, request)
     return response
+
+
+def my_courses(request):
+
+    user = request.user
+    if not UserProfile.objects.filter(user=user).exists():
+        return redirect(reverse('account_settings'))
+
+    hide_dashboard_courses_until_activated = configuration_helpers.get_value(
+        'HIDE_DASHBOARD_COURSES_UNTIL_ACTIVATED',
+        settings.FEATURES.get('HIDE_DASHBOARD_COURSES_UNTIL_ACTIVATED', False)
+    )
+
+    # Get the org whitelist or the org blacklist for the current site
+    site_org_whitelist, site_org_blacklist = get_org_black_and_whitelist_for_site()
+    course_enrollments = list(get_course_enrollments(user, site_org_whitelist, site_org_blacklist))
+
+    # sort the enrollment by course_order
+    def is_unordered(enrollment):
+        """
+        This helper function is created to avoid NoneType error raised in test.
+        In production, it will return a CourseDescriptor object when we call
+        modulestore().get_course
+        """
+        course = modulestore().get_course(enrollment.course_id)
+        if course:
+            return course.course_order is None
+        return False
+
+    def order(enrollment):
+        """
+        This helper function is created to avoid NoneType error raised in test.
+        In production, it will return a CourseDescriptor object when we call
+        modulestore().get_course
+        """
+        course = modulestore().get_course(enrollment.course_id)
+        if course:
+            if course.course_order is None:
+                return 999
+            else:
+                return course.course_order
+        return 999
+
+    no_order_enrollments = filter(is_unordered, course_enrollments)
+    ordered_enrollments = [n for n in course_enrollments if n not in no_order_enrollments]
+    ordered_enrollments.sort(key=order)
+    course_enrollments = ordered_enrollments + no_order_enrollments
+
+    # Retrieve the course modes for each course
+    enrolled_course_ids = [enrollment.course_id for enrollment in course_enrollments]
+    __, unexpired_course_modes = CourseMode.all_and_unexpired_modes_for_courses(enrolled_course_ids)
+    course_modes_by_course = {
+        course_id: {
+            mode.slug: mode
+            for mode in modes
+        }
+        for course_id, modes in iteritems(unexpired_course_modes)
+    }
+
+    # Get the entitlements for the user and a mapping to all available sessions for that entitlement
+    # If an entitlement has no available sessions, pass through a mock course overview object
+    (course_entitlements,
+     course_entitlement_available_sessions,
+     unfulfilled_entitlement_pseudo_sessions) = get_filtered_course_entitlements(
+        user,
+        site_org_whitelist,
+        site_org_blacklist
+    )
+
+    show_email_settings_for = frozenset(
+        enrollment.course_id for enrollment in course_enrollments if (
+            BulkEmailFlag.feature_enabled(enrollment.course_id)
+        )
+    )
+
+    show_courseware_links_for = frozenset(
+        enrollment.course_id for enrollment in course_enrollments
+        if has_access(request.user, 'load', enrollment.course_overview)
+    )
+
+    # Construct a dictionary of course mode information
+    # used to render the course list.  We re-use the course modes dict
+    # we loaded earlier to avoid hitting the database.
+    course_mode_info = {
+        enrollment.course_id: complete_course_mode_info(
+            enrollment.course_id, enrollment,
+            modes=course_modes_by_course[enrollment.course_id]
+        )
+        for enrollment in course_enrollments
+    }
+
+    # Determine the per-course verification status
+    # This is a dictionary in which the keys are course locators
+    # and the values are one of:
+    #
+    # VERIFY_STATUS_NEED_TO_VERIFY
+    # VERIFY_STATUS_SUBMITTED
+    # VERIFY_STATUS_APPROVED
+    # VERIFY_STATUS_MISSED_DEADLINE
+    #
+    # Each of which correspond to a particular message to display
+    # next to the course on the dashboard.
+    #
+    # If a course is not included in this dictionary,
+    # there is no verification messaging to display.
+    verify_status_by_course = check_verify_status_by_course(user, course_enrollments)
+    cert_statuses = {
+        enrollment.course_id: cert_info(request.user, enrollment.course_overview)
+        for enrollment in course_enrollments
+    }
+
+    enrolled_courses_either_paid = frozenset(
+        enrollment.course_id for enrollment in course_enrollments
+        if enrollment.is_paid_course()
+    )
+
+    block_courses = frozenset(
+        enrollment.course_id for enrollment in course_enrollments
+        if is_course_blocked(
+            request,
+            CourseRegistrationCode.objects.filter(
+                course_id=enrollment.course_id,
+                registrationcoderedemption__redeemed_by=request.user
+            ),
+            enrollment.course_id
+        )
+    )
+
+    # get list of courses having pre-requisites yet to be completed
+    courses_having_prerequisites = frozenset(
+        enrollment.course_id for enrollment in course_enrollments
+        if enrollment.course_overview.pre_requisite_courses
+    )
+    courses_requirements_not_met = get_pre_requisite_courses_not_completed(user, courses_having_prerequisites)
+
+    # Disable lookup of Enterprise consent_required_course due to ENT-727
+    # Will re-enable after fixing WL-1315
+    consent_required_courses = set()
+    enterprise_customer_name = None
+
+    context = {
+        'all_course_modes': course_mode_info,
+        'block_courses': block_courses,
+        'cert_statuses': cert_statuses,
+        'consent_required_courses': consent_required_courses,
+        'course_enrollments': course_enrollments,
+        'course_entitlements': course_entitlements,
+        'courses_requirements_not_met': courses_requirements_not_met,
+        'credit_statuses': _credit_statuses(user, course_enrollments),
+        'display_dashboard_courses': (user.is_active or not hide_dashboard_courses_until_activated),
+        'enrolled_courses_either_paid': enrolled_courses_either_paid,
+        'enterprise_customer_name': enterprise_customer_name,
+        'show_courseware_links_for': show_courseware_links_for,
+        'show_dashboard_tabs': True,
+        'show_email_settings_for': show_email_settings_for,
+        'verification_status_by_course': verify_status_by_course,
+    }
+
+    # Gather urls for course card resume buttons.
+    resume_button_urls = _get_urls_for_resume_buttons(user, course_enrollments)
+    # There must be enough urls for dashboard.html. Template creates course
+    # cards for "enrollments + entitlements".
+    resume_button_urls += ['' for entitlement in course_entitlements]
+    context.update({
+        'resume_button_urls': resume_button_urls
+    })
+    return render_to_response('my_courses.html', context)
 
 
 @login_required

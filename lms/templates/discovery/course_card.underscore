@@ -37,7 +37,7 @@
         <section class="sub-info">
             <div class="badge">
                 <i class="far fa-trophy"></i>
-                <span><%- gettext("badges") %></span>
+                <span><%- badges %> <%- gettext("badges") %></span>
             </div>
             <div class="spliter"></div>
             <div class="duration">

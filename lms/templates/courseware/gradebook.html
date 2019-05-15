@@ -52,10 +52,32 @@ from django.core.urlresolvers import reverse
   </style>
 </%block>
 
-
+<%include file="/courseware/course_navigation.html" args="active_page='instructor'" />
 
 <section class="container">
 <div class="gradebook-wrapper">
+  <section class="instructor-dashboard-content-2" id="instructor-dashboard-content">
+      <h2 class="hd hd-2 instructor-dashboard-title">${_("Instructor Dashboard")}</h2>
+      <div class="instructor-dashboard-content-wrapper">
+          <ul class="instructor-nav">
+            <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-course_info" type="button" class="btn-link course_info" data-section="course_info" aria-pressed="true">Course Info</a></li>
+
+            <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-membership" type="button" class="btn-link membership" data-section="membership" aria-pressed="false">Membership</a></li>
+
+            <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-cohort_management" type="button" class="btn-link cohort_management" data-section="cohort_management" aria-pressed="false">Cohorts</a></li>
+
+            <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-discussions_management" type="button" class="btn-link discussions_management" data-section="discussions_management" aria-pressed="false">Discussions</a></li>
+
+            <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-student_admin" type="button" class="btn-link student_admin active-section" data-section="student_admin" aria-pressed="false">Student Admin</a></li>
+
+            <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-data_download" type="button" class="btn-link data_download" data-section="data_download" aria-pressed="false">Data Download</a></li>
+
+            <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-certificates" type="button" class="btn-link certificates" data-section="certificates" aria-pressed="false">Certificates</a></li>
+
+            <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-open_response_assessment" type="button" class="btn-link open_response_assessment" data-section="open_response_assessment" aria-pressed="false">Open Responses</a></li>
+          </ul>
+      </div>
+  </section>
   <section class="gradebook-content">
     <div class="title_gradebook">${_("Gradebook")}</div>
     <div class="search">

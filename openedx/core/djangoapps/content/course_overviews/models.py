@@ -195,6 +195,8 @@ class CourseOverview(TimeStampedModel):
         course_overview.effort = CourseDetails.fetch_about_attribute(course.id, 'effort')
         course_overview.course_video_url = CourseDetails.fetch_video_url(course.id)
         course_overview.self_paced = course.self_paced
+        course_overview.course_mandatory_enabled = course.course_mandatory_enabled
+        course_overview.course_order = course.course_order
 
         if not CatalogIntegration.is_enabled():
             course_overview.language = course.language

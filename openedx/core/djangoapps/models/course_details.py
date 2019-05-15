@@ -81,6 +81,7 @@ class CourseDetails(object):
         self.re_enroll_time_unit = 'month'
         self.periodic_reminder_enabled = ''
         self.periodic_reminder_day = 1
+        self.course_order = None
         self.course_mandatory_enabled = ''
 
     @classmethod
@@ -137,6 +138,7 @@ class CourseDetails(object):
         course_details.re_enroll_time_unit = course_descriptor.re_enroll_time_unit
         course_details.periodic_reminder_enabled = course_descriptor.periodic_reminder_enabled
         course_details.periodic_reminder_day = course_descriptor.periodic_reminder_day
+        course_details.course_order = course_descriptor.course_order
         course_details.course_mandatory_enabled = course_descriptor.course_mandatory_enabled
 
         # Default course license is "All Rights Reserved"
@@ -327,6 +329,10 @@ class CourseDetails(object):
         if 'periodic_reminder_day' in jsondict and \
                 jsondict['periodic_reminder_day'] != descriptor.periodic_reminder_day:
             descriptor.periodic_reminder_day = jsondict['periodic_reminder_day']
+            dirty = True
+
+        if 'course_order' in jsondict and jsondict['course_order'] != descriptor.course_order:
+            descriptor.course_order = jsondict['course_order']
             dirty = True
 
         if 'course_category' in jsondict and jsondict['course_category'] != descriptor.course_category:

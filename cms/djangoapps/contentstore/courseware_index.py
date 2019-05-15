@@ -519,6 +519,12 @@ class AboutInfo(object):
         if not course:
             raise ValueError("Context dictionary does not contain expected argument 'course'")
 
+        if self.property_name == 'badges':
+            nb_trophies_possible = 0
+            grading_rules = course.raw_grader
+            for rule in grading_rules:
+                nb_trophies_possible += rule.get('min_count', 0)
+            return nb_trophies_possible
         return getattr(course, self.property_name, None)
 
     def from_course_mode(self, **kwargs):
@@ -577,6 +583,7 @@ class CourseAboutSearchIndexer(object):
         AboutInfo("vendor", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY),
         AboutInfo("catalog_visibility", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY),
         AboutInfo("course_mandatory_enabled", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY),
+        AboutInfo("badges", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY)
     ]
 
     @classmethod
