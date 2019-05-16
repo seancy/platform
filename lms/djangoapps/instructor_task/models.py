@@ -224,7 +224,15 @@ class ReportStore(object):
         compatibility.
         """
         for row in rows:
-            yield [unicode(item).encode('utf-8') for item in row]
+            result = []
+
+            for item in row:
+                if isinstance(item, dict):
+                    unicode_item = json.dumps(item, ensure_ascii=False)
+                else:
+                    unicode_item = unicode(item)
+                result.append(unicode_item.encode('utf-8'))
+            yield result
 
 
 class DjangoStorageReportStore(ReportStore):

@@ -1,5 +1,8 @@
 <div class="cohorts-state-section">
-    <label> <input type="checkbox" class="cohorts-state" value="Cohorts-State" <%- cohortsEnabled ? 'checked="checked"' : '' %> /> <%- gettext('Enable Cohorts') %></label>
+    <label>
+        <input type="checkbox" class="cohorts-state" value="Cohorts-State" <%- cohortsEnabled ? 'checked="checked"' : '' %> />
+        <span><%- gettext('Enable Cohorts') %></span>
+    </label>
 </div>
 
 <% if (cohortsEnabled) { %>
@@ -39,9 +42,9 @@
 
         <div class="cohort-management-supplemental">
             <p class="">
-                <span class="icon fa fa-info-circle" aria-hidden="true"></span>
+                <span class="icon fa fa-exclamation-circle" aria-hidden="true"></span>
                 <%= HtmlUtils.interpolateHtml(
-                    gettext('To review learner cohort assignments or see the results of uploading a CSV file, download course profile information or cohort results on the {link_start}Data Download{link_end} page.'),
+                    gettext('To review learner cohort assignments or see the results of uploading a CSV file, download course profile information or cohort results on {link_start}the Data Download page{link_end}.'),
                     {
                         link_start: HtmlUtils.HTML('<button type="button" class="btn-link link-cross-reference" data-section="data_download">'),
                         link_end: HtmlUtils.HTML('</button>')

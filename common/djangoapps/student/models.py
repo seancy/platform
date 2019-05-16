@@ -1118,9 +1118,9 @@ class CourseEnrollmentManager(models.Manager):
 
         enrollment_number = super(CourseEnrollmentManager, self).get_queryset().filter(
             course_id=course_id,
-            is_active=1
+            is_active=1,
+            user__is_active=1
         ).count()
-
         return enrollment_number
 
     def num_enrolled_in_exclude_admins(self, course_id):
@@ -1148,7 +1148,9 @@ class CourseEnrollmentManager(models.Manager):
         return super(CourseEnrollmentManager, self).get_queryset().filter(
             course_id=course_id,
             is_active=1,
-        ).exclude(user__in=staff).exclude(user__in=admins).exclude(user__in=coaches).count()
+            user__is_active=1
+        ).exclude(user__in=staff).exclude(user__in=admins).exclude(user__in=coaches
+        ).count()
 
     def is_course_full(self, course):
         """
@@ -1181,8 +1183,11 @@ class CourseEnrollmentManager(models.Manager):
         """
         # Unfortunately, Django's "group by"-style queries look super-awkward
         query = use_read_replica_if_available(
-            super(CourseEnrollmentManager, self).get_queryset().filter(course_id=course_id, is_active=True).values(
-                'mode').order_by().annotate(Count('mode')))
+            super(CourseEnrollmentManager, self).get_queryset().filter(
+                    course_id=course_id,
+                    is_active=1,
+                    user__is_active=1
+                ).values('mode').order_by().annotate(Count('mode')))
         total = 0
         enroll_dict = defaultdict(int)
         for item in query:

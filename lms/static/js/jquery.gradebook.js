@@ -304,7 +304,7 @@ var Gradebook = function($element) {
     $leftShadow.css('height', tableHeight + 'px');
     $grades.append($leftShadow).append($rightShadow);
     setShadows(0);
-    $grades.css('height', tableHeight+10);
+    $grades.css('height', tableHeight+16);
     $gradeTable.bind('mousedown', startDrag);
     $element.find('tr').bind('mouseenter', highlightRow).bind('mouseleave', function () {
         $element.find('.highlight').removeClass('highlight').find('.promote-grade').css('display', 'none');

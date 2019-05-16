@@ -216,23 +216,19 @@ such that the value can be defined later than this assignment (file load order).
         };
 
         AuthListWidget.prototype.clear_errors = function() {
-            var result;
-            result = this.$errorSection !== undefined ? this.$errorSection.text('') : undefined;
-            return result;
+            if (this.$errorSection !== undefined) {
+                this.$errorSection.text('');
+                return this.$errorSection.css({display: 'none'});
+            }
+            return undefined;
         };
 
         AuthListWidget.prototype.show_errors = function(msg) {
-            var result;
-            result = undefined
             if (this.$errorSection !== undefined) {
-                var $taskResSection;
-                $taskResSection = $('<div/>', {
-                    class: 'request-res-error-section'
-                });
-                $taskResSection.text(msg);
-                result = this.$errorSection.append($taskResSection);
+                this.$errorSection.text(msg);
+                return this.$errorSection.css({display: 'block'});
             }
-            return result;
+            return undefined;
         };
 
         AuthListWidget.prototype.get_member_list = function(cb) {
@@ -312,11 +308,12 @@ such that the value can be defined later than this assignment (file load order).
             this.$browse_file = this.$container.find('#browseFile');
             this.$progress_bar = this.$container.find('.progress-bar');
             this.$file_size = this.$container.find('.file-size');
+            this.$file_name = this.$container.find('.file-name');
             this.processing = false;
             this.$browse_button.on('change', function(event) {
                 if (event.currentTarget.files.length === 1) {
-                    var fileSize = (autoenrollviacsv.$browse_button[0].files[0].size/1000).toFixed(3);
-                    autoenrollviacsv.$file_size.text(fileSize+'KB');
+                    autoenrollviacsv.activeFiles = autoenrollviacsv.$browse_button[0].files;
+                    autoenrollviacsv.refreshFileInfo();
                     return autoenrollviacsv.$browse_file.val(
                         event.currentTarget.value.substring(event.currentTarget.value.lastIndexOf('\\') + 1)
                     );
@@ -331,8 +328,8 @@ such that the value can be defined later than this assignment (file load order).
                 autoenrollviacsv.processing = true;
                 event.preventDefault();
                 data = new FormData();
-                if (autoenrollviacsv.$students_list_file.files.length === 1) {
-                    data.append('students_list', autoenrollviacsv.$students_list_file.files[0]);
+                if (autoenrollviacsv.activeFiles && autoenrollviacsv.activeFiles.length>0){
+                    data.append('students_list', autoenrollviacsv.activeFiles[0]);
                 }
                 return $.ajax({
                     dataType: 'json',
@@ -364,6 +361,48 @@ such that the value can be defined later than this assignment (file load order).
                     }
                 });
             });
+
+            this.initAdditionalFileUploader();
+
+        }
+
+        AutoEnrollmentViaCsv.prototype.refreshFileInfo = function(){
+            var fileSize = (this.activeFiles[0].size/1000).toFixed(3);
+            this.$file_size.text(fileSize+'KB');
+            var fileName = this.activeFiles[0] ? this.activeFiles[0].name : '';
+            this.$file_name.text(fileName)
+
+            this.$progress_bar.find('i').width(0+'%');
+        }
+
+        AutoEnrollmentViaCsv.prototype.initAdditionalFileUploader = function(){
+            var $form = this.$container;
+            var form = $form[0];
+            const stopEvent = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            'drag dragstart dragend dragover dragenter dragleave drop'.split(' ').forEach(function(eventName){
+                form.addEventListener(eventName, stopEvent, false)
+            })
+
+            form.addEventListener('drop', function(e) {
+                var droppedFiles = e.dataTransfer.files;
+                autoenrollviacsv.activeFiles = droppedFiles;
+                autoenrollviacsv.refreshFileInfo();
+            });
+
+            'dragover dragenter'.split(' ').forEach(function(eventName) {
+                form.addEventListener(eventName, function() {
+                    $form.addClass('draghovering')
+                });
+            })
+            'dragleave dragend drop'.split(' ').forEach(function(eventName) {
+                form.addEventListener(eventName, function() {
+                    $form.removeClass('draghovering')
+                });
+            })
+
         }
 
 
@@ -448,11 +487,12 @@ such that the value can be defined later than this assignment (file load order).
             this.$browse_file = this.$container.find('#browseFileUpdate');
             this.$progress_bar = this.$container.find('.progress-bar');
             this.$file_size = this.$container.find('.file-size');
+            this.$file_name = this.$container.find('.file-name');
             this.processing = false;
-            this.$browse_button.on('change', function(event) {
+            this.$browse_button.on('change', function(event)  {
                 if (event.currentTarget.files.length === 1) {
-                    var fileSize = (autoupdateviacsv.$browse_button[0].files[0].size/1000).toFixed(3);
-                    autoupdateviacsv.$file_size.text(fileSize+'KB');
+                    autoupdateviacsv.activeFiles = autoupdateviacsv.$browse_button[0].files;
+                    autoupdateviacsv.refreshFileInfo();
                     return autoupdateviacsv.$browse_file.val(
                         event.currentTarget.value.substring(event.currentTarget.value.lastIndexOf('\\') + 1)
                     );
@@ -467,8 +507,8 @@ such that the value can be defined later than this assignment (file load order).
                 autoupdateviacsv.processing = true;
                 event.preventDefault();
                 data = new FormData();
-                if (autoupdateviacsv.$students_list_file.files.length === 1) {
-                    data.append('students_list', autoupdateviacsv.$students_list_file.files[0]);
+                if (autoupdateviacsv.activeFiles && autoupdateviacsv.activeFiles.length>0){
+                    data.append('students_list', autoupdateviacsv.activeFiles[0]);
                 }
                 return $.ajax({
                     dataType: 'json',
@@ -500,6 +540,46 @@ such that the value can be defined later than this assignment (file load order).
                     }
                 });
             });
+            this.initAdditionalFileUploader();
+        }
+
+        AutoUpdateViaCsv.prototype.refreshFileInfo = function(){
+            var fileSize = (this.activeFiles[0].size/1000).toFixed(3);
+            this.$file_size.text(fileSize+'KB');
+            var fileName = this.activeFiles[0] ? this.activeFiles[0].name : '';
+            this.$file_name.text(fileName)
+
+            this.$progress_bar.find('i').width(0+'%');
+        }
+
+        AutoUpdateViaCsv.prototype.initAdditionalFileUploader = function(){
+            var $form = this.$container;
+            var form = $form[0];
+            const stopEvent = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            'drag dragstart dragend dragover dragenter dragleave drop'.split(' ').forEach(function(eventName) {
+                form.addEventListener(eventName, stopEvent, false)
+            })
+
+            form.addEventListener('drop', function(e) {
+                var droppedFiles = e.dataTransfer.files;
+                autoupdateviacsv.activeFiles = droppedFiles;
+                autoupdateviacsv.refreshFileInfo();
+            });
+
+            'dragover dragenter'.split(' ').forEach(function(eventName) {
+                form.addEventListener(eventName, function() {
+                    $form.addClass('draghovering')
+                });
+            })
+            'dragleave dragend drop'.split(' ').forEach(function(eventName) {
+                form.addEventListener(eventName, function() {
+                    $form.removeClass('draghovering')
+                });
+            })
+
         }
 
         AutoUpdateViaCsv.prototype.display_response = function(dataFromServer, action) {
@@ -565,6 +645,8 @@ such that the value can be defined later than this assignment (file load order).
             this.$checkbox_emailstudents = this.$container.find("input[name='email-students-beta']");
             this.$task_response = this.$container.find('.request-response');
             this.$request_response_error = this.$container.find('.request-response-error');
+            this.clear_responses();
+
             this.$btn_beta_testers.click(function(event) {
                 var autoEnroll, sendData;
                 emailStudents = betatest.$checkbox_emailstudents.is(':checked');
@@ -596,24 +678,25 @@ such that the value can be defined later than this assignment (file load order).
             return this.$checkbox_autoenroll.attr('checked', true);
         };
 
+        betaTesterBulkAddition.prototype.clear_responses = function() {
+            this.$task_response.empty();
+            this.$request_response_error.empty();
+            return this.$request_response_error.css({display: 'none'});
+        }
+
         betaTesterBulkAddition.prototype.fail_with_error = function(msg) {
             this.clear_input();
             this.$task_response.empty();
             this.$request_response_error.empty();
-            var $taskResSection;
-            $taskResSection = $('<div/>', {
-                class: 'request-res-error-section'
-            });
-            $taskResSection.text(msg);
-            return this.$request_response_error.append($taskResSection);
+            this.$request_response_error.text(msg);
+            return this.$request_response_error.css({display: 'block'});
         };
 
         betaTesterBulkAddition.prototype.display_response = function(dataFromServer) {
             var errors, noUsers, renderList, sr, studentResults, successes, i, len, ref,
                 displayResponse = this;
             this.clear_input();
-            this.$task_response.empty();
-            this.$request_response_error.empty();
+            this.clear_responses();
             errors = [];
             successes = [];
             noUsers = [];
@@ -737,6 +820,8 @@ such that the value can be defined later than this assignment (file load order).
             this.checkbox_emailstudents_initialstate = this.$checkbox_emailstudents.is(':checked');
             this.$task_response = this.$container.find('.request-response');
             this.$request_response_error = this.$container.find('.request-response-error');
+            this.clear_responses();
+
             this.$enrollment_button.click(function(event) {
                 var sendData;
                 if (!batchEnroll.$reason_field.val()) {
@@ -779,16 +864,18 @@ such that the value can be defined later than this assignment (file load order).
             return this.$checkbox_autoenroll.attr('checked', true);
         };
 
+        batchEnrollment.prototype.clear_responses = function() {
+            this.$task_response.empty();
+            this.$request_response_error.empty();
+            return this.$request_response_error.css({display: 'none'});
+        }
+
         batchEnrollment.prototype.fail_with_error = function(msg) {
             this.clear_input();
             this.$task_response.empty();
             this.$request_response_error.empty();
-            var $taskResSection;
-            $taskResSection = $('<div/>', {
-                class: 'request-res-error-section'
-            });
-            $taskResSection.text(msg);
-            return this.$request_response_error.append($taskResSection);
+            this.$request_response_error.text(msg)
+            return this.$request_response_error.css({display: 'block'});
         };
 
         batchEnrollment.prototype.display_response = function(dataFromServer) {
@@ -797,8 +884,7 @@ such that the value can be defined later than this assignment (file load order).
                 i, j, len, len1, ref, renderIdsLists,
                 displayResponse = this;
             this.clear_input();
-            this.$task_response.empty();
-            this.$request_response_error.empty();
+            this.clear_responses();
             invalidIdentifier = [];
             errors = [];
             enrolled = [];
@@ -1005,6 +1091,7 @@ such that the value can be defined later than this assignment (file load order).
             this.rolename = rolename;
             this.$display_table = this.$container.find('.auth-list-table');
             this.$request_response_error = this.$container.find('.request-response-error');
+            this.$request_response_error.css({display: 'none'});
             this.$add_section = this.$container.find('.auth-list-add');
             this.$allow_field = this.$add_section.find("input[name='email']");
             this.$allow_button = this.$add_section.find("input[name='allow']");
@@ -1023,6 +1110,7 @@ such that the value can be defined later than this assignment (file load order).
             loadAuthList = function(data) {
                 var $tablePlaceholder, WHICH_CELL_IS_REVOKE, columns, grid, options, tableData;
                 ths.$request_response_error.empty();
+                ths.$request_response_error.css({display: 'none'});
                 ths.$display_table.empty();
                 options = {
                     enableCellNavigation: true,
@@ -1078,7 +1166,8 @@ such that the value can be defined later than this assignment (file load order).
                 },
                 success: loadAuthList,
                 error: statusAjaxError(function() {
-                    return ths.$request_response_error.text("Error fetching list for '" + ths.rolename + "'");
+                    ths.$request_response_error.text("Error fetching list for '" + ths.rolename + "'");
+                    return ths.$request_response_error.css({display: 'block'});
                 })
             });
         };
@@ -1103,7 +1192,8 @@ such that the value can be defined later than this assignment (file load order).
                     return typeof cb === 'function' ? cb(data) : undefined;
                 },
                 error: statusAjaxError(function() {
-                    return ths.$request_response_error.text(gettext("Error changing user's permissions."));
+                    ths.$request_response_error.text(gettext("Error changing user's permissions."));
+                    return ths.$request_response_error.css({display: 'block'});
                 })
             });
         };

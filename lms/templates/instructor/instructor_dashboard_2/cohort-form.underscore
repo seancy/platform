@@ -2,7 +2,10 @@
 <div class="cohort-management-settings">
     <form action="" method="post" name="" id="cohort-management-settings-form" class="cohort-management-settings-form">
         <% if (isNewCohort) { %>
-            <h3 class="hd hd-3 form-title"><%- gettext('Add a New Cohort') %></h3>
+            <h3 class="hd hd-3 form-title">
+                <span><%- gettext('Add a New Cohort') %></span>
+                <i class="fa fa-times"></i>
+            </h3>
             <div class="tab-content is-visible new-cohort-form">
         <% } %>
         <div class="form-fields">
@@ -42,10 +45,10 @@
                         <%- gettext('Cohort Assignment Method') %>
                     </h4>
                     <label>
-                        <input type="radio" class="type-random" name="cohort-assignment-type" value="random"  <%- assignment_type == 'random' ? 'checked="checked"' : '' %>/> <%- gettext("Automatic") %>
+                            <input type="radio" class="type-random" name="cohort-assignment-type" value="random"  <%- assignment_type == 'random' ? 'checked="checked"' : '' %>/> <span><%- gettext("Automatic") %></span>
                     </label>
                     <label>
-                        <input type="radio" class="type-manual" name="cohort-assignment-type" value="manual"  <%- assignment_type == 'manual' || isNewCohort ? 'checked="checked"' : '' %>/> <%- gettext("Manual") %>
+                        <input type="radio" class="type-manual" name="cohort-assignment-type" value="manual"  <%- assignment_type == 'manual' || isNewCohort ? 'checked="checked"' : '' %>/> <span><%- gettext("Manual") %></span>
                     </label>
                 </div>
                 <% if (isDefaultCohort) { %>
@@ -59,9 +62,9 @@
                     <h4 class="form-label">
                         <%- gettext('Associated Content Group') %>
                     </h4>
-                    <label><input type="radio" class="radio-no" name="cohort-association-course" value="no"  <%- !hasSelectedContentGroup ? 'checked="checked"' : '' %>/> <%- gettext("No Content Group") %></label>
+                    <label><input type="radio" class="radio-no" name="cohort-association-course" value="no"  <%- !hasSelectedContentGroup ? 'checked="checked"' : '' %>/> <span><%- gettext("No Content Group") %></span></label>
                     <div class="input-group has-other-input-text">
-                        <label><input type="radio" class="radio-yes" name="cohort-association-course" value="yes" <%- !hasContentGroups ? 'disabled="disabled"' : '' %> <%- hasSelectedContentGroup ? 'checked="checked"' : '' %> /> <%- gettext("Select a Content Group") %></label>
+                        <label><input type="radio" class="radio-yes" name="cohort-association-course" value="yes" <%- !hasContentGroups ? 'disabled="disabled"' : '' %> <%- hasSelectedContentGroup ? 'checked="checked"' : '' %> /> <span><%- gettext("Select a Content Group") %></span></label>
                         <% if (hasContentGroups) { %>
                             <div class="input-group-other">
                                 <label class="sr" for="cohort-group-association"><%- gettext("Choose a content group to associate") %></label>

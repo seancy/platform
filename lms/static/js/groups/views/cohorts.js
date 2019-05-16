@@ -25,6 +25,7 @@
                     'click .action-create': 'showAddCohortForm',
                     'click .cohort-management-add-form .action-save': 'saveAddCohortForm',
                     'click .cohort-management-add-form .action-cancel': 'cancelAddCohortForm',
+                    'click .cohort-management-add-form .form-title i': 'cancelAddCohortForm',
                     'click .link-cross-reference': 'showSection',
                     'click .toggle-cohort-management-secondary': 'showCsvUpload'
                 },
@@ -44,6 +45,11 @@
                     $(this.getSectionCss('cohort_management')).click(function() {
                         model.fetch();
                     });
+
+                    setTimeout(function(){
+                        this.showCsvUpload();
+                    }, 3900)
+
                 },
 
                 render: function() {
@@ -281,9 +287,12 @@
                 },
 
                 showCsvUpload: function(event) {
-                    event.preventDefault();
+                    if (event){
+                        event.preventDefault();
 
-                    $(event.currentTarget).addClass(hiddenClass);
+                        $(event.currentTarget).addClass(hiddenClass);
+                    }
+
                     var uploadElement = this.$('.csv-upload').removeClass(hiddenClass);
 
                     if (!this.fileUploaderView) {

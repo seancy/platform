@@ -47,7 +47,7 @@
             );
             this.$field_select_score_single = findAndAssert(this.$section, "input[name='score-select-single']");
             this.$btn_task_history_single = this.$section.find("input[name='task-history-single']");
-            this.$table_task_history_single = this.$section.find('.task-history-single-table');
+            this.$table_task_history_single = $('.task-history-single-table');
             this.$field_exam_grade = this.$section.find("input[name='entrance-exam-student-select-grade']");
             this.$btn_reset_entrance_exam_attempts = this.$section.find("input[name='reset-entrance-exam-attempts']");
             this.$btn_delete_entrance_exam_state = this.$section.find("input[name='delete-entrance-exam-state']");
@@ -57,26 +57,30 @@
             );
             this.$btn_skip_entrance_exam = this.$section.find("input[name='skip-entrance-exam']");
             this.$btn_entrance_exam_task_history = this.$section.find("input[name='entrance-exam-task-history']");
-            this.$table_entrance_exam_task_history = this.$section.find('.entrance-exam-task-history-table');
+            this.$table_entrance_exam_task_history = $('.entrance-exam-task-history-table');
             this.$field_problem_select_all = this.$section.find("input[name='problem-select-all']");
             this.$btn_reset_attempts_all = this.$section.find("input[name='reset-attempts-all']");
             this.$btn_rescore_problem_all = this.$section.find("input[name='rescore-problem-all']");
             this.$btn_rescore_problem_if_higher_all = this.$section.find("input[name='rescore-problem-all-if-higher']");
             this.$btn_task_history_all = this.$section.find("input[name='task-history-all']");
-            this.$table_task_history_all = this.$section.find('.task-history-all-table');
+            this.$table_task_history_all = $('.task-history-all-table');
             this.instructor_tasks = new (PendingInstructorTasks())(this.$section);
             this.$request_err = findAndAssert(this.$section, '.student-specific-container .request-response-error');
             this.$request_err_grade = findAndAssert(this.$section, '.student-grade-container .request-response-error');
             this.$request_err_ee = this.$section.find('.entrance-exam-grade-container .request-response-error');
             this.$request_response_error_all = this.$section.find('.course-specific-container .request-response-error');
+
+            this.clear_display();
+
             this.$progress_link.click(function(e) {
                 var errorMessage, fullErrorMessage, uniqStudentIdentifier;
                 e.preventDefault();
                 uniqStudentIdentifier = studentadmin.$field_student_select_progress.val();
                 if (!uniqStudentIdentifier) {
-                    return studentadmin.$request_err.text(
+                    studentadmin.$request_err.text(
                         gettext('Please enter a student email address or username.')
                     );
+                    return studentadmin.$request_err.css({display: 'block'});
                 }
                 errorMessage = gettext("Error getting student progress url for '<%- student_id %>'. Make sure that the student identifier is spelled correctly.");  // eslint-disable-line max-len
                 fullErrorMessage = _.template(errorMessage)({
@@ -94,7 +98,8 @@
                         return window.location;
                     }),
                     error: statusAjaxError(function() {
-                        return studentadmin.$request_err.text(fullErrorMessage);
+                        studentadmin.$request_err.text(fullErrorMessage);
+                        return studentadmin.$request_err.css({display: 'block'});
                     })
                 });
             });
@@ -104,12 +109,14 @@
                 uniqStudentIdentifier = studentadmin.$field_student_select_grade.val();
                 problemToReset = studentadmin.$field_problem_select_single.val();
                 if (!uniqStudentIdentifier) {
-                    return studentadmin.$request_err_grade.text(
+                    studentadmin.$request_err_grade.text(
                         gettext('Please enter a student email address or username.')
                     );
+                    return studentadmin.$request_err_grade.css({display: 'block'});
                 }
                 if (!problemToReset) {
-                    return studentadmin.$request_err_grade.text(gettext('Please enter a problem location.'));
+                    studentadmin.$request_err_grade.text(gettext('Please enter a problem location.'));
+                    return studentadmin.$request_err_grade.css({display: 'block'});
                 }
                 sendData = {
                     unique_student_identifier: uniqStudentIdentifier,
@@ -135,7 +142,8 @@
                         return alert(fullSuccessMessage);  // eslint-disable-line no-alert
                     }),
                     error: statusAjaxError(function() {
-                        return studentadmin.$request_err_grade.text(fullErrorMessage);
+                        studentadmin.$request_err_grade.text(fullErrorMessage);
+                        return studentadmin.$request_err_grade.css({display: 'block'});
                     })
                 });
             });
@@ -145,14 +153,16 @@
                 uniqStudentIdentifier = studentadmin.$field_student_select_grade.val();
                 problemToReset = studentadmin.$field_problem_select_single.val();
                 if (!uniqStudentIdentifier) {
-                    return studentadmin.$request_err_grade.text(
+                    studentadmin.$request_err_grade.text(
                         gettext('Please enter a student email address or username.')
                     );
+                    return studentadmin.$request_err_grade.css({display: 'block'});
                 }
                 if (!problemToReset) {
-                    return studentadmin.$request_err_grade.text(
+                    studentadmin.$request_err_grade.text(
                         gettext('Please enter a problem location.')
                     );
+                    return studentadmin.$request_err_grade.css({display: 'block'});
                 }
                 confirmMessage = gettext("Delete student '<%- student_id %>'s state on problem '<%- problem_id %>'?");
                 fullConfirmMessage = _.template(confirmMessage)({
@@ -179,7 +189,8 @@
                             return alert(gettext('Module state successfully deleted.'));  // eslint-disable-line no-alert, max-len
                         }),
                         error: statusAjaxError(function() {
-                            return studentadmin.$request_err_grade.text(fullErrorMessage);
+                            studentadmin.$request_err_grade.text(fullErrorMessage);
+                            return studentadmin.$request_err_grade.css({display: 'block'});
                         })
                     });
                 } else {
@@ -197,14 +208,16 @@
                 uniqStudentIdentifier = studentadmin.$field_student_select_grade.val();
                 problemToReset = studentadmin.$field_problem_select_single.val();
                 if (!uniqStudentIdentifier) {
-                    return studentadmin.$request_err_grade.text(
+                    studentadmin.$request_err_grade.text(
                         gettext('Please enter a student email address or username.')
                     );
+                    return studentadmin.$request_err_grade.css({display: 'block'});
                 }
                 if (!problemToReset) {
-                    return studentadmin.$request_err_grade.text(
+                    studentadmin.$request_err_grade.text(
                         gettext('Please enter a problem location.')
                     );
+                    return studentadmin.$request_err_grade.css({display: 'block'});
                 }
                 sendData = {
                     unique_student_identifier: uniqStudentIdentifier,
@@ -224,7 +237,8 @@
                         return createTaskListTable(studentadmin.$table_task_history_single, data.tasks);
                     }),
                     error: statusAjaxError(function() {
-                        return studentadmin.$request_err_grade.text(fullErrorMessage);
+                        studentadmin.$request_err_grade.text(fullErrorMessage);
+                        return studentadmin.$request_err_grade.css({display: 'block'});
                     })
                 });
             });
@@ -232,9 +246,10 @@
                 var sendData, uniqStudentIdentifier;
                 uniqStudentIdentifier = studentadmin.$field_exam_grade.val();
                 if (!uniqStudentIdentifier) {
-                    return studentadmin.$request_err_ee.text(gettext(
+                    studentadmin.$request_err_ee.text(gettext(
                         'Please enter a student email address or username.')
                     );
+                    return studentadmin.$request_ee.css({display: 'block'});
                 }
                 sendData = {
                     unique_student_identifier: uniqStudentIdentifier,
@@ -259,7 +274,8 @@
                         fullErrorMessage = interpolate_text(errorMessage, {
                             student_id: uniqStudentIdentifier
                         });
-                        return studentadmin.$request_err_ee.text(fullErrorMessage);
+                        studentadmin.$request_err_ee.text(fullErrorMessage);
+                        return studentadmin.$request_err_ee.css({display: 'block'});
                     })
                 });
             });
@@ -273,7 +289,8 @@
                 var confirmMessage, fullConfirmMessage, sendData, uniqStudentIdentifier;
                 uniqStudentIdentifier = studentadmin.$field_exam_grade.val();
                 if (!uniqStudentIdentifier) {
-                    return studentadmin.$request_err_ee.text(gettext("Enter a student's username or email address."));
+                    studentadmin.$request_err_ee.text(gettext("Enter a student's username or email address."));
+                    return studentadmin.$request_err_ee.css({display: 'block'});
                 }
                 confirmMessage = gettext("Do you want to allow this student ('{student_id}') to skip the entrance exam?");  // eslint-disable-line max-len
                 fullConfirmMessage = interpolate_text(confirmMessage, {
@@ -294,7 +311,8 @@
                         error: statusAjaxError(function() {
                             var errorMessage;
                             errorMessage = gettext("An error occurred. Make sure that the student's username or email address is correct and try again.");  // eslint-disable-line max-len
-                            return studentadmin.$request_err_ee.text(errorMessage);
+                            studentadmin.$request_err_ee.text(errorMessage);
+                            return studentadmin.$request_err_ee.css({display: 'block'});
                         })
                     });
                 }
@@ -304,9 +322,10 @@
                 var sendData, uniqStudentIdentifier;
                 uniqStudentIdentifier = studentadmin.$field_exam_grade.val();
                 if (!uniqStudentIdentifier) {
-                    return studentadmin.$request_err_ee.text(
+                    studentadmin.$request_err_ee.text(
                         gettext('Please enter a student email address or username.')
                     );
+                    return studentadmin.$request_err_ee.css({display: 'block'});
                 }
                 sendData = {
                     unique_student_identifier: uniqStudentIdentifier,
@@ -331,7 +350,8 @@
                         fullErrorMessage = interpolate_text(errorMessage, {
                             student_id: uniqStudentIdentifier
                         });
-                        return studentadmin.$request_err_ee.text(fullErrorMessage);
+                        studentadmin.$request_err_ee.text(fullErrorMessage);
+                        return studentadmin.$request_err_ee.css({display: 'block'});
                     })
                 });
             });
@@ -339,9 +359,10 @@
                 var sendData, uniqStudentIdentifier;
                 uniqStudentIdentifier = studentadmin.$field_exam_grade.val();
                 if (!uniqStudentIdentifier) {
-                    return studentadmin.$request_err_ee.text(
+                    studentadmin.$request_err_ee.text(
                         gettext("Enter a student's username or email address.")
                     );
+                    return studentadmin.$request_err_ee.css({display: 'block'});
                 }
                 sendData = {
                     unique_student_identifier: uniqStudentIdentifier
@@ -360,7 +381,8 @@
                         fullErrorMessage = interpolate_text(errorMessage, {
                             student_id: uniqStudentIdentifier
                         });
-                        return studentadmin.$request_err_ee.text(fullErrorMessage);
+                        studentadmin.$request_err_ee.text(fullErrorMessage);
+                        return studentadmin.$request_err_ee.css({display: 'block'});
                     })
                 });
             });
@@ -369,9 +391,10 @@
                     fullErrorMessage, fullSuccessMessage, problemToReset, sendData, successMessage;
                 problemToReset = studentadmin.$field_problem_select_all.val();
                 if (!problemToReset) {
-                    return studentadmin.$request_response_error_all.text(
+                    studentadmin.$request_response_error_all.text(
                         gettext('Please enter a problem location.')
                     );
+                    return studentadmin.$request_response_error_all.css({display: 'block'});
                 }
                 confirmMessage = gettext("Reset attempts for all students on problem '<%- problem_id %>'?");
                 fullConfirmMessage = _.template(confirmMessage)({
@@ -399,7 +422,8 @@
                             return alert(fullSuccessMessage);  // eslint-disable-line no-alert
                         }),
                         error: statusAjaxError(function() {
-                            return studentadmin.$request_response_error_all.text(fullErrorMessage);
+                            studentadmin.$request_response_error_all.text(fullErrorMessage);
+                            return studentadmin.$request_response_error_all.css({display: 'block'});
                         })
                     });
                 } else {
@@ -421,9 +445,10 @@
                     problem_location_str: studentadmin.$field_problem_select_all.val()
                 };
                 if (!sendData.problem_location_str) {
-                    return studentadmin.$request_response_error_all.text(
+                    studentadmin.$request_response_error_all.text(
                         gettext('Please enter a problem location.')
                     );
+                    return studentadmin.$request_response_error_all.css({display: 'block'});
                 }
                 return $.ajax({
                     type: 'POST',
@@ -434,9 +459,10 @@
                         return createTaskListTable(studentadmin.$table_task_history_all, data.tasks);
                     }),
                     error: statusAjaxError(function() {
-                        return studentadmin.$request_response_error_all.text(
+                        studentadmin.$request_response_error_all.text(
                             gettext('Error listing task history for this student and problem.')
                         );
+                        return studentadmin.$request_response_error_all.css({display: 'block'});
                     })
                 });
             });
@@ -449,14 +475,16 @@
             uniqStudentIdentifier = this.$field_student_select_grade.val();
             problemToReset = this.$field_problem_select_single.val();
             if (!uniqStudentIdentifier) {
-                return this.$request_err_grade.text(
+                this.$request_err_grade.text(
                     gettext('Please enter a student email address or username.')
                 );
+                return $request_err_grade.css({display: 'block'});
             }
             if (!problemToReset) {
-                return this.$request_err_grade.text(
+                this.$request_err_grade.text(
                     gettext('Please enter a problem location.')
                 );
+                return $request_err_grade.css({display: 'block'});
             }
             sendData = {
                 unique_student_identifier: uniqStudentIdentifier,
@@ -483,9 +511,11 @@
                 }),
                 error: statusAjaxError(function(response) {
                     if (response.responseText) {
-                        return that.$request_err_grade.text(response.responseText);
+                        that.$request_err_grade.text(response.responseText);
+                        return that.$request_err_grade.css({display: 'block'});
                     }
-                    return that.$request_err_grade.text(fullDefaultErrorMessage);
+                    that.$request_err_grade.text(fullDefaultErrorMessage);
+                    return that.$request_err_grade.css({display: 'block'});
                 })
             });
         };
@@ -498,19 +528,22 @@
             problemToReset = this.$field_problem_select_single.val();
             score = this.$field_select_score_single.val();
             if (!uniqStudentIdentifier) {
-                return this.$request_err_grade.text(
+                this.$request_err_grade.text(
                     gettext('Please enter a student email address or username.')
                 );
+                return this.$request_err_grade.css({display: 'block'});
             }
             if (!problemToReset) {
-                return this.$request_err_grade.text(
+                this.$request_err_grade.text(
                     gettext('Please enter a problem location.')
                 );
+                return this.$request_err_grade.css({display: 'block'});
             }
             if (!score) {
-                return this.$request_err_grade.text(
+                this.$request_err_grade.text(
                     gettext('Please enter a score.')
                 );
+                return this.$request_err_grade.css({display: 'block'});
             }
             sendData = {
                 unique_student_identifier: uniqStudentIdentifier,
@@ -537,9 +570,11 @@
                 }),
                 error: statusAjaxError(function(response) {
                     if (response.responseText) {
-                        return that.$request_err_grade.text(response.responseText);
+                        that.$request_err_grade.text(response.responseText);
+                        return that.$request_err_grade.css({display: 'block'});
                     }
-                    return that.$request_err_grade.text(fullDefaultErrorMessage);
+                    that.$request_err_grade.text(fullDefaultErrorMessage);
+                    return that.$request_err_grade.css({display: 'block'});
                 })
             });
         };
@@ -549,9 +584,10 @@
                 that = this;
             uniqStudentIdentifier = this.$field_exam_grade.val();
             if (!uniqStudentIdentifier) {
-                return this.$request_err_ee.text(gettext(
+                this.$request_err_ee.text(gettext(
                     'Please enter a student email address or username.')
                 );
+                return this.$request_err_ee.css({display: 'block'});
             }
             sendData = {
                 unique_student_identifier: uniqStudentIdentifier,
@@ -576,7 +612,8 @@
                     fullErrorMessage = interpolate_text(errorMessage, {
                         student_id: uniqStudentIdentifier
                     });
-                    return that.$request_err_ee.text(fullErrorMessage);
+                    that.$request_err_ee.text(fullErrorMessage);
+                    return that.$request_err.css({display: 'block'});
                 })
             });
         };
@@ -588,9 +625,10 @@
                 that = this;
             problemToReset = this.$field_problem_select_all.val();
             if (!problemToReset) {
-                return this.$request_response_error_all.text(
+                this.$request_response_error_all.text(
                     gettext('Please enter a problem location.')
                 );
+                return studentadmin.$request_response_error_all.css({display: 'block'});
             }
             confirmMessage = gettext("Rescore problem '<%- problem_id %>' for all students?");
             fullConfirmMessage = _.template(confirmMessage)({
@@ -620,9 +658,11 @@
                     }),
                     error: statusAjaxError(function(response) {
                         if (response.responseText) {
-                            return that.$request_response_error_all.text(response.responseText);
+                            that.$request_response_error_all.text(response.responseText);
+                            return that.$request_response_error_all.css({display: 'block'});
                         }
-                        return that.$request_response_error_all.text(fullDefaultErrorMessage);
+                        that.$request_response_error_all.text(fullDefaultErrorMessage);
+                        return that.$request_response_error_all.css({display: 'block'});
                     })
                 });
             } else {
@@ -631,10 +671,7 @@
         };
 
         StudentAdmin.prototype.clear_errors_then = function(cb) {
-            this.$request_err.empty();
-            this.$request_err_grade.empty();
-            this.$request_err_ee.empty();
-            this.$request_response_error_all.empty();
+            this.clear_errors();
             return function() {
                 return cb != null ? cb.apply(this, arguments) : void 0;
             };
@@ -644,8 +681,16 @@
             this.$request_err.empty();
             this.$request_err_grade.empty();
             this.$request_err_ee.empty();
-            return this.$request_response_error_all.empty();
+            this.$request_response_error_all.empty();
+            return this.clear_display();
         };
+
+        StudentAdmin.prototype.clear_display = function() {
+            this.$request_err.css({display: 'none'});
+            this.$request_err_grade.css({display: 'none'});
+            this.$request_err_ee.css({display: 'none'});
+            return this.$request_response_error_all.css({display: 'none'});;
+        }
 
         StudentAdmin.prototype.onClickTitle = function() {
             return this.instructor_tasks.task_poller.start();

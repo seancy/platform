@@ -69,13 +69,14 @@ from openedx.core.djangolib.markup import HTML, Text
 %if static.get_value('ALLOW_AUTOMATED_SIGNUPS', settings.FEATURES.get('ALLOW_AUTOMATED_SIGNUPS', False)):
   <hr/>
 
-  <fieldset class="auto_enroll auto_enroll_csv membership-section">
+  <form class="auto_enroll auto_enroll_csv membership-section">
     <legend class="hd hd-3">${_("Register/Enroll Students")}</legend>
-    <p>
+    <label>
       ${_("To register and enroll a list of users in this course, choose a CSV file based on the following template:")}
       <a href="${static.url('documents/batch_register_enroll_template.csv')}">batch_register_enroll_template.csv</a><br/>
-      ${_("Please include one student per row and do not include any headers, footers, or blank lines.")}
-    </p>
+      ${_("Please include one student per row and do not include any headers, footers, or blank lines.")}<br/>
+      ${_("A maximum of 200 users by batch is advised to ensure optimal response times.")}
+    </label>
     <div class="customBrowseBtn">
         <i class="fa fa-file-csv csv-file"></i>
       <label for="browseBtn-auto-enroll">${_("Upload a CSV for bulk enrollment")}</label>
@@ -87,6 +88,7 @@ from openedx.core.djangolib.markup import HTML, Text
     <div class="action-wrapper">
         <div class="file-field-wrapper">
             <input class="file_field" id="browseBtn-auto-enroll" name="auto_enroll_students_list" type="file" accept=".csv"/>
+            <span class="file-name"></span>
             <span class="file-size"></span>
             <div class="progress-bar" data-percent="40%" percent="40"><i></i></div>
         </div>
@@ -95,15 +97,15 @@ from openedx.core.djangolib.markup import HTML, Text
       <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
     </div>
     <div class="results" id="register-enroll-results"></div>
-  </fieldset>
+  </form>
 
-  <fieldset class="auto_update_csv membership-section">
-    <p>
+  <form class="auto_update_csv membership-section">
+    <label>
       ${_("To update a list of user accounts, choose a CSV file based on the following template:")}
       <a href="${static.url('documents/batch_update_template.csv')}">batch_update_template.csv</a><br/>
       ${_("Please include one student per row and do not include any headers, footers, or blank lines.")}<br/>
       ${_("Note that users must have an activated {platform_name} account prior to this update.").format(platform_name=settings.PLATFORM_NAME)}
-    </p>
+    </label>
     <div class="customBrowseBtn">
         <i class="fa fa-file-csv csv-file"></i>
       <label for="browseBtn-auto-update">${_("Upload a CSV for bulk enrollment")}</label>
@@ -116,6 +118,7 @@ from openedx.core.djangolib.markup import HTML, Text
     <div class="action-wrapper">
         <div class="file-field-wrapper">
             <input class="file_field" id="browseBtn-auto-update" name="auto_update_students_list" type="file" accept=".csv"/>
+            <span class="file-name"></span>
             <span class="file-size"></span>
             <div class="progress-bar" data-percent="40%" percent="40"><i></i></div>
         </div>
@@ -123,7 +126,7 @@ from openedx.core.djangolib.markup import HTML, Text
       <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
     </div>
     <div class="results" id="update-results"></div>
-  </fieldset>
+  </form>
 %endif
 
 <hr/>

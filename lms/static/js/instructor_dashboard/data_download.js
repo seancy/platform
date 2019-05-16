@@ -22,8 +22,8 @@
             this.$container = $container;
             this.$list_issued_certificate_table_btn = this.$container.find("input[name='issued-certificates-list']");
             this.$list_issued_certificate_csv_btn = this.$container.find("input[name='issued-certificates-csv']");
-            this.$certificate_display_table = this.$container.find('.certificate-data-display-table');
-            this.$certificates_request_err = this.$container.find('.issued-certificates-error.request-response-error');
+            this.$certificate_display_table = $('.reports-download-container .certificate-data-display-table');
+            this.$certificates_request_err = $('.reports-download-container .request-response-error.msg-error');
             this.$list_issued_certificate_table_btn.click(function() {
                 var url = dataDownloadCert.$list_issued_certificate_table_btn.data('endpoint');
                 dataDownloadCert.clear_ui();
@@ -36,7 +36,7 @@
                         dataDownloadCert.$certificates_request_err.text(
                             gettext('Error getting issued certificates list.')
                         );
-                        return $('.issued_certificates .issued-certificates-error.msg-error').css({
+                        return $('.reports-download-container .request-response-error.msg-error').css({
                             display: 'block'
                         });
                     },
@@ -81,7 +81,7 @@
         InstructorDashboardDataDownloadCertificate.prototype.clear_ui = function() {
             this.$certificate_display_table.empty();
             this.$certificates_request_err.empty();
-            return $('.issued-certificates-error.msg-error').css({
+            return $('.reports-download-container .request-response-error.msg-error').css({
                 display: 'none'
             });
         };
@@ -117,6 +117,18 @@
             this.report_downloads = new (ReportDownloads())(this.$section);
             this.instructor_tasks = new (PendingInstructorTasks())(this.$section);
             this.clear_display();
+
+            this.$section.on('click', '.slickgrid', function(e) {
+                if (!$(e.target).hasClass('slick-cell')) {
+                    var $table = $(e.currentTarget);
+                    if ($table.hasClass('extended')) {
+                        $table.removeClass('extended')
+                    } else {
+                        $table.addClass('extended')
+                    }
+                }
+            });
+
             this.$list_anon_btn.click(function() {
                 location.href = dataDownloadObj.$list_anon_btn.data('endpoint');
             });

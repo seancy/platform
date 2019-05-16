@@ -24,32 +24,6 @@ from django.core.urlresolvers import reverse
       $.notify.defaults({ className: "success" });
     });
   </script>
-
-  <style type="text/css">
-      .indicate-icon a {
-          display: inline-block;
-      }
-      .indicate-icon {
-          display: inline-block;
-      }
-      .indicate-icon a.promote-section {
-        display: none;
-      }
-      .indicate-icon a.undo-grade {
-        display: none;
-      }
-      div.gradebook-wrapper section.gradebook-content .high-column {
-
-          background-color: rgba(231,76,60,0.1) !important;
-
-      }
-      .student-table .indicate-icon {
-
-        width: 18px;
-        display: inline-block;
-
-      }
-  </style>
 </%block>
 
 <%include file="/courseware/course_navigation.html" args="active_page='instructor'" />
@@ -84,20 +58,25 @@ from django.core.urlresolvers import reverse
       <form class="student-search">
         <input type="search" name="learner_name" class="student-search-field" placeholder="${_('Search students')}" />
         <input type="submit" value="${_("Filter")}">
+        <i class="far fa-search" onClick="javascript:this.parentElement.submit();"></i>
       </form>
+
+      <div style="clear: both"></div>
+    </div>
+    <div class="gradebook-instructions-wrapper">
+      <ul class="gradebook-instructions">
+        ${_("Instructions")}:
+        <li>1. ${_("The grade can only be manually changed to 100")}</li>
+        <li>2. ${_("The check icon on the right side of grade means the grade is manually changed")}</li>
+        <li>3. ${_("Please be careful when you try to edit learners' grade. Once you click the save button, this action is non reversible, a notification email will be sent the leaner.")}</li>
+      </ul>
       <div class="export-edit">
         <button class="edit_gradebook edit-grade">${_("Edit")}</button>
         <button class="edit_gradebook confirm-grade" style="display: none">${_("Save")}</button>
         <button class="edit_gradebook confirm-grade cancel-grade" style="display: none">${_("Cancel")}</button>
       </div>
-      <div style="clear: both"></div>
     </div>
-    <ul class="gradebook-instructions">
-        ${_("Instructions")}:
-        <li>1. ${_("The grade can only be manually changed to 100")}</li>
-        <li>2. ${_("The check icon on the right side of grade means the grade is manually changed")}</li>
-        <li>3. ${_("Please be careful when you try to edit learners' grade. Once you click the save button, this action is non reversible, a notification email will be sent the leaner.")}</li>
-    </ul>
+
     <table class="student-table">
       <thead>
         <tr>
