@@ -984,15 +984,25 @@ def _progress(request, course_key, student_id):
     # student instead of request.user in the rest of the function.
 
     course_grade = CourseGradeFactory().read(student, course)
-    courseware_summary = course_grade.chapter_grades.values()
+    progress_summary = CourseGradeFactory().get_progress(student, course, grade_summary=course_grade)
 
     studio_url = get_studio_url(course, 'settings/grading')
     # checking certificate generation configuration
     enrollment_mode, _ = CourseEnrollment.enrollment_mode_for_user(student, course_key)
 
+    show_courseware_link = bool(
+        (
+            has_access(request.user, 'load', course)
+        ) or settings.FEATURES.get('ENABLE_LMS_MIGRATION')
+    )
+
+    if has_access(request.user, 'load', course):
+        course_target = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
+    else:
+        course_target = reverse('about_course', args=[text_type(course.id)])
+
     context = {
         'course': course,
-        'courseware_summary': courseware_summary,
         'studio_url': studio_url,
         'grade_summary': course_grade.summary,
         'staff_access': staff_access,
@@ -1001,6 +1011,13 @@ def _progress(request, course_key, student_id):
         'student': student,
         'credit_course_requirements': _credit_course_requirements(course_key, student),
         'certificate_data': _get_cert_data(student, course, enrollment_mode, course_grade),
+        'show_dashboard_tabs': True,
+        'supports_preview_menu': False,
+        'show_courseware_link': show_courseware_link,
+        'user': request.user,
+        'registered': registered_for_course(course, request.user),
+        'course_target': course_target,
+        'progress_summary': progress_summary
     }
     context.update(
         get_experiment_user_metadata_context(
@@ -1010,7 +1027,7 @@ def _progress(request, course_key, student_id):
     )
 
     with outer_atomic():
-        response = render_to_response('courseware/progress.html', context)
+        response = render_to_response('courseware/progress_badges.html', context)
 
     return response
 

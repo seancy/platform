@@ -322,12 +322,16 @@ def get_course_tab_list(request, course):
             if tab.type != 'courseware':
                 continue
             tab.name = _("Entrance Exam")
+        elif tab.type == 'courseware':
+            tab.name = _('OVERVIEW')
         # TODO: LEARNER-611 - once the course_info tab is removed, remove this code
         if UNIFIED_COURSE_TAB_FLAG.is_enabled(course.id) and tab.type == 'course_info':
                 continue
         if tab.type == 'static_tab' and tab.course_staff_only and \
                 not bool(user and has_access(user, 'staff', course, course.id)):
             continue
+        if tab.type == 'progress':
+            tab.name = _("BADGES")
         course_tab_list.append(tab)
 
     # Add in any dynamic tabs, i.e. those that are not persisted

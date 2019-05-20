@@ -3,6 +3,7 @@ Tests for credit requirement display on the progress page.
 """
 
 import ddt
+import pytest
 from django.conf import settings
 from django.urls import reverse
 from mock import patch
@@ -15,6 +16,7 @@ from xmodule.modulestore.tests.django_utils import SharedModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
 
 
+@pytest.mark.skip("Skip this test, cause our progress view is quite different from the origin")
 @patch.dict(settings.FEATURES, {"ENABLE_CREDIT_ELIGIBILITY": True})
 @ddt.ddt
 class ProgressPageCreditRequirementsTest(SharedModuleStoreTestCase):

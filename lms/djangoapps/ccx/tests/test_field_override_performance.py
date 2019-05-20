@@ -3,6 +3,7 @@
 Performance tests for field overrides.
 """
 import itertools
+import pytest
 from datetime import datetime
 
 import ddt
@@ -224,6 +225,7 @@ class FieldOverridePerformanceTestCase(FieldOverrideTestMixin, ProceduralCourseT
             )
 
 
+@pytest.mark.skip("Skip this test, cause our progress view is quite different from the origin")
 class TestFieldOverrideMongoPerformance(FieldOverridePerformanceTestCase):
     """
     Test cases for instrumenting field overrides against the Mongo modulestore.
@@ -251,6 +253,7 @@ class TestFieldOverrideMongoPerformance(FieldOverridePerformanceTestCase):
     }
 
 
+@pytest.mark.skip("Skip this test, cause our progress view is quite different from the origin")
 class TestFieldOverrideSplitPerformance(FieldOverridePerformanceTestCase):
     """
     Test cases for instrumenting field overrides against the Split modulestore.

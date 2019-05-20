@@ -332,7 +332,7 @@ class CourseGradeFactory(object):
                     grader = grading_rules_dict[section.format]
                     trophy = {
                         'result': section.percent_graded,
-                        'attempted': section.attempted_graded,
+                        'attempted': section.attempted_graded or section.override is not None,
                         'section_format': section.format,
                         'section_name': section.display_name,
                         'section_url': section.url_name,

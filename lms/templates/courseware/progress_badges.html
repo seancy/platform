@@ -1,0 +1,268 @@
+<%page expression_filter="h"/>
+<%inherit file="/main.html" />
+<%namespace name='static' file='/static_content.html'/>
+<%def name="online_help_token()"><% return "progress" %></%def>
+<%!
+from django.utils.translation import ugettext as _
+from django.urls import reverse
+from django.conf import settings
+from django.utils.http import urlquote_plus
+from six import text_type, string_types
+
+from course_modes.models import CourseMode
+from courseware.courses import get_course_about_section
+from lms.djangoapps.certificates.models import CertificateStatuses
+from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.lib.courses import course_image_url
+from openedx.features.enterprise_support.utils import get_enterprise_learner_generic_name
+from xmodule.contentstore.django import contentstore
+%>
+
+<%
+username = get_enterprise_learner_generic_name(request) or student.username
+%>
+
+<%block name="bodyclass">view-in-course view-progress</%block>
+
+<%block name="headextra">
+<%static:css group='style-course-vendor'/>
+<%static:css group='style-course'/>
+</%block>
+
+<%block name="pagetitle">${_("{course_number} Progress").format(course_number=course.display_number_with_default)}</%block>
+
+<%block name="js_extra">
+
+<%static:require_module_async module_name="js/dateutil_factory" class_name="DateUtilFactory">
+    DateUtilFactory.transform(iterationKey=".localized_datetime");
+</%static:require_module_async>
+</%block>
+
+<%
+def get_trophy_path(trophy_img):
+    try:
+        asset_key = course.id.make_asset_key('asset', trophy_img + '.png')
+        contentstore().find(asset_key)
+
+        img_path = course_image_url(course)
+        at_pos = img_path.rfind("@")
+        return img_path[:at_pos] + "@" + trophy_img + '.png'
+
+    except:
+        return static.url("images/badge.png")
+%>
+
+<header class="course-profile">
+
+  <nav class="wrapper-preview-menu" aria-label="${_('Course View')}">
+    <section class="welcome-wrapper">
+      <h2>${course.display_name_with_default_escaped}</h2>
+      <ul>
+        <% course_duration = get_course_about_section(request, course, "duration") %>
+        % if course_duration:
+          <li class="duration">
+            <i class="far fa-clock" aria-hidden="true"></i>
+            <span>${course_duration}</span>
+          </li>
+        % endif
+        % if course.language:
+          <li class="language">
+              <i class="far fa-globe" aria-hidden="true"></i>
+              <span class="sr">${_("Language")}</span>
+              <span>${dict(settings.ALL_LANGUAGES).get(course.language, course.language)}</span>
+          </li>
+        % endif
+        % if course.course_category:
+          <li class="course-category">
+            <i class="far fa-folder" aria-hidden="true"></i>
+            <span>${course.course_category}</span>
+          </li>
+        % endif
+        % if not course.start_date_is_still_default:
+          <% course_start_date = course.advertised_start or course.start %>
+          <li class="important-dates">
+            <i class="icon far fa-calendar-alt" aria-hidden="true"></i>
+            <span class="sr">${_('Course dates')}</span>
+            % if isinstance(course_start_date, string_types):
+              <span class="important-dates-item-text start-date">${course_start_date}</span>
+            % else:
+              <% course_date_string = course_start_date.strftime('%Y-%m-%dT%H:%M:%S%z') %>
+              <span class="important-dates-item-text start-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></span>
+            % endif
+            % if course.end:
+                &nbsp;-&nbsp;
+                % if isinstance(course_end_date, string_types):
+                  <span class="important-dates-item-text final-date">${course.end}</span>
+                % else:
+                  <% course_date_string = course.end.strftime('%Y-%m-%dT%H:%M:%S%z') %>
+                  <span class="important-dates-item-text final-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></span>
+                % endif
+            % endif
+          </li>
+        % endif
+
+        % if get_course_about_section(request, course, "effort"):
+          <li class="effort">
+            <i class="icon fa fa-pencil" aria-hidden="true"></i>
+            <span class="sr">${_("Estimated Effort")}</span>
+            <span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span>
+          </li>
+        % endif
+
+          <li class="course-length">
+            <i class="icon fa fa-clock-o" aria-hidden="true"></i>
+            <span class="sr">${_('Course Length')}</span>
+            <span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span>
+          </li>
+
+
+        % if course_price and (can_add_course_to_cart or is_cosmetic_price_enabled):
+          <li class="course-price">
+            <i class="icon fa fa-money" aria-hidden="true"></i>
+            <span class="sr">${_("Price")}</span>
+            <span class="important-dates-item-text">${course_price}</span>
+          </li>
+        % endif
+      </ul>
+    </section>
+
+    <section class="course-control">
+      <div style="margin: 30px; color: white">${int(progress_summary['progress']*100)}% ${_('Completed')}</div>
+      <div class="main-cta">
+        % if user.is_authenticated and registered:
+            <span class="sr">${_("You are enrolled in this course")}</span>
+          % if show_courseware_link:
+            <a href="${course_target}"><strong>${_("Resume Course")}</strong></a>
+          % endif
+
+        % elif in_cart:
+            <span class="sr">${_('This course is in your cart.')}</span>
+            <a href="${cart_link}">${_('View Cart')}</a>
+          </span>
+
+        % elif is_course_full:
+          <span class="sr">${_("Course is full")}</span>
+          <span class="disabled-button">${_('Start Course')}</span>
+
+        % elif invitation_only and not can_enroll:
+          <span class="sr">${_("Enrollment in this course is by invitation only")}</span>
+          <span class="disabled-button">${_('Start Course')}</span>
+
+        ## Shib courses need the enrollment button to be displayed even when can_enroll is False,
+        ## because AnonymousUsers cause can_enroll for shib courses to be False, but we need them to be able to click
+        ## so that they can register and become a real user that can enroll.
+        % elif not is_shib_course and not can_enroll:
+          <span class="sr">${_("Enrollment is Closed")}</span>
+          <span class="disabled-button">${_('Start Course')}</span>
+
+        % elif can_add_course_to_cart:
+          <%
+          if user.is_authenticated:
+            reg_href = "#"
+            reg_element_id = "add_to_cart_post"
+          else:
+            reg_href = reg_then_add_to_cart_link
+            reg_element_id = "reg_then_add_to_cart"
+          %>
+          <% if ecommerce_checkout:
+              reg_href = ecommerce_checkout_link
+              reg_element_id = ""
+          %>
+          <a href="${reg_href}" class="add-to-cart" id="${reg_element_id}">
+            ${_("Add to Cart <span>({price} USD)</span>")\
+              .format(price=course_price)}
+          </a>
+          <div id="register_error"></div>
+
+        % else:
+          <%
+            if ecommerce_checkout:
+              reg_href = ecommerce_checkout_link
+            else:
+              reg_href="#"
+            if professional_mode:
+              href_class = "add-to-cart"
+            else:
+              href_class = "register"
+          %>
+          <a href="${reg_href}" class="${href_class}">${_("Start Course")}</a>
+          <div id="register_error"></div>
+        % endif
+        </div>
+    </section>
+  </nav>
+
+</header>
+
+<%include file="/courseware/course_navigation.html" args="active_page='progress'" />
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <div class="container">
+        <div class="profile-wrapper">
+            <section class="obtained-badges">
+                <h2>${_("My collection of badges")}</h2>
+                <ul>
+                    % for chapter in progress_summary['trophies_by_chapter']:
+                        % for trophy in chapter['trophies']:
+                            % if trophy['passed']:
+                            <li class="badge-card">
+                                <a href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
+                                    <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
+                                    <section class="badge-info">
+                                        <h2>${trophy['section_format']}</h2>
+                                        <div><span>${trophy['section_name']}</span></div>
+                                        <div><span>+1 ${_('badge')} <i class="fa fa-trophy"></i></span></div>
+                                        <div><span>${_('Score')}: ${int(trophy['result']*100)}%</span></div>
+                                    </section>
+                                </a>
+                            </li>
+                            % endif
+                        % endfor
+                    % endfor
+                </ul>
+            </section>
+            <section class="not-obtained-badges">
+                <h2>${_("Badges not obtained")}</h2>
+                <ul>
+                    % for chapter in progress_summary['trophies_by_chapter']:
+                        % for trophy in chapter['trophies']:
+                            % if not trophy['passed'] and trophy['attempted']:
+                            <li class="badge-card">
+                                <a href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
+                                    <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
+                                    <section class="badge-info">
+                                        <h2>${trophy['section_format']}</h2>
+                                        <div><span>${_('To win this badge, get at least {score}%').format(score=int(trophy['threshold']*100))}</span></div>
+                                        <div><span>${_('Score')}: ${int(trophy['result']*100)}%</span></div>
+                                    </section>
+                                </a>
+                            </li>
+                            % endif
+                        % endfor
+                    % endfor
+                </ul>
+            </section>
+            <section class="not-started-badges">
+                <h2>${_("Badges to be earned")}</h2>
+                <ul>
+                    % for chapter in progress_summary['trophies_by_chapter']:
+                        % for trophy in chapter['trophies']:
+                            % if not trophy['attempted']:
+                            <li class="badge-card">
+                                <a href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
+                                    <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
+                                    <section class="badge-info">
+                                        <h2>${trophy['section_format']}</h2>
+                                        <div><span>${_('To win this badge, get at least {score}%').format(score=int(trophy['threshold']*100))}</span></div>
+                                        <div><span>${_('Score')}: 0%</span></div>
+                                    </section>
+                                </a>
+                            </li>
+                            % endif
+                        % endfor
+                    % endfor
+                </ul>
+            </section>
+        </div>
+    </div>
+</main>

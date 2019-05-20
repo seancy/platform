@@ -3,6 +3,7 @@ Unit tests for masquerade.
 """
 import json
 import pickle
+import pytest
 from datetime import datetime
 
 from django.conf import settings
@@ -418,6 +419,7 @@ class TestStaffMasqueradeAsSpecificStudent(StaffMasqueradeTestCase, ProblemSubmi
         content = self.get_course_info_page().content
         self.assertIn("OOGIE BLOOGIE", content)
 
+    @pytest.mark.skip("Skip this test, cause our progress view is quite different from the origin")
     def test_masquerade_as_specific_student_progress(self):
         """
         Test masquerading as a specific user for progress page.

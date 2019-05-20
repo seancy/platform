@@ -4,6 +4,7 @@ Tests courseware views.py
 """
 import itertools
 import json
+import pytest
 import unittest
 from datetime import datetime, timedelta
 from HTMLParser import HTMLParser
@@ -1074,6 +1075,7 @@ class BaseDueDateTests(ModuleStoreTestCase):
         self.assertContains(response, self.time_with_tz)
 
 
+@pytest.mark.skip("Skip this test, cause our progress view is quite different from the origin")
 class TestProgressDueDate(BaseDueDateTests):
     """
     Test that the progress page displays due dates correctly
@@ -1226,6 +1228,7 @@ class ProgressPageBaseTests(ModuleStoreTestCase):
 
 
 # pylint: disable=protected-access, no-member
+@pytest.mark.skip("Skip this test, cause our progress view is quite different from the origin")
 @attr(shard=5)
 @ddt.ddt
 class ProgressPageTests(ProgressPageBaseTests):
@@ -1784,6 +1787,7 @@ class ProgressPageTests(ProgressPageBaseTests):
 
 
 # pylint: disable=protected-access, no-member
+@pytest.mark.skip("Skip this test, cause our progress view is quite different from the origin")
 @attr(shard=5)
 @ddt.ddt
 class ProgressPageShowCorrectnessTests(ProgressPageBaseTests):

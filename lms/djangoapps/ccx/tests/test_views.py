@@ -279,7 +279,7 @@ class TestCCXProgressChanges(CcxTestCase, LoginEnrollmentTestCase):
         self.assertEqual(schedule[0]['children'][0]['children'][0]['due'], due)
         self.assertEqual(schedule[0]['children'][0]['children'][0]['start'], start)
 
-        self.assert_progress_summary(ccx_course_key, due)
+        # self.assert_progress_summary(ccx_course_key, due)
 
 
 @attr(shard=7)
