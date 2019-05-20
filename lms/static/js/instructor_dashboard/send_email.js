@@ -48,8 +48,8 @@
             this.$request_response_error = this.$container.find('.request-response-error');
             this.$content_request_response_error = this.$container.find('.content-request-response-error');
             this.$history_request_response_error = this.$container.find('.history-request-response-error');
-            this.$btn_task_history_email = this.$container.find("input[name='task-history-email']");
-            this.$btn_task_history_email_content = this.$container.find("input[name='task-history-email-content']");
+            this.$btn_task_history_email = this.$container.find(".task-history-email");
+            this.$btn_task_history_email_content = this.$container.find(".task-history-email-content");
             this.$table_task_history_email = this.$container.find('.task-history-email-table');
             this.$table_email_content_history = this.$container.find('.content-history-email-table');
             this.$email_content_table_inner = this.$container.find('.content-history-table-inner');
@@ -135,6 +135,7 @@
                     dataType: 'json',
                     url: url,
                     success: function(data) {
+                        sendemail.$btn_task_history_email.addClass('opened');
                         if (data.tasks.length) {
                             return createTaskListTable(sendemail.$table_task_history_email, data.tasks);
                         } else {
@@ -160,6 +161,7 @@
                     dataType: 'json',
                     url: url,
                     success: function(data) {
+                        sendemail.$btn_task_history_email_content.addClass('opened');
                         if (data.emails.length) {
                             createEmailContentTable(sendemail.$table_email_content_history,
                                 sendemail.$email_content_table_inner, data.emails

@@ -115,7 +115,7 @@ from openedx.core.djangolib.markup import HTML
         <div>
             <p>${_("To see the content of previously sent emails, click this button:")}</p>
             <br/>
-            <input type="button" name="task-history-email-content" value="${_("Show Sent Email History")}" data-endpoint="${ section_data['email_content_history_url'] }" >
+            <button class="task-history-email-content" name="task-history-email-content" data-endpoint="${ section_data['email_content_history_url'] }">${_("Show Sent Email History")}</button>
             <div class="content-request-response-error msg msg-warning copy"></div>
             <p>
             <div class="content-history-email-table">
@@ -128,7 +128,7 @@ from openedx.core.djangolib.markup import HTML
         <div>
             <p>${_("To see the status for all email tasks submitted for this course, click this button:")}</p>
             <br/>
-            <input type="button" name="task-history-email" value="${_("Show Email Task History")}" data-endpoint="${ section_data['email_background_tasks_url'] }" >
+            <button class="task-history-email" name="task-history-email" data-endpoint="${ section_data['email_background_tasks_url'] }" >${_("Show Email Task History")}</button>
             <div class="history-request-response-error msg msg-warning copy"></div>
             <div class="task-history-email-table"></div>
         </div>
