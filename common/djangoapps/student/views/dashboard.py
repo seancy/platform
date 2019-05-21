@@ -888,7 +888,6 @@ def student_dashboard(request):
 
 
 def my_courses(request):
-
     user = request.user
     if not UserProfile.objects.filter(user=user).exists():
         return redirect(reverse('account_settings'))
@@ -1032,6 +1031,7 @@ def my_courses(request):
         'consent_required_courses': consent_required_courses,
         'course_enrollments': course_enrollments,
         'course_entitlements': course_entitlements,
+        'course_optouts': Optout.objects.filter(user=user).values_list('course_id', flat=True),
         'courses_requirements_not_met': courses_requirements_not_met,
         'credit_statuses': _credit_statuses(user, course_enrollments),
         'display_dashboard_courses': (user.is_active or not hide_dashboard_courses_until_activated),
