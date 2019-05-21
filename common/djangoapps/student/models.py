@@ -2903,3 +2903,41 @@ class LogoutViewConfiguration(ConfigurationModel):
     def __unicode__(self):
         """Unicode representation of the instance. """
         return u'Logout view configuration: {enabled}'.format(enabled=self.enabled)
+
+
+class WaiverRequestException(Exception):
+    pass
+
+
+class PendingRequestExitsError(WaiverRequestException):
+    pass
+
+
+class RequestAlreadyApprovedError(WaiverRequestException):
+    pass
+
+
+class WaiverRequest(TimeStampedModel):
+    """
+    Represent a student's waiver request record
+    """
+    enrollment = models.ForeignKey(CourseEnrollment, related_name="waiver_requests")
+    # modules or sections that student want a waiver
+    sections = models.CharField(default=None, null=True, max_length=255)
+    # provided reasons
+    description = models.TextField(default=None)
+    approved = models.NullBooleanField(default=None, null=True)
+    instructor = models.ForeignKey(User, related_name="processed_waiver", default=None, null=True)
+
+    @classmethod
+    def create_waiver_request(cls, enrollment, description, sections=None):
+        queryset = cls.objects.filter(enrollment=enrollment,
+                                      sections=sections)
+        if queryset.filter(approved=None).count() != 0:
+            raise PendingRequestExitsError("There can only be one exiting pending task")
+        if queryset.filter(approved=True).count() != 0:
+            raise RequestAlreadyApprovedError("The request is already approved by the instructor")
+        waiver = cls.objects.create(enrollment=enrollment,
+                                    description=description,
+                                    sections=sections)
+        return waiver

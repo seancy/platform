@@ -12,7 +12,7 @@ def send_mail_with_alias(*args, **kwargs):
     args_list = list(args)
     try:
         from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
-        args_list[2] = "{} <{}>".format(from_alias, args_list[2])
+        args_list[2] = "{0} <{1}>".format(from_alias, args_list[2])
         no_email_address = getattr(settings, 'LEARNER_NO_EMAIL')
         if no_email_address:
             args_list[3] = [x for x in args_list[3] if x != no_email_address ]

@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 
-from triboo_analytics import views
 from django.conf import settings
 from django.conf.urls import url
+
+from . import views
 
 urlpatterns = [
     url(r'^transcript/$', views.my_transcript_view, name='analytics_my_transcript'),
@@ -27,5 +29,4 @@ urlpatterns = [
     url(r'^learner_transcript/(?P<user_id>\w+)/export/$', views.transcript_export_table, name='analytics_transcript_export'),
     url(r'^learner/export/$', views.learner_export_table, name='analytics_learner_export'),
     url(r'^course/export/$', views.course_export_table, name='analytics_course_export'),
-
 ]

@@ -1,0 +1,245 @@
+<%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
+<%!
+  from django.utils.translation import ugettext as _
+  from django.utils.translation import ungettext
+  from django.core.urlresolvers import reverse
+  from django.template import Template, Context
+  from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
+  from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+%>
+
+<%block name="js_extra">
+    <link href="https://cdn.bootcss.com/izimodal/1.5.1/css/iziModal.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/izimodal/1.5.1/js/iziModal.min.js"></script>
+    <script src="https://cdn.bootcss.com/notify/0.4.2/notify.js"></script>
+    <script>
+        $("#waiver-pop-up").iziModal({
+            width: 700,
+        });
+        var contents = ${course_contents};
+        $("#pop-up-form").submit(function (e) {
+            e.preventDefault();
+            $.notify.defaults({ className: "success" });
+            var fx = "shake",  //shake shake
+                $modal = $(this).closest('.iziModal'),
+                $send_button = $(".send-waiver-request"),
+                $waiver_section = $("#waiver-section").find("option:selected"),
+                waiver_course = $("#waiver-course").val(),
+                waiver_description = $("#waiver-description").val().trim();
+            if (waiver_course == 'none' || waiver_description.length == 0){
+                if (waiver_course == 'none'){
+                    $send_button.notify("${_('Please select a course!')}", {position: 'top-center', className: 'error'});
+                }
+                else {
+                    $send_button.notify("${_('Please the provide the reason. It cannot be empty!')}", {position: 'top-center', className: 'error'});
+                }
+                if(!$modal.hasClass(fx) ){
+                    $modal.addClass(fx);
+                    setTimeout(function(){
+                        $modal.removeClass(fx);
+                    }, 1500);
+                }
+                return false
+            }
+            else {
+                if ($waiver_section.length == 0) {
+                    var sections = [];
+                    $.each(contents[waiver_course]['chapters'], function (index, value) {
+                        if (value['disabled'] == false) {
+                            $.each(value['sections'], function (i, v) {
+                                if (v['graded'] == true) {
+                                    sections.push(v['usage_id'])
+                                }
+                            })
+                        }
+                    })
+                }
+                else {
+                    var sections = {};
+                    $waiver_section.each(function () {
+                        let sec = [],
+                            chapter = contents[waiver_course]['chapters'][$(this).data('id')],
+                            name = $(this).val();
+                        $.each(chapter['sections'], function (i, v) {
+                            if (v['graded'] == true) {
+                                sec.push(v['usage_id'])
+                            }
+                        });
+                        if (sec.length > 0) {
+                            sections[$(this).val()] = sec
+                        }
+                    })
+                }
+            }
+            $.ajax({
+                type: "post",
+                url: "${reverse('waiver_request')}",
+                data: {
+                    "course_id": waiver_course,
+                    "sections": JSON.stringify(sections),
+                    "description": waiver_description,
+                    "csrfmiddlewaretoken": "${csrf_token}"
+                },
+                dataType: 'json',
+                success: function (data) {
+                    $send_button.notify(data.message, {position: 'top-center'});
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 3000)
+                },
+                error: function (data) {
+                    $send_button.notify(data.responseJSON.message, {position: 'top-center', className: 'error'});
+                }
+            });
+        });
+        $("#waiver-pop-up").on('change', '#waiver-course', function () {
+            var course_id = $(this).val();
+            if (course_id != 'none') {
+                $("#waiver-section").html('');
+                $("#waiver-section").attr('multiple', 'multiple');
+
+                var chapters = contents[course_id]['chapters'];
+                for (var i in chapters) {
+                    if (chapters[i]['disabled']) {
+                        var option_head = '<option disabled data-id=' + i + '>'
+                    }
+                    else {
+                        var option_head = '<option data-id=' + i + '>'
+                    }
+                    $("#waiver-section").append(option_head + chapters[i]['display_name'] + '</option>')
+                }
+            }
+            else {
+                $("#waiver-section").removeAttr('multiple');
+                $("#waiver-section").html('<option selected value="whole course">Select a section</option>')
+            }
+        });
+    </script>
+</%block>
+
+<%block name="pagetitle">${_("Analytics - Learning Transcript")}</%block>
+<%block name="bodyclass">view-in-analytics</%block>
+
+<style type="text/css">
+    @-webkit-keyframes shake {
+      from {
+        -webkit-transform: none;
+        transform: none;
+      }
+
+      15% {
+        -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -5deg);
+        transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -5deg);
+      }
+
+      30% {
+        -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 3deg);
+        transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 3deg);
+      }
+
+      45% {
+        -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -3deg);
+        transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -3deg);
+      }
+
+      60% {
+        -webkit-transform: translate3d(3%, 0, 0) rotate3d(0, 0, 1, 2deg);
+        transform: translate3d(3%, 0, 0) rotate3d(0, 0, 1, 2deg);
+      }
+
+      75% {
+        -webkit-transform: translate3d(-2%, 0, 0) rotate3d(0, 0, 1, -1deg);
+        transform: translate3d(-2%, 0, 0) rotate3d(0, 0, 1, -1deg);
+      }
+
+      to {
+        -webkit-transform: none;
+        transform: none;
+      }
+    }
+
+    @keyframes shake {
+      from {
+        -webkit-transform: none;
+        transform: none;
+      }
+
+      15% {
+        -webkit-transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -5deg);
+        transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -5deg);
+      }
+
+      30% {
+        -webkit-transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 3deg);
+        transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 3deg);
+      }
+
+      45% {
+        -webkit-transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -3deg);
+        transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -3deg);
+      }
+
+      60% {
+        -webkit-transform: translate3d(3%, 0, 0) rotate3d(0, 0, 1, 2deg);
+        transform: translate3d(3%, 0, 0) rotate3d(0, 0, 1, 2deg);
+      }
+
+      75% {
+        -webkit-transform: translate3d(-2%, 0, 0) rotate3d(0, 0, 1, -1deg);
+        transform: translate3d(-2%, 0, 0) rotate3d(0, 0, 1, -1deg);
+      }
+
+      to {
+        -webkit-transform: none;
+        transform: none;
+      }
+    }
+
+    .shake {
+      -webkit-animation-name: shake;
+      animation-name: shake;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+    }
+</style>
+
+<div class="wrapper-analytics transcript">
+    <h2>${_("Learning Transcript")}</h2>
+    <div class="analytics-header">
+        <span>${_("Let's have a look at your learning experience!")}</span>
+      % if configuration_helpers.get_value("ENABLE_WAIVER_REQUEST", False):
+        <button class="request-waiver" data-izimodal-open="#waiver-pop-up">${_("Request a waiver")}</button>
+      % endif
+    </div>
+    <div class="waiver-pop-up" id="waiver-pop-up" data-iziModal-group="grupo1">
+        <span class="waiver-x" data-iziModal-close>X</span>
+        <header>
+            <h2>${_("Request a waiver for a course or a section")}</h2>
+        </header>
+        <form class="pop-up-form" id="pop-up-form" method="post">
+            <input name="csrfmiddlewaretoken" value="${csrf_token}" type="hidden">
+            <p>${_("Here you can request a waiver for an entire course or a module of a course, "
+                   "please select a course and the specific section(s) of the course. If you want to ask a waiver for an entire course, "
+                   "just select the course and leave the section blank.")}
+            </p>
+            <select class="waiver-course" id="waiver-course" name="waiver-course">
+                <option selected value="none">${_("Select a course")}</option>
+                % for c in courses:
+                    <option value="${c['id']}">${c['display_name']}</option>
+                % endfor
+            </select>
+            <select class="waiver-section" id="waiver-section" name="waiver-section">
+                <option selected value="whole course" disabled>${_("Select the section(s)")}</option>
+            </select>
+            <p class="waiver-justify">${_("Justify the reasons why you are requesting for this waiver")}</p>
+            <textarea id="waiver-description" name="waiver-description"></textarea>
+            <p>${_("After sending your request, the course admin will assess it and you will receive an answer by email.")}</p>
+            <footer>
+                <button class="send-waiver-request" type="submit">${_("Send")}</button>
+            </footer>
+        </form>
+    </div>
+</div>

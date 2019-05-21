@@ -7,12 +7,16 @@ Does not include any access control, be sure to check access before calling.
 import json
 import logging
 from datetime import datetime
+from path import Path
 
 import pytz
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.mail import get_connection
+from django.core.mail.message import EmailMultiAlternatives
 from django.urls import reverse
 from django.utils.translation import override as override_language
+from email.mime.image import MIMEImage
 from six import text_type
 
 from course_modes.models import CourseMode
@@ -25,6 +29,8 @@ from lms.djangoapps.grades.signals.handlers import disconnect_submissions_signal
 from lms.djangoapps.grades.signals.signals import PROBLEM_RAW_SCORE_CHANGED
 from openedx.core.djangoapps.lang_pref import LANGUAGE_KEY
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.theming.models import SiteTheme
+from openedx.core.djangoapps.theming.helpers import get_theme_base_dir
 from openedx.core.djangoapps.user_api.models import UserPreference
 from student.models import (
     CourseEnrollment,
@@ -543,6 +549,18 @@ def send_mail_to_student(student, param_dict, language=None):
             'emails/enroll_email_enrolledsubject.txt',
             'emails/account_creation_and_enroll_emailMessage.txt'
         ),
+        'waiver_request': (
+            'emails/waiver_request_subject.txt',
+            'emails/waiver_request_message.txt',
+        ),
+        'waiver_request_approved': (
+            'emails/waiver_request_accepted_subject.txt',
+            'emails/waiver_request_accepted_message.txt',
+        ),
+        'waiver_request_denied': (
+            'emails/waiver_request_denied_subject.txt',
+            'emails/waiver_request_denied_message.txt',
+        ),
     }
 
     subject_template, message_template = email_template_dict.get(message_type, (None, None))
@@ -563,6 +581,108 @@ def send_mail_to_student(student, param_dict, language=None):
         )
 
         send_mail(subject, message, from_address, [student], fail_silently=False)
+
+
+def send_custom_waiver_email(email, param_dict, language=None):
+    """
+    Construct the email using templates and then send it.
+    `email` is the receiver's email address (a `str`),
+
+    `param_dict` is a `dict` with keys
+    [
+        `site_name`: name given to edX instance (a `str`)
+        `registration_url`: url for registration (a `str`)
+        `display_name` : display name of a course (a `str`)
+        `course_id`: id of course (a `str`)
+        `auto_enroll`: user input option (a `str`)
+        `course_url`: url of course (a `str`)
+        `email_address`: email of student (a `str`)
+        `full_name`: student full name (a `str`)
+        `message`: type of email to send and template to use (a `str`)
+        `is_shib_course`: (a `boolean`)
+    ]
+
+    `language` is the language used to render the email. If None the language
+    of the currently-logged in user (that is, the user sending the email) will
+    be used.
+
+    Returns a boolean indicating whether the email was sent successfully.
+    """
+
+    # add some helpers and microconfig subsitutions
+    if 'display_name' in param_dict:
+        param_dict['course_name'] = param_dict['display_name']
+
+    param_dict['site_name'] = configuration_helpers.get_value(
+        'SITE_NAME',
+        param_dict['site_name']
+    )
+
+    subject = None
+    message = None
+    html_message = None
+
+    # see if there is an activation email template definition available as configuration,
+    # if so, then render that
+    message_type = param_dict['message']
+
+    email_template_dict = {
+        'forced_waiver_request': (
+            'emails/waiver_request_subject.txt',
+            'emails/forced_waiver_request_message.txt',
+            'emails/forced_waiver_request_html.txt'
+        ),
+    }
+
+    subject_template, message_template, html_template = email_template_dict.get(message_type, (None, None, None))
+    if all([subject_template, message_template]):
+        subject, message = render_message_to_string(
+            subject_template, message_template, param_dict, language=language
+        )
+        html_message = render_to_string(html_template, param_dict)
+
+    if subject and message:
+        # Remove leading and trailing whitespace from body
+        message = message.strip()
+
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
+        from_address = configuration_helpers.get_value(
+            'email_from_address',
+            settings.DEFAULT_FROM_EMAIL
+        )
+        site_theme = SiteTheme.objects.get(id=param_dict['site_theme'])
+        theme_dir = site_theme.theme_dir_name
+        theme_dir_base = get_theme_base_dir(theme_dir)
+        image_path = Path(theme_dir_base) / theme_dir / 'lms/static/images/logo.png'
+        image_name = "logo.png"
+        send_mail_with_image(subject, message, from_address, [email], fail_silently=False, html_message=html_message,
+                             image_path=image_path, image_name=image_name)
+
+
+def send_mail_with_image(subject, message, from_email, recipient_list, fail_silently=False,
+                         auth_user=None, auth_password=None, connection=None, html_message=None,
+                         image_path=None, image_name=None):
+    connection = connection or get_connection(username=auth_user,
+                                              password=auth_password,
+                                              fail_silently=fail_silently)
+    email_showname = configuration_helpers.get_value('email_from_showname', settings.DEFAULT_FROM_EMAIL_SHOW_NAME)
+    from_email = "{0}<{1}>".format(email_showname, from_email)
+    mail = EmailMultiAlternatives(subject, message, from_email, recipient_list,
+                                  connection=connection)
+
+    if all([html_message, image_path]):
+        mail.attach_alternative(html_message, 'text/html')
+
+        # it is important part that ensures embedding of image
+        mail.mixed_subtype = 'related'
+
+        with open(image_path, mode='rb') as f:
+            image = MIMEImage(f.read())
+            mail.attach(image)
+            image.add_header('Content-ID', '<{}>'.format(image_name))
+
+    return mail.send()
 
 
 def render_message_to_string(subject_template, message_template, param_dict, language=None):

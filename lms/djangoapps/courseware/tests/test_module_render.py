@@ -8,7 +8,6 @@ from datetime import datetime
 from functools import partial
 
 import ddt
-import pytest
 import pytz
 from bson import ObjectId
 from completion.models import BlockCompletion
@@ -790,6 +789,85 @@ class TestTOC(ModuleStoreTestCase):
                     self.course_key, self.request.user, self.toy_course, depth=2
                 )
 
+    def toc_toy_expected(self, ms, active_welcome=False):
+        if ms == ModuleStoreEnum.Type.mongo:
+            prefix = "i4x://edX/toy/"
+            section_1 = "%svideosequence/Toy_Videos" % prefix
+            section_2 = "%svideo/Welcome" % prefix
+            section_3 = "%svideo/video_123456789012" % prefix
+            section_4 = "%svideo/video_4f66f493ac8f" % prefix
+            section_5 = "%svideo/toyvideo" % prefix
+        else:
+            prefix = "block-v1:edX+toy+2012_Fall+type@"
+            section_1 = "%svideosequence+block@Toy_Videos" % prefix
+            section_2 = "%svideo+block@Welcome" % prefix
+            section_3 = "%svideo+block@video_123456789012" % prefix
+            section_4 = "%svideo+block@video_4f66f493ac8f" % prefix
+            section_5 = "%svideo+block@toyvideo" % prefix
+        return ([
+            {
+                'active': True,
+                'sections': [
+                    {
+                        'url_name': 'Toy_Videos',
+                        'display_name': u'Toy Videos',
+                        'graded': True,
+                        'format': u'Lecture Sequence',
+                        'due': None,
+                        'active': False,
+                        'usage_id': u'%s' % section_1
+                    },
+                    {
+                        'url_name': 'Welcome',
+                        'display_name': u'Welcome',
+                        'graded': True,
+                        'format': '', 'due': None,
+                        'active': active_welcome,
+                        'usage_id': u'%s' % section_2
+                    },
+                    {
+                        'url_name': 'video_123456789012',
+                        'display_name': 'Test Video',
+                        'graded': True,
+                        'format': '',
+                        'due': None,
+                        'active': False,
+                        'usage_id': u'%s' % section_3
+                    },
+                    {
+                        'url_name': 'video_4f66f493ac8f',
+                        'display_name': 'Video',
+                        'graded': True,
+                        'format': '',
+                        'due': None,
+                        'active': False,
+                        'usage_id': u'%s' % section_4
+                    }
+                ],
+                'url_name': 'Overview',
+                'display_name': u'Overview',
+                'display_id': u'overview'
+            },
+            {
+                'active': False,
+                'sections':[
+                    {
+                        'url_name': 'toyvideo',
+                        'display_name': 'toyvideo',
+                        'graded': True,
+                        'format': '',
+                        'due': None,
+                        'active': False,
+                        'usage_id': u'%s' % section_5
+                    }
+                ],
+                'url_name': 'secret:magic',
+                'display_name': 'secret:magic',
+                'display_id': 'secretmagic'
+            }
+        ])
+
+
     # Mongo makes 3 queries to load the course to depth 2:
     #     - 1 for the course
     #     - 1 for its children
@@ -807,28 +885,17 @@ class TestTOC(ModuleStoreTestCase):
         with self.store.default_store(default_ms):
             self.setup_request_and_course(setup_finds, setup_sends)
 
-            expected = ([{'active': True, 'sections':
-                          [{'url_name': 'Toy_Videos', 'display_name': u'Toy Videos', 'graded': True,
-                            'format': u'Lecture Sequence', 'due': None, 'active': False},
-                           {'url_name': 'Welcome', 'display_name': u'Welcome', 'graded': True,
-                            'format': '', 'due': None, 'active': False},
-                           {'url_name': 'video_123456789012', 'display_name': 'Test Video', 'graded': True,
-                            'format': '', 'due': None, 'active': False},
-                           {'url_name': 'video_4f66f493ac8f', 'display_name': 'Video', 'graded': True,
-                            'format': '', 'due': None, 'active': False}],
-                          'url_name': 'Overview', 'display_name': u'Overview', 'display_id': u'overview'},
-                         {'active': False, 'sections':
-                          [{'url_name': 'toyvideo', 'display_name': 'toyvideo', 'graded': True,
-                            'format': '', 'due': None, 'active': False}],
-                          'url_name': 'secret:magic', 'display_name': 'secret:magic', 'display_id': 'secretmagic'}])
+            expected = self.toc_toy_expected(default_ms)
 
             course = self.store.get_course(self.toy_course.id, depth=2)
             with check_mongo_calls(toc_finds):
                 actual = render.toc_for_course(
                     self.request.user, self.request, course, self.chapter, None, self.field_data_cache
                 )
+
         for toc_section in expected:
             self.assertIn(toc_section, actual['chapters'])
+
         self.assertIsNone(actual['previous_of_active_section'])
         self.assertIsNone(actual['next_of_active_section'])
 
@@ -849,20 +916,7 @@ class TestTOC(ModuleStoreTestCase):
         with self.store.default_store(default_ms):
             self.setup_request_and_course(setup_finds, setup_sends)
             section = 'Welcome'
-            expected = ([{'active': True, 'sections':
-                          [{'url_name': 'Toy_Videos', 'display_name': u'Toy Videos', 'graded': True,
-                            'format': u'Lecture Sequence', 'due': None, 'active': False},
-                           {'url_name': 'Welcome', 'display_name': u'Welcome', 'graded': True,
-                            'format': '', 'due': None, 'active': True},
-                           {'url_name': 'video_123456789012', 'display_name': 'Test Video', 'graded': True,
-                            'format': '', 'due': None, 'active': False},
-                           {'url_name': 'video_4f66f493ac8f', 'display_name': 'Video', 'graded': True,
-                            'format': '', 'due': None, 'active': False}],
-                          'url_name': 'Overview', 'display_name': u'Overview', 'display_id': u'overview'},
-                         {'active': False, 'sections':
-                          [{'url_name': 'toyvideo', 'display_name': 'toyvideo', 'graded': True,
-                            'format': '', 'due': None, 'active': False}],
-                          'url_name': 'secret:magic', 'display_name': 'secret:magic', 'display_id': 'secretmagic'}])
+            expected = self.toc_toy_expected(default_ms, True)
 
             with check_mongo_calls(toc_finds):
                 actual = render.toc_for_course(

@@ -157,7 +157,8 @@ class EntranceExamTestCases(LoginEnrollmentTestCase, ModuleStoreTestCase, Milest
                             'graded': True,
                             'format': '',
                             'due': None,
-                            'active': True
+                            'active': True,
+                            'usage_id': unicode(self.exam_1.location)
                         }
                     ],
                     'url_name': u'Entrance_Exam_Section_-_Chapter_1',
@@ -177,7 +178,8 @@ class EntranceExamTestCases(LoginEnrollmentTestCase, ModuleStoreTestCase, Milest
                             'graded': False,
                             'format': '',
                             'due': None,
-                            'active': False
+                            'active': False,
+                            'usage_id': unicode(self.welcome.location)
                         },
                         {
                             'url_name': u'Lesson_1',
@@ -185,7 +187,8 @@ class EntranceExamTestCases(LoginEnrollmentTestCase, ModuleStoreTestCase, Milest
                             'graded': False,
                             'format': '',
                             'due': None,
-                            'active': False
+                            'active': False,
+                            'usage_id': unicode(self.chapter_subsection.location)
                         }
                     ],
                     'url_name': u'Overview',
@@ -215,7 +218,8 @@ class EntranceExamTestCases(LoginEnrollmentTestCase, ModuleStoreTestCase, Milest
                             'graded': True,
                             'format': '',
                             'due': None,
-                            'active': True
+                            'active': True,
+                            'usage_id': unicode(self.exam_1.location)
                         }
                     ],
                     'url_name': u'Entrance_Exam_Section_-_Chapter_1',
