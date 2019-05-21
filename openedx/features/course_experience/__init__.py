@@ -11,7 +11,7 @@ from openedx.core.djangoapps.waffle_utils import CourseWaffleFlag, WaffleFlagNam
 WAFFLE_FLAG_NAMESPACE = WaffleFlagNamespace(name='course_experience')
 
 # Waffle flag to enable the separate course outline page and full width content.
-COURSE_OUTLINE_PAGE_FLAG = CourseWaffleFlag(WAFFLE_FLAG_NAMESPACE, 'course_outline_page', flag_undefined_default=True)
+COURSE_OUTLINE_PAGE_FLAG = CourseWaffleFlag(WAFFLE_FLAG_NAMESPACE, 'course_outline_page', flag_undefined_default=False)
 
 # Waffle flag to enable a single unified "Course" tab.
 UNIFIED_COURSE_TAB_FLAG = CourseWaffleFlag(WAFFLE_FLAG_NAMESPACE, 'unified_course_tab', flag_undefined_default=True)

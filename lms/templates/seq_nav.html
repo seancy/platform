@@ -1,0 +1,24 @@
+<nav class="seq-nav-wrapper">
+  <ol id="seq-nav">
+    % for seq in sequence_list:
+    <li role="presentation">
+        % if seq['graded']:
+          % if seq['complete']:
+            <span class="far fa-shield-check"></span>
+          % else:
+            <span class="far fa-shield"></span>
+          % endif
+        % else:
+          % if seq['complete']:
+            <span class="fa fa-check-circle"></span>
+          % else:
+            <span class="fa fa-circle"></span>
+          % endif
+        % endif
+        <span class="seq-tooltip sr">${seq['title']}</span>
+      </button>
+    </li>
+    % endfor
+  </ol>
+</nav>
+

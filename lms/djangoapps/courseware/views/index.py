@@ -41,6 +41,7 @@ from shoppingcart.models import CourseRegistrationCode
 from student.views import is_course_blocked
 from util.views import ensure_valid_course_key
 from xmodule.modulestore.django import modulestore
+from xmodule.vertical_block import VerticalBlock
 from xmodule.x_module import STUDENT_VIEW
 from .views import CourseTabView
 from ..access import has_access
@@ -373,6 +374,7 @@ class CoursewareIndex(View):
             'fragment': Fragment(),
             'staff_access': self.is_staff,
             'masquerade': self.masquerade,
+            'disable_student_access': False,
             'supports_preview_menu': True,
             'studio_url': get_studio_url(self.course, 'course'),
             'xqa_server': settings.FEATURES.get('XQA_SERVER', "http://your_xqa_server.com"),
@@ -402,6 +404,14 @@ class CoursewareIndex(View):
             self.course,
             table_of_contents['chapters'],
         )
+
+        courseware_context['seq_nav'] = render_seq_nav(
+            self.effective_user,
+            self.request,
+            self.course,
+            self.chapter_url_name,
+            self.section_url_name,
+            self.field_data_cache,)
 
         courseware_context['course_sock_fragment'] = CourseSockFragmentView().render_to_fragment(
             request, course=self.course)
@@ -434,6 +444,7 @@ class CoursewareIndex(View):
             section_context = self._create_section_context(
                 table_of_contents['previous_of_active_section'],
                 table_of_contents['next_of_active_section'],
+                courseware_context
             )
             courseware_context['fragment'] = self.section.render(STUDENT_VIEW, section_context)
             if self.section.position and self.section.has_children:
@@ -467,7 +478,7 @@ class CoursewareIndex(View):
                 get_entrance_exam_usage_key(self.course),
             )
 
-    def _create_section_context(self, previous_of_active_section, next_of_active_section):
+    def _create_section_context(self, previous_of_active_section, next_of_active_section, courseware_context):
         """
         Returns and creates the rendering context for the section.
         """
@@ -492,6 +503,7 @@ class CoursewareIndex(View):
             'progress_url': reverse('progress', kwargs={'course_id': unicode(self.course_key)}),
             'user_authenticated': self.request.user.is_authenticated,
             'position': position,
+            'courseware_context': courseware_context
         }
         if previous_of_active_section:
             section_context['prev_url'] = _compute_section_url(previous_of_active_section, 'last')
@@ -517,6 +529,46 @@ def render_accordion(request, course, table_of_contents):
         ] + TEMPLATE_IMPORTS.items()
     )
     return render_to_string('courseware/accordion.html', context)
+
+
+def render_seq_nav(user, request, course, chapter_url_name, section_url_name, field_data_cache):
+    sequence_list = []
+
+    from completion.services import CompletionService
+    completion_service = CompletionService(user=user, course_key=course.id)
+
+    with modulestore().bulk_operations(course.id):
+        course_module = get_module_for_descriptor(
+            user, request, course, field_data_cache, course.id, course=course
+        )
+        if course_module is None:
+            return
+
+        chapters = course_module.get_display_items()
+        for chapter in chapters:
+            if chapter.hide_from_toc:
+                continue
+            sections = chapter.get_display_items()
+            for section in sections:
+                if section.hide_from_toc:
+                    continue
+                sequences = section.get_display_items()
+                for sequence in sequences:
+                    if sequence.hide_from_toc:
+                        continue
+
+                    complete = False
+                    if isinstance(sequence, VerticalBlock):
+                        complete = completion_service.vertical_is_complete(sequence)
+
+                    sequence_list.append({
+                        'id': sequence.url_name,
+                        'title': sequence.display_name_with_default_escaped,
+                        'graded': sequence.graded,
+                        'complete': complete
+                    })
+    return render_to_string('seq_nav.html', {'sequence_list': sequence_list})
+
 
 
 def save_child_position(seq_module, child_name):

@@ -122,9 +122,14 @@ ${HTML(fragment.foot_html())}
 
 % if disable_accordion is UNDEFINED or not disable_accordion:
     <div class="course-index">
+      <div class="back-link">
+        <a href="${reverse('openedx.course_experience.course_home', args=[course.id])}">
+          <i class="far fa-arrow-left"></i>
+          ${course.display_name_with_default}
+        </a>
+      </div>
 
       <div class="wrapper-course-modes">
-
           <div class="courseware-bookmarks-button">
               <a class="bookmarks-list-button" href="${reverse('openedx.course_bookmarks.home', args=[course.id])}">
                   ${_('Bookmarks')}
@@ -145,7 +150,6 @@ ${HTML(fragment.foot_html())}
               </form>
             </div>
           % endif
-
       </div>
 
       <div class="accordion">
@@ -160,7 +164,10 @@ ${HTML(fragment.foot_html())}
 
     </div>
 % endif
+
     <section class="course-content" id="course-content">
+        ${HTML(seq_nav)}
+
         <header class="page-header has-secondary">
             <div class="page-header-main">
                 <nav aria-label="${_('Course')}" class="sr-is-focusable" tabindex="-1">
@@ -192,37 +199,37 @@ ${HTML(fragment.foot_html())}
         </header>
 
         <main id="main" tabindex="-1" aria-label="Content">
-            % if getattr(course, 'entrance_exam_enabled') and \
-               getattr(course, 'entrance_exam_minimum_score_pct') and \
-               entrance_exam_current_score is not UNDEFINED:
-                % if not entrance_exam_passed:
+          % if getattr(course, 'entrance_exam_enabled') and \
+             getattr(course, 'entrance_exam_minimum_score_pct') and \
+             entrance_exam_current_score is not UNDEFINED:
+              % if not entrance_exam_passed:
                 <p class="sequential-status-message">
-                    ${_('To access course materials, you must score {required_score}% or higher on this \
-                    exam. Your current score is {current_score}%.').format(
-                        required_score=int(round(course.entrance_exam_minimum_score_pct * 100)),
-                        current_score=int(round(entrance_exam_current_score * 100))
-                    )}
+                  ${_('To access course materials, you must score {required_score}% or higher on this \
+                  exam. Your current score is {current_score}%.').format(
+                      required_score=int(round(course.entrance_exam_minimum_score_pct * 100)),
+                      current_score=int(round(entrance_exam_current_score * 100))
+                  )}
                 </p>
                 <script type="text/javascript">
-                $(document).ajaxSuccess(function(event, xhr, settings) {
-                    if (settings.url.indexOf("xmodule_handler/problem_check") > -1) {
-                        var data = JSON.parse(xhr.responseText);
-                        if (data.entrance_exam_passed){
-                            location.reload();
-                        }
-                    }
-                });
+                  $(document).ajaxSuccess(function(event, xhr, settings) {
+                      if (settings.url.indexOf("xmodule_handler/problem_check") > -1) {
+                          var data = JSON.parse(xhr.responseText);
+                          if (data.entrance_exam_passed){
+                              location.reload();
+                          }
+                      }
+                  });
                 </script>
-                % else:
-                  <p class="sequential-status-message">
-                    ${_('Your score is {current_score}%. You have passed the entrance exam.').format(
-                        current_score=int(round(entrance_exam_current_score * 100))
-                    )}
+              % else:
+                <p class="sequential-status-message">
+                  ${_('Your score is {current_score}%. You have passed the entrance exam.').format(
+                      current_score=int(round(entrance_exam_current_score * 100))
+                  )}
                 </p>
-                % endif
-            % endif
+              % endif
+          % endif
 
-              ${HTML(fragment.body_html())}
+            ${HTML(fragment.body_html())}
         </main>
     </section>
 

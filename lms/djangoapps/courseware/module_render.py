@@ -679,6 +679,7 @@ def get_module_system_for_user(
         reverse('jump_to_id', kwargs={'course_id': text_type(course_id), 'module_id': ''}),
     ))
 
+    needs_staff_markup = False
     if settings.FEATURES.get('DISPLAY_DEBUG_INFO_TO_STAFF'):
         if is_masquerading_as_specific_student(user, course_id):
             # When masquerading as a specific student, we want to show the debug button
@@ -694,7 +695,8 @@ def get_module_system_for_user(
         else:
             staff_access = has_access(user, 'staff', descriptor, course_id)
         if staff_access:
-            block_wrappers.append(partial(add_staff_markup, user, disable_staff_debug_info))
+            needs_staff_markup = True
+    block_wrappers.append(partial(add_staff_markup, needs_staff_markup, user, disable_staff_debug_info))
 
     # These modules store data using the anonymous_student_id as a key.
     # To prevent loss of data, we will continue to provide old modules with

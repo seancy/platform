@@ -299,7 +299,7 @@ def sanitize_html_id(html_id):
 
 
 @contract(user=User, block=XBlock, view=basestring, frag=Fragment, context="dict|None")
-def add_staff_markup(user, disable_staff_debug_info, block, view, frag, context):  # pylint: disable=unused-argument
+def add_staff_markup(needs_staff_markup, user, disable_staff_debug_info, block, view, frag, context):  # pylint: disable=unused-argument
     """
     Updates the supplied module with a new get_html function that wraps
     the output of the old get_html function with additional information
@@ -311,97 +311,112 @@ def add_staff_markup(user, disable_staff_debug_info, block, view, frag, context)
     """
     # TODO: make this more general, eg use an XModule attribute instead
     if isinstance(block, VerticalBlock) and (not context or not context.get('child_of_vertical', False)):
+        preview_menu_frag = ""
+        if context and 'courseware_context' in context:
+            preview_menu_frag = render_to_string("preview_menu.html", {
+                                    'course': context['courseware_context']['course'],
+                                    'staff_access': context['courseware_context']['staff_access'],
+                                    'supports_preview_menu': context['courseware_context']['supports_preview_menu'],
+                                    'masquerade': context['courseware_context']['masquerade'],
+                                    'disable_student_access': context['courseware_context']['disable_student_access']
+                                })
+
         # check that the course is a mongo backed Studio course before doing work
         is_studio_course = block.course_edit_method == "Studio"
+        needs_edit_link = (needs_staff_markup and is_studio_course)
 
+        edit_link = ""
         if is_studio_course:
             # build edit link to unit in CMS. Can't use reverse here as lms doesn't load cms's urls.py
             edit_link = "//" + settings.CMS_BASE + '/container/' + text_type(block.location)
 
-            # return edit link in rendered HTML for display
-            return wrap_fragment(
-                frag,
-                render_to_string(
-                    "edit_unit_link.html",
-                    {'frag_content': frag.content, 'edit_link': edit_link}
-                )
-            )
-        else:
+        # return edit link in rendered HTML for display
+        return wrap_fragment(
+            frag,
+            render_to_string("edit_unit_link.html", {
+                'frag_content': frag.content,
+                'needs_edit_link': needs_edit_link,
+                'edit_link': edit_link,
+                'preview_menu_frag': preview_menu_frag
+            })
+        )
+
+    if needs_staff_markup:
+        if isinstance(block, SequenceModule) or getattr(block, 'HIDDEN', False):
             return frag
 
-    if isinstance(block, SequenceModule) or getattr(block, 'HIDDEN', False):
-        return frag
+        block_id = block.location
+        if block.has_score and settings.FEATURES.get('DISPLAY_HISTOGRAMS_TO_STAFF'):
+            histogram = grade_histogram(block_id)
+            render_histogram = len(histogram) > 0
+        else:
+            histogram = None
+            render_histogram = False
 
-    block_id = block.location
-    if block.has_score and settings.FEATURES.get('DISPLAY_HISTOGRAMS_TO_STAFF'):
-        histogram = grade_histogram(block_id)
-        render_histogram = len(histogram) > 0
-    else:
-        histogram = None
-        render_histogram = False
+        if settings.FEATURES.get('ENABLE_LMS_MIGRATION') and hasattr(block.runtime, 'filestore'):
+            [filepath, filename] = getattr(block, 'xml_attributes', {}).get('filename', ['', None])
+            osfs = block.runtime.filestore
+            if filename is not None and osfs.exists(filename):
+                # if original, unmangled filename exists then use it (github
+                # doesn't like symlinks)
+                filepath = filename
+            data_dir = block.static_asset_path or osfs.root_path.rsplit('/')[-1]
+            giturl = block.giturl or 'https://github.com/MITx'
+            edit_link = "%s/%s/tree/master/%s" % (giturl, data_dir, filepath)
+        else:
+            edit_link = False
+            # Need to define all the variables that are about to be used
+            giturl = ""
+            data_dir = ""
 
-    if settings.FEATURES.get('ENABLE_LMS_MIGRATION') and hasattr(block.runtime, 'filestore'):
-        [filepath, filename] = getattr(block, 'xml_attributes', {}).get('filename', ['', None])
-        osfs = block.runtime.filestore
-        if filename is not None and osfs.exists(filename):
-            # if original, unmangled filename exists then use it (github
-            # doesn't like symlinks)
-            filepath = filename
-        data_dir = block.static_asset_path or osfs.root_path.rsplit('/')[-1]
-        giturl = block.giturl or 'https://github.com/MITx'
-        edit_link = "%s/%s/tree/master/%s" % (giturl, data_dir, filepath)
-    else:
-        edit_link = False
-        # Need to define all the variables that are about to be used
-        giturl = ""
-        data_dir = ""
+        source_file = block.source_file  # source used to generate the problem XML, eg latex or word
 
-    source_file = block.source_file  # source used to generate the problem XML, eg latex or word
+        # Useful to indicate to staff if problem has been released or not.
+        # TODO (ichuang): use _has_access_descriptor.can_load in lms.courseware.access,
+        # instead of now>mstart comparison here.
+        now = datetime.datetime.now(UTC)
+        is_released = "unknown"
+        mstart = block.start
 
-    # Useful to indicate to staff if problem has been released or not.
-    # TODO (ichuang): use _has_access_descriptor.can_load in lms.courseware.access,
-    # instead of now>mstart comparison here.
-    now = datetime.datetime.now(UTC)
-    is_released = "unknown"
-    mstart = block.start
+        if mstart is not None:
+            is_released = "<font color='red'>Yes!</font>" if (now > mstart) else "<font color='green'>Not yet</font>"
 
-    if mstart is not None:
-        is_released = "<font color='red'>Yes!</font>" if (now > mstart) else "<font color='green'>Not yet</font>"
+        field_contents = []
+        for name, field in block.fields.items():
+            try:
+                field_contents.append((name, field.read_from(block)))
+            except InvalidScopeError:
+                log.warning("Unable to read field in Staff Debug information", exc_info=True)
+                field_contents.append((name, "WARNING: Unable to read field"))
 
-    field_contents = []
-    for name, field in block.fields.items():
-        try:
-            field_contents.append((name, field.read_from(block)))
-        except InvalidScopeError:
-            log.warning("Unable to read field in Staff Debug information", exc_info=True)
-            field_contents.append((name, "WARNING: Unable to read field"))
+        staff_context = {
+            'fields': field_contents,
+            'xml_attributes': getattr(block, 'xml_attributes', {}),
+            'tags': block._class_tags,  # pylint: disable=protected-access
+            'location': block.location,
+            'xqa_key': block.xqa_key,
+            'source_file': source_file,
+            'source_url': '%s/%s/tree/master/%s' % (giturl, data_dir, source_file),
+            'category': str(block.__class__.__name__),
+            'element_id': sanitize_html_id(block.location.html_id()),
+            'edit_link': edit_link,
+            'user': user,
+            'xqa_server': settings.FEATURES.get('XQA_SERVER', "http://your_xqa_server.com"),
+            'histogram': json.dumps(histogram),
+            'render_histogram': render_histogram,
+            'block_content': frag.content,
+            'is_released': is_released,
+            'can_reset_attempts': 'attempts' in block.fields,
+            'can_rescore_problem': hasattr(block, 'rescore'),
+            'can_override_problem_score': isinstance(block, ScorableXBlockMixin),
+            'disable_staff_debug_info': disable_staff_debug_info,
+        }
+        if isinstance(block, ScorableXBlockMixin):
+            staff_context['max_problem_score'] = block.max_score()
 
-    staff_context = {
-        'fields': field_contents,
-        'xml_attributes': getattr(block, 'xml_attributes', {}),
-        'tags': block._class_tags,  # pylint: disable=protected-access
-        'location': block.location,
-        'xqa_key': block.xqa_key,
-        'source_file': source_file,
-        'source_url': '%s/%s/tree/master/%s' % (giturl, data_dir, source_file),
-        'category': str(block.__class__.__name__),
-        'element_id': sanitize_html_id(block.location.html_id()),
-        'edit_link': edit_link,
-        'user': user,
-        'xqa_server': settings.FEATURES.get('XQA_SERVER', "http://your_xqa_server.com"),
-        'histogram': json.dumps(histogram),
-        'render_histogram': render_histogram,
-        'block_content': frag.content,
-        'is_released': is_released,
-        'can_reset_attempts': 'attempts' in block.fields,
-        'can_rescore_problem': hasattr(block, 'rescore'),
-        'can_override_problem_score': isinstance(block, ScorableXBlockMixin),
-        'disable_staff_debug_info': disable_staff_debug_info,
-    }
-    if isinstance(block, ScorableXBlockMixin):
-        staff_context['max_problem_score'] = block.max_score()
+        return wrap_fragment(frag, render_to_string("staff_problem_info.html", staff_context))
 
-    return wrap_fragment(frag, render_to_string("staff_problem_info.html", staff_context))
+    return frag
 
 
 def get_course_update_items(course_updates, provided_index=0):

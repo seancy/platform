@@ -258,7 +258,7 @@ class EntranceExamTestCases(LoginEnrollmentTestCase, ModuleStoreTestCase, Milest
         resp = self.client.get(url)
         self.assertRedirects(resp, expected_url, status_code=302, target_status_code=200)
         resp = self.client.get(expected_url)
-        self.assertNotIn('Exam Vertical - Unit 1', resp.content)
+        self.assertNotIn('Exam Sequential - Subsection 1 <span class="sr">current section</span>', resp.content)
 
     def test_entrance_exam_content_presence(self):
         """
@@ -275,7 +275,7 @@ class EntranceExamTestCases(LoginEnrollmentTestCase, ModuleStoreTestCase, Milest
         resp = self.client.get(url)
         self.assertRedirects(resp, expected_url, status_code=302, target_status_code=200)
         resp = self.client.get(expected_url)
-        self.assertIn('Exam Vertical - Unit 1', resp.content)
+        self.assertIn('Exam Sequential - Subsection 1 <span class="sr">current section</span>', resp.content)
 
     def test_get_entrance_exam_content(self):
         """
