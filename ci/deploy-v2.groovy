@@ -78,7 +78,7 @@ pipeline {
                                 this_platform_branch = 'master'
                                 theme_process = true
                             } else {
-                                this_platform_branch = params.DEPLOY_OWNER.replaceAll('staging-auto-', '').toLowerCase()
+                                this_platform_branch = params.DEPLOY_OWNER.replaceAll('staging-auto-', '')
                                 theme_process = false
                             }
                         }
@@ -207,7 +207,7 @@ pipeline {
                 script {
                     try {
                         timeout(time: 2) {
-                            if (env.BRANCH_NAME == "ci_pipeline") {
+                            if (env.BRANCH_NAME == "master") {
                                 ec2_region = input message: "which region to deploy", parameters: [choice(name: 'region', choices: ['CN', 'FR', 'US'],description: 'which region to deploy')]
                                 if (ec2_region == 'CN') {
                                     ec2_location = 'ap-southeast-1'
