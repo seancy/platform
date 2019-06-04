@@ -116,6 +116,7 @@ class CommonCertificatesTestCase(ModuleStoreTestCase):
             user=self.user,
             course_id=self.course_id,
             mode=CourseMode.HONOR,
+            completed=datetime.datetime.now()
         )
         CertificateHtmlViewConfigurationFactory.create()
         LinkedInAddToProfileConfigurationFactory.create()
@@ -1019,6 +1020,7 @@ class CertificatesViewsTests(CommonCertificatesTestCase):
         with patch('capa.xqueue_interface.XQueueInterface.send_to_queue') as mock_queue:
             mock_queue.return_value = (0, "Successfully queued")
             with mock_passing_grade():
+
                 response = self.client.post(request_certificate_url, {'course_id': unicode(self.course.id)})
                 self.assertEqual(response.status_code, 200)
                 response_json = json.loads(response.content)

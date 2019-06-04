@@ -191,7 +191,8 @@ def regenerate_certificate_for_user(request):
 
     # Attempt to regenerate certificates
     try:
-        certificate = api.regenerate_user_certificates(params["user"], params["course_key"], course=course)
+        certificate = api.regenerate_user_certificates(params["user"], params["course_key"],
+                                                       course=course, site=request.site)
     except:  # pylint: disable=bare-except
         # We are pessimistic about the kinds of errors that might get thrown by the
         # certificates API.  This may be overkill, but we're logging everything so we can

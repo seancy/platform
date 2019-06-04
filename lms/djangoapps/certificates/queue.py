@@ -1,12 +1,16 @@
 """Interface for adding certificate generation tasks to the XQueue. """
 import json
 import logging
+import os
 import random
+from collections import OrderedDict
 from uuid import uuid4
 
 import lxml.html
 from django.conf import settings
 from django.urls import reverse
+from django.utils.timezone import now
+from django.utils.translation import ugettext as _, override as override_language
 from django.test.client import RequestFactory
 from lxml.etree import ParserError, XMLSyntaxError
 from requests.auth import HTTPBasicAuth
@@ -17,12 +21,15 @@ from lms.djangoapps.certificates.models import (
     CertificateWhitelist,
     ExampleCertificate,
     GeneratedCertificate,
-    certificate_status_for_student
+    certificate_status_for_student,
+    CertificatePdfConfig
 )
 from course_modes.models import CourseMode
+from instructor.enrollment import get_user_email_language
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.verify_student.services import IDVerificationService
 from student.models import CourseEnrollment, UserProfile
+from util.date_utils import strftime_localized
 from xmodule.modulestore.django import modulestore
 
 LOGGER = logging.getLogger(__name__)
@@ -103,7 +110,8 @@ class XQueueCertInterface(object):
         self.restricted = UserProfile.objects.filter(allow_certificate=False)
         self.use_https = True
 
-    def regen_cert(self, student, course_id, course=None, forced_grade=None, template_file=None, generate_pdf=True):
+    def regen_cert(self, student, course_id, course=None, forced_grade=None,
+                   template_file=None, generate_pdf=True, site=None):
         """(Re-)Make certificate for a particular student in a particular course
 
         Arguments:
@@ -159,7 +167,8 @@ class XQueueCertInterface(object):
             course=course,
             forced_grade=forced_grade,
             template_file=template_file,
-            generate_pdf=generate_pdf
+            generate_pdf=generate_pdf,
+            site=site
         )
 
     def del_cert(self, student, course_id):
@@ -180,7 +189,8 @@ class XQueueCertInterface(object):
         raise NotImplementedError
 
     # pylint: disable=too-many-statements
-    def add_cert(self, student, course_id, course=None, forced_grade=None, template_file=None, generate_pdf=True):
+    def add_cert(self, student, course_id, course=None, forced_grade=None,
+                 template_file=None, generate_pdf=True, site=None):
         """
         Request a new certificate for a student.
 
@@ -235,10 +245,10 @@ class XQueueCertInterface(object):
             status.audit_passing,
             status.audit_notpassing,
             status.unverified,
+            status.not_completed
         ]
 
         cert_status = certificate_status_for_student(student, course_id)['status']
-        cert = None
 
         if cert_status not in valid_statuses:
             LOGGER.warning(
@@ -269,6 +279,10 @@ class XQueueCertInterface(object):
 
         is_whitelisted = self.whitelist.filter(user=student, course_id=course_id, whitelist=True).exists()
         course_grade = CourseGradeFactory().read(student, course)
+        try:
+            score = str(int(course_grade.percent*100)) + "%"
+        except KeyError:
+            score = 0
         enrollment_mode, __ = CourseEnrollment.enrollment_mode_for_user(student, course_id)
         mode_is_verified = enrollment_mode in GeneratedCertificate.VERIFIED_CERTS_MODES
         user_is_verified = IDVerificationService.user_is_verified(student)
@@ -278,6 +292,33 @@ class XQueueCertInterface(object):
         # For credit mode generate verified certificate
         if cert_mode == CourseMode.CREDIT_MODE:
             cert_mode = CourseMode.VERIFIED
+
+        # get PDF template information from the given site_name, overwrite template_file and pdf_info
+        pdf_info = None
+        if site:
+            pdf_config = site.cert_pdf_configs.first()
+            site_theme = site.themes.first()
+            if site_theme:
+                theme_name = site_theme.theme_dir_name
+                template_dir = "{0}/{1}/lms/static/certificates".format(settings.COMPREHENSIVE_THEME_DIRS[0],
+                                                                        theme_name)
+                file_name = "{0}/certificate-template.pdf".format(template_dir)
+                if os.path.exists(file_name) and pdf_config:
+                    canvas = json.loads(pdf_config.canvas)
+                    font_name = pdf_config.font_name
+                    font_info = json.loads(pdf_config.font_info)
+                    sentences = json.loads(pdf_config.sentences)
+                    positions = json.loads(pdf_config.positions)
+                    tmp_info = zip(canvas, positions, font_info)
+
+                    # make sure this only works for Myacademy
+                    if site.domain == "myacademy.learning-tribes.com":
+                        with override_language(get_user_email_language(student)):
+                            trans_sentences = [_(x) for x in sentences]
+                            pdf_info = OrderedDict(zip(trans_sentences, tmp_info))
+                    else:
+                        pdf_info = OrderedDict(zip(sentences, tmp_info))
+                    pdf_info.update({"font": font_name, "template_dir": template_dir})
 
         if template_file is not None:
             template_pdf = template_file
@@ -291,7 +332,7 @@ class XQueueCertInterface(object):
                 unverified = True
         else:
             # honor code and audit students
-            template_pdf = "certificate-template-{id.org}-{id.course}.pdf".format(id=course_id)
+            template_pdf = "certificate-template.pdf"
 
         LOGGER.info(
             (
@@ -382,6 +423,24 @@ class XQueueCertInterface(object):
             )
             return cert
 
+        else:
+            enrollment = CourseEnrollment.get_enrollment(student, course.id)
+            if not enrollment.completed and not is_whitelisted:
+                cert.status = status.not_completed
+                cert.save()
+
+                LOGGER.info(
+                    (
+                        u"Student %s does not complete the course '%s', "
+                        u"so their certificate status has been set to '%s'. "
+                        u"No certificate generation task was sent to the XQueue."
+                    ),
+                    student.id,
+                    unicode(course_id),
+                    cert.status
+                )
+                return cert
+
         # Check to see whether the student is on the the embargoed
         # country restricted list. If so, they should not receive a
         # certificate -- set their status to restricted and log it.
@@ -417,9 +476,9 @@ class XQueueCertInterface(object):
             return cert
 
         # Finally, generate the certificate and send it off.
-        return self._generate_cert(cert, course, student, grade_contents, template_pdf, generate_pdf)
+        return self._generate_cert(cert, course, student, grade_contents, template_pdf, generate_pdf, pdf_info, score)
 
-    def _generate_cert(self, cert, course, student, grade_contents, template_pdf, generate_pdf):
+    def _generate_cert(self, cert, course, student, grade_contents, template_pdf, generate_pdf, pdf_info, score):
         """
         Generate a certificate for the student. If `generate_pdf` is True,
         sends a request to XQueue.
@@ -436,6 +495,8 @@ class XQueueCertInterface(object):
             'name': cert.name,
             'grade': grade_contents,
             'template_pdf': template_pdf,
+            'score': score,
+            'pdf_info': pdf_info
         }
         if generate_pdf:
             cert.status = status.generating
@@ -447,6 +508,18 @@ class XQueueCertInterface(object):
         logging.info(u'certificate generated for user: %s with generate_pdf status: %s',
                      student.username, generate_pdf)
 
+        lang = get_user_email_language(student)
+        with override_language(lang):
+            if lang not in ('en', 'zh-cn'):
+                contents['issued_date'] = strftime_localized(cert.modified_date, "%d %B, %Y")
+            else:
+                contents['issued_date'] = strftime_localized(cert.modified_date, "%B %d, %Y")
+        json_date = {
+            'year': cert.modified_date.year,
+            'month': cert.modified_date.month,
+            'day': cert.modified_date.day
+        }
+        contents['json_date'] = json_date
         if generate_pdf:
             try:
                 self._send_to_xqueue(contents, key)
@@ -474,7 +547,7 @@ class XQueueCertInterface(object):
                 )
         return cert
 
-    def add_example_cert(self, example_cert):
+    def add_example_cert(self, example_cert, request_user=None, site=None):
         """Add a task to create an example certificate.
 
         Unlike other certificates, an example certificate is
@@ -489,11 +562,45 @@ class XQueueCertInterface(object):
             example_cert (ExampleCertificate)
 
         """
+        template_file = None
+        pdf_info = None
+        if site:
+            pdf_config = site.cert_pdf_configs.first()
+            site_theme = site.themes.first()
+            if site_theme:
+                theme_name = site_theme.theme_dir_name
+                template_dir = "{0}/{1}/lms/static/certificates".format(settings.COMPREHENSIVE_THEME_DIRS[0],
+                                                                        theme_name)
+                file_name = "{0}/certificate-template.pdf".format(template_dir)
+                if os.path.exists(file_name) and pdf_config:
+                    template_file = "certificate-template.pdf"
+                    canvas = json.loads(pdf_config.canvas)
+                    font_name = pdf_config.font_name
+                    font_info = json.loads(pdf_config.font_info)
+                    sentences = json.loads(pdf_config.sentences)
+                    positions = json.loads(pdf_config.positions)
+                    tmp_info = zip(canvas, positions, font_info)
+
+                    # make sure this only works for Myacademy
+                    if site.domain == "myacademy.learning-tribes.com":
+                        trans_sentences = [_(x) for x in sentences]
+                        pdf_info = OrderedDict(zip(trans_sentences, tmp_info))
+                    else:
+                        pdf_info = OrderedDict(zip(sentences, tmp_info))
+                    pdf_info.update({"font": font_name, "template_dir": template_dir})
         contents = {
             'action': 'create',
             'course_id': unicode(example_cert.course_key),
+            'course_name': unicode(example_cert.course_key),
             'name': example_cert.full_name,
-            'template_pdf': example_cert.template,
+            'template_pdf': template_file or example_cert.template,
+            'pdf_info': pdf_info,
+            'json_date': {
+                'year': now().year,
+                'month': now().month,
+                'day': now().day
+            },
+            'issued_date': strftime_localized(now(), "%B %d, %Y"),
 
             # Example certificates are not associated with a particular user.
             # However, we still need to find the example certificate when
@@ -508,6 +615,14 @@ class XQueueCertInterface(object):
             # This is not used by the certificates workers or XQueue.
             'example_certificate': True,
         }
+
+        if request_user:
+            lang = get_user_email_language(request_user)
+            with override_language(lang):
+                if lang not in ('en', 'zh-cn'):
+                    contents['issued_date'] = strftime_localized(now(), "%d %B, %Y")
+                else:
+                    contents['issued_date'] = strftime_localized(now(), "%B %d, %Y")
 
         # The callback for example certificates is different than the callback
         # for other certificates.  Although both tasks use the same queue,
@@ -534,6 +649,28 @@ class XQueueCertInterface(object):
                     u"The exception was %s.  "
                     u"The example certificate has been marked with status 'error'."
                 ), example_cert.uuid, unicode(exc)
+            )
+
+    def add_certs_export(self, certs_path, course_id, task_identifier):
+        contents = {
+            'action': 'export',
+            'certs_path': certs_path,
+            'course_id': course_id
+        }
+        key = make_hashkey(random.random())
+        try:
+            self._send_to_xqueue(contents,
+                                 key,
+                                 task_identifier=task_identifier,
+                                 callback_url_path='/update_instructor_task'
+                                 )
+        except XQueueAddToQueueError as exc:
+            LOGGER.critical(
+
+                (
+                    u"Could not add certificates export task {} to XQueue.  "
+                    u"The exception was {}."
+                ).format(task_identifier, unicode(exc))
             )
 
     def _send_to_xqueue(self, contents, key, task_identifier=None, callback_url_path='/update_certificate'):

@@ -9,6 +9,7 @@ import freezegun
 import pytz
 from django.test import TestCase
 from django.test.utils import override_settings
+from django.utils.timezone import now
 from mock import Mock, patch
 from nose.plugins.attrib import attr
 from opaque_keys.edx.locator import CourseLocator
@@ -25,9 +26,11 @@ from lms.djangoapps.certificates.tests.factories import CertificateWhitelistFact
 from course_modes.models import CourseMode
 from lms.djangoapps.grades.tests.utils import mock_passing_grade
 from lms.djangoapps.verify_student.tests.factories import SoftwareSecurePhotoVerificationFactory
+from student.models import CourseEnrollment
 from student.tests.factories import CourseEnrollmentFactory, UserFactory
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
+from util.date_utils import strftime_localized
 
 
 @ddt.ddt
@@ -45,6 +48,7 @@ class XQueueCertInterfaceAddCertificateTest(ModuleStoreTestCase):
             course_id=self.course.id,
             is_active=True,
             mode="honor",
+            completed=datetime.now()
         )
         self.xqueue = XQueueCertInterface()
         self.user_2 = UserFactory.create()
@@ -81,9 +85,7 @@ class XQueueCertInterfaceAddCertificateTest(ModuleStoreTestCase):
     @override_settings(AUDIT_CERT_CUTOFF_DATE=datetime.now(pytz.UTC) - timedelta(days=1))
     def test_add_cert_with_honor_certificates(self, mode):
         """Test certificates generations for honor and audit modes."""
-        template_name = 'certificate-template-{id.org}-{id.course}.pdf'.format(
-            id=self.course.id
-        )
+        template_name = 'certificate-template.pdf'
         mock_send = self.add_cert_to_queue(mode)
         if CourseMode.is_eligible_for_certificate(mode):
             self.assert_certificate_generated(mock_send, mode, template_name)
@@ -138,6 +140,7 @@ class XQueueCertInterfaceAddCertificateTest(ModuleStoreTestCase):
             course_id=self.course.id,
             is_active=True,
             mode=mode,
+            completed=datetime.now()
         )
         with mock_passing_grade():
             with patch.object(XQueueInterface, 'send_to_queue') as mock_send:
@@ -256,6 +259,7 @@ class XQueueCertInterfaceAddCertificateTest(ModuleStoreTestCase):
             course_id=self.course.id,
             is_active=True,
             mode=CourseMode.AUDIT,
+            completed=datetime.now()
         )
         created_date = datetime.now(pytz.UTC) + created_delta
         with freezegun.freeze_time(created_date):
@@ -338,13 +342,22 @@ class XQueueCertInterfaceExampleCertificateTest(TestCase):
             'queue_name': 'certificates'
         }
 
+        time_now = now()
         expected_body = {
             'action': 'create',
             'username': cert.uuid,
             'name': u'John Doë',
             'course_id': unicode(self.COURSE_KEY),
+            'course_name': unicode(self.COURSE_KEY),
             'template_pdf': 'test.pdf',
-            'example_certificate': True
+            'example_certificate': True,
+            'pdf_info': None,
+            'issued_date': strftime_localized(time_now, "%B %d, %Y"),
+            'json_date': {
+                'day': time_now.day,
+                'month': time_now.month,
+                'year': time_now.year
+            }
         }
 
         self.assertTrue(mock_send.called)
@@ -352,6 +365,6 @@ class XQueueCertInterfaceExampleCertificateTest(TestCase):
         __, kwargs = mock_send.call_args_list[0]
         actual_header = json.loads(kwargs['header'])
         actual_body = json.loads(kwargs['body'])
-
+        self.maxDiff = None
         self.assertEqual(expected_header, actual_header)
         self.assertEqual(expected_body, actual_body)

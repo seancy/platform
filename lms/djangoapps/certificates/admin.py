@@ -14,7 +14,8 @@ from lms.djangoapps.certificates.models import (
     CertificateHtmlViewConfiguration,
     CertificateTemplate,
     CertificateTemplateAsset,
-    GeneratedCertificate
+    GeneratedCertificate,
+    CertificatePdfConfig
 )
 from util.organizations_helpers import get_organizations
 
@@ -78,9 +79,14 @@ class CertificateGenerationCourseSettingAdmin(admin.ModelAdmin):
     show_full_result_count = False
 
 
+class CertificatePdfConfigAdmin(admin.ModelAdmin):
+    list_display = ('site',)
+
+
 admin.site.register(CertificateGenerationConfiguration)
 admin.site.register(CertificateGenerationCourseSetting, CertificateGenerationCourseSettingAdmin)
 admin.site.register(CertificateHtmlViewConfiguration, ConfigurationModelAdmin)
 admin.site.register(CertificateTemplate, CertificateTemplateAdmin)
 admin.site.register(CertificateTemplateAsset, CertificateTemplateAssetAdmin)
 admin.site.register(GeneratedCertificate, GeneratedCertificateAdmin)
+admin.site.register(CertificatePdfConfig, CertificatePdfConfigAdmin)

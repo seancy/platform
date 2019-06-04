@@ -93,4 +93,6 @@ urlpatterns = [
     url(r'^generate_bulk_certificate_exceptions', api.generate_bulk_certificate_exceptions,
         name='generate_bulk_certificate_exceptions'),
     url(r'^certificate_invalidation_view/$', api.certificate_invalidation_view, name='certificate_invalidation_view'),
+    url(r'^certificates_export$', api.certificates_export, name='certificates_export'),
+    url(r'^list_cert_zip_gen_tasks$', api.list_cert_zip_gen_tasks, name='list_cert_zip_gen_tasks'),
 ]

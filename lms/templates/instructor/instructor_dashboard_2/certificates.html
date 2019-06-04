@@ -108,6 +108,32 @@ from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_str
     % endif
 
     <hr>
+    <div class="certificates-export action-type-container">
+        <h3 class="hd hd-3">${_("Certificates Export")}</h3>
+        <div class="action-type-container-content">
+            <form>
+                <label>
+                    ${_("Enter email addresses and/or usernames separated by new lines or commas.")}
+                    <textarea name="student-ids" placeholder="${_("Email Addresses/Usernames")}"></textarea>
+                </label>
+                <input type="button" value="generate" id="generate-cert" data-endpoint="${ section_data['urls']['certificates_export'] }">
+            </form>
+            <div class="certificates-error" style="display: none">
+                <h3>${_("The following users didn't get certificates:")}</h3>
+                <ul></ul>
+            </div>
+            <div class="certificates-download" data-endpoint="${ section_data['urls']['list_cert_zip_gen_tasks'] }">
+                <h3>${_("Certificates Available for Download")}</h3>
+                <p>${_("The zip files listed below are available for download. A link to every zip file remains available on this page, identified by the UTC date and time of generation. Reports are not deleted, so you will always be able to access previously generated reports from this page.")}</p>
+                <div class="zip-file-list">
+                    <div class="zip-file-list-header"><span>${_("File Name")}</span></div>
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
     <div class="start-certificate-regeneration">
         <h3 class="hd hd-3">${_("Regenerate Certificates")}</h3>
         <form id="certificate-regenerating-form" method="post" action="${section_data['urls']['start_certificate_regeneration']}">
@@ -125,7 +151,7 @@ from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_str
                 <div>
                     <label>
                         <input id="certificate_status_${section_data['status'].notpassing}" type="checkbox" name="certificate_statuses" value="${section_data['status'].notpassing}">
-                        ${_("Regenerate for learners who have not received certificates. ({count})").format(count=section_data['certificate_statuses_with_count'].get(section_data['status'].notpassing, 0))}
+                        ${_("Regenerate for learners who have not received certificates. ({count})").format(count=section_data['certificate_statuses_with_count'].get(section_data['status'].notpassing, 0)+section_data['certificate_statuses_with_count'].get(section_data['status'].not_completed, 0))}
                     </label>
                 </div>
                 <div>

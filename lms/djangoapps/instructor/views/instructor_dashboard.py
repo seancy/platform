@@ -404,6 +404,14 @@ def _section_certificates(course):
                 'list_instructor_tasks',
                 kwargs={'course_id': course.id}
             ),
+            'certificates_export': reverse(
+                'certificates_export',
+                kwargs={'course_id': course.id}
+            ),
+            'list_cert_zip_gen_tasks': reverse(
+                'list_cert_zip_gen_tasks',
+                kwargs={'course_id': course.id}
+            ),
         }
     }
 

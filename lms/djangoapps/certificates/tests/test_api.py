@@ -186,7 +186,10 @@ class CertificateDownloadableStatusTests(WebCertificateTestMixin, ModuleStoreTes
 
     @patch.dict(settings.FEATURES, {'CERTIFICATES_HTML_VIEW': True})
     def test_with_downloadable_web_cert(self):
-        CourseEnrollment.enroll(self.student, self.course.id, mode='honor')
+
+        enrollment = CourseEnrollment.enroll(self.student, self.course.id, mode='honor')
+        enrollment.completed = datetime.now()
+        enrollment.save()
         self._setup_course_certificate()
         with mock_passing_grade():
             certs_api.generate_user_certificates(self.student, self.course.id)
@@ -223,7 +226,9 @@ class CertificateDownloadableStatusTests(WebCertificateTestMixin, ModuleStoreTes
         self.course.certificates_display_behavior = 'end'
         self.course.save()
 
-        CourseEnrollment.enroll(self.student, self.course.id, mode='honor')
+        enrollment = CourseEnrollment.enroll(self.student, self.course.id, mode='honor')
+        enrollment.completed = datetime.now()
+        enrollment.save()
         self._setup_course_certificate()
         with mock_passing_grade():
             certs_api.generate_user_certificates(self.student, self.course.id)
@@ -538,6 +543,10 @@ class GenerateUserCertificatesTest(EventTestMixin, WebCertificateTestMixin, Modu
         self.request_factory = RequestFactory()
 
     def test_new_cert_requests_into_xqueue_returns_generating(self):
+
+        enrollment = CourseEnrollment.get_enrollment(self.student, self.course.id)
+        enrollment.completed = datetime.now()
+        enrollment.save()
         with mock_passing_grade():
             with self._mock_queue():
                 certs_api.generate_user_certificates(self.student, self.course.id)
@@ -556,6 +565,10 @@ class GenerateUserCertificatesTest(EventTestMixin, WebCertificateTestMixin, Modu
         )
 
     def test_xqueue_submit_task_error(self):
+
+        enrollment = CourseEnrollment.get_enrollment(self.student, self.course.id)
+        enrollment.completed = datetime.now()
+        enrollment.save()
         with mock_passing_grade():
             with self._mock_queue(is_successful=False):
                 certs_api.generate_user_certificates(self.student, self.course.id)
@@ -581,6 +594,9 @@ class GenerateUserCertificatesTest(EventTestMixin, WebCertificateTestMixin, Modu
 
         with mock_passing_grade():
             with self._mock_queue():
+                enrollment = CourseEnrollment.get_enrollment(self.student, self.course.id)
+                enrollment.completed = datetime.now()
+                enrollment.save()
                 status = certs_api.generate_user_certificates(self.student, self.course.id)
                 self.assertEqual(status, 'generating')
 
@@ -590,6 +606,11 @@ class GenerateUserCertificatesTest(EventTestMixin, WebCertificateTestMixin, Modu
         Test no message sent to Xqueue if HTML certificate view is enabled
         """
         self._setup_course_certificate()
+
+        enrollment = CourseEnrollment.get_enrollment(self.student, self.course.id)
+        enrollment.completed = datetime.now()
+        enrollment.save()
+
         with mock_passing_grade():
             certs_api.generate_user_certificates(self.student, self.course.id)
 

@@ -95,6 +95,7 @@ class CertificateStatuses(object):
     unverified = 'unverified'
     invalidated = 'invalidated'
     requesting = 'requesting'
+    not_completed = 'not_completed'
 
     readable_statuses = {
         downloadable: "already received",
@@ -258,7 +259,7 @@ class GeneratedCertificate(models.Model):
     course_id = CourseKeyField(max_length=255, blank=True, default=None)
     verify_uuid = models.CharField(max_length=32, blank=True, default='', db_index=True)
     download_uuid = models.CharField(max_length=32, blank=True, default='')
-    download_url = models.CharField(max_length=128, blank=True, default='')
+    download_url = models.CharField(max_length=512, blank=True, default='')
     grade = models.CharField(max_length=5, blank=True, default='')
     key = models.CharField(max_length=32, blank=True, default='')
     distinction = models.BooleanField(default=False)

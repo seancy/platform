@@ -7,6 +7,7 @@ import datetime
 import logging
 
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.core.management.base import BaseCommand
 from opaque_keys.edx.keys import CourseKey
 from pytz import UTC
@@ -56,6 +57,13 @@ class Command(BaseCommand):
             help='Grade and generate certificates for a specific course'
         )
         parser.add_argument(
+            '-s', '--site_name',
+            metavar='SITE_NAME',
+            dest='site_name',
+            default=None,
+            help='This will choose the PDF template that is linked to the site_name'
+        )
+        parser.add_argument(
             '-f', '--force-gen',
             metavar='STATUS',
             dest='force',
@@ -88,6 +96,7 @@ class Command(BaseCommand):
 
         course = CourseKey.from_string(options['course'])
         ended_courses = [course]
+        site = Site.objects.filter(domain=options['site_name']).first()
 
         for course_key in ended_courses:
             # prefetch all chapters/sequentials by saying depth=2
@@ -133,7 +142,8 @@ class Command(BaseCommand):
                             student,
                             course_key,
                             course=course,
-                            insecure=options['insecure']
+                            insecure=options['insecure'],
+                            site=site
                         )
 
                         if ret == 'generating':

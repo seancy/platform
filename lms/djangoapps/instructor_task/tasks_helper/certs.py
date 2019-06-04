@@ -1,17 +1,24 @@
 """
 Instructor tasks related to certificates.
 """
-from time import time
+import os
+import urllib
+import zipfile
+from datetime import datetime
+from time import time, sleep
 
+from celery.states import SUCCESS, FAILURE
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 from django.db.models import Q
 
 from lms.djangoapps.certificates.api import generate_user_certificates
 from lms.djangoapps.certificates.models import CertificateStatuses, GeneratedCertificate
+from lms.djangoapps.certificates.queue import XQueueCertInterface
 from student.models import CourseEnrollment
 from xmodule.modulestore.django import modulestore
 
-from .runner import TaskProgress
+from .runner import TaskProgress, _get_current_task
 
 
 def generate_students_certificates(
@@ -71,13 +78,18 @@ def generate_students_certificates(
     task_progress.update_task_state(extra_meta=current_step)
 
     course = modulestore().get_course(course_id, depth=0)
+    site_name = task_input.get('site_name')
+    site = Site.objects.filter(domain=site_name).first()
+    insecure = task_input.get('insecure')
     # Generate certificate for each student
     for student in students_require_certs:
         task_progress.attempted += 1
         status = generate_user_certificates(
             student,
             course_id,
-            course=course
+            course=course,
+            insecure=insecure,
+            site=site
         )
 
         if CertificateStatuses.is_passing_status(status):
@@ -147,3 +159,50 @@ def invalidate_generated_certificates(course_id, enrolled_students, certificate_
         download_url='',
         grade='',
     )
+
+
+def generate_certs_zip_file(_xmodule_instance_args, _entry_id, course_id, task_input, action_name):
+    """
+    This is the main function to generate certificates zip files
+    """
+    start_time = time()
+    certs = task_input.get('certs')
+    insecure = task_input.get('insecure')
+    total = len(certs)
+    task_progress = TaskProgress(action_name, total, start_time)
+    waiting_time = 0
+    certs_list = GeneratedCertificate.objects.filter(id__in=certs)
+    certs_path = []
+
+    # In the task_input we get the list ID of certificates,
+    # when the status is 'downloadable', it is available to add to the zip file
+    # because it takes time to generate the certificates instances (need to call from Xqueue server)
+    # so we the status of the certificates every second, until all the certificates are 'downloadable'
+    # The task expires in 10mins.
+    while True:
+        for cert in certs_list:
+            if cert.status == 'downloadable':
+                certs.remove(cert.id)
+                task_progress.succeeded += 1
+                certs_path.append(urllib.unquote(cert.download_url.split('downloads/')[-1]))
+            elif cert.status == 'error':
+                _get_current_task().update_state(state=FAILURE)
+                return
+        task_progress.skipped = len(certs)
+        skipped_certs = {'skipped_certs': certs}
+        task_progress.update_task_state(extra_meta=skipped_certs)
+        if len(certs) == 0:
+            break
+        certs_list = certs_list.filter(id__in=certs)
+        sleep(5)
+        waiting_time += 5
+        if waiting_time > 300:
+            break
+    if certs_path:
+        xqueue = XQueueCertInterface()
+        if insecure:
+            xqueue.use_https = False
+        else:
+            xqueue.use_https = True
+        xqueue.add_certs_export(certs_path, unicode(course_id), _entry_id)
+        return task_progress.update_task_state()

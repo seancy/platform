@@ -379,6 +379,8 @@ class CertificatesInstructorApiTest(SharedModuleStoreTestCase):
         """
         # Check that user is enrolled in audit mode.
         enrollment = CourseEnrollment.get_enrollment(self.user, self.course.id)
+        enrollment.completed = datetime.now()
+        enrollment.save()
         self.assertEquals(enrollment.mode, CourseMode.AUDIT)
 
         with mock_passing_grade():

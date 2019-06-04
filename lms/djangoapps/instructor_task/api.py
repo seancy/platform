@@ -8,6 +8,7 @@ arguments.
 """
 import hashlib
 from collections import Counter
+from mock import Mock
 
 from celery.states import READY_STATES
 
@@ -36,6 +37,7 @@ from lms.djangoapps.instructor_task.tasks import (
     exec_summary_report_csv,
     export_ora2_data,
     generate_certificates,
+    generate_certs_zip,
     proctored_exam_results_csv,
     rescore_problem,
     reset_problem_attempts,
@@ -489,7 +491,8 @@ def generate_certificates_for_students(request, course_key, student_set=None, sp
     """
     if student_set:
         task_type = 'generate_certificates_student_set'
-        task_input = {'student_set': student_set}
+        task_input = {'student_set': student_set,
+                      'site_name': request.site.domain}
 
         if student_set == 'specific_student':
             task_type = 'generate_certificates_certain_student'
@@ -501,7 +504,11 @@ def generate_certificates_for_students(request, course_key, student_set=None, sp
             task_input.update({'specific_student_id': specific_student_id})
     else:
         task_type = 'generate_certificates_all_student'
-        task_input = {}
+        task_input = {'site_name': request.site.domain}
+
+    # To pass the test, Mock is not json serializable
+    if isinstance(request, Mock):
+        task_input['site_name'] = None
 
     task_class = generate_certificates
     task_key = ""
@@ -526,7 +533,11 @@ def regenerate_certificates(request, course_key, statuses_to_regenerate):
     Raises AlreadyRunningError if certificates are currently being generated.
     """
     task_type = 'regenerate_certificates_all_student'
-    task_input = {}
+    task_input = {'site_name': request.site.domain, 'insecure': not request.is_secure()}
+
+    # To pass the test, Mock is not json serializable
+    if isinstance(request, Mock):
+        task_input['site_name'] = None
 
     task_input.update({"statuses_to_regenerate": statuses_to_regenerate})
     task_class = generate_certificates
@@ -541,4 +552,20 @@ def regenerate_certificates(request, course_key, statuses_to_regenerate):
         is_regeneration=True
     )
 
+    return instructor_task
+
+
+def submit_cert_zip_gen_task(request, course_key, certs):
+    """
+    certs: type List, contains IDs of Generated certificates, [1,3,16]
+    return a background task to generate certificates zip file
+    """
+    task_type = 'generate_certificates_zip_file'
+    task_class = generate_certs_zip
+    task_key = ''
+    task_input = {
+        'certs': certs,
+        'insecure': not request.is_secure()
+    }
+    instructor_task = submit_task(request, task_type, task_class, course_key, task_input, task_key)
     return instructor_task

@@ -6,7 +6,7 @@ import logging
 
 from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import Http404, HttpResponse, HttpResponseForbidden
+from django.http import Http404, HttpResponse, HttpResponseForbidden, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from opaque_keys.edx.keys import CourseKey
@@ -20,6 +20,7 @@ from lms.djangoapps.certificates.models import (
     GeneratedCertificate,
     certificate_status_for_student
 )
+from lms.djangoapps.instructor_task.models import InstructorTask
 from util.bad_request_rate_limiter import BadRequestRateLimiter
 from util.json_request import JsonResponse, JsonResponseBadRequest
 from xmodule.modulestore.django import modulestore
@@ -52,6 +53,43 @@ def request_certificate(request):
                 status = generate_user_certificates(student, course_key, course=course)
             return HttpResponse(json.dumps({'add_status': status}), content_type='application/json')
         return HttpResponse(json.dumps({'add_status': 'ERRORANONYMOUSUSER'}), content_type='application/json')
+
+
+@csrf_exempt
+def update_instructor_task(request):
+
+    if request.method == "POST":
+
+        xqueue_body = json.loads(request.POST.get('xqueue_body'))
+        xqueue_header = json.loads(request.POST.get('xqueue_header'))
+
+        key = request.GET.get('key')
+        download_url = xqueue_body['url']
+
+        try:
+            task = InstructorTask.objects.get(id=key)
+
+        except InstructorTask.DoesNotExist:
+            log.critical('Unable to lookup instructor_task {}'.format(key))
+            return JsonResponse(
+                {
+                    'return_code': 1,
+                    'content': 'Unable to lookup instructor_task'
+                }
+            )
+        if 'error' in xqueue_body:
+            return JsonResponse(
+                {
+                    'return_code': 1,
+                    'content': xqueue_body['error']
+                }
+            )
+
+        output = json.loads(task.task_output)
+        output['download_url'] = download_url
+        task.task_output = json.dumps(output)
+        task.save()
+        return JsonResponse({'return_code': 0})
 
 
 @csrf_exempt

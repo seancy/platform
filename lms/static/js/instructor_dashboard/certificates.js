@@ -35,6 +35,55 @@ var onCertificatesReady = null;
             window.location.reload();
         });
 
+        /**
+         * Certificates Export
+         */
+        $('#generate-cert').click(function () {
+            var url = $(this).data('endpoint'),
+                identifier_input = $(this).parent().find("textarea[name='student-ids']").val(),
+                $cert_download = $(".certificates-download");
+            $(this).val("generating ..");
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    identifiers: identifier_input
+                },
+                success: function (data) {
+                    $('#generate-cert').val("generate");
+                    var $result = $('.certificates-error'),
+                        fail_num = data["fail"].length;
+                    if (fail_num > 0) {
+                        $result.show();
+                        $result.find('ul').empty();
+                        for (var i = 0; i < data["fail"].length; i++) {
+                            $result.find('ul').append(data["fail"][i])
+                        }
+                    }
+                }
+            });
+        });
+
+        var endpoint = $(".certificates-download").data('endpoint');
+        function get_zip_links() {
+            $.ajax({
+                type: "GET",
+                url: endpoint,
+                success: function (data) {
+                    var $zip_list = $('.zip-file-list'),
+                        link_num = data["links"].length;
+                    if (link_num > 0) {
+                        $zip_list.show();
+                        $zip_list.find('ul').empty();
+                        for (var i = 0; i < data["links"].length; i++) {
+                            $zip_list.find('ul').append(data["links"][i])
+                        }
+                    }
+                }
+            });
+        }
+        get_zip_links();
+        setInterval(get_zip_links, 30000);
 
         /**
          * Start generating certificates for all students.

@@ -1118,7 +1118,7 @@ def _get_cert_data(student, course, enrollment_mode, course_grade=None):
         returns dict if course certificate is available else None.
     """
     if not CourseMode.is_eligible_for_certificate(enrollment_mode):
-        return AUDIT_PASSING_CERT_DATA if enrollment_mode == CourseMode.AUDIT else HONOR_PASSING_CERT_DATA
+        return AUDIT_PASSING_CERT_DATA
 
     certificates_enabled_for_course = certs_api.cert_generation_enabled(course.id)
     if course_grade is None:

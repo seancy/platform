@@ -16,6 +16,7 @@ import string
 import StringIO
 import time
 import unicodecsv
+import urllib
 from django_countries import countries
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -48,8 +49,9 @@ import lms.djangoapps.instructor_task.api
 from bulk_email.models import BulkEmailFlag, CourseEmail
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import (
-    CertificateInvalidation, CertificateStatuses, CertificateWhitelist, GeneratedCertificate,
+    CertificateInvalidation, CertificateStatuses, CertificateWhitelist, GeneratedCertificate
 )
+from lms.djangoapps.certificates.queue import XQueueCertInterface
 from courseware.access import has_access
 from courseware.courses import get_course_by_id, get_course_with_access
 from courseware.models import StudentModule
@@ -82,7 +84,7 @@ from lms.djangoapps.instructor.views import INVOICE_KEY
 from lms.djangoapps.instructor.views.instructor_task_helpers import extract_email_features, extract_task_features
 from lms.djangoapps.instructor_task.api import submit_override_score
 from lms.djangoapps.instructor_task.api_helper import AlreadyRunningError, QueueConnectionError
-from lms.djangoapps.instructor_task.models import ReportStore
+from lms.djangoapps.instructor_task.models import ReportStore, InstructorTask
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.course_groups.cohorts import is_course_cohorted
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
@@ -3396,7 +3398,15 @@ def generate_example_certificates(request, course_id=None):  # pylint: disable=u
 
     """
     course_key = CourseKey.from_string(course_id)
-    certs_api.generate_example_certificates(course_key)
+    insecure = True
+    if request.is_secure():
+        insecure = False
+    certs_api.generate_example_certificates(
+        course_key,
+        insecure=insecure,
+        request_user=request.user,
+        site=request.site
+    )
     return redirect(_instructor_dash_url(course_key, section='certificates'))
 
 
@@ -3477,6 +3487,8 @@ def start_certificate_regeneration(request, course_id):
     """
     course_key = CourseKey.from_string(course_id)
     certificates_statuses = request.POST.getlist('certificate_statuses', [])
+    if CertificateStatuses.notpassing in certificates_statuses:
+        certificates_statuses.append(CertificateStatuses.not_completed)
     if not certificates_statuses:
         return JsonResponse(
             {'message': _('Please select one or more certificate statuses that require certificate regeneration.')},
@@ -3490,6 +3502,7 @@ def start_certificate_regeneration(request, course_id):
         CertificateStatuses.notpassing,
         CertificateStatuses.audit_passing,
         CertificateStatuses.audit_notpassing,
+        CertificateStatuses.not_completed
     ]
     if not set(certificates_statuses).issubset(allowed_statuses):
         return JsonResponse(
@@ -3959,6 +3972,79 @@ def validate_request_data_and_get_certificate(certificate_invalidation, course_k
             "username/email and the selected course are correct and try again."
         ).format(student=student.username, course=course_key.course))
     return certificate
+
+
+@transaction.non_atomic_requests
+@require_POST
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+@require_level('staff')
+@require_post_params(identifiers="stringified list of emails and/or usernames")
+def certificates_export(request, course_id):
+    """
+    This is the api for generating certificates zip file.
+    In the front end, we input list of users name/email,
+    it will imediately return list of users that don't get
+    the certificates, and also the reason.
+    Meanwhile, it creates a background task to generate the
+    zip file.
+    """
+    xqueue = XQueueCertInterface()
+    if request.is_secure():
+        xqueue.use_https = True
+    else:
+        xqueue.use_https = False
+    course_key = CourseKey.from_string(course_id)
+    identifiers_raw = request.POST.get('identifiers')
+    identifiers = _split_input_list(identifiers_raw)
+    context = {"fail": [], "success": []}
+    certs = []
+    for identifier in identifiers:
+        try:
+            user = get_student_from_identifier(identifier)
+            cert = xqueue.add_cert(user, course_key, site=request.site)
+            if not (cert.status == 'generating' or cert.status == 'downloadable'):
+                context["fail"].append(u'<li>{identifier}: {result}</li>'.format(
+                    identifier=identifier,
+                    result=cert.status
+                ))
+            else:
+                certs.append(cert.id)
+        except User.DoesNotExist:
+            context["fail"].append(u'<li>{identifier}: {result}</li>'.format(
+                    identifier=identifier,
+                    result='User does not exist'
+                ))
+
+    # if there are valid certificates, we submit a background task to generate zip file
+    if certs:
+        lms.djangoapps.instructor_task.api.submit_cert_zip_gen_task(request, course_key, certs)
+    return JsonResponse(context)
+
+
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+@require_level('staff')
+def list_cert_zip_gen_tasks(request, course_id):
+    """
+    This is the api to get the list of certificates zip files.
+
+    In the front end we call this api every 30 seconds
+    """
+    task_type = 'generate_certificates_zip_file'
+    course_key = CourseKey.from_string(course_id)
+    tasks = InstructorTask.objects.filter(
+        course_id=course_key,
+        task_type=task_type,
+        task_state='SUCCESS'
+    ).order_by('-id')
+    links = ['<li><a href="{href}">{file}</a></li>'.format(
+        href=json.loads(task.task_output).get('download_url', "#"),
+        file=urllib.unquote(json.loads(task.task_output).get('download_url').split('certs-zip/')[-1])
+    )
+        for task in tasks if task.task_output != 'null' and json.loads(task.task_output).has_key('download_url')]
+    context = {"links": links}
+    return JsonResponse(context)
 
 
 def _get_boolean_param(request, param_name):

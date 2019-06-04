@@ -125,7 +125,7 @@ def get_certificate_for_user(username, course_key):
 
 
 def generate_user_certificates(student, course_key, course=None, insecure=False, generation_mode='batch',
-                               forced_grade=None):
+                               forced_grade=None, site=None):
     """
     It will add the add-cert request into the xqueue.
 
@@ -161,7 +161,8 @@ def generate_user_certificates(student, course_key, course=None, insecure=False,
         course_key,
         course=course,
         generate_pdf=generate_pdf,
-        forced_grade=forced_grade
+        forced_grade=forced_grade,
+        site=site
     )
     # If cert_status is not present in certificate valid_statuses (for example unverified) then
     # add_cert returns None and raises AttributeError while accesing cert attributes.
@@ -179,8 +180,8 @@ def generate_user_certificates(student, course_key, course=None, insecure=False,
     return cert.status
 
 
-def regenerate_user_certificates(student, course_key, course=None,
-                                 forced_grade=None, template_file=None, insecure=False):
+def regenerate_user_certificates(student, course_key, course=None, forced_grade=None,
+                                 template_file=None, insecure=False, site=None):
     """
     It will add the regen-cert request into the xqueue.
 
@@ -218,7 +219,8 @@ def regenerate_user_certificates(student, course_key, course=None,
         course=course,
         forced_grade=forced_grade,
         template_file=template_file,
-        generate_pdf=generate_pdf
+        generate_pdf=generate_pdf,
+        site=site
     )
 
 
@@ -338,7 +340,7 @@ def cert_generation_enabled(course_key):
     )
 
 
-def generate_example_certificates(course_key):
+def generate_example_certificates(course_key, insecure=False, request_user=None, site=None):
     """Generate example certificates for a course.
 
     Example certificates are used to validate that certificates
@@ -362,8 +364,10 @@ def generate_example_certificates(course_key):
 
     """
     xqueue = XQueueCertInterface()
+    if insecure:
+        xqueue.use_https = False
     for cert in ExampleCertificateSet.create_example_set(course_key):
-        xqueue.add_example_cert(cert)
+        xqueue.add_example_cert(cert, request_user=request_user, site=site)
 
 
 def example_certificates_status(course_key):
