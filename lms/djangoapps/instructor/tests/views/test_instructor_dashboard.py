@@ -103,10 +103,17 @@ class TestInstructorDashboard(ModuleStoreTestCase, LoginEnrollmentTestCase, XssT
         """
         def has_instructor_tab(user, course):
             """Returns true if the "Instructor" tab is shown."""
-            request = RequestFactory().request()
-            request.user = user
-            tabs = get_course_tab_list(request, course)
-            return len([tab for tab in tabs if tab.name == 'Instructor']) == 1
+            # request = RequestFactory().request()
+            # request.user = user
+            # tabs = get_course_tab_list(request, course)
+            # return len([tab for tab in tabs if tab.name == 'Instructor']) == 1
+            self.client.logout()
+            self.client.login(username=user.username, password="test")
+            response = self.client.get(self.url)
+            for line in response.content.split('\n'):
+                if 'alt="View Instructor Page"' in line:
+                    return True
+            return False
 
         self.assertTrue(has_instructor_tab(self.instructor, self.course))
 
@@ -537,6 +544,6 @@ class TestInstructorDashboardPerformance(ModuleStoreTestCase, LoginEnrollmentTes
 
         # check MongoDB calls count
         url = reverse('spoc_gradebook', kwargs={'course_id': self.course.id})
-        with check_mongo_calls(9):
+        with check_mongo_calls(13):
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)

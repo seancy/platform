@@ -27,13 +27,6 @@
                 <% } %>
             </div>
         </section>
-        <section class="progress-icon">
-            <svg class="progress-ring" data-percent="60">
-                <circle class="progress-ring__circle-bg" r="12" cx="16" y="15"/>
-                <circle class="progress-ring__circle" r="12" cx="13" cy="16"/>
-            </svg>
-            <span>0%</span>
-        </section>
         <section class="sub-info">
             <div class="badge">
                 <i class="far fa-trophy"></i>

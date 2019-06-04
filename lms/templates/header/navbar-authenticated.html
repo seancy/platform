@@ -31,7 +31,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 <div class="nav-links">
   ## Dashboard, Catalogue, My courses, Analytics, Studio
   <div class="main">
-    % if show_dashboard_tabs:
+##    % if show_dashboard_tabs:
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab dashboard-tab">
           <a class="${'active ' if reverse('dashboard') == request.path else ''}tab-nav-link" href="${reverse('dashboard')}">
             <span class="label"><span class="icon far fa-home-alt" aria-hidden="true"></span></span>
@@ -81,7 +81,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
       % endif
 
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab studio-tab">
-          <a class="tab-nav-link" href="${getattr(settings, 'CMS_BASE')}">
+          <a class="tab-nav-link" href="//${getattr(settings, 'CMS_BASE')}">
             <span class="label"><span class="icon far fa-edit" aria-hidden="true"></span></span>
             ${_("Studio")}
           </a>
@@ -94,7 +94,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
   ##          </a>
   ##        </div>
   ##      % endif
-    % endif
+##    % endif ## endif show_dashboard_tabs
 
   ## % if show_sysadmin_dashboard:
   ##   <div class="mobile-nav-item hidden-mobile nav-item nav-tab">

@@ -1,14 +1,21 @@
 ## mako
 
-<%page args="active_page=None" expression_filter="h" />
 <%namespace name='static' file='/static_content.html'/>
 
 <%!
+from courseware.access import has_access
+from courseware.courses import get_studio_url
 from courseware.tabs import get_course_tab_list
 from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import ugettext as _
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from instructor.views.instructor_dashboard import InstructorDashboardTab
+from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
+from courseware.courses import get_studio_url
 %>
+
+<%page args="active_page=None, studio_url=None" expression_filter="h" />
 
 <%
 if active_page is None and active_page_context is not UNDEFINED:
@@ -17,6 +24,8 @@ if active_page is None and active_page_context is not UNDEFINED:
 
 if course is not None:
     include_special_exams = settings.FEATURES.get('ENABLE_SPECIAL_EXAMS', False) and (course.enable_proctored_exams or course.enable_timed_exams)
+    if not studio_url:
+        studio_url = get_studio_url(course, 'course')
 %>
 
 % if include_special_exams is not UNDEFINED and include_special_exams:
@@ -33,30 +42,30 @@ if course is not None:
     <%
     tab_list = get_course_tab_list(request, course)
     %>
-    % if uses_bootstrap:
-        <nav class="navbar course-tabs pb-0 navbar-expand" aria-label="${_('Course')}">
-            <ul class="navbar-nav mr-auto">
-                % for tab in tab_list:
-                    <%
-                    tab_is_active = tab.tab_id in (active_page, default_tab)
-                    %>
-                    <li class="nav-item ${'active' if tab_is_active else ''}">
-                        <a href="${tab.link_func(course, reverse)}" class="nav-link">
-                            ${_(tab.name)}
-                            % if tab_is_active:
-                                <span class="sr-only">, ${_('current location')}</span>
-                            %endif
-                            % if tab_image:
-                                ## Translators: 'needs attention' is an alternative string for the
-                                ## notification image that indicates the tab "needs attention".
-                                <img src="${tab_image}" alt="${_('needs attention')}" />
-                            %endif
-                        </a>
-                    </li>
-                % endfor
-            </ul>
-        </nav>
-    % else:
+    ## % if uses_bootstrap:
+    ##     <nav class="navbar course-tabs pb-0 navbar-expand" aria-label="${_('Course')}">
+    ##         <ul class="navbar-nav mr-auto">
+    ##             % for tab in tab_list:
+    ##                 <%
+    ##                 tab_is_active = tab.tab_id in (active_page, default_tab)
+    ##                 %>
+    ##                 <li class="nav-item ${'active' if tab_is_active else ''}">
+    ##                     <a href="${tab.link_func(course, reverse)}" class="nav-link">
+    ##                         ${_(tab.name)}
+    ##                         % if tab_is_active:
+    ##                             <span class="sr-only">, ${_('current location')}</span>
+    ##                         %endif
+    ##                         % if tab_image:
+    ##                             ## Translators: 'needs attention' is an alternative string for the
+    ##                             ## notification image that indicates the tab "needs attention".
+    ##                             <img src="${tab_image}" alt="${_('needs attention')}" />
+    ##                         %endif
+    ##                     </a>
+    ##                 </li>
+    ##             % endfor
+    ##         </ul>
+    ##     </nav>
+    ## % else:
         <nav class="${active_page} wrapper-course-material" aria-label="${_('Course Material')}">
             <div class="course-material">
                 <%
@@ -66,14 +75,40 @@ if course is not None:
                     <%include file="${tabs_tmpl}" args="tab_list=tab_list,active_page=active_page,default_tab=default_tab,tab_image=tab_image" />
                     <%block name="extratabs" />
                 </ol>
-                <div class="wrap-instructor-info studio-view">
-                  %if studio_url:
-                    <a class="instructor-info-action" href="${studio_url}">${_("View Course in Studio")}</a>
-                  %endif
-                </div>
+                <ul class="actions">
+                  % if InstructorDashboardTab.is_enabled(course, request.user):
+                    <%
+                        instructor_link_class = "instructor-info-action"
+                        if 'instructor' == active_page:
+                            instructor_link_class += " active"
+                    %>
+                    <li>
+                      <a class="${instructor_link_class}" href="${reverse('instructor_dashboard', kwargs={'course_id': unicode(course.id)})}" alt="${_('View Instructor Page')}">
+                        <i class="far fa-cog"></i>
+                      </a>
+                    </li>
+                  % endif
+
+                  % if has_access(request.user, 'staff', course, course.id) and studio_url is not None:
+                    <li>
+                      <a class="instructor-info-action" href="${studio_url}">
+                        <i class="far fa-pen"></i><span class="sr">${_('View About Page in studio')}</span>
+                      </a>
+                    </li>
+                  % endif
+                  % if (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
+                  and (ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()] \
+                  or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in request.user.groups.all()])):
+                    <li>
+                      <a class="instructor-info-action" href="${reverse('analytics_course')}/?course_id=${unicode(course.id)}" alt="${_('View Course Report Page')}">
+                        <i class="far fa-analytics"></i>
+                      </a>
+                    </li>
+                  % endif
+                </ul>
             </div>
         </nav>
-    % endif
+    ## % endif
 %endif
 
 

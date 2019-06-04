@@ -89,6 +89,7 @@ from openedx.core.djangoapps.util.user_messages import PageLevelMessages
 from openedx.core.djangolib.markup import HTML, Text
 from openedx.features.course_experience import UNIFIED_COURSE_TAB_FLAG, course_home_url_name
 from openedx.features.course_experience.course_tools import CourseToolsPluginManager
+from openedx.features.course_experience.utils import get_course_outline_block_tree, get_resume_block
 from openedx.features.course_experience.views.course_dates import CourseDatesFragmentView
 from openedx.features.course_experience.views.course_outline import CourseOutlineFragmentView
 from openedx.features.course_experience.waffle import waffle as course_experience_waffle
@@ -288,6 +289,17 @@ def jump_to(_request, course_id, location):
         raise Http404(u"This location is not in any class: {0}".format(usage_key))
 
     return redirect(redirect_url)
+
+def get_resume_course_url(request, course):
+    resume_course_url = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
+    if not isinstance(request.user, AnonymousUser):
+        course_outline_root_block = get_course_outline_block_tree(request, text_type(course.id))
+        resume_block = get_resume_block(course_outline_root_block) if course_outline_root_block else None
+        if resume_block:
+            resume_course_url = resume_block['lms_web_url']
+        elif course_outline_root_block:
+            resume_course_url = course_outline_root_block['lms_web_url']
+    return resume_course_url
 
 
 @ensure_csrf_cookie
@@ -615,6 +627,23 @@ class CourseTabView(EdxFragmentView):
             # course is not yet visible to students.
             supports_preview_menu = False
 
+        show_courseware_link = False
+        resume_course_url = None
+        progress = None
+        if course:
+            show_courseware_link = bool(
+                has_access(request.user, 'load', course)
+                or settings.FEATURES.get('ENABLE_LMS_MIGRATION')
+            )
+
+            if show_courseware_link:
+                resume_course_url = get_resume_course_url(request, course)
+
+                if not isinstance(request.user, AnonymousUser):
+                    progress = CourseGradeFactory().get_course_completion_percentage(
+                                        request.user, course.id)
+                    progress = int(progress * 100)
+
         context = {
             'course': course,
             'tab': tab,
@@ -625,6 +654,10 @@ class CourseTabView(EdxFragmentView):
             'uses_bootstrap': uses_bootstrap,
             'uses_pattern_library': not uses_bootstrap,
             'disable_courseware_js': True,
+            'registered': registered_for_course(course, request.user),
+            'show_courseware_link': show_courseware_link,
+            'resume_course_url': resume_course_url,
+            'progress': progress
         }
         context.update(
             get_experiment_user_metadata_context(
@@ -774,7 +807,7 @@ def course_about(request, course_id):
         studio_url = get_studio_url(course, 'settings/details')
 
         if has_access(request.user, 'load', course):
-            course_target = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
+            course_target = get_resume_course_url(request, course)
         else:
             course_target = reverse('about_course', args=[text_type(course.id)])
 
@@ -997,7 +1030,7 @@ def _progress(request, course_key, student_id):
     )
 
     if has_access(request.user, 'load', course):
-        course_target = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
+        course_target = get_resume_course_url(request, course)
     else:
         course_target = reverse('about_course', args=[text_type(course.id)])
 
@@ -1017,7 +1050,8 @@ def _progress(request, course_key, student_id):
         'user': request.user,
         'registered': registered_for_course(course, request.user),
         'course_target': course_target,
-        'progress_summary': progress_summary
+        'progress_summary': progress_summary,
+        'progress': int(progress_summary['progress']*100)
     }
     context.update(
         get_experiment_user_metadata_context(

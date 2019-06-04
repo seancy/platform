@@ -222,9 +222,10 @@ class BlockStructureStore(object):
             return unicode(bs_model)
 
         else:
+            data_usage_key = u"%s" % bs_model.data_usage_key
             return "v{version}.root.key.{root_usage_key}".format(
                 version=unicode(BlockStructureBlockData.VERSION),
-                root_usage_key=unicode(bs_model.data_usage_key),
+                root_usage_key=data_usage_key.encode('utf-8'),
             )
 
     @staticmethod

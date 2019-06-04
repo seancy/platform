@@ -175,7 +175,7 @@ class TestCourseHomePage(CourseHomePageTestCase):
         course_home_url(self.course)
 
         # Fetch the view and verify the query counts
-        with self.assertNumQueries(54, table_blacklist=QUERY_COUNT_TABLE_BLACKLIST):
+        with self.assertNumQueries(63, table_blacklist=QUERY_COUNT_TABLE_BLACKLIST):
             with check_mongo_calls(4):
                 url = course_home_url(self.course)
                 self.client.get(url)
@@ -240,11 +240,11 @@ class TestCourseHomePageAccess(CourseHomePageTestCase):
         # are only shown to enrolled users.
         is_enrolled = user_type is CourseUserType.ENROLLED
         is_unenrolled_staff = user_type is CourseUserType.UNENROLLED_STAFF
-        expected_count = 1 if (is_enrolled or is_unenrolled_staff) else 0
-        self.assertContains(response, TEST_CHAPTER_NAME, count=expected_count)
-        self.assertContains(response, 'Start Course', count=expected_count)
+        self.assertContains(response, TEST_CHAPTER_NAME, count=(1 if is_enrolled or is_unenrolled_staff else 0))
+        self.assertContains(response, 'Start Course', count=(0 if is_enrolled or is_unenrolled_staff else 1))
+        self.assertContains(response, 'Resume Course', count=(1 if is_enrolled or is_unenrolled_staff else 0))
         self.assertContains(response, 'Learn About Verified Certificate', count=(1 if is_enrolled else 0))
-        self.assertContains(response, TEST_WELCOME_MESSAGE, count=expected_count)
+        self.assertContains(response, TEST_WELCOME_MESSAGE, count=(1 if is_enrolled or is_unenrolled_staff else 0))
 
         # Verify that the expected message is shown to the user
         self.assertContains(response, '<div class="user-messages">', count=1 if expected_message else 0)
@@ -281,9 +281,9 @@ class TestCourseHomePageAccess(CourseHomePageTestCase):
         # are only shown to enrolled users.
         is_enrolled = user_type is CourseUserType.ENROLLED
         is_unenrolled_staff = user_type is CourseUserType.UNENROLLED_STAFF
-        expected_count = 1 if (is_enrolled or is_unenrolled_staff) else 0
-        self.assertContains(response, TEST_CHAPTER_NAME, count=expected_count)
-        self.assertContains(response, 'Start Course', count=expected_count)
+        self.assertContains(response, TEST_CHAPTER_NAME, count=(1 if is_enrolled or is_unenrolled_staff else 0))
+        self.assertContains(response, 'Start Course', count=(0 if is_enrolled or is_unenrolled_staff else 1))
+        self.assertContains(response, 'Resume Course', count=(1 if is_enrolled or is_unenrolled_staff else 0))
         self.assertContains(response, 'Learn About Verified Certificate', count=(1 if is_enrolled else 0))
 
         # Verify that the expected message is shown to the user

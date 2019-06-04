@@ -116,163 +116,11 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 <section class="course-info">
 
   <%block name="course_about_header">
-    <header class="course-profile">
+    <%include file="/courseware/course_banner.html" />
 
-      <nav class="wrapper-preview-menu" aria-label="${_('Course View')}">
-        <section class="welcome-wrapper">
-          <h2>${course.display_name_with_default_escaped}</h2>
-          <ul>
-            <% course_duration = get_course_about_section(request, course, "duration") %>
-            % if course_duration:
-              <li class="duration">
-                <i class="far fa-clock" aria-hidden="true"></i>
-                <span>${course_duration}</span>
-              </li>
-            % endif
-            % if course.language:
-              <li class="language">
-                  <i class="far fa-globe" aria-hidden="true"></i>
-                  <span class="sr">${_("Language")}</span>
-                  <span>${dict(settings.ALL_LANGUAGES).get(course.language, course.language)}</span>
-              </li>
-            % endif
-            % if course.course_category:
-              <li class="course-category">
-                <i class="far fa-folder" aria-hidden="true"></i>
-                <span>${course.course_category}</span>
-              </li>
-            % endif
-            % if not course.start_date_is_still_default:
-              <% course_start_date = course.advertised_start or course.start %>
-              <li class="important-dates">
-                <i class="icon far fa-calendar-alt" aria-hidden="true"></i>
-                <span class="sr">${_('Course dates')}</span>
-                % if isinstance(course_start_date, string_types):
-                  <span class="important-dates-item-text start-date">${course_start_date}</span>
-                % else:
-                  <% course_date_string = course_start_date.strftime('%Y-%m-%dT%H:%M:%S%z') %>
-                  <span class="important-dates-item-text start-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></span>
-                % endif
-                % if course.end:
-                    &nbsp;-&nbsp;
-                    % if isinstance(course_end_date, string_types):
-                      <span class="important-dates-item-text final-date">${course.end}</span>
-                    % else:
-                      <% course_date_string = course.end.strftime('%Y-%m-%dT%H:%M:%S%z') %>
-                      <span class="important-dates-item-text final-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></span>
-                    % endif
-                % endif
-              </li>
-            % endif
-
-            % if get_course_about_section(request, course, "effort"):
-              <li class="effort">
-                <i class="icon fa fa-pencil" aria-hidden="true"></i>
-                <span class="sr">${_("Estimated Effort")}</span>
-                <span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span>
-              </li>
-            % endif
-
-              <li class="course-length">
-                <i class="icon fa fa-clock-o" aria-hidden="true"></i>
-                <span class="sr">${_('Course Length')}</span>
-                <span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span>
-              </li>
-
-
-            % if course_price and (can_add_course_to_cart or is_cosmetic_price_enabled):
-              <li class="course-price">
-                <i class="icon fa fa-money" aria-hidden="true"></i>
-                <span class="sr">${_("Price")}</span>
-                <span class="important-dates-item-text">${course_price}</span>
-              </li>
-            % endif
-          </ul>
-        </section>
-
-        <section class="course-control">
-          <div class="main-cta">
-            % if user.is_authenticated and registered:
-                <span class="sr">${_("You are enrolled in this course")}</span>
-              % if show_courseware_link:
-                <a href="${course_target}"><strong>${_("Resume Course")}</strong></a>
-              % endif
-
-            % elif in_cart:
-                <span class="sr">${_('This course is in your cart.')}</span>
-                <a href="${cart_link}">${_('View Cart')}</a>
-              </span>
-
-            % elif is_course_full:
-              <span class="sr">${_("Course is full")}</span>
-              <span class="disabled-button">${_('Start Course')}</span>
-
-            % elif invitation_only and not can_enroll:
-              <span class="sr">${_("Enrollment in this course is by invitation only")}</span>
-              <span class="disabled-button">${_('Start Course')}</span>
-
-            ## Shib courses need the enrollment button to be displayed even when can_enroll is False,
-            ## because AnonymousUsers cause can_enroll for shib courses to be False, but we need them to be able to click
-            ## so that they can register and become a real user that can enroll.
-            % elif not is_shib_course and not can_enroll:
-              <span class="sr">${_("Enrollment is Closed")}</span>
-              <span class="disabled-button">${_('Start Course')}</span>
-
-            % elif can_add_course_to_cart:
-              <%
-              if user.is_authenticated:
-                reg_href = "#"
-                reg_element_id = "add_to_cart_post"
-              else:
-                reg_href = reg_then_add_to_cart_link
-                reg_element_id = "reg_then_add_to_cart"
-              %>
-              <% if ecommerce_checkout:
-                  reg_href = ecommerce_checkout_link
-                  reg_element_id = ""
-              %>
-              <a href="${reg_href}" class="add-to-cart" id="${reg_element_id}">
-                ${_("Add to Cart <span>({price} USD)</span>")\
-                  .format(price=course_price)}
-              </a>
-              <div id="register_error"></div>
-
-            % else:
-              <%
-                if ecommerce_checkout:
-                  reg_href = ecommerce_checkout_link
-                else:
-                  reg_href="#"
-                if professional_mode:
-                  href_class = "add-to-cart"
-                else:
-                  href_class = "register"
-              %>
-              <a href="${reg_href}" class="${href_class}">${_("Start Course")}</a>
-              <div id="register_error"></div>
-            % endif
-            </div>
-        </section>
-      </nav>
-
-      <div class="intro-inner-wrapper">
-        <div class="table">
-          <section class="intro">
-            <div class="heading-group">
-              <h1>
-                ${course.display_name_with_default_escaped}
-              </h1>
-              <br />
-              <span>${course.display_org_with_default | h}</span>
-            </div>
-          </section>
-        </div>
-      </div>
-    </header>
-
-    <div class="menu">
+    <div class="course-material">
       <ul class="tabs">
-          <li class="overview active">${_("Overview")}</li>
+          <li class="tab course-tab overview active">${_("Overview")}</li>
       </ul>
       <ul class="actions">
         % if InstructorDashboardTab.is_enabled(course, request.user):
@@ -284,8 +132,8 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
         % endif
         % if staff_access and studio_url is not None:
           <li>
-            <a class="instructor-info-action" href="${studio_url}" alt="${_('View About Page in studio')}">
-              <i class="far fa-pen"></i>
+            <a class="instructor-info-action" href="${studio_url}">
+              <i class="far fa-pen"></i><span class="sr">${_('View About Page in studio')}</span>
             </a>
           </li>
         % endif

@@ -19,8 +19,8 @@ class TestCourseTabApi(TestCase):
         """
         Verify that get_plugin works as expected.
         """
-        tab_type = CourseTabPluginManager.get_plugin("instructor")
-        self.assertEqual(tab_type.title, "Instructor")
+        tab_type = CourseTabPluginManager.get_plugin("progress")
+        self.assertEqual(tab_type.title, "Progress")
 
         with self.assertRaises(PluginError):
             CourseTabPluginManager.get_plugin("no_such_type")

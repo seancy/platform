@@ -323,16 +323,18 @@ def get_course_tab_list(request, course):
                 continue
             tab.name = _("Entrance Exam")
         elif tab.type == 'courseware':
-            tab.name = _('OVERVIEW')
+            continue
         # TODO: LEARNER-611 - once the course_info tab is removed, remove this code
-        if UNIFIED_COURSE_TAB_FLAG.is_enabled(course.id) and tab.type == 'course_info':
-                continue
+        # if UNIFIED_COURSE_TAB_FLAG.is_enabled(course.id) and tab.type == 'course_info':
+        #         continue
+        if tab.type == 'course_info':
+            tab.name = _('Overview')
         if tab.type == 'static_tab' and tab.course_staff_only and \
                 not bool(user and has_access(user, 'staff', course, course.id)):
             continue
-        if tab.type == 'progress':
-            tab.name = _("BADGES")
+
         course_tab_list.append(tab)
+
 
     # Add in any dynamic tabs, i.e. those that are not persisted
     course_tab_list += _get_dynamic_tabs(course, user)
@@ -350,6 +352,9 @@ def _get_dynamic_tabs(course, user):
     for tab_type in CourseTabPluginManager.get_tab_types():
         if getattr(tab_type, "is_dynamic", False):
             tab = tab_type(dict())
+            #if tab.type == 'instructor' and not has_access(user, 'staff', course, course.id):
+            if tab.type == 'instructor':
+                continue
             if tab.is_enabled(course, user=user):
                 dynamic_tabs.append(tab)
     dynamic_tabs.sort(key=lambda dynamic_tab: dynamic_tab.name)

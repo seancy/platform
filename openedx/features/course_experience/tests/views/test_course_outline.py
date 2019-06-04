@@ -407,20 +407,22 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
         # vertical and its parent should be checked
         self.assertEqual(len(content('.fa-check-circle')), 2)
 
-    def test_start_course(self):
-        """
-        Tests that the start course button appears when the course has never been accessed.
 
-        Technically, this is a course home test, and not a course outline test, but checking the counts of
-        start/resume course should be done together to not get a false positive.
+    # test becomes invalid after we changed the feature to display 'Start Course' only when not registered/staff
+    # def test_start_course(self):
+    #     """
+    #     Tests that the start course button appears when the course has never been accessed.
 
-        """
-        course = self.course
+    #     Technically, this is a course home test, and not a course outline test, but checking the counts of
+    #     start/resume course should be done together to not get a false positive.
 
-        response = self.visit_course_home(course, start_count=1, resume_count=0)
-        content = pq(response.content)
+    #     """
+    #     course = self.course
 
-        self.assertTrue(content('.action-resume-course').attr('href').endswith('/course/' + course.url_name))
+    #     response = self.visit_course_home(course, start_count=1, resume_count=0)
+    #     content = pq(response.content)
+
+    #     self.assertTrue(content('.action-resume-course').attr('href').endswith('/course/' + course.url_name))
 
     @override_settings(LMS_BASE='test_url:9999')
     def test_resume_course_with_completion_api(self):
@@ -507,7 +509,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
                 self.store.delete_item(sequential.location, self.user.id)
 
         # check resume course buttons
-        self.visit_course_home(course, start_count=1, resume_count=0)
+        self.visit_course_home(course, start_count=0, resume_count=1)
 
     def test_course_home_for_global_staff(self):
         """
@@ -520,7 +522,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
 
         self.override_waffle_switch(True)
         CourseEnrollment.get_enrollment(self.user, course.id).delete()
-        response = self.visit_course_home(course, start_count=1, resume_count=0)
+        response = self.visit_course_home(course, start_count=0, resume_count=1)
         content = pq(response.content)
         self.assertTrue(content('.action-resume-course').attr('href').endswith('/course/' + course.url_name))
 

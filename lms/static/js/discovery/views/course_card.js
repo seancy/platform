@@ -60,9 +60,21 @@
                     data.course_category = window.COURSE_CATEGORIES[data.course_category];
                 }
                 this.$el.html(this.tpl(data));
+            //     return this.postRender();
+            // },
+
+            // postRender: function() {
+            //     var progressRing = this.$('.progress-ring')[0]
+            //     var percent = progressRing.dataset['percent']
+            //     var circle = this.$('.progress-ring__circle')[0];
+            //     var circleBg = this.$('.progress-ring__circle-bg')[0];
+            //     var radius = circle.r.baseVal.value;
+            //     var circumference = radius * 2 * Math.PI;
+            //     const offset = circumference - percent / 100 * circumference;
+            //     circle.style.strokeDashoffset = offset;
+            //     circleBg.style.strokeDashoffset = circumference - 100 / 100 * circumference;
                 return this;
             }
-
         });
     });
 }(define || RequireJS.define));

@@ -495,7 +495,7 @@ def ccx_gradebook(request, course, ccx=None):
     with ccx_course(ccx_key) as course:
         student_info, page = get_grade_book_page(request, course, course_key=ccx_key)
 
-        return render_to_response('courseware/gradebook.html', {
+        return render_to_response('instructor/instructor_dashboard_2/gradebook.html', {
             'page': page,
             'page_url': reverse('ccx_gradebook', kwargs={'course_id': ccx_key}),
             'students': student_info,

@@ -131,7 +131,7 @@ class CourseHomeFragmentView(EdxFragmentView):
                     request, course_id=course_id, **kwargs
                 )
             course_sock_fragment = CourseSockFragmentView().render_to_fragment(request, course=course, **kwargs)
-            has_visited_course, resume_course_url = self._get_resume_course_info(request, course_id)
+            # has_visited_course, resume_course_url = self._get_resume_course_info(request, course_id)
         else:
             # Redirect the user to the dashboard if they are not enrolled and
             # this is a course that does not support direct enrollment.
@@ -142,8 +142,8 @@ class CourseHomeFragmentView(EdxFragmentView):
             outline_fragment = None
             update_message_fragment = None
             course_sock_fragment = None
-            has_visited_course = None
-            resume_course_url = None
+            # has_visited_course = None
+            # resume_course_url = None
 
         # Get the handouts
         handouts_html = self._get_course_handouts(request, course)
@@ -184,8 +184,8 @@ class CourseHomeFragmentView(EdxFragmentView):
             'outline_fragment': outline_fragment,
             'handouts_html': handouts_html,
             'course_home_message_fragment': course_home_message_fragment,
-            'has_visited_course': has_visited_course,
-            'resume_course_url': resume_course_url,
+            # 'has_visited_course': has_visited_course,
+            # 'resume_course_url': resume_course_url,
             'course_tools': course_tools,
             'dates_fragment': dates_fragment,
             'username': request.user.username,
