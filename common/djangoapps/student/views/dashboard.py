@@ -1024,6 +1024,11 @@ def my_courses(request):
     consent_required_courses = set()
     enterprise_customer_name = None
 
+    staff_access = False
+    if has_access(user, 'staff', 'global'):
+        # Show any courses that encountered an error on load
+        staff_access = True
+
     context = {
         'all_course_modes': course_mode_info,
         'block_courses': block_courses,
@@ -1040,6 +1045,7 @@ def my_courses(request):
         'show_courseware_links_for': show_courseware_links_for,
         'show_dashboard_tabs': True,
         'show_email_settings_for': show_email_settings_for,
+        'staff_access': staff_access,
         'verification_status_by_course': verify_status_by_course,
     }
 

@@ -342,6 +342,19 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         </div>
       </div>
   </section>
+  % if course_requirements and not staff_access:
+    ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
+    <% prc_target = reverse('about_course', args=[unicode(course_requirements['courses'][0]['key'])]) %>
+    <div class="prerequisites">
+      <p class="tip">
+        ${Text(_("You must successfully complete {link_start}{prc_display}{link_end} before you begin this course.")).format(
+            link_start=HTML('<a href="{}">').format(prc_target),
+            link_end=HTML('</a>'),
+            prc_display=course_requirements['courses'][0]['display'],
+          )}
+      </p>
+    </div>
+  % endif
   <footer class="wrapper-messages-primary">
     <div class="messages-list">
 
@@ -500,20 +513,6 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
           </div>
         % endif
       % endif
-
-        % if course_requirements:
-        ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
-        <% prc_target = reverse('about_course', args=[unicode(course_requirements['courses'][0]['key'])]) %>
-        <div class="prerequisites">
-          <p class="tip">
-            ${Text(_("You must successfully complete {link_start}{prc_display}{link_end} before you begin this course.")).format(
-                link_start=HTML('<a href="{}">').format(prc_target),
-                link_end=HTML('</a>'),
-                prc_display=course_requirements['courses'][0]['display'],
-              )}
-          </p>
-        </div>
-        % endif
     </div>
   </footer>
 </article>

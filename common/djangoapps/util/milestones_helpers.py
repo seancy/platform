@@ -126,6 +126,7 @@ def get_pre_requisite_courses_not_completed(user, enrolled_courses):  # pylint: 
 
     pre_requisite_courses = {}
 
+    from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
     for course_key in enrolled_courses:
         required_courses = []
         fulfillment_paths = milestones_api.get_course_milestones_fulfillment_paths(course_key, {'id': user.id})
@@ -134,11 +135,14 @@ def get_pre_requisite_courses_not_completed(user, enrolled_courses):  # pylint: 
                 if key == 'courses' and value:
                     for required_course in value:
                         required_course_key = CourseKey.from_string(required_course)
-                        required_course_overview = CourseOverview.get_from_id(required_course_key)
-                        required_courses.append({
-                            'key': required_course_key,
-                            'display': get_course_display_string(required_course_overview)
-                        })
+                        required_course_descriptor = modulestore().get_course(required_course_key)
+                        grade_summary = CourseGradeFactory().read(user, required_course_descriptor).summary
+                        if grade_summary['grade'] != 'Pass':
+                            required_course_overview = CourseOverview.get_from_id(required_course_key)
+                            required_courses.append({
+                                'key': required_course_key,
+                                'display': required_course_overview.display_name_with_default
+                            })
         # If there are required courses, add them to the result dict.
         if required_courses:
             pre_requisite_courses[course_key] = {'courses': required_courses}
