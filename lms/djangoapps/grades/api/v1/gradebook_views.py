@@ -3,11 +3,16 @@ Defines an endpoint for gradebook data related to a course.
 """
 import copy
 import logging
+import json
 from collections import namedtuple
 from contextlib import contextmanager
 
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.urls import reverse
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_POST
 from rest_framework import status
 from rest_framework.response import Response
 from six import text_type
@@ -144,15 +149,12 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
         This endpoint does not accept any URL parameters.
 
     **Example POST Data**
-        [
           {
-            9: ["block-v1:edX+DemoX+Demo_Course+type@sequential+block@basic_questions",
-                "block-v1:edX+DemoX+Demo_Course+type@sequential+block@advanced_questions"]
-          },
-          {
-            11: ["block-v1:edX+DemoX+Demo_Course+type@sequential+block@basic_questions"]
-          },
-        ]
+            9: {"block-v1:edX+DemoX+Demo_Course+type@sequential+block@basic_questions": 50,
+                "block-v1:edX+DemoX+Demo_Course+type@sequential+block@advanced_questions": 100},
+
+            11: {"block-v1:edX+DemoX+Demo_Course+type@sequential+block@basic_questions": 90}
+          }
 
     **POST Response Values**
         An HTTP 202 may be returned if a grade override was created for each of the requested (user_id, usage_id)
@@ -200,7 +202,7 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
 
         result = []
         email_list = []
-        all_pass = False
+        whole = False
         data = request.data['log']
         number_of_sections = int(request.data['number_of_sections'])
         import json
@@ -208,10 +210,9 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
         for user_id, keys in data.items():
             requested_user_id = int(user_id)
             usage_ids = list(set(keys))
-            override_sections = []
+            override_sections = {}
             if number_of_sections == len(usage_ids):
-                all_pass = True
-            grade_models = []
+                whole = True
             try:
                 user = self._get_single_user(request, course_key, requested_user_id)
             except USER_MODEL.DoesNotExist:
@@ -222,13 +223,9 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
                     usage_key = UsageKey.from_string(requested_usage_id)
 
                 except InvalidKeyError as exc:
-                    self._log_update_result(request.user, requested_user_id, requested_usage_id, success=False)
-                    result.append(GradebookUpdateResponseItem(
-                        user_id=requested_user_id,
-                        usage_id=requested_usage_id,
-                        success=False,
-                        reason=text_type(exc)
-                    ))
+                    self._log_update_result(
+                        request.user, requested_user_id, requested_usage_id, success=False, reason=text_type(exc)
+                    )
                     usage_ids.remove(requested_usage_id)
                     continue
 
@@ -238,48 +235,41 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
                         course_id=course_key,
                         usage_key=usage_key
                     )
-                    if subsection_grade_model.earned_all == subsection_grade_model.possible_all and \
-                       subsection_grade_model.earned_graded == subsection_grade_model.possible_graded and \
-                       subsection_grade_model.earned_all == subsection_grade_model.earned_graded:
-                        usage_ids.remove(requested_usage_id)
-                        continue
-                    else:
-                        grade_models.append(subsection_grade_model)
+
                 except PersistentSubsectionGrade.DoesNotExist:
                     subsection = course.get_child(usage_key)
                     if subsection:
                         subsection_grade_model = self._create_subsection_grade(user, course, subsection)
-                        if subsection_grade_model.earned_all == subsection_grade_model.possible_all and \
-                                subsection_grade_model.earned_graded == subsection_grade_model.possible_graded and \
-                                subsection_grade_model.earned_all == subsection_grade_model.earned_graded:
-                            usage_ids.remove(requested_usage_id)
-                            continue
-                        else:
-                            grade_models.append(subsection_grade_model)
                     else:
-                        self._log_update_result(request.user, requested_user_id, requested_usage_id, success=False)
-                        result.append(GradebookUpdateResponseItem(
-                            user_id=requested_user_id,
-                            usage_id=requested_usage_id,
-                            success=False,
-                            reason=u'usage_key {} does not exist in this course.'.format(usage_key)
-                        ))
+                        self._log_update_result(
+                            request.user, requested_user_id, requested_usage_id, success=False,
+                            reason=u'usage_key does not exist in this course.'
+                        )
                         usage_ids.remove(requested_usage_id)
                         continue
 
-            if grade_models:
-                for obj in grade_models:
-                    override_data = {
-                            "earned_all_override": obj.possible_all,
-                            "possible_all_override": obj.possible_all,
-                            "earned_graded_override": obj.possible_all,
-                            "possible_graded_override": obj.possible_all
+                if subsection_grade_model:
+                    # if the current score equals to the override score, skip and remove the usage_id from the list
+                    # This won't happen if we edit the score of subsections one by one, but it could happen when we
+                    # edit the total score or the average score, because we have to change all the score of the included
+                    # subsection to the same
+                    override_score = keys[requested_usage_id] * subsection_grade_model.possible_all / 100
+                    if override_score == subsection_grade_model.earned_all:
+                        usage_ids.remove(requested_usage_id)
+                        continue
+                    else:
+                        override_data = {
+                            "earned_all_override": override_score,
+                            "possible_all_override": subsection_grade_model.possible_all,
+                            "earned_graded_override": override_score,
+                            "possible_graded_override": subsection_grade_model.possible_all
                         }
-                    override = self._create_override(request.user, obj, **override_data)
+                        override = self._create_override(request.user, subsection_grade_model, **override_data)
+                        self._log_update_result(
+                            request.user, requested_user_id, requested_usage_id, subsection_grade_model, override, True
+                        )
 
-                    self._log_update_result(
-                        request.user, requested_user_id, obj.usage_key, obj, override, True
-                    )
+            if usage_ids:
                 course_grade = CourseGradeFactory().read(user, course)
                 grade_summary = course_grade.summary
                 graded_subsections = course_grade.graded_subsections_by_format
@@ -290,7 +280,7 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
                         pair = sections_by_format.popitem(last=False)
                         section['usage_key'] = unicode(pair[0])
                         if unicode(pair[0]) in usage_ids:
-                            override_sections.append(pair[1].display_name)
+                            override_sections[pair[1].display_name] = int(section['percent'] * 100)
                         if pair[1].override is not None:
                             section['override'] = True
                             grade_summary['override'] = True
@@ -305,16 +295,17 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
                     grade_data=grade_data
                 ))
                 email_list.append({
+                    'total': int(grade_summary['percent'] * 100),
                     'name': user.profile.name or user.username,
                     'email': user.email,
-                    'all_pass': all_pass,
+                    'whole': whole,
                     'sections': override_sections,
                     'language': get_user_email_language(user)
                 })
 
         if email_list:
             # we don't finish the anaytics transcript feature yet, so use this fake link
-            transcript_link = "http://fake-link"
+            transcript_link = reverse('analytics_my_transcript')
             course_name = course.display_name_with_default_escaped
             platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
             send_grade_override_email.apply_async(
@@ -327,7 +318,7 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
             )
 
         status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
-        if all((item.success for item in result)):
+        if len(result) > 0:
             status_code = status.HTTP_202_ACCEPTED
 
         return Response(
@@ -402,15 +393,46 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
         user_id, usage_id,
         subsection_grade_model=None,
         subsection_grade_override=None,
-        success=False
+        success=False,
+        reason=None,
     ):
 
         log.info(
-            u'Grades: Bulk_Update, UpdatedByUser: %s, User: %s, Usage: %s, Grade: %s, GradeOverride: %s, Success: %s',
+            u'Grades: Bulk_Update, UpdatedByUser: %s, User: %s, Usage: %s, Grade: %s, GradeOverride: %s, Success: %s, '
+            u'Reason: %s',
             request_user.id,
             user_id,
             usage_id,
             subsection_grade_model,
             subsection_grade_override,
-            success
+            success,
+            reason
         )
+
+
+@require_POST
+def undo_override_for_student(request, course_id):
+    user_id = int(request.POST.get('user_id'))
+    user = User.objects.get(id=user_id)
+    course_key = CourseKey.from_string(course_id)
+    usage_ids = json.loads(request.POST.get('usage_ids'))
+    for key in usage_ids:
+        GradesService().undo_override_subsection_grade(user_id, course_id, key)
+    grade_summary = CourseGradeFactory().read(user, course_key=course_key).summary
+    data = []
+    for section in grade_summary['section_breakdown']:
+        attrs = {'percent': section['percent'], 'category': section['category'],
+                 'label': section['label'], 'detail': section['detail'],
+                 'class': '', 'grade': int(round(section['percent'] * 100)),
+                 'usage_key': section.get('usage_key', ''),
+                 'override': section.get('override', False)}
+        if 'Avg' in section['label']:
+            attrs['class'] = 'high-column'
+        if section.get('override', False):
+            attrs['override'] = True
+        data.append(attrs)
+    total = {'percent': grade_summary['percent'], 'category': 'Total', 'label': 'Total',
+             'detail': _('Total'), 'class': 'high-column', 'grade': int(round(grade_summary['percent'] * 100)),
+             'override': grade_summary.get('override', False), 'usage_key': ''}
+    data = [total] + data
+    return JsonResponse({user_id: data})

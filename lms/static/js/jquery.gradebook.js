@@ -102,7 +102,6 @@ var Gradebook = function($element) {
 
     var highlightRow = function() {
         $element.find('.highlight').removeClass('highlight').find('.promote-grade').css('display', 'none');
-        $element.find('.undo-grade').css('display', 'none');
         var index = $(this).index();
         var $student_tr = $studentTable.find('tr').eq(index + 1);
         $student_tr.addClass('highlight');
@@ -127,8 +126,110 @@ var Gradebook = function($element) {
            keys_list.push(usage_id);
        }
     });
-    console.log(keys_list);
-    console.log(keys_dict);
+    var course_id = window.location.pathname.split('/')[2],
+        override_link = '/api/grades/v1/gradebook/' + course_id + '/undo-override';
+
+    $studentTable.on('click', '.indicate-icon a', function (e) {
+        e.preventDefault();
+        /*
+        $.post(
+            $(this).attr('href'),
+            {user_id: $(this).parents('tr').data('id'), usage_ids: JSON.stringify(keys_list)},
+            function (data) {
+                for (var i in data) {
+                    var id = '#' + i,
+                        v = data[i],
+                        $target = $gradeTable.find(id);
+
+                    $target.find('.indicate-icon .fa-check').remove();
+                    $target.find('td').each(function () {
+                        var index = $(this).index(),
+                            grade_data = v[index];
+                        $(this).attr({
+                            'class': grade_data['class'],
+                            'title': grade_data['detail'],
+                            'data-percent': grade_data['percent'],
+                            'data-usage-id': grade_data['usage_key']
+                        }).find('.score').text(grade_data['grade']);
+
+                        if ($(this).find('.indicate-icon .fa-check').length == 0) {
+                            if (grade_data['override'] == true) {
+                                if (grade_data['grade'] == 100) {
+                                    $(this).find('.indicate-icon').html('<i class="fa fa-check"></i>')
+                                }
+                                else {
+                                    $(this).find('.indicate-icon').append('<i class="fa fa-check"></i>')
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        );*/
+        var target_id = $(this).parents('tr').index(),
+            user_id = $(this).parents('tr').data('id'),
+            usage_ids = JSON.stringify(keys_list),
+            user_name = $(this).parents('td').find('a').eq(1).text();
+        $('#revert-override').find('p strong').text(user_name);
+        $('.revert-confirm').off('click');
+        $('.revert-confirm').on('click',function () {
+
+            $.post(
+                override_link,
+                {user_id: user_id, usage_ids: usage_ids},
+                function (data) {
+                    for (var i in data) {
+                        var id = '#' + i,
+                            v = data[i],
+                            $target = $gradeTable.find(id);
+
+                        $target.find('.indicate-icon .fa-check').remove();
+                        $target.find('td').each(function () {
+                            var index = $(this).index(),
+                                grade_data = v[index];
+                            $(this).attr({
+                                'class': grade_data['class'],
+                                'title': grade_data['detail'],
+                                'data-percent': grade_data['percent'],
+                                'data-usage-id': grade_data['usage_key']
+                            }).find('.score').text(grade_data['grade']);
+
+                        });
+                        $studentTable.find('tbody tr').eq(target_id).find('.indicate-icon a').remove()
+                    }
+                    $("#revert-override").iziModal('close');
+                    $studentTable.find('tbody tr').eq(target_id).find('a').notify("Success!", {position: 'right-middle'});
+                    $studentTable.find('.notifyjs-container').css({"line-height": "20px", "top": "6px"})
+                }
+            )
+        });
+    });
+
+    $gradeTable.find('tr td .score').keypress(function (e) {
+            if (e.which == 13) {
+                $(this).blur();
+            }
+        });
+    $gradeTable.find('tr td .score').focusout(function () {
+        var before = Math.round($(this).parent().attr('data-percent')*100),
+            now = parseInt($(this).text());
+        if (isNaN($(this).text())) {
+            $(this).notify("Please input a valid number", {position: 'top', className: 'error'});
+            $(this).parent().find('.undo-grade').show();
+        }
+        else if (now < before || now > 100) {
+            $(this).notify("Please input a score between " + before + " and 100", {position: 'top', className: 'error'});
+            $(this).parent().find('.undo-grade').show();
+        }
+        else if (now > before) {
+            $(this).parent().find('.undo-grade').show();
+            promote_log_info($(this).parent())
+        }
+        else {
+            $(this).parent().find('.undo-grade').hide();
+        }
+        $gradeTable.find(".notifyjs-container").css("line-height", "20px")
+    });
 
     $edit.click(function () {
         $(this).css('display', 'none');
@@ -137,22 +238,26 @@ var Gradebook = function($element) {
         sessionStorage.setItem('grade_html', grade_html);
         grade_log = {};
         $gradeTable.find('.indicate-icon .fa-check').css('display', 'none');
+        $studentTable.find('.indicate-icon .fa-undo').css('display', 'none');
+        $gradeTable.find('tr td .score').each(function () {
+            if ($(this).text() != '100') {
+                $(this).attr('contenteditable', true)   
+            }
+        });
     });
     $edit_siblings.click(function () {
         $edit_siblings.css('display', 'none');
         $edit.css('display', 'inline-block');
         $gradeTable.find('.indicate-icon .fa-check').css('display', 'block');
+        $studentTable.find('.indicate-icon .fa-undo').css('display', 'block');
+        $gradeTable.find('.undo-grade').hide();
         if ($(this).hasClass('cancel-grade')) {
-            if ($gradeTable.find('.grade-promoted').length != 0) {
-                $gradeTable.find('tbody').html(sessionStorage.getItem('grade_html'));
-                $studentTable.find('tbody td').each(function () {
-                    $(this).removeClass('grade-promoted');
-                });
-            }
+
+            $gradeTable.find('tbody').html(sessionStorage.getItem('grade_html'));
         }
         else {
-            var log = JSON.stringify(grade_log);
-            var course_id = window.location.pathname.split('/')[2];
+            var log = JSON.stringify(grade_log),
+                grade_html = sessionStorage.getItem('grade_html');
             if (log != '{}') {
                 $.post(
                     '/api/grades/v1/gradebook/' + course_id + '/bulk-update',
@@ -174,75 +279,83 @@ var Gradebook = function($element) {
                                     }).find('span').first().text(grade_data['grade']);
                                     if ($(this).find('.indicate-icon .fa-check').length == 0) {
                                         if (grade_data['override'] == true) {
-                                            if (grade_data['grade'] == 100) {
-                                                $(this).find('.indicate-icon').html('<i class="fa fa-check"></i>')
-                                            }
-                                            else {
-                                                $(this).find('.indicate-icon').append('<i class="fa fa-check"></i>')
-                                            }
+                                            $(this).find('.indicate-icon').append('<i class="fa fa-check"></i>')
                                         }
                                     }
                                 });
                             }
                         });
                         $studentTable.find('tbody tr td').each(function () {
-                            $(this).removeClass('grade-promoted');
                             var id = $(this).parent().data('id');
                             if (id in data) {
                                 if (data[id]['grade_data'][0]['override'] == true) {
-                                    $(this).find('.indicate-icon').html('<i class="fa fa-check"></i>')
+                                    $(this).find('.indicate-icon').html('<a href=' + override_link + '><i class="fa fa-undo"></i></a>');
+                                    $(this).find('.indicate-icon a').attr('data-izimodal-open', '#revert-override')
                                 }
                             }
                         });
-                        var position = 'left';
-                        if ($(window).width() <= 725) {
-                            position = 'right'
-                        }
-                        $('.export-edit').notify('saved successfully!', {position: position});
+                        var position = 'right';
+                        //if ($(window).width() <= 725) {
+                        //    position = 'right'
+                        //}
+                        $edit.notify('saved successfully!', {position: position});
                     }
-                );
+                )
+
+                .fail(function () {
+                    $gradeTable.find('tbody').html(grade_html);
+                });
             }
         }
+        $gradeTable.find('tr td .score').each(function () {
+            $(this).removeAttr('contenteditable')
+        });
         sessionStorage.clear();
         grade_log = {}
     });
-    if ($studentTable.find('tr').hasClass('promoted')) {
-        $studentTable.find('tr .promote-grade').addClass('undo-grade');
-    }
-    $gradeTable.on('mouseenter', 'tbody td', function () {
-        if ($edit.css('display') == 'none') {
-            if ($(this).hasClass('grade-promoted')) {
-                $(this).find('.undo-grade').css('display', 'inline-block');
-            }
-            else {
-                $(this).find('.promote-section').css('display', 'inline-block')
-            }
-        }
-    }).on('mouseleave', 'tbody td', function () {
-        if ($edit.css('display') == 'none') {
-            $(this).find('a').css('display', 'none');
-        }
-    });
+    //if ($studentTable.find('tr').hasClass('promoted')) {
+    //    $studentTable.find('tr .promote-grade').addClass('undo-grade');
+    //}
+    //$gradeTable.on('mouseenter', 'tbody td', function () {
+    //    if ($edit.css('display') == 'none') {
+    //        if ($(this).hasClass('grade-promoted')) {
+    //            $(this).find('.undo-grade').css('display', 'inline-block');
+    //        }
+    //        else {
+    //            $(this).find('.promote-section').css('display', 'inline-block')
+    //        }
+    //    }
+    //}).on('mouseleave', 'tbody td', function () {
+    //    if ($edit.css('display') == 'none') {
+    //        $(this).find('a').css('display', 'none');
+    //    }
+    //});
 
     function promote_log_info($el) {
         var $parent = $el.parent(),
             id = $parent.data('id'),
             category = $el.data('category'),
             title = $el.attr("title"),
-            usage_id = $el.data('usage-id');
+            usage_id = $el.data('usage-id'),
+            override_score = parseInt($el.find('.score').text());
 
         if (grade_log[id] == undefined) {
-            grade_log[id] = []
+            grade_log[id] = {}
         }
         if (category == 'Total') {
-            grade_log[id] = grade_log[id].concat(keys_list)
+            for (let i = 0; i < keys_list.length; i++) {
+                grade_log[id][keys_list[i]] = override_score
+            }
         }
         else if (title.indexOf('Average') != -1) {
-            grade_log[id] = grade_log[id].concat(keys_dict[category])
+            for (let i = 0; i < keys_dict[category].length; i++) {
+                grade_log[id][keys_dict[category][i]] = override_score
+            }
         }
         else if (usage_id != '') {
-            grade_log[id].push(usage_id)
+            grade_log[id][usage_id] = override_score
         }
+        console.log(grade_log)
     }
     function undo_log_info($el) {
         var $parent = $el.parent(),
@@ -251,29 +364,28 @@ var Gradebook = function($element) {
             title = $el.attr("title"),
             usage_id = $el.data('usage-id');
 
-        if (category == 'Total') {
+        if (grade_log[id] == undefined) {
+            return
+        }
+        else if (category == 'Total') {
            let ele;
            for (ele in keys_list) {
-               let index = grade_log[id].indexOf(keys_list[ele]);
-               if (index != -1) {
-                   grade_log[id].splice(index, 1)
+               if (keys_list[ele] in grade_log[id]) {
+                   delete grade_log[id][keys_list[ele]]
                }
            }
         }
         else if (title.indexOf('Average') != -1) {
             let ele;
             for (ele in keys_dict[category]) {
-               let index = grade_log[id].indexOf(keys_dict[category][ele]);
-               if (index != -1) {
-                   grade_log[id].splice(index, 1)
-               }
+                if (keys_dict[category][ele] in grade_log[id]) {
+                    delete grade_log[id][keys_dict[category][ele]]
+                }
             }
-            console.log('test')
         }
         else if (usage_id != '') {
-            let index = grade_log[id].indexOf(usage_id);
-            if (index != -1) {
-               grade_log[id].splice(index, 1)
+            if (usage_id in grade_log[id]) {
+                delete grade_log[id][usage_id]
             }
         }
 
@@ -282,24 +394,13 @@ var Gradebook = function($element) {
         }
     }
 
-    function promote_grade() {
-        var $parent_tr = $(this).parents('tr'),
-            key = 'tr_' + $parent_tr.data('id'),
-            tr_html = $parent_tr.html();
-        if (sessionStorage.getItem(key) == null) {
-                sessionStorage.setItem(key, tr_html)
-            }
-        $(this).parents('td').addClass('grade-promoted').find('span').first().text(100);
-        $(this).css('display', 'none').parents('td').find('.undo-grade').css('display', 'inline-block');
-        promote_log_info($(this).parents('td'))
-    }
     function reset_grade() {
         var $parent = $(this).parents('td');
-        $parent.removeClass('grade-promoted').find('span').first().text(Math.round($parent.data('percent')*100));
-        $(this).css('display', 'none').parent().find('.promote-section').css('display', 'inline-block');
+        $parent.find('.score').text(Math.round($parent.attr('data-percent')*100));
+        $(this).css('display', 'none');
         undo_log_info($(this).parents('td'))
     }
-    $gradeTable.on('click', 'a.promote-section', promote_grade).on('click', 'a.undo-grade', reset_grade);
+    $gradeTable.on('click', 'a.undo-grade', reset_grade);
 
     $leftShadow.css('height', tableHeight + 'px');
     $grades.append($leftShadow).append($rightShadow);
@@ -307,8 +408,7 @@ var Gradebook = function($element) {
     $grades.css('height', tableHeight+16);
     $gradeTable.bind('mousedown', startDrag);
     $element.find('tr').bind('mouseenter', highlightRow).bind('mouseleave', function () {
-        $element.find('.highlight').removeClass('highlight').find('.promote-grade').css('display', 'none');
-        $element.find('.undo-grade').css('display', 'none');
+        $element.find('.highlight').removeClass('highlight');
     });
     $search.bind('keyup', filter);
     $(window).bind('resize', onResizeTable);

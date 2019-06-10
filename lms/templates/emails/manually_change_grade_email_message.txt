@@ -3,13 +3,16 @@
 ${_("Hello")} ${name},
 
 % if sections:
-${_("Congratulations! You've just successfully completed the section {sections} in the course {course_name}.").format(
-    sections=sections,
-    course_name=course_name
-)}
+${_("The scores of the following sections have been overridden.")}
+
+% for section in sections:
+    ${"{section}: {score}".format(section=section, score=sections[section])}
+% endfor
+
 % else:
-${_("Congratulations! You've just successfully completed the course {course_name}.").format(
-    course_name=course_name
+${_("Your score of the course {course_name} has been overridden to {score}.").format(
+    course_name=course_name,
+    score=score
 )}
 % endif
 

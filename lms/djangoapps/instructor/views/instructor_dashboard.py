@@ -94,6 +94,91 @@ def show_analytics_dashboard_message(course_key):
     return settings.ANALYTICS_DASHBOARD_URL
 
 
+def get_instructor_tabs(request, user, course):
+
+    course_key = course.id
+    access = {
+        'admin': user.is_staff,
+        'instructor': bool(has_access(user, 'instructor', course)),
+        'finance_admin': CourseFinanceAdminRole(course_key).has_user(user),
+        'sales_admin': CourseSalesAdminRole(course_key).has_user(user),
+        'staff': bool(has_access(user, 'staff', course)),
+        'forum_admin': has_forum_access(user, course_key, FORUM_ROLE_ADMINISTRATOR),
+    }
+
+    user_has_access = any([
+        user.is_staff,
+        CourseStaffRole(course_key).has_user(user),
+        CourseInstructorRole(course_key).has_user(user)
+    ])
+
+    sections = [
+        _section_course_info(course, access),
+        _section_membership(course, access),
+        _section_cohort_management(course, access),
+        _section_discussions_management(course, access),
+        _section_student_admin(course, access),
+        _section_data_download(course, access),
+    ]
+
+    # Check if there is corresponding entry in the CourseMode Table related to the Instructor Dashboard course
+    course_mode_has_price = False
+    paid_modes = CourseMode.paid_modes_for_course(course_key)
+    if len(paid_modes) == 1:
+        course_mode_has_price = True
+    elif len(paid_modes) > 1:
+        log.error(
+            u"Course %s has %s course modes with payment options. Course must only have "
+            u"one paid course mode to enable eCommerce options.",
+            unicode(course_key), len(paid_modes)
+        )
+
+    is_white_label = CourseMode.is_white_label(course_key)
+
+    reports_enabled = configuration_helpers.get_value('SHOW_ECOMMERCE_REPORTS', False)
+
+    if show_analytics_dashboard_message(course_key):
+        sections.append(_section_analytics(course, access))
+
+    if settings.FEATURES.get('INDIVIDUAL_DUE_DATES') and access['instructor']:
+        sections.insert(3, _section_extensions(course))
+
+    # Gate access to course email by feature flag & by course-specific authorization
+    if BulkEmailFlag.feature_enabled(course_key):
+        sections.append(_section_send_email(course, access))
+
+    # Gate access to Metrics tab by featue flag and staff authorization
+    if settings.FEATURES['CLASS_DASHBOARD'] and access['staff']:
+        sections.append(_section_metrics(course, access))
+
+    # Gate access to Ecommerce tab
+    if course_mode_has_price and (access['finance_admin'] or access['sales_admin']):
+        sections.append(_section_e_commerce(course, access, paid_modes[0], is_white_label, reports_enabled))
+
+    course_has_special_exams = course.enable_proctored_exams or course.enable_timed_exams
+    can_see_special_exams = course_has_special_exams and user_has_access and settings.FEATURES.get(
+        'ENABLE_SPECIAL_EXAMS', False)
+
+    if can_see_special_exams:
+        sections.append(_section_special_exams(course, access))
+
+    certs_enabled = CertificateGenerationConfiguration.current().enabled and not hasattr(course_key, 'ccx')
+    if certs_enabled and access['admin']:
+        sections.append(_section_certificates(course))
+
+    openassessment_blocks = modulestore().get_items(
+        course_key, qualifiers={'category': 'openassessment'}
+    )
+    # filter out orphaned openassessment blocks
+    openassessment_blocks = [
+        block for block in openassessment_blocks if block.parent is not None
+    ]
+    if len(openassessment_blocks) > 0:
+        sections.append(_section_open_response_assessment(request, course, openassessment_blocks, access))
+
+    return sections
+
+
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def instructor_dashboard_2(request, course_id):

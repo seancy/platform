@@ -7,6 +7,8 @@ from django.core.urlresolvers import reverse
 
 <%block name="bodyclass">view-in-course</%block>
 <%block name="js_extra">
+  <link href="https://cdn.bootcss.com/izimodal/1.5.1/css/iziModal.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/izimodal/1.5.1/js/iziModal.min.js"></script>
   <script src="https://cdn.bootcss.com/notify/0.4.2/notify.js"></script>
   <script type="text/javascript" src="${static.url('js/vendor/flot/jquery.flot.js')}"></script>
   <script type="text/javascript" src="${static.url('js/vendor/flot/jquery.flot.stack.js')}"></script>
@@ -22,6 +24,10 @@ from django.core.urlresolvers import reverse
     $(document).ready(function() {
       var gradebook = new Gradebook($('.gradebook-content'));
       $.notify.defaults({ className: "success" });
+      $("#revert-override").iziModal({
+            width: 500,
+        });
+
     });
   </script>
 </%block>
@@ -37,14 +43,17 @@ from django.core.urlresolvers import reverse
           <h2 class="hd hd-2 instructor-dashboard-title">${_("Instructor Dashboard")}</h2>
           <div class="instructor-dashboard-content-wrapper gradebook-wrapper">
               <ul class="instructor-nav">
-                <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-course_info" type="button" class="btn-link course_info" data-section="course_info" aria-pressed="true">Course Info</a></li>
-                <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-membership" type="button" class="btn-link membership" data-section="membership" aria-pressed="false">Membership</a></li>
-                <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-cohort_management" type="button" class="btn-link cohort_management" data-section="cohort_management" aria-pressed="false">Cohorts</a></li>
-                <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-discussions_management" type="button" class="btn-link discussions_management" data-section="discussions_management" aria-pressed="false">Discussions</a></li>
-                <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-student_admin" type="button" class="btn-link student_admin active-section" data-section="student_admin" aria-pressed="false">Student Admin</a></li>
-                <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-data_download" type="button" class="btn-link data_download" data-section="data_download" aria-pressed="false">Data Download</a></li>
-                <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-certificates" type="button" class="btn-link certificates" data-section="certificates" aria-pressed="false">Certificates</a></li>
-                <li class="nav-item"><a href="${reverse('instructor_dashboard', kwargs={'course_id': course_id})}#view-open_response_assessment" type="button" class="btn-link open_response_assessment" data-section="open_response_assessment" aria-pressed="false">Open Responses</a></li>
+                % for section_data in sections:
+                  <% is_hidden = section_data.get('is_hidden', False) %>
+                  ## This is necessary so we don't scrape 'section_display_name' as a string.
+                  <% dname = section_data['section_display_name'] %>
+                  <% href = reverse('instructor_dashboard', kwargs={'course_id': course_id}) + "#view-" + section_data['section_key'] %>
+                  % if not is_hidden:
+                    <li class="nav-item">
+                        <a href="${href}" type="button" class="btn-link ${section_data['section_key']}" data-section="${section_data['section_key']}" aria-pressed="true">${_(dname)}</a>
+                    </li>
+                  % endif
+                % endfor
               </ul>
               <section id="gradebook" class="idash-section active-section gradebook-content">
                 <h4 class="hd hd-4">${_("Gradebook")}</h4>
@@ -82,9 +91,11 @@ from django.core.urlresolvers import reverse
                     %for student in students:
                     <tr data-id="${student['id']}">
                       <td>
-                        <div class="indicate-icon" title="${_("This learner's grade has been manually changed")}">
+                        <div class="indicate-icon" title="${_("Revert to original score")}">
                             %if student['grade_summary'].get('override'):
-                              <i class="fa fa-check"></i>
+                              <a href="${reverse('lms.djangoapps.grades:v1:undo_grade_override', kwargs={'course_id': course_id})}" data-izimodal-open="#revert-override">
+                                <i class="fa fa-undo"></i>
+                              </a>
                             %endif
                         </div>
                         <a href="${reverse('student_progress', kwargs=dict(course_id=course_id.to_deprecated_string(), student_id=student['id']))}">${student['username']}</a>
@@ -133,13 +144,9 @@ from django.core.urlresolvers import reverse
                             data_class = 'high-column'
                       %>
                       <td class="${data_class}" data-category="${category}" data-percent="${fraction}" data-label="${label}" title="${detail}" data-usage-id="${usage_key}">
-                          <span>${ "{0:.0f}".format( 100 * fraction ) }</span>
+                          <span class="score">${ "{0:.0f}".format( 100 * fraction ) }</span>
                           <div class="indicate-icon">
-                          %if fraction < 1.0:
-
-                              <a class="promote-section" title="${_('promote')}" href="javascript:void(0);"><span class="fa fa-arrow-up"></span></a>
                               <a class="undo-grade" title="${_('undo')}" href="javascript:void(0);"><span class="fa fa-undo"></span></a>
-                          %endif
                           %if override:
                               <i class="fa fa-check"></i>
                           %endif
@@ -159,7 +166,11 @@ from django.core.urlresolvers import reverse
                     </tbody>
                   </table>
                 </div>
-
+                <div id="revert-override" class="revert-override" data-iziModal-group="group1" style="display: none">
+                    <p>The score of <strong>User Name</strong> will revert to original state</p>
+                    <button class="revert-confirm">${_("Confirm")}</button>
+                    <button class="revert-cancel" data-iziModal-close>${_("Cancel")}</button>
+                </div>
                 <div class="gradebook-footer">
                     %if page["previous_offset"] is not None:
                       <a href="${page_url}offset=${page['previous_offset']}"

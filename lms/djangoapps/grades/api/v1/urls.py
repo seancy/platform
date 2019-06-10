@@ -26,4 +26,9 @@ urlpatterns = [
         gradebook_views.GradebookBulkUpdateView.as_view(),
         name='course_gradebook_bulk_update'
     ),
+    url(
+        r'^gradebook/{course_id}/undo-override$'.format(course_id=settings.COURSE_ID_PATTERN),
+        gradebook_views.undo_override_for_student,
+        name='undo_grade_override'
+    ),
 ]

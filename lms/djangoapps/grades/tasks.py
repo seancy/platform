@@ -182,12 +182,13 @@ def send_grade_override_email(self, **kwargs):
 
     from lms.djangoapps.instructor.enrollment import render_message_to_string
     for student in student_info:
-        sections = [] if student['all_pass'] else ', '.join(student['sections'])
+        sections = [] if student['whole'] else student['sections']
         params = {'name': student['name'],
                   'transcript': transcript,
                   'sections': sections,
                   'platform_name': platform_name,
-                  'course_name': course_name}
+                  'course_name': course_name,
+                  'score': student['total']}
 
         subject, message = render_message_to_string(
             'emails/manually_change_grade_email_subject.txt',

@@ -7,6 +7,7 @@ import math
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db import transaction
+from django.db.models import Q
 from django.views.decorators.cache import cache_control
 from opaque_keys.edx.keys import CourseKey
 
@@ -15,6 +16,7 @@ from courseware.views.views import get_resume_course_url
 from edxmako.shortcuts import render_to_response
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.instructor.views.api import require_level
+from lms.djangoapps.instructor.views.instructor_dashboard import get_instructor_tabs
 from xmodule.modulestore.django import modulestore
 
 # Grade book: max students per page
@@ -72,10 +74,10 @@ def get_grade_book_page(request, course, course_key):
     current_offset = request.GET.get('offset', 0)
     search_query = request.GET.get('learner_name', '')
     enrolled_students = User.objects.filter(
+        Q(profile__name__icontains=search_query) | Q(username__icontains=search_query),
         is_active=True,
         courseenrollment__course_id=course_key,
-        courseenrollment__is_active=1,
-        profile__name__icontains=search_query
+        courseenrollment__is_active=1
     ).order_by('profile__name').select_related("profile")
 
     total_students = enrolled_students.count()
@@ -126,6 +128,7 @@ def spoc_gradebook(request, course_id):
     course_key = CourseKey.from_string(course_id)
     course = get_course_with_access(request.user, 'staff', course_key, depth=None)
     student_info, page = get_grade_book_page(request, course, course_key)
+    sections = get_instructor_tabs(request, request.user, course)
 
     if request.method == 'GET':
         page_url = request.get_full_path()
@@ -154,4 +157,5 @@ def spoc_gradebook(request, course_id):
             'resume_course_url': resume_course_url,
             'progress': progress,
             'ordered_grades': sorted(course.grade_cutoffs.items(), key=lambda i: i[1], reverse=True),
+            'sections': sections
         })
