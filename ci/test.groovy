@@ -31,7 +31,13 @@ pipeline {
     }
     post {
         success {
-            build job: "/ci-pipeline-deploy/${env.CHANGE_BRANCH}", parameters: [[$class: "StringParameterValue", name: "DEPLOY_OWNER", value: "staging-auto-${env.CHANGE_BRANCH}"]], wait: false
+            script {
+                if (env.BRANCH_NAME == "master") {
+                    build job: "/ci-pipeline-deploy/master", parameters: [[$class: "StringParameterValue", name: "DEPLOY_OWNER", value: "staging-auto-master"]], wait: false
+                } else {
+                    build job: "/ci-pipeline-deploy/${env.CHANGE_BRANCH}", parameters: [[$class: "StringParameterValue", name: "DEPLOY_OWNER", value: "staging-auto-${env.CHANGE_BRANCH}"]], wait: false
+                }
+            }
         }
     }
 }
