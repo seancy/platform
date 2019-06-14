@@ -51,7 +51,7 @@ def get_trophy_path(trophy_img):
 
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="container">
-        <div class="profile-wrapper">
+        <div class="profile-wrapper badges-wrapper">
             <section class="obtained-badges">
                 <h2>${_("My collection of badges")}</h2>
                 <ul>
@@ -59,12 +59,13 @@ def get_trophy_path(trophy_img):
                         % for trophy in chapter['trophies']:
                             % if trophy['passed']:
                             <li class="badge-card">
-                                <a href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
+                                <a class="btn" href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
                                     <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
                                     <section class="badge-info">
                                         <h2>${trophy['section_format']}</h2>
                                         <div><span>${trophy['section_name']}</span></div>
-                                        <div><span>+1 ${_('badge')} <i class="fa fa-trophy"></i></span></div>
+                                        <div class="icon-wrapper"><span>+1 ${_('badge')}</span><i class="far fa-trophy"></i></div>
+                                        <div class="progress-bar"><i></i></div>
                                         <div><span>${_('Score')}: ${int(trophy['result']*100)}%</span></div>
                                     </section>
                                 </a>
@@ -81,11 +82,13 @@ def get_trophy_path(trophy_img):
                         % for trophy in chapter['trophies']:
                             % if not trophy['passed'] and trophy['attempted']:
                             <li class="badge-card">
-                                <a href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
+                                <a class="btn" href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
                                     <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
                                     <section class="badge-info">
                                         <h2>${trophy['section_format']}</h2>
-                                        <div><span>${_('To win this badge, get at least {score}%').format(score=int(trophy['threshold']*100))}</span></div>
+                                        <div><span>${trophy['section_name']}</span></div>
+                                        <div class="icon-wrapper"><span>${_('To win this badge, get at least {score}%').format(score=int(trophy['threshold']*100))}</span></div>
+                                        <div class="progress-bar"><i style="width:${int(trophy['result']*100)}%;"></i></div>
                                         <div><span>${_('Score')}: ${int(trophy['result']*100)}%</span></div>
                                     </section>
                                 </a>
@@ -102,12 +105,14 @@ def get_trophy_path(trophy_img):
                         % for trophy in chapter['trophies']:
                             % if not trophy['attempted']:
                             <li class="badge-card">
-                                <a href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
+                                <a class="btn" href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=chapter['url'], section=trophy['section_url']))}">
                                     <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
                                     <section class="badge-info">
                                         <h2>${trophy['section_format']}</h2>
-                                        <div><span>${_('To win this badge, get at least {score}%').format(score=int(trophy['threshold']*100))}</span></div>
-                                        <div><span>${_('Score')}: 0%</span></div>
+                                        <div><span>${trophy['section_name']}</span></div>
+                                        <div class="icon-wrapper"><span>${_('To win this badge, get at least {score}%').format(score=int(trophy['threshold']*100))}</span></div>
+                                        <div class="progress-bar"><i style="width: ${int(trophy['result']*100)}%;"></i></div>
+                                        <div><span>${_('Score')}: ${int(trophy['result']*100)}%</span></div>
                                     </section>
                                 </a>
                             </li>
