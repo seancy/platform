@@ -32,6 +32,13 @@
                     context,
                     mainTemplate = edx.HtmlUtils.template($('#thread-edit-template').html());
                 context = $.extend({mode: this.mode, startHeader: this.startHeader}, this.model.attributes);
+
+                var body_length = this.model.attributes.body.length;
+                var country_tag = this.model.attributes.body.substr(body_length - 4, 4);
+                if (country_tag.startsWidth(" #")) {
+                    this.model.attributes.body = this.model.attributes.body.substr(0, body_length - 4);
+                }
+
                 edx.HtmlUtils.setHtml(this.$el, mainTemplate(context));
                 this.container.append(this.$el);
                 this.$submitBtn = this.$('.post-update');

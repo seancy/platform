@@ -1,9 +1,14 @@
 <% if (username) { %>
-<a href="<%- user_url %>" class="username"><%- username %></a>
+    <a href="<%- user_url %>" class="username">
+        <% if (user_profile_image_url) { %>
+            <img class="author-profile-image" src="<%- user_profile_image_url %>" alt="<%- username %>">
+        <% } %>
+        <%- user_display_name %>
+    </a>
     <% if (is_community_ta) { %>
-    <span class="user-label-community-ta"><%- gettext("(Community TA)") %></span>
+        <span class="user-label-community-ta"><%- gettext("(Community TA)") %></span>
     <% } else if (is_staff) { %>
-    <span class="user-label-staff"><%- gettext("(Staff)") %></span>
+        <span class="user-label-staff"><%- gettext("(Staff)") %></span>
     <% } %>
 <% } else { %>
     <%- gettext('anonymous') %>

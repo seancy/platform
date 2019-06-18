@@ -12,7 +12,6 @@
         <div class="inline-thread">
             <div class="forum-nav-bar">
                 <button class="btn-link all-posts-btn">
-                    <span class="icon fa fa-chevron-prev" aria-hidden="true"></span>
                     <span aria-hidden="true"><%- gettext('All Posts') %></span>
                     <span class="sr-only"><%- gettext('Return to all posts') %></span>
                 </button>

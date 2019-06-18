@@ -218,7 +218,7 @@
                             self.discussionBoardView.discussionThreadListView.discussionIds =
                                 self.topicView.currentTopicId;
                         }
-                        self.$el.addClass('is-hidden');
+                        self.$el.hide();
                         self.resetForm();
                         self.trigger('newPost:createPost');
                         return self.collection.add(thread);

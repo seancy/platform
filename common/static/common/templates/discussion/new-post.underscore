@@ -30,29 +30,25 @@
         </label>
     </div>
     <% } %>
-    <div class="post-field group-visibility" id="wrapper-visibility-message"></div>
-    <div class="post-field">
-        <label class="field-label">
-            <span class="field-label-text"><%- gettext("Title") %></span>
-            <div class="field-help" id="field_help_title">
-                <%- gettext("Add a clear and descriptive title to encourage participation. (Required)") %>
-            </div>
-            <div>
-                <input aria-describedby="field_help_title" type="text" class="js-post-title field-input" name="title">
-            </div>
-        </label>
+    <div class="post-field post-title-field">
+        <label class="field-label sr"><%- gettext("Title") %></label>
+        <div class="field-value">
+            <input aria-describedby="field_help_title" type="text" class="js-post-title field-input" name="title" placeholder="<%- gettext("Title") %>">
+        </div>
+        <div class="field-help" id="field_help_title">
+            <%- gettext("Add a clear and descriptive title to encourage participation. (Required)") %>
+        </div>
     </div>
 
-    <div>
-        <span class="field-label-text field-label-text-full" id="new-post-editor-description"><%- gettext('Your question or idea (required)') %></span>
+    <div class="post-field post-body-field">
+        <span class="field-help" id="new-post-editor-description"><%- gettext('Your question or idea (required)') %></span>
         <div class="js-post-body editor" aria-describedby="new-post-editor-description" name="body"></div>
     </div>
+    <div class="post-field group-visibility" id="wrapper-visibility-message"></div>
     <div class="post-options">
         <label for= "follow" class="field-label label-inline">
             <input id="follow" type="checkbox" name="follow" class="field-input input-checkbox" checked>
-            <span class="field-input-label">
-                <span class="icon fa fa-star" aria-hidden="true"></span><%- gettext("follow this post") %>
-            </span>
+            <span class="field-input-label"><%- gettext("follow this post") %></span>
         </label>
         <% if (allow_anonymous) { %>
         <label for="anonymous" class="field-label label-inline">
@@ -67,8 +63,7 @@
         </div>
         <% } %>
     </div>
-    <div>
+    <div class="actions">
         <button type="submit" class="btn btn-primary submit"><%- gettext('Submit') %></button>
-        <button type="button" class="btn btn-outline-primary cancel"><%- gettext('Cancel') %></button>
     </div>
 </form>

@@ -1,4 +1,4 @@
-<div class="discussion-article view-discussion-home">
+<div class="view-discussion-home">
   <section class="home-header">
     <span class="label"><%- gettext("Discussion Home") %></span>
     <% if (window.courseName) { %>
@@ -13,34 +13,19 @@
             {platform_name: window.PLATFORM_NAME}, true
           ) %>
     </span>
-    <table class="home-helpgrid">
-      <tr class="helpgrid-row helpgrid-row-navigation">
-        <th scope="row" class="row-title"><%- gettext("Find discussions") %></td>
-        <td class="row-item">
-          <span class="icon fa fa-reorder" aria-hidden="true"></span>
-          <span class="row-description"><%- gettext("Use the All Topics menu to find specific topics.") %></span>
-        </td>
-        <td class="row-item">
-          <span class="icon fa fa-search" aria-hidden="true"></span>
-          <span class="row-description"><%- gettext("Search all posts") %></span>
-        </td>
-        <td class="row-item">
-          <span class="icon fa fa-sort" aria-hidden="true"></span>
-          <span class="row-description"><%- gettext("Filter and sort topics") %></span>
-        </td>
-      </tr>
+    <table class="home-helpgrid" cellspacing=0 cellpadding=0>
       <tr class="helpgrid-row helpgrid-row-participation">
         <th scope="row" class="row-title"><%- gettext("Engage with posts") %></td>
         <td class="row-item">
-          <span class="icon fa fa-plus" aria-hidden="true"></span>
+          <span class="icon far fa-heart" aria-hidden="true"></span>
           <span class="row-description"><%- gettext("Vote for good posts and responses") %></span>
         </td>
         <td class="row-item">
-          <span class="icon fa fa-flag" aria-hidden="true"></span>
+          <span class="icon far fa-minus-octagon" aria-hidden="true"></span>
           <span class="row-description"><%- gettext("Report abuse, topics, and responses") %></span>
         </td>
         <td class="row-item">
-          <span class="icon fa fa-star" aria-hidden="true"></span>
+          <span class="icon far fa-star" aria-hidden="true"></span>
           <span class="row-description"><%- gettext("Follow or unfollow posts") %></span>
         </td>
       </tr>

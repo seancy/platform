@@ -402,10 +402,14 @@ class TestXBlockQueryLoad(SharedModuleStoreTestCase):
                 discussion_target='Target Discussion',
             ))
 
-        # 3 queries are required to do first discussion xblock render:
+        # 5 queries are required to do first discussion xblock render:
         # * django_comment_client_role
         # * django_comment_client_permission
         # * lms_xblock_xblockasidesconfig
+        # * static_replace_assetbaseurlconfig
+        # * static_replace_assetexcludedextensionsconfig
+        # last 2 seemed to have disappeared after Triboo modifications
+        # num_queries = 5
         num_queries = 3
         for discussion in discussions:
             discussion_xblock = get_module_for_descriptor_internal(

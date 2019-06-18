@@ -277,14 +277,15 @@
                         button = this.$el.find(selector);
                         numVotes = votes.up_count;
                         votesCountMsg = ngettext(
-                            'there is currently {numVotes} vote', 'there are currently {numVotes} votes', numVotes
+                            'there is currently {numVotes} like', 'there are currently {numVotes} likes', numVotes
                         );
                         button.find('.js-sr-vote-count').empty().text(
                             edx.StringUtils.interpolate(votesCountMsg, {numVotes: numVotes})
                         );
                         votesText = edx.StringUtils.interpolate(
-                            ngettext('{numVotes} Vote', '{numVotes} Votes', numVotes),
+                            ngettext('{numVotes} like', '{numVotes} likes', numVotes),
                             {numVotes: numVotes});
+
                         button.find('.vote-count').empty().text(votesText);
                         this.$el.find('.display-vote .vote-count').empty().text(votesText);
                     },
@@ -495,6 +496,8 @@
             DiscussionContentShowView.prototype.getAuthorDisplay = function() {
                 return _.template($('#post-user-display-template').html())({
                     username: this.model.get('username') || null,
+                    user_display_name: this.model.get('user_display_name') || null,
+                    user_profile_image_url: this.model.get('user_profile_image_url') || null,
                     user_url: this.model.get('user_url'),
                     is_community_ta: this.model.get('community_ta_authored'),
                     is_staff: this.model.get('staff_authored')

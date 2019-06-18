@@ -6,13 +6,11 @@
         <% // Vote counts are populated by JS %>
         <span class="sr"><%- gettext("Vote for this post,") %>&nbsp;</span>
         <span class="sr js-sr-vote-count"></span>
-
+        <span class="action-icon" aria-hidden="true">
+            <span class="icon fa fa-heart" aria-hidden="true"></span>
+        </span>
         <span class="action-label" aria-hidden="true">
           <span class="vote-count"></span>
-        </span>
-
-        <span class="action-icon" aria-hidden="true">
-            <span class="icon fa fa-plus" aria-hidden="true"></span>
         </span>
     </button>
 </li>

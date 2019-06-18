@@ -22,7 +22,6 @@
                     this.discussion = options.discussion;
                     this.courseSettings = options.courseSettings;
                     this.discussionBoardView = options.discussionBoardView;
-                    this.newPostView = options.newPostView;
                     if (options.startHeader !== undefined) {
                         this.startHeader = options.startHeader;
                     } else {
@@ -31,13 +30,6 @@
                 },
 
                 start: function() {
-                    var self = this,
-                        $newPostButton = $('.new-post-btn');
-                    this.listenTo(this.newPostView, 'newPost:cancel', this.hideNewPost);
-                    $newPostButton.bind('click', _.bind(this.showNewPost, this));
-                    $newPostButton.bind('keydown', function(event) {
-                        DiscussionUtil.activateOnSpace(event, self.showNewPost);
-                    });
 
                     // Automatically navigate when the user selects threads
                     this.discussionBoardView.discussionThreadListView.on(
@@ -45,9 +37,6 @@
                     );
                     this.discussionBoardView.discussionThreadListView.on(
                         'thread:removed', _.bind(this.navigateToAllThreads, this)
-                    );
-                    this.discussionBoardView.discussionThreadListView.on(
-                        'threads:rendered', _.bind(this.setActiveThread, this)
                     );
                     this.discussionBoardView.discussionThreadListView.on(
                         'thread:created', _.bind(this.navigateToThread, this)
@@ -64,22 +53,28 @@
                 },
 
                 allThreads: function() {
+                    $('.new-post-btn').show().siblings().hide();
+                    this.discussionBoardView.discussionThreadListView.$el.show();
+                    $('.forum-content').show();
+
+                    if (this.main) {
+                        this.main.cleanup();
+                        this.main.undelegateEvents();
+                        this.main.$el.remove();
+                        this.main = null;
+                    }
                     return this.discussionBoardView.goHome();
                 },
 
-                setActiveThread: function() {
-                    if (this.thread) {
-                        return this.discussionBoardView.discussionThreadListView.setActiveThread(this.thread.get('id'));
-                    } else {
-                        return this.discussionBoardView.goHome;
-                    }
-                },
-
                 showThread: function(forumName, threadId) {
+                    $('.back-thread-list').show().siblings().hide();
+                    this.discussionBoardView.discussionThreadListView.$el.hide();
+                    $('.forum-content').hide();
+                    $('.forum-search').hide();
+
                     this.thread = this.discussion.get(threadId);
                     this.thread.set('unread_comments_count', 0);
                     this.thread.set('read', true);
-                    this.setActiveThread();
                     return this.showMain();
                 },
 
@@ -88,21 +83,16 @@
                     if (this.main) {
                         this.main.cleanup();
                         this.main.undelegateEvents();
-                    }
-                    if (!($('.forum-content').is(':visible'))) {
-                        $('.forum-content').fadeIn();
-                    }
-                    if ($('.new-post-article').is(':visible')) {
-                        $('.new-post-article').fadeOut();
+                        $('.discussion-body').remove(this.main.$el)
                     }
                     this.main = new DiscussionThreadView({
-                        el: $('.forum-content'),
                         model: this.thread,
                         mode: 'tab',
                         startHeader: this.startHeader,
                         courseSettings: this.courseSettings,
                         is_commentable_divided: this.discussion.is_commentable_divided
                     });
+                    $('.discussion-body').append(this.main.$el)
                     this.main.render();
                     return this.thread.on('thread:thread_type_updated', this.showMain);
                 },
@@ -117,26 +107,6 @@
                 navigateToAllThreads: function() {
                     return this.navigate('', {
                         trigger: true
-                    });
-                },
-
-                showNewPost: function() {
-                    var self = this;
-                    return $('.forum-content').fadeOut({
-                        duration: 200,
-                        complete: function() {
-                            return self.newPostView.$el.fadeIn(200).focus();
-                        }
-                    });
-                },
-
-                hideNewPost: function() {
-                    return this.newPostView.$el.fadeOut({
-                        duration: 200,
-                        complete: function() {
-                            return $('.forum-content').fadeIn(200).find('.thread-wrapper')
-                                .focus();
-                        }
                     });
                 }
 

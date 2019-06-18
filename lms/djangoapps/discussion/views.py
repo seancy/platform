@@ -3,6 +3,7 @@ Views handling read (GET) requests for the Discussion tab and inline discussions
 """
 
 import logging
+from datetime import datetime
 from functools import wraps
 
 from django.conf import settings
@@ -314,6 +315,9 @@ def single_thread(request, course_key, discussion_id, thread_id):
             )
 
         content = utils.prepare_content(thread.to_dict(), course_key, is_staff)
+        content.get('endorsed_responses', []).sort(reverse=True, key=lambda k: datetime.strptime(k['created_at'], '%Y-%m-%dT%H:%M:%SZ'))
+        content.get('non_endorsed_responses', []).sort(reverse=True, key=lambda k: datetime.strptime(k['created_at'], '%Y-%m-%dT%H:%M:%SZ'))
+
         with function_trace("add_courseware_context"):
             add_courseware_context([content], course, request.user)
 
@@ -363,7 +367,6 @@ def _find_thread(request, course, discussion_id, thread_id):
         user_group_id = get_group_id_for_user(request.user, course_discussion_settings)
         if getattr(thread, "group_id", None) is not None and user_group_id != thread.group_id:
             return None
-
     return thread
 
 

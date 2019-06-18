@@ -116,7 +116,7 @@
                 if (options.group_id) {
                     data.group_id = options.group_id;
                 }
-                data.sort_key = sort_options.sort_key || 'activity';
+                data.sort_key = sort_options.sort_key || 'date';
                 data.sort_order = sort_options.sort_order || 'desc';
                 return DiscussionUtil.safeAjax({
                     $elem: this.$el,

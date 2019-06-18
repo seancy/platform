@@ -1856,3 +1856,18 @@ def set_discussion_division_settings(
         always_divide_inline_discussions=always_divide_inline_discussions,
     )
     set_course_cohorted(course_key, enable_cohorts)
+
+
+@ddt.ddt
+@attr(hawthorn_migration=True)
+class BankcardTestCase(TestCase):
+    @ddt.data(
+        ('4232232323232323', True),
+        ('5232232323232323', True),
+        ('6232232323232323', True),
+        ('6212121212121212121', True),
+        ('bidnafjkdfa', False),
+    )
+    @ddt.unpack
+    def test_is_contain_bank_card(self, s, expect):
+        self.assertEqual(utils.is_contain_bank_card(s), expect)

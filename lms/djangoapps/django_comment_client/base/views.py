@@ -12,6 +12,7 @@ from django.http import Http404, HttpResponse, HttpResponseServerError
 from django.utils.translation import ugettext as _
 from django.views.decorators import csrf
 from django.views.decorators.http import require_GET, require_POST
+from lms.djangoapps.django_comment_client.utils import is_contain_bank_card
 from opaque_keys.edx.keys import CourseKey
 from six import text_type
 
@@ -223,6 +224,11 @@ def ajax_content_response(request, course_key, content):
         'annotated_content_info': annotated_content_info,
     })
 
+def is_sensitive_data(*args):
+    for s in args:
+        if is_contain_bank_card(s):
+            return True
+    return False
 
 @require_POST
 @login_required
@@ -253,6 +259,13 @@ def create_thread(request, course_id, commentable_id):
     if 'body' not in post or not post['body'].strip():
         return JsonError(_("Body can't be empty"))
 
+    if is_sensitive_data(request.POST["title"], request.POST["body"]):
+        return JsonError(_("Remove sensitive data in the content and try again"))
+
+    body = post["body"]
+    if cc_settings.ENABLE_COUNTRY_TAG and not anonymous:
+        body = body + " #" + unicode(user.profile.country)
+
     params = {
         'anonymous': anonymous,
         'anonymous_to_peers': anonymous_to_peers,
@@ -260,7 +273,7 @@ def create_thread(request, course_id, commentable_id):
         'course_id': text_type(course_key),
         'user_id': user.id,
         'thread_type': post["thread_type"],
-        'body': post["body"],
+        'body': body,
         'title': post["title"],
     }
 
@@ -319,13 +332,21 @@ def update_thread(request, course_id, thread_id):
     if 'body' not in request.POST or not request.POST['body'].strip():
         return JsonError(_("Body can't be empty"))
 
+    if is_sensitive_data(request.POST["title"], request.POST["body"]):
+        return JsonError(_("Remove sensitive data in the content and try again"))
+
     course_key = CourseKey.from_string(course_id)
     thread = cc.Thread.find(thread_id)
     # Get thread context first in order to be safe from reseting the values of thread object later
     thread_context = getattr(thread, "context", "course")
-    thread.body = request.POST["body"]
-    thread.title = request.POST["title"]
     user = request.user
+
+    body = request.POST["body"]
+    if cc_settings.ENABLE_COUNTRY_TAG:
+        body = body + " #" + unicode(user.profile.country)
+
+    thread.body = body
+    thread.title = request.POST["title"]
     # The following checks should avoid issues we've seen during deploys, where end users are hitting an updated server
     # while their browser still has the old client code. This will avoid erasing present values in those cases.
     if "thread_type" in request.POST:
@@ -360,6 +381,9 @@ def _create_comment(request, course_key, thread_id=None, parent_id=None):
     if 'body' not in post or not post['body'].strip():
         return JsonError(_("Body can't be empty"))
 
+    if is_sensitive_data(request.POST["body"]):
+        return JsonError(_("Remove sensitive data in the content and try again"))
+
     course = get_course_with_access(user, 'load', course_key)
     if course.allow_anonymous:
         anonymous = post.get('anonymous', 'false').lower() == 'true'
@@ -371,6 +395,10 @@ def _create_comment(request, course_key, thread_id=None, parent_id=None):
     else:
         anonymous_to_peers = False
 
+    body = post["body"]
+    if cc_settings.ENABLE_COUNTRY_TAG and not anonymous:
+        body = body + " #" + unicode(user.profile.country)
+
     comment = cc.Comment(
         anonymous=anonymous,
         anonymous_to_peers=anonymous_to_peers,
@@ -378,7 +406,7 @@ def _create_comment(request, course_key, thread_id=None, parent_id=None):
         course_id=text_type(course_key),
         thread_id=thread_id,
         parent_id=parent_id,
-        body=post["body"]
+        body=body
     )
     comment.save()
 
@@ -438,7 +466,15 @@ def update_comment(request, course_id, comment_id):
     comment = cc.Comment.find(comment_id)
     if 'body' not in request.POST or not request.POST['body'].strip():
         return JsonError(_("Body can't be empty"))
-    comment.body = request.POST["body"]
+
+    if is_sensitive_data(request.POST["body"]):
+        return JsonError(_("Remove sensitive data in the content and try again"))
+
+    body = request.POST["body"]
+    if cc_settings.ENABLE_COUNTRY_TAG:
+        body = body + " #" + unicode(request.user.profile.country)
+
+    comment.body = body
     comment.save()
 
     comment_edited.send(sender=None, user=request.user, post=comment)

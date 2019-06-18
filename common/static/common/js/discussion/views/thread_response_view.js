@@ -99,16 +99,18 @@
             };
 
             ThreadResponseView.prototype.hideEditorChrome = function() {
+                this.$('.wmd-panel').addClass('collapsed');
                 this.$('.wmd-button-row').hide();
                 this.$('.wmd-preview-container').hide();
-                this.$('.wmd-input').css({
+                this.$('.comment-post-control').hide();
+                return this.$('.wmd-input').css({
                     height: '35px',
                     padding: '5px'
                 });
-                return this.$('.comment-post-control').hide();
             };
 
             ThreadResponseView.prototype.showEditorChrome = function() {
+                this.$('.wmd-panel').removeClass('collapsed');
                 this.$('.wmd-button-row').show();
                 this.$('.wmd-preview-container').show();
                 this.$('.comment-post-control').show();
@@ -118,14 +120,29 @@
                 });
             };
 
+            function reverseSortBy(sortByFunction) {
+              return function(left, right) {
+                var l = sortByFunction(left);
+                var r = sortByFunction(right);
+
+                if (l === void 0) return -1;
+                if (r === void 0) return 1;
+
+                return l < r ? 1 : l > r ? -1 : 0;
+              };
+            }
+
             ThreadResponseView.prototype.renderComments = function() {
                 var collectComments, comments,
                     self = this;
                 comments = new Comments();
                 this.commentViews = [];
+
                 comments.comparator = function(comment) {
                     return comment.get('created_at');
                 };
+                comments.comparator = reverseSortBy(comments.comparator);
+
                 collectComments = function(comment) {
                     var children;
                     comments.add(comment);
@@ -160,11 +177,12 @@
                     startHeader: this.startHeader
                 });
                 view.render();
-                if (this.readOnly) {
-                    this.$el.find('.comments').append(view.el);
-                } else {
-                    this.$el.find('.comments .new-comment').before(view.el);
-                }
+                // if (this.readOnly) {
+                //     this.$el.find('.comments').append(view.el);
+                // } else {
+                //     this.$el.find('.comments .new-comment').before(view.el);
+                // }
+                this.$el.find('.comments').append(view.el);
                 view.bind('comment:edit', function(event) {
                     if (self.editView) {
                         self.cancelEdit(event);

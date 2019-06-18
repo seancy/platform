@@ -44,14 +44,6 @@
                     is_commentable_divided: isCommentableDivided});
                 courseSettings = new DiscussionCourseSettings(options.courseSettings);
 
-                // Create the discussion board view
-                discussionBoardView = new DiscussionBoardView({
-                    el: $('.discussion-board'),
-                    discussion: discussion,
-                    courseSettings: courseSettings
-                });
-                discussionBoardView.render();
-
                 // Create the new post view
                 newPostView = new NewPostView({
                     el: $('.new-post-article'),
@@ -64,13 +56,21 @@
                 });
                 newPostView.render();
 
+                // Create the discussion board view
+                discussionBoardView = new DiscussionBoardView({
+                    el: $('.discussion-board'),
+                    discussion: discussion,
+                    courseSettings: courseSettings,
+                    newPostView: newPostView
+                });
+                discussionBoardView.render();
+
                 // Set up a router to manage the page's history
                 router = new DiscussionRouter({
                     rootUrl: options.rootUrl,
                     discussion: discussion,
                     courseSettings: courseSettings,
-                    discussionBoardView: discussionBoardView,
-                    newPostView: newPostView
+                    discussionBoardView: discussionBoardView
                 });
                 router.start();
                 routerEvents = {
@@ -81,8 +81,14 @@
                     // Clear search box when a thread is selected
                     'thread:selected': function() {
                         router.discussionBoardView.searchView.clearSearch();
+                    },
+                    'back-thread-list':function(){
+                        router.navigate('', {
+                            trigger: true
+                        })
                     }
                 };
+
                 Object.keys(routerEvents).forEach(function(key) {
                     router.discussionBoardView.on(key, routerEvents[key]);
                 });

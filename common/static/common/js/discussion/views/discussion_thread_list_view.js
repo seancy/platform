@@ -109,7 +109,7 @@
                 this.boardName = null;
                 this.current_search = '';
                 this.mode = options.mode || 'commentables';
-                this.showThreadPreview = true;
+                this.showThreadPreview = false;
                 this.searchAlertCollection = new Backbone.Collection([], {
                     model: Backbone.Model
                 });
@@ -166,9 +166,6 @@
                 active = $currentElement.has('.forum-nav-thread-link.is-active').length !== 0;
                 $currentElement.replaceWith($content);
                 this.showMetadataAccordingToSort();
-                if (this.supportsActiveThread && active) {
-                    this.setActiveThread(threadId);
-                }
             };
 
             /*
@@ -223,9 +220,13 @@
                     $content = this.renderThread(thread);
                     this.$('.forum-nav-thread-list').append($content);
                 }
+                var $table = this.$('.table-wrapper');
                 if (this.$('.forum-nav-thread-list li').length === 0) {
                     this.clearSearchAlerts();
                     this.addSearchAlert(gettext('There are no posts in this topic yet.'));
+                    $table.addClass('is-hidden');
+                }else{
+                    $table.removeClass('is-hidden');
                 }
                 this.showMetadataAccordingToSort();
                 this.renderMorePages();
@@ -365,9 +366,6 @@
             DiscussionThreadListView.prototype.threadSelected = function(e) {
                 var threadId;
                 threadId = $(e.target).closest('.forum-nav-thread').attr('data-id');
-                if (this.supportsActiveThread) {
-                    this.setActiveThread(threadId);
-                }
                 this.trigger('thread:selected', threadId);
                 return false;
             };

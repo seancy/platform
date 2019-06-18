@@ -60,6 +60,9 @@ User = get_user_model()  # pylint:disable=invalid-name
 FEATURES_WITH_FAILED_PASSWORD_RESET_EMAIL = settings.FEATURES.copy()
 FEATURES_WITH_FAILED_PASSWORD_RESET_EMAIL['ENABLE_PASSWORD_RESET_FAILURE_EMAIL'] = True
 
+FEATURES_WITH_COMBINED_LOGIN_REGISTRATION_DISABLED = settings.FEATURES.copy()
+FEATURES_WITH_COMBINED_LOGIN_REGISTRATION_DISABLED['ENABLE_COMBINED_LOGIN_REGISTRATION'] = False
+
 
 @ddt.ddt
 class StudentAccountUpdateTest(CacheIsolationTestCase, UrlResetMixin):
@@ -721,6 +724,7 @@ class StudentAccountLoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMi
         self.assertEqual(enterprise_cookie.value, '')
 
     @override_settings(SITE_NAME=settings.MICROSITE_TEST_HOSTNAME)
+    @override_settings(FEATURES=FEATURES_WITH_COMBINED_LOGIN_REGISTRATION_DISABLED)
     def test_microsite_uses_old_login_page(self):
         # Retrieve the login page from a microsite domain
         # and verify that we're served the old page.
@@ -731,13 +735,17 @@ class StudentAccountLoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMi
         self.assertContains(resp, "Log into your Test Site Account")
         self.assertContains(resp, "login-form")
 
+    @override_settings(FEATURES=FEATURES_WITH_COMBINED_LOGIN_REGISTRATION_DISABLED)
     def test_microsite_uses_old_register_page(self):
         # Retrieve the register page from a microsite domain
         # and verify that we're served the old page.
+        settings.FEATURES.update({'ENABLE_COMBINED_LOGIN_REGISTRATION': False
+})
         resp = self.client.get(
             reverse("register_user"),
             HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME
         )
+        # print "LAETITIA -- resp = %s" % resp
         self.assertContains(resp, "Register for Test Site")
         self.assertContains(resp, "register-form")
 
@@ -1096,6 +1104,8 @@ class MicrositeLogistrationTests(TestCase):
         self.assertIn('<div id="login-and-registration-container"', resp.content)
 
     @override_settings(SITE_NAME=settings.MICROSITE_TEST_HOSTNAME)
+
+    @pytest.mark.skip("Invalid after we changed login/registration")
     def test_no_override(self):
         """
         Make sure we get the old style login/registration if we don't override

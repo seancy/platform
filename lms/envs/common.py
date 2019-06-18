@@ -81,6 +81,10 @@ FEATURES = {
     # for consistency in user-experience, keep the value of the following 3 settings
     # in sync with the corresponding ones in cms/envs/common.py
     'ENABLE_DISCUSSION_SERVICE': True,
+
+    # Set true to automatically add user's country tag at the end of posts, responses and comments.
+    'ENABLE_COUNTRY_TAG': False,
+
     'ENABLE_TEXTBOOK': True,
     'ENABLE_STUDENT_NOTES': True,  # enables the student notes API and UI.
 

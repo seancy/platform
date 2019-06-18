@@ -44,9 +44,9 @@
                 this.addComment = function() {
                     return DiscussionThreadView.prototype.addComment.apply(self, arguments);
                 };
-                this.renderAddResponseButton = function() {
-                    return DiscussionThreadView.prototype.renderAddResponseButton.apply(self, arguments);
-                };
+                // this.renderAddResponseButton = function() {
+                //     return DiscussionThreadView.prototype.renderAddResponseButton.apply(self, arguments);
+                // };
                 this.renderResponseToList = function() {
                     return DiscussionThreadView.prototype.renderResponseToList.apply(self, arguments);
                 };
@@ -62,6 +62,7 @@
 
             DiscussionThreadView.prototype.events = {
                 'click .discussion-submit-post': 'submitComment',
+                'focus .discussion-reply-new .wmd-input': 'showEditor',
                 'click .add-response-btn': 'scrollToAddResponse',
                 'keydown .wmd-button': function(event) {
                     return DiscussionUtil.handleKeypressInToolbar(event);
@@ -146,7 +147,8 @@
                 this.renderAttrs();
                 this.$('span.timeago').timeago();
                 this.makeWmdEditor('reply-body');
-                this.renderAddResponseButton();
+                this.hideEditor();
+                // this.renderAddResponseButton();
                 this.responses.on('add', function(response) {
                     return self.renderResponseToList(response, '.js-response-list', {});
                 });
@@ -160,13 +162,35 @@
                 this.loadInitialResponses();
             };
 
+            DiscussionThreadView.prototype.hideEditor = function() {
+                this.$('.discussion-reply-new .wmd-panel').addClass('collapsed');
+                this.$('.discussion-reply-new .wmd-button-row').hide();
+                this.$('.discussion-reply-new .wmd-preview-container').hide();
+                this.$('.discussion-reply-new .reply-post-control').hide();
+                return this.$('.discussion-reply-new .wmd-input').css({
+                    height: '35px',
+                    padding: '5px'
+                });
+            };
+
+            DiscussionThreadView.prototype.showEditor = function() {
+                this.$('.discussion-reply-new .wmd-panel').removeClass('collapsed');
+                this.$('.discussion-reply-new .wmd-button-row').show();
+                this.$('.discussion-reply-new .wmd-preview-container').show();
+                this.$('.discussion-reply-new .reply-post-control').show();
+                return this.$('.discussion-reply-new .wmd-input').css({
+                    height: '125px',
+                    padding: '10px'
+                });
+            };
+
             DiscussionThreadView.prototype.attrRenderer = $.extend({}, DiscussionContentView.prototype.attrRenderer, {
                 closed: function(closed) {
                     this.$('.discussion-reply-new').toggle(!closed);
                     this.$('.comment-form').closest('li').toggle(!closed);
                     this.$('.action-vote').toggle(!closed);
-                    this.$('.display-vote').toggle(closed);
-                    return this.renderAddResponseButton();
+                    return this.$('.display-vote').toggle(closed);
+                    // return this.renderAddResponseButton();
                 }
             });
 
@@ -319,13 +343,13 @@
                 }
             };
 
-            DiscussionThreadView.prototype.renderAddResponseButton = function() {
-                if (this.model.hasResponses() && this.model.can('can_reply') && !this.model.get('closed')) {
-                    return this.$el.find('.add-response').show();
-                } else {
-                    return this.$el.find('.add-response').hide();
-                }
-            };
+            // DiscussionThreadView.prototype.renderAddResponseButton = function() {
+            //     if (this.model.hasResponses() && this.model.can('can_reply') && !this.model.get('closed')) {
+            //         return this.$el.find('.add-response').show();
+            //     } else {
+            //         return this.$el.find('.add-response').hide();
+            //     }
+            // };
 
             DiscussionThreadView.prototype.scrollToAddResponse = function(event) {
                 var form;
@@ -368,7 +392,8 @@
                     focusAddedResponse: true
                 });
                 this.model.addComment();
-                this.renderAddResponseButton();
+                // this.renderAddResponseButton();
+                this.hideEditor();
                 return DiscussionUtil.safeAjax({
                     $elem: $(event.target),
                     url: url,

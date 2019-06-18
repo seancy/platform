@@ -23,18 +23,16 @@ from openedx.core.djangolib.markup import HTML
          data-sort-preference="${sort_preference}"
          data-flag-moderator="${json.dumps(flag_moderator)}"
          data-user-group-id="${user_group_id}">
+    <div class="forum-content"></div>
+
     <header class="page-header has-secondary">
-        ## Breadcrumb navigation
-        <div class="page-header-main">
-            <nav aria-label="${_('Discussions')}" class="sr-is-focusable" tabindex="-1">
-                <div class="has-breadcrumbs"></div>
-            </nav>
-        </div>
+        <h3>${_('Discussions')}</h3>
         <div class="page-header-secondary">
             ## Add Post button
             % if has_permission(user, 'create_thread', course.id):
             <div class="forum-actions">
                 <button class="btn btn-outline-primary btn-small new-post-btn">${_("Add a Post")}</button>
+                <button class="btn btn-outline-primary btn-small back-thread-list">${_("All Discussions")}</button>
             </div>
             % endif
             ## Search box
@@ -48,11 +46,10 @@ from openedx.core.djangolib.markup import HTML
     >
         <div class="discussion-body">
             <main id="main" class="discussion-column" aria-label="Content" tabindex="-1">
-                <article class="new-post-article is-hidden" style="display: none" tabindex="-1" aria-label="${_("New topic form")}"></article>
-                <div class="forum-content"></div>
+                <article class="new-post-article is-hidden" tabindex="-1" aria-label="${_("New topic form")}"></article>
+
             </main>
             <aside class="forum-nav" role="complementary" aria-label="${_("Discussion thread list")}">
-                <%include file="_filter_dropdown.html" />
                 <div class="discussion-thread-list-container"></div>
             </aside>
         </div>

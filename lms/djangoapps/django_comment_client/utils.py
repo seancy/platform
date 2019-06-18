@@ -3,6 +3,7 @@ import logging
 from collections import defaultdict
 from datetime import datetime
 
+import re
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -23,7 +24,8 @@ from django_comment_common.utils import get_course_discussion_settings
 from openedx.core.djangoapps.content.course_structures.models import CourseStructure
 from openedx.core.djangoapps.course_groups.cohorts import get_cohort_id, get_cohort_names, is_course_cohorted
 from openedx.core.djangoapps.request_cache.middleware import request_cached
-from student.models import get_user_by_username_or_email
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
+from student.models import get_user_by_username_or_email, UserProfile
 from student.roles import GlobalStaff
 from xmodule.modulestore.django import modulestore
 from xmodule.partitions.partitions import ENROLLMENT_TRACK_PARTITION_ID
@@ -50,12 +52,15 @@ def strip_blank(dic):
     """
     Returns a dictionary stripped of any 'blank' (empty) keys
     """
+
     def _is_blank(v):
         """
         Determines if the provided value contains no information
         """
         return isinstance(v, str) and len(v.strip()) == 0
+
     return dict([(k, v) for k, v in dic.iteritems() if not _is_blank(v)])
+
 
 # TODO should we be checking if d1 and d2 have the same keys with different values?
 
@@ -125,7 +130,8 @@ def get_accessible_discussion_xblocks(course, user, include_all=False):  # pylin
 
 
 @request_cached
-def get_accessible_discussion_xblocks_by_course_id(course_id, user=None, include_all=False):  # pylint: disable=invalid-name
+def get_accessible_discussion_xblocks_by_course_id(course_id, user=None,
+                                                   include_all=False):  # pylint: disable=invalid-name
     """
     Return a list of all valid discussion xblocks in this course.
     Checks for the given user's access if include_all is False.
@@ -146,7 +152,8 @@ def get_discussion_id_map_entry(xblock):
         xblock.discussion_id,
         {
             "location": xblock.location,
-            "title": xblock.discussion_category.split("/")[-1].strip() + (" / " + xblock.discussion_target if xblock.discussion_target else "")
+            "title": xblock.discussion_category.split("/")[-1].strip() + (
+                " / " + xblock.discussion_target if xblock.discussion_target else "")
         }
     )
 
@@ -253,7 +260,8 @@ def _filter_unstarted_categories(category_map, course):
                         if key != "start_date":
                             filtered_map["entries"][child][key] = unfiltered_map["entries"][child][key]
                 else:
-                    log.debug(u"Filtering out:%s with start_date: %s", child, unfiltered_map["entries"][child]["start_date"])
+                    log.debug(u"Filtering out:%s with start_date: %s", child,
+                              unfiltered_map["entries"][child]["start_date"])
             else:
                 if course.self_paced or unfiltered_map["subcategories"][child]["start_date"] < now:
                     filtered_map["children"].append((child, c_type))
@@ -380,14 +388,14 @@ def get_discussion_category_map(course, user, divided_only_if_explicit=False, ex
                 node[level]["start_date"] = category_start_date
 
         divide_all_inline_discussions = (  # pylint: disable=invalid-name
-            not divided_only_if_explicit and discussion_settings.always_divide_inline_discussions
+                not divided_only_if_explicit and discussion_settings.always_divide_inline_discussions
         )
         dupe_counters = defaultdict(lambda: 0)  # counts the number of times we see each title
         for entry in entries:
             is_entry_divided = (
-                discussion_division_enabled and (
+                    discussion_division_enabled and (
                     divide_all_inline_discussions or entry["id"] in divided_discussion_ids
-                )
+            )
             )
 
             title = entry["title"]
@@ -409,9 +417,7 @@ def get_discussion_category_map(course, user, divided_only_if_explicit=False, ex
             "id": entry["id"],
             "sort_key": entry.get("sort_key", topic),
             "start_date": datetime.now(UTC),
-            "is_divided": (
-                discussion_division_enabled and entry["id"] in divided_discussion_ids
-            )
+            "is_divided": (discussion_division_enabled and entry["id"] in divided_discussion_ids)
         }
 
     _sort_map_entries(category_map, course.discussion_sort_alpha)
@@ -460,6 +466,7 @@ class JsonResponse(HttpResponse):
     """
     Django response object delivering JSON representations
     """
+
     def __init__(self, data=None):
         """
         Object constructor, converts data (if provided) to JSON
@@ -473,6 +480,7 @@ class JsonError(HttpResponse):
     """
     Django response object delivering JSON exceptions
     """
+
     def __init__(self, error_messages=[], status=400):
         """
         Object constructor, returns an error response containing the provided exception messages
@@ -488,6 +496,7 @@ class HtmlResponse(HttpResponse):
     """
     Django response object delivering HTML representations
     """
+
     def __init__(self, html=''):
         """
         Object constructor, brokers provided HTML to caller
@@ -499,6 +508,7 @@ class ViewNameMiddleware(object):
     """
     Django middleware object to inject view name into request context
     """
+
     def process_view(self, request, view_func, view_args, view_kwargs):
         """
         Injects the view name value into the request context
@@ -513,6 +523,7 @@ class QueryCountDebugMiddleware(object):
     status code of 200). It does not currently support
     multi-db setups.
     """
+
     def process_response(self, request, response):
         """
         Log information for 200 OK responses as part of the outbound pipeline
@@ -549,7 +560,8 @@ def get_ability(course_id, content, user):
             user_group_id,
             content_user_group_id
         ),
-        'can_reply': check_permissions_by_view(user, course_id, content, "create_comment" if content['type'] == 'thread' else "create_sub_comment"),
+        'can_reply': check_permissions_by_view(user, course_id, content, "create_comment" if content[
+                                                    'type'] == 'thread' else "create_sub_comment"),
         'can_delete': check_permissions_by_view(
             user,
             course_id,
@@ -579,6 +591,7 @@ def get_ability(course_id, content, user):
             "flag_abuse_for_thread" if content['type'] == 'thread' else "flag_abuse_for_comment"
         ) or GlobalStaff().has_user(user))
     }
+
 
 # TODO: RENAME
 
@@ -617,6 +630,7 @@ def get_annotated_content_info(course_id, content, user, user_info):
         'ability': get_ability(course_id, content, user),
     }
 
+
 # TODO: RENAME
 
 
@@ -634,6 +648,7 @@ def get_annotated_content_infos(course_id, thread, user, user_info):
                 content.get('non_endorsed_responses', [])
         ):
             annotate(child)
+
     annotate(thread)
     return infos
 
@@ -707,7 +722,7 @@ def add_courseware_context(content_list, course, user, id_map=None):
             title = id_map[commentable_id]["title"]
 
             url = reverse('jump_to', kwargs={"course_id": text_type(course.id),
-                          "location": location})
+                                             "location": location})
 
             content.update({"courseware_url": url, "courseware_title": title})
 
@@ -742,10 +757,25 @@ def prepare_content(content, course_key, is_staff=False, discussion_division_ena
         'endorsement', 'context', 'last_activity_at'
     ]
 
+    needs_user_profile = False
     if (content.get('anonymous') is False) and ((content.get('anonymous_to_peers') is False) or is_staff):
         fields += ['username', 'user_id']
+        needs_user_profile = True
 
     content = strip_none(extract(content, fields))
+
+    if needs_user_profile:
+        try:
+            author = User.objects.get(id=content.get('user_id'))
+            content['user_display_name'] = author.username
+            content['user_profile_image_url'] = None
+            if author.profile.name:
+                content['user_display_name'] = author.profile.name
+                content['user_profile_image_url'] = get_profile_image_urls_for_user(author)['medium']
+        except User.DoesNotExist:
+            pass
+        except UserProfile.DoesNotExist:
+            pass
 
     if content.get("endorsement"):
         endorsement = content["endorsement"]
@@ -872,10 +902,10 @@ def is_comment_too_deep(parent):
     parent can be None to determine whether root comments are allowed
     """
     return (
-        MAX_COMMENT_DEPTH is not None and (
+            MAX_COMMENT_DEPTH is not None and (
             MAX_COMMENT_DEPTH < 0 or
             (parent and parent["depth"] >= MAX_COMMENT_DEPTH)
-        )
+    )
     )
 
 
@@ -903,8 +933,8 @@ def is_commentable_divided(course_key, commentable_id, course_discussion_setting
         # this is the easy case :)
         ans = False
     elif (
-        commentable_id in course.top_level_discussion_topic_ids or
-        course_discussion_settings.always_divide_inline_discussions is False
+            commentable_id in course.top_level_discussion_topic_ids or
+            course_discussion_settings.always_divide_inline_discussions is False
     ):
         # top level discussions have to be manually configured as divided
         # (default is not).
@@ -966,13 +996,13 @@ def enrollment_track_group_count(course_key):
 def _get_course_division_scheme(course_discussion_settings):
     division_scheme = course_discussion_settings.division_scheme
     if (
-        division_scheme == CourseDiscussionSettings.COHORT and
-        not is_course_cohorted(course_discussion_settings.course_id)
+            division_scheme == CourseDiscussionSettings.COHORT and
+            not is_course_cohorted(course_discussion_settings.course_id)
     ):
         division_scheme = CourseDiscussionSettings.NONE
     elif (
-        division_scheme == CourseDiscussionSettings.ENROLLMENT_TRACK and
-        enrollment_track_group_count(course_discussion_settings.course_id) <= 1
+            division_scheme == CourseDiscussionSettings.ENROLLMENT_TRACK and
+            enrollment_track_group_count(course_discussion_settings.course_id) <= 1
     ):
         division_scheme = CourseDiscussionSettings.NONE
     return division_scheme
@@ -1050,3 +1080,19 @@ def is_content_authored_by(content, user):
         return int(content.get('user_id')) == user.id
     except (ValueError, TypeError):
         return False
+
+
+BANK_CARD_REGEX = ("^(?:4[0-9]{12}(?:[0-9]{3})?"  # Visa
+                   "|(?:5[1-5][0-9]{2}"  # MasterCard
+                   "|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}"  # MasterCard
+                   "|3[47][0-9]{13}"  # American Express
+                   "|3(?:0[0-5]|[68][0-9])[0-9]{11}"  # Diners Club
+                   "|6(?:011|5[0-9]{2})[0-9]{12}"  # Discover
+                   "|(?:2131|1800|35\d{3})\d{11})"  # JCB
+                   "|(62[0-9]{14,17})$")  # Union pay
+
+bank_card_prog = re.compile(BANK_CARD_REGEX)
+
+
+def is_contain_bank_card(s):
+    return bool(bank_card_prog.search(filter(lambda x: x.isdigit(), s)))

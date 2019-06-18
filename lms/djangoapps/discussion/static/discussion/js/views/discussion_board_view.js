@@ -9,12 +9,11 @@
         'edx-ui-toolkit/js/utils/constants',
         'common/js/discussion/utils',
         'common/js/discussion/views/discussion_thread_list_view',
-        'discussion/js/views/discussion_fake_breadcrumbs',
         'discussion/js/views/discussion_search_view',
         'text!discussion/templates/discussion-home.underscore'
     ],
     function(_, Backbone, HtmlUtils, Constants, DiscussionUtil,
-        DiscussionThreadListView, DiscussionFakeBreadcrumbs, DiscussionSearchView, discussionHomeTemplate) {
+        DiscussionThreadListView, DiscussionSearchView, discussionHomeTemplate) {
         var DiscussionBoardView = Backbone.View.extend({
             events: {
                 'click .forum-nav-browse-title': 'selectTopicHandler',
@@ -27,7 +26,9 @@
                 'click .forum-nav-browse-menu-wrapper': 'ignoreClick',
                 'keydown .search-input': 'performSearch',
                 'click .search-button': 'performSearch',
-                'topic:selected': 'clearSearch'
+                'topic:selected': 'clearSearch',
+                'click .new-post-btn':'showNewPost',
+                'click .back-thread-list':'backThreadList'
             },
 
             initialize: function(options) {
@@ -36,9 +37,29 @@
                 this.current_search = '';
                 this.mode = 'all';
                 this.discussion = options.discussion;
+                this.newPostView = options.newPostView;
                 this.filterInputReset();
                 this.selectedTopic = $('.forum-nav-browse-menu-item:visible .forum-nav-browse-title.is-focused');
                 this.listenTo(this.model, 'change', this.render);
+
+            },
+
+            showNewPost: function(e) {
+                this.searchView.$el.hide();
+                this.newPostView.$el.show();
+                this.discussionThreadListView.$el.hide();
+                const $btn = $(e.currentTarget);
+                $btn.hide().siblings().show();
+            },
+
+            backThreadList: function(e) {
+                this.searchView.$el.show();
+                this.newPostView.$el.hide();
+                this.discussionThreadListView.$el.show();
+                const $btn = $(e.currentTarget);
+                $btn.hide().siblings().show();
+
+                this.trigger('back-thread-list');
             },
 
             render: function() {
@@ -52,27 +73,8 @@
                 this.searchView = new DiscussionSearchView({
                     el: this.$('.forum-search')
                 }).render();
-                this.renderBreadcrumbs();
                 this.showBrowseMenu(true);
                 return this;
-            },
-
-            renderBreadcrumbs: function() {
-                var BreadcrumbsModel = Backbone.Model.extend({
-                    defaults: {
-                        contents: []
-                    }
-                });
-
-                this.breadcrumbs = new DiscussionFakeBreadcrumbs({
-                    el: $('.has-breadcrumbs'),
-                    model: new BreadcrumbsModel(),
-                    events: {
-                        'click .all-topics': function(event) {
-                            event.preventDefault();
-                        }
-                    }
-                }).render();
             },
 
             isBrowseMenuVisible: function() {
@@ -80,26 +82,9 @@
             },
 
             showBrowseMenu: function(initialLoad) {
-                if (!this.isBrowseMenuVisible()) {
-                    this.$('.forum-nav-browse-menu-wrapper').show();
-                    this.$('.forum-nav-thread-list-wrapper').hide();
-                    if (!initialLoad) {
-                        $('.forum-nav-browse-filter-input').focus();
-                        this.filterInputReset();
-                    }
-                }
             },
 
             hideBrowseMenu: function() {
-                var selectedTopicList = this.$('.forum-nav-browse-title.is-focused');
-                if (this.isBrowseMenuVisible()) {
-                    selectedTopicList.removeClass('is-focused');
-                    this.$('.forum-nav-browse-menu-wrapper').hide();
-                    this.$('.forum-nav-thread-list-wrapper').show();
-                    if (this.selectedTopicId !== 'undefined') {
-                        this.$('.forum-nav-browse-filter-input').attr('aria-activedescendant', this.selectedTopicId);
-                    }
-                }
             },
 
             toggleBrowseMenu: function(event) {
@@ -114,7 +99,6 @@
                     }
                     this.showBrowseMenu();
                 }
-                this.breadcrumbs.model.set('contents', []);
                 this.clearSearch();
             },
 
@@ -122,7 +106,6 @@
                 if (event.which === Constants.keyCodes.enter || event.type === 'click') {
                     event.preventDefault();
                     this.hideBrowseMenu();
-                    this.breadcrumbs.model.set('contents', ['Search Results']);
                     this.discussionThreadListView.performSearch($('.search-input', this.$el));
                 }
             },
