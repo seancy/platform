@@ -50,8 +50,8 @@
             ${"disabled=disabled" if disable_navigation else ""}>
             <span class="icon fa seq_${item['type']}" aria-hidden="true"></span>
             % if 'complete' in item:
-              <span 
-                class="fa fa-check-circle check-circle ${"is-hidden" if not item['complete'] else ""}" 
+              <span
+                class="fa fa-check-circle check-circle ${"is-hidden" if not item['complete'] else ""}"
                 style="color:green"
                 aria-hidden="true"
               ></span>
@@ -83,12 +83,12 @@
 
   <nav class="sequence-bottom" aria-label="${_('Section')}">
     <button class="sequence-nav-button button-previous">
-      <span class="icon fa fa-chevron-prev" aria-hidden="true"></span>
+      <span class="icon far fa-arrow-left" aria-hidden="true"></span>
       <span>${_('Previous')}</span>
     </button>
     <button class="sequence-nav-button button-next">
-      <span>${_('Next')}</span>
-      <span class="icon fa fa-chevron-next" aria-hidden="true"></span>
+      <span>${_('Continue')}</span>
+      <span class="icon far fa-arrow-right" aria-hidden="true"></span>
     </button>
   </nav>
 </div>

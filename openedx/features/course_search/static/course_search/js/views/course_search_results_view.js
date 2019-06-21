@@ -20,6 +20,9 @@
                 'click .search-load-next': 'loadNext'
             },
 
+            updateSearchInfo:function(query){
+                this.$el.find('.search-term span').text(query);
+            },
             clear: function() {
                 SearchResultsView.prototype.clear.call(this);
                 $(this.coursewareResultsWrapperElement).hide();

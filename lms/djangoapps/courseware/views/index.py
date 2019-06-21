@@ -560,9 +560,8 @@ def render_seq_nav(user, request, course, chapter_url_name, section_url_name, fi
                     complete = False
                     if isinstance(sequence, VerticalBlock):
                         complete = completion_service.vertical_is_complete(sequence)
-
                     sequence_list.append({
-                        'id': sequence.url_name,
+                        'id': sequence.location,
                         'title': sequence.display_name_with_default_escaped,
                         'graded': sequence.graded,
                         'complete': complete

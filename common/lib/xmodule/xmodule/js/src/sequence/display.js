@@ -427,6 +427,24 @@
                 .removeClass('visited')
                 .removeClass('focused')
                 .addClass('active');
+            var data_id = element[0].dataset.id;
+            var sequences = $('#seq-nav li');
+            var current_seq_index = sequences.length;
+            sequences.each(function (index, value) {
+                if (index <= current_seq_index) {
+                    if (value.dataset['id'] == data_id) {
+                        $(this).addClass('active');
+                        $(this).removeClass('past');
+                        current_seq_index = index;
+                    } else {
+                        $(this).addClass('past');
+                        $(this).removeClass('active');
+                    }
+                } else {
+                    $(this).removeClass('active');
+                    $(this).removeClass('past');
+                }
+            });
             this.$('.sequence-list-wrapper').focus();
         };
 

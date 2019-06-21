@@ -50,6 +50,7 @@
 
             setActiveStyle: function() {
                 if (this.supportsActive) {
+                    this.$el.addClass('is-active')
                     this.$searchField.addClass('is-active');
                     this.$searchButton.hide();
                     this.$cancelButton.show();
@@ -58,6 +59,7 @@
 
             setInitialStyle: function() {
                 if (this.supportsActive) {
+                    this.$el.removeClass('is-active')
                     this.$searchField.removeClass('is-active');
                     this.$searchButton.show();
                     this.$cancelButton.hide();

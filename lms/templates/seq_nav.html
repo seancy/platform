@@ -1,7 +1,7 @@
 <nav class="seq-nav-wrapper">
   <ol id="seq-nav">
     % for seq in sequence_list:
-    <li role="presentation">
+    <li role="presentation" data-id="${seq['id']}">
         % if seq['graded']:
           % if seq['complete']:
             <span class="far fa-shield-check"></span>
@@ -15,7 +15,7 @@
             <span class="fa fa-circle"></span>
           % endif
         % endif
-        <span class="seq-tooltip sr">${seq['title']}</span>
+        <span class="seq-tooltip">${seq['title']}</span>
       </button>
     </li>
     % endfor

@@ -7,11 +7,33 @@
     function Courseware() {
       Logger.bind();
       this.render();
+      this.eventInit();
     }
 
     Courseware.start = function() {
       return new Courseware;
     };
+
+    Courseware.prototype.eventInit = function(){
+      var $courseContent = $('.course-content');
+      var $icon = $courseContent.find('.page-header i');
+      var $courseIndex = $('.course-index');
+      if ($.cookie('course-index') == 'hide'){
+          $courseIndex.toggle();
+          $icon.removeClass('fa-outdent').addClass('fa-indent')
+      }
+      $icon.on('click', function (e) {
+        $courseIndex.toggle();
+        var $src = $(e.currentTarget)
+        if ($('.course-index').css('display') == 'none') {
+            $src.removeClass('fa-outdent').addClass('fa-indent')
+            $.cookie('course-index', 'hide')
+        } else {
+            $src.removeClass('fa-indent').addClass('fa-outdent')
+            $.cookie('course-index', '')
+        }
+      })
+    }
 
     Courseware.prototype.render = function() {
       var courseContentElement = $('.course-content')[0];

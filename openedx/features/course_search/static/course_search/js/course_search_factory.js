@@ -27,6 +27,7 @@
                     results.showLoadingMessage();
                     collection.performSearch(query);
                     router.navigate('search/' + query, {replace: true});
+                    this.searchQueryStr = query;
                 });
 
                 dispatcher.listenTo(form, 'clear', function() {
@@ -41,6 +42,7 @@
 
                 dispatcher.listenTo(collection, 'search', function() {
                     results.render();
+                    results.updateSearchInfo(this.searchQueryStr);
                 });
 
                 dispatcher.listenTo(collection, 'next', function() {

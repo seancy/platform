@@ -77,8 +77,8 @@ var edx = edx || {},
                         .children('.group-heading')
                         .removeClass('active')
                         .find('.icon')
-                            .addClass('fa-caret-right')
-                            .removeClass('fa-caret-down');
+                            .addClass('fa-chevron-right')
+                            .removeClass('fa-chevron-down');
 
                     $toggle
                         .next('.chapter-content-container')
@@ -108,8 +108,8 @@ var edx = edx || {},
                     .children('.group-heading')
                     .addClass('active')
                     .find('.icon')
-                        .removeClass('fa-caret-right')
-                        .addClass('fa-caret-down');
+                        .removeClass('fa-chevron-right')
+                        .addClass('fa-chevron-down');
 
                 $sectionEl
                     .addClass('is-open')
