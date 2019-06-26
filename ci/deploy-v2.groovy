@@ -21,6 +21,7 @@ def platform_with_theme_process = false
 def restart_service_process = false
 def certs_process = false
 def xblock_process = false
+def config_file_process = false
 def proceed = true
 def manual = true
 def stage_auto_proceed = false
@@ -35,6 +36,7 @@ def compile_theme = []
 def xblock_name = []
 def tag_theme = ''
 def tag_restart_service = ''
+def tag_config_file = ''
 
 
 pipeline {
@@ -116,9 +118,9 @@ pipeline {
                     try {
                         timeout(time: 2) {
                             if (this_environment == 'PROD') {
-                                this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'restart serivce', 'xblock', 'certs'], description: 'which process to run')]
+                                this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'restart serivce', 'xblock', 'certs', 'config file'], description: 'which process to run')]
                             } else if (this_environment == 'STAGING') {
-                                this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'platform&theme', 'restart serivce', 'xblock', 'certs'], description: 'which process to run')]
+                                this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'platform&theme', 'restart serivce', 'xblock', 'certs', 'config file'], description: 'which process to run')]
                             }
                             if (this_process == 'platform') {
                                 platform_process = true
@@ -155,6 +157,14 @@ pipeline {
                                 certs_process = true
                             } else if (this_process == 'xblock') {
                                 xblock_process = true
+                            } else if (this_process == 'config file') {
+                                config_file_process = true
+                                sub_config_file_process = input message: "which service to update configuration file", parameters: [choice(name: 'service', choices: ['nginx', 'platform'], description: 'which service to update configuration file')]
+                                if (sub_config_file_process == 'nginx') {
+                                    tag_config_file = 'update_nginx'
+                                } else if (sub_config_file_process == 'platform') {
+                                    tag_config_file = 'update_platform'
+                                }
                             }
                         }
                     } catch (err) {
@@ -522,6 +532,30 @@ pipeline {
                     . /tmp/.venvec2/bin/activate
                     ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" --tags "deploy-xblock" lt_pipeline_jobs.yml
                     """
+                }
+            }
+        }
+        stage("Update configuration file") {
+            when {
+                expression { return proceed == true && config_file_process == true }
+            }
+            steps {
+                dir('configuration/playbooks') {
+                    script {
+                        if (sub_config_file_process == 'nginx') {
+                            sh """
+                            . /tmp/.venvec2/bin/activate
+                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}"  --tags "${tag_config_file}" lt_pipeline_jobs.yml
+                            """
+                        } else if (sub_config_file_process == 'platform') {
+                            restart_service_process = true
+                            tag_restart_service = 'restart-edxapp'
+                            sh """
+                            . /tmp/.venvec2/bin/activate
+                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}"  --tags "${tag_config_file}" lt_pipeline_jobs.yml
+                            """
+                        }
+                    }
                 }
             }
         }
