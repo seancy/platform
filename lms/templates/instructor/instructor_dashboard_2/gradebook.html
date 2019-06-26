@@ -68,9 +68,9 @@ from django.core.urlresolvers import reverse
                 <div class="gradebook-instructions-wrapper">
                   <ul class="gradebook-instructions">
                     ${_("Instructions")}:
-                    <li>1. ${_("The grade can only be manually changed to 100")}</li>
-                    <li>2. ${_("The check icon on the right side of grade means the grade is manually changed")}</li>
-                    <li>3. ${_("Please be careful when you try to edit learners' grade. Once you click the save button, this action is non reversible, a notification email will be sent the leaner.")}</li>
+                    <li>1. ${_("The new score must be between current score and 100.")}</li>
+                    <li>2. ${_("The check icon on the right side of the grade means the grade is manually changed.")}</li>
+                    <li>3. ${_("If a learner's grade is overridden, there will be a red revert button on the left side of the learner's name. Clicking on this button will revert all the learner's grades to their original state.")}</li>
                   </ul>
                   <div class="export-edit">
                     <button class="edit_gradebook edit-grade">${_("Edit")}</button>
