@@ -45,6 +45,24 @@ from xmodule.modulestore.django import modulestore
         signInUser: "${reverse('signin_user') | n, js_escaped_string}",
         changeEmailSettings: "${reverse('change_email_settings') | n, js_escaped_string}"
       });
+
+      $(".progress-icon").each(function () {
+        var progressRing = $(this).find('.progress-ring')[0],
+            percent = progressRing.dataset['percent'],
+            circle = $(this).find('.progress-ring__circle')[0],
+            circleBg = $(this).find('.progress-ring__circle-bg')[0],
+            radius = circle.r.baseVal.value,
+            size = (radius + 7) * 2,
+            circumference = radius * 2 * Math.PI,
+            offset = circumference - percent / 100 * circumference;
+        progressRing.style.height = size + "px";
+        progressRing.style.width = size + "px";
+        progressRing.style.strokeDasharray = circumference + " " + circumference;
+        progressRing.style.strokeDashoffset = circumference;
+        circle.style.strokeDashoffset = offset;
+        circle.style.transformOrigin = (radius + 6) + "px " + (radius + 6) + "px";
+        circleBg.style.strokeDashoffset = circumference - 100 / 100 * circumference;
+      });
     });
   </script>
   <%static:webpack entry="UnenrollmentFactory">
@@ -85,6 +103,8 @@ from xmodule.modulestore.django import modulestore
   <script>
     var $courses = $(".listing-courses li.course-item");
     $(".my-courses-nav li").click(function () {
+        $(this).find('.btn-link').addClass('active-section');
+        $(this).siblings().find('.btn-link').removeClass('active-section');
         if($(this).attr('id') == 'all-courses') {
           $courses.show();
         }
@@ -123,7 +143,7 @@ from xmodule.modulestore.django import modulestore
 </%block>
 
 <main id="main" aria-label="Content" tabindex="-1">
-    <div class="dashboard" id="my-courses-main">
+    <div class="my-courses-dashboard" id="my-courses-main">
         <div class="main-container">
             <section class="banner">
               <section class="welcome-wrapper">
@@ -132,10 +152,10 @@ from xmodule.modulestore.django import modulestore
             </section>
             <div class="my-courses" id="my-courses">
               <ul class="my-courses-nav">
-                <li class="nav-item" id="all-courses"><a>${_("All courses")}</a></li>
-                <li class="nav-item" id="not-started"><a>${_("Not started")}</a></li>
-                <li class="nav-item" id="started"><a>${_("Started")}</a></li>
-                <li class="nav-item" id="finished"><an>${_("Finished")}</an></li>
+                <li class="nav-item" id="all-courses"><button class="btn-link active-section">${_("All courses")}</button></li>
+                <li class="nav-item" id="not-started"><button class="btn-link">${_("Not started")}</button></li>
+                <li class="nav-item" id="started"><button class="btn-link">${_("Started")}</button></li>
+                <li class="nav-item" id="finished"><button class="btn-link">${_("Finished")}</button></li>
               </ul>
               % if len(course_entitlements + course_enrollments) > 0:
                 <ul class="listing-courses">

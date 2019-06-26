@@ -60,25 +60,42 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         % endif
       >
 <article class="course${mode_class}" aria-labelledby="course-title-${enrollment.course_id}" id="course-card-${course_card_index}">
-  <% course_target = reverse(course_home_url_name(course_overview.id), args=[unicode(course_overview.id)]) %>
+  <%
+    course_target = reverse(course_home_url_name(course_overview.id), args=[unicode(course_overview.id)])
+    course_url = ''
+    if show_courseware_link or is_unfulfilled_entitlement:
+        if course_overview.has_ended():
+            if not is_course_blocked:
+                course_url = course_target
+        else:
+            if resume_button_url != '':
+                course_url = resume_button_url
+            elif not is_course_blocked:
+                course_url = course_target
+            else:
+                course_url = ''
+  %>
+
+  % if course_requirements and not staff_access:
+    ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
+    <% prc_target = reverse('about_course', args=[unicode(course_requirements['courses'][0]['key'])]) %>
+    <div class="prerequisites">
+      <p class="tip">
+        ${Text(_('You must successfully complete {link_start}"{prc_display}"{link_end} before you begin this course.')).format(
+            link_start=HTML('<a href="{}">').format(prc_target),
+            link_end=HTML('</a>'),
+            prc_display=course_requirements['courses'][0]['display'],
+          )}
+      </p>
+    </div>
+  % endif
+
   <section class="details" aria-labelledby="details-heading-${enrollment.course_id}">
       <h2 class="hd hd-2 sr" id="details-heading-${enrollment.course_id}">${_('Course details')}</h2>
     <div class="wrapper-course-image" aria-hidden="true">
-      % if show_courseware_link and not is_unfulfilled_entitlement:
-        % if not is_course_blocked:
-            <a href="${course_target}" data-course-key="${enrollment.course_id}" class="cover" tabindex="-1">
-              <img src="${course_overview.image_urls['small']}" class="course-image" alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" />
-            </a>
-        % else:
-            <a class="fade-cover">
-              <img src="${course_overview.image_urls['small']}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" />
-            </a>
-        % endif
-      % else:
-        <a class="cover">
-          <img src="${course_overview.image_urls['small']}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" />
+        <a href="${course_url}" data-course-key="${enrollment.course_id}" class="cover" tabindex="-1">
+          <img src="${course_overview.image_urls['small']}" class="course-image" alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" />
         </a>
-      % endif
       % if course_language:
         <img src="/static/images/country-icons/${course_language}.png" alt="${course_language}" class="course-language">
       % endif
@@ -99,20 +116,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
       % endif
     </div>
     <div class="wrapper-course-details">
-        <h3 class="course-title" id="course-title-${enrollment.course_id}">
-          % if show_courseware_link and not is_unfulfilled_entitlement:
-            % if not is_course_blocked:
-              <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_overview.display_name_with_default}</a>
-            % else:
-              <a class="disable-look" data-course-key="${enrollment.course_id}">${course_overview.display_name_with_default}</a>
-            % endif
-          % else:
-            <span>${course_overview.display_name_with_default}</span>
-          % endif
-        </h3>
         <div class="course-info">
-          <span class="info-university">${course_overview.display_org_with_default} - </span>
-          <span class="info-course-id">${course_overview.display_number_with_default}</span>
           <%
             if course_overview.start_date_is_still_default:
                 container_string = _("Coming Soon")
@@ -135,7 +139,33 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                 endif
             endif
           %>
-
+            <section>
+                <h2 class="course-title" id="course-title-${enrollment.course_id}">
+                  <a data-course-key="${enrollment.course_id}" href="${course_url}">${course_overview.display_name_with_default}</a>
+                </h2>
+                <div class="progress-icon">
+                    <svg class="progress-ring" data-percent="${progress}">
+                        <defs>
+                          <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%" filterUnits="userSpaceOnUse">
+                            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/> <!-- stdDeviation is how much to blur -->
+                            <feOffset dx="5" dy="5" result="offsetblur"/>
+                            <feOffset dx="-5" dy="-5" result="offsetblur"/>
+                            <feMerge>
+                              <feMergeNode/>
+                              <feMergeNode in="SourceGraphic"/>
+                              <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                          </filter>
+                        </defs>
+                        <circle class="progress-ring__circle-bg" r="12" cx="20" cy="19"/>
+                        <circle class="progress-ring__circle" r="12" cx="17" cy="20"/>
+                    </svg>
+                    <div>
+                      <span class="percent">${progress}%</span>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </section>
             <span class="info-date-block-container">
                 % if is_unfulfilled_entitlement:
                     <span class="info-date-block" aria-live="polite">
@@ -161,7 +191,14 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                     % endif
                 % endif
             </span>
-            <span class="info-progress">${progress}%</span>
+            <div class="info-certificate">
+            % if cert_status and cert_status['status'] == 'downloadable':
+                <a href="${cert_status['download_url']}" title="${_('This link will open/download a PDF document')}" target="_blank">
+                    <i class="fas fa-arrow-alt-to-bottom"></i>
+                    ${_("Download Certificate")}
+                </a>
+            % endif
+            </div>
             % if entitlement and not is_unfulfilled_entitlement and entitlement_expiration_date:
                 <div class="info-expires-at">
                         <span class="msg-icon fa fa-warning" aria-hidden="true"></span>
@@ -186,44 +223,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         </section>
         <div class="wrapper-course-actions">
           <div class="course-actions">
-            % if show_courseware_link or is_unfulfilled_entitlement:
-              % if course_overview.has_ended():
-                % if not is_course_blocked:
-                  <a href="${course_target}" class="enter-course archived" data-course-key="${enrollment.course_id}">${_('View Archived Course')}<span class="sr">&nbsp;${course_overview.display_name_with_default}</span></a>
-                % else:
-                  <a class="enter-course-blocked archived" data-course-key="${enrollment.course_id}">${_('View Archived Course')}<span class="sr">&nbsp;${course_overview.display_name_with_default}</span></a>
-                % endif
 
-              % else:
-                % if resume_button_url != '':
-                  <a href="${resume_button_url}"
-                     class="enter-course ${'hidden' if is_unfulfilled_entitlement else ''}"
-                     data-course-key="${enrollment.course_id}">
-                    ${_('Resume Course')}
-                    <span class="sr">
-                      &nbsp;${course_overview.display_name_with_default}
-                    </span>
-                  </a>
-                % elif not is_course_blocked:
-                  <a href="${course_target}"
-                     class="enter-course ${'hidden' if is_unfulfilled_entitlement else ''}"
-                     data-course-key="${enrollment.course_id}">
-                    ${_('View Course')}
-                    <span class="sr">
-                      &nbsp;${course_overview.display_name_with_default}
-                    </span>
-                  </a>
-                % else:
-                  <a class="enter-course-blocked"
-                     data-course-key="${enrollment.course_id}">
-                    ${_('View Course')}
-                    <span class="sr">
-                      &nbsp;${course_overview.display_name_with_default}
-                    </span>
-                  </a>
-                % endif
-              % endif
-            % endif
 
             % if show_courseware_link or course_overview.has_social_sharing_url() or course_overview.has_marketing_url():
 
@@ -342,19 +342,6 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         </div>
       </div>
   </section>
-  % if course_requirements and not staff_access:
-    ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
-    <% prc_target = reverse('about_course', args=[unicode(course_requirements['courses'][0]['key'])]) %>
-    <div class="prerequisites">
-      <p class="tip">
-        ${Text(_("You must successfully complete {link_start}{prc_display}{link_end} before you begin this course.")).format(
-            link_start=HTML('<a href="{}">').format(prc_target),
-            link_end=HTML('</a>'),
-            prc_display=course_requirements['courses'][0]['display'],
-          )}
-      </p>
-    </div>
-  % endif
   <footer class="wrapper-messages-primary">
     <div class="messages-list">
 
@@ -393,10 +380,6 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
             % endfor
           </ul>
         </div>
-      % endif
-
-      % if cert_status:
-        <%include file='_dashboard_certificate_information.html' args='cert_status=cert_status,course_overview=course_overview, enrollment=enrollment, reverify_link=reverify_link'/>
       % endif
 
       % if credit_status is not None:

@@ -85,22 +85,22 @@ class TestCourseListing(ModuleStoreTestCase):
         self.assertEqual(dest_course.enrollment_end, None)
 
     @ddt.data(ModuleStoreEnum.Type.mongo, ModuleStoreEnum.Type.split)
-    def test_newly_created_course_has_web_certs_enabled(self, store):
+    def test_newly_created_course_has_web_certs_disabled(self, store):
         """
-        Tests newly created course has web certs enabled by default.
+        Tests newly created course has web certs disabled by default.
         """
         with modulestore().default_store(store):
             response = self.client.ajax_post(self.course_create_rerun_url, {
                 'org': 'orgX',
                 'number': 'CS101',
-                'display_name': 'Course with web certs enabled',
+                'display_name': 'Course with web certs disabled',
                 'run': '2015_T2'
             })
             self.assertEqual(response.status_code, 200)
             data = parse_json(response)
             new_course_key = CourseKey.from_string(data['course_key'])
             course = self.store.get_course(new_course_key)
-            self.assertTrue(course.cert_html_view_enabled)
+            self.assertFalse(course.cert_html_view_enabled)
 
     @patch.dict('django.conf.settings.FEATURES', {'ORGANIZATIONS_APP': False})
     @ddt.data(ModuleStoreEnum.Type.mongo, ModuleStoreEnum.Type.split)

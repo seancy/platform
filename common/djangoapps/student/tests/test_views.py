@@ -392,7 +392,8 @@ class StudentDashboardTests(SharedModuleStoreTestCase, MilestonesTestCaseMixin, 
             'type': 'verified'
         }
         response = self.client.get(self.path)
-        self.assertIn('class="enter-course hidden"', response.content)
+        # view course button is removed in course card
+        # self.assertIn('class="enter-course hidden"', response.content)
         self.assertIn('You must select a session to access the course.', response.content)
         self.assertIn('<div class="course-entitlement-selection-container ">', response.content)
         self.assertIn('Related Programs:', response.content)
@@ -700,6 +701,7 @@ class StudentDashboardTests(SharedModuleStoreTestCase, MilestonesTestCaseMixin, 
             course_run=course_run_string
         )
 
+    @unittest.skip("The view course button is removed in course card")
     def test_view_course_appears_on_dashboard(self):
         """
         When a course doesn't have completion data, its course card should
@@ -743,6 +745,7 @@ class StudentDashboardTests(SharedModuleStoreTestCase, MilestonesTestCaseMixin, 
             dashboard_html
         )
 
+    @unittest.skip("Resume/view course buttons are removed in course card")
     def test_resume_course_appears_on_dashboard(self):
         """
         When a course has completion data, its course card should display a
@@ -797,6 +800,7 @@ class StudentDashboardTests(SharedModuleStoreTestCase, MilestonesTestCaseMixin, 
             dashboard_html
         )
 
+    @unittest.skip("Resume/view course buttons are removed in course card")
     def test_dashboard_with_resume_buttons_and_view_buttons(self):
         '''
         The Test creates a four-course-card dashboard. The user completes course

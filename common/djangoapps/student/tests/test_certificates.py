@@ -80,7 +80,7 @@ class CertificateDisplayTestBase(SharedModuleStoreTestCase):
         Inspect the dashboard to see if a certificate can be downloaded.
         """
         response = self.client.get(reverse('dashboard'))
-        self.assertContains(response, u'Download Your ID Verified')
+        self.assertContains(response, u'Download Certificate')
         self.assertContains(response, self.DOWNLOAD_URL)
 
     def _check_can_download_certificate_no_id(self):
@@ -90,7 +90,7 @@ class CertificateDisplayTestBase(SharedModuleStoreTestCase):
         """
         response = self.client.get(reverse('dashboard'))
         self.assertContains(response, u'Download')
-        self.assertContains(response, u'(PDF)')
+        # self.assertContains(response, u'(PDF)')
         self.assertContains(response, self.DOWNLOAD_URL)
 
     def _check_can_not_download_certificate(self):
@@ -132,6 +132,7 @@ class CertificateDashboardMessageDisplayTest(CertificateDisplayTestBase):
         else:
             self._check_can_download_certificate()
 
+    @unittest.skip("We only display certificate link when it's generated")
     @ddt.data(True, False, None)
     def test_certificate_available_date(self, past_certificate_available_date):
         cert = self._create_certificate('verified')
@@ -180,6 +181,7 @@ class CertificateDisplayTest(CertificateDisplayTestBase):
         self._create_certificate(CourseMode.NO_ID_PROFESSIONAL_MODE)
         self._check_can_download_certificate_no_id()
 
+    @unittest.skip("This part of html is hidden")
     @ddt.data('verified', 'honor', 'professional')
     def test_unverified_certificate_message(self, enrollment_mode):
         cert = self._create_certificate(enrollment_mode)
@@ -202,6 +204,7 @@ class CertificateDisplayTest(CertificateDisplayTestBase):
         # button should not be visible
         self._check_linkedin_visibility(False)
 
+    @unittest.skip("This part of html is hidden")
     def test_post_to_linkedin_visibility(self):
         """
         Verifies that the post certificate to linked button appears
@@ -291,6 +294,7 @@ class CertificateDisplayTestLinkedHtmlView(CertificateDisplayTestBase):
         cls.course.save()
         cls.store.update_item(cls.course, cls.USERNAME)
 
+    @unittest.skip("This part of html is hidden as we don't user HTML certificate anymore")
     @ddt.data('verified')
     @override_settings(CERT_NAME_SHORT='Test_Certificate')
     @patch.dict('django.conf.settings.FEATURES', {'CERTIFICATES_HTML_VIEW': True})
