@@ -180,27 +180,21 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           <p class="important-dates-item-title">${_("Prerequisites")}</p>
           ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
           <div class="pre-requisites-container">
-            <span class="important-dates-item-text pre-requisite"><a href="">Prerequisite Course Name</a></span>
-            <p class="tip">You must successfully complete <a href="">Prerequisite Course Name</a></p>
+            % if pre_requisite_courses:
+              <% prc_target = reverse('about_course', args=[unicode(pre_requisite_courses[0]['key'])]) %>
+              <span class="important-dates-item-text pre-requisite"><a href="${prc_target}">${pre_requisite_courses[0]['display']}</a></span>
+              <p class="tip">
+              ${_("You must successfully complete {link_start}{prc_display}{link_end} before you begin this course.").format(
+                link_start='<a href="{}">'.format(prc_target),
+                link_end='</a>',
+                prc_display=pre_requisite_courses[0]['display'],
+              )}
+              </p>
+            % else:
+              <p class="tip">${_("No prerequisite required for this course")}</p>
+            % endif
           </div>
         </div>
-
-        % if pre_requisite_courses:
-          <% prc_target = reverse('about_course', args=[unicode(pre_requisite_courses[0]['key'])]) %>
-          <li class="prerequisites">
-            <span class="icon fa fa-list-ul" aria-hidden="true"></span>
-            <p class="important-dates-item-title">${_("Prerequisites")}</p>
-            ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
-            <span class="important-dates-item-text pre-requisite"><a href="${prc_target}">${pre_requisite_courses[0]['display']}</a></span>
-            <p class="tip">
-              ${_("You must successfully complete {link_start}{prc_display}{link_end} before you begin this course.").format(
-                  link_start='<a href="{}">'.format(prc_target),
-                  link_end='</a>',
-                  prc_display=pre_requisite_courses[0]['display'],
-              )}
-            </p>
-          </li>
-        % endif
 
         % if get_course_about_section(request, course, "prerequisites"):
           <li class="important-dates-item">

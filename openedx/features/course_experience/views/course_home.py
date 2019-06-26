@@ -23,10 +23,12 @@ from lms.djangoapps.course_goals.api import (
 )
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect
 from lms.djangoapps.courseware.views.views import CourseTabView
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
 from openedx.core.djangoapps.util.maintenance_banner import add_maintenance_banner
 from openedx.features.course_experience.course_tools import CourseToolsPluginManager
 from student.models import CourseEnrollment
+from util.milestones_helpers import get_prerequisite_courses_display
 from util.views import ensure_valid_course_key
 
 from .. import LATEST_UPDATE_FLAG, SHOW_UPGRADE_MSG_ON_COURSE_HOME, USE_BOOTSTRAP_FLAG
@@ -175,6 +177,13 @@ class CourseHomeFragmentView(EdxFragmentView):
             upgrade_url = EcommerceService().upgrade_url(request.user, course_key)
             upgrade_price = get_cosmetic_verified_display_price(course)
 
+        # get prerequisite courses display names
+        pre_requisite_courses = get_prerequisite_courses_display(course)
+
+        # Overview
+        overview = CourseOverview.get_from_id(course.id)
+        course_image_urls = overview.image_urls
+
         # Render the course home fragment
         context = {
             'request': request,
@@ -199,6 +208,8 @@ class CourseHomeFragmentView(EdxFragmentView):
             'uses_pattern_library': True,
             'upgrade_price': upgrade_price,
             'upgrade_url': upgrade_url,
+            'course_image_urls': course_image_urls,
+            'pre_requisite_courses': pre_requisite_courses,
         }
         html = render_to_string('course_experience/course-home-fragment.html', context)
         return Fragment(html)

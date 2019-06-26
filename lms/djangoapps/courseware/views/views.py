@@ -615,7 +615,7 @@ class CourseTabView(EdxFragmentView):
         """
         staff_access = has_access(request.user, 'staff', course)
         supports_preview_menu = tab.get('supports_preview_menu', False)
-        uses_bootstrap = self.uses_bootstrap(request, course, tab=tab)
+        uses_bootstrap = False
         if supports_preview_menu:
             masquerade, masquerade_user = setup_masquerade(request, course.id, staff_access, reset_masquerade_data=True)
             request.user = masquerade_user
