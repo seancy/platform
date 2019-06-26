@@ -920,7 +920,8 @@ def course_about(request, course_id):
             'sidebar_html_enabled': sidebar_html_enabled,
             'user': request.user,
             'show_dashboard_tabs': True,
-            'outline_fragment': outline_fragment
+            'outline_fragment': outline_fragment,
+            'progress': None
         }
         return render_to_response('courseware/course_about.html', context)
 

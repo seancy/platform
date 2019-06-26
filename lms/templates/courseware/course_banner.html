@@ -80,7 +80,7 @@ from six import string_types
     </section>
 
     <section class="course-control">
-      % if progress:
+      % if progress is not None:
         <section class="progress-icon">
             <svg class="progress-ring" data-percent="${progress}">
                 <defs>

@@ -486,6 +486,7 @@ def get_module_system_for_user(
         """
         handlers = {
             'grade': handle_grade_event,
+            'ilt_grade': handle_ilt_grade_event,
         }
         if completion_waffle.waffle().is_enabled(completion_waffle.ENABLE_COMPLETION_TRACKING):
             handlers.update({
@@ -541,6 +542,21 @@ def get_module_system_for_user(
             only_if_higher=event.get('only_if_higher'),
             score_deleted=event.get('score_deleted'),
         )
+
+    def handle_ilt_grade_event(block, event):
+        event = {e['user_id']: e for e in event}
+        users = User.objects.filter(id__in=event.keys())
+        users = {u.id: u for u in users}
+        for user_id, sub_event in event.items():
+            SCORE_PUBLISHED.send(
+                sender=None,
+                block=block,
+                user=users[user_id],
+                raw_earned=sub_event['value'],
+                raw_possible=sub_event['max_value'],
+                only_if_higher=sub_event.get('only_if_higher'),
+                score_deleted=sub_event.get('score_deleted'),
+            )
 
     def handle_deprecated_progress_event(block, event):
         """
