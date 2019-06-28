@@ -100,6 +100,7 @@
                     // Empty el if it's not empty to get the clean state.
                     this.$el.html('');
                     this.$el.show();
+                    $(this.coursewareResultsWrapperEl).css('display', 'table-cell');
                 },
 
                 showLoadingMessage: function() {

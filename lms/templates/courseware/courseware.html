@@ -79,6 +79,14 @@ from openedx.features.course_experience import course_home_page_title, COURSE_OU
     </%static:require_module>
   % endif
 
+  <%static:require_module module_name="course_bookmarks/js/course_bookmarks_factory" class_name="CourseBookmarksFactory">
+        CourseBookmarksFactory({
+            $el: $(".course-bookmarks"),
+            courseId: $('.courseware-results').data('courseId'),
+            bookmarksApiUrl: '${bookmarks_api_url | n, js_escaped_string}',
+        });
+  </%static:require_module>
+
   <%static:require_module module_name="js/courseware/courseware_factory" class_name="CoursewareFactory">
     CoursewareFactory();
   </%static:require_module>
@@ -163,11 +171,10 @@ ${HTML(fragment.foot_html())}
       </div>
 
       <div class="courseware-bookmarks-button">
-          <a class="bookmarks-list-button" href="${reverse('openedx.course_bookmarks.home', args=[course.id])}">
+          <button type="button" class="bookmarks-list-button">
               ${_('Bookmarks')}
-          </a>
+          </button>
       </div>
-
     </div>
 % endif
 

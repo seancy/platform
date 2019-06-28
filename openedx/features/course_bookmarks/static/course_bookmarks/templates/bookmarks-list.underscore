@@ -1,5 +1,7 @@
 <div id="my-bookmarks" class="sr-is-focusable" tabindex="-1"></div>
 
+<h2 class="bookmarks-results-header"><%= gettext("My Bookmarks") %></h2>
+
 <% if (bookmarksCollection.length) { %>
 
     <div class="paging-header"></div>
