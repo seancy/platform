@@ -33,6 +33,9 @@ from xmodule.modulestore.django import modulestore
 <%block name="bodyclass">view-dashboard is-authenticated</%block>
 
 <%block name="header_extras">
+<link type="text/css" href="${static.url('css/vendor/swiper.min.css')}" rel="stylesheet"/>
+<script src="${static.url('js/vendor/swiper.min.js')}"></script>
+
 % for template_name in ["donation"]:
 <script type="text/template" id="${template_name}-tpl">
   <%static:include path="dashboard/${template_name}.underscore" />
@@ -151,13 +154,41 @@ from xmodule.modulestore.django import modulestore
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="dashboard" id="dashboard-main">
       <div class="main-container">
-        <div class="my-courses" id="my-courses">
+        <section class="banner">
+          <section class="welcome-wrapper">
+            <h2>${_("Hello")} ${user.first_name or user.profile.name or user.username},</h2>
+            <h3>${_("Welcome on your dashboard")}</h3>
+          </section>
+          <section class="whiteboard">
+            <div class="completed-courses">
+              <i class="far fa-file-alt"></i>
+              <h2>${nb_completed_courses}</h2>
+              <p>${_("completed courses")}</p>
+            </div>
+            <div class="badges-obtained">
+              <i class="far fa-trophy"></i>
+              <h2>${nb_badges_obtained}</h2>
+              <p>${_("badges obtained")}</p>
+            </div>
+            <div class="nb_posts">
+              <i class="far fa-comment-alt-lines"></i>
+              <h2>${nb_posts}</h2>
+              <p>${_("posts")}</p>
+            </div>
+
+            <a class="flat-button view-transcript" href="${reverse('analytics_my_transcript')}">${_("View my learning transcript")}</a>
+            <a class="flat-button view-my-courses" href="${reverse('my_courses')}">${_("View my courses")}</a>
+          </section>
+        </section>
+
+
+        <div class="my-courses swiper-container" id="my-courses">
           % if display_dashboard_courses:
           <%include file="learner_dashboard/_dashboard_navigation_courses.html"/>
           % endif
 
           % if len(course_entitlements + course_enrollments) > 0:
-            <ul class="listing-courses">
+            <ul class="listing-courses swiper-wrapper">
             <%
                 share_settings = configuration_helpers.get_value(
                     'SOCIAL_SHARING_SETTINGS',
@@ -218,24 +249,22 @@ from xmodule.modulestore.django import modulestore
                 course_overview = enrollment.course_overview
                 resume_button_url = resume_button_urls[dashboard_index]
                 course_duration = CourseDetails.fetch_about_attribute(enrollment.course_id, 'duration')
-                course_descriptor = modulestore().get_course(enrollment.course_id)
-                if course_descriptor:
-                  is_mandatory = course_descriptor.course_mandatory_enabled
-                  course_category = course_descriptor.course_category
-                  course_language = course_descriptor.language
-                  nb_of_badges = CourseGradeFactory().get_nb_trophies_possible(course_descriptor)
-                  progress = int(CourseGradeFactory().get_course_completion_percentage(user, enrollment.course_id)*100)
-                else:
-                  is_mandatory = False
-                  course_category = None
-                  nb_of_badges = 0
-                  progress = 0
-                  course_language = ''
+                summary = progress_summaries.get(enrollment.course_id, {})
+                is_mandatory = summary.get('is_mandatory', False)
+                course_category = summary.get('course_category', None)
+                course_language = summary.get('course_language', 'en')
+                nb_of_badges = summary.get('nb_trophies_possible', 0)
+                progress = summary.get('progress', 0)
               %>
               <%include file='dashboard/_dashboard_course_listing.html' args='course_language=course_language, progress=progress, nb_of_badges=nb_of_badges, is_mandatory=is_mandatory, course_category=course_category, course_duration=course_duration, course_status=None, course_overview=course_overview, course_card_index=dashboard_index, enrollment=enrollment, is_unfulfilled_entitlement=is_unfulfilled_entitlement, is_fulfilled_entitlement=is_fulfilled_entitlement, entitlement=entitlement, entitlement_session=entitlement_session, entitlement_available_sessions=entitlement_available_sessions, entitlement_expiration_date=entitlement_expiration_date, entitlement_expired_at=entitlement_expired_at, show_courseware_link=show_courseware_link, cert_status=cert_status, can_refund_entitlement=can_refund_entitlement, can_unenroll=can_unenroll, credit_status=credit_status, show_email_settings=show_email_settings, course_mode_info=course_mode_info, is_paid_course=is_paid_course, is_course_blocked=is_course_blocked, verification_status=course_verification_status, course_requirements=course_requirements, dashboard_index=dashboard_index, share_settings=share_settings, user=user, related_programs=related_programs, display_course_modes_on_dashboard=display_course_modes_on_dashboard, show_consent_link=show_consent_link, enterprise_customer_name=enterprise_customer_name, resume_button_url=resume_button_url' />
             % endfor
 
             </ul>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+
+            <div class="swiper-pagination"></div>
           % else:
             <div class="empty-dashboard-message">
               % if display_dashboard_courses:
@@ -273,20 +302,39 @@ from xmodule.modulestore.django import modulestore
           % endif
         </div>
 
+        <script type="text/javascript">
+          var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 'auto',
+            spaceBetween: 30,
+            slidesOffsetAfter:160,
+
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+          });
+        </script>
+
         % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
           <div class="ilt-calendar" id="ilt-calendar">
+            <div class="events-header">
+                <h2>${_("My upcoming ILT sessions")}</h2>
+            </div>
             <div class="ilt-calendar-wrapper">
               <div id="calendar"></div>
               <div id="ilt-events">
-                  <div class="events-header">
-                      <h1>${_("My upcoming ILT sessions")}</h1>
-                  </div>
                   <div class="ilt-events-list"></div>
               </div>
             </div>
           </div>
         % endif
       </div>
+
+      <!--
       <div class="side-container">
         %if display_sidebar_account_activation_message:
           <div class="sidebar-notification">
@@ -336,6 +384,8 @@ from xmodule.modulestore.django import modulestore
           </div>
         % endif
       </div>
+      -->
+
     </div>
 </main>
 

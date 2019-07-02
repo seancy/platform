@@ -27,11 +27,13 @@ import track.views
 from bulk_email.models import BulkEmailFlag, Optout  # pylint: disable=import-error
 from course_modes.models import CourseMode
 from courseware.access import has_access
-from courseware.models import XModuleUserStateSummaryField
+from courseware.models import StudentModule, XModuleUserStateSummaryField
 from edxmako.shortcuts import render_to_response, render_to_string
 from entitlements.models import CourseEntitlement
 from lms.djangoapps.commerce.utils import EcommerceService  # pylint: disable=import-error
+from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.verify_student.services import IDVerificationService
+from lms.lib import comment_client as cc
 from openedx.core.djangoapps import monitoring_utils
 from openedx.core.djangoapps.catalog.utils import (
     get_programs,
@@ -628,6 +630,56 @@ def student_dashboard(request):
     ordered_enrollments.sort(key=order)
     course_enrollments = ordered_enrollments + no_order_enrollments
 
+    # get progress summary of each courses
+    progress_summaries = {}
+    nb_badges_obtained = 0
+    try:
+        cc_user = cc.User.from_django_user(user)
+        cc_info = cc_user.to_dict()
+        nb_posts = len(cc_info['subscribed_thread_ids'])
+    except:
+        nb_posts = 0
+    for c in course_enrollments:
+        course_descriptor = modulestore().get_course(c.course_id)
+        if course_descriptor:
+            is_mandatory = course_descriptor.course_mandatory_enabled
+            course_category = course_descriptor.course_category
+            course_language = course_descriptor.language
+            progress_summary = CourseGradeFactory().get_progress(user, course_descriptor)
+            nb_trophies_possible = progress_summary['nb_trophies_possible']
+            nb_trophies_earned = progress_summary['nb_trophies_earned']
+            progress = int(progress_summary['progress'] * 100)
+        else:
+            is_mandatory = False
+            course_category = None
+            nb_trophies_possible = 0
+            nb_trophies_earned = 0
+            progress = 0
+            course_language = ''
+        summary = {
+            "is_mandatory": is_mandatory,
+            "course_category": course_category,
+            "nb_trophies_possible": nb_trophies_possible,
+            "nb_trophies_earned": nb_trophies_earned,
+            "progress": progress,
+            "course_language": course_language
+        }
+        progress_summaries.update({c.course_id: summary})
+        nb_badges_obtained += nb_trophies_earned
+
+    # filter completed courses and not completed
+    completed_courses = [c for c in course_enrollments if c.completed]
+    uncompleted_courses = [c for c in course_enrollments if c not in completed_courses]
+
+    # filter started courses and not started courses from uncompleted courses
+    started_courses = [c for c in uncompleted_courses if StudentModule.objects.filter(course_id=c.course_id).exists()]
+    not_started_courses = [c for c in uncompleted_courses if c not in started_courses]
+
+    # the ordered courses on dashboard, limited to 12
+    course_enrollments = started_courses + not_started_courses + completed_courses
+    if len(course_enrollments) > 12:
+        course_enrollments = course_enrollments[:12]
+
     # Retrieve the course modes for each course
     enrolled_course_ids = [enrollment.course_id for enrollment in course_enrollments]
     __, unexpired_course_modes = CourseMode.all_and_unexpired_modes_for_courses(enrolled_course_ids)
@@ -865,6 +917,10 @@ def student_dashboard(request):
         'display_sidebar_account_activation_message': not(user.is_active or hide_dashboard_courses_until_activated),
         'display_dashboard_courses': (user.is_active or not hide_dashboard_courses_until_activated),
         'empty_dashboard_message': empty_dashboard_message,
+        'nb_completed_courses': len(completed_courses),
+        'nb_badges_obtained': nb_badges_obtained,
+        'nb_posts': nb_posts,
+        'progress_summaries': progress_summaries,
     }
 
     if ecommerce_service.is_enabled(request.user):

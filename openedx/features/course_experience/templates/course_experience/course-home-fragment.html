@@ -29,9 +29,10 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
     nb_trophies_earned = progress_summary['nb_trophies_earned']
     nb_trophies_possible = progress_summary['nb_trophies_possible']
     try:
-      cc_user = cc.User(id=request.user.id, course_id=course.id)
-      user_info = cc_user.to_dict()
-      nb_talks = len(user_info['subscribed_thread_ids'])
+      cc_user = cc.User.from_django_user(request.user)
+      cc_user.course_id = course.id
+      cc_user.retrieve(complete=False)
+      nb_talks = cc_user['threads_count'] + cc_user['comments_count']
     except:
       nb_talks = 0
   else:

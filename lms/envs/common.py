@@ -1410,6 +1410,7 @@ base_vendor_js = [
 ]
 
 main_vendor_js = base_vendor_js + [
+    'js/vendor/swiper.min.js',
     'js/vendor/json2.js',
     'js/vendor/jquery-ui.min.js',
     'js/vendor/jquery.qtip.min.js',
@@ -1518,6 +1519,7 @@ credit_web_view_js = [
 PIPELINE_CSS = {
     'style-vendor': {
         'source_filenames': [
+            'css/vendor/swiper.min.css',
             'css/vendor/jquery.qtip.min.css',
             'js/vendor/timepicker/jquery.timepicker.css'
         ],

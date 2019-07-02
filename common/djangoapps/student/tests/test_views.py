@@ -418,7 +418,7 @@ class StudentDashboardTests(SharedModuleStoreTestCase, MilestonesTestCaseMixin, 
         response = self.client.get(self.path)
         # There should be two entitlements on the course page, one prompting for a mandatory session, but no
         # select option for the courses as there is only the single course run which has already been redeemed
-        self.assertEqual(response.content.count('<li class="course-item"'), 2)
+        self.assertEqual(response.content.count('<li class="swiper-slide course-item"'), 2)
         self.assertIn('You must select a session to access the course.', response.content)
         self.assertNotIn('To access the course, select a session.', response.content)
 
@@ -552,7 +552,7 @@ class StudentDashboardTests(SharedModuleStoreTestCase, MilestonesTestCaseMixin, 
         program['courses'][0]['uuid'] = entitlement.course_uuid
         mock_get_programs.return_value = [program]
         response = self.client.get(self.path)
-        self.assertEqual(response.content.count('<li class="course-item"'), 1)
+        self.assertEqual(response.content.count('<li class="swiper-slide course-item"'), 1)
         self.assertIn('<button class="change-session btn-link "', response.content)
         self.assertIn('Related Programs:', response.content)
 
@@ -589,7 +589,7 @@ class StudentDashboardTests(SharedModuleStoreTestCase, MilestonesTestCaseMixin, 
         program['courses'][0]['uuid'] = entitlement.course_uuid
         mock_get_programs.return_value = [program]
         response = self.client.get(self.path)
-        self.assertEqual(response.content.count('<li class="course-item"'), 1)
+        self.assertEqual(response.content.count('<li class="swiper-slide course-item"'), 1)
         self.assertIn('You can no longer change sessions.', response.content)
         self.assertIn('Related Programs:', response.content)
 

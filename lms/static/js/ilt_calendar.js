@@ -13,6 +13,9 @@
     //Create Header
     this.drawHeader();
 
+    // Draw week day names
+    this.drawDayName();
+
     //Draw Month
     this.drawMonth();
   }
@@ -24,7 +27,7 @@
       this.header = createElement('div', 'header');
       this.header.className = 'header';
 
-      this.title = createElement('h1');
+      this.title = createElement('h2');
 
       var right = createElement('div', 'right');
       right.addEventListener('click', function() { self.nextMonth(); });
@@ -42,6 +45,21 @@
     this.title.innerHTML = this.current.format('MMMM YYYY');
   }
 
+  Calendar.prototype.drawDayName = function() {
+    console.log('111');
+    var self = this,
+        name_list = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    if(!this.day_names) {
+      console.log('222');
+      this.day_names = createElement('div', 'day-names');
+      for (var i = 0; i < name_list.length; i++) {
+        var name = createElement('div', 'day-name', name_list[i]);
+        this.day_names.appendChild(name)
+      }
+      this.el && this.el.appendChild(this.day_names);
+    }
+  }
+
   Calendar.prototype.drawMonth = function() {
     var self = this;
     if(this.month) {
@@ -56,8 +74,8 @@
         self.el.appendChild(self.month);
         window.setTimeout(function() {
           self.month.className = 'month in ' + (self.next ? 'next' : 'prev');
-          var $month = $(".month");
-          $(".ilt-events-list").height($month.height());
+          var $calendar = $("#calendar");
+          $(".ilt-events-list").height($calendar.outerHeight());
         }, 16);
       });
     } else {
@@ -132,9 +150,9 @@
     var events = createElement('div', 'day-events');
     this.drawEvents(day, events);
 
-    outer.appendChild(name);
+    // outer.appendChild(name);
     outer.appendChild(number);
-    outer.appendChild(events);
+    // outer.appendChild(events);
     this.week.appendChild(outer);
   }
 
@@ -212,8 +230,6 @@
 
     this.renderEvents(todaysEvents, details);
     this.drawEventsList(todaysEvents);
-    var events_header = document.querySelector('.events-header h1');
-    events_header.innerText = day.format("MMMM Do, YYYY");
 
     var offset = Math.abs(el.offsetLeft - (el.previousSibling || el.nextElementSibling).offsetLeft) / 2;
     arrow.style.left = el.offsetLeft - el.parentNode.offsetLeft + offset + 'px';
@@ -229,17 +245,23 @@
                 time = createElement('span', 'ilt-event-time', ev.start_at + ' to ' + ev.end_at),
                 timezone = createElement('span', 'ilt-event-timezone', ev.timezone),
                 instructor = createElement('span', 'ilt-event-instructor', ev.instructor),
-                time_icon = createElement('i', 'fa fa-clock-o', ''),
-                timezone_icon = createElement('i', 'fa fa-globe', ''),
-                instructor_icon = createElement('i', 'fa fa-user', '');
+                time_icon = createElement('i', 'far fa-clock', ''),
+                timezone_icon = createElement('i', 'far fa-globe', ''),
+                instructor_icon = createElement('i', 'far fa-user', ''),
+                event_day = createElement('section', 'event-day', ''),
+                event_day_name = createElement('div', 'event-day-name', ev.start_date.format('dddd')),
+                event_day_number = createElement('h2', 'event-day-number', ev.start_date.format('DD'));
             link.href = ev.url;
-            time.insertAdjacentElement('beforebegin', time_icon);
-            timezone.insertAdjacentElement('beforebegin', timezone_icon);
-            instructor.insertAdjacentElement('beforebegin', instructor_icon);
+            time.insertAdjacentElement('afterbegin', time_icon);
+            timezone.insertAdjacentElement('afterbegin', timezone_icon);
+            instructor.insertAdjacentElement('afterbegin', instructor_icon);
             link.appendChild(title);
             link.appendChild(time);
             link.appendChild(timezone);
             link.appendChild(instructor);
+            event_day.appendChild(event_day_name);
+            event_day.appendChild(event_day_number);
+            wrapper.appendChild(event_day);
             wrapper.appendChild(link);
             event_list.appendChild(wrapper);
         });
@@ -260,6 +282,7 @@
       return memo;
     }, []);
     if (upcomingEvents.length > 0) {
+      console.log(upcomingEvents);
       upcomingEvents.forEach(function (ev) {
         var wrapper = createElement('div', 'ilt-event'),
             link = createElement('a', 'ilt-link', ''),
@@ -267,17 +290,23 @@
             time = createElement('span', 'ilt-event-time', ev.start_at + ' to ' + ev.end_at),
             timezone = createElement('span', 'ilt-event-timezone', ev.timezone),
             instructor = createElement('span', 'ilt-event-instructor', ev.instructor),
-            time_icon = createElement('i', 'fa fa-clock-o', ''),
-            timezone_icon = createElement('i', 'fa fa-globe', ''),
-            instructor_icon = createElement('i', 'fa fa-user', '');
+            time_icon = createElement('i', 'far fa-clock', ''),
+            timezone_icon = createElement('i', 'far fa-globe', ''),
+            instructor_icon = createElement('i', 'far fa-user', ''),
+            event_day = createElement('section', 'event-day', ''),
+            event_day_name = createElement('div', 'event-day-name', ev.start_date.format('dddd')),
+            event_day_number = createElement('h2', 'event-day-number', ev.start_date.format('DD'));
         link.href = ev.url;
-        time.insertAdjacentElement('beforebegin', time_icon);
-        timezone.insertAdjacentElement('beforebegin', timezone_icon);
-        instructor.insertAdjacentElement('beforebegin', instructor_icon);
+        time.insertAdjacentElement('afterbegin', time_icon);
+        timezone.insertAdjacentElement('afterbegin', timezone_icon);
+        instructor.insertAdjacentElement('afterbegin', instructor_icon);
         link.appendChild(title);
         link.appendChild(time);
         link.appendChild(timezone);
         link.appendChild(instructor);
+        event_day.appendChild(event_day_name);
+        event_day.appendChild(event_day_number);
+        wrapper.appendChild(event_day);
         wrapper.appendChild(link);
         event_list.appendChild(wrapper);
       });
