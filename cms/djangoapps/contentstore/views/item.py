@@ -49,6 +49,7 @@ from contentstore.views.preview import get_preview_fragment
 from edxmako.shortcuts import render_to_string
 from help_tokens.core import HelpUrlExpert
 from models.settings.course_grading import CourseGradingModel
+from openedx.core.djangoapps.content.block_structure.api import clear_course_from_cache
 from openedx.core.djangoapps.schedules.config import COURSE_UPDATE_WAFFLE_FLAG
 from openedx.core.djangoapps.waffle_utils import WaffleSwitch
 from openedx.core.lib.gating import api as gating_api
@@ -642,6 +643,7 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
         # Used by Bok Choy tests and by republishing of staff locks.
         if publish == 'make_public':
             modulestore().publish(xblock.location, user.id)
+            clear_course_from_cache(xblock.location.course_key)
 
         # Note that children aren't being returned until we have a use case.
         return JsonResponse(result, encoder=EdxJSONEncoder)
