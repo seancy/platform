@@ -186,7 +186,7 @@ COURSE_DISCOVERY_MEANINGS = {
         'name': 'Organization',
     },
     'modes': {
-        'name': 'Course Type',
+        'name': 'Category',
         'terms': {
             'honor': 'Honor',
             'verified': 'Verified',

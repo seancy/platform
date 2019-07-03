@@ -1067,7 +1067,7 @@ COURSE_DISCOVERY_MEANINGS = {
         },
     },
     'course_category': {
-        'name': 'Course Type',
+        'name': 'Category',
         'terms': dict(COURSE_CATEGORIES),
     },
     'vendor': {

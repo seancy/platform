@@ -13,7 +13,7 @@ define([
             }
         },
         modes: {
-            name: 'Course Type',
+            name: 'Category',
             terms: {
                 honor: 'Honor',
                 verified: 'Verified'

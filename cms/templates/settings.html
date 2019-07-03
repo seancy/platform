@@ -203,9 +203,9 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             </ol>
           </fieldset>
         </div>
-        
+
         <hr class="divide" />
-        
+
         <div id="schedule" class="group-settings schedule">
           <header>
             <h2 class="title-2">${_('Course Schedule')}</h2>
@@ -351,13 +351,13 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
               <span class="tip tip-stacked">${_("Identify the course language here. This is used to assist users find courses that are taught in a specific language.")}</span>
             </li>
             <li class="field" id="field-course-category">
-              <label for="course-category">${_("Course Type")}</label>
+              <label for="course-category">${_("Course Category")}</label>
               <select id="course-category">
                 % for category, label in category_options:
                   <option value="${category}">${label}</option>
                 % endfor
               </select>
-              <span class="tip tip-stacked">${_("Identify the Course Type here.")}</span>
+              <span class="tip tip-stacked">${_("Identify the course category here.")}</span>
             </li>
             <li class="field" id="field-course-order">
                 <label for="course-order">${_("Course Order")}</label>
@@ -367,7 +367,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <span class="tip tip-stacked">${_("Sort the courses to display on dashboard in ascending order. The order is from 0 to 99.")}</span>
             </li>
             <li class="field" id="field-course-vendor">
-              <label for="course-vendor">${_("Label")}</label>
+              <label for="course-vendor">${_("Course Label")}</label>
                 <input type="text" id="course-vendor">
               <span class="tip tip-stacked">${_("Identify the course label here.")}</span>
             </li>
@@ -468,7 +468,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                     <div class="input">
                       ## Translators: This is the placeholder text for a field that requests the URL for a course image
                       <input type="text" dir="ltr" class="long new-course-image-url" id="course-image-url" value="" placeholder="${_("Your course image URL")}" autocomplete="off" />
-                      <span class="tip tip-stacked">${_("Please provide a valid path and name to your course image (Note: only JPEG or PNG format supported)")}</span>
+                      <span class="tip tip-stacked">${_("Please provide a valid path and name to your course image (Note: the ideal image is 400px wide by 310px tall, in JPEG format)")}</span>
                     </div>
                     <button type="button" class="action action-upload-image" id="upload-course-image">${_("Upload Course Card Image")}</button>
                   </div>
@@ -494,7 +494,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                     <span class="wrapper-course-image">
                       <img class="course-image placeholder" id="banner-image" src="${banner_image_url}" alt="${_('Course Banner Image')}"/>
                     </span>
-                    <span class="msg msg-empty">${_("Your course currently does not have an image. Please upload one (JPEG or PNG format, and minimum suggested dimensions are 1440px wide by 400px tall)")}</span>
+                    <span class="msg msg-empty">${_("Your course currently does not have an image. Please upload one (JPEG or PNG format, and minimum suggested dimensions are 1000px wide by 600px tall)")}</span>
                     % endif
                   </div>
 
@@ -502,7 +502,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                     <div class="input">
                       ## Translators: This is the placeholder text for a field that requests the URL for a course banner image
                       <input type="text" dir="ltr" class="long new-course-image-url" id="banner-image-url" value="" placeholder="${_("Your banner image URL")}" autocomplete="off" />
-                      <span class="tip tip-stacked">${_("Please provide a valid path and name to your banner image (Note: only JPEG or PNG format supported)")}</span>
+                      <span class="tip tip-stacked">${_("Please provide a valid path and name to your banner image (Note: the ideal image is 1000px wide by 600px tall, in JPEG format)")}</span>
                     </div>
                     <button type="button" class="action action-upload-image" id="upload-banner-image">${_("Upload Course Banner Image")}</button>
                   </div>
