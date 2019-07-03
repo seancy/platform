@@ -1,11 +1,16 @@
 <%! from django.utils.translation import ugettext as _ %>
 <%! from django.utils.translation import ungettext %>
+<%! from django.conf import settings %>
+<%! from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers %>
+<%!
+    platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
+%>
 
-${_("Dear student,")}
+${_("Dear")} ${username},
 
-${_("You are receiving this message because you have been automatically re-enrolled in the course {course_name} at {site_name}.").format(
+${_("You are receiving this message because you have been automatically re-enrolled in the course {course_name} on {site_name}.").format(
 		course_name=display_name,
-		site_name=site_name
+		site_name=platform_name
 	)}
 
 % if finish_days:
@@ -39,6 +44,8 @@ ${_("To access the course visit {course_url} and login.").format(course_url=cour
 
 
 ${_("Best regards")}
+
+${_("{platform_name} Team").format(platform_name=platform_name)}
 
 ----
 ${_("This email was automatically sent from {site_name} to "
