@@ -28,15 +28,6 @@
                     this.listenTo(this.model, 'sync', this.saveSuccess);
                 },
 
-                render: function(html) {
-                    $(this.el).html(_.template(this.tpl)({
-                        context: {
-                            static_url: this.static_url
-                        }
-                    }));
-                    return this;
-                },
-
                 saveSuccess: function() {
                     this.trigger('password-email-sent');
 

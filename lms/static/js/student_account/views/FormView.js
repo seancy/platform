@@ -56,6 +56,9 @@
                 var fields = html || '';
 
                 $(this.el).html(_.template(this.tpl)({
+                    context: {
+                        static_url: this.static_url
+                    },
                     fields: fields
                 }));
 
