@@ -63,6 +63,7 @@ from models.settings.encoder import CourseSettingsEncoder
 from openedx.core.djangoapps.credit.api import get_credit_requirements, is_credit_course
 from openedx.core.djangoapps.credit.tasks import update_credit_course_requirements
 from openedx.core.djangoapps.models.course_details import CourseDetails
+from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangolib.js_utils import dump_js_escaped_json
 from openedx.core.lib.course_tabs import CourseTabPluginManager
@@ -545,7 +546,14 @@ def course_listing(request):
     active_courses, archived_courses = _process_courses_list(courses_iter, in_process_course_actions, split_archived)
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
+    orgs = []
+    for configuration in SiteConfiguration.objects.filter(enabled=True).all():
+        org_filter = configuration.get_value('course_org_filter', None)
+        if org_filter:
+            orgs.append(org_filter)
+
     return render_to_response(u'index.html', {
+        u'orgs': orgs,
         u'courses': active_courses,
         u'archived_courses': archived_courses,
         u'in_process_course_actions': in_process_course_actions,

@@ -115,10 +115,6 @@ def login_and_registration_form(request, initial_mode="login"):
     # Themed sites can use the new logistration page by setting
     # 'ENABLE_COMBINED_LOGIN_REGISTRATION' in their
     # configuration settings.
-    print "LAETITIA -- configuration_helpers.get_value('ENABLE_COMBINED_LOGIN_REGISTRATION') = %s" % configuration_helpers.get_value('ENABLE_COMBINED_LOGIN_REGISTRATION')
-    print "LAETITIA -- settings.FEATURES.get('ENABLE_COMBINED_LOGIN_REGISTRATION' = %s" % settings.FEATURES.get('ENABLE_COMBINED_LOGIN_REGISTRATION')
-    print "LAETITIA -- is_request_in_themed_site = %s" % is_request_in_themed_site()
-
     if is_request_in_themed_site() and not configuration_helpers.get_value('ENABLE_COMBINED_LOGIN_REGISTRATION',
                                             settings.FEATURES.get('ENABLE_COMBINED_LOGIN_REGISTRATION', True)):
         if initial_mode == "login":

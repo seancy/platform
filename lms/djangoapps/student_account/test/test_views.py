@@ -745,7 +745,6 @@ class StudentAccountLoginAndRegistrationTest(ThirdPartyAuthTestMixin, UrlResetMi
             reverse("register_user"),
             HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME
         )
-        # print "LAETITIA -- resp = %s" % resp
         self.assertContains(resp, "Register for Test Site")
         self.assertContains(resp, "register-form")
 
