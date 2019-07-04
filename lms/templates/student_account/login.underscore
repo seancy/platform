@@ -1,6 +1,6 @@
 <aside>
   <figure class="instruction-text">
-    <img src='/static/images/login-illustration.jpg' />
+    <img src="<%- context.static_url %>/login-illustration.jpg" />
     <% if ( context.createAccountOption !== false && !context.syncLearnerProfileData && !(context.enterpriseName && context.currentProvider) ) { %>
     <div class="toggle-form">
         <span class="text"><%- gettext("First time here?") %></span>

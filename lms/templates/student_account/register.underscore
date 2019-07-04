@@ -1,6 +1,6 @@
 <aside>
   <figure class="instruction-text">
-    <img src='/static/images/login-illustration.jpg' />
+    <img src="<%- context.static_url %>/login-illustration.jpg" />
     <% if (!context.syncLearnerProfileData) { %>
         <div class="toggle-form">
             <span class="text"><%- edx.StringUtils.interpolate(gettext('Already have an {platformName} account?'), {platformName: context.platformName }) %></span>
