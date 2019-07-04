@@ -613,6 +613,7 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
 
         if grader_type is not None:
             result.update(CourseGradingModel.update_section_grader_type(xblock, grader_type, user))
+            clear_course_from_cache(xblock.location.course_key)
 
         # Save gating info
         if xblock.category == 'sequential' and course.enable_subsection_gating:

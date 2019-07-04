@@ -6,3 +6,4 @@
     id="search"
     placeholder="<%- gettext("Search all posts") %>"
 />
+<i class="far fa-times"></i>

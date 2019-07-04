@@ -28,7 +28,8 @@
                 'click .search-button': 'performSearch',
                 'topic:selected': 'clearSearch',
                 'click .new-post-btn':'showNewPost',
-                'click .back-thread-list':'backThreadList'
+                'click .back-thread-list':'backThreadList',
+                'click .fa-times': 'clearAndShowThreads'
             },
 
             initialize: function(options) {
@@ -103,6 +104,7 @@
             },
 
             performSearch: function(event) {
+                this.$('.fa-times').show();
                 if (event.which === Constants.keyCodes.enter || event.type === 'click') {
                     event.preventDefault();
                     this.hideBrowseMenu();
@@ -113,6 +115,13 @@
             clearSearch: function() {
                 this.$('.search-input').val('');
                 this.discussionThreadListView.clearSearchAlerts();
+            },
+
+            clearAndShowThreads: function() {
+                this.$('.search-input').val('');
+                this.$('.fa-times').hide();
+                this.hideBrowseMenu();
+                this.discussionThreadListView.performSearch($('.search-input', this.$el));
             },
 
             goHome: function() {
