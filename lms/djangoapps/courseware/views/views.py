@@ -1019,6 +1019,7 @@ def _progress(request, course_key, student_id):
 
     course_grade = CourseGradeFactory().read(student, course)
     progress_summary = CourseGradeFactory().get_progress(student, course, grade_summary=course_grade)
+    progress_badges_section = _get_badges_section(progress_summary)
 
     studio_url = get_studio_url(course, 'settings/grading')
     # checking certificate generation configuration
@@ -1051,7 +1052,8 @@ def _progress(request, course_key, student_id):
         'user': request.user,
         'registered': registered_for_course(course, request.user),
         'course_target': course_target,
-        'progress_summary': progress_summary,
+        #'progress_summary': progress_summary,
+        'progress_badges_section': progress_badges_section,
         'progress': int(progress_summary['progress']*100)
     }
     context.update(
@@ -1065,6 +1067,30 @@ def _progress(request, course_key, student_id):
         response = render_to_response('courseware/progress_badges.html', context)
 
     return response
+
+
+def _get_badges_section(progress_summary):
+    """get badges and divide into different section
+
+    Sections for obtained, not obtained and not started, divided into to avoid front page to calculate for multi loop, optimal page performance.
+
+    Args:
+        progress_summary: dict object contains each chapter's trophies.
+
+    Returns:
+        A dict mapping different sections to individual badges
+    """
+    badges_section = {'obtained': [], 'not-obtained': [], 'not-started': []}
+    for chapter in progress_summary['trophies_by_chapter']:
+        for trophy in chapter['trophies']:
+            trophy['url'] = chapter['url']
+            if trophy['passed']:
+                badges_section['obtained'].append(trophy)
+            elif trophy['attempted']:
+                badges_section['not-obtained'].append(trophy)
+            else:
+                badges_section['not-started'].append(trophy)
+    return badges_section
 
 
 def _downloadable_certificate_message(course, cert_downloadable_status):

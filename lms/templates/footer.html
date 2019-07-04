@@ -101,7 +101,7 @@
             <li><a href="${reverse('mymooc_catalog')}">${_("My Mooc")}</a></li>
           % endif
 
-            <li><a href="${reverse('dashboard')}">${_('My Courses')}</a></li>
+            <li><a href="${reverse('my_courses')}">${_('My Courses')}</a></li>
             <li><a href="${reverse('account_settings')}">${_('My Account')}</a></li>
           </ol>
         </nav>
@@ -109,7 +109,7 @@
         <nav class="nav-other-systems">
           <h6>admin space</h6>
           <ol>
-            <li><a href="${getattr(settings, 'CMS_BASE')}">${_('Studio')}</a></li>
+            <li><a href="//${getattr(settings, 'CMS_BASE')}">${_('Studio')}</a></li>
 
           % if (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
               and (ANALYTICS_ACCESS_GROUP in [group.name for group in user.groups.all()] \
