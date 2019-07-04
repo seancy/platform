@@ -10,8 +10,8 @@ pipeline {
         AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
     }
     parameters {
-        choice(name: 'REGION', choices: ['CN', 'FR', 'US'], description: 'where to deploy APP')
-        string(name: 'CLIENT', defaultValue: 'learning-tribes', description: 'what instance name of client APP')
+        choice(name: 'REGION', choices: ['CN', 'FR', 'US', 'SG'], description: 'where to deploy APP')
+        string(name: 'CLIENT', defaultValue: 'learning-customer', description: 'what instance name of client APP')
     }
     stages{
         stage('GIT configuration Repo') {
@@ -32,8 +32,10 @@ pipeline {
                     if (params.REGION == 'CN') {
                         ec2_location = 'ap-southeast-1'
                     } else if (params.REGION == 'FR') {
-                        ec2_location = 'ap-southeast-1'
+                        ec2_location = 'eu-west-1'
                     } else if (params.REGION == 'US') {
+                        ec2_location = 'us-east-1'
+                    } else if (params.REGION == 'SG') {
                         ec2_location = 'ap-southeast-1'
                     }
                 }
@@ -74,7 +76,11 @@ pipeline {
                 dir('configuration/playbooks') {
                     sh """
                     . /tmp/.venv2/bin/activate
-                    ansible-playbook -i /opt/repo/hawthorn_inventory/hosts.ini -l "${params.CLIENT}_tenant" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" lt_edxapp_with_worker.yml
+                    ansible-playbook -i /opt/repo/hawthorn_inventory/hosts.ini -l "${params.CLIENT}_tenant" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "sensu_subscription=hawthorn-app" -e "THEMES_GIT_PATH=edx" -e "client_name=${params.REGION}-${params.CLIENT}_tenant" -e "sentry_project=${params.REGION}-${params.CLIENT}" -e "apm_project=${params.REGION}-${params.CLIENT}" lt_edxapp_with_worker.yml
+                    ansible-playbook -i /opt/repo/hawthorn_inventory/hosts.ini -l "${params.CLIENT}_tenant" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "client_name=${params.CLIENT}" lt_ec2_tenant_after.yml
+                    ansible-playbook -i /opt/repo/hawthorn_inventory/hosts.ini -l "${params.CLIENT}_tenant" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" lt_xqueue.yml
+                    ansible-playbook -i /opt/repo/hawthorn_inventory/hosts.ini -l "${params.CLIENT}_tenant" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" lt_forum.yml
+                    ansible-playbook -i /opt/repo/hawthorn_inventory/hosts.ini -l "${params.CLIENT}_tenant" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --skip-tags 'to-remove' lt_certs.yml
                     """
                 }
             }

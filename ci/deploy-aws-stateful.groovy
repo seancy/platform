@@ -49,7 +49,7 @@ pipeline {
                 dir('configuration/playbooks') {
                     sh """
                     . /tmp/.venv2/bin/activate
-                    ansible-playbook -i /opt/repo/hawthorn_inventory/hosts.ini -l "${params.REGION}_stateful" -u ubuntu --private-key /opt/instanceskey/"${params.REGION}"_platform_key.pem --vault-password-file "${key_file}" lt_stateful_center.yml
+                    ansible-playbook -i /opt/repo/hawthorn_inventory/hosts.ini -l "${params.REGION}_stateful" -u ubuntu --private-key /opt/instanceskey/"${params.REGION}"_platform_key.pem -e "sensu_subscription=hawthorn-db" -e "client_name=${params.REGION}_stateful" --vault-password-file "${key_file}" lt_stateful_center.yml
                     """
                 }
             }

@@ -1132,6 +1132,11 @@ if "ELASTIC_APM" in ENV_TOKENS:
     INSTALLED_APPS += ('elasticapm.contrib.django',)
     ELASTIC_APM = ENV_TOKENS.get('ELASTIC_APM')
 
+################### Settings for sentry ###################
+if "RAVEN_CONFIG" in ENV_TOKENS:
+    INSTALLED_APPS += ('raven.contrib.django.raven_compat',)
+    RAVEN_CONFIG = ENV_TOKENS.get('RAVEN_CONFIG')
+
 ############################### Plugin Settings ###############################
 
 from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants
