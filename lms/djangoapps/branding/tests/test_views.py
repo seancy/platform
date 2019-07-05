@@ -316,6 +316,7 @@ class TestIndex(SiteMixin, TestCase):
             fetch_redirect_response=False
         )
 
+    @pytest.mark.skip('Invalid after we removed the link in the footer copyright')
     def test_header_logo_links_to_marketing_site_with_site_override(self):
         """
         Test marketing site root link is included on dashboard page
