@@ -47,7 +47,7 @@
     <div class="nav-sub">
       <ul>
         % if GlobalStaff().has_user(user):
-        <li class="nav-item">
+        <li class="nav-item nav-maintenance">
           <a href="${reverse('maintenance:maintenance_index')}">${_("Maintenance")}</a>
         </li>
         % endif
