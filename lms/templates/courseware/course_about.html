@@ -176,6 +176,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           </div>
         </div>
 
+        % if pre_requisite_courses:
         <div class="pre-requisites">
           <p class="important-dates-item-title">${_("Prerequisites")}</p>
           ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
@@ -195,6 +196,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
             % endif
           </div>
         </div>
+        % endif
 
         % if get_course_about_section(request, course, "prerequisites"):
           <li class="important-dates-item">
@@ -208,12 +210,14 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           ${HTML(outline_fragment.body_html())}
         % endif
 
+        % if len(get_course_about_section(request, course, "overview").strip()):
         <div class="inner-wrapper course-overview">
           <h2 class="course-overview-title">Course Overview</h2>
           <div class="course-overview-container">
-            ${get_course_about_section(request, course, "overview")}
+            ${HTML(get_course_about_section(request, course, "overview"))}
           </div>
         </div>
+        % endif
 
         <% course_instructors = CourseDetails.fetch(course.id).instructor_info['instructors'] %>
         % if len(course_instructors) > 0:

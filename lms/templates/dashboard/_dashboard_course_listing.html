@@ -213,7 +213,8 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         <section class="sub-info">
             <div class="badge">
                 <i class="far fa-trophy"></i>
-                <span>${nb_of_badges} ${_("badges")}</span>
+                <span>${ungettext(
+                    '{num} badge', '{num} badges', nb_of_badges).format(num=nb_of_badges)}</span>
             </div>
             <div class="spliter"></div>
             <div class="duration">
