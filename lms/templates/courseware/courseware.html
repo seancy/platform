@@ -135,7 +135,7 @@ ${HTML(fragment.foot_html())}
   <div class="course-wrapper" role="presentation">
 
 % if disable_accordion is UNDEFINED or not disable_accordion:
-    <div class="course-index">
+    <div class="course-index ${course_index}" >
       <div class="back-link">
         <a href="${reverse('openedx.course_experience.course_home', args=[course.id])}">
           <i class="far fa-arrow-left"></i>
@@ -181,7 +181,12 @@ ${HTML(fragment.foot_html())}
     <section class="course-content" id="course-content">
 
         <header class="page-header has-secondary">
-              <i class="far fa-outdent"></i>
+            % if course_index == 'hide':
+                <i class="far fa-indent"></i>
+            % else:
+                <i class="far fa-outdent"></i>
+            % endif
+
             % if section:
               <h3>${section.display_name_with_default}</h3>
             % endif
