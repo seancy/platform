@@ -535,6 +535,8 @@ def account_settings_context(request):
         # it will be broken if exception raised
         user_orders = []
 
+    extra_fields = configuration_helpers.get_value('REGISTRATION_EXTRA_FIELDS', settings.REGISTRATION_EXTRA_FIELDS)
+
     context = {
         'auth': {},
         'duplicate_provider': None,
@@ -568,6 +570,9 @@ def account_settings_context(request):
         'show_program_listing': ProgramsApiConfig.is_enabled(),
         'show_dashboard_tabs': True,
         'order_history': user_orders,
+        'lt_phone_number': extra_fields.get('lt_phone_number', 'hidden'),
+        'lt_gdpr': extra_fields.get('lt_gdpr','hidden'),
+        'gdpr_message': configuration_helpers.get_value('General_Data_Protect_Regulation', 'I agree to be contacted by email or phone as part of a recruitment process.'),
         'enable_account_deletion': configuration_helpers.get_value(
             'ENABLE_ACCOUNT_DELETION', settings.FEATURES.get('ENABLE_ACCOUNT_DELETION', False)
         ),

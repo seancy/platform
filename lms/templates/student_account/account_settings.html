@@ -37,6 +37,9 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
         authData = ${ auth | n, dump_js_escaped_json },
         platformName = '${ static.get_platform_name() | n, js_escaped_string }',
         contactEmail = '${ static.get_contact_email_address() | n, js_escaped_string }',
+        ltPhoneNumber = '${ lt_phone_number | n, js_escaped_string }',
+        ltGDPR= '${ lt_gdpr | n, js_escaped_string }',
+        gdprMessage = '${ gdpr_message | n, js_escaped_string }'
         allowEmailChange = ${ bool(settings.FEATURES['ALLOW_EMAIL_ADDRESS_CHANGE']) | n, dump_js_escaped_json },
         socialPlatforms = ${ settings.SOCIAL_PLATFORMS | n, dump_js_escaped_json },
 
@@ -57,6 +60,9 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
         ${ user.id | n, dump_js_escaped_json },
         platformName,
         contactEmail,
+        ltPhoneNumber,
+        ltGDPR,
+        gdprMessage,
         allowEmailChange,
         socialPlatforms,
 

@@ -20,6 +20,9 @@
             accountUserId,
             platformName,
             contactEmail,
+            ltPhoneNumber,
+            ltGDPR,
+            gdprMessage,
             allowEmailChange,
             socialPlatforms,
             syncLearnerProfileData,
@@ -144,6 +147,22 @@
                         fullnameFieldView,
                         emailFieldView,
                         {
+                            view: new AccountSettingsFieldViews.PhoneNumberFieldView({
+                                model: userAccountModel,
+                                title: gettext('Phone Number'),
+                                valueAttribute: 'lt_phone_number',
+                                persistChanges: true
+                            })
+                        },
+                        {
+                            view: new AccountSettingsFieldViews.CheckboxFieldView({
+                                model: userAccountModel,
+                                title: gettext(gdprMessage),
+                                valueAttribute: 'lt_gdpr',
+                                persistChanges: true
+                            })
+                        },
+                        {
                             view: new AccountSettingsFieldViews.PasswordFieldView({
                                 model: userAccountModel,
                                 title: gettext('Password'),
@@ -232,6 +251,17 @@
                 }
             ];
 
+            var accountFields = aboutSectionsData[0].fields;
+            for (var i = 0; i < accountFields.length; i++) {
+                if (accountFields[i].view.fieldType === 'phone_number' && ltPhoneNumber === 'hidden') {
+                    accountFields.splice(i, 1);
+                }
+                if (accountFields[i].view.fieldType === 'gdpr' && ltGDPR === 'hidden') {
+                    accountFields.splice(i, 1);
+                    i--; // avoid to skip matched items. make sure this's the last statement in current loop.
+                }
+            }
+            
             // Add the extended profile fields
             additionalFields = aboutSectionsData[1];
             for (var field in extendedProfileFields) {  // eslint-disable-line guard-for-in, no-restricted-syntax, vars-on-top, max-len

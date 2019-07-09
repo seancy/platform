@@ -9,6 +9,8 @@
                 username: '',
                 name: '',
                 email: '',
+                lt_phone_number: '',
+                lt_gdpr: '',
                 password: '',
                 language: null,
                 country: null,

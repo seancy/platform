@@ -302,6 +302,8 @@ class AccountSettingsOnCreationTest(TestCase):
         self.assertEqual(account_settings, {
             'username': self.USERNAME,
             'email': self.EMAIL,
+            'lt_phone_number': None,
+            'lt_gdpr': False,
             'name': u'',
             'gender': None,
             'goals': None,

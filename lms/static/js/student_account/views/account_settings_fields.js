@@ -10,6 +10,7 @@
         'text!templates/fields/field_readonly_account.underscore',
         'text!templates/fields/field_link_account.underscore',
         'text!templates/fields/field_dropdown_account.underscore',
+        'text!templates/fields/field_checkbox_account.underscore',
         'text!templates/fields/field_social_link_account.underscore',
         'text!templates/fields/field_order_history.underscore',
         'edx-ui-toolkit/js/utils/string-utils',
@@ -21,6 +22,7 @@
         field_readonly_account_template,
         field_link_account_template,
         field_dropdown_account_template,
+        field_checkbox_account_template,
         field_social_link_template,
         field_order_history_template,
         StringUtils,
@@ -47,6 +49,29 @@
                         )
                     );
                 }
+            }),
+            PhoneNumberFieldView: FieldViews.TextFieldView.extend({
+                fieldType: 'phone_number',
+                fieldTemplate: field_text_account_template
+            }),
+            CheckboxFieldView: FieldViews.CheckboxFieldView.extend({
+                fieldType: 'gdpr',
+                fieldTemplate: field_checkbox_account_template,
+                initialize: function(options) {
+                    this._super(options);
+                    _.bindAll(this, 'render', 'updateValueInField', 'fieldValue', 'saveValue');
+                    this.listenTo(this.model, 'change:' + this.options.valueAttribute, this.updateValueInField);
+                },
+                fieldValue: function() {
+                    var isChecked = (this.$('.u-field-value input').prop('checked')) ? 'true' : 'false';
+                    return isChecked;
+                },
+                updateValueInField: function() {
+                    var value = (_.isUndefined(this.modelValue()) || _.isNull(this.modelValue())) ? '' : this.modelValue();
+                    this.$('.u-field-value input').val(value);
+                    this.$('.u-field-value input').prop('checked', value);
+                }
+
             }),
             LanguagePreferenceFieldView: FieldViews.DropdownFieldView.extend({
                 fieldTemplate: field_dropdown_account_template,

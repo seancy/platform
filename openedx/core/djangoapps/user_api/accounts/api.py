@@ -152,6 +152,9 @@ def update_account_settings(requesting_user, update, username=None):
         AccountUserSerializer.get_read_only_fields() + AccountLegacyProfileSerializer.get_read_only_fields()
     )
 
+    if "lt_gdpr" in update:
+        update["lt_gdpr"] = True if update["lt_gdpr"] == 'true' else False
+        
     # Build up all field errors, whether read-only, validation, or email errors.
     field_errors = {}
 

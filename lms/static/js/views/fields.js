@@ -6,6 +6,7 @@
         'edx-ui-toolkit/js/utils/date-utils',
         'text!templates/fields/field_readonly.underscore',
         'text!templates/fields/field_dropdown.underscore',
+        'text!templates/fields/field_checkbox.underscore',
         'text!templates/fields/field_link.underscore',
         'text!templates/fields/field_text.underscore',
         'text!templates/fields/field_textarea.underscore',
@@ -13,6 +14,7 @@
     ], function(gettext, $, _, Backbone, HtmlUtils, DateUtils,
                  field_readonly_template,
                  field_dropdown_template,
+                 field_checkbox_template,
                  field_link_template,
                  field_text_template,
                  field_textarea_template
@@ -533,6 +535,17 @@
                     groupTitle: null,
                     selectOptions: this.options.options
                 }];
+            }
+        });
+
+        FieldViews.CheckboxFieldView = FieldViews.TextFieldView.extend({
+
+            fieldType: 'checkbox',
+
+            fieldTemplate: field_checkbox_template,
+
+            events: {
+                'change input': 'saveValue'
             }
         });
 

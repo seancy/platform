@@ -3044,6 +3044,8 @@ ACCOUNT_VISIBILITY_CONFIGURATION = {
     "admin_fields": [
         "username",
         "email",
+        "lt_phone_number",
+        "lt_gdpr",
         "is_active",
         "bio",
         "country",
