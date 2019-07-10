@@ -69,10 +69,16 @@ from openedx.core.djangolib.markup import HTML, Text
               % endif
             </h2>
         </div>
-        % if resume_course_url and user_is_enrolled:
+        % if resume_course_url:
+          % if user_is_enrolled:
           <div class="page-header-secondary">
               <a href="${resume_course_url}" class="last-accessed-link">${_("Resume Course")}</a>
           </div>
+          % elif staff_access:
+          <div class="page-header-secondary">
+              <a href="${resume_course_url}" class="last-accessed-link">${_("View Course")}</a>
+          </div>
+          % endif
         % endif
       </div>
       <div class="info-wrapper">

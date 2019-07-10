@@ -121,19 +121,24 @@ from six import string_types
           circleBg.style.strokeDashoffset = circumference - 100 / 100 * circumference;
         </script>
       % endif
+      % if show_courseware_link:
         <div class="main-cta">
         % if user.is_authenticated and (registered or staff_access):
           % if registered:
             <span class="sr">${_("You are enrolled in this course")}</span>
-          % endif
-          % if show_courseware_link:
             <a href="${ resume_course_url if resume_course_url else course_target }" class="action-resume-course">${_("Resume Course")}</a>
+          % else:
+            % if in_cart:
+              <span class="sr">${_('This course is in your cart.')}</span>
+              <a href="${cart_link}">${_('View Cart')}</a>
+            % else:
+              <a href="${ resume_course_url if resume_course_url else course_target }" class="action-resume-course">${_("View Course")}</a>
+            % endif
           % endif
 
         % elif in_cart:
-            <span class="sr">${_('This course is in your cart.')}</span>
-            <a href="${cart_link}">${_('View Cart')}</a>
-          </span>
+          <span class="sr">${_('This course is in your cart.')}</span>
+          <a href="${cart_link}">${_('View Cart')}</a>
 
         % elif is_course_full:
           <span class="sr">${_("Course is full")}</span>
@@ -164,8 +169,7 @@ from six import string_types
               reg_element_id = ""
           %>
           <a href="${reg_href}" class="add-to-cart" id="${reg_element_id}">
-            ${_("Add to Cart <span>({price} USD)</span>")\
-              .format(price=course_price)}
+            ${_("Add to Cart <span>({price} USD)</span>").format(price=course_price)}
           </a>
           <div id="register_error"></div>
 
@@ -184,6 +188,7 @@ from six import string_types
           <div id="register_error"></div>
         % endif
         </div>
+      % endif
     </section>
   </nav>
 </header>

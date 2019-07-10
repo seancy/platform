@@ -496,16 +496,17 @@ def ccx_gradebook(request, course, ccx=None):
         student_info, page = get_grade_book_page(request, course, course_key=ccx_key)
 
         return render_to_response('instructor/instructor_dashboard_2/gradebook.html', {
-            'sections': {},
-            'progress': None,
             'page': page,
             'page_url': reverse('ccx_gradebook', kwargs={'course_id': ccx_key}),
             'students': student_info,
             'course': course,
             'course_id': course.id,
             'staff_access': request.user.is_staff,
+            'show_courseware_link': False,
+            'progress': None,
             'ordered_grades': sorted(
                 course.grade_cutoffs.items(), key=lambda i: i[1], reverse=True),
+            'sections': {},
         })
 
 

@@ -371,7 +371,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
             completion=completion
         )
 
-    def visit_course_home(self, course, start_count=0, resume_count=0):
+    def visit_course_home(self, course, start_count=0, resume_count=0, view_count=0):
         """
         Helper function to navigates to course home page, test for resume buttons
 
@@ -384,6 +384,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Start Course', count=start_count)
         self.assertContains(response, 'Resume Course', count=resume_count)
+        self.assertContains(response, 'View Course', count=view_count)
         return response
 
     def test_course_home_completion(self):
@@ -522,7 +523,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
 
         self.override_waffle_switch(True)
         CourseEnrollment.get_enrollment(self.user, course.id).delete()
-        response = self.visit_course_home(course, start_count=0, resume_count=1)
+        response = self.visit_course_home(course, start_count=0, resume_count=0, view_count=1)
         content = pq(response.content)
         self.assertTrue(content('.action-resume-course').attr('href').endswith('/course/' + course.url_name))
 
