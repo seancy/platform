@@ -154,7 +154,7 @@ class CourseGradeFactory(object):
             raise PersistentCourseGrade.DoesNotExist
 
         persistent_grade = PersistentCourseGrade.read(user.id, course_data.course_key)
-        log.debug(u'Grades: Read, %s, User: %s, %s', unicode(course_data), user.id, persistent_grade)
+        log.info(u'Grades: Read, %s, User: %s, %s', unicode(course_data), user.id, persistent_grade)
 
         return CourseGrade(
             user,

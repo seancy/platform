@@ -11,11 +11,16 @@ from lms.djangoapps.grades.course_data import CourseData
 from lms.djangoapps.grades.subsection_grade import CreateSubsectionGrade
 from lms.djangoapps.utils import _get_key
 from opaque_keys.edx.keys import CourseKey, UsageKey
-from track.event_transaction_utils import create_new_event_transaction_id, set_event_transaction_type
+from track.event_transaction_utils import (
+    create_new_event_transaction_id,
+    get_event_transaction_id,
+    get_event_transaction_type,
+    set_event_transaction_type,
+)
 
 from .config.waffle import waffle_flags, REJECTED_EXAM_OVERRIDES_GRADE
 from .constants import ScoreDatabaseTableEnum
-from .events import SUBSECTION_OVERRIDE_EVENT_TYPE
+from .events import grade_updated, SUBSECTION_OVERRIDE_EVENT_TYPE
 from .models import (
     PersistentSubsectionGrade,
     PersistentSubsectionGradeOverride,
@@ -145,8 +150,8 @@ class GradesService(object):
         # Signal will trigger subsection recalculation which will call PersistentSubsectionGrade.update_or_create_grade
         # which will no longer use the above deleted override, and instead return the grade to the original score from
         # the actual problem responses before writing to the table.
-        SUBSECTION_OVERRIDE_CHANGED.send(
-            sender=None,
+
+        grade_updated(
             user_id=user_id,
             course_id=unicode(course_key),
             usage_id=unicode(usage_key),
@@ -154,6 +159,22 @@ class GradesService(object):
             modified=datetime.now().replace(tzinfo=pytz.UTC),  # Not used when score_deleted=True
             score_deleted=True,
             score_db_table=ScoreDatabaseTableEnum.overrides
+        )
+
+        from .tasks import recalculate_subsection_grade_v3
+        recalculate_subsection_grade_v3.apply(
+            kwargs=dict(
+                user_id=user_id,
+                anonymous_user_id=None,
+                course_id=unicode(course_key),
+                usage_id=unicode(usage_key),
+                only_if_higher=False,
+                expected_modified_time=datetime.now().replace(tzinfo=pytz.UTC),
+                score_deleted=True,
+                event_transaction_id=unicode(get_event_transaction_id()),
+                event_transaction_type=unicode(get_event_transaction_type()),
+                score_db_table=ScoreDatabaseTableEnum.overrides,
+            )
         )
 
     def should_override_grade_on_rejected_exam(self, course_key_or_id):

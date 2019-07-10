@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 %>
 
+<%block name="pagetitle">${_("Gradebook")}</%block>
 <%block name="bodyclass">view-in-course</%block>
 <%block name="js_extra">
   <link href="https://cdn.bootcss.com/izimodal/1.5.1/css/iziModal.min.css" rel="stylesheet">
@@ -79,6 +80,16 @@ from django.core.urlresolvers import reverse
                   </div>
                 </div>
 
+                % if query:
+                  <div class="active-filter">
+                      <div class="filter-wrapper">
+                          <button>
+                              <span>${query}</span>
+                              <i class="far fa-times"></i>
+                          </button>
+                      </div>
+                  </div>
+                % endif
                 <table class="student-table">
                   <thead>
                     <tr>

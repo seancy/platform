@@ -190,8 +190,7 @@ var Gradebook = function($element) {
                             $(this).attr({
                                 'class': grade_data['class'],
                                 'title': grade_data['detail'],
-                                'data-percent': grade_data['percent'],
-                                'data-usage-id': grade_data['usage_key']
+                                'data-percent': grade_data['percent']
                             }).find('.score').text(grade_data['grade']);
 
                         });
@@ -412,4 +411,8 @@ var Gradebook = function($element) {
     });
     $search.bind('keyup', filter);
     $(window).bind('resize', onResizeTable);
+    
+    $(".active-filter button").click(function () {
+        window.location = window.location.pathname
+    })
 };

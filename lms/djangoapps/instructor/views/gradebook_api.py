@@ -131,11 +131,13 @@ def spoc_gradebook(request, course_id):
     sections = get_instructor_tabs(request, request.user, course)
 
     if request.method == 'GET':
+        query_name = ''
         page_url = request.get_full_path()
         if page_url.rfind('offset') > -1:
             page_url = page_url[0:page_url.rfind('offset')]
         else:
             if 'learner_name' in page_url:
+                query_name = request.GET.get('learner_name')
                 page_url = page_url + '&'
             else:
                 page_url = page_url + '?'
@@ -157,5 +159,6 @@ def spoc_gradebook(request, course_id):
             'resume_course_url': resume_course_url,
             'progress': progress,
             'ordered_grades': sorted(course.grade_cutoffs.items(), key=lambda i: i[1], reverse=True),
-            'sections': sections
+            'sections': sections,
+            'query': query_name
         })
