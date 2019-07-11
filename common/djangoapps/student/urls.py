@@ -14,7 +14,7 @@ urlpatterns = [
     # TODO: standardize login
 
     # login endpoint used by cms.
-    url(r'^login_post$', views.login_user, name='login_post'),
+    url(r'^login_post$', views.studio_login, name='login_post'),
     # login endpoints used by lms.
     url(r'^login_ajax$', views.login_user, name="login"),
     url(r'^login_ajax/(?P<error>[^/]*)$', views.login_user),
