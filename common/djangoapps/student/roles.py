@@ -18,7 +18,6 @@ log = logging.getLogger(__name__)
 # A list of registered access roles.
 REGISTERED_ACCESS_ROLES = {}
 
-COURSE_ADMIN_ACCESS_GROUP = "Course Admin"
 
 
 def register_access_role(cls):
