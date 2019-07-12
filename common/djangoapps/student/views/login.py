@@ -221,10 +221,7 @@ def _generate_not_activated_message(user):
         settings.PLATFORM_NAME
     )
 
-    not_activated_msg_template = _('In order to sign in, you need to activate your account.<br /><br />'
-                                   'We just sent an activation link to <strong>{email}</strong>.  If '
-                                   'you do not receive an email, check your spam folders or '
-                                   '<a href="{support_url}">contact {platform} Support</a>.')
+    not_activated_msg_template = _('In order to sign in, you need to activate your account.')
 
     not_activated_message = not_activated_msg_template.format(
         email=user.email,
@@ -250,7 +247,7 @@ def _log_and_raise_inactive_user_auth_error(unauthenticated_user):
             unauthenticated_user.username)
         )
 
-    send_reactivation_email_for_user(unauthenticated_user)
+    # send_reactivation_email_for_user(unauthenticated_user)
     raise AuthFailedError(_generate_not_activated_message(unauthenticated_user))
 
 

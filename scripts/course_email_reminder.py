@@ -210,6 +210,7 @@ def send_re_enroll_email(course_enrollment):
             sending_mail = True
         elif time_unit == 'year' and r.years >= re_enroll_time:
             sending_mail = True
+
         if sending_mail:
             # sending_mail is true means we have to re-enroll the student in the course
             course_re_enroll(course_enrollment)
