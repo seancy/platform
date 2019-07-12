@@ -232,10 +232,13 @@ def send_re_enroll_email(course_enrollment):
             subject = subject.strip('\n')
             try:
                 send_mail(subject, message, settings.CONTACT_EMAIL, [course_enrollment.user.email], fail_silently=False)
-                logger.info("send re_enroll_email to {email}, course_id: {course_id}".format(
-                    email=course_enrollment.user.email,
-                    course_id=course_enrollment.course_id
-                ))
+                logger.info("send re_enroll_email to username: {username}, id: {user_id}, "
+                            "email: {email}, course_id: {course_id}".format(
+                                username=course_enrollment.user.username,
+                                user_id=course_enrollment.user.id,
+                                email=course_enrollment.user.email,
+                                course_id=course_enrollment.course_id
+                            ))
             except Exception:
                 logger.exception(Exception)
 
@@ -290,10 +293,13 @@ def send_reminder_email(course_enrollment):
         subject = subject.strip('\n')
         try:
             send_mail(subject, message, settings.CONTACT_EMAIL, [course_enrollment.user.email], fail_silently=False)
-            logger.info("send reminder_email to {email}, course_id: {course_id}".format(
-                email=course_enrollment.user.email,
-                course_id=course_enrollment.course_id
-            ))
+            logger.info("send reminder_email to username: {username}, id: {user_id}, "
+                        "email: {email}, course_id: {course_id}".format(
+                            username=course_enrollment.user.username,
+                            user_id=course_enrollment.user.id,
+                            email=course_enrollment.user.email,
+                            course_id=course_enrollment.course_id
+                        ))
         except Exception:
             logger.exception(Exception)
 

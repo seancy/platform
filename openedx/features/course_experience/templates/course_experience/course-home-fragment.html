@@ -145,7 +145,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
               ${nb_trophies_earned} / ${nb_trophies_possible}
             </a>
           </div>
-          <div style="clear: both;"></div>
+          <div class="clearfix"></div>
         </div>
         <div class="intro">
           <div class="course-image">
@@ -271,7 +271,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 ## Since it's no harm to display a hidden form, we display it with the most permissive conditional
 ## which is when the student is not registered.
 % if active_reg_button or is_shib_course:
-  <div style="display: none;">
+  <div>
     <form id="class_enroll_form" method="post" data-remote="true" action="${reverse('change_enrollment')}">
       <fieldset class="enroll_fieldset">
         <legend class="sr">${pgettext("self","Enroll")}</legend>

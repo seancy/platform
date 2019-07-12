@@ -37,6 +37,7 @@ from xmodule.modulestore.django import modulestore
 
 <%block name="js_extra">
   <script src="${static.url('js/commerce/credit.js')}"></script>
+  <script src="${static.url('js/dashboard/progress_ring.js')}"></script>
   <%static:js group='dashboard'/>
   <script type="text/javascript">
     $(document).ready(function() {
@@ -44,24 +45,6 @@ from xmodule.modulestore.django import modulestore
         dashboard: "${reverse('dashboard') | n, js_escaped_string}",
         signInUser: "${reverse('signin_user') | n, js_escaped_string}",
         changeEmailSettings: "${reverse('change_email_settings') | n, js_escaped_string}"
-      });
-
-      $(".progress-icon").each(function () {
-        var progressRing = $(this).find('.progress-ring')[0],
-            percent = progressRing.dataset['percent'],
-            circle = $(this).find('.progress-ring__circle')[0],
-            circleBg = $(this).find('.progress-ring__circle-bg')[0],
-            radius = circle.r.baseVal.value,
-            size = (radius + 7) * 2,
-            circumference = radius * 2 * Math.PI,
-            offset = circumference - percent / 100 * circumference;
-        progressRing.style.height = size + "px";
-        progressRing.style.width = size + "px";
-        progressRing.style.strokeDasharray = circumference + " " + circumference;
-        progressRing.style.strokeDashoffset = circumference;
-        circle.style.strokeDashoffset = offset;
-        circle.style.transformOrigin = (radius + 6) + "px " + (radius + 6) + "px";
-        circleBg.style.strokeDashoffset = circumference - 100 / 100 * circumference;
       });
     });
   </script>
