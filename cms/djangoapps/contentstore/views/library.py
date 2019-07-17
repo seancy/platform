@@ -8,7 +8,6 @@ from __future__ import absolute_import
 import logging
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseForbidden, HttpResponseNotAllowed
 from django.utils.translation import ugettext as _
@@ -30,7 +29,7 @@ from student.auth import (
     has_studio_read_access,
     has_studio_write_access
 )
-from student.roles import CourseInstructorRole, CourseStaffRole, LibraryUserRole
+from student.roles import studio_login_required, CourseInstructorRole, CourseStaffRole, LibraryUserRole
 from util.json_request import JsonResponse, JsonResponseBadRequest, expect_json
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
@@ -68,7 +67,7 @@ def get_library_creator_status(user):
             return not disable_course_creation
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(('GET', 'POST'))
 def library_handler(request, library_key_string=None):

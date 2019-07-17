@@ -1,7 +1,6 @@
 """
 Views related to course tabs
 """
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseNotFound
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -10,6 +9,7 @@ from opaque_keys.edx.keys import CourseKey, UsageKey
 
 from edxmako.shortcuts import render_to_response
 from student.auth import has_course_author_access
+from student.roles import studio_login_required
 from util.json_request import JsonResponse, expect_json
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
@@ -21,7 +21,7 @@ __all__ = ['tabs_handler']
 
 
 @expect_json
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "POST", "PUT"))
 def tabs_handler(request, course_key_string):

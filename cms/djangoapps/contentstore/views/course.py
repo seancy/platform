@@ -12,7 +12,6 @@ import django.utils
 import six
 from ccx_keys.locator import CCXLocator
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.urls import reverse
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
@@ -70,7 +69,14 @@ from openedx.core.lib.course_tabs import CourseTabPluginManager
 from openedx.core.lib.courses import course_image_url
 from student import auth
 from student.auth import has_course_author_access, has_studio_read_access, has_studio_write_access
-from student.roles import CourseCreatorRole, CourseInstructorRole, CourseStaffRole, GlobalStaff, UserBasedRole
+from student.roles import (
+    studio_login_required,
+    CourseCreatorRole,
+    CourseInstructorRole,
+    CourseStaffRole,
+    GlobalStaff,
+    UserBasedRole
+)
 from util.course import get_link_for_about_page
 from util.date_utils import get_default_time_display
 from util.json_request import JsonResponse, JsonResponseBadRequest, expect_json
@@ -139,7 +145,7 @@ def reindex_course_and_check_access(course_key, user):
     return CoursewareSearchIndexer.do_course_reindex(modulestore(), course_key)
 
 
-@login_required
+@studio_login_required
 def course_notifications_handler(request, course_key_string=None, action_state_id=None):
     """
     Handle incoming requests for notifications in a RESTful way.
@@ -224,7 +230,7 @@ def _dismiss_notification(request, course_action_state_id):  # pylint: disable=u
 
 
 # pylint: disable=unused-argument
-@login_required
+@studio_login_required
 def course_handler(request, course_key_string=None):
     """
     The restful handler for course specific requests.
@@ -276,7 +282,7 @@ def course_handler(request, course_key_string=None):
         raise Http404
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(["GET"])
 def course_rerun_handler(request, course_key_string):
@@ -301,7 +307,7 @@ def course_rerun_handler(request, course_key_string):
             })
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_GET
 def course_search_index_handler(request, course_key_string):
@@ -492,7 +498,7 @@ def _accessible_libraries_iter(user, org=None):
     return (lib for lib in libraries if has_studio_read_access(user, lib.location.library_key))
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 def course_listing(request):
     """
@@ -613,7 +619,7 @@ def _deprecated_blocks_info(course_module, deprecated_block_types):
     return data
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 def course_index(request, course_key):
     """
@@ -941,7 +947,7 @@ def rerun_course(user, source_course_key, org, number, run, fields, async=True):
 
 
 # pylint: disable=unused-argument
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(["GET"])
 def course_info_handler(request, course_key_string):
@@ -974,7 +980,7 @@ def course_info_handler(request, course_key_string):
 
 
 # pylint: disable=unused-argument
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "POST", "PUT", "DELETE"))
 @expect_json
@@ -1026,7 +1032,7 @@ def course_info_update_handler(request, course_key_string, provided_id=None):
             )
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "PUT", "POST"))
 @expect_json
@@ -1183,7 +1189,7 @@ def settings_handler(request, course_key_string):
                 )
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "POST", "PUT", "DELETE"))
 @expect_json
@@ -1279,7 +1285,7 @@ def _refresh_course_tabs(request, course_module):
         course_module.tabs = course_tabs
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "POST", "PUT"))
 @expect_json
@@ -1405,7 +1411,7 @@ def assign_textbook_id(textbook, used_ids=()):
 
 
 @require_http_methods(("GET", "POST", "PUT"))
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 def textbooks_list_handler(request, course_key_string):
     """
@@ -1480,7 +1486,7 @@ def textbooks_list_handler(request, course_key_string):
             return resp
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "POST", "PUT", "DELETE"))
 def textbooks_detail_handler(request, course_key_string, textbook_id):
@@ -1581,7 +1587,7 @@ def remove_content_or_experiment_group(request, store, course, configuration, gr
 
 
 @require_http_methods(("GET", "POST"))
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 def group_configurations_list_handler(request, course_key_string):
     """
@@ -1661,7 +1667,7 @@ def group_configurations_list_handler(request, course_key_string):
             return HttpResponse(status=406)
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("POST", "PUT", "DELETE"))
 def group_configurations_detail_handler(request, course_key_string, group_configuration_id, group_id=None):

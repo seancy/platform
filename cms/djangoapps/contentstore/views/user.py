@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseNotFound
@@ -13,7 +12,7 @@ from edxmako.shortcuts import render_to_response
 from student import auth
 from student.auth import STUDIO_EDIT_ROLES, STUDIO_VIEW_USERS, get_user_permissions
 from student.models import CourseEnrollment
-from student.roles import CourseInstructorRole, CourseStaffRole, LibraryUserRole
+from student.roles import studio_login_required, CourseInstructorRole, CourseStaffRole, LibraryUserRole
 from util.json_request import JsonResponse, expect_json
 from xmodule.modulestore.django import modulestore
 
@@ -21,7 +20,7 @@ __all__ = ['request_course_creator', 'course_team_handler']
 
 
 @require_POST
-@login_required
+@studio_login_required
 def request_course_creator(request):
     """
     User has requested course creation access.
@@ -30,7 +29,7 @@ def request_course_creator(request):
     return JsonResponse({"Status": "OK"})
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "POST", "PUT", "DELETE"))
 def course_team_handler(request, course_key_string=None, email=None):

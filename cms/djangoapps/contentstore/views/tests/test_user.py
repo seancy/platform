@@ -9,7 +9,8 @@ from contentstore.tests.utils import CourseTestCase
 from contentstore.utils import reverse_course_url
 from student import auth
 from student.models import CourseEnrollment
-from student.roles import CourseInstructorRole, CourseStaffRole
+from student.roles import COURSE_ADMIN_ACCESS_GROUP, CourseInstructorRole, CourseStaffRole
+from student.tests.factories import GroupFactory
 
 
 class UsersTestCase(CourseTestCase):
@@ -211,6 +212,7 @@ class UsersTestCase(CourseTestCase):
         auth.add_users(self.user, CourseStaffRole(self.course.id), self.user)
         self.user.is_staff = False
         self.user.save()
+        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
 
         self_url = self.course_team_url(email=self.user.email)
 
@@ -227,6 +229,7 @@ class UsersTestCase(CourseTestCase):
         auth.add_users(self.user, CourseStaffRole(self.course.id), self.user)
         self.user.is_staff = False
         self.user.save()
+        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
 
         resp = self.client.post(
             self.detail_url,
@@ -241,6 +244,7 @@ class UsersTestCase(CourseTestCase):
         auth.add_users(self.user, CourseStaffRole(self.course.id), self.user)
         self.user.is_staff = False
         self.user.save()
+        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
 
         self_url = self.course_team_url(email=self.user.email)
 
@@ -254,6 +258,7 @@ class UsersTestCase(CourseTestCase):
         auth.add_users(self.user, CourseStaffRole(self.course.id), self.user, self.ext_user)
         self.user.is_staff = False
         self.user.save()
+        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
 
         resp = self.client.delete(self.detail_url)
         self.assertEqual(resp.status_code, 403)

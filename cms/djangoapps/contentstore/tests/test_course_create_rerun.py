@@ -10,8 +10,8 @@ from mock import patch
 from opaque_keys.edx.keys import CourseKey
 
 from contentstore.tests.utils import AjaxEnabledTestClient, parse_json
-from student.roles import CourseInstructorRole, CourseStaffRole
-from student.tests.factories import UserFactory
+from student.roles import COURSE_ADMIN_ACCESS_GROUP, CourseInstructorRole, CourseStaffRole
+from student.tests.factories import UserFactory, GroupFactory
 from util.organizations_helpers import add_organization, get_course_organizations
 from xmodule.course_module import CourseFields
 from xmodule.modulestore import ModuleStoreEnum
@@ -31,7 +31,6 @@ class TestCourseListing(ModuleStoreTestCase):
         """
         super(TestCourseListing, self).setUp()
         # create and log in a staff user.
-        # create and log in a non-staff user
         self.user = UserFactory()
         self.factory = RequestFactory()
         self.client = AjaxEnabledTestClient()
@@ -53,6 +52,7 @@ class TestCourseListing(ModuleStoreTestCase):
         )
         self.source_course_key = source_course.id
 
+        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
         for role in [CourseInstructorRole, CourseStaffRole]:
             role(self.source_course_key).add_users(self.user)
 

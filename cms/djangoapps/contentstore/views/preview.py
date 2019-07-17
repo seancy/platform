@@ -4,7 +4,6 @@ import logging
 from functools import partial
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import Http404, HttpResponseBadRequest
 from django.utils.translation import ugettext as _
@@ -29,6 +28,7 @@ from openedx.core.lib.xblock_utils import (
     wrap_xblock_aside,
     xblock_local_resource_url
 )
+from student.roles import studio_login_required
 from util.sandboxing import can_execute_unsafe_code, get_python_lib_zip
 from xblock_config.models import StudioConfig
 from xblock_django.user_service import DjangoXBlockUserService
@@ -50,7 +50,7 @@ __all__ = ['preview_handler']
 log = logging.getLogger(__name__)
 
 
-@login_required
+@studio_login_required
 def preview_handler(request, usage_key_string, handler, suffix=''):
     """
     Dispatch an AJAX action to an xblock

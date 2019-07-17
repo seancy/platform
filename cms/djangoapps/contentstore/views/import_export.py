@@ -10,7 +10,6 @@ import re
 import shutil
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.files import File
 from django.core.files.storage import FileSystemStorage
@@ -33,6 +32,7 @@ from contentstore.tasks import CourseExportTask, CourseImportTask, export_olx, i
 from contentstore.utils import reverse_course_url, reverse_library_url
 from edxmako.shortcuts import render_to_response
 from student.auth import has_course_author_access
+from student.roles import studio_login_required
 from util.json_request import JsonResponse
 from util.views import ensure_valid_course_key
 from xmodule.modulestore.django import modulestore
@@ -53,7 +53,7 @@ STATUS_FILTERS = user_tasks_settings.USER_TASKS_STATUS_FILTERS
 
 
 @transaction.non_atomic_requests
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("GET", "POST", "PUT"))
 @ensure_valid_course_key
@@ -229,7 +229,7 @@ def _write_chunk(request, courselike_key):
 @transaction.non_atomic_requests
 @require_GET
 @ensure_csrf_cookie
-@login_required
+@studio_login_required
 @ensure_valid_course_key
 def import_status_handler(request, course_key_string, filename=None):
     """
@@ -284,7 +284,7 @@ def send_tarball(tarball, size):
 
 @transaction.non_atomic_requests
 @ensure_csrf_cookie
-@login_required
+@studio_login_required
 @require_http_methods(('GET', 'POST'))
 @ensure_valid_course_key
 def export_handler(request, course_key_string):
@@ -338,7 +338,7 @@ def export_handler(request, course_key_string):
 @transaction.non_atomic_requests
 @require_GET
 @ensure_csrf_cookie
-@login_required
+@studio_login_required
 @ensure_valid_course_key
 def export_status_handler(request, course_key_string):
     """
@@ -407,7 +407,7 @@ def export_status_handler(request, course_key_string):
 @transaction.non_atomic_requests
 @require_GET
 @ensure_csrf_cookie
-@login_required
+@studio_login_required
 @ensure_valid_course_key
 def export_output_handler(request, course_key_string):
     """

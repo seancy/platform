@@ -112,7 +112,6 @@ class AnonymousUserFactory(factory.Factory):
     class Meta(object):
         model = AnonymousUser
 
-
 class AdminFactory(UserFactory):
     is_staff = True
 

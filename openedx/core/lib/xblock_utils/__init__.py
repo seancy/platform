@@ -11,7 +11,6 @@ import static_replace
 import uuid
 from lxml import html, etree
 from contracts import contract
-
 from django.conf import settings
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
@@ -24,12 +23,12 @@ from web_fragments.fragment import Fragment
 from xblock.core import XBlock
 from xblock.exceptions import InvalidScopeError
 from xblock.scorable import ScorableXBlockMixin
-
 from xmodule.seq_module import SequenceModule
 from xmodule.vertical_block import VerticalBlock
 from xmodule.x_module import shim_xmodule_js, XModuleDescriptor, XModule, PREVIEW_VIEWS, STUDIO_VIEW
-
 import webpack_loader.utils
+from student.roles import studio_access_role
+
 
 log = logging.getLogger(__name__)
 
@@ -323,7 +322,7 @@ def add_staff_markup(needs_staff_markup, user, disable_staff_debug_info, block, 
 
         # check that the course is a mongo backed Studio course before doing work
         is_studio_course = block.course_edit_method == "Studio"
-        needs_edit_link = (needs_staff_markup and is_studio_course)
+        needs_edit_link = (needs_staff_markup and is_studio_course and studio_access_role(user))
 
         edit_link = ""
         if is_studio_course:

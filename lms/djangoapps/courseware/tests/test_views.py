@@ -205,8 +205,8 @@ class IndexQueryTestCase(ModuleStoreTestCase):
     NUM_PROBLEMS = 20
 
     @ddt.data(
-        (ModuleStoreEnum.Type.mongo, 10, 147),
-        (ModuleStoreEnum.Type.split, 4, 147),
+        (ModuleStoreEnum.Type.mongo, 10, 150),
+        (ModuleStoreEnum.Type.split, 4, 150),
     )
     @ddt.unpack
     def test_index_query_counts(self, store_type, expected_mongo_query_count, expected_mysql_query_count):

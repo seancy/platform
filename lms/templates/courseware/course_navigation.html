@@ -3,7 +3,6 @@
 <%namespace name='static' file='/static_content.html'/>
 
 <%!
-from courseware.access import has_access
 from courseware.courses import get_studio_url
 from courseware.tabs import get_course_tab_list
 from django.conf import settings
@@ -12,7 +11,7 @@ from django.utils.translation import ugettext as _
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from instructor.views.instructor_dashboard import InstructorDashboardTab
 from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
-from courseware.courses import get_studio_url
+from student.roles import studio_access_role
 %>
 
 <%page args="active_page=None, studio_url=None" expression_filter="h" />
@@ -89,9 +88,9 @@ if course is not None:
                     </li>
                   % endif
 
-                  % if has_access(request.user, 'staff', course, course.id) and studio_url is not None:
+                  % if studio_access_role(request.user) and studio_url is not None:
                     <li>
-                      <a class="instructor-info-action" href="${studio_url}">
+                      <a class="instructor-info-action" href="${studio_url}" target="_blank">
                         <i class="far fa-pen"></i><span class="sr">${_('View About Page in studio')}</span>
                       </a>
                     </li>

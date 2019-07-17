@@ -29,8 +29,8 @@ from course_action_state.managers import CourseRerunUIStateManager
 from course_action_state.models import CourseRerunState
 from openedx.core.djangoapps.waffle_utils import WaffleSwitchNamespace
 from student.auth import has_course_author_access
-from student.roles import CourseStaffRole, GlobalStaff, LibraryUserRole
-from student.tests.factories import UserFactory
+from student.roles import COURSE_ADMIN_ACCESS_GROUP, CourseStaffRole, GlobalStaff, LibraryUserRole
+from student.tests.factories import UserFactory, GroupFactory
 from util.date_utils import get_default_time_display
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
@@ -88,6 +88,7 @@ class TestCourseIndex(CourseTestCase):
         # Make sure libraries are visible to non-staff users too
         self.client.logout()
         non_staff_user, non_staff_userpassword = self.create_non_staff_user()
+        non_staff_user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
         lib2 = LibraryFactory.create(user_id=non_staff_user.id)
         LibraryUserRole(lib2.location.library_key).add_users(non_staff_user)
         self.client.login(username=non_staff_user.username, password=non_staff_userpassword)
@@ -115,6 +116,7 @@ class TestCourseIndex(CourseTestCase):
         Make and register course_staff and ensure they can access the courses
         """
         course_staff_client, course_staff = self.create_non_staff_authed_user_client()
+        course_staff.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
         for course in [self.course, self.odd_course]:
             permission_url = reverse_course_url('course_team_handler', course.id, kwargs={'email': course_staff.email})
 
@@ -364,6 +366,7 @@ class TestCourseIndexArchived(CourseTestCase):
         self.staff, self.staff_password = self.create_non_staff_user()
         for course in (self.course, self.active_course, self.archived_course):
             CourseStaffRole(course.id).add_users(self.staff)
+        self.staff.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
 
         # Make sure we've cached data which could change the query counts
         # depending on test execution order
@@ -396,8 +399,8 @@ class TestCourseIndexArchived(CourseTestCase):
 
     @ddt.data(
         # Staff user has course staff access
-        (True, 'staff', None, 3, 20),
-        (False, 'staff', None, 3, 20),
+        (True, 'staff', None, 3, 21),
+        (False, 'staff', None, 3, 21),
         # Base user has global staff access
         (True, 'user', ORG, 3, 20),
         (False, 'user', ORG, 3, 20),

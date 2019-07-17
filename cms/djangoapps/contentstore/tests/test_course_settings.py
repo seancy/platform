@@ -20,8 +20,8 @@ from models.settings.course_grading import CourseGradingModel, GRADING_POLICY_CH
 from models.settings.course_metadata import CourseMetadata
 from models.settings.encoder import CourseSettingsEncoder
 from openedx.core.djangoapps.models.course_details import CourseDetails
-from student.roles import CourseInstructorRole, CourseStaffRole
-from student.tests.factories import UserFactory
+from student.roles import COURSE_ADMIN_ACCESS_GROUP, CourseInstructorRole, CourseStaffRole
+from student.tests.factories import UserFactory, GroupFactory
 from util import milestones_helpers
 from xblock_django.models import XBlockStudioConfigurationFlag
 from xmodule.fields import Date
@@ -1286,6 +1286,7 @@ id=\"course-enrollment-end-time\" value=\"\" placeholder=\"HH:MM\" autocomplete=
         Return the course details page as either global or non-global staff
         """
         user = UserFactory(is_staff=global_staff)
+        user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
         CourseInstructorRole(self.course.id).add_users(user)
 
         self.client.login(username=user.username, password='test')

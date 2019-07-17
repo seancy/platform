@@ -607,3 +607,6 @@ plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.CMS, plugin_c
 
 derive_settings(__name__)
 FEATURES['ENABLE_PREREQUISITE_COURSES'] = True
+
+###################### Default production settings ##############################
+FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False

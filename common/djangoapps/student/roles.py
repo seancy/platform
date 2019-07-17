@@ -4,20 +4,26 @@ adding users, removing users, and listing members
 """
 
 import logging
+from functools import wraps
 from abc import ABCMeta, abstractmethod
 from collections import defaultdict
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponseForbidden
+from django.utils.translation import ugettext as _
 from opaque_keys.edx.django.models import CourseKeyField
 
 from openedx.core.djangoapps.request_cache import get_cache
 from student.models import CourseAccessRole
+from edxmako.shortcuts import render_to_string
 
 log = logging.getLogger(__name__)
 
 # A list of registered access roles.
 REGISTERED_ACCESS_ROLES = {}
 
+COURSE_ADMIN_ACCESS_GROUP = "Course Admin"
 
 
 def register_access_role(cls):
@@ -34,6 +40,20 @@ def register_access_role(cls):
     except AttributeError:
         log.exception(u"Unable to register Access Role with attribute 'ROLE'.")
     return cls
+
+
+def studio_access_role(user):
+    return user.is_staff or COURSE_ADMIN_ACCESS_GROUP in [group.name for group in user.groups.all()]
+
+
+def studio_login_required(func):
+    """" View decorator that requires that the user has course admin permissions. """
+    @wraps(func)
+    def wrapped(request, *args, **kwargs):
+        if studio_access_role(request.user):
+            return func(request, *args, **kwargs)
+        return HttpResponseForbidden(render_to_string('403.html', {}, request=request))
+    return login_required(wrapped)
 
 
 class BulkRoleCache(object):

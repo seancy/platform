@@ -12,7 +12,8 @@ from contentstore.tests.utils import CourseTestCase
 from contentstore.utils import reverse_course_url
 from contentstore.views.transcript_settings import TranscriptionProviderErrorType, validate_transcript_credentials
 from openedx.core.djangoapps.profile_images.tests.helpers import make_image_file
-from student.roles import CourseStaffRole
+from student.roles import COURSE_ADMIN_ACCESS_GROUP, CourseStaffRole
+from student.tests.factories import GroupFactory
 
 
 @ddt.ddt
@@ -467,9 +468,9 @@ class TranscriptDeleteTest(CourseTestCase):
         response = self.client.post(transcript_delete_url)
         self.assertEqual(response.status_code, 405)
 
-    def test_404_with_non_staff_user(self):
+    def test_403_with_non_staff_user(self):
         """
-        Verify that 404 is returned if the user doesn't have studio write access.
+        Verify that 403 is returned if the user doesn't have studio write access.
         """
         # Making sure that user is not a staff / course's staff.
         self.user.is_staff = False
@@ -482,7 +483,7 @@ class TranscriptDeleteTest(CourseTestCase):
         # Now, Make request to deletion handler
         transcript_delete_url = self.get_url_for_course_key(self.course.id, edx_video_id='test_id', language_code='en')
         response = self.client.delete(transcript_delete_url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 403)
 
     @ddt.data(
         {
@@ -509,6 +510,7 @@ class TranscriptDeleteTest(CourseTestCase):
         course_staff_role = CourseStaffRole(self.course.id)
         if is_course_staff:
             course_staff_role.add_users(self.user)
+            self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
         else:
             course_staff_role.remove_users(self.user)
 

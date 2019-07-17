@@ -12,7 +12,6 @@ import os
 
 import requests
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.files.base import ContentFile
 from django.http import Http404, HttpResponse
@@ -22,6 +21,7 @@ from opaque_keys.edx.keys import UsageKey
 from six import text_type
 from edxval.api import create_or_update_video_transcript, create_external_video
 from student.auth import has_course_author_access
+from student.roles import studio_login_required
 from util.json_request import JsonResponse
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
@@ -191,7 +191,7 @@ def validate_transcript_upload_data(request):
     return error, validated_data
 
 
-@login_required
+@studio_login_required
 def upload_transcripts(request):
     """
     Upload transcripts for current module.
@@ -248,7 +248,7 @@ def upload_transcripts(request):
     return response
 
 
-@login_required
+@studio_login_required
 def download_transcripts(request):
     """
     Passes to user requested transcripts file.
@@ -270,7 +270,7 @@ def download_transcripts(request):
     return response
 
 
-@login_required
+@studio_login_required
 def check_transcripts(request):
     """
     Check state of transcripts availability.
@@ -525,7 +525,7 @@ def validate_transcripts_request(request, include_yt=False, include_html5=False)
     return error, validated_data
 
 
-@login_required
+@studio_login_required
 def choose_transcripts(request):
     """
     Create/Update edx transcript in DS with chosen html5 subtitles from contentstore.
@@ -564,7 +564,7 @@ def choose_transcripts(request):
     return response
 
 
-@login_required
+@studio_login_required
 def rename_transcripts(request):
     """
     Copies existing transcript on video component's `sub`(from contentstore) into the
@@ -605,7 +605,7 @@ def rename_transcripts(request):
     return response
 
 
-@login_required
+@studio_login_required
 def replace_transcripts(request):
     """
     Downloads subtitles from youtube and replaces edx transcripts in DS with youtube ones.

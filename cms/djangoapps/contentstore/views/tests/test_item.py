@@ -37,7 +37,8 @@ from contentstore.views.item import (
     highlights_setting,
 )
 from lms_xblock.mixin import NONSENSICAL_ACCESS_RESTRICTION
-from student.tests.factories import UserFactory
+from student.tests.factories import UserFactory, GroupFactory
+from student.roles import COURSE_ADMIN_ACCESS_GROUP
 from xblock_django.models import XBlockConfiguration, XBlockStudioConfiguration, XBlockStudioConfigurationFlag
 from xblock_django.user_service import DjangoXBlockUserService
 from xmodule.capa_module import CapaDescriptor
@@ -2129,6 +2130,7 @@ class TestComponentHandler(TestCase):
         )
 
         self.user = UserFactory()
+        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
 
         self.request = self.request_factory.get('/dummy-url')
         self.request.user = self.user

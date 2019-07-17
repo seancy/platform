@@ -15,7 +15,8 @@ from contentstore.utils import reverse_course_url, reverse_library_url
 from contentstore.views.component import get_component_templates
 from contentstore.views.library import get_library_creator_status
 from course_creators.views import add_user_with_status_granted as grant_course_creator_status
-from student.roles import LibraryUserRole
+from student.roles import COURSE_ADMIN_ACCESS_GROUP, LibraryUserRole
+from student.tests.factories import GroupFactory
 from xmodule.modulestore.tests.factories import LibraryFactory
 
 LIBRARY_REST_URL = '/library/'  # URL for GET/POST requests involving libraries
@@ -96,6 +97,7 @@ class UnitTestLibraries(CourseTestCase):
         Ensure that `DISABLE_COURSE_CREATION` feature works with libraries as well.
         """
         nostaff_client, nostaff_user = self.create_non_staff_authed_user_client()
+        nostaff_user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
         self.assertFalse(get_library_creator_status(nostaff_user))
 
         # To be explicit, this user can GET, but not POST
@@ -159,6 +161,7 @@ class UnitTestLibraries(CourseTestCase):
         """
         self.client.logout()
         ns_user, password = self.create_non_staff_user()
+        ns_user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
         self.client.login(username=ns_user.username, password=password)
         grant_course_creator_status(self.user, ns_user)
         response = self.client.ajax_post(LIBRARY_REST_URL, {
@@ -174,6 +177,7 @@ class UnitTestLibraries(CourseTestCase):
         """
         self.client.logout()
         ns_user, password = self.create_non_staff_user()
+        ns_user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
         self.client.login(username=ns_user.username, password=password)
         response = self.client.ajax_post(LIBRARY_REST_URL, {
             'org': 'org', 'library': 'lib', 'display_name': "New Library",

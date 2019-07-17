@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from openedx.core.djangolib.markup import HTML, Text
 %>
 <%inherit file="base.html" />
-<%block name="title">${_("Page Not Found")}</%block>
+<%block name="title">${_("Forbidden")}</%block>
 
 <%block name="header"/>
 <%block name="bodyclass">error-page</%block>
@@ -18,19 +18,12 @@ from openedx.core.djangolib.markup import HTML, Text
     <a class="brand-link" href="/"><img src="${static.url('images/studio-logo.png')}"></a>
   </aside>
   <article>
-    <h1><%block name="pageheader">${_("Page not found")}</%block></h1>
+    <h1><%block name="pageheader">${_("Forbidden")}</%block></h1>
     <p>
       <%block name="pagecontent">
-        ${_('The page that you were looking for was not found.')}
-        ${Text(_('Go back to the {homepage} or let us know about any pages that may have been moved at {email}.')).format(
-          homepage=HTML('<a href="/">homepage</a>'),
-          email=HTML('<a href="mailto:{address}">{address}</a>').format(
-            address=Text(settings.TECH_SUPPORT_EMAIL)
-          )
-        )}
+        ${_("You must be Course Admin to access this view.")}
       </%block>
     </p>
   </article>
 </%block>
 <%block name="footer" />
-

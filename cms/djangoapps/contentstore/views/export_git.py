@@ -5,7 +5,6 @@ the giturl attribute is set.
 
 import logging
 
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -14,13 +13,14 @@ from opaque_keys.edx.keys import CourseKey
 import contentstore.git_export_utils as git_export_utils
 from edxmako.shortcuts import render_to_response
 from student.auth import has_course_author_access
+from student.roles import studio_login_required
 from xmodule.modulestore.django import modulestore
 
 log = logging.getLogger(__name__)
 
 
 @ensure_csrf_cookie
-@login_required
+@studio_login_required
 def export_git(request, course_key_string):
     """
     This method serves up the 'Export to Git' page

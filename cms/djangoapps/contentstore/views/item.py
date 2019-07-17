@@ -9,7 +9,6 @@ from functools import partial
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
@@ -56,6 +55,7 @@ from openedx.core.lib.gating import api as gating_api
 from openedx.core.lib.xblock_utils import request_token, wrap_xblock
 from static_replace import replace_static_urls
 from student.auth import has_studio_read_access, has_studio_write_access
+from student.roles import studio_login_required
 from util.date_utils import get_default_time_display
 from util.json_request import JsonResponse, expect_json
 from util.milestones_helpers import is_entrance_exams_enabled
@@ -108,7 +108,7 @@ def _filter_entrance_exam_grader(graders):
 
 
 @require_http_methods(("DELETE", "GET", "PUT", "POST", "PATCH"))
-@login_required
+@studio_login_required
 @expect_json
 def xblock_handler(request, usage_key_string):
     """
@@ -296,7 +296,7 @@ class StudioEditModuleRuntime(object):
 
 
 @require_http_methods(("GET"))
-@login_required
+@studio_login_required
 @expect_json
 def xblock_view_handler(request, usage_key_string, view_name):
     """
@@ -413,7 +413,7 @@ def xblock_view_handler(request, usage_key_string, view_name):
 
 
 @require_http_methods(("GET"))
-@login_required
+@studio_login_required
 @expect_json
 def xblock_outline_handler(request, usage_key_string):
     """
@@ -441,7 +441,7 @@ def xblock_outline_handler(request, usage_key_string):
 
 
 @require_http_methods(("GET"))
-@login_required
+@studio_login_required
 @expect_json
 def xblock_container_handler(request, usage_key_string):
     """
@@ -650,7 +650,7 @@ def _save_xblock(user, xblock, data=None, children_strings=None, metadata=None, 
         return JsonResponse(result, encoder=EdxJSONEncoder)
 
 
-@login_required
+@studio_login_required
 @expect_json
 def create_item(request):
     """
@@ -659,7 +659,7 @@ def create_item(request):
     return _create_item(request)
 
 
-@login_required
+@studio_login_required
 @expect_json
 def _create_item(request):
     """View for create items."""
@@ -907,7 +907,7 @@ def _duplicate_item(parent_usage_key, duplicate_source_usage_key, user, display_
         return dest_module.location
 
 
-@login_required
+@studio_login_required
 @expect_json
 def delete_item(request, usage_key):
     """
@@ -945,7 +945,7 @@ def _delete_item(usage_key, user):
         store.delete_item(usage_key, user.id)
 
 
-@login_required
+@studio_login_required
 @require_http_methods(("GET", "DELETE"))
 def orphan_handler(request, course_key_string):
     """

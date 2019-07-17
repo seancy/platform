@@ -5,7 +5,6 @@ from functools import partial
 import re
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseBadRequest, HttpResponseNotFound
 from django.utils.translation import ugettext as _
@@ -25,6 +24,7 @@ from contentstore.views.exception import AssetNotFoundException, AssetSizeTooLar
 from edxmako.shortcuts import render_to_response
 from openedx.core.djangoapps.contentserver.caching import del_cached_content
 from student.auth import has_course_author_access
+from student.roles import studio_login_required
 from util.date_utils import get_default_time_display
 from util.json_request import JsonResponse
 
@@ -40,7 +40,7 @@ REQUEST_DEFAULTS = {
 }
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 def assets_handler(request, course_key_string=None, asset_key_string=None):
     '''
@@ -386,7 +386,7 @@ def update_course_run_asset(course_key, upload_file):
 
 @require_POST
 @ensure_csrf_cookie
-@login_required
+@studio_login_required
 def _upload_asset(request, course_key):
     course_exists_error = _get_error_if_course_does_not_exist(course_key)
 
@@ -498,7 +498,7 @@ def _get_thumbnail_asset_key(asset, course_key):
 
 
 @require_http_methods(('DELETE', 'POST', 'PUT'))
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 def _update_asset(request, course_key, asset_key):
     '''

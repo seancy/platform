@@ -6,7 +6,6 @@ import logging
 from functools import wraps
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -18,6 +17,7 @@ from contentstore.views.item import delete_item
 from models.settings.course_metadata import CourseMetadata
 from openedx.core.djangolib.js_utils import dump_js_escaped_json
 from student.auth import has_course_author_access
+from student.roles import studio_login_required
 from util import milestones_helpers
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError
@@ -54,7 +54,7 @@ def check_feature_enabled(feature_name):
     return _check_feature_enabled
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @check_feature_enabled(feature_name='ENTRANCE_EXAMS')
 def entrance_exam(request, course_key_string):

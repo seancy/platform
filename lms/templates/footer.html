@@ -10,6 +10,7 @@
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
   from branding.api import get_footer
   from branding.views import CATALOG_DENIED_GROUP, MYMOOC_DENIED_GROUP
+  from student.roles import studio_access_role
   from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
 %>
 <% footer = get_footer(is_secure=is_secure) %>
@@ -86,38 +87,46 @@
         </div>
 
         <nav class="nav-colophon" aria-label="${_('About')}">
-          <h6>navigation</h6>
+          <h6>${_('Navigation')}</h6>
           <ol>
-            <li><a href="${reverse('dashboard')}">${_('Dashboard')}</a></li>
+              <li><a href="${reverse('dashboard')}">${_('Dashboard')}</a></li>
 
-          % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
-            and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
-            <li><a href="${marketing_link('COURSES')}">${_("Explore")}</a></li>
-          % endif
+            % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
+              and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+              <li><a href="${marketing_link('COURSES')}">${_("Explore")}</a></li>
+            % endif
 
-          % if (configuration_helpers.get_value('ENABLE_MYMOOC_CATALOG', settings.FEATURES.get('ENABLE_MYMOOC_CATALOG', False)) \
-            and configuration_helpers.get_value('MYMOOC_URL', None) \
-            and MYMOOC_DENIED_GROUP not in [group.name for group in user.groups.all()]):
-            <li><a href="${reverse('mymooc_catalog')}">${_("My Mooc")}</a></li>
-          % endif
+            % if (configuration_helpers.get_value('ENABLE_MYMOOC_CATALOG', settings.FEATURES.get('ENABLE_MYMOOC_CATALOG', False)) \
+              and configuration_helpers.get_value('MYMOOC_URL', None) \
+              and MYMOOC_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+              <li><a href="${reverse('mymooc_catalog')}">${_("My Mooc")}</a></li>
+            % endif
 
-            <li><a href="${reverse('my_courses')}">${_('My Courses')}</a></li>
-            <li><a href="${reverse('account_settings')}">${_('My Account')}</a></li>
+              <li><a href="${reverse('my_courses')}">${_('My Courses')}</a></li>
+              <li><a href="${reverse('account_settings')}">${_('My Account')}</a></li>
           </ol>
         </nav>
 
+        <%
+          can_see_studio_link = studio_access_role(user)
+          can_see_analytics_link = (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
+                and (ANALYTICS_ACCESS_GROUP in [group.name for group in user.groups.all()] \
+                  or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in user.groups.all()]))
+        %>
         <nav class="nav-other-systems">
-          <h6>admin space</h6>
-          <ol>
-            <li><a href="//${getattr(settings, 'CMS_BASE')}">${_('Studio')}</a></li>
+          % if can_see_studio_link or can_see_analytics_link:
+            <h6>${_('Admin Space')}</h6>
+            <ol>
+              % if can_see_studio_link:
+                <li><a href="//${getattr(settings, 'CMS_BASE')}" target="_blank">${_('Studio')}</a></li>
+              % endif
+              % if can_see_analytics_link:
+                <li><a href="${reverse('analytics_microsite')}">${_("Analytics")}</a></li>
+              % endif
 
-          % if (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
-              and (ANALYTICS_ACCESS_GROUP in [group.name for group in user.groups.all()] \
-                or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in user.groups.all()])):
-            <li><a href="${reverse('analytics_microsite')}">${_("Analytics")}</a></li>
+              </ol>
+
           % endif
-
-            </ol>
         </nav>
 
         % if context.get('include_language_selector', footer_language_selector_is_enabled()):

@@ -25,7 +25,6 @@ import json
 import logging
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.utils.translation import ugettext as _
@@ -42,7 +41,7 @@ from course_modes.models import CourseMode
 from edxmako.shortcuts import render_to_response
 from eventtracking import tracker
 from student.auth import has_studio_write_access
-from student.roles import GlobalStaff
+from student.roles import studio_login_required, GlobalStaff
 from util.db import MYSQL_MAX_INT, generate_int_id
 from util.json_request import JsonResponse
 from xmodule.modulestore import EdxJSONEncoder
@@ -328,7 +327,7 @@ class Certificate(object):
         return self._certificate_data
 
 
-@login_required
+@studio_login_required
 @require_http_methods(("POST",))
 @ensure_csrf_cookie
 def certificate_activation_handler(request, course_key_string):
@@ -363,7 +362,7 @@ def certificate_activation_handler(request, course_key_string):
     return HttpResponse(status=200)
 
 
-@login_required
+@studio_login_required
 @require_http_methods(("GET", "POST"))
 @ensure_csrf_cookie
 def certificates_list_handler(request, course_key_string):
@@ -455,7 +454,7 @@ def certificates_list_handler(request, course_key_string):
             return HttpResponse(status=406)
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("POST", "PUT", "DELETE"))
 def certificates_detail_handler(request, course_key_string, certificate_id):
@@ -531,7 +530,7 @@ def certificates_detail_handler(request, course_key_string, certificate_id):
         return JsonResponse(status=204)
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 @require_http_methods(("POST", "PUT", "DELETE"))
 def signatory_detail_handler(request, course_key_string, certificate_id, signatory_id):

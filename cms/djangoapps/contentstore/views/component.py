@@ -3,7 +3,6 @@ from __future__ import absolute_import
 import logging
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponseBadRequest
 from django.utils.translation import ugettext as _
@@ -22,6 +21,7 @@ from contentstore.views.helpers import get_parent_xblock, is_unit, xblock_type_d
 from contentstore.views.item import StudioEditModuleRuntime, add_container_page_publishing_info, create_xblock_info
 from edxmako.shortcuts import render_to_response
 from student.auth import has_course_author_access
+from student.roles import studio_login_required
 from xblock_django.api import authorable_xblocks, disabled_xblocks
 from xblock_django.models import XBlockStudioConfigurationFlag
 from xmodule.modulestore.django import modulestore
@@ -92,7 +92,7 @@ def _load_mixed_class(category):
 
 
 @require_GET
-@login_required
+@studio_login_required
 def container_handler(request, usage_key_string):
     """
     The restful handler for container xblock requests.
@@ -403,7 +403,7 @@ def _filter_disabled_blocks(all_blocks):
     return [block_name for block_name in all_blocks if block_name not in disabled_block_names]
 
 
-@login_required
+@studio_login_required
 def _get_item_in_course(request, usage_key):
     """
     Helper method for getting the old location, containing course,
@@ -427,7 +427,7 @@ def _get_item_in_course(request, usage_key):
     return course, item, lms_link, preview_lms_link
 
 
-@login_required
+@studio_login_required
 def component_handler(request, usage_key_string, handler, suffix=''):
     """
     Dispatch an AJAX action to an xblock

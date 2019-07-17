@@ -15,6 +15,7 @@ from openedx.core.djangoapps.models.course_details import CourseDetails
 from six import string_types
 from instructor.views.instructor_dashboard import InstructorDashboardTab
 from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
+from student.roles import studio_access_role
 %>
 
 <%inherit file="../main.html" />
@@ -130,9 +131,9 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
             </a>
           </li>
         % endif
-        % if staff_access and studio_url is not None:
+        % if studio_access_role(user) and studio_url is not None:
           <li>
-            <a class="instructor-info-action" href="${studio_url}">
+            <a class="instructor-info-action" href="${studio_url}" target="_blank">
               <i class="far fa-pen"></i><span class="sr">${_('View About Page in studio')}</span>
             </a>
           </li>

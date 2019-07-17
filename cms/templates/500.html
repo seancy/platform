@@ -1,30 +1,34 @@
 <%page expression_filter="h"/>
+<%namespace name='static' file='static_content.html'/>
 <%!
-from openedx.core.djangolib.markup import HTML, Text
 from django.utils.translation import ugettext as _
+from openedx.core.djangolib.markup import HTML, Text
 %>
 <%inherit file="base.html" />
-<%block name="title">
-${Text(_("{studio_name} Server Error")).format(
-  studio_name=Text(settings.STUDIO_SHORT_NAME)
-)}
-</%block>
-<%block name="bodyclass">view-util util-500</%block>
+<%block name="title">${_("Server Error")}</%block>
+
+<%block name="header"/>
+<%block name="bodyclass">error-page</%block>
 
 <%block name="content">
-<div class="wrapper-content wrapper">
-  <section class="content">
-    <header>
-      <h1 class="title title-1">
+  <aside>
+    <figure class="instruction-text">
+      <img src='${static.url("images/404-illustration.jpg")}' />
+    </figure>
+    <a class="brand-link" href="/"><img src="${static.url('images/studio-logo.png')}"></a>
+  </aside>
+  <article>
+    <h1>
+      <%block name="pageheader">
         ${Text(_(u"The {em_start}{studio_name}{em_end} servers encountered an error")).format(
           em_start=HTML('<em>'),
           em_end=HTML('</em>'),
           studio_name=Text(settings.STUDIO_SHORT_NAME),
         )}
-      </h1>
-    </header>
-    <article class="content-primary" role="main">
-      <p>
+      </%block>
+    </h1>
+    <p>
+      <%block name="pagecontent">
         ${Text(_("An error occurred in {studio_name} and the page could not be loaded. Please try again in a few moments.")).format(
           studio_name=Text(settings.STUDIO_SHORT_NAME),
         )}
@@ -34,8 +38,9 @@ ${Text(_("{studio_name} Server Error")).format(
             email_address=Text(settings.TECH_SUPPORT_EMAIL),
           )
         )}
-      </p>
-    </article>
-  </section>
-</div>
+      </%block>
+    </p>
+  </article>
 </%block>
+<%block name="footer" />
+

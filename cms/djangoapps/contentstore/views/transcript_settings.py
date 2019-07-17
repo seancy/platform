@@ -5,7 +5,6 @@ import os
 import json
 import logging
 
-from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from django.http import HttpResponseNotFound, HttpResponse
 from django.utils.translation import ugettext as _
@@ -23,6 +22,7 @@ from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangoapps.video_config.models import VideoTranscriptEnabledFlag
 from openedx.core.djangoapps.video_pipeline.api import update_3rd_party_transcription_service_credentials
 from student.auth import has_studio_write_access
+from student.roles import studio_login_required
 from util.json_request import JsonResponse, expect_json
 
 from contentstore.views.videos import TranscriptProvider
@@ -82,7 +82,7 @@ def validate_transcript_credentials(provider, **credentials):
 
 
 @expect_json
-@login_required
+@studio_login_required
 @require_POST
 def transcript_credentials_handler(request, course_key_string):
     """
@@ -128,7 +128,7 @@ def transcript_credentials_handler(request, course_key_string):
     return response
 
 
-@login_required
+@studio_login_required
 @require_GET
 def transcript_download_handler(request):
     """
@@ -199,7 +199,7 @@ def validate_transcript_upload_data(data, files):
     return error
 
 
-@login_required
+@studio_login_required
 @require_POST
 def transcript_upload_handler(request):
     """
@@ -251,7 +251,7 @@ def transcript_upload_handler(request):
     return response
 
 
-@login_required
+@studio_login_required
 @require_http_methods(["DELETE"])
 def transcript_delete_handler(request, course_key_string, edx_video_id, language_code):
     """

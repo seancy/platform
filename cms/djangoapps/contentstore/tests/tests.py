@@ -23,6 +23,8 @@ from contentstore.tests.test_course_settings import CourseTestCase
 from contentstore.tests.utils import AjaxEnabledTestClient, parse_json, registration, user
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
+from student.tests.factories import GroupFactory
+from student.roles import COURSE_ADMIN_ACCESS_GROUP
 
 
 class ContentStoreTestCase(ModuleStoreTestCase):
@@ -68,6 +70,7 @@ class ContentStoreTestCase(ModuleStoreTestCase):
 
         # Check both that the user is created, and inactive
         self.assertFalse(user(email).is_active)
+        user(email).groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
 
         return resp
 

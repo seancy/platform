@@ -1,5 +1,4 @@
 # pylint: disable=missing-docstring
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.csrf import ensure_csrf_cookie
 from opaque_keys.edx.keys import CourseKey
@@ -7,11 +6,12 @@ from xmodule.modulestore.django import modulestore
 
 from edxmako.shortcuts import render_to_response
 from student.auth import has_course_author_access
+from student.roles import studio_login_required
 
 __all__ = ['checklists_handler']
 
 
-@login_required
+@studio_login_required
 @ensure_csrf_cookie
 def checklists_handler(request, course_key_string=None):
     '''

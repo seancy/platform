@@ -12,7 +12,6 @@ from uuid import uuid4
 import rfc6266_parser
 from boto import s3
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.files.images import get_image_dimensions
 from django.urls import reverse
@@ -44,6 +43,7 @@ from edxmako.shortcuts import render_to_response
 from openedx.core.djangoapps.video_config.models import VideoTranscriptEnabledFlag
 from openedx.core.djangoapps.waffle_utils import WaffleSwitchNamespace
 from util.json_request import JsonResponse, expect_json
+from student.roles import studio_login_required
 
 from .course import get_course_and_check_access
 
@@ -149,7 +149,7 @@ class StatusDisplayStrings(object):
 
 
 @expect_json
-@login_required
+@studio_login_required
 @require_http_methods(("GET", "POST", "DELETE"))
 def videos_handler(request, course_key_string, edx_video_id=None):
     """
@@ -242,7 +242,7 @@ def validate_video_image(image_file):
 
 
 @expect_json
-@login_required
+@studio_login_required
 @require_POST
 def video_images_handler(request, course_key_string, edx_video_id=None):
 
@@ -350,7 +350,7 @@ def validate_transcript_preferences(provider, cielo24_fidelity, cielo24_turnarou
 
 
 @expect_json
-@login_required
+@studio_login_required
 @require_http_methods(('POST', 'DELETE'))
 def transcript_preferences_handler(request, course_key_string):
     """
@@ -391,7 +391,7 @@ def transcript_preferences_handler(request, course_key_string):
         return JsonResponse()
 
 
-@login_required
+@studio_login_required
 @require_GET
 def video_encodings_download(request, course_key_string):
     """

@@ -5,6 +5,7 @@ Much of this file was broken out from views.py, previous history can be found th
 """
 
 import datetime
+import json
 import logging
 import uuid
 import warnings
@@ -69,6 +70,7 @@ from student.models import (
     create_comments_service_user
 )
 from student.helpers import authenticate_new_user, do_create_account
+from student.roles import studio_access_role
 from third_party_auth import pipeline, provider
 from util.json_request import JsonResponse
 
@@ -482,6 +484,21 @@ def login_user(request):
         return set_logged_in_cookies(request, response, possibly_authenticated_user)
     except AuthFailedError as error:
         return JsonResponse(error.get_response())
+
+
+def studio_login(request, error=""):
+    resp = login_user(request)
+    content = json.loads(resp.content)
+    if content.get('success', False):
+        if studio_access_role(request.user):
+            pass
+        else:
+            permission_denied_message = _("You are not allowed to login to studio!")
+            return JsonResponse({
+                'success': False,
+                'value': permission_denied_message,
+            })
+    return resp
 
 
 @csrf_exempt
