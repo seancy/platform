@@ -221,13 +221,13 @@ pipeline {
                                 ec2_region = input message: "which region to deploy", parameters: [choice(name: 'region', choices: ['CN', 'FR', 'US'],description: 'which region to deploy')]
                                 if (ec2_region == 'CN') {
                                     ec2_location = 'ap-southeast-1'
-                                    this_platform_branch = 'master'
+                                    this_platform_branch = 'master-master'
                                 } else if (ec2_region == 'FR') {
                                     ec2_location = 'ap-southeast-1'
-                                    this_platform_branch = 'master'
+                                    this_platform_branch = 'master-master'
                                 } else if (ec2_region == 'US') {
                                     ec2_location = 'ap-southeast-1'
-                                    this_platform_branch = 'master'
+                                    this_platform_branch = 'master-master'
                                 }
                                 println ec2_location
                                 sh "python ${env.WORKSPACE}/configuration/playbooks/roles/lt_edxapp/files/check_tenant_file.py ${env.WORKSPACE}/inventory ${ec2_location} ${env.WORKSPACE}/configuration/playbooks/roles/lt_edxapp/files/credential-helper.sh"
@@ -315,11 +315,17 @@ pipeline {
                         if (stage_auto_proceed == false) {
                             restart_service_process = true
                             tag_restart_service = 'restart-all'
-                            sh """
-                            . /tmp/.venvec2/bin/activate
-                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=${dbMigrate}" lt_pipeline_jobs.yml
-                            """
-
+                            if (this_platform_branch == 'master-master') {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production" -e "migrate_lt_db=${dbMigrate}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                """
+                            } else {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=${dbMigrate}" lt_pipeline_jobs.yml
+                                """
+                            }                            
                         } else if (stage_auto_proceed == true) {
                             restart_service_process = true
                             tag_restart_service = 'restart-all'
@@ -456,6 +462,8 @@ pipeline {
             steps {
                 dir('configuration/playbooks') {
                     script {
+                        restart_service_process = true
+                        tag_restart_service = 'restart-edxapp'
                         if (stage_auto_proceed == false) {
                             sh """
                             . /tmp/.venvec2/bin/activate
