@@ -593,7 +593,7 @@ class LoginSessionViewTest(UserAPITestCase):
             {
                 "name": "email",
                 "defaultValue": "",
-                "type": "email",
+                "type": "text",
                 "required": True,
                 "label": "Email",
                 "placeholder": "username@domain.com",

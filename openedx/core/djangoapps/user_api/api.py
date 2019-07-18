@@ -100,7 +100,7 @@ def get_login_session_form(request):
 
     form_desc.add_field(
         "email",
-        field_type="email",
+        field_type="text",
         label=email_label,
         placeholder=email_placeholder,
         instructions=email_instructions,

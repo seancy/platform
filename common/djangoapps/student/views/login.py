@@ -144,20 +144,24 @@ def _do_third_party_auth(request):
 
 def _get_user_by_email(request):
     """
-    Finds a user object in the database based on the given request, ignores all fields except for email.
+    Finds a user object in the database based on the given request, ignores all fields except for email or username.
     """
     if 'email' not in request.POST or 'password' not in request.POST:
         raise AuthFailedError(_('There was an error receiving your login information. Please email us.'))
 
+    # email can be real email or just username
     email = request.POST['email']
-
-    try:
-        return User.objects.get(email=email)
-    except User.DoesNotExist:
-        if settings.FEATURES['SQUELCH_PII_IN_LOGS']:
-            AUDIT_LOG.warning(u"Login failed - Unknown user email")
-        else:
-            AUDIT_LOG.warning(u"Login failed - Unknown user email: {0}".format(email))
+    password = request.POST['password']
+    user = authenticate(username=email, password=password)
+    if user is None:
+        try:
+            return User.objects.get(email=email)
+        except User.DoesNotExist:
+            if settings.FEATURES['SQUELCH_PII_IN_LOGS']:
+                AUDIT_LOG.warning(u"Login failed - Unknown user email or username")
+            else:
+                AUDIT_LOG.warning(u"Login failed - Unknown user email or username: {0}".format(email))
+    return user
 
 
 def _check_shib_redirect(user):
