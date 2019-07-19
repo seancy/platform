@@ -309,8 +309,8 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
               <span>${_("Learners will be automatically re-enrolled in this course after")}</span>
               <input type="text" id="course-re-enroll-time" />
               <select id="re-enroll-time-unit">
-                <option value="month">Month</option>
-                <option value="year">Year</option>
+                <option value="month">${_("Month")}</option>
+                <option value="year">${_("Year")}</option>
               </select>
               <span>${_("after completion")}</span>
             </li>
@@ -396,7 +396,11 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 </li>
                 <li class="field text" id="field-course-duration">
                   <label for="course-duration">${_("Course Duration")}</label>
-                  <input type="text" id="course-duration">
+                  <input type="number" min="0" step="0.5" id="course-duration-number">
+                  <select id="course-duration-unit">
+                    <option value="hours">${_("hours")}</option>
+                    <option value="minutes">${_("minutes")}</option>
+                  </select>
                   <span class="tip tip-stacked">${_("Displayed on the course details page. Limit to 50 characters.")}</span>
                 </li>
                 <li class="field text" id="field-course-description">

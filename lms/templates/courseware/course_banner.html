@@ -1,6 +1,7 @@
 <%namespace name='static' file='/static_content.html'/>
 <%!
 from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext
 from django.conf import settings
 from courseware.courses import get_course_about_section
 from six import string_types
@@ -22,7 +23,12 @@ from six import string_types
         % if course_duration:
           <li class="duration">
             <i class="far fa-clock" aria-hidden="true"></i>
-            <span>${course_duration}</span>
+            <% duration = course_duration.strip().split(' ') %> 
+            % if len(duration) > 1 and duration[1] == 'minutes':
+              <span>${ungettext('{num} minute', '{num} minutes', float(duration[0])).format(num=duration[0])}</span>
+            % elif len(duration) > 1 and duration[1] == 'hours':
+              <span>${ungettext('{num} hour', '{num} hours', float(duration[0])).format(num=duration[0])}</span>
+            % endif
           </li>
         % endif
         % if course.language:

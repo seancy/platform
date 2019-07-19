@@ -33,10 +33,23 @@
                 <span><%- badges %> <%- gettext("badges") %></span>
             </div>
             <div class="spliter"></div>
+            <% if (content.duration) { %>
             <div class="duration">
                 <i class="far fa-clock"></i>
-                <span><%- content.duration %></span>
+                <span>
+                <%
+                    var duration = content.duration.trim().split(' ');
+                    if (duration[1] === 'minutes') {
+                        var fmt = ngettext("%(num)s minute", "%(num)s minutes", duration[0]);
+                        print(interpolate(fmt, {num: duration[0]}, true));
+                    } else if (duration[1] === 'hours') {
+                        var fmt = ngettext("%(num)s hour", "%(num)s hours", duration[0]);
+                        print(interpolate(fmt, {num: duration[0]}, true));
+                    }
+                %>
+                </span>
             </div>
+            <% } %>
         </section>
         <div class="course-actions" aria-hidden="true">
             <div class="learn-more"><%- gettext("Learn More") %></div>

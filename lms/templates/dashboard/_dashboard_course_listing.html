@@ -216,10 +216,17 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                     '{num} badge', '{num} badges', nb_of_badges).format(num=nb_of_badges)}</span>
             </div>
             <div class="spliter"></div>
+            % if course_duration:
             <div class="duration">
                 <i class="far fa-clock"></i>
-                <span>${course_duration} ${_("hours")}</span>
+                <% duration = course_duration.strip().split(' ') %> 
+                % if len(duration) > 1 and duration[1] == 'minutes':
+                  <span>${ungettext('{num} minute', '{num} minutes', float(duration[0])).format(num=duration[0])}</span>
+                % elif len(duration) > 1 and duration[1] == 'hours':
+                  <span>${ungettext('{num} hour', '{num} hours', float(duration[0])).format(num=duration[0])}</span>
+                % endif
             </div>
+            % endif
         </section>
         <div class="wrapper-course-actions">
           <div class="course-actions">

@@ -119,6 +119,13 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
 
                    this.$el.find('#' + this.fieldToSelectorMap.subtitle).val(this.model.get('subtitle'));
                    this.$el.find('#' + this.fieldToSelectorMap.duration).val(this.model.get('duration'));
+                   if (this.model.get('duration')) {
+                       this.$el.find('#' + this.fieldToSelectorMap.course_duration_number).val(Number(this.model.get('duration').split(' ')[0]));
+                       this.$el.find('#' + this.fieldToSelectorMap.course_duration_unit).val(this.model.get('duration').split(' ')[1]);
+                   } else {
+                       this.$el.find('#' + this.fieldToSelectorMap.course_duration_number).val(0);
+                       this.$el.find('#' + this.fieldToSelectorMap.course_duration_unit).val('minutes');
+                   }
                    this.$el.find('#' + this.fieldToSelectorMap.description).val(this.model.get('description'));
 
                    this.$el.find('#' + this.fieldToSelectorMap.short_description).val(this.model.get('short_description'));
@@ -201,7 +208,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    overview: 'course-overview',
                    title: 'course-title',
                    subtitle: 'course-subtitle',
-                   duration: 'course-duration',
+                   course_duration_number: 'course-duration-number',
+                   course_duration_unit: 'course-duration-unit',
                    description: 'course-description',
                    about_sidebar_html: 'course-about-sidebar-html',
                    short_description: 'course-short-description',
@@ -389,6 +397,25 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        this.model.set('self_paced', JSON.parse(event.currentTarget.value));
                        break;
 
+                   case 'course-duration-number':
+                       var durationNum = $(event.currentTarget).val();
+                       var durationUnit = this.$el.find('#' + this.fieldToSelectorMap.course_duration_unit).val();
+                       if (durationNum !== '') {
+                           this.model.set('duration', durationNum + ' ' + durationUnit);
+                       } else {
+                           this.model.set('duration', '');
+                       }
+                       break;
+                   case 'course-duration-unit':
+                       durationNum = this.$el.find('#' + this.fieldToSelectorMap.course_duration_number).val();
+                       durationUnit = $(event.currentTarget).val();
+                       if (durationNum) {
+                           this.model.set('duration', durationNum + ' ' + durationUnit);
+                       } else {
+                           this.model.set('duration', '');
+                       }
+                       break;
+
                    case 'course-order':
                    case 'course-mandatory-enabled':
                    case 'periodic-reminder-enabled':
@@ -402,7 +429,6 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    case 'course-effort':
                    case 'course-title':
                    case 'course-subtitle':
-                   case 'course-duration':
                    case 'course-description':
                    case 'course-short-description':
                        this.setField(event);
