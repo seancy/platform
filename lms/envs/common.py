@@ -1416,6 +1416,8 @@ main_vendor_js = base_vendor_js + [
     'js/vendor/jquery.qtip.min.js',
     'js/vendor/jquery.ba-bbq.min.js',
     'js/vendor/timepicker/jquery.timepicker.js',
+    'js/vendor/notify.min.js',
+    'js/vendor/iziModal.min.js',
 ]
 
 # Common files used by both RequireJS code and non-RequireJS code
@@ -1521,7 +1523,8 @@ PIPELINE_CSS = {
         'source_filenames': [
             'css/vendor/swiper.min.css',
             'css/vendor/jquery.qtip.min.css',
-            'js/vendor/timepicker/jquery.timepicker.css'
+            'js/vendor/timepicker/jquery.timepicker.css',
+            'css/vendor/iziModal.min.css'
         ],
         'output_filename': 'css/lms-style-vendor.css',
     },
