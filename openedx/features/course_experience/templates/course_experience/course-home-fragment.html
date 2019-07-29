@@ -166,7 +166,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           </div>
           <div class="course-description">
             <p class="subtitle">${CourseDetails.fetch(course.id).subtitle}</p>
-            <div class="description">${CourseDetails.fetch(course.id).description}</div>
+            <div class="description">${HTML(CourseDetails.fetch(course.id).description)}</div>
           </div>
         </div>
 
