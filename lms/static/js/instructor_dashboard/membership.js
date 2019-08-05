@@ -204,12 +204,12 @@ such that the value can be defined later than this assignment (file load order).
                         } else {
                             authListWidgetReloadList.list_enabled = true;
                             enableAddButton(true, authListWidgetReloadList);
-                            authListWidgetReloadList.add_row([member.name, member.email,
+                            authListWidgetReloadList.add_row([member.username, member.email,
                                 member.group_name, $revokeBtn]
                             );
                         }
                     } else {
-                        authListWidgetReloadList.add_row([$img, member.name, member.email, $revokeBtn]);
+                        authListWidgetReloadList.add_row([$img, member.username, member.email, $revokeBtn]);
                     }
                 });
             });
