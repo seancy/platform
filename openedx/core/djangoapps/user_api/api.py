@@ -844,17 +844,26 @@ class RegistrationFormFactory(object):
 
             field_type = 'plaintext'
 
+            tos_label = _(u"Terms of Service")
+            tos_link = marketing_link("TOS")
+
+            honor_label = (u"Honor Code")
+            honor_link  = marketing_link("HONOR")
+
             pp_link = marketing_link("PRIVACY")
             label = Text(_(
                 u"By creating an account with {platform_name}, you agree \
                   to abide by our {platform_name} \
-                  {terms_of_service_link_start}{terms_of_service}{terms_of_service_link_end} \
+                  {terms_of_service_link_start}{terms_of_service}{terms_of_service_link_end} and {honor_link_start}{honor_code}{honor_link_end} \
                   and agree to our {privacy_policy_link_start}Privacy Policy{privacy_policy_link_end}."
             )).format(
                 platform_name=configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME),
-                terms_of_service=terms_label,
-                terms_of_service_link_start=HTML("<a href='{terms_url}' target='_blank'>").format(terms_url=terms_link),
+                terms_of_service_link_start=HTML("<a href='{tos_url}' target='_blank'>").format(tos_url=tos_link),
+                terms_of_service=tos_label,
                 terms_of_service_link_end=HTML("</a>"),
+                honor_link_start=HTML("<a href='{honor_url}' target='_blank'>").format(honor_url=honor_link),
+                honor_code=honor_label,
+                honor_link_end=HTML("</a>"),
                 privacy_policy_link_start=HTML("<a href='{pp_url}' target='_blank'>").format(pp_url=pp_link),
                 privacy_policy_link_end=HTML("</a>"),
             )
