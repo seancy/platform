@@ -608,5 +608,13 @@ plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.CMS, plugin_c
 derive_settings(__name__)
 FEATURES['ENABLE_PREREQUISITE_COURSES'] = True
 
+################# Enable Catalogue ######################
+FEATURES['ENABLE_COURSE_DISCOVERY'] = True
+FEATURES['ENABLE_COURSEWARE_INDEX'] = True
+
+################# Enable Video Upload Pipeline ######################
+FEATURES['ENABLE_VIDEO_UPLOAD_PIPELINE'] = True
+
 ###################### Default production settings ##############################
 FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False
+

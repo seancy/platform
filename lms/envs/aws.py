@@ -1151,3 +1151,23 @@ derive_settings(__name__)
 FEATURES['BATCH_ENROLLMENT_NOTIFY_USERS_DEFAULT'] = False
 FEATURES['ALLOW_AUTOMATED_SIGNUPS'] = True
 FEATURES['ENABLE_PREREQUISITE_COURSES'] = True
+
+################# Enable Catalogue ######################
+FEATURES['ENABLE_COURSE_DISCOVERY'] = True
+FEATURES['ENABLE_COURSEWARE_INDEX'] = True
+
+################# Display language selector ######################
+FEATURES['SHOW_FOOTER_LANGUAGE_SELECTOR'] = True
+
+################# Enable the combined login/registration form ######################
+FEATURES['ENABLE_COMBINED_LOGIN_REGISTRATION'] = True
+FEATURES['ENABLE_COMBINED_LOGIN_REGISTRATION_FOOTER'] = True
+
+################# Enable OAuth2 authentication provider ######################
+FEATURES['ENABLE_OAUTH2_PROVIDER'] = True
+
+################# Enable third-party auth ######################
+FEATURES['ENABLE_THIRD_PARTY_AUTH'] = True
+
+################# Enable password policy enforcement ######################
+FEATURES['ENFORCE_PASSWORD_POLICY'] = True
