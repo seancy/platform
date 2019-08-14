@@ -44,12 +44,9 @@ pipeline {
     options {
         timestamps()
     }
-    parameters { 
-        string(name: 'DEPLOY_OWNER', defaultValue: '', description: 'Logging action')
-    }
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-secret-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-secret-access-key')
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-aws-cn-secret-key-id')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws-cn-secret-access-key')
         GITHUB_USERNAME       = credentials('jenkins-github-username')
         GITHUB_PASSWORD       = credentials('jenkins-github-password')  
     }
@@ -68,28 +65,6 @@ pipeline {
                 }
             }
         }
-        stage('Check string') {
-            steps {
-                script {
-                    try {
-                        if (params.DEPLOY_OWNER.substring(0,12) == 'staging-auto') {
-                            stage_auto_proceed = true
-                            platform_process = true
-                            this_environment = 'STAGING'
-                            if (params.DEPLOY_OWNER.replaceAll('staging-auto-', '') == 'master') {
-                                this_platform_branch = 'master'
-                                theme_process = true
-                            } else {
-                                this_platform_branch = params.DEPLOY_OWNER.replaceAll('staging-auto-', '')
-                                theme_process = false
-                            }
-                        }
-                    } catch (err) {
-                        println err
-                    }
-                }
-            }
-        }
         stage('Choose environment') {
             when {
                 expression { return stage_auto_proceed == false }
@@ -98,7 +73,7 @@ pipeline {
                 script {
                     try {
                         timeout(time: 2) {
-                            this_environment = input message: "which environment to run", parameters: [choice(name: 'environment', choices: ['PROD', 'STAGING'], description: 'which environment to run')]
+                            this_environment = input message: "which environment to run", parameters: [choice(name: 'environment', choices: ['PROD'], description: 'which environment to run')]
                         }
                     } catch (err) {
                         println err
@@ -218,17 +193,11 @@ pipeline {
                     try {
                         timeout(time: 2) {
                             if (env.BRANCH_NAME == "master") {
-                                ec2_region = input message: "which region to deploy", parameters: [choice(name: 'region', choices: ['CN', 'FR', 'US'],description: 'which region to deploy')]
+                                ec2_region = input message: "which region to deploy", parameters: [choice(name: 'region', choices: ['CN'],description: 'which region to deploy')]
                                 if (ec2_region == 'CN') {
-                                    ec2_location = 'ap-southeast-1'
+                                    ec2_location = 'cn-northwest-1'
                                     this_platform_branch = 'master-master'
-                                } else if (ec2_region == 'FR') {
-                                    ec2_location = 'ap-southeast-1'
-                                    this_platform_branch = 'master-master'
-                                } else if (ec2_region == 'US') {
-                                    ec2_location = 'ap-southeast-1'
-                                    this_platform_branch = 'master-master'
-                                }
+                                } 
                                 println ec2_location
                                 sh "python ${env.WORKSPACE}/configuration/playbooks/roles/lt_edxapp/files/check_tenant_file.py ${env.WORKSPACE}/inventory ${ec2_location} ${env.WORKSPACE}/configuration/playbooks/roles/lt_edxapp/files/credential-helper.sh"
                                 def list_parameters = []
