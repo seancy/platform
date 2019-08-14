@@ -14,7 +14,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from waffle.decorators import waffle_switch
 from contentstore.config import waffle
 
-__all__ = ['signup', 'login_page', 'howitworks', 'accessibility']
+__all__ = ['signup', 'login_page', 'howitworks', 'accessibility', 'tos']
 
 
 @ensure_csrf_cookie
@@ -85,3 +85,10 @@ def accessibility(request):
     return render_to_response('accessibility.html', {
         'language_code': request.LANGUAGE_CODE
     })
+
+
+@ensure_csrf_cookie
+def tos(request):
+    if request.user.is_authenticated:
+        return redirect('/course/')
+    return render_to_response('tos.html', {})
