@@ -30,6 +30,8 @@ def signup(request):
         # Redirect to course to login to process their certificate if SSL is enabled
         # and registration is disabled.
         return redirect_with_get('login', request.GET, False)
+    if not settings.FEATURES.get('ALLOW_PUBLIC_ACCOUNT_CREATION'):
+        return render_to_response('404.html', {})
 
     return render_to_response('register.html', {'csrf': csrf_token})
 
