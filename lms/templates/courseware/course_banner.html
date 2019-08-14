@@ -110,8 +110,9 @@ from six import string_types
             </div>
         </section>
         <script type="text/javascript">
+          var $progressRing = $(this).find('.progress-ring');
           var progressRing = $('.progress-ring')[0]
-          var percent = progressRing.dataset['percent']
+          percent = $progressRing.data('percent');
           var circle = $('.progress-ring__circle')[0];
           var circleBg = $('.progress-ring__circle-bg')[0];
           var radius = circle.r.baseVal.value;

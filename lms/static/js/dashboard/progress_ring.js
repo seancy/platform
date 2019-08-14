@@ -1,7 +1,8 @@
 $(document).ready(function () {
    $(".progress-icon").each(function () {
+       var $progressRing = $(this).find('.progress-ring');
         var progressRing = $(this).find('.progress-ring')[0],
-            percent = progressRing.dataset['percent'],
+            percent = $progressRing.data('percent'),
             circle = $(this).find('.progress-ring__circle')[0],
             circleBg = $(this).find('.progress-ring__circle-bg')[0],
             radius = circle.r.baseVal.value,

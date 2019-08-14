@@ -31,14 +31,14 @@
             },
 
             resetPanel: function (e) {
-                this.$container.find('.fact-wrapper').each((i, item) => {
+                this.$container.find('.fact-wrapper').each(function (i, item) {
                     $(item).addClass('hidden-panel')
                 })
 
             },
 
             togglePanel: function (e) {
-                setTimeout(() => {
+                setTimeout(function () {
                     const $wrapper = $(e.currentTarget).parent();
                     if ($wrapper.hasClass('hidden-panel')) {
                         $wrapper.removeClass('hidden-panel')

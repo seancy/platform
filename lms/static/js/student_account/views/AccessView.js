@@ -224,7 +224,8 @@
                     this._toggleForm('reset', false);
                 },
 
-                _toggleForm: function (type, isChangeRoute = true) {
+                _toggleForm: function (type, isChangeRoute) {
+                    isChangeRoute = true
                     let $form = $('#' + type + '-form');
                     if (type == 'reset') {
                         $form = $('#password-reset-form');
