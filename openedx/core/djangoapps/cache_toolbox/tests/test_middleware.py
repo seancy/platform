@@ -6,7 +6,7 @@ from mock import patch
 
 from openedx.core.djangolib.testing.utils import skip_unless_cms, skip_unless_lms
 from student.tests.factories import UserFactory, GroupFactory
-from student.roles import COURSE_ADMIN_ACCESS_GROUP
+from student.roles import STUDIO_ADMIN_ACCESS_GROUP
 
 
 class CachedAuthMiddlewareTestCase(TestCase):
@@ -16,7 +16,7 @@ class CachedAuthMiddlewareTestCase(TestCase):
         super(CachedAuthMiddlewareTestCase, self).setUp()
         password = 'test-password'
         self.user = UserFactory(password=password)
-        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
+        self.user.groups.add(GroupFactory(name=STUDIO_ADMIN_ACCESS_GROUP))
         self.client.login(username=self.user.username, password=password)
 
     def _test_change_session_hash(self, test_url, redirect_url):

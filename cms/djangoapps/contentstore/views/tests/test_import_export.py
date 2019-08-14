@@ -28,7 +28,7 @@ from contentstore.utils import reverse_course_url
 from models.settings.course_metadata import CourseMetadata
 from openedx.core.lib.extract_tar import safetar_extractall
 from student import auth
-from student.roles import COURSE_ADMIN_ACCESS_GROUP, CourseInstructorRole, CourseStaffRole
+from student.roles import STUDIO_ADMIN_ACCESS_GROUP, CourseInstructorRole, CourseStaffRole
 from student.tests.factories import GroupFactory
 from util import milestones_helpers
 from xmodule.contentstore.django import contentstore
@@ -219,7 +219,7 @@ class ImportTestCase(CourseTestCase):
         # Create a non_staff user and add it to course staff only
         __, nonstaff_user = self.create_non_staff_authed_user_client()
         auth.add_users(self.user, CourseStaffRole(self.course.id), nonstaff_user)
-        nonstaff_user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
+        nonstaff_user.groups.add(GroupFactory(name=STUDIO_ADMIN_ACCESS_GROUP))
 
         course = self.store.get_course(self.course.id)
         self.assertIsNotNone(course)

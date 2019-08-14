@@ -16,7 +16,7 @@ from openedx.core.djangoapps.content.course_structures.tests import SignalDiscon
 from student import auth
 from student.auth import has_studio_read_access, has_studio_write_access
 from student.roles import (
-    COURSE_ADMIN_ACCESS_GROUP,
+    STUDIO_ADMIN_ACCESS_GROUP,
     CourseInstructorRole,
     CourseStaffRole,
     LibraryUserRole,
@@ -492,7 +492,7 @@ class TestLibraryAccess(SignalDisconnectTestMixin, LibraryTestCase):
         super(TestLibraryAccess, self).setUp()
         self.non_staff_user_password = 'foo'
         self.non_staff_user = UserFactory(password=self.non_staff_user_password, is_staff=False)
-        self.non_staff_user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
+        self.non_staff_user.groups.add(GroupFactory(name=STUDIO_ADMIN_ACCESS_GROUP))
 
     def _login_as_non_staff_user(self, logout_first=True):
         """ Login as a user that starts out with no roles/permissions granted. """

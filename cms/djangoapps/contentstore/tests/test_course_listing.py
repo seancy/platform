@@ -22,7 +22,7 @@ from contentstore.views.course import (
 )
 from course_action_state.models import CourseRerunState
 from student.roles import (
-    COURSE_ADMIN_ACCESS_GROUP,
+    STUDIO_ADMIN_ACCESS_GROUP,
     CourseInstructorRole,
     CourseStaffRole,
     GlobalStaff,
@@ -58,7 +58,7 @@ class TestCourseListing(ModuleStoreTestCase):
         self.request.user = self.user
         self.client = AjaxEnabledTestClient()
         self.client.login(username=self.user.username, password='test')
-        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
+        self.user.groups.add(GroupFactory(name=STUDIO_ADMIN_ACCESS_GROUP))
 
 
     def _create_course_with_access_groups(self, course_location, user=None, store=ModuleStoreEnum.Type.split):

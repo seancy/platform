@@ -12,7 +12,7 @@ from contentstore.tests.utils import CourseTestCase
 from contentstore.utils import reverse_course_url
 from contentstore.views.transcript_settings import TranscriptionProviderErrorType, validate_transcript_credentials
 from openedx.core.djangoapps.profile_images.tests.helpers import make_image_file
-from student.roles import COURSE_ADMIN_ACCESS_GROUP, CourseStaffRole
+from student.roles import STUDIO_ADMIN_ACCESS_GROUP, CourseStaffRole
 from student.tests.factories import GroupFactory
 
 
@@ -510,7 +510,7 @@ class TranscriptDeleteTest(CourseTestCase):
         course_staff_role = CourseStaffRole(self.course.id)
         if is_course_staff:
             course_staff_role.add_users(self.user)
-            self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
+            self.user.groups.add(GroupFactory(name=STUDIO_ADMIN_ACCESS_GROUP))
         else:
             course_staff_role.remove_users(self.user)
 

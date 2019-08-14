@@ -10,7 +10,7 @@ from mock import patch
 from opaque_keys.edx.keys import CourseKey
 
 from contentstore.tests.utils import AjaxEnabledTestClient, parse_json
-from student.roles import COURSE_ADMIN_ACCESS_GROUP, CourseInstructorRole, CourseStaffRole
+from student.roles import STUDIO_ADMIN_ACCESS_GROUP, CourseInstructorRole, CourseStaffRole
 from student.tests.factories import UserFactory, GroupFactory
 from util.organizations_helpers import add_organization, get_course_organizations
 from xmodule.course_module import CourseFields
@@ -52,7 +52,7 @@ class TestCourseListing(ModuleStoreTestCase):
         )
         self.source_course_key = source_course.id
 
-        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
+        self.user.groups.add(GroupFactory(name=STUDIO_ADMIN_ACCESS_GROUP))
         for role in [CourseInstructorRole, CourseStaffRole]:
             role(self.source_course_key).add_users(self.user)
 

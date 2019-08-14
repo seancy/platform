@@ -23,7 +23,7 @@ log = logging.getLogger(__name__)
 # A list of registered access roles.
 REGISTERED_ACCESS_ROLES = {}
 
-COURSE_ADMIN_ACCESS_GROUP = "Course Admin"
+STUDIO_ADMIN_ACCESS_GROUP = "Studio Admin"
 
 
 def register_access_role(cls):
@@ -43,7 +43,7 @@ def register_access_role(cls):
 
 
 def studio_access_role(user):
-    return user.is_staff or COURSE_ADMIN_ACCESS_GROUP in [group.name for group in user.groups.all()]
+    return user.is_staff or STUDIO_ADMIN_ACCESS_GROUP in [group.name for group in user.groups.all()]
 
 
 def studio_login_required(func):

@@ -24,7 +24,7 @@ from openedx.core.djangoapps.password_policy.compliance import (
     NonCompliantPasswordWarning
 )
 from openedx.core.djangolib.testing.utils import CacheIsolationTestCase
-from student.roles import COURSE_ADMIN_ACCESS_GROUP
+from student.roles import STUDIO_ADMIN_ACCESS_GROUP
 from student.tests.factories import RegistrationFactory, UserFactory, UserProfileFactory, GroupFactory
 from student.views import login_oauth_token
 from third_party_auth.tests.utils import (
@@ -49,7 +49,7 @@ class LoginTest(CacheIsolationTestCase):
         self.user = UserFactory.build(username='test', email='test@edx.org')
         self.user.set_password('test_password')
         self.user.save()
-        self.user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
+        self.user.groups.add(GroupFactory(name=STUDIO_ADMIN_ACCESS_GROUP))
 
         # Create a registration for the user
         RegistrationFactory(user=self.user)
@@ -344,7 +344,7 @@ class LoginTest(CacheIsolationTestCase):
         user = UserFactory.build(username='tester', email='tester@edx.org')
         user.set_password('test_password')
         user.save()
-        user.groups.add(GroupFactory(name=COURSE_ADMIN_ACCESS_GROUP))
+        user.groups.add(GroupFactory(name=STUDIO_ADMIN_ACCESS_GROUP))
 
 
         # Assert that no profile is created.
