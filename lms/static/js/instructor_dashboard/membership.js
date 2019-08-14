@@ -825,8 +825,7 @@ such that the value can be defined later than this assignment (file load order).
             this.$enrollment_button.click(function(event) {
                 var sendData;
                 if (!batchEnroll.$reason_field.val()) {
-                    batchEnroll.fail_with_error(gettext('Reason field should not be left blank.'));
-                    return false;
+                    batchEnroll.$reason_field.val('');
                 }
                 if (!batchEnroll.$role.val()) {
                     batchEnroll.fail_with_error(gettext('Role field should not be left unselected.'));
