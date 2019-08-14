@@ -589,8 +589,9 @@ def _section_membership(course, access):
     """ Provide data for the corresponding dashboard section """
     course_key = course.id
     ccx_enabled = settings.FEATURES.get('CUSTOM_COURSES_EDX', False) and course.enable_ccx
-    enrollment_role_choices = configuration_helpers.get_value('MANUAL_ENROLLMENT_ROLE_CHOICES',
-                                                              settings.MANUAL_ENROLLMENT_ROLE_CHOICES)
+    enrollment_role_choices = configuration_helpers.get_value(
+        'MANUAL_ENROLLMENT_ROLE_CHOICES',
+        settings.MANUAL_ENROLLMENT_ROLE_CHOICES)
 
     section_data = {
         'section_key': 'membership',

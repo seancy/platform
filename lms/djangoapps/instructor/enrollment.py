@@ -203,9 +203,9 @@ def enroll_user(course_id, student):
 
 def unenroll_email(course_id, student_email, email_students=False, email_params=None, language=None):
     """
-    Unenroll a student by email.
+    Unenroll a student by user.
 
-    `student_email` is student's emails e.g. "foo@bar.com"
+    `student` is student's user
     `email_students` determines if student should be notified of action by email.
     `email_params` parameters used while parsing email templates (a `dict`).
     `language` is the language used to render the email.

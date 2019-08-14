@@ -1153,8 +1153,9 @@ def students_update_enrollment(request, course_id):
     reason = request.POST.get('reason')
     role = request.POST.get('role')
 
-    allowed_role_choices = configuration_helpers.get_value('MANUAL_ENROLLMENT_ROLE_CHOICES',
-                                                           settings.MANUAL_ENROLLMENT_ROLE_CHOICES)
+    allowed_role_choices = configuration_helpers.get_value(
+        'MANUAL_ENROLLMENT_ROLE_CHOICES',
+        settings.MANUAL_ENROLLMENT_ROLE_CHOICES)
     if role and role not in allowed_role_choices:
         return JsonResponse(
             {
