@@ -1121,28 +1121,8 @@ def my_courses(request):
 def get_enrolled_ilt(request):
     user = request.user
 
-    # we want to filter and only show enrollments for courses within
-    # the 'ORG' defined in configuration.
-    course_org_filter = configuration_helpers.get_value('course_org_filter')
-    extra_course_org_filters = configuration_helpers.get_configuration_value('extra_course_org_filters', [])
-
-    # Let's filter out any courses in an "org" that has been declared to be
-    # in a configuration
-    org_filter_out_set = configuration_helpers.get_all_orgs()
-
-    # remove our current org from the "filter out" list, if applicable
-    if course_org_filter:
-        org_filter_out_set.remove(course_org_filter)
-    for org_filter in extra_course_org_filters:
-        if org_filter in org_filter_out_set:
-            org_filter_out_set.remove(org_filter)
-
-    # Build our (course, enrollment) list for the user, but ignore any courses that no
-    # longer exist (because the course IDs have changed). Still, we don't delete those
-    # enrollments, because it could have been a data push snafu.
-    course_enrollments = list(get_course_enrollments(user, course_org_filter, org_filter_out_set))
-    for org_filter in extra_course_org_filters:
-        course_enrollments += list(get_course_enrollments(user, org_filter, org_filter_out_set))
+    site_org_whitelist, site_org_blacklist = get_org_black_and_whitelist_for_site()
+    course_enrollments = list(get_course_enrollments(user, site_org_whitelist, site_org_blacklist))
 
     enrolled_course_ids = [enrollment.course_id for enrollment in course_enrollments]
 

@@ -298,14 +298,12 @@ class CourseGradeFactory(object):
             nb_trophies_possible += rule.get('min_count', 0)
         return nb_trophies_possible
 
-    def get_progress(self, user, course, course_key=None, progress=None, grade_summary=None, enrollment=None):
-        if not course_key:
-            course_key = course.id
+    def get_progress(self, user, course, progress=None, grade_summary=None, enrollment=None):
+        course_key = course.id
         if not grade_summary:
             grade_summary = self.read(user, course)
-        if not progress:
-            progress = self.get_course_completion_percentage(
-                user, course_key, course_grade=grade_summary, enrollment=enrollment)
+        if not grade_summary:
+            return
 
         nb_trophies_attempted = 0
         nb_trophies_earned = 0
@@ -363,12 +361,16 @@ class CourseGradeFactory(object):
         else:
             current_score = 0
 
+        if not progress:
+            progress = self.get_course_completion_percentage(
+                user, course_key, course_grade=grade_summary, enrollment=enrollment)
+
         return {
             'current_score': current_score,
             'is_course_passed': grade_summary.passed,
-            'progress': progress,
             'nb_trophies_attempted': nb_trophies_attempted,
             'nb_trophies_earned': nb_trophies_earned,
             'nb_trophies_possible': nb_trophies_possible,
-            'trophies_by_chapter': trophies_by_chapter
+            'trophies_by_chapter': trophies_by_chapter,
+            'progress': progress
         }

@@ -736,6 +736,9 @@ TRACKING_BACKENDS = {
         'OPTIONS': {
             'name': 'tracking'
         }
+    },
+    'django': {
+        'ENGINE': 'track.backends.django.DjangoBackend'
     }
 }
 
@@ -2334,7 +2337,8 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
 
     # analytics features
-    'triboo_analytics'
+    'triboo_analytics',
+    'django_tables2',
 ]
 
 ######################### CSRF #########################################
@@ -2628,6 +2632,12 @@ GRADES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
     'BUCKET': 'edx-grades',
     'ROOT_PATH': '/tmp/edx-s3/grades',
+}
+
+TRIBOO_ANALYTICS_REPORTS = {
+    'STORAGE_TYPE': 'localfs',
+    'BUCKET': 'triboo_analytics',
+    'ROOT_PATH': '/tmp/edx-s3/analytics',
 }
 
 FINANCIAL_REPORTS = {

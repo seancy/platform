@@ -3,6 +3,7 @@
 from django.utils.translation import ugettext as _
 from django.utils.translation import pgettext
 from django.urls import reverse
+from urllib import urlencode
 from courseware.courses import get_course_about_section
 from django.conf import settings
 from six import text_type
@@ -142,7 +143,7 @@ from student.roles import studio_access_role
         and (ANALYTICS_ACCESS_GROUP in [group.name for group in user.groups.all()] \
         or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in user.groups.all()])):
           <li>
-            <a class="instructor-info-action" href="${reverse('analytics_course')}/?course_id=${unicode(course.id)}" alt="${_('View Course Report Page')}">
+            <a class="instructor-info-action" href="${"%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course.id}))}" alt="${_('View Course Report Page')}">
               <i class="far fa-analytics"></i>
             </a>
           </li>

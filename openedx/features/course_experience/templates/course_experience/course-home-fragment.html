@@ -25,7 +25,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 
 <%
   if request.user.is_authenticated:
-    progress_summary = CourseGradeFactory().get_progress(request.user, course, course_key)
+    progress_summary = CourseGradeFactory().get_progress(request.user, course)
     nb_trophies_earned = progress_summary['nb_trophies_earned']
     nb_trophies_possible = progress_summary['nb_trophies_possible']
     try:

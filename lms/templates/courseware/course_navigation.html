@@ -7,6 +7,7 @@ from courseware.courses import get_studio_url
 from courseware.tabs import get_course_tab_list
 from django.conf import settings
 from django.urls import reverse
+from urllib import urlencode
 from django.utils.translation import ugettext as _
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from instructor.views.instructor_dashboard import InstructorDashboardTab
@@ -99,7 +100,7 @@ if course is not None:
                   and (ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()] \
                   or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in request.user.groups.all()])):
                     <li>
-                      <a class="instructor-info-action" href="${reverse('analytics_course')}/?course_id=${unicode(course.id)}" alt="${_('View Course Report Page')}">
+                      <a class="instructor-info-action" href="${"%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course.id}))}" alt="${_('View Course Report Page')}">
                         <i class="far fa-analytics"></i>
                       </a>
                     </li>

@@ -5,8 +5,8 @@
   from django.utils.translation import ungettext
   from django.core.urlresolvers import reverse
   from django.template import Template, Context
-  from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+  from triboo_analytics.models import CourseStatus, format_time_spent
 %>
 
 <%block name="js_extra">
@@ -206,40 +206,134 @@
     }
 </style>
 
-<div class="wrapper-analytics transcript">
-    <h2>${_("Learning Transcript")}</h2>
-    <div class="analytics-header">
-        <span>${_("Let's have a look at your learning experience!")}</span>
-      % if configuration_helpers.get_value("ENABLE_WAIVER_REQUEST", False):
-        <button class="request-waiver" data-izimodal-open="#waiver-pop-up">${_("Request a waiver")}</button>
-      % endif
+<main id="main" aria-label="Content" tabindex="-1">
+    <div class="main-container">
+        <section class="banner">
+          <section class="welcome-wrapper">
+            <h2>${_("Learning Transcript")}</h2>
+          </section>
+        </section>
+        <section class="analytics-wrapper">
+          <div class="report-wrapper transcript">
+              <div class="analytics-header">
+                  <span>${_("Let's have a look at your learning experience!")}</span>
+                % if configuration_helpers.get_value("ENABLE_WAIVER_REQUEST", False):
+                  <button class="request-waiver" data-izimodal-open="#waiver-pop-up">${_("Request a waiver")}</button>
+                % endif
+              </div>
+              <div class="waiver-pop-up" id="waiver-pop-up" data-iziModal-group="group1">
+                  <span class="waiver-x" data-iziModal-close>X</span>
+                  <header>
+                      <h2>${_("Request a waiver for a course or a section")}</h2>
+                  </header>
+                  <form class="pop-up-form" id="pop-up-form" method="post">
+                      <input name="csrfmiddlewaretoken" value="${csrf_token}" type="hidden">
+                      <p>${_("Here you can request a waiver for an entire course or a module of a course, "
+                             "please select a course and the specific section(s) of the course. If you want to ask a waiver for an entire course, "
+                             "just select the course and leave the section blank.")}
+                      </p>
+                      <select class="waiver-course" id="waiver-course" name="waiver-course">
+                          <option selected value="none">${_("Select a course")}</option>
+                          % for c in courses:
+                              <option value="${c['id']}">${c['display_name']}</option>
+                          % endfor
+                      </select>
+                      <select class="waiver-section" id="waiver-section" name="waiver-section">
+                          <option selected value="whole course" disabled>${_("Select the section(s)")}</option>
+                      </select>
+                      <p class="waiver-justify">${_("Justify the reasons why you are requesting for this waiver")}</p>
+                      <textarea id="waiver-description" name="waiver-description"></textarea>
+                      <p>${_("After sending your request, the course admin will assess it and you will receive an answer by email.")}</p>
+                      <footer>
+                          <button class="send-waiver-request" type="submit">${_("Send")}</button>
+                      </footer>
+                  </form>
+              </div>
+            % if learner_report_enrollments:
+              <div class="analytics-summary">
+                  <div class="analytics-figures">
+                      <div class="figures-line">
+                          <div class="analytics-figure">
+                              <p class="figure">${learner_report_enrollments}</p>
+                              <p class="title">${ungettext("Enrollment", "Enrollments", learner_report_enrollments)}</p>
+                          </div>
+                          <div class="analytics-figure">
+                              <p class="figure">${format_time_spent(learner_report_total_time_spent)}</p>
+                              <p class="title">${_("Time spent on the platform")}</p>
+                          </div>
+                      </div>
+                      <div class="figures-line">
+                          <div class="analytics-figure">
+                              <p class="figure">${learner_report_average_final_score}&nbsp;%</p>
+                              <p class="title">${_("Average Final Score")}</p>
+                          </div>
+                          <div class="analytics-figure">
+                              <p class="figure">${learner_report_posts}</p>
+                              <p class="title">${ungettext("Post", "Posts", learner_report_posts)}</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="analytics-piechart">
+                      <div id="pieChart">
+                          <svg></svg>
+                      </div>
+                      <div class="legend">
+                        <p><span class="finished">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.finished])}</p>
+                        <p><span class="failed">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.failed])}</p>
+                        <p><span class="in-progress">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</p>
+                        <p><span class="not-started">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.not_started])}</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="analytics-detailed-summary last-update">
+                <div class="last-update">
+                  <i class="fa fa-bell"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
+                </div>
+              </div>
+              <div class="analytics-detailed-summary">
+                  <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
+                  ${Template(tpl).render(Context({'learner_course_table': learner_course_table, 'request': request,
+                      'list_table_downloads_url': list_table_downloads_url}))}
+              </div>
+
+              <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
+            % endif
+          </div>
+        </section>
     </div>
-    <div class="waiver-pop-up" id="waiver-pop-up" data-iziModal-group="group1">
-        <span class="waiver-x" data-iziModal-close>X</span>
-        <header>
-            <h2>${_("Request a waiver for a course or a section")}</h2>
-        </header>
-        <form class="pop-up-form" id="pop-up-form" method="post">
-            <input name="csrfmiddlewaretoken" value="${csrf_token}" type="hidden">
-            <p>${_("Here you can request a waiver for an entire course or a module of a course, "
-                   "please select a course and the specific section(s) of the course. If you want to ask a waiver for an entire course, "
-                   "just select the course and leave the section blank.")}
-            </p>
-            <select class="waiver-course" id="waiver-course" name="waiver-course">
-                <option selected value="none">${_("Select a course")}</option>
-                % for c in courses:
-                    <option value="${c['id']}">${c['display_name']}</option>
-                % endfor
-            </select>
-            <select class="waiver-section" id="waiver-section" name="waiver-section">
-                <option selected value="whole course" disabled>${_("Select the section(s)")}</option>
-            </select>
-            <p class="waiver-justify">${_("Justify the reasons why you are requesting for this waiver")}</p>
-            <textarea id="waiver-description" name="waiver-description"></textarea>
-            <p>${_("After sending your request, the course admin will assess it and you will receive an answer by email.")}</p>
-            <footer>
-                <button class="send-waiver-request" type="submit">${_("Send")}</button>
-            </footer>
-        </form>
-    </div>
-</div>
+</main>
+
+% if learner_report_enrollments:
+  <!-- load the d3.js library -->
+  <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+  <script type="text/javascript" src="${static.url('js/triboo_analytics/charts.js')}"></script>
+
+
+  <!-- the script -->
+  <script type="text/javascript">
+  var pieChartData = [
+    {
+      color       : 'green',
+      value       : ${learner_report_finished},
+      percent     : ${learner_report_finished} / ${learner_report_enrollments}
+    },
+    {
+      color       : 'red',
+      value       : ${learner_report_failed},
+      percent     : ${learner_report_failed} / ${learner_report_enrollments}
+    },
+    {
+      color       : 'orange',
+      value       : ${learner_report_in_progress},
+      percent     : ${learner_report_in_progress} / ${learner_report_enrollments}
+    },
+    {
+      color       : 'gray',
+      value       : ${learner_report_not_started},
+      percent     : ${learner_report_not_started} / ${learner_report_enrollments}
+    }
+  ];
+
+  drawPieChart('pieChart', pieChartData);
+  </script>
+% endif

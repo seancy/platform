@@ -13,6 +13,7 @@ class TestDjangoBackend(TestCase):
     def test_django_backend(self):
         event = {
             'username': 'test',
+            'user_id': 16,
             'time': '2013-01-01T12:01:00-05:00'
         }
         self.backend.send(event)

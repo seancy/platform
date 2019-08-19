@@ -552,11 +552,7 @@ def course_listing(request):
     active_courses, archived_courses = _process_courses_list(courses_iter, in_process_course_actions, split_archived)
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
-    orgs = []
-    for configuration in SiteConfiguration.objects.filter(enabled=True).all():
-        org_filter = configuration.get_value('course_org_filter', None)
-        if org_filter:
-            orgs.append(org_filter)
+    orgs = SiteConfiguration.get_all_orgs()
 
     return render_to_response(u'index.html', {
         u'orgs': orgs,

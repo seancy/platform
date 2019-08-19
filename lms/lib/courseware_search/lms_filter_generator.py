@@ -34,7 +34,7 @@ class LmsSearchFilterGenerator(SearchFilterGenerator):
             user_enrollments = self._enrollments_for_user(kwargs['user'])
             field_dictionary['course'] = [unicode(enrollment.course_id) for enrollment in user_enrollments]
 
-        # if we have an org filter, only include results for this org filter
+        # if we have an org filter, only include results for these orgs
         course_org_filter = configuration_helpers.get_current_site_orgs()
         if course_org_filter:
             field_dictionary['org'] = course_org_filter

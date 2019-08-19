@@ -93,11 +93,14 @@ def server_track(request, event_type, event, page=None):
 
     try:
         username = request.user.username
+        user_id = request.user.pk
     except:
         username = "anonymous"
+        user_id = None
 
     # define output:
     event = {
+        "user_id": user_id,
         "username": username,
         "ip": _get_request_ip(request),
         "referer": _get_request_header(request, 'HTTP_REFERER'),
