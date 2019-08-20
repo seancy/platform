@@ -505,6 +505,34 @@ def send_mail_to_student(student, param_dict, language=None):
     message_type = param_dict['message']
 
     email_template_dict = {
+        'ilt_hotel_cancel': (
+            'emails/ilt_hotel_cancel_email_subject.txt',
+            'emails/ilt_hotel_cancel_email_message.txt',
+        ),
+        'ilt_batch_unenroll': (
+            'emails/ilt_batch_unenroll_email_subject.txt',
+            'emails/ilt_batch_unenroll_email_message.txt',
+        ),
+        'ilt_self_unenroll': (
+            'emails/ilt_self_unenroll_email_subject.txt',
+            'emails/ilt_self_unenroll_email_message.txt',
+        ),
+        'ilt_refused': (
+            'emails/ilt_refused_email_subject.txt',
+            'emails/ilt_refused_email_message.txt',
+        ),
+        'ilt_hotel_updated': (
+            'emails/ilt_hotel_updated_email_subject.txt',
+            'emails/ilt_hotel_updated_email_message.txt',
+        ),
+        'ilt_validate': (
+            'emails/ilt_validate_email_subject.txt',
+            'emails/ilt_validate_email_message.txt',
+        ),
+        'ilt_confirmed': (
+            'emails/ilt_confirmed_email_subject.txt',
+            'emails/ilt_confirmed_email_message.txt',
+        ),
         'ilt_enrolled': (
             'emails/ilt_enrolled_email_subject.txt',
             'emails/ilt_enrolled_email_message.txt',

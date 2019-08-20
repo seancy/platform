@@ -477,6 +477,7 @@ class UserProfile(models.Model):
     lt_is_tos_agreed = models.BooleanField(verbose_name='TOS agreed', default=0)
 
     lt_comments = models.TextField(verbose_name='Comments', blank=True, null=True)
+    lt_ilt_supervisor = models.EmailField(verbose_name='ILT Supervisor', blank=True, null=True)
 
 
     @property

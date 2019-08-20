@@ -58,7 +58,8 @@ from courseware.courses import (
 )
 from courseware.masquerade import setup_masquerade
 from courseware.model_data import FieldDataCache
-from courseware.models import BaseStudentModuleHistory, StudentModule
+from courseware.models import BaseStudentModuleHistory, StudentModule, XModuleUserStateSummaryField
+from courseware.module_render import handle_xblock_callback
 from courseware.url_helpers import get_redirect_url
 from courseware.user_state_client import DjangoXBlockUserStateClient
 from edxmako.shortcuts import marketing_link, render_to_response, render_to_string
@@ -68,7 +69,7 @@ from lms.djangoapps.commerce.utils import EcommerceService
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect, Redirect
 from lms.djangoapps.experiments.utils import get_experiment_user_metadata_context
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
-from lms.djangoapps.instructor.enrollment import uses_shib
+from lms.djangoapps.instructor.enrollment import uses_shib, send_mail_to_student, get_user_email_language
 from lms.djangoapps.instructor.views.api import require_global_staff
 from lms.djangoapps.verify_student.services import IDVerificationService
 from openedx.core.djangoapps.catalog.utils import get_programs, get_programs_with_type
@@ -99,6 +100,7 @@ from shoppingcart.utils import is_shopping_cart_enabled
 from student.models import CourseEnrollment, UserTestGroup
 from util.cache import cache, cache_if_anonymous
 from util.db import outer_atomic
+from util.json_request import JsonResponse
 from util.milestones_helpers import get_prerequisite_courses_display
 from util.views import _record_feedback_in_zendesk, ensure_valid_course_key, ensure_valid_usage_key
 from xmodule.modulestore.django import modulestore
@@ -1817,3 +1819,115 @@ def get_financial_aid_courses(user):
             )
 
     return financial_aid_courses
+
+
+def ilt_registration_validation(request, course_id, usage_id, user_id):
+
+    usage_key = UsageKey.from_string(usage_id)
+    try:
+        user = User.objects.get(id=user_id)
+        request.user = user
+        summary = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="enrolled_users")
+        sessions = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="sessions")
+        data = json.loads(summary.value)
+        session_data = json.loads(sessions.value)
+        registration_info = None
+        registered_session = ""
+        for k, v in data.items():
+            if str(user_id) in v:
+                registration_info = v[str(user_id)]
+                registered_session = k
+        if not registration_info:
+            log.info("ILT request does not exist. User: {user_id}, Usage_id: {usage_id}".format(
+                user_id=user_id,
+                usage_id=usage_id
+            ))
+            raise Http404
+        if registered_session not in session_data:
+            log.info("Invalid session id: {session_id}".format(
+                session_id=registered_session
+            ))
+            raise Http404
+
+    except Exception as e:
+        log.error(e)
+        raise Http404
+
+    course_key = CourseKey.from_string(course_id)
+    course = modulestore().get_course(course_key)
+    ilt_block = modulestore().get_item(usage_key)
+    if request.method == "GET":
+        msg = ''
+        if registration_info['status'] != "pending":
+            msg = "This request has been {}".format(registration_info['status'])
+        enrollment = [registered_session, registration_info]
+        response = handle_xblock_callback(
+            request,
+            course_id,
+            usage_id,
+            'student_handler'
+        )
+        student_data = json.loads(response.content)
+        student_data['enrollment'] = enrollment
+        student_data['disable_footer'] = True
+        student_data['user'] = user
+        student_data['msg'] = msg
+        student_data['course_name'] = course.display_name
+        student_data['session_name'] = ilt_block.display_name
+
+        for idx, val in enumerate(student_data['sessions']):
+            if val[0] == registered_session:
+                student_data["selected_index"] = idx
+        return render_to_response(
+            'courseware/ilt_validation.html',
+            student_data
+        )
+
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == 'accept':
+            session_number = request.POST.get("session_number")
+            for k in registration_info:
+                if k in request.POST:
+                    registration_info[k] = request.POST.get(k)
+
+            accommodation = configuration_helpers.get_value("ILT_ACCOMMODATION_ENABLED", False)
+            if accommodation and registration_info['accommodation'] == 'yes':
+                registration_info['status'] = 'accepted'
+                msg = _("This request has been accepted")
+            else:
+                section_id = ilt_block.get_parent().parent.block_id
+                chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+                url = reverse('courseware_section', args=[course_id, chapter_id, section_id])
+                url = request.build_absolute_uri(url)
+                registration_info['status'] = 'confirmed'
+                params = {'message': 'ilt_confirmed',
+                          'name': user.profile.name or user.username,
+                          'ilt_link': url, 'site_name': None,
+                          'ilt_name': ilt_block.display_name,
+                          'course_name': course.display_name}
+                send_mail_to_student(user.email, params, language=get_user_email_language(user))
+                msg = _("This request has been confirmed")
+            if session_number != registered_session:
+                data[registered_session].pop(str(user_id), None)
+                data[session_number][str(user_id)] = registration_info
+            else:
+                data[registered_session][str(user_id)] = registration_info
+        else:
+            registration_info['status'] = 'refused'
+            data[registered_session][str(user_id)] = registration_info
+            ilt_block = modulestore().get_item(usage_key)
+            section_id = ilt_block.get_parent().parent.block_id
+            chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+            url = reverse('courseware_section', args=[course_id, chapter_id, section_id])
+            url = request.build_absolute_uri(url)
+            params = {'message': 'ilt_refused',
+                      'name': user.profile.name or user.username,
+                      'ilt_link': url, 'site_name': None,
+                      'ilt_name': ilt_block.display_name,
+                      'course_name': course.display_name}
+            send_mail_to_student(user.email, params, language=get_user_email_language(user))
+            msg = _("This request has been refused")
+        summary.value = json.dumps(data)
+        summary.save()
+        return JsonResponse({"msg": msg}, status=200)

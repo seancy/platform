@@ -16,7 +16,7 @@ from courseware.masquerade import handle_ajax as courseware_masquerade_handle_aj
 from courseware.module_render import handle_xblock_callback, handle_xblock_callback_noauth, xblock_view, xqueue_callback
 from courseware.views import views as courseware_views
 from courseware.views.index import CoursewareIndex
-from courseware.views.views import CourseTabView, EnrollStaffView, StaticCourseTabView
+from courseware.views.views import CourseTabView, EnrollStaffView, ilt_registration_validation, StaticCourseTabView
 from debug import views as debug_views
 from django_comment_common.models import ForumsConfig
 from django_openid_auth import views as django_openid_auth_views
@@ -769,6 +769,15 @@ if settings.FEATURES.get('ENABLE_DISCUSSION_SERVICE'):
                 'subscribe': True,
             },
             name='resubscribe_forum_update',
+        ),
+
+        url(
+            r'^ilt-validation/{course_key}/{usage_key}/(?P<user_id>[0-9]+)/$'.format(
+                course_key=settings.COURSE_ID_PATTERN,
+                usage_key=settings.USAGE_ID_PATTERN,
+            ),
+            ilt_registration_validation,
+            name='ilt_validation',
         ),
     ]
 

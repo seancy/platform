@@ -7,7 +7,7 @@
 
 ${_("Hello")} ${name}
 
-${_("You have been enrolled to an ILT session '{ilt_name}' in course {course_name} on the {platform_name} platform. For more information about the session, please click on the link below:").format(platform_name=platform_name, ilt_name=ilt_name, course_name=course_name)}
+${_("You have been enrolled to the ILT session '{ilt_name}' in the course {course_name} on the {platform_name} platform.").format(platform_name=platform_name, ilt_name=ilt_name, course_name=course_name)}
 
 % if session_info:
 Session information:
@@ -36,8 +36,13 @@ Session information:
     % endif
 % endif
 
+% if hotel:
+${_("Here are the information about your hotel reservation")}: ${hotel}
+% endif
+
+${_("For more information about the session, please click on the link below:")}
 ${ilt_link}
 
-${_("Best regards")}
+${_("Best regards,")}
 
 ${_("{platform_name} Team").format(platform_name=platform_name)}
