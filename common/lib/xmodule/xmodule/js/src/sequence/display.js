@@ -369,7 +369,7 @@
                 if (targetUrl) {
                     // Wait to load the new page until we've attempted to log the event
                     var additionalParameter = targetUrl.indexOf('?') >= 0 ? '&' : '?';
-                    window.location.href = targetUrl+ additionalParameter + 'course_index=' + ($('.course-index').css('display') == 'none' ? 'hide' : '');
+                    window.location.href = targetUrl+ additionalParameter + 'course_index=' + ($('.course-index').hasClass('showing') ? 'showing' : '');
                 }
             });
 

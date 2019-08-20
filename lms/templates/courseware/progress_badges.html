@@ -27,6 +27,9 @@ username = get_enterprise_learner_generic_name(request) or student.username
 <%block name="headextra">
 <%static:css group='style-course-vendor'/>
 <%static:css group='style-course'/>
+<link type="text/css" href="${static.url('css/vendor/swiper.min.css')}" rel="stylesheet"/>
+<script src="${static.url('js/vendor/swiper.min.js')}"></script>
+
 </%block>
 
 <%block name="pagetitle">${_("{course_number} Progress").format(course_number=course.display_number_with_default)}</%block>
@@ -53,11 +56,11 @@ def get_trophy_path(trophy_img):
     <div class="container">
         <div class="profile-wrapper badges-wrapper">
           % if len(progress_badges_section['obtained']):
-            <section class="obtained-badges">
+            <section class="swiper-container obtained-badges">
                 <h2>${_("My collection of badges")}</h2>
-                <ul>
+                <ul class="swiper-wrapper">
                     % for trophy in progress_badges_section['obtained']:
-                        <li class="badge-card">
+                        <li class="swiper-slide badge-card">
                             <a class="btn" href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=trophy['url'], section=trophy['section_url']))}">
                                 <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
                                 <section class="badge-info">
@@ -75,11 +78,11 @@ def get_trophy_path(trophy_img):
           % endif
 
           % if len(progress_badges_section['not-obtained']):
-            <section class="not-obtained-badges">
+            <section class="swiper-container not-obtained-badges">
                 <h2>${_("Badges not obtained")}</h2>
-                <ul>
+                <ul class="swiper-wrapper">
                     % for trophy in progress_badges_section['not-obtained']:
-                        <li class="badge-card">
+                        <li class="swiper-slide badge-card">
                             <a class="btn" href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=trophy['url'], section=trophy['section_url']))}">
                                 <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
                                 <section class="badge-info">
@@ -93,15 +96,16 @@ def get_trophy_path(trophy_img):
                         </li>
                     % endfor
                 </ul>
+                <div class="swiper-pagination"></div>
             </section>
           % endif
 
           % if len(progress_badges_section['not-started']):
-            <section class="not-started-badges">
+            <section class="swiper-container not-started-badges">
                 <h2>${_("Badges to be earned")}</h2>
-                <ul>
+                <ul class="swiper-wrapper">
                     % for trophy in progress_badges_section['not-started']:
-                        <li class="badge-card">
+                        <li class="swiper-slide badge-card">
                             <a class="btn" href="${reverse('courseware_section', kwargs=dict(course_id=text_type(course.id), chapter=trophy['url'], section=trophy['section_url']))}">
                                 <img src="${get_trophy_path(trophy['trophy_img'])}" alt="badge">
                                 <section class="badge-info">
@@ -115,8 +119,21 @@ def get_trophy_path(trophy_img):
                         </li>
                     % endfor
                 </ul>
+                <div class="swiper-pagination"></div>
             </section>
           % endif
+
+            <script type="text/javascript">
+              var swiper = new Swiper('.swiper-container', {
+                slidesPerView: 'auto',
+                spaceBetween: 13,
+                slidesOffsetAfter:160,
+                pagination: {
+                  el: '.swiper-pagination',
+                  clickable: true,
+                },
+              });
+            </script>
         </div>
     </div>
 </main>

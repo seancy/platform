@@ -14,7 +14,11 @@ function createMobileMenu() {
         mobileNavItem.removeAttr('role');
         mobileNavItem.find('a').attr('role', 'menuitem');
         // xss-lint: disable=javascript-jquery-append
-        $('.mobile-menu').append(mobileNavItem);
+        if (mobileNavItem.hasClass('dropdown-item')){
+            $('.userinfo-mobile-menu').append(mobileNavItem);
+        }else{
+            $('.mobile-menu').append(mobileNavItem);
+        }
     });
 }
 
@@ -52,15 +56,17 @@ $(document).ready(function() {
 
     // Toggling menu visibility with the hamburger menu
     $('.global-header .hamburger-menu').click(function() {
+        $('.global-header').toggleClass('module-menu-showing');
         $hamburgerMenu = $('.global-header .hamburger-menu');
         $mobileMenu = $('.mobile-menu');
-        if ($mobileMenu.is(':visible')) {
-            $mobileMenu.addClass('hidden');
-            $hamburgerMenu.attr('aria-expanded', 'false');
-        } else {
-            $mobileMenu.removeClass('hidden');
+        if (!$mobileMenu.hasClass('showing')) {
+            $mobileMenu.addClass('showing');
             $hamburgerMenu.attr('aria-expanded', 'true');
+        } else {
+            $mobileMenu.removeClass('showing');
+            $hamburgerMenu.attr('aria-expanded', 'false');
         }
+        $('.userinfo-mobile-menu').removeClass('showing');
         $hamburgerMenu.toggleClass('open');
     });
 
@@ -72,6 +78,12 @@ $(document).ready(function() {
     createMobileMenu();
 });
 
+$('.secondary').find('.nav-item').on('click', function (e) {
+    $('.global-header').toggleClass('usermenu-showing');
+    var $userinfoMobileMenu = $('.userinfo-mobile-menu');
+    $('.mobile-menu').removeClass('showing');
+    $userinfoMobileMenu.toggleClass('showing');
+})
 
 // Accessibility keyboard controls for user dropdown and mobile menu
 $('.mobile-menu, .global-header').on('keydown', function(e) {

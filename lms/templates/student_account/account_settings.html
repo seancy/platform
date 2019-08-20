@@ -17,6 +17,7 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
 <%namespace name='static' file='/static_content.html'/>
 
 <%block name="pagetitle">${_("Account Settings")}</%block>
+<%block name="bodyclass">view-account-setting</%block>
 
 % if duplicate_provider:
     <section>

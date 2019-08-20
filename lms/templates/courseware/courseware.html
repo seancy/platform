@@ -141,6 +141,8 @@ ${HTML(fragment.foot_html())}
           <i class="far fa-arrow-left"></i>
           ${course.display_name_with_default}
         </a>
+
+        <i class="far fa-outdent"></i>
       </div>
 
       <div class="wrapper-course-modes">
@@ -181,7 +183,7 @@ ${HTML(fragment.foot_html())}
     <section class="course-content" id="course-content">
 
         <header class="page-header has-secondary">
-            % if course_index == 'hide':
+            % if course_index != 'showing':
                 <i class="far fa-indent"></i>
             % else:
                 <i class="far fa-outdent"></i>

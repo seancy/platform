@@ -24,7 +24,7 @@
           <span class="forum-nav-thread-title"><%- title %></span>
           <% if(typeof(courseware_title) === "undefined") { var courseware_title = null; } %>
           <span class="forum-nav-thread-topic"><%- courseware_title %></span>
-          <span class="forum-nav-thread-author"><%- user_display_name %></span>
+          <span class="forum-nav-thread-author"><%- (typeof user_display_name) != 'undefined'? user_display_name : 'undefined'  %></span>
       <% if (showThreadPreview){ %>
           <div class="thread-preview-body"><%- threadPreview %></div>
       <% } %>

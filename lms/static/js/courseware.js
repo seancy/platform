@@ -18,18 +18,24 @@
       var $courseContent = $('.course-content');
       var $icon = $courseContent.find('.page-header i');
       var $courseIndex = $('.course-index');
-      if ($courseIndex.css('display') == 'none'){
-          $icon.removeClass('fa-outdent').addClass('fa-indent')
+      var $leftSideIcon = $courseIndex.find('.back-link > i');
+      if (!$courseIndex.hasClass('showing')){
+        $leftSideIcon.removeClass('fa-outdent').addClass('fa-indent')
+      }else {
+        $leftSideIcon.removeClass('fa-indent').addClass('fa-outdent')
       }
-      $icon.on('click', function (e) {
-        $courseIndex.toggle();
+      var tempFun = function (e) {
+        $courseIndex.toggleClass('showing');
         var $src = $(e.currentTarget)
-        if ($courseIndex.css('display') == 'none') {
-            $src.removeClass('fa-outdent').addClass('fa-indent')
+        if (!$courseIndex.hasClass('showing')) {
+          $leftSideIcon.removeClass('fa-outdent').addClass('fa-indent')
+          $icon.removeClass('fa-outdent').addClass('fa-indent')
         } else {
-            $src.removeClass('fa-indent').addClass('fa-outdent')
+          $leftSideIcon.removeClass('fa-indent').addClass('fa-outdent')
+          $icon.removeClass('fa-indent').addClass('fa-outdent')
         }
-      })
+      };
+      $leftSideIcon.on('click', tempFun);
     }
 
     Courseware.prototype.render = function() {

@@ -46,7 +46,7 @@
 
                 var body_length = this.model.attributes.body.length;
                 var country_tag = this.model.attributes.body.substr(body_length - 4, 4);
-                if (country_tag.startsWidth(" #")) {
+                if (country_tag.startsWith(" #")) {
                     this.model.attributes.body = this.model.attributes.body.substr(0, body_length - 4);
                 }
 
