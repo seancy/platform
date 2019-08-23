@@ -617,4 +617,5 @@ FEATURES['ENABLE_VIDEO_UPLOAD_PIPELINE'] = True
 
 ###################### Default production settings ##############################
 FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False
-
+FEATURES['ENABLE_SPECIAL_EXAMS'] = True
+FEATURES['MILESTONES_APP'] = True

@@ -1175,3 +1175,8 @@ FEATURES['ENABLE_THIRD_PARTY_AUTH'] = True
 
 ################# Enable password policy enforcement ######################
 FEATURES['ENFORCE_PASSWORD_POLICY'] = True
+
+###################### Default production settings ##############################
+FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False
+FEATURES['ENABLE_SPECIAL_EXAMS'] = True
+FEATURES['MILESTONES_APP'] = True
