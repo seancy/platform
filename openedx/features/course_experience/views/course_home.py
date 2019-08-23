@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.contrib.auth.decorators import login_required
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from web_fragments.fragment import Fragment
 
@@ -52,6 +53,7 @@ class CourseHomeView(CourseTabView):
     @method_decorator(cache_control(no_cache=True, no_store=True, must_revalidate=True))
     @method_decorator(ensure_valid_course_key)
     @method_decorator(add_maintenance_banner)
+    @method_decorator(login_required)
     def get(self, request, course_id, **kwargs):
         """
         Displays the home page for the specified course.

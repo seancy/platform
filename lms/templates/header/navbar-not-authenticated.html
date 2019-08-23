@@ -35,7 +35,7 @@ from six import text_type
     </div>
   % endif
   % if allows_login:
-    % if can_discover_courses:
+    % if can_discover_courses and courses_are_browsable:
       <div class="mobile-nav-item hidden-mobile nav-item">
         <a href="/courses">${_('Explore courses')}</a>
       </div>

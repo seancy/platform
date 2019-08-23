@@ -99,6 +99,13 @@ def courses(request):
     if enable_mktg_site:
         return redirect(marketing_link('COURSES'), permanent=True)
 
+    course_about_visibility = configuration_helpers.get_value(
+                                'COURSE_ABOUT_VISIBILITY_PERMISSION',
+                                settings.COURSE_ABOUT_VISIBILITY_PERMISSION)
+
+    if (course_about_visibility == "see_private_about_page"
+        and not request.user.is_authenticated):
+        return redirect('/login?next=courses')
     if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False))
         and CATALOG_DENIED_GROUP not in [group.name for group in request.user.groups.all()]):
         return courseware.views.views.courses(request)

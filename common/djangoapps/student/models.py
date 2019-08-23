@@ -458,6 +458,8 @@ class UserProfile(models.Model):
     profile_image_uploaded_at = models.DateTimeField(null=True, blank=True)
 
     lt_custom_country = models.CharField(verbose_name='Custom Country', max_length=255, blank=True, null=True)
+    lt_area = models.CharField(verbose_name='Commercial Zone', max_length=255, blank=True, null=True)
+    lt_sub_area = models.CharField(verbose_name='Commercial Region', max_length=255, blank=True, null=True)
     lt_address = models.CharField(verbose_name='Address', max_length=255, blank=True, null=True)
     lt_address_2 = models.CharField(verbose_name='Address 2', max_length=255, blank=True, null=True)
     lt_phone_number = models.CharField(verbose_name='Phone Number', max_length=255, blank=True, null=True)

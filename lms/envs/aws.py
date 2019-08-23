@@ -1165,7 +1165,7 @@ FEATURES['SHOW_FOOTER_LANGUAGE_SELECTOR'] = True
 
 ################# Enable the combined login/registration form ######################
 FEATURES['ENABLE_COMBINED_LOGIN_REGISTRATION'] = True
-FEATURES['ENABLE_COMBINED_LOGIN_REGISTRATION_FOOTER'] = True
+# FEATURES['ENABLE_COMBINED_LOGIN_REGISTRATION_FOOTER'] = False
 
 ################# Enable OAuth2 authentication provider ######################
 FEATURES['ENABLE_OAUTH2_PROVIDER'] = True
