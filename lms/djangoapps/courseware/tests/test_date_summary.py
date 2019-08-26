@@ -68,7 +68,7 @@ class CourseDateSummaryTest(SharedModuleStoreTestCase):
         course = create_course_run()
         url = reverse('openedx.course_experience.course_home', args=(course.id,))
         response = self.client.get(url)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(302, response.status_code)
 
     # Tests for which blocks are enabled
     def assert_block_types(self, course, user, expected_blocks):

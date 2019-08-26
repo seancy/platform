@@ -4,6 +4,7 @@ Python tests for the Survey workflows
 
 from collections import OrderedDict
 from copy import deepcopy
+import pytest
 
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -116,6 +117,7 @@ class SurveyViewsTests(LoginEnrollmentTestCase, SharedModuleStoreTestCase, XssTe
         """
         self._assert_survey_redirect(self.course)
 
+    @pytest.mark.skip('Course home page requires login')
     def test_anonymous_user_visiting_course_with_survey(self):
         """
         Verifies that anonymous user going to the courseware home with an unanswered survey is not

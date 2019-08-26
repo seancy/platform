@@ -11,6 +11,7 @@ from six import text_type
 from edxmako import LOOKUP, add_lookup
 from microsite_configuration import microsite
 from openedx.features.course_experience import course_home_url_name
+from student.tests.factories import TEST_PASSWORD, UserFactory
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
 
@@ -63,6 +64,8 @@ class HelpModalTests(ModuleStoreTestCase):
         Simple test to make sure that you don't get a 500 error when the modal
         is enabled.
         """
+        user = UserFactory()
+        self.client.login(username=user.username, password=TEST_PASSWORD)
         url = reverse(course_home_url_name(self.course.id), args=[text_type(self.course.id)])
         resp = self.client.get(url)
         self.assertEqual(resp.status_code, 200)
