@@ -285,20 +285,29 @@ from xmodule.modulestore.django import modulestore
         </div>
 
         <script type="text/javascript">
-          var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 'auto',
-            spaceBetween: 13,
-            slidesOffsetAfter:160,
+          var slidesNumber = $('.my-courses > .listing-courses > .course-item').length;
+          if (((document.body.offsetWidth < 768) && (slidesNumber > 1))
+            || ((document.body.offsetWidth < 992) && (slidesNumber > 2))
+            || ((document.body.offsetWidth < 1200) && (slidesNumber > 3))) {
+            swiperInit();
+          }
 
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true,
-            },
-          });
+          function swiperInit(){
+            new Swiper('.swiper-container', {
+              slidesPerView: 'auto',
+              spaceBetween: 13,
+              slidesOffsetAfter:160,
+
+              navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+              },
+              pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+              },
+            });
+          }
         </script>
 
         % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
