@@ -997,6 +997,12 @@ if settings.FEATURES.get('ENABLE_OAUTH2_PROVIDER'):
         ),
     ]
 
+# IDP
+if settings.FEATURES.get('ENABLE_SAML_IDP'):
+    urlpatterns += (
+        url(r'^idp/', include('djangosaml2idp.urls')),
+    )
+
 # Certificates
 urlpatterns += [
     url(r'^certificates/', include('certificates.urls')),

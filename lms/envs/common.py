@@ -126,6 +126,9 @@ FEATURES = {
     # Toggles OAuth2 authentication provider
     'ENABLE_OAUTH2_PROVIDER': False,
 
+    # Enables the platform to become an SAML Identity Provider (IdP)
+    'ENABLE_SAML_IDP': True,
+
     # Allows to enable an API endpoint to serve XBlock view, used for example by external applications.
     # See jquey-xblock: https://github.com/edx-solutions/jquery-xblock
     'ENABLE_XBLOCK_VIEW_ENDPOINT': False,
@@ -3531,3 +3534,10 @@ INSTALLED_APPS.extend(plugin_apps.get_apps(plugin_constants.ProjectType.LMS))
 plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.LMS, plugin_constants.SettingsType.COMMON)
 
 COURSE_ADVANCED_MODULES = []
+
+########################### SAML IdP ################################################
+# Settings to configure the platform as an SAML Identity Provider
+
+SAML_IDP_BASE_URL = '/idp/'
+SAML_IDP_CONFIG = {}
+SAML_IDP_SPCONFIG = {}

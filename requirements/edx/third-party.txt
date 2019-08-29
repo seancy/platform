@@ -1,0 +1,8 @@
+#
+# This file is used for newly third-party packages for our platform.
+# All newly third-party packages should be put here.
+django-auth-ldap==1.2.15  # via python-ldap
+djangosaml2idp==0.3.3  # Used to become an SAML IdP
+django-tables2==1.16.0
+python-ldap==2.4.44
+tablib==0.12.1

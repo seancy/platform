@@ -22,12 +22,18 @@ import json
 
 import dateutil
 
+import ldap
+from django_auth_ldap.config import LDAPSearch
+
 from .common import *
 from openedx.core.lib.derived import derive_settings
 from openedx.core.lib.logsettings import get_logger_config
 import os
 
 from path import Path as path
+import saml2
+from saml2.saml import NAMEID_FORMAT_EMAILADDRESS, NAMEID_FORMAT_UNSPECIFIED
+from saml2.sigver import get_xmlsec_binary
 from xmodule.modulestore.modulestore_settings import convert_module_store_setting_if_needed
 
 # SERVICE_VARIANT specifies name of the variant used, which decides what JSON
@@ -664,8 +670,8 @@ PASSWORD_DICTIONARY = ENV_TOKENS.get("PASSWORD_DICTIONARY", [])
 SESSION_INACTIVITY_TIMEOUT_IN_SECONDS = AUTH_TOKENS.get("SESSION_INACTIVITY_TIMEOUT_IN_SECONDS")
 
 ##### LMS DEADLINE DISPLAY TIME_ZONE #######
-TIME_ZONE_DISPLAYED_FOR_DEADLINES = ENV_TOKENS.get("TIME_ZONE_DISPLAYED_FOR_DEADLINES",
-                                                   TIME_ZONE_DISPLAYED_FOR_DEADLINES)
+TIME_ZONE_DISPLAYED_FOR_DEADLINES = ENV_TOKENS.get(
+    "TIME_ZONE_DISPLAYED_FOR_DEADLINES", TIME_ZONE_DISPLAYED_FOR_DEADLINES)
 
 ##### X-Frame-Options response header settings #####
 X_FRAME_OPTIONS = ENV_TOKENS.get('X_FRAME_OPTIONS', X_FRAME_OPTIONS)
@@ -679,6 +685,7 @@ if FEATURES.get('ENABLE_THIRD_PARTY_AUTH'):
         'social_core.backends.azuread.AzureADOAuth2',
         'third_party_auth.saml.SAMLAuthBackend',
         'third_party_auth.lti.LTIAuthBackend',
+        'third_party_auth.ldap_auth.LDAPAuthBackend',
     ])
 
     AUTHENTICATION_BACKENDS = list(tmp_backends) + list(AUTHENTICATION_BACKENDS)
@@ -712,6 +719,21 @@ if FEATURES.get('ENABLE_THIRD_PARTY_AUTH'):
     # It should be a dict where the key is a word passed via ?auth_entry=, and the value is a
     # dict with an arbitrary 'secret_key' and a 'url'.
     THIRD_PARTY_AUTH_CUSTOM_AUTH_FORMS = AUTH_TOKENS.get('THIRD_PARTY_AUTH_CUSTOM_AUTH_FORMS', {})
+
+##### LDAP auth ####################
+AUTH_LDAP_SERVER_URI = ENV_TOKENS.get('AUTH_LDAP_SERVER_URI')
+AUTH_LDAP_BIND_DN = ENV_TOKENS.get('AUTH_LDAP_BIND_DN')
+AUTH_LDAP_BIND_PASSWORD = ENV_TOKENS.get('AUTH_LDAP_BIND_PASSWORD')
+AUTH_LDAP_USER_SEARCH = None
+AUTH_LDAP_USER_SEARCH_BASE_DN = ENV_TOKENS.get('AUTH_LDAP_USER_SEARCH_BASE_DN')
+AUTH_LDAP_USER_SEARCH_FILTER_STR = ENV_TOKENS.get('AUTH_LDAP_USER_SEARCH_FILTER_STR')
+if AUTH_LDAP_USER_SEARCH_BASE_DN and AUTH_LDAP_USER_SEARCH_FILTER_STR:
+    AUTH_LDAP_USER_SEARCH = LDAPSearch(AUTH_LDAP_USER_SEARCH_BASE_DN, ldap.SCOPE_SUBTREE, AUTH_LDAP_USER_SEARCH_FILTER_STR)
+AUTH_LDAP_USER_ATTR_MAP = ENV_TOKENS.get ('AUTH_LDAP_USER_ATTR_MAP', {
+    'email': 'mail',
+    'first_name': 'givenName',
+    'last_name': 'sn'
+})
 
 ##### OAUTH2 Provider ##############
 if FEATURES.get('ENABLE_OAUTH2_PROVIDER'):
@@ -1175,6 +1197,59 @@ FEATURES['ENABLE_THIRD_PARTY_AUTH'] = True
 
 ################# Enable password policy enforcement ######################
 FEATURES['ENFORCE_PASSWORD_POLICY'] = True
+
+if FEATURES.get('ENABLE_SAML_IDP'):
+    INSTALLED_APPS += ('djangosaml2idp',)
+    SAML_IDP_BASE_URL = 'https://stage.learning-tribes.com/idp'
+
+    SAML_IDP_CONFIG = {
+        'debug' : DEBUG,
+        'xmlsec_binary': get_xmlsec_binary(['/opt/local/bin', '/usr/bin/xmlsec1']),
+        'entityid': '%s/metadata' % SAML_IDP_BASE_URL,
+        'description': 'Triboo Identity Provider',
+
+        'service': {
+            'idp': {
+                'name': 'Triboo IdP',
+                'endpoints': {
+                    'single_sign_on_service': [
+                        ('%s/sso/post' % SAML_IDP_BASE_URL, saml2.BINDING_HTTP_POST),
+                        ('%s/sso/redirect' % SAML_IDP_BASE_URL, saml2.BINDING_HTTP_REDIRECT),
+                    ],
+                },
+                'name_id_format': [NAMEID_FORMAT_EMAILADDRESS, NAMEID_FORMAT_UNSPECIFIED],
+                'sign_response': True,
+                'sign_assertion': True,
+            },
+        },
+
+        'metadata': {
+            'remote': [{'url': 'https://sitel.my-mooc.com/fr/saml/metadata.xml'}],
+        },
+        # Signing
+        'key_file': os.path.abspath('certificates/saml-idp-private.key'),
+        'cert_file': os.path.abspath('certificates/saml-idp-public.cert'),
+        # Encryption
+        'encryption_keypairs': [{
+            'key_file': os.path.abspath('certificates/saml-idp-private.key'),
+            'cert_file': os.path.abspath('certificates/saml-idp-public.cert'),
+        }],
+        'valid_for': 365 * 24,
+    }
+
+    SAML_IDP_SPCONFIG = {
+        'https://sitel.my-mooc.com': {
+            'processor': 'djangosaml2idp.processors.BaseProcessor',
+            'attribute_mapping': {
+                # DJANGO: SAML
+                'uid': 'username',
+                'username': 'username',
+                'email': 'email',
+                'first_name': 'first_name',
+                'last_name': 'last_name'
+            }
+        }
+    }
 
 ###################### Default production settings ##############################
 FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False

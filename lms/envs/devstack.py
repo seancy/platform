@@ -143,6 +143,9 @@ OAUTH_OIDC_ISSUER = 'http://127.0.0.1:8000/oauth2'
 FEATURES['ENABLE_MOBILE_REST_API'] = True
 FEATURES['ENABLE_VIDEO_ABSTRACTION_LAYER_API'] = True
 
+########################## SAML IdP #####################################
+FEATURES['ENABLE_SAML_IDP'] = True
+
 ########################## SECURITY #######################
 FEATURES['ENFORCE_PASSWORD_POLICY'] = False
 FEATURES['ENABLE_MAX_FAILED_LOGIN_ATTEMPTS'] = False

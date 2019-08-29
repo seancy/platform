@@ -9,4 +9,3 @@ cd /edx/app/edxapp/edx-platform
 paver test_system -C -c "--cov-append" --fasttest
 paver test_lib -C -c "--cov-append"
 paver coverage
-

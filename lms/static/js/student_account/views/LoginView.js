@@ -23,7 +23,9 @@
             events: {
                 'click .js-login': 'submitForm',
                 'click .forgot-password': 'forgotPassword',
-                'click .login-provider': 'thirdPartyAuth'
+                'click .login-provider': 'thirdPartyAuth',
+                'click .sso-login': 'switchSSOLogin',
+                'click .email-login': 'switchEmailLogin'
             },
             formType: 'login',
             requiredStr: '',
@@ -106,6 +108,8 @@
 
                 // Display account activation success or error messages.
                 this.renderAccountActivationMessages();
+                // Display normal form or third-party auth link according to if we have providers.
+                this.displayLoginSection();
             },
 
             renderAccountActivationMessages: function() {
@@ -117,6 +121,36 @@
                     jsHook: message.tags,
                     message: HtmlUtils.HTML(message.message)
                 });
+            },
+
+            displayLoginSection: function() {
+                if (this.providers.length > 0 && !this.currentProvider || this.hasSecondaryProviders) {
+                    if (!this.$form.hasClass('hidden')) {
+                        this.$form.addClass('hidden');
+                    }
+                    if ($('.login-providers').hasClass('hidden')) {
+                        $('.login-providers').removeClass('hidden');
+                    }
+                    if (!$('.sso-link').hasClass('hidden')) {
+                        $('.sso-link').addClass('hidden');
+                    }
+                    if ($('.email-login-link').hasClass('hidden')) {
+                        $('.email-login-link').removeClass('hidden');
+                    }
+                } else {
+                    if (this.$form.hasClass('hidden')) {
+                        this.$form.removeClass('hidden');
+                    }
+                    if (!$('.login-providers').hasClass('hidden')) {
+                        $('.login-providers').addClass('hidden');
+                    }
+                    if (!$('.sso-link').hasClass('hidden')) {
+                        $('.sso-link').addClass('hidden');
+                    }
+                    if (!$('.email-login-link').hasClass('hidden')) {
+                        $('.email-login-link').addClass('hidden');
+                    }
+                }
             },
 
             forgotPassword: function(event) {
@@ -167,6 +201,40 @@
 
                 if (providerUrl) {
                     window.location.href = providerUrl;
+                }
+            },
+
+            switchSSOLogin: function(event) {
+                event.preventDefault();
+                this.clearFormErrors();
+                if (!this.$form.hasClass('hidden')) {
+                    this.$form.addClass('hidden');
+                }
+                if ($('.login-providers').hasClass('hidden')) {
+                    $('.login-providers').removeClass('hidden');
+                }
+                if (!$('.sso-link').hasClass('hidden')) {
+                    $('.sso-link').addClass('hidden');
+                }
+                if ($('.email-login-link').hasClass('hidden')) {
+                    $('.email-login-link').removeClass('hidden');
+                }
+            },
+
+            switchEmailLogin: function(event) {
+                event.preventDefault();
+                this.clearFormErrors();
+                if (this.$form.hasClass('hidden')) {
+                    this.$form.removeClass('hidden');
+                }
+                if (!$('.login-providers').hasClass('hidden')) {
+                    $('.login-providers').addClass('hidden');
+                }
+                if ($('.sso-link').hasClass('hidden')) {
+                    $('.sso-link').removeClass('hidden');
+                }
+                if (!$('.email-login-link').hasClass('hidden')) {
+                    $('.email-login-link').addClass('hidden');
                 }
             },
 

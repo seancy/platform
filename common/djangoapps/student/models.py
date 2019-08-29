@@ -40,6 +40,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 from django_countries.fields import CountryField
+from django_countries import countries
 from edx_rest_api_client.exceptions import SlumberBaseException
 from eventtracking import tracker
 from model_utils.models import TimeStampedModel
@@ -65,6 +66,7 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
 from openedx.core.djangoapps.request_cache import clear_cache, get_cache
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.xmodule_django.models import NoneToEmptyManager
+from django_auth_ldap.backend import populate_user
 from openedx.core.djangolib.model_mixins import DeletableByUserValue
 from track import contexts
 from util.milestones_helpers import is_entrance_exams_enabled
@@ -2944,3 +2946,19 @@ class WaiverRequest(TimeStampedModel):
                                     description=description,
                                     sections=sections)
         return waiver
+
+
+@receiver(populate_user)
+def ldap_auth_populate_user(user, ldap_user, **kwargs):
+    #AUDIT_LOG.warning(ldap_user.attrs)
+    name = ldap_user.attrs.get('cn', [''])[0]
+    language = ldap_user.attrs.get('preferredLanguage', [''])[0]
+    country = ldap_user.attrs.get('co', [''])[0].lower()
+    country = dict((v.lower(),k) for k, v in dict(countries).iteritems()).get(country)
+    #AUDIT_LOG.warning("name=%s, language=%s, country=%s", name, language, country)
+    up, created = UserProfile.objects.get_or_create(user=user, name=name,
+                                        language=language, country=country)
+    if not created:
+        up.name = name
+        up.country = country
+        up.save()
