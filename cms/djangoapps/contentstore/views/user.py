@@ -12,7 +12,7 @@ from edxmako.shortcuts import render_to_response
 from student import auth
 from student.auth import STUDIO_EDIT_ROLES, STUDIO_VIEW_USERS, get_user_permissions
 from student.models import CourseEnrollment
-from student.roles import studio_login_required, CourseInstructorRole, CourseStaffRole, LibraryUserRole
+from student.roles import studio_login_required, CourseInstructorRole, CourseStaffRole, LibraryUserRole, studio_access_role
 from util.json_request import JsonResponse, expect_json
 from xmodule.modulestore.django import modulestore
 
@@ -83,7 +83,11 @@ def _manage_users(request, course_key):
     for user in instructors:
         formatted_users.append(user_with_role(user, 'instructor'))
     for user in staff - instructors:
-        formatted_users.append(user_with_role(user, 'staff'))
+        if studio_access_role(user):
+            formatted_users.append(user_with_role(user, 'staff'))
+        else:
+            formatted_users.append(user_with_role(user, 'triboo_instructor'))
+        # formatted_users.append(user_with_role(user, 'staff'))
 
     return render_to_response('manage_users.html', {
         'context_course': course_module,

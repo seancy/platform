@@ -102,6 +102,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview',
                 var self = this;
                 for (var i = 0; i < self.options.roles.length; i++) {
                     var role_name = self.options.roles[i].key;
+                    if (role_name === 'triboo_instructor') continue; // ignore triboo_instructor role
                     var role_selector = 'click .user-actions .make-' + role_name;
 
                     (function(role) {
@@ -167,19 +168,25 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview',
             },
 
             getPossibleRoleChangesForRole: function(role, adminRoleCount) {
+                // create a temp roles to ignore triboo_instructors
+                var temp_roles = []
+                for (var i = 0; i < this.roles.length; i++) {
+                    if (this.roles[i].key === 'triboo_instructor') continue;
+                    temp_roles.push(this.roles[i])
+                }
                 var result = [],
-                    role_names = _.map(this.roles, function(role) { return role.key; });
+                    role_names = _.map(temp_roles, function(role) { return role.key; });
                 if (role === this.admin_role.key && adminRoleCount === 1) {
                     result.push({notoggle: true});
-                } else {
+                } else if (role !== 'triboo_instructor') {
                     var currentRoleIdx = _.indexOf(role_names, role);
                     // in reverse order to show "Add" buttons to the left, "Remove" to the right
-                    for (var i = this.roles.length - 1; i >= 0; i--) {
-                        var other_role = this.roles[i];
+                    for (var i = temp_roles.length - 1; i >= 0; i--) {
+                        var other_role = temp_roles[i];
                         if (Math.abs(currentRoleIdx - i) !== 1) continue; // allows moving only to adjacent roles
                         result.push({
                             to_role: other_role.key,
-                            label: (i < currentRoleIdx) ? this.roles[currentRoleIdx].name : other_role.name,
+                            label: (i < currentRoleIdx) ? temp_roles[currentRoleIdx].name : other_role.name,
                             direction: (i < currentRoleIdx) ? 'remove' : 'add'
                         });
                     }

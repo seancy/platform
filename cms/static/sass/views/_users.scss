@@ -121,7 +121,8 @@
         }
 
         &.flag-role-user,
-        &.flag-role-library_user {
+        &.flag-role-library_user,
+        &.flag-role-triboo_instructor {
           background: $yellow-d1;
           .msg-you { color: $yellow-l1; }
         }
