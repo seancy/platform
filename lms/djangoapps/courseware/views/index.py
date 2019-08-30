@@ -364,8 +364,11 @@ class CoursewareIndex(View):
         course_url_name = default_course_url_name(self.course.id)
         course_url = reverse(course_url_name, kwargs={'course_id': unicode(self.course.id)})
 
+        course_index = request.GET.get('course_index')
+        if course_index == None:
+            course_index = 'showing'
         courseware_context = {
-            'course_index': request.GET.get('course_index'),
+            'course_index': course_index,
             'csrf': csrf(self.request)['csrf_token'],
             'course': self.course,
             'course_url': course_url,
