@@ -1931,3 +1931,52 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
         summary.value = json.dumps(data)
         summary.save()
         return JsonResponse({"msg": msg}, status=200)
+
+
+def ilt_attendance_sheet(request, course_id, usage_id, sess_key):
+
+    def decode_datetime(dts):
+        return datetime.strptime(dts, '%Y-%m-%dT%H:%M')
+
+    course_key = CourseKey.from_string(course_id)
+    usage_key = UsageKey.from_string(usage_id)
+    summary = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="enrolled_users")
+    sessions = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="sessions")
+    enrolled_data = json.loads(summary.value)
+    session_data = json.loads(sessions.value)
+    course = modulestore().get_course(course_key)
+    ilt_block = modulestore().get_item(usage_key)
+
+    session = session_data[sess_key]
+    enrolled_user_ids = [key for key in enrolled_data.get(sess_key, {})
+                         if enrolled_data[sess_key][key]['status'] in ("accepted", "confirmed")]
+    enrolled_users = User.objects.filter(id__in=enrolled_user_ids).select_related("profile")
+    print("enrolled_users: ", enrolled_users)
+    print("data:", enrolled_data)
+
+    date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "")
+    if date_format:
+        date_format = date_format.replace("YYYY", "%Y").replace("DD", "%d").replace(
+            "MM", "%m"
+        ).replace("HH", "%H").replace("mm", "%M")
+        start_at = decode_datetime(session['start_at']).strftime(date_format)
+        end_at = decode_datetime(session['end_at']).strftime(date_format)
+    else:
+        start_at = session['start_at'].replace("T", " ")
+        end_at = session['end_at'].replace("T", " ")
+    context = {
+        'course_name': course.display_name,
+        'session_name': ilt_block.display_name,
+        'start_at': start_at,
+        'end_at': end_at,
+        'duration': session.get('duration', ''),
+        'location_name': session.get('location', ''),
+        'location_id': session.get('location_id'),
+        'address': session.get('address', ''),
+        'city': session.get('city', ''),
+        'zip_code': session.get('zip_code', ''),
+        'disable_footer': True,
+        'is_secure': request.is_secure(),
+        'enrolled_users': enrolled_users
+    }
+    return render_to_response('courseware/ilt_attendance_sheet.html', context)

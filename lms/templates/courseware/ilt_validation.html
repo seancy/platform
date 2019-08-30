@@ -81,7 +81,7 @@
                                % if enrollment[1]['accommodation'] == 'yes':
                                checked="checked"
                                % endif
-                               % if enrollment[0] is not None:
+                               % if enrollment[1]['status'] != 'pending':
                                disabled="disabled"
                                %endif >
                         <label for="accommodation-yes">Yes</label>
@@ -89,7 +89,7 @@
                                % if enrollment[1]['accommodation'] == 'no':
                                checked="checked"
                                % endif
-                               % if enrollment[0] is not None:
+                               % if enrollment[1]['status'] != 'pending':
                                disabled="disabled"
                                %endif >
                         <label for="accommodation-no">No</label>
@@ -98,7 +98,7 @@
                     <div class="ilt-registration-comment">
                         <label for="ilt-comment">${_("Comment")}:</label>
                         <textarea
-                               % if enrollment[0] is not None:
+                               % if enrollment[1]['status'] != 'pending':
                                disabled="disabled"
                                %endif
                                id="ilt-comment" placeholder="comment ...">${enrollment[1]['comment']}</textarea>
@@ -107,14 +107,14 @@
                     <div class="ilt-registration-trip">
                         <label for="ilt-one-way-trip">${_("Number of one way")}: </label>
                         <input
-                               % if enrollment[0] is not None:
+                               % if enrollment[1]['status'] != 'pending':
                                disabled="disabled"
                                %endif
                                type="text" id="ilt-one-way-trip" value="${enrollment[1]['number_of_one_way']}">
 
                         <label for="ilt-return-trip">${_("Number of return")}: </label>
                         <input
-                               % if enrollment[0] is not None:
+                               % if enrollment[1]['status'] != 'pending':
                                disabled="disabled"
                                %endif
                                type="text" id="ilt-return-trip" value="${enrollment[1]['number_of_return']}">

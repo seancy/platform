@@ -943,6 +943,9 @@ def student_dashboard(request):
     return response
 
 
+@login_required
+@ensure_csrf_cookie
+@add_maintenance_banner
 def my_courses(request):
     user = request.user
     if not UserProfile.objects.filter(user=user).exists():
