@@ -1857,9 +1857,13 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
     course = modulestore().get_course(course_key)
     ilt_block = modulestore().get_item(usage_key)
     if request.method == "GET":
-        msg = ''
-        if registration_info['status'] != "pending":
-            msg = "This request has been {}".format(registration_info['status'])
+        if registration_info['status'] == "pending":
+            msg = ''
+        elif registration_info['status'] == "refused":
+            msg = _("Enrollment refused")
+        else:
+            msg = _("Enrollment accepted. If a hotel request has been done, "
+                    "you will receive a confirmation as soon as it is processed.")
         enrollment = [registered_session, registration_info]
         response = handle_xblock_callback(
             request,
@@ -1887,6 +1891,8 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
         action = request.POST.get("action")
         if action == 'accept':
             session_number = request.POST.get("session_number")
+            msg = _("Enrollment accepted. If a hotel request has been done, "
+                    "you will receive a confirmation as soon as it is processed.")
             for k in registration_info:
                 if k in request.POST:
                     registration_info[k] = request.POST.get(k)
@@ -1894,7 +1900,6 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
             accommodation = configuration_helpers.get_value("ILT_ACCOMMODATION_ENABLED", False)
             if accommodation and registration_info['accommodation'] == 'yes':
                 registration_info['status'] = 'accepted'
-                msg = _("This request has been accepted")
             else:
                 section_id = ilt_block.get_parent().parent.block_id
                 chapter_id = ilt_block.get_parent().get_parent().parent.block_id
@@ -1907,7 +1912,8 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
                           'ilt_name': ilt_block.display_name,
                           'course_name': course.display_name}
                 send_mail_to_student(user.email, params, language=get_user_email_language(user))
-                msg = _("This request has been confirmed")
+
+            # in case ILT supervisor altered learner's request session number
             if session_number != registered_session:
                 data[registered_session].pop(str(user_id), None)
                 data[session_number][str(user_id)] = registration_info
@@ -1927,7 +1933,7 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
                       'ilt_name': ilt_block.display_name,
                       'course_name': course.display_name}
             send_mail_to_student(user.email, params, language=get_user_email_language(user))
-            msg = _("This request has been refused")
+            msg = _("Enrollment refused")
         summary.value = json.dumps(data)
         summary.save()
         return JsonResponse({"msg": msg}, status=200)
