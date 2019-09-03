@@ -24074,7 +24074,7 @@ msgstr ""
 
 #: wiki/templates/wiki/article/create_root.html
 msgid "Congratulations!"
-msgstr ""
+msgstr "恭喜您！"
 
 #: wiki/templates/wiki/article/create_root.html
 msgid ""
@@ -24216,3 +24216,8 @@ msgid ""
 "A new revision was created: Merge between Revision #%(r1)d and Revision "
 "#%(r2)d"
 msgstr "产生新的修订版本：合并修订版本#%(r1)d与#%(r2)d"
+
+
+# certificate translation for joyson
+msgid "You have completed the online training of"
+msgstr "成功完成了线上课程"
