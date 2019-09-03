@@ -200,9 +200,10 @@ def generate_certs_zip_file(_xmodule_instance_args, _entry_id, course_id, task_i
             break
     if certs_path:
         xqueue = XQueueCertInterface()
-        if insecure:
-            xqueue.use_https = False
-        else:
-            xqueue.use_https = True
+
+        #if insecure:
+        #    xqueue.use_https = False
+        #else:
+        #    xqueue.use_https = True
         xqueue.add_certs_export(certs_path, unicode(course_id), _entry_id)
         return task_progress.update_task_state()

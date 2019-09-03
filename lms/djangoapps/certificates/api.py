@@ -364,8 +364,8 @@ def generate_example_certificates(course_key, insecure=False, request_user=None,
 
     """
     xqueue = XQueueCertInterface()
-    if insecure:
-        xqueue.use_https = False
+    #if insecure:
+    #    xqueue.use_https = False
     for cert in ExampleCertificateSet.create_example_set(course_key):
         xqueue.add_example_cert(cert, request_user=request_user, site=site)
 
