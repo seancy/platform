@@ -260,6 +260,14 @@ ${HTML(fragment.foot_html())}
     </section>
 
     <section class="courseware-results-wrapper">
+        <header class="page-header has-secondary">
+            % if course_index != 'showing':
+                <i class="far fa-indent"></i>
+            % else:
+                <i class="far fa-outdent"></i>
+            % endif
+        </header>
+
       <div id="loading-message" aria-live="polite" aria-relevant="all"></div>
       <div id="error-message" aria-live="polite"></div>
       <div class="courseware-results search-results" data-course-id="${course.id}" data-lang-code="${language_preference}"></div>

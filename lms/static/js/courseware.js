@@ -16,7 +16,6 @@
 
     Courseware.prototype.eventInit = function(){
       var $courseContent = $('.course-content');
-      var $icon = $courseContent.find('.page-header i');
       var $courseIndex = $('.course-index');
       var $leftSideIcon = $courseIndex.find('.back-link > i');
       if (!$courseIndex.hasClass('showing')){
@@ -24,18 +23,27 @@
       }else {
         $leftSideIcon.removeClass('fa-indent').addClass('fa-outdent')
       }
-      var tempFun = function (e) {
-        $courseIndex.toggleClass('showing');
-        var $src = $(e.currentTarget)
-        if (!$courseIndex.hasClass('showing')) {
-          $leftSideIcon.removeClass('fa-outdent').addClass('fa-indent')
-          $icon.removeClass('fa-outdent').addClass('fa-indent')
-        } else {
-          $leftSideIcon.removeClass('fa-indent').addClass('fa-outdent')
-          $icon.removeClass('fa-indent').addClass('fa-outdent')
+      var iconStatusInit = function() {
+        var $icon = $courseContent.find('.page-header i');
+        var $iconInSearchResult = $('.courseware-results-wrapper .page-header i');
+        var $leftSideIcon = $courseIndex.find('.back-link > i');
+        var arr = [$icon, $iconInSearchResult, $leftSideIcon]
+        for(var i=0; i<arr.length; i++){
+          if (!$courseIndex.hasClass('showing')){
+            arr[i].removeClass('fa-outdent').addClass('fa-indent')
+          }else {
+            arr[i].removeClass('fa-indent').addClass('fa-outdent')
+          }
         }
+      }
+      var toggleCourseOutline = function () {
+        $courseIndex.toggleClass('showing');
+        iconStatusInit();
       };
-      $leftSideIcon.on('click', tempFun);
+      $leftSideIcon.on('click', toggleCourseOutline);
+      $('.course-content > .page-header > i').on('click', toggleCourseOutline);
+      $('.courseware-results-wrapper').delegate('.page-header > i', 'click', toggleCourseOutline);
+      iconStatusInit();
     }
 
     Courseware.prototype.render = function() {
