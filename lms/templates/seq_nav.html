@@ -1,3 +1,4 @@
+%if len(sequence_list) > 1:
 <nav class="seq-nav-wrapper">
   <ol id="seq-nav">
     % for seq in sequence_list:
@@ -21,4 +22,4 @@
     % endfor
   </ol>
 </nav>
-
+%endif
