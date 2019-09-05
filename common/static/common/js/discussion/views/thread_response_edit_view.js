@@ -41,14 +41,15 @@
             };
 
             ThreadResponseEditView.prototype.render = function() {
-                var context = $.extend({mode: this.options.mode, startHeader: this.options.startHeader},
-                    this.model.attributes);
-
                 var body_length = this.model.attributes.body.length;
                 var country_tag = this.model.attributes.body.substr(body_length - 4, 4);
                 if (country_tag.startsWith(" #")) {
                     this.model.attributes.body = this.model.attributes.body.substr(0, body_length - 4);
+                    this.model.attributes.country_tag = country_tag;
                 }
+
+                var context = $.extend({mode: this.options.mode, startHeader: this.options.startHeader},
+                    this.model.attributes);
 
                 this.template = _.template($('#thread-response-edit-template').html());
                 this.$el.html(this.template(context));
@@ -62,6 +63,8 @@
             };
 
             ThreadResponseEditView.prototype.cancel_edit = function(event) {
+                var country_tag = this.model.attributes.country_tag ? this.model.attributes.country_tag : '';
+                this.model.attributes.body = this.model.attributes.body + country_tag;
                 return this.trigger('response:cancel_edit', event);
             };
 

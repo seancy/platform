@@ -224,11 +224,19 @@ def ajax_content_response(request, course_key, content):
         'annotated_content_info': annotated_content_info,
     })
 
+
 def is_sensitive_data(*args):
     for s in args:
         if is_contain_bank_card(s):
             return True
     return False
+
+
+def body_with_country_tag(body, user, is_anonymous=False):
+    if cc_settings.ENABLE_COUNTRY_TAG and not is_anonymous:
+        if hasattr(user, 'profile') and hasattr(user.profile, 'country') and unicode(user.profile.country):
+            return body + " #" + unicode(user.profile.country)
+    return body
 
 @require_POST
 @login_required
@@ -262,9 +270,7 @@ def create_thread(request, course_id, commentable_id):
     if is_sensitive_data(request.POST["title"], request.POST["body"]):
         return JsonError(_("Remove sensitive data in the content and try again"))
 
-    body = post["body"]
-    if cc_settings.ENABLE_COUNTRY_TAG and not anonymous:
-        body = body + " #" + unicode(user.profile.country)
+    body = body_with_country_tag(post["body"], user, anonymous)
 
     params = {
         'anonymous': anonymous,
@@ -341,9 +347,7 @@ def update_thread(request, course_id, thread_id):
     thread_context = getattr(thread, "context", "course")
     user = request.user
 
-    body = request.POST["body"]
-    if cc_settings.ENABLE_COUNTRY_TAG:
-        body = body + " #" + unicode(user.profile.country)
+    body = body_with_country_tag(request.POST["body"], user)
 
     thread.body = body
     thread.title = request.POST["title"]
@@ -395,9 +399,7 @@ def _create_comment(request, course_key, thread_id=None, parent_id=None):
     else:
         anonymous_to_peers = False
 
-    body = post["body"]
-    if cc_settings.ENABLE_COUNTRY_TAG and not anonymous:
-        body = body + " #" + unicode(user.profile.country)
+    body = body_with_country_tag(post["body"], user, anonymous)
 
     comment = cc.Comment(
         anonymous=anonymous,
@@ -470,9 +472,7 @@ def update_comment(request, course_id, comment_id):
     if is_sensitive_data(request.POST["body"]):
         return JsonError(_("Remove sensitive data in the content and try again"))
 
-    body = request.POST["body"]
-    if cc_settings.ENABLE_COUNTRY_TAG:
-        body = body + " #" + unicode(request.user.profile.country)
+    body = body_with_country_tag(request.POST["body"], request.user)
 
     comment.body = body
     comment.save()

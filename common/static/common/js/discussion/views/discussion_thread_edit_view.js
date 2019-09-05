@@ -31,13 +31,14 @@
                     $threadTypeSelector = $(threadTypeTemplate({form_id: formId}).toString()),
                     context,
                     mainTemplate = edx.HtmlUtils.template($('#thread-edit-template').html());
-                context = $.extend({mode: this.mode, startHeader: this.startHeader}, this.model.attributes);
 
                 var body_length = this.model.attributes.body.length;
                 var country_tag = this.model.attributes.body.substr(body_length - 4, 4);
                 if (country_tag.startsWith(" #")) {
                     this.model.attributes.body = this.model.attributes.body.substr(0, body_length - 4);
+                    this.model.attributes.country_tag = country_tag;
                 }
+                context = $.extend({mode: this.mode, startHeader: this.startHeader}, this.model.attributes);
 
                 edx.HtmlUtils.setHtml(this.$el, mainTemplate(context));
                 this.container.append(this.$el);
@@ -75,6 +76,7 @@
                         thread_type: threadType,
                         body: body
                     };
+                    var country_tag = this.model.attributes.country_tag ? this.model.attributes.country_tag : '';
                 if (this.topicView) {
                     postData.commentable_id = this.topicView.getCurrentTopicId();
                 }
@@ -88,6 +90,7 @@
                     data: postData,
                     error: DiscussionUtil.formErrorHandler(this.$('.post-errors')),
                     success: function() {
+                        postData.body = postData.body + country_tag;
                         this.$('.edit-post-title').val('').attr('prev-text', '');
                         this.$('.edit-post-body textarea').val('').attr('prev-text', '');
                         this.$('.wmd-preview p').html('');
@@ -114,6 +117,8 @@
             },
 
             cancelHandler: function(event) {
+                var country_tag = this.model.attributes.country_tag ? this.model.attributes.country_tag : '';
+                this.model.attributes.body = this.model.attributes.body + country_tag;
                 event.preventDefault();
                 this.trigger('thread:cancel_edit', event);
                 this.remove();

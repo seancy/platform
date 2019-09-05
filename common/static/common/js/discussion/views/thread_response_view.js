@@ -203,12 +203,21 @@
                 event.preventDefault();
                 url = this.model.urlFor('reply');
                 body = this.getWmdContent('comment-body');
+
+                var body_length = this.model.attributes.body.length;
+                var country_tag = this.model.attributes.body.substr(body_length - 4, 4);
+                if (country_tag.startsWith(" #")) {
+                    this.model.attributes.body = this.model.attributes.body.substr(0, body_length - 4);
+                    this.model.attributes.country_tag = country_tag;
+                }
+                var country_tag_show = this.model.attributes.country_tag ? this.model.attributes.country_tag : '';
+
                 if (!body.trim().length) {
                     return;
                 }
                 this.setWmdContent('comment-body', '');
                 comment = new Comment({
-                    body: body,
+                    body: body + country_tag_show,
                     created_at: (new Date()).toISOString(),
                     username: window.user.get('username'),
                     abuse_flaggers: [],
@@ -326,6 +335,7 @@
                 event.preventDefault();
                 this.createShowView();
                 this.renderShowView();
+                this.hideEditorChrome();
                 return this.showCommentForm();
             };
 
@@ -340,6 +350,7 @@
                 var newBody, url,
                     self = this;
                 newBody = this.editView.$('.edit-post-body textarea').val();
+                var country_tag = this.model.attributes.country_tag ? this.model.attributes.country_tag : '';
                 url = DiscussionUtil.urlFor('update_comment', this.model.id);
                 return DiscussionUtil.safeAjax({
                     $elem: $(event.target),
@@ -352,10 +363,11 @@
                     },
                     error: DiscussionUtil.formErrorHandler(this.$('.edit-post-form-errors')),
                     success: function() {
+                        self.hideEditorChrome();
                         self.editView.$('.edit-post-body textarea').val('').attr('prev-text', '');
                         self.editView.$('.wmd-preview p').html('');
                         self.model.set({
-                            body: newBody
+                            body: newBody + country_tag
                         });
                         self.createShowView();
                         self.renderShowView();

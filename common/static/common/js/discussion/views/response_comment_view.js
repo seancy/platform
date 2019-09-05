@@ -137,6 +137,7 @@
                 var newBody, url,
                     self = this;
                 newBody = this.editView.$('.edit-comment-body textarea').val();
+                var country_tag = this.model.attributes.country_tag ? this.model.attributes.country_tag : '';
                 url = DiscussionUtil.urlFor('update_comment', this.model.id);
                 return DiscussionUtil.safeAjax({
                     $elem: $(event.target),
@@ -149,7 +150,7 @@
                     },
                     error: DiscussionUtil.formErrorHandler(this.$('.edit-comment-form-errors')),
                     success: function() {
-                        self.model.set('body', newBody);
+                        self.model.set('body', newBody + country_tag);
                         return self.cancelEdit();
                     }
                 });
