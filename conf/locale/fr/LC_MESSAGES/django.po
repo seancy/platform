@@ -10703,8 +10703,8 @@ msgid ""
 "to download the report when it is complete, it can take several minutes to "
 "appear."
 msgstr ""
-"Votre rapport est en cours de création. Il apparaitra dans le section" 
-"'Mes rapports' en bas de la page quand il sera prêt. La génération peut" 
+"Votre rapport est en cours de création. Il apparaitra dans le section"
+"'Mes rapports' en bas de la page quand il sera prêt. La génération peut"
 "prendre quelques minutes."
 
 #: lms/djangoapps/triboo_analytics/views.py:532
@@ -14519,8 +14519,8 @@ msgid "Hello"
 msgstr "Bonjour"
 
 #: lms/templates/dashboard.html:143
-msgid "Welcome on your dashboard"
-msgstr "Bienvenue sur votre dashboard"
+msgid "Welcome to your dashboard"
+msgstr "Bienvenue sur votre tableau de bord"
 
 #: lms/templates/dashboard.html:149
 msgid "completed courses"
@@ -20317,7 +20317,7 @@ msgstr "Votre demande de dérogation pour la section {sections} a été refusé.
 #: lms/templates/emails/waiver_request_denied_message.txt:15
 msgid ""
 "Your waiver request for the entire course {course_name} has been denied."
-msgstr "" 
+msgstr ""
 "Votre demande de dérogation pour le cours {course_name} a été refusé."
 
 #: lms/templates/emails/waiver_request_denied_subject.txt:2
