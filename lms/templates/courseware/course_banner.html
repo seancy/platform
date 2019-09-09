@@ -23,11 +23,14 @@ from six import string_types
         % if course_duration:
           <li class="duration">
             <i class="far fa-clock" aria-hidden="true"></i>
-            <% duration = course_duration.strip().split(' ') %>
-            % if len(duration) > 1 and duration[1] == 'minutes':
-              <span>${ungettext('{num} minute', '{num} minutes', float(duration[0])).format(num=duration[0])}</span>
-            % elif len(duration) > 1 and duration[1] == 'hours':
-              <span>${ungettext('{num} hour', '{num} hours', float(duration[0])).format(num=duration[0])}</span>
+            <% 
+                  duration_context = course_duration.strip().split(' ')
+                  duration = int(duration_context[0])
+            %>
+            % if len(duration_context) > 1 and duration_context[1].startswith('minute'):
+              <span>${ungettext('{num} minute', '{num} minutes', duration).format(num=duration)}</span>
+            % elif len(duration_context) > 1 and duration_context[1].startswith('hour'):
+              <span>${ungettext('{num} hour', '{num} hours', duration).format(num=duration)}</span>
             % endif
           </li>
         % endif

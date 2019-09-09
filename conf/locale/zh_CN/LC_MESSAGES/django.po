@@ -16755,15 +16755,15 @@ msgstr "通过邮件告诉其他人您已选修此课程"
 #: lms/templates/dashboard/_dashboard_course_listing.html:224
 msgid "{num} minute"
 msgid_plural "{num} minutes"
-msgstr[0] "{num_minute} 分钟"
-msgstr[1] "{num_minute} 分钟"
+msgstr[0] "{num} 分钟"
+msgstr[1] "{num} 分钟"
 
 #: lms/templates/courseware/course_banner.html:30
 #: lms/templates/dashboard/_dashboard_course_listing.html:226
 msgid "{num} hour"
 msgid_plural "{num} hours"
-msgstr[0] "{num_hour} 小时"
-msgstr[1] "{num_hour} 小时"
+msgstr[0] "{num} 小时"
+msgstr[1] "{num} 小时"
 
 #: lms/templates/courseware/course_banner.html:73
 msgid "Estimated Effort"
@@ -25448,7 +25448,7 @@ msgstr "课程时长"
 
 #: cms/templates/settings.html:401
 msgid "hours"
-msgstr "小时数"
+msgstr "小时"
 
 #: cms/templates/settings.html:402
 msgid "minutes"
