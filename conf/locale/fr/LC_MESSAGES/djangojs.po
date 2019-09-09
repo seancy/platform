@@ -12224,3 +12224,41 @@ msgstr "Utiliser la transcription courante"
 
 #~ msgid "Starts: %(start_date)s"
 #~ msgstr "Début: %(start_date)s"
+
+
+
+
+
+
+
+#: lms/templates/discovery/facet.underscore
+msgid "Availability"
+msgstr "Disponibilité"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Current"
+msgstr "En cours"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "New"
+msgstr "New"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Starts soon"
+msgstr "Bientôt"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Future"
+msgstr "À venir"
+
+#: lms/templates/discovery/facet.underscore
+msgid "Label"
+msgstr "Label"
+
+#: lms/templates/discovery/facet.underscore
+msgid "Category"
+msgstr "Catégorie"
+
+#: lms/templates/discovery/facet.underscore
+msgid "Mandatory"
+msgstr "Obligatoire"

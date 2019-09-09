@@ -1,6 +1,6 @@
 <div class="fact-wrapper hidden-panel">
     <h3 class="header-facet">
-        <%- displayName %>
+        <%- gettext(displayName) %>
     </h3>
     <ul data-facet="<%- name %>" class="facet-list collapse">
         <%= HtmlUtils.ensureHtml(optionsHtml) %>

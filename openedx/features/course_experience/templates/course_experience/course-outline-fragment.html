@@ -18,7 +18,7 @@ course_sections = blocks.get('children')
 <main role="main" class="course-outline" id="main" tabindex="-1">
     % if course_sections is not None:
         <div class="course-outline-nav">
-            <h2>Course Outline</h2>
+            <h2>{_("Course Outline")}</h2>
             <button class="btn btn-primary"
                 id="expand-collapse-outline-all-button"
                 aria-expanded="false"

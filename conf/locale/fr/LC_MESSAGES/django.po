@@ -29442,3 +29442,50 @@ msgstr ""
 
 #~ msgid "LMS"
 #~ msgstr "LMS"
+
+
+
+
+
+
+
+
+#: lms/templates/courseware/courses.html
+msgid "Availability"
+msgstr "Disponibilité"
+
+#: lms/templates/courseware/courses.html
+msgid "Current"
+msgstr "En cours"
+
+#: lms/templates/courseware/courses.html
+msgid "New"
+msgstr "Nouveau"
+
+#: lms/templates/courseware/courses.html
+msgid "Starts soon"
+msgstr "Bientôt"
+
+#: lms/templates/courseware/courses.html
+msgid "Future"
+msgstr "À venir"
+
+#: lms/templates/courseware/courses.html
+#: lms/templates/courseware/course_banner.html
+msgid "Online"
+msgstr "En ligne"
+
+#: lms/templates/courseware/courses.html
+#: lms/templates/courseware/course_banner.html
+msgid "Offline"
+msgstr "Présentiel"
+
+#: lms/templates/courseware/courses.html
+#: lms/templates/courseware/course_banner.html
+msgid "Live session"
+msgstr "Session live"
+
+#: lms/templates/courseware/courses.html
+#: lms/templates/courseware/course_banner.html
+msgid "Session recorded"
+msgstr "Session enregistrée"

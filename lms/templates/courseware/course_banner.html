@@ -41,7 +41,7 @@ from six import string_types
         % if course.course_category:
           <li class="course-category">
             <i class="far fa-folder" aria-hidden="true"></i>
-            <span>${course.course_category}</span>
+            <span>${_(course.course_category)}</span>
           </li>
         % endif
         % if not course.start_date_is_still_default:
