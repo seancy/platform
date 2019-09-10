@@ -21,7 +21,6 @@
   
   var newcatalog = {
     " ${price} {currency} )": " ${price} {currency} )", 
-    " Link": "\u94fe\u63a5", 
     " and ": " \u548c ", 
     " learner does not exist in LMS and not added to the exception list": "\u5b66\u4e60\u8005\u4e0d\u5b58\u5728\u7cfb\u7edf\u4e2d\uff0c\u5c06\u4e0d\u52a0\u5230\u4f8b\u5916\u5217\u8868\u4e2d", 
     " learner is already white listed and not added to the exception list": "\u5b66\u5458\u5df2\u5728\u767d\u540d\u5355\uff0c\u672a\u6dfb\u52a0\u5230\u4f8b\u5916\u5217\u8868\u4e2d", 
@@ -41,78 +40,101 @@
     "%(comments_count)s %(span_sr_open)scomments (%(unread_comments_count)s unread comments)%(span_close)s": "%(comments_count)s %(span_sr_open)s\u8bc4\u8bba (%(unread_comments_count)s \u672a\u8bfb\u8bc4\u8bba)%(span_close)s", 
     "%(download_link_start)sDownload this image (right-click or option-click, save as)%(link_end)s and then %(upload_link_start)supload%(link_end)s it to your backpack.</li>": "%(download_link_start)s\u4e0b\u8f7d\u6b64\u56fe\u50cf\uff08\u53f3\u51fb\u6216\u5355\u51fb\u9009\u9879\uff0c\u53e6\u5b58\u4e3a\uff09%(link_end)s\uff0c\u968f\u540e%(upload_link_start)s\u4e0a\u4f20%(link_end)s\u81f3\u4f60\u7684 backpack \u4e2d\u3002</li>", 
     "%(earned)s/%(possible)s point (graded)": [
+      "%(earned)s/%(possible)s \u5206 (\u5206\u7ea7)", 
       "%(earned)s/%(possible)s \u5206 (\u5206\u7ea7)"
     ], 
     "%(earned)s/%(possible)s point (ungraded)": [
+      "%(earned)s/%(possible)s \u5206 (\u4e0d\u5206\u7ea7)", 
       "%(earned)s/%(possible)s \u5206 (\u4e0d\u5206\u7ea7)"
     ], 
     "%(errorCount)s error found in form.": [
+      "\u8868\u683c\u4e2d\u53d1\u73b0 %(errorCount)s \u4e2a\u9519\u8bef\u3002", 
       "\u8868\u683c\u4e2d\u53d1\u73b0 %(errorCount)s \u4e2a\u9519\u8bef\u3002"
     ], 
     "%(field)s can only contain up to %(count)d characters.": "%(field)s \u6700\u591a\u53ea\u80fd\u6709 %(count)d \u4e2a\u5b57\u7b26\u3002", 
     "%(field)s must have at least %(count)d characters.": "%(field)s \u81f3\u5c11\u8981\u6709 %(count)d \u5b57\u7b26\u3002", 
     "%(memberCount)s / %(maxMemberCount)s Member": [
+      "%(memberCount)s / %(maxMemberCount)s \u4e2a\u6210\u5458", 
       "%(memberCount)s / %(maxMemberCount)s \u4e2a\u6210\u5458"
     ], 
     "%(new_item_message)s": "%(new_item_message)s", 
     "%(num)s hour": [
+      "%(num)s \u5c0f\u65f6", 
       "%(num)s \u5c0f\u65f6"
     ], 
     "%(num)s minute": [
+      "%(num)s \u5206\u949f", 
       "%(num)s \u5206\u949f"
     ], 
     "%(num_points)s point possible (graded)": [
+      "%(num_points)s \u5206 \u53ef\u4ee5 (\u5206\u7ea7)", 
       "%(num_points)s \u5206 \u53ef\u4ee5 (\u5206\u7ea7)"
     ], 
     "%(num_points)s point possible (graded, results hidden)": [
+      "%(num_points)s \u5206 \u53ef\u4ee5 (\u5206\u7ea7\uff0c \u9690\u85cf\u7ed3\u679c)", 
       "%(num_points)s \u5206 \u53ef\u4ee5 (\u5206\u7ea7\uff0c \u9690\u85cf\u7ed3\u679c)"
     ], 
     "%(num_points)s point possible (ungraded)": [
+      "%(num_points)s \u5206 \u53ef\u4ee5(\u4e0d\u5206\u7ea7)", 
       "%(num_points)s \u5206 \u53ef\u4ee5(\u4e0d\u5206\u7ea7)"
     ], 
     "%(num_points)s point possible (ungraded, results hidden)": [
+      "%(num_points)s \u5206 \u53ef\u4ee5 (\u4e0d\u5206\u7ea7, \u9690\u85cf\u7ed3\u679c)", 
       "%(num_points)s \u5206 \u53ef\u4ee5 (\u4e0d\u5206\u7ea7, \u9690\u85cf\u7ed3\u679c)"
     ], 
     "%(num_questions)s question": [
+      "%(num_questions)s \u4e2a\u95ee\u9898", 
       "%(num_questions)s \u4e2a\u95ee\u9898"
     ], 
     "%(num_students)s student": [
+      "%(num_students)s \u4e2a\u5b66\u751f", 
       "%(num_students)s \u4e2a\u5b66\u751f"
     ], 
     "%(num_students)s student opened Subsection": [
+      "%(num_students)s \u4e2a\u5b66\u751f\u5df2\u6253\u5f00\u5206\u9879", 
       "%(num_students)s \u4e2a\u5b66\u751f\u5df2\u6253\u5f00\u5206\u9879"
     ], 
     "%(programName)s Home Page.": "%(programName)s \u4e3b\u9875.", 
     "%(student_count)s students": [
+      "%(student_count)s students", 
       "%(student_count)s students"
     ], 
     "%(team_count)s Team": [
+      "%(team_count)s \u4e2a\u56e2\u961f", 
       "%(team_count)s \u4e2a\u56e2\u961f"
     ], 
     "%(type)s Component Template Menu": "%(type)s \u7ec4\u4ef6\u6a21\u677f\u83dc\u5355", 
     "%(value)s hour": [
+      "%(value)s \u5c0f\u65f6", 
       "%(value)s \u5c0f\u65f6"
     ], 
     "%(value)s minute": [
+      "%(value)s \u5206\u949f", 
       "%(value)s \u5206\u949f"
     ], 
     "%(value)s second": [
+      "%(value)s \u79d2\u949f", 
       "%(value)s \u79d2\u949f"
     ], 
     "%d day": [
+      "%d \u5929", 
       "%d \u5929"
     ], 
     "%d minute": [
+      "%d \u5206\u949f", 
       "%d \u5206\u949f"
     ], 
     "%d month": [
+      "%d \u4e2a\u6708", 
       "%d \u4e2a\u6708"
     ], 
     "%d year": [
+      "%d \u5e74", 
       "%d \u5e74"
     ], 
     "%s ago": "%s \u4ee5\u524d", 
     "%s course found": [
+      "\u627e\u5230 %s \u8bfe\u7a0b", 
       "\u627e\u5230 %s \u8bfe\u7a0b"
     ], 
     "%s from now": "\u8ddd\u73b0\u5728:%s", 
@@ -307,6 +329,7 @@
     "Automated Transcripts": "\u81ea\u52a8\u6210\u7ee9\u5355", 
     "Automatic": "\u81ea\u52a8", 
     "Automatic transcripts are disabled.": "\u81ea\u52a8\u6210\u7ee9\u5355\u88ab\u7981\u7528\u3002", 
+    "Availability": "\u8bfe\u7a0b\u5f00\u653e\u65f6\u95f4", 
     "Average": "\u5e73\u5747", 
     "Back to login.": "\u8fd4\u56de\u767b\u5f55\u3002", 
     "Back to sign in": "\u8fd4\u56de\u767b\u5f55", 
@@ -351,6 +374,7 @@
     "Cannot delete when in use by an experiment": "\u5b9e\u9a8c\u4f7f\u7528\u65f6\u65e0\u6cd5\u5220\u9664", 
     "Cannot drop more <%= types %> assignments than are assigned.": "\u4e0d\u80fd\u5220\u6389\u5df2\u7ecf\u6307\u6d3e\u7684<%= types %>\u4f5c\u4e1a", 
     "Caption": "\u6807\u9898", 
+    "Category": "\u8bfe\u7a0b\u7c7b\u578b", 
     "Caution: The last published version of this unit is live. By publishing changes you will change the student experience.": "\u8b66\u544a\uff1a \u6b64\u5355\u5143\u7684\u4e0a\u4e00\u4e2a\u53d1\u5e03\u7248\u672c\u662f\u5b9e\u65f6\u7684\u3002\u901a\u8fc7\u53d1\u5e03\u66f4\u6539\uff0c\u60a8\u5c06\u66f4\u6539\u5b66\u751f\u4f53\u9a8c\u3002", 
     "Cell": "\u5355\u5143\u683c", 
     "Cell padding": "\u50a8\u5b58\u8868\u683c\u7684\u8fb9\u8ddd", 
@@ -386,9 +410,11 @@
     "Chapter {order}": "\u7ae0 {order}", 
     "Check Your Email": "\u68c0\u67e5\u4f60\u7684\u7535\u5b50\u90ae\u4ef6", 
     "Check the box to remove %(count)s flag.": [
+      "\u9009\u4e2d\u6b64\u9009\u6846\u4ee5\u79fb\u9664 %(count)s \u4e2a\u6807\u8bb0\u3002", 
       "\u9009\u4e2d\u6b64\u9009\u6846\u4ee5\u79fb\u9664 %(count)s \u4e2a\u6807\u8bb0\u3002"
     ], 
     "Check the box to remove %(totalFlags)s flag.": [
+      "\u9009\u4e2d\u6b64\u9009\u6846\u4ee5\u79fb\u9664\u6240\u6709 %(totalFlags)s \u4e2a\u6807\u8bb0\u3002", 
       "\u9009\u4e2d\u6b64\u9009\u6846\u4ee5\u79fb\u9664\u6240\u6709 %(totalFlags)s \u4e2a\u6807\u8bb0\u3002"
     ], 
     "Check the box to remove all flags.": "\u9009\u4e2d\u6b64\u9009\u6846\u4ee5\u79fb\u9664\u6240\u6709\u6807\u8bb0", 
@@ -462,6 +488,7 @@
     "Contact Us": "\u8054\u7cfb\u6211\u4eec", 
     "Contains staff only content": "\u4ec5\u5305\u542b\u5458\u5de5\u5185\u5bb9", 
     "Contains {count} group": [
+      "\u5305\u542b {count}\u7ec4", 
       "\u5305\u542b {count}\u7ec4"
     ], 
     "Content Group ID": "\u5185\u5bb9\u7ec4 ID", 
@@ -491,6 +518,7 @@
     "Country of residence": "\u5c45\u4f4f\u56fd\u5bb6", 
     "Country or Region of Residence": "\u5c45\u4f4f\u56fd\u5bb6\u6216\u5730\u533a", 
     "Course": [
+      "\u8bfe\u7a0b", 
       "\u8bfe\u7a0b"
     ], 
     "Course Credit Requirements": "\u8bfe\u7a0b\u8bc1\u4e66\u8981\u6c42", 
@@ -532,6 +560,7 @@
     "Criterion Added": "\u6807\u51c6\u5df2\u6dfb\u52a0", 
     "Criterion Deleted": "\u89c4\u8303\u5df2\u5220\u9664", 
     "Crossed out items have been refunded.": "\u5212\u6389\u7684\u9879\u76ee\u5df2\u9000\u6b3e\u3002", 
+    "Current": "\u6b63\u5728\u8fdb\u884c", 
     "Current Role:": "\u5f53\u524d\u89d2\u8272\uff1a", 
     "Current conversation": "\u5f53\u524d\u5bf9\u8bdd", 
     "Current enrollment mode:": "\u5f53\u524d\u9009\u8bfe\u6a21\u5f0f\uff1a", 
@@ -694,7 +723,7 @@
     "Enter the page number you'd like to quickly navigate to.": "\u8f93\u5165\u60a8\u9700\u8981\u5feb\u901f\u524d\u5f80\u7684\u9875\u7801\u3002", 
     "Enter the username or email address of each learner that you want to add as an exception.": "\u8f93\u5165\u60a8\u8981\u6dfb\u52a0\u4e3a\u7279\u6b8a\u5904\u7406\u7684\u6bcf\u4e00\u4f4d\u5b66\u5458\u7684\u7528\u6237\u540d\u6216\u7535\u5b50\u90ae\u4ef6\u3002", 
     "Enter username or email": "\u8f93\u5165\u7528\u6237\u540d\u6216\u8005\u7535\u5b50\u90ae\u4ef6\u5730\u5740", 
-    "Enter your ": "\u8f93\u5165\u60a8\u7684 ", 
+    "Enter your {platform_name} username or the URL to your {platform_name} page. Delete the URL to remove the link.": "\u8f93\u5165\u6216\u5220\u9664\u4f60\u7684 {platform_name} \u7528\u6237\u540d\u6216\u4e2a\u4eba\u4e3b\u9875\u5730\u5740", 
     "Entrance exam attempts is being reset for student '{student_id}'.": "\u6b63\u5728\u91cd\u7f6e\u5b66\u751f\u201c{student_id}\u201d\u7684\u5165\u5b66\u8003\u8bd5\u5c1d\u8bd5\u6b21\u6570\u3002", 
     "Entrance exam state is being deleted for student '{student_id}'.": "\u5b66\u751f'{student_id}'\u7684\u5165\u5b66\u8003\u8bd5\u7684\u72b6\u6001\u5df2\u88ab\u5220\u9664\u3002", 
     "Error": "\u9519\u8bef", 
@@ -798,6 +827,7 @@
     "Full Profile": "\u5168\u90e8\u8d44\u6599", 
     "Fullscreen": "\u5168\u5c4f", 
     "Fully Supported": "\u5b8c\u5168\u652f\u6301", 
+    "Future": "\u5373\u5c06\u5f00\u59cb", 
     "Gender": "\u6027\u522b", 
     "General": "\u5e38\u89c4", 
     "General Proctored Exam Rules": "\u4e00\u822c\u76d1\u8003\u8003\u8bd5\u89c4\u5219", 
@@ -959,6 +989,7 @@
     "KB": "KB", 
     "Key should only contain letters, numbers, _, or -": "\u5173\u952e\u5b57\u53ea\u80fd\u5305\u542b\u5b57\u6bcd\u3001\u6570\u5b57\u3001\u4e0b\u5212\u7ebf\u548c\u8fde\u5b57\u7b26\u3002", 
     "Keywords": "\u5173\u952e\u8bcd", 
+    "Label": "\u6807\u7b7e", 
     "Language": "\u8bed\u8a00", 
     "Large": "\u5927", 
     "Last Activity %(date)s": "\u4e0a\u4e00\u6b21\u6d3b\u52a8\u5728 %(date)s ", 
@@ -1010,6 +1041,7 @@
     "Load more": "\u52a0\u8f7d\u66f4\u591a", 
     "Load next {numResponses} responses": "\u52a0\u8f7d\u4e0b\u4e00\u4e2a{numResponses}\u7b54\u590d", 
     "Load next {num_items} result": [
+      "\u52a0\u8f7d\u4e0b\u4e00\u4e2a {num_items} \u7ed3\u679c", 
       "\u52a0\u8f7d\u4e0b\u4e00\u4e2a {num_items} \u7ed3\u679c"
     ], 
     "Loading": "\u6b63\u5728\u52a0\u8f7d", 
@@ -1037,6 +1069,7 @@
     "Make this subsection available as a prerequisite to other content": "\u4f7f\u672c\u5c0f\u8282\u4f5c\u4e3a\u5176\u4ed6\u5185\u5bb9\u7684\u5148\u51b3\u6761\u4ef6\u63d0\u4f9b", 
     "Making Visible to Students": "\u6b63\u5728\u5bf9\u5b66\u751f\u53ef\u89c1", 
     "Manage Learners": "\u7ba1\u7406\u5b66\u4e60\u8005", 
+    "Mandatory": "\u5fc5\u4fee\u8bfe", 
     "Manual": "\u624b\u52a8", 
     "Mark Exam As Completed": "\u6807\u8bb0\u8003\u8bd5\u5b8c\u6210", 
     "Mark as Answer": "\u6807\u8bb0\u4f5c\u4e3a\u7b54\u6848", 
@@ -1077,6 +1110,7 @@
     "Needs verified certificate ": "\u9700\u8981\u9a8c\u8bc1\u8bc1\u4e66", 
     "Never published": "\u4ece\u672a\u53d1\u5e03", 
     "Never show assessment results": "\u4ece\u4e0d\u663e\u793a\u8bc4\u4f30\u7ed3\u679c", 
+    "New": "\u6700\u65b0", 
     "New %(item_type)s": "\u65b0\u5efa %(item_type)s", 
     "New Address": "\u65b0\u5730\u5740", 
     "New Password *": "\u5bc6\u7801 *", 
@@ -1437,6 +1471,7 @@
     "Show All": "\u663e\u793a\u6240\u6709", 
     "Show Annotations": "\u663e\u793a\u6807\u6ce8", 
     "Show Comment (%(num_comments)s)": [
+      "\u663e\u793a\u8bc4\u8bba (%(num_comments)s)", 
       "\u663e\u793a\u8bc4\u8bba (%(num_comments)s)"
     ], 
     "Show Deprecated Settings": "\u663e\u793a\u5df2\u8fc7\u65f6\u7684\u8bbe\u7f6e", 
@@ -1453,6 +1488,7 @@
     "Show transcripts ({transcriptCount})": "\u663e\u793a\u6210\u7ee9\u5355({transcriptCount})", 
     "Showing all responses": "\u663e\u793a\u6240\u6709\u7684\u56de\u590d", 
     "Showing first response": [
+      "\u663e\u793a\u7b2c\u4e00\u4e2a\u7b54\u590d", 
       "\u663e\u793a\u7b2c\u4e00\u4e2a\u7b54\u590d"
     ], 
     "Showing results for \"{searchString}\"": "\u663e\u793a\"{searchString}\"\"\u7684\u7ed3\u679c", 
@@ -1513,6 +1549,7 @@
     "Started task to override the score for problem '<%- problem_id %>' and student '<%- student_id %>'. Click the 'Show Task Status' button to see the status of the task.": "\u5df2\u542f\u52a8\u4efb\u52a1\u4ee5\u8986\u76d6\u95ee\u9898 '<%- problem_id %>'\u548c\u5b66\u751f'<%- student_id %>'\u3002\u5355\u51fb\"\u663e\u793a\u4efb\u52a1\u72b6\u6001\"\u6309\u94ae\u4ee5\u67e5\u770b\u4efb\u52a1\u7684\u72b6\u6001\u3002", 
     "Started {start}": "\u5df2\u5f00\u59cb {start}", 
     "Starts": "\u5f00\u59cb", 
+    "Starts soon": "\u5373\u5c06\u5f00\u59cb", 
     "Starts {start}": "\u5f00\u59cb {start}", 
     "State": "\u72b6\u6001", 
     "Status": "\u72b6\u6001", 
@@ -1640,7 +1677,7 @@
     "The minimum score percentage must be a whole number between 0 and 100.": "\u6700\u4f4e\u5206\u6570\u767e\u5206\u6bd4\u5fc5\u987b\u4e3a\u4ecb\u4e8e 0 \u548c 100 \u4e4b\u95f4\u7684\u6574\u6570\u3002", 
     "The more you tell us, the more quickly and helpfully we can respond!": "\u4f60\u544a\u8bc9\u6211\u4eec\u7684\u8d8a\u591a\uff0c\u6211\u4eec\u7684\u53cd\u5e94\u5c31\u8d8a\u5feb\uff0c\u8d8a\u6709\u5e2e\u52a9\uff01", 
     "The name of this signatory as it should appear on certificates.": "\u8be5\u7b7e\u5b57\u4eba\u7684\u59d3\u540d\u5e94\u5217\u5728\u8bc1\u4e66\u4e0a\u3002", 
-    "The name that identifies you on {platform_name}. You cannot change your username.": "\u5728  {platform_name}\u540d\u79f0\u4e0a\u6807\u8bc6\u60a8\u7684\u540d\u79f0\u3002\u60a8\u4e0d\u80fd\u66f4\u6539\u7528\u6237\u540d\u3002", 
+    "The name that identifies you on {platform_name}. You cannot change your username.": "\u5728  {platform_name}\u4e0a\u6807\u8bc6\u60a8\u7684\u540d\u79f0\u3002\u60a8\u4e0d\u80fd\u66f4\u6539\u7528\u6237\u540d\u3002", 
     "The name that is used for ID verification and that appears on your certificates.": "\u7528\u4e8e ID \u9a8c\u8bc1\u7684\u540d\u79f0\uff0c\u5e76\u663e\u793a\u5728\u8bc1\u4e66\u4e0a\u3002", 
     "The number of assignments of this type that will be dropped. The lowest scoring assignments are dropped first.": "\u5c06\u5220\u9664\u7684\u6b64\u7c7b\u578b\u7684\u5206\u914d\u6570\u3002\u5f97\u5206\u6700\u4f4e\u7684\u4f5c\u4e1a\u5c06\u9996\u5148\u5220\u9664\u3002", 
     "The number of subsections in the course that contain problems of this assignment type.": "\u8bfe\u7a0b\u4e2d\u5305\u542b\u6b64\u4f5c\u4e1a\u7c7b\u578b\u95ee\u9898\u7684\u5b50\u8282\u6570\u3002", 
@@ -1683,6 +1720,7 @@
     "There was an error retrieving preview results for this catalog. Please check that your query is correct and try again.": "\u5728\u83b7\u53d6\u8fd9\u4e2a\u76ee\u5f55\u7684\u9884\u89c8\u7ed3\u679c\u65f6\u53d1\u751f\u9519\u8bef\u3002\u8bf7\u68c0\u67e5\u60a8\u7684\u6307\u4ee4\u662f\u5426\u6b63\u786e\u5e76\u91cd\u8bd5\u3002", 
     "There was an error updating your goal.": "\u66f4\u65b0\u76ee\u6807\u65f6\u51fa\u9519\u3002", 
     "There was an error when trying to add learners:": [
+      "\u5c1d\u8bd5\u6dfb\u52a0\u5b66\u5458\u65f6\u51fa\u9519\uff1a", 
       "\u5c1d\u8bd5\u6dfb\u52a0\u5b66\u5458\u65f6\u51fa\u9519\uff1a"
     ], 
     "There was an error while importing the new course to our database.": "\u5728\u5bfc\u5165\u65b0\u8bfe\u7a0b\u5230\u6570\u636e\u5e93\u65f6\u51fa\u73b0\u4e86\u9519\u8bef\u3002", 
@@ -1708,6 +1746,7 @@
     "This action cannot be undone.": "\u8fd9\u4e2a\u52a8\u4f5c\u65e0\u6cd5\u53d6\u6d88\u3002", 
     "This action updates the {provider} information for your entire organization.": "\u6b64\u64cd\u4f5c\u5c06\u66f4\u65b0\u6574\u4e2a\u7ec4\u7ec7\u7684 {provider}\u4fe1\u606f\u3002", 
     "This annotation has %(count)s flag.": [
+      "\u6b64\u6ce8\u91ca\u5e26\u6709 %(count)s \u4e2a\u6807\u8bb0\u3002", 
       "\u6b64\u6ce8\u91ca\u5e26\u6709 %(count)s \u4e2a\u6807\u8bb0\u3002"
     ], 
     "This assessment could not be submitted.": "\u8fd9\u4efd\u8bc4\u6d4b\u65e0\u6cd5\u63d0\u4ea4\u3002", 
@@ -1910,6 +1949,7 @@
     "Use your webcam to take a photo of your face. We will match this photo with the photo on your ID.": "\u8bf7\u7528\u6444\u50cf\u5934\u62cd\u6444\u4e00\u5f20\u60a8\u7684\u9762\u90e8\u7167\u7247\uff0c\u6211\u4eec\u5c06\u5bf9\u6bd4\u8be5\u7167\u7247\u4e0e\u60a8\u8eab\u4efd\u8bc1\u4ef6\u4e0a\u7684\u7167\u7247\u3002", 
     "Used": "\u5df2\u4f7f\u7528", 
     "Used in {count} location": [
+      "\u7528\u4e8e  {count}\u4f4d\u7f6e", 
       "\u7528\u4e8e  {count}\u4f4d\u7f6e"
     ], 
     "User": "\u7528\u6237", 
@@ -1990,6 +2030,7 @@
     "Webcam": "\u6444\u50cf\u5934", 
     "Weekly Highlight Emails": "\u6bcf\u5468\u4eae\u70b9\u7535\u5b50\u90ae\u4ef6", 
     "Weight of Total Grade": "\u6210\u7ee9\u4e2d\u7684\u6743\u91cd", 
+    "Welcome to your training platform, log in to find your learning space!": "\u6b22\u8fce\u6765\u5230\u60a8\u7684\u57f9\u8bad\u5e73\u53f0\uff0c\u767b\u5f55\u67e5\u627e\u60a8\u7684\u5b66\u4e60\u7a7a\u95f4\uff01", 
     "We\u2019re sorry to see you go!": "\u6211\u4eec\u5f88\u62b1\u6b49\u770b\u5230\u60a8\u8981\u79bb\u5f00\u6211\u4eec\u5e73\u53f0\uff01", 
     "What You Need for Verification": "\u8ba4\u8bc1\u6240\u9700", 
     "What can we help you with, {username}?": "\u6211\u4eec\u53ef\u4ee5\u4e3a\u60a8\u63d0\u4f9b\u4ec0\u4e48\u5e2e\u52a9\uff0c{username}\uff1f", 
@@ -2078,7 +2119,7 @@
     "You need an ID with your name and photo. A driver's license, passport, or other government-issued IDs are all acceptable.": "\u60a8\u9700\u8981\u4e00\u4efd\u5e26\u6709\u60a8\u59d3\u540d\u548c\u7167\u7247\u7684\u8eab\u4efd\u8bc1\u4ef6\uff0c\u6211\u4eec\u53ef\u4ee5\u63a5\u53d7\u9a7e\u7167\u3001\u62a4\u7167\u4ee5\u53ca\u5176\u4ed6\u7531\u653f\u5e9c\u7b7e\u53d1\u7684\u8eab\u4efd\u8bc1\u4ef6\u3002", 
     "You need to activate your account before you can enroll in courses. Check your inbox for an activation email.": "\u5728\u9009\u8bfe\u4e4b\u524d\u4f60\u9700\u8981\u5148\u6fc0\u6d3b\u4f60\u7684\u8d26\u6237\uff0c\u8bf7\u68c0\u67e5\u6536\u4ef6\u7bb1\u4e2d\u7684\u6fc0\u6d3b\u90ae\u4ef6\u3002", 
     "You need to activate your account before you can enroll in courses. Check your inbox for an activation email. After you complete activation you can return and refresh this page.": "\u5728\u9009\u8bfe\u4e4b\u524d\u4f60\u9700\u8981\u5148\u6fc0\u6d3b\u4f60\u7684\u8d26\u6237\uff0c\u8bf7\u68c0\u67e5\u6536\u4ef6\u7bb1\u4e2d\u7684\u6fc0\u6d3b\u90ae\u4ef6\u3002\u5f53\u4f60\u5b8c\u6210\u6fc0\u6d3b\u540e\uff0c\u4f60\u53ef\u4ee5\u8fd4\u56de\u5e76\u5237\u65b0\u672c\u9875\u9762\u3002", 
-    "You receive messages from {platform_name} and course teams at this address.": "\u60a8\u5728\u6b64\u5730\u5740\u6536\u5230\u6765\u81ea {platform_name} \u540d\u79f0\u548c\u8bfe\u7a0b\u56e2\u961f\u7684\u6d88\u606f\u3002", 
+    "You receive messages from {platform_name} and course teams at this address.": "\u60a8\u5728\u6b64\u5730\u5740\u6536\u5230\u6765\u81ea {platform_name} \u548c\u8bfe\u7a0b\u56e2\u961f\u7684\u6d88\u606f\u3002", 
     "You reserve all rights for your work": "\u60a8\u5bf9\u60a8\u7684\u5de5\u4f5c\u4fdd\u7559\u6240\u6709\u6743\u5229", 
     "You still need to visit the %(display_name)s website to complete the credit process.": "\u4f60\u4ecd\u7136\u9700\u8981\u8bbf\u95ee\u7f51\u7ad9 %(display_name)s \u4ee5\u5b8c\u6210\u83b7\u53d6\u5b66\u5206\u6d41\u7a0b\u3002", 
     "You submitted {filename}; only {allowedFiles} are allowed.": "\u60a8\u63d0\u4ea4\u4e86 {filename}\uff1b\u4ec5\u652f\u6301\u63d0\u4ea4 {allowedFiles} \u683c\u5f0f\u7684\u6587\u4ef6\u3002", 
@@ -2137,6 +2178,7 @@
     "[no tags]": "[\u65e0\u6807\u7b7e]", 
     "a day": "\u4e00\u5929", 
     "about %d hour": [
+      "\u5927\u7ea6 %d \u5c0f\u65f6", 
       "\u5927\u7ea6 %d \u5c0f\u65f6"
     ], 
     "about a minute": "\u5927\u7ea6\u4e00\u5206\u949f", 
@@ -2209,6 +2251,7 @@
     "text_word_{uniqueId}": "text_word_{uniqueId}", 
     "text_word_{uniqueId} title_word_{uniqueId}": "text_word_{uniqueId} title_word_{uniqueId}", 
     "there is currently {numVotes} like": [
+      "\u76ee\u524d\u6709 {numVotes} \u8d5e", 
       "\u76ee\u524d\u6709 {numVotes} \u8d5e"
     ], 
     "timed": "\u5b9a\u65f6", 
@@ -2237,27 +2280,35 @@
     "{maxWidth}x{maxHeight} pixels": "{maxWidth}x{maxHeight} \u50cf\u7d20", 
     "{minutes} {unit}": "{minutes} {unit}", 
     "{numMoved} learner was moved from {prevCohort}": [
+      "{numMoved}\u5b66\u5458\u4ece{prevCohort} \u79fb\u52a8", 
       "{numMoved}\u5b66\u5458\u4ece{prevCohort} \u79fb\u52a8"
     ], 
     "{numPreassigned} learner was pre-assigned for this cohort. This learner will automatically be added to the cohort when they enroll in the course.": [
+      "{numPreassigned} \u5b66\u5458\u5df2\u4e3a\u6b64\u7fa4\u7ec4\u9884\u5148\u5206\u914d\u3002\u6b64\u5b66\u5458\u5728\u6ce8\u518c\u8bfe\u7a0b\u65f6\u5c06\u81ea\u52a8\u6dfb\u52a0\u5230\u7fa4\u7ec4\u4e2d\u3002", 
       "{numPreassigned} \u5b66\u5458\u5df2\u4e3a\u6b64\u7fa4\u7ec4\u9884\u5148\u5206\u914d\u3002\u6b64\u5b66\u5458\u5728\u6ce8\u518c\u8bfe\u7a0b\u65f6\u5c06\u81ea\u52a8\u6dfb\u52a0\u5230\u7fa4\u7ec4\u4e2d\u3002"
     ], 
     "{numPresent} learner was already in the cohort": [
+      "{numPresent} \u5b66\u5458\u5df2\u5728\u7fa4\u7ec4\u4e2d", 
       "{numPresent} \u5b66\u5458\u5df2\u5728\u7fa4\u7ec4\u4e2d"
     ], 
     "{numResponses} other response": [
+      "{numResponses}  \u5176\u4ed6\u56de\u590d", 
       "{numResponses}  \u5176\u4ed6\u56de\u590d"
     ], 
     "{numResponses} response": [
+      "{numResponses} \u7b54\u590d", 
       "{numResponses} \u7b54\u590d"
     ], 
     "{numUsersAdded} learner has been added to this cohort. ": [
+      "{numUsersAdded}\u5b66\u5458\u5df2\u6dfb\u52a0\u5230\u6b64\u7fa4\u7ec4\u4e2d\u3002", 
       "{numUsersAdded}\u5b66\u5458\u5df2\u6dfb\u52a0\u5230\u6b64\u7fa4\u7ec4\u4e2d\u3002"
     ], 
     "{numVotes} like": [
+      "{numVotes} \u8d5e", 
       "{numVotes} \u8d5e"
     ], 
     "{organization}\\'s logo": "{organization}\\'s \u7684\u6807\u8bc6", 
+    "{platform_name} Link": "{platform_name} \u94fe\u63a5", 
     "{screen_reader_start}Warning:{screen_reader_end} No content groups exist.": "{screen_reader_start}\u8b66\u544a\uff1a{screen_reader_end}\u4e0d\u5b58\u5728\u5185\u5bb9\u7ec4\u3002", 
     "{screen_reader_start}Warning:{screen_reader_end} The previously selected content group was deleted. Select another content group.": "{screen_reader_start}\u8b66\u544a\uff1a{screen_reader_end}\u4e4b\u524d\u9009\u62e9\u7684\u5185\u5bb9\u7ec4\u5df2\u88ab\u5220\u9664\u3002\u8bf7\u9009\u62e9\u53e6\u4e00\u4e2a\u5185\u5bb9\u7ec4\u3002", 
     "{seconds} {unit}": "{seconds} {unit}", 
@@ -2267,6 +2318,7 @@
     "{start_strong}{total}{end_strong} words submitted in total.": "{start_strong}{total}{end_strong}\u5355\u8bcd\u4e00\u8d77\u63d0\u4ea4\u3002", 
     "{totalItems} total": "\u5171\u6709{totalItems}", 
     "{total_results} result": [
+      "{total_results} \u7ed3\u679c", 
       "{total_results} \u7ed3\u679c"
     ], 
     "{transcriptClientTitle}_{transcriptLanguageCode}.{fileExtension}": "{transcriptClientTitle}_{transcriptLanguageCode}.{fileExtension}", 

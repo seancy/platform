@@ -6118,7 +6118,7 @@ msgstr "电子邮件地址（登录）"
 #: lms/static/js/student_account/views/account_settings_factory.js:73
 msgid ""
 "You receive messages from {platform_name} and course teams at this address."
-msgstr "您在此地址收到来自 {platform_name} 名称和课程团队的消息。"
+msgstr "您在此地址收到来自 {platform_name} 和课程团队的消息。"
 
 #: lms/static/js/student_account/views/account_settings_factory.js:90
 #: openedx/features/learner_profile/static/learner_profile/js/learner_profile_factory.js:105
@@ -6152,7 +6152,7 @@ msgstr "这些设置包括有关您的帐户的基本信息。"
 msgid ""
 "The name that identifies you on {platform_name}. You cannot change your "
 "username."
-msgstr "在  {platform_name}名称上标识您的名称。您不能更改用户名。"
+msgstr "在  {platform_name}上标识您的名称。您不能更改用户名。"
 
 #: lms/static/js/student_account/views/account_settings_factory.js:152
 msgid "Phone Number"
@@ -6229,12 +6229,12 @@ msgid ""
 msgstr "或者，将您的个人帐户链接到 edX 个人资料上的社交媒体图标。"
 
 #: lms/static/js/student_account/views/account_settings_factory.js:309
-msgid " Link"
-msgstr "链接"
+msgid "{platform_name} Link"
+msgstr "{platform_name} 链接"
 
 #: lms/static/js/student_account/views/account_settings_factory.js:312
-msgid "Enter your "
-msgstr "输入您的 "
+msgid "Enter your {platform_name} username or the URL to your {platform_name} page. Delete the URL to remove the link."
+msgstr "输入或删除你的 {platform_name} 用户名或个人主页地址"
 
 #: lms/static/js/student_account/views/account_settings_factory.js:351
 #: lms/static/js/student_account/views/account_settings_view.js:29
@@ -11603,3 +11603,7 @@ msgstr "课程类型"
 #: lms/templates/discovery/facet.underscore
 msgid "Mandatory"
 msgstr "必修课"
+
+#: lms/templates/student_account/login.underscore
+msgid "Welcome to your training platform, log in to find your learning space!"
+msgstr "欢迎来到您的培训平台，登录查找您的学习空间！"

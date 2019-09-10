@@ -16820,7 +16820,7 @@ msgstr "选课已关闭"
 
 #: lms/templates/courseware/course_banner.html:179
 msgid "Add to Cart <span>({price} USD)</span>"
-msgstr "添加{course_name}到购物车<span>({price} USD)</span>"
+msgstr "添加到购物车<span>({price} USD)</span>"
 
 #: lms/templates/courseware/course_navigation.html:69
 msgid "Course Material"
@@ -22397,7 +22397,7 @@ msgstr "了解已验证的证书"
 
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:24
 msgid "{platform_name} Verified Certificate"
-msgstr "{platform_name} {course_name}的验证证书"
+msgstr "{platform_name}的验证证书"
 
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:25
 msgid "Why upgrade?"
@@ -22932,7 +22932,7 @@ msgid ""
 "icon."
 msgstr ""
 "要在激活证书之前对其进行编辑或删除，请将鼠标悬停在窗体的右上角，然后选择 "
-"[em_start]编辑_end_或删除图标。"
+"{em_start}编辑{em_end}或删除图标。"
 
 #: cms/templates/certificates.html:92
 msgid ""
@@ -23471,7 +23471,7 @@ msgid ""
 "remain included in grade calculations."
 msgstr ""
 "要在子节到期日期过后继续对学员隐藏该节的内容，请点击该节的\"配置\"图标，然后"
-"选择 {em}start_隐藏到期日期后的内容{em}end}。该节的得分仍将计入课程成绩。"
+"选择 {em_start}隐藏到期日期后的内容{em_end}。该节的得分仍将计入课程成绩。"
 
 #: cms/templates/course_outline.html:251
 msgid "Learn more about content visibility settings"
@@ -27504,3 +27504,7 @@ msgstr "实时活动"
 #: lms/templates/courseware/course_banner.html
 msgid "Session recorded"
 msgstr "实时活动记录"
+
+#: cms/templates/login.html
+msgid "Welcome to your training platform, log in to find your learning space!"
+msgstr "欢迎来到您的培训平台，登录查找您的学习空间！"

@@ -37,7 +37,7 @@
                 showLoadingError, orderNumber, getUserField, userFields, timeZoneDropdownField, countryDropdownField,
                 emailFieldView, socialFields, accountDeletionFields, platformData,
                 aboutSectionMessageType, aboutSectionMessage, fullnameFieldView, countryFieldView,
-                fullNameFieldData, emailFieldData, countryFieldData, additionalFields, fieldItem;
+                fullNameFieldData, emailFieldData, countryFieldData, additionalFields, fieldItem, accountFields;
 
             $accountSettingsElement = $('.wrapper-account-settings');
 
@@ -251,7 +251,7 @@
                 }
             ];
 
-            var accountFields = aboutSectionsData[0].fields;
+            accountFields = aboutSectionsData[0].fields;
             for (var i = 0; i < accountFields.length; i++) {
                 if (accountFields[i].view.fieldType === 'phone_number' && ltPhoneNumber === 'hidden') {
                     accountFields.splice(i, 1);
@@ -261,7 +261,6 @@
                     i--; // avoid to skip matched items. make sure this's the last statement in current loop.
                 }
             }
-            
             // Add the extended profile fields
             additionalFields = aboutSectionsData[1];
             for (var field in extendedProfileFields) {  // eslint-disable-line guard-for-in, no-restricted-syntax, vars-on-top, max-len
@@ -306,11 +305,14 @@
                     {
                         view: new AccountSettingsFieldViews.SocialLinkTextFieldView({
                             model: userAccountModel,
-                            title: gettext(platformData.display_name + ' Link'),
+                            title: StringUtils.interpolate(
+                                gettext('{platform_name} Link'), {platform_name: platformData.display_name}
+                            ),
                             valueAttribute: 'social_links',
-                            helpMessage: gettext(
-                                'Enter your ' + platformData.display_name + ' username or the URL to your ' +
-                                platformData.display_name + ' page. Delete the URL to remove the link.'
+                            helpMessage: StringUtils.interpolate(
+                                gettext(
+                                'Enter your {platform_name} username or the URL to your {platform_name} page. Delete the URL to remove the link.'), // eslint-disable-line max-len
+                                {platform_name: platformData.display_name}
                             ),
                             platform: socialPlatform,
                             persistChanges: true,

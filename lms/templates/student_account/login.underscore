@@ -10,7 +10,7 @@
 
         <figure class="welcome-text">
           <a class="brand-link" href="/"><img src="<%- context.static_url %>/logo.png"></a>
-          <figcaption>Welcome to your training platform, log in to find your learning space!</figcaption>
+          <figcaption><%- gettext("Welcome to your training platform, log in to find your learning space!") %></figcaption>
         </figure>
 
         <div class="js-form-feedback" aria-live="assertive" tabindex="-1">

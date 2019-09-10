@@ -19,17 +19,21 @@ from six import string_types
     <section class="welcome-wrapper">
       <h2>${course.display_name_with_default_escaped}</h2>
       <ul>
-        <% course_duration = get_course_about_section(request, course, "duration") %>
-        % if course_duration:
+        <% 
+              course_duration = get_course_about_section(request, course, "duration") 
+              duration_context = course_duration.strip().split(' ')
+              duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
+        %>
+        % if duration_availability:
+        <%
+              duration = int(duration_context[0])
+              duration_unit = duration_context[1]
+        %>
           <li class="duration">
             <i class="far fa-clock" aria-hidden="true"></i>
-            <% 
-                  duration_context = course_duration.strip().split(' ')
-                  duration = int(duration_context[0])
-            %>
-            % if len(duration_context) > 1 and duration_context[1].startswith('minute'):
+            % if duration_unit.startswith('minute'):
               <span>${ungettext('{num} minute', '{num} minutes', duration).format(num=duration)}</span>
-            % elif len(duration_context) > 1 and duration_context[1].startswith('hour'):
+            % elif duration_unit.startswith('hour'):
               <span>${ungettext('{num} hour', '{num} hours', duration).format(num=duration)}</span>
             % endif
           </li>

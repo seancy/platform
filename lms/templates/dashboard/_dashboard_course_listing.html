@@ -216,16 +216,20 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                     '{num} badge', '{num} badges', nb_of_badges).format(num=nb_of_badges)}</span>
             </div>
             <div class="spliter"></div>
-            % if course_duration:
+            <% 
+                  duration_context = course_duration.strip().split(' ')
+                  duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
+            %>
+            % if duration_availability:
+            <%
+                  duration = int(duration_context[0])
+                  duration_unit = duration_context[1]
+            %>
             <div class="duration">
                 <i class="far fa-clock"></i>
-                <% 
-                      duration_context = course_duration.strip().split(' ')
-                      duration = int(duration_context[0])
-                %> 
-                % if len(duration_context) > 1 and duration_context[1].startswith('minute'):
+                % if duration_unit.startswith('minute'):
                   <span>${ungettext('{num} minute', '{num} minutes', duration).format(num=duration)}</span>
-                % elif len(duration_context) > 1 and duration_context[1].startswith('hour'):
+                % elif duration_unit.startswith('hour'):
                   <span>${ungettext('{num} hour', '{num} hours', duration).format(num=duration)}</span>
                 % endif
             </div>
