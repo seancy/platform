@@ -1,0 +1,43 @@
+#: lms/templates/discovery/facet.underscore
+msgid "Availability"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Current"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "New"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Starts soon"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Online"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Offline"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Future"
+msgstr ""
+
+#: lms/templates/discovery/facet.underscore
+msgid "Label"
+msgstr ""
+
+#: lms/templates/discovery/facet.underscore
+msgid "Category"
+msgstr ""
+
+#: lms/templates/discovery/facet.underscore
+msgid "Mandatory"
+msgstr ""
+
+#: lms/templates/student_account/login.underscore
+msgid "Welcome to your training platform, log in to find your learning space!"
+msgstr ""

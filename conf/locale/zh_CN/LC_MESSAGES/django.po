@@ -27485,12 +27485,12 @@ msgstr "即将开始"
 msgid "Future"
 msgstr "即将开始"
 
-#: lms/templates/courseware/courses.html
+#: lms/templates/dashboard/_dashboard_course_listing.html
 #: lms/templates/courseware/course_banner.html
 msgid "Online"
 msgstr "在线课程"
 
-#: lms/templates/courseware/courses.html
+#: lms/templates/dashboard/_dashboard_course_listing.html
 #: lms/templates/courseware/course_banner.html
 msgid "Offline"
 msgstr "线下课程"
@@ -27508,3 +27508,190 @@ msgstr "实时活动记录"
 #: cms/templates/login.html
 msgid "Welcome to your training platform, log in to find your learning space!"
 msgstr "欢迎来到您的培训平台，登录查找您的学习空间！"
+
+#: XBlock: xblock-certificate icxblock.html
+msgid "You have successfully obtained the {type} badge with a score of {score}%."
+msgstr "您已成功获得 {type} 徽章，分数为{score}%。"
+
+#: XBlock: xblock-certificate icxblock.html
+msgid "You can download your {title} by clicking the button below."
+msgstr "您可以通过单击下面的按钮下载您的 {title}。"
+
+#: XBlock: xblock-certificate icxblock.html
+msgid "{title} is unavailable."
+msgstr "{title}不可用。"
+
+#: XBlock: xblock-certificate icxblock.html
+msgid "Your score {score}% is not enough to get the {type} badge."
+msgstr "您的分数 {score}% 不足以获得{type} 徽章。"
+
+#: XBlock: xblock-certificate icxblock.html
+msgid "Preview Certificate"
+msgstr "预览证书"
+
+#: XBlock: xblock-poll /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
+msgid "View results"
+msgstr "查看结果"
+
+#: XBlock: xblock-done lbmdonexblock.html
+msgid "Done"
+msgstr "完成"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "INSTRUCTOR LEAD TRAINING"
+msgstr "讲师引导式培训"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Add to calendar"
+msgstr "添加到日历"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "CHOOSE A SESSION TO ENROLL"
+msgstr "选择注册一门课程"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "NO SESSION AVAILABLE"
+msgstr "当前无班级"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "ADMIN MANAGEMENT TOOL"
+msgstr "管理员工具"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "CLASS MANAGEMENT"
+msgstr "班级管理"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "MANAGE ENROLLMENT"
+msgstr "注册管理"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "SESSION MANAGEMENT"
+msgstr "班次管理"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "ENROLLMENT MANAGEMENT"
+msgstr "注册管理"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "ACCOMMODATION MANAGEMENT"
+msgstr "住宿管理"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Choose a session"
+msgstr "选择一个班次"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Accommodation Management"
+msgstr "住宿管理"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Download the CSV file of the learners enrolled in the selected session"
+msgstr "下载所选课程的注册学员名单的 CSV 文件"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid ""
+"After you download the CSV file of the enrolled learners, tick with a 'x' the column 'attendance'. If the learner "
+"attended the course and upload it back in order to validate the completion of the module in the platform."
+msgstr ""
+"下载已注册学员的 CSV 文件后，在\"attendance\"出席这一列，用\"x\"勾选出已出席学员名单，并将文件重新上传到平台，使平台能"
+"够将这些学员此模块的学习进度标记为完成。"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Validate"
+msgstr "验证"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Bulk Enrollment"
+msgstr "批量注册"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid ""
+"Enter email addresses and/or usernames separated by new lines or commas. You will not get notification for emails that "
+"bounce, so please double-check spelling. The learners will be enrolled into the selected session. Learners will be "
+"notified by email."
+msgstr ""
+"输入电子邮件地址和/或用户名，用逗号或换行符分隔。您不会收到退回邮件的通知，因此请仔细检查拼写。学员将会被注册到所选课程"
+"中，并将会收到相关的电子邮件通知。"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Manage ILT sessions"
+msgstr "管理ILT课程"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Create or delete your ILT sessions below. Learners will be notified by email if a session is modified or deleted."
+msgstr "在下面创建或删除您的ILT课程。如果课程被修改或删除，学员将收到电子邮件通知。"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "View and download the attendance sheet of the learners enrolled in the selected session"
+msgstr "查看并下载所选课程注册学员的考勤表"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Seats"
+msgstr "席位"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Area/Region"
+msgstr "地区"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Hotel Booked"
+msgstr "酒店预订"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request is being validated"
+msgstr "您的请求正在验证中"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been validated, hotel confirmation pending"
+msgstr "您的请求已验证被，酒店待确认"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been confirmed"
+msgstr "您的请求已确认"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been refused"
+msgstr "您的请求已被拒绝"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "accommodation, preferences, specific diet ..."
+msgstr "住宿，喜好，饮食偏好..."
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgctxt "xblock-ilt"
+msgid "Location"
+msgstr "位置"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgctxt "xblock-ilt"
+msgid "Address"
+msgstr "地址"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Enroll"
+msgstr "注册"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Add"
+msgstr "添加"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Hotel booked"
+msgstr "酒店已预定"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Create a Session"
+msgstr "创建班级"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure to delete this session?"
+msgstr "是否确实要删除此班次？"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "View Attendance Sheet"
+msgstr "查看考勤表"
+
+#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
+msgid "Acknowledge reception of the attendance sheet"
+msgstr "确认收到出勤表"

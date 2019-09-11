@@ -29443,12 +29443,238 @@ msgstr ""
 #~ msgid "LMS"
 #~ msgstr "LMS"
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You have successfully obtained the {type} badge with a score of {score}%."
+msgstr "Vous avez obtenu avec succès le badge {type} avec un score."
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking the button below."
+msgstr "Vous pouvez télécharger votre {title} en cliquant sur le bouton ci-dessous."
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is unavailable."
+msgstr "{title} n'est pas disponible."
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to get the {type} badge."
+msgstr "Votre score de {score}% n'est pas suffisant afin d'obtenir le badge {type}."
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Preview Certificate"
+msgstr "Visualiser le certificat"
 
+#: XBlock: xblock-poll
+#: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
+msgid "View results"
+msgstr "Voir les résultats"
 
+#: XBlock: xblock-done
+#: lbmdonexblock.html
+msgid "Done"
+msgstr "Complété"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "INSTRUCTOR LEAD TRAINING"
+msgstr "Formation présentielle"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Add to calendar"
+msgstr "Ajouter à mon calendrier"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "CHOOSE A SESSION TO ENROLL"
+msgstr "Choisir une session de formation"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "NO SESSION AVAILABLE"
+msgstr "Pas de session disponible"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "ADMIN MANAGEMENT TOOL"
+msgstr "Outil d'administration"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "CLASS MANAGEMENT"
+msgstr "Gestion des sessions"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "MANAGE ENROLLMENT"
+msgstr "Gestion des inscriptions"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "SESSION MANAGEMENT"
+msgstr "Administration d'une session"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "ENROLLMENT MANAGEMENT"
+msgstr "Gestion des inscriptions"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "ACCOMMODATION MANAGEMENT"
+msgstr "Gestion de l'hébergement"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Choose a session"
+msgstr "Choisir une session"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Accommodation Management"
+msgstr "Gestion de l'hébergement"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Download the CSV file of the learners enrolled in the selected session"
+msgstr "Télécharger le fichier CSV des apprenants inscrits à la session sélectionnée"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid ""
+"After you download the CSV file of the enrolled learners, tick with a 'x' the column 'attendance'. "
+"If the learner attended the course and upload it back in order to validate the completion of the module in the platform."
+msgstr ""
+"Après avoir téléchargé le fichier CSV des apprenants inscrits, confirmez la présence à la session en marquant d'un 'x'"
+" la colonne 'attendance'. Une fois le fichier chargé, les utilisateurs présents valideront la section."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Validate"
+msgstr "Valider"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Bulk Enrollment"
+msgstr "Inscriptions en masse"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid ""
+"Enter email addresses and/or usernames separated by new lines or commas. "
+"You will not get notification for emails that bounce, so please double-check spelling. "
+"The learners will be enrolled into the selected session. Learners will be notified by email."
+msgstr ""
+"Entrez une ou plusiers adresses mails ou noms d'utilisateurs séparés par un saut de ligne ou une virgule."
+"Vous ne recevrez pas de mails de notifications si l'adresse mail est incorrectes, verifiez bien les emails saisies."
+"Les apprenants seront inscrits à la session sélectionnée. Ils recevront une notification par email."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Manage ILT sessions"
+msgstr "Administration des sessions de formation"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Create or delete your ILT sessions below. Learners will be notified by email if a session is modified or deleted."
+msgstr "Créez ou supprimez votre session de formation ci-dessous. Les apprenants recevront un email de notification si"
+"la session est modifiée ou supprimée"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "View and download the attendance sheet of the learners enrolled in the selected session"
+msgstr "Visualisez et téléchargez la feuille de présence des apprenants inscrits à la session sélectionnée."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Seats"
+msgstr "Places"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Area/Region"
+msgstr "Zone / Région"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Hotel Booked"
+msgstr "Hotel reservé"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request is being validated"
+msgstr "Votre demande est en cours de validation"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been validated, hotel confirmation pending"
+msgstr "Votre demande a été validée, les informations d'hôtel sont en cours de traitement"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been confirmed"
+msgstr "Votre demande est confirmée"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been refused"
+msgstr "Votre demande a été refusée"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "accommodation, preferences, specific diet ..."
+msgstr "hébergement, préférence, régime spécifique ..."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgctxt "xblock-ilt"
+msgid "Location"
+msgstr "Lieu"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgctxt "xblock-ilt"
+msgid "Address"
+msgstr "Adresse"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Enroll"
+msgstr "S'inscrire"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Add"
+msgstr "Ajouter"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Hotel booked"
+msgstr "Hôtel reservé"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Create a Session"
+msgstr "Créér une session"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure to delete this session?"
+msgstr "Etes-vous sur de vouloir supprimer cette session?"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "View Attendance Sheet"
+msgstr "Voir la feuille de présence"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Acknowledge reception of the attendance sheet"
+msgstr "Accuser la réception de la feuille de présence"
 
 #: lms/templates/courseware/courses.html
 msgid "Availability"

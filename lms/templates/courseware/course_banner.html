@@ -21,8 +21,10 @@ from six import string_types
       <ul>
         <% 
               course_duration = get_course_about_section(request, course, "duration") 
-              duration_context = course_duration.strip().split(' ')
-              duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
+              duration_availability = False
+              if course_duration:
+                  duration_context = course_duration.strip().split(' ')
+                  duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
         %>
         % if duration_availability:
         <%

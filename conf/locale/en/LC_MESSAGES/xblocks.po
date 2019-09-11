@@ -1,0 +1,374 @@
+# This file is used for xblock strings and some strings can't be extracted from platform which need to be translated.
+# If there are some strings that already exist in our platform, we should comment these string in current files.
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+#: wiki/templates/wiki/article/create_root.html:22
+#  msgid "Congratulations!"
+#  msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You have successfully obtained the {type} badge with a score of {score}%."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking the button below."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: lms/templates/lt_analytics/table.html
+#: icxblock.html
+#  msgid "Download"
+#  msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is unavailable."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to get the {type} badge."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Preview Certificate"
+msgstr ""
+
+#: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
+msgid "View results"
+msgstr ""
+
+#: lbmdonexblock.html
+msgid "Done"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "INSTRUCTOR LEAD TRAINING"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Add to calendar"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "CHOOSE A SESSION TO ENROLL"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "NO SESSION AVAILABLE"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "ADMIN MANAGEMENT TOOL"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "CLASS MANAGEMENT"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "MANAGE ENROLLMENT"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "SESSION MANAGEMENT"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "ENROLLMENT MANAGEMENT"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "ACCOMMODATION MANAGEMENT"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Choose a session"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Accommodation Management"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Download the CSV file of the learners enrolled in the selected session"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid ""
+"After you download the CSV file of the enrolled learners, tick with a 'x' the column 'attendance'. "
+"If the learner attended the course and upload it back in order to validate the completion of the module in the platform."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Validate"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Bulk Enrollment"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid ""
+"Enter email addresses and/or usernames separated by new lines or commas. "
+"You will not get notification for emails that bounce, so please double-check spelling. "
+"The learners will be enrolled into the selected session. Learners will be notified by email."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Manage ILT sessions"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Create or delete your ILT sessions below. Learners will be notified by email if a session is modified or deleted."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "View and download the attendance sheet of the learners enrolled in the selected session"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Seats"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Available seats"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Timezone"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Area/Region"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Accommodation Need"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Comment"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Number of one way"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Number of return"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Hotel Booked"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request is being validated"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been validated"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been confirmed"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your request has been refused"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "accommodation, preferences, specific diet ..."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgctxt "xblock-ilt"
+msgid "Location"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgctxt "xblock-ilt"
+msgid "Address"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Instructor"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Zip Code"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "City"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Location ID"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Unenroll"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Enroll"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "From"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "To"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Duration"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Add"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Save"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Full Name"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Comments"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Hotel booked"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Confirm"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+#  msgid "Cancel"
+#  msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Create a Session"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure to delete this session?"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "View Attendance Sheet"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Acknowledge reception of the attendance sheet"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "Availability"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "Current"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "New"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "Starts soon"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "Future"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+#: lms/templates/courseware/course_banner.html
+msgid "Online"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+#: lms/templates/courseware/course_banner.html
+msgid "Offline"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+#: lms/templates/courseware/course_banner.html
+msgid "Live session"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+#: lms/templates/courseware/course_banner.html
+msgid "Session recorded"
+msgstr ""

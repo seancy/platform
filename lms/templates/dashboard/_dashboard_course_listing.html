@@ -112,7 +112,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
       <div class="course-mandatory"><i class="fa fa-exclamation"></i></div>
       % endif
       % if course_category:
-      <div class="course-category">${course_category}</div>
+      <div class="course-category">${_(course_category)}</div>
       % endif
     </div>
     <div class="wrapper-course-details">
@@ -217,8 +217,10 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
             </div>
             <div class="spliter"></div>
             <% 
-                  duration_context = course_duration.strip().split(' ')
-                  duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
+                  duration_availability = False
+                  if course_duration:
+                      duration_context = course_duration.strip().split(' ')
+                      duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
             %>
             % if duration_availability:
             <%

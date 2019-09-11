@@ -11566,12 +11566,6 @@ msgstr "使用当前成绩单"
 #~ msgid "Starts: %(start_date)s"
 #~ msgstr "开始于：%(start_date)s"
 
-
-
-
-
-
-
 #: lms/templates/discovery/facet.underscore
 msgid "Availability"
 msgstr "课程开放时间"
@@ -11587,6 +11581,14 @@ msgstr "最新"
 #: lms/templates/discovery/facet_option.underscore
 msgid "Starts soon"
 msgstr "即将开始"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Online"
+msgstr "在线课程"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Offline"
+msgstr "线下课程"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Future"

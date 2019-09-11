@@ -12225,12 +12225,6 @@ msgstr "Utiliser la transcription courante"
 #~ msgid "Starts: %(start_date)s"
 #~ msgstr "Début: %(start_date)s"
 
-
-
-
-
-
-
 #: lms/templates/discovery/facet.underscore
 msgid "Availability"
 msgstr "Disponibilité"
@@ -12246,6 +12240,14 @@ msgstr "New"
 #: lms/templates/discovery/facet_option.underscore
 msgid "Starts soon"
 msgstr "Bientôt"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Online"
+msgstr "En ligne"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Offline"
+msgstr "Présentiel"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Future"
