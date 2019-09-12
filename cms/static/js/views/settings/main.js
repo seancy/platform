@@ -34,6 +34,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
         // fill in fields
                    this.$el.find("#course-vendor").val(this.model.get('vendor'));
                    this.$el.find("#course-category").val(this.model.get('course_category'));
+                   this.$el.find("#course-country").val(this.model.get('course_country'));
                    this.$el.find('#course-language').val(this.model.get('language'));
                    this.$el.find('#course-organization').val(this.model.get('org'));
                    this.$el.find('#course-number').val(this.model.get('course_id'));
@@ -201,6 +202,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    start_date: 'course-start',
                    end_date: 'course-end',
                    course_category: 'course-category',
+                   course_country: 'course-country',
                    vendor: 'course-vendor',
                    enrollment_start: 'enrollment-start',
                    enrollment_end: 'enrollment-end',
@@ -425,6 +427,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    case 'course-finish-days':
                    case 'course-language':
                    case 'course-category':
+                   case 'course-country':
                    case 'course-vendor':
                    case 'course-effort':
                    case 'course-title':

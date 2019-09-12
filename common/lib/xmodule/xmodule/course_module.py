@@ -738,6 +738,13 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
+    course_country = String(
+        display_name=_("Course Country"),
+        help=_("Specify the country of your course."),
+        scope=Scope.settings,
+        default="All countries"
+    )
+
     course_category = String(
         display_name=_("Course Category"),
         help=_("Specify the category of your course."),

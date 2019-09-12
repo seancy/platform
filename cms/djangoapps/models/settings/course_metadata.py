@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from six import text_type
 from xblock.fields import Scope
 
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from xblock_django.models import XBlockStudioConfigurationFlag
 from xmodule.modulestore.django import modulestore
 
@@ -152,6 +153,11 @@ class CourseMetadata(object):
             }
             if field.name == 'course_category':
                 result[field.name]['options'] = getattr(settings, 'COURSE_CATEGORIES', tuple())
+            if field.name == 'course_country':
+                country_options = ['All countries']
+                if configuration_helpers.get_value('COURSE_COUNTRIES', []):
+                    country_options += configuration_helpers.get_value('COURSE_COUNTRIES', [])
+                result[field.name]['options'] = country_options
         return result
 
     @classmethod

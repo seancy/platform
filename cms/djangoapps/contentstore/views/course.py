@@ -1071,6 +1071,10 @@ def settings_handler(request, course_key_string):
             sidebar_html_enabled = course_experience_waffle().is_enabled(ENABLE_COURSE_ABOUT_SIDEBAR_HTML)
             # self_paced_enabled = SelfPacedConfiguration.current().enabled
 
+            country_options = ['All countries']
+            if configuration_helpers.get_value('COURSE_COUNTRIES', []):
+                country_options += configuration_helpers.get_value('COURSE_COUNTRIES', [])
+
             settings_context = {
                 'context_course': course_module,
                 'course_locator': course_key,
@@ -1086,6 +1090,7 @@ def settings_handler(request, course_key_string):
                 'course_handler_url': reverse_course_url('course_handler', course_key),
                 'language_options': settings.ALL_LANGUAGES,
                 'category_options': settings.COURSE_CATEGORIES,
+                'country_options': country_options,
                 'credit_eligibility_enabled': credit_eligibility_enabled,
                 'is_credit_course': False,
                 'show_min_grade_warning': False,

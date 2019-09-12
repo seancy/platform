@@ -340,6 +340,15 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             <span class="tip">${_('Provide useful information about your course')}</span>
           </header>
           <ol class="list-input">
+            <li class="field" id="field-course-country">
+              <label for="course-country">${_("Course Country")}</label>
+              <select id="course-country">
+                % for country in country_options:
+                  <option value="${country}">${country}</option>
+                % endfor
+              </select>
+              <span class="tip tip-stacked">${_("Identify the course country here.")}</span>
+            </li>
             <li class="field" id="field-course-language">
               <label for="course-language">${_("Course Language")}</label>
               <select id="course-language">

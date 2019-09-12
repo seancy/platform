@@ -43,6 +43,7 @@ class CourseDetails(object):
         self.run = run
         self.language = None
         self.course_category = None
+        self.course_country = "All countries"
         self.vendor = None
         self.start_date = None  # 'start'
         self.end_date = None  # 'end'
@@ -128,6 +129,7 @@ class CourseDetails(object):
         course_details.video_thumbnail_image_asset_path = course_image_url(course_descriptor, 'video_thumbnail_image')
         course_details.language = course_descriptor.language
         course_details.course_category = course_descriptor.course_category
+        course_details.course_country = course_descriptor.course_country
         course_details.vendor = course_descriptor.vendor
         course_details.self_paced = course_descriptor.self_paced
         course_details.learning_info = course_descriptor.learning_info
@@ -337,6 +339,10 @@ class CourseDetails(object):
 
         if 'course_category' in jsondict and jsondict['course_category'] != descriptor.course_category:
             descriptor.course_category = jsondict['course_category']
+            dirty = True
+
+        if 'course_country' in jsondict and jsondict['course_country'] != descriptor.course_country:
+            descriptor.course_country = jsondict['course_country']
             dirty = True
 
         if 'vendor' in jsondict and jsondict['vendor'] != descriptor.vendor:
