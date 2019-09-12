@@ -5307,7 +5307,7 @@ msgstr "如果你没有请求该变更，请忽略本邮件——我们尚未重
 
 #: common/templates/student/edx_ace/passwordreset/email/body.html:33
 msgid "Change my Password"
-msgstr "Change my Password"
+msgstr "修改我的密码"
 
 #: common/templates/student/edx_ace/passwordreset/email/body.txt:9
 msgid "Please go to the following page and choose a new password:"
@@ -14409,8 +14409,13 @@ msgid "View this course as:"
 msgstr "查看课程的身份："
 
 #: lms/templates/preview_menu.html:36
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:22
 msgid "Learner"
 msgstr "学员"
+
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:22
+msgid "Partner"
+msgstr "参与者"
 
 #: lms/templates/preview_menu.html:37
 msgid "Specific learner"
@@ -16176,6 +16181,14 @@ msgstr "请输入一个有效的 CCX 名称。"
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:140
 msgid "Email Addresses/Usernames"
 msgstr "电子邮箱地址／用户名"
+
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:137
+msgid "Email Addresses"
+msgstr "电子邮箱地址"
+
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:140
+msgid "Send Emails"
+msgstr "发送电子邮件"
 
 #: lms/templates/ccx/enrollment.html:14
 msgid ""
@@ -19384,6 +19397,14 @@ msgid ""
 "Enter email addresses and/or usernames separated by new lines or commas."
 msgstr "输入电子邮箱地址与／或 用户名，以逗号分割或重启一行。"
 
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:134
+msgid "Welcoming Email"
+msgstr "欢迎邮件"
+
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:136
+msgid "To send a welcoming email to users registered and enrolled by batch, enter email addresses separated by new lines or commas."
+msgstr "要向批量注册和选修的用户发送欢迎电子邮件，请输入用新行或逗号分隔的电子邮件地址。"
+
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:122
 msgid "The following users didn't get certificates:"
 msgstr "以下用户未获得证书: "
@@ -20427,6 +20448,11 @@ msgstr "建议按批次最多 200 个用户，以确保最佳响应时间。"
 msgid "Upload a CSV for bulk enrollment"
 msgstr "为批量注册上传一个CSV文件"
 
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:86
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:115
+msgid "Browse"
+msgstr "浏览"
+
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:95
 msgid "Test CSV file"
 msgstr "测试CSV文件"
@@ -21353,6 +21379,20 @@ msgid ""
 "Your password has been reset. {start_link}Sign-in to your account.{end_link}"
 msgstr "你的密码已重置。{start_link}登录你的帐号。{end_link}"
 
+#: lms/templates/registration/password_reset_confirm.html:49
+msgid ""
+"This password reset link is invalid. It may have been used already. To reset"
+" your password, go to the {start_link}sign-in{end_link} page and select "
+"{start_strong}Forgot password{end_strong}."
+msgstr ""
+
+#: lms/templates/registration/password_create_confirm.html:49
+msgid ""
+"This password creation link is invalid. It may have been used already. To reset"
+" your password, go to the {start_link}sign-in{end_link} page and select "
+"{start_strong}Forgot password{end_strong}."
+msgstr ""
+
 #: lms/templates/registration/password_reset_confirm.html:14
 msgid "Reset Your {platform_name} Password"
 msgstr "重置你的 {platform_name} 密码"
@@ -21360,6 +21400,10 @@ msgstr "重置你的 {platform_name} 密码"
 #: lms/templates/registration/password_reset_confirm.html:47
 msgid "Invalid Password Reset Link"
 msgstr "无效的密码重置链接"
+
+#: lms/templates/registration/password_create_confirm.html:47
+msgid "Invalid Password Creation Link"
+msgstr "无效的密码创建链接"
 
 #: lms/templates/registration/password_reset_done.html:3
 msgid "Password reset successful"
@@ -27699,3 +27743,27 @@ msgstr "确认收到出勤表"
 #: cms/templates/login.html
 msgid "Welcome to Joyson Open Online Courses, log in to explore more!"
 msgstr "欢迎来到均胜网络课堂，请登录，让我们一起来探索未知!"
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "points"
+msgstr "分"
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "completed"
+msgstr "已完成"
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "unknown"
+msgstr "未开始"
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "not started"
+msgstr "未开始"
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "passed"
+msgstr "通过"
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "failed"
+msgstr "未通过"

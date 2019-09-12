@@ -372,3 +372,31 @@ msgstr ""
 #: lms/templates/courseware/course_banner.html
 msgid "Session recorded"
 msgstr ""
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "points"
+msgstr ""
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "completed"
+msgstr ""
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+#  msgid "incomplete"
+#  msgstr ""
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "unknown"
+msgstr ""
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "not started"
+msgstr ""
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "passed"
+msgstr ""
+
+# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "failed"
+msgstr ""
