@@ -603,6 +603,7 @@ def _section_membership(course, access):
         'precheck_upload_student_csv_button_url': reverse('register_and_enroll_students_precheck', kwargs={'course_id': unicode(course_key)}),
         'upload_student_csv_button_url': reverse('register_and_enroll_students', kwargs={'course_id': unicode(course_key)}),
         'update_student_csv_button_url': reverse('students_batch_update', kwargs={'course_id': unicode(course_key)}),
+        'send_welcoming_email_url': reverse('send_students_welcoming_email', kwargs={'course_id': unicode(course_key)}),
         'modify_beta_testers_button_url': reverse('bulk_beta_modify_access', kwargs={'course_id': unicode(course_key)}),
         'list_course_role_members_url': reverse('list_course_role_members', kwargs={'course_id': unicode(course_key)}),
         'modify_access_url': reverse('modify_access', kwargs={'course_id': unicode(course_key)}),

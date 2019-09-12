@@ -153,7 +153,7 @@ def _footer_social_links():
     Returns: list
 
     """
-    platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
+    platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
     links = []
 
     for social_name in settings.SOCIAL_MEDIA_FOOTER_NAMES:
@@ -196,7 +196,7 @@ def _build_support_form_url():
 
 def _footer_navigation_links():
     """Return the navigation links to display in the footer. """
-    platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
+    platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
     return [
         {
             "name": link_name,
@@ -251,7 +251,7 @@ def _footer_legal_links():
 
 def _footer_business_links():
     """Return the business links to display in the footer. """
-    platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
+    platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
 
     return [
         {
@@ -312,7 +312,7 @@ def _footer_mobile_links(is_secure):
     Returns: list
 
     """
-    platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
+    platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
 
     mobile_links = []
     if settings.FEATURES.get('ENABLE_FOOTER_MOBILE_APP_LINKS'):

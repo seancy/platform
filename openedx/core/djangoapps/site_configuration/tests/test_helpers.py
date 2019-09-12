@@ -12,7 +12,7 @@ from openedx.core.djangoapps.site_configuration.tests.test_util import (
 
 test_config = {   # pylint: disable=invalid-name
     "university": "Test University",
-    "platform_name": "Test Education Program",
+    "PLATFORM_NAME": "Test Education Program",
     "SITE_NAME": "test.localhost",
     "course_org_filter": "TestX",
     "css_overrides_file": "test/css/site.css",
@@ -53,7 +53,7 @@ class TestHelpers(TestCase):
         """
         # Make sure entry is saved and retrieved correctly
         self.assertEqual(configuration_helpers.get_value("university"), test_config['university'])
-        self.assertEqual(configuration_helpers.get_value("platform_name"), test_config['platform_name'])
+        self.assertEqual(configuration_helpers.get_value("PLATFORM_NAME"), test_config['PLATFORM_NAME'])
         self.assertEqual(configuration_helpers.get_value("SITE_NAME"), test_config['SITE_NAME'])
         self.assertEqual(configuration_helpers.get_value("course_org_filter"), test_config['course_org_filter'])
         self.assertEqual(configuration_helpers.get_value("css_overrides_file"), test_config['css_overrides_file'])
@@ -102,7 +102,7 @@ class TestHelpers(TestCase):
         """
 
         self.assertTrue(configuration_helpers.has_override_value("university"))
-        self.assertTrue(configuration_helpers.has_override_value("platform_name"))
+        self.assertTrue(configuration_helpers.has_override_value("PLATFORM_NAME"))
         self.assertTrue(configuration_helpers.has_override_value("ENABLE_MKTG_SITE"))
         self.assertTrue(configuration_helpers.has_override_value("REGISTRATION_EXTRA_FIELDS"))
 

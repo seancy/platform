@@ -38,6 +38,13 @@ urlpatterns = [
         name='password_reset_confirm',
     ),
 
+    url(r'^password_create_confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+        views.password_create_confirm_wrapper,
+        name='password_create_confirm'),
+    url(r'^password_create_complete/$', views.password_create_complete,
+        name='password_create_complete'),
+
+
     url(r'accounts/verify_password', views.verify_user_password, name='verify_password'),
 
     url(r'^course_run/{}/refund_status$'.format(settings.COURSE_ID_PATTERN),

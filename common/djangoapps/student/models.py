@@ -2596,7 +2596,7 @@ class LinkedInAddToProfileConfiguration(ConfigurationModel):
         cert_name = share_settings.get('CERTIFICATE_LINKEDIN_MODE_TO_CERT_NAME', {}).get(cert_mode, default_cert_name)
 
         return cert_name.format(
-            platform_name=configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+            platform_name=configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
             course_name=course_name
         )
 

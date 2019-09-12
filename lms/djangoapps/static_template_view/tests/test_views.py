@@ -120,7 +120,7 @@ class MarketingSiteViewTests(TestCase):
         self.assertContains(
             resp,
             'There has been a 500 error on the <em>{platform_name}</em> servers'.format(
-                platform_name=settings.MICROSITE_CONFIGURATION['test_site']['platform_name']
+                platform_name=settings.MICROSITE_CONFIGURATION['test_site']['PLATFORM_NAME']
             ),
             status_code=500
         )

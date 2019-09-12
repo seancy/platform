@@ -17,7 +17,7 @@ class ContactUsView(View):
 
     def get(self, request):
         context = {
-            'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+            'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
             'support_email': configuration_helpers.get_value('CONTACT_EMAIL', settings.CONTACT_EMAIL),
             'custom_fields': settings.ZENDESK_CUSTOM_FIELDS
         }

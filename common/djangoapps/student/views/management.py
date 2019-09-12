@@ -18,7 +18,7 @@ from django.contrib import messages
 from django.contrib.auth import login as django_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser, User
-from django.contrib.auth.views import password_reset_confirm
+from django.contrib.auth.views import password_reset_confirm, password_reset_complete
 from django.core import mail
 from django.urls import reverse
 from django.core.validators import ValidationError, validate_email
@@ -219,7 +219,7 @@ def register_user(request, extra_context=None):
         'running_pipeline': None,
         'pipeline_urls': auth_pipeline_urls(pipeline.AUTH_ENTRY_REGISTER, redirect_url=redirect_to),
         'platform_name': configuration_helpers.get_value(
-            'platform_name',
+            'PLATFORM_NAME',
             settings.PLATFORM_NAME
         ),
         'selected_provider': '',
@@ -1143,7 +1143,7 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
     # convert old-style base36-encoded user id to base64
     uidb64 = uidb36_to_uidb64(uidb36)
     platform_name = {
-        "platform_name": configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
+        "platform_name": configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
     }
     try:
         uid_int = base36_to_int(uidb36)
@@ -1240,6 +1240,99 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
             user.save()
 
     return response
+
+
+def password_create_confirm_wrapper(request, uidb36=None, token=None):
+    """
+    Copy of password_reset_confirm_wrapper to allow users registered by bach to set their password.
+    A wrapper around django.contrib.auth.views.password_reset_confirm.
+    Needed because we want to set the user as active at this step.
+    We also optionally do some additional password policy checks.
+    """
+    # convert old-style base36-encoded user id to base64
+    uidb64 = uidb36_to_uidb64(uidb36)
+    platform_name = {
+        "platform_name": configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
+    }
+    try:
+        uid_int = base36_to_int(uidb36)
+        user = User.objects.get(id=uid_int)
+    except (ValueError, User.DoesNotExist):
+        # if there's any error getting a user, just let django's
+        # password_reset_confirm function handle it.
+        return password_reset_confirm(
+            request, uidb64=uidb64, token=token, extra_context=platform_name
+        )
+
+    if request.method == 'POST':
+        password = request.POST['new_password1']
+
+        try:
+            validate_password(password, user=user)
+        except ValidationError as err:
+            # We have a password reset attempt which violates some security
+            # policy, or any other validation. Use the existing Django template to communicate that
+            # back to the user.
+            context = {
+                'validlink': True,
+                'form': None,
+                'title': _('Password create unsuccessful'),
+                'err_msg': err.message,
+            }
+            context.update(platform_name)
+            return TemplateResponse(
+                request, 'registration/password_create_confirm.html', context
+            )
+
+        # remember what the old password hash is before we call down
+        old_password_hash = user.password
+
+        response = password_reset_confirm(
+            request, uidb64=uidb64, token=token, extra_context=platform_name,
+            post_reset_redirect="password_create_complete"
+        )
+
+        # If password reset was unsuccessful a template response is returned (status_code 200).
+        # Check if form is invalid then show an error to the user.
+        # Note if password reset was successful we get response redirect (status_code 302).
+        if response.status_code == 200:
+            form_valid = response.context_data['form'].is_valid() if response.context_data['form'] else False
+            if not form_valid:
+                log.warning(
+                    u'Unable to create password for user [%s] because form is not valid. '
+                    u'A possible cause is that the user had an invalid reset token',
+                    user.username,
+                )
+                response.context_data['err_msg'] = _('Error in creating your password. Please try again.')
+                return response
+
+        # get the updated user
+        updated_user = User.objects.get(id=uid_int)
+
+        # did the password hash change, if so record it in the PasswordHistory
+        if updated_user.password != old_password_hash:
+            entry = PasswordHistory()
+            entry.create(updated_user)
+
+    else:
+        response = password_reset_confirm(
+            request, uidb64=uidb64, token=token, extra_context=platform_name,
+            template_name="registration/password_create_confirm.html",
+            post_reset_redirect="password_create_complete"
+        )
+
+        response_was_successful = response.context_data.get('validlink')
+        if response_was_successful and not user.is_active:
+            user.is_active = True
+            user.save()
+
+    return response
+
+
+def password_create_complete(request):
+    return password_reset_complete(
+        request, template_name="registration/password_create_complete.html"
+    )
 
 
 def validate_new_email(user, new_email):

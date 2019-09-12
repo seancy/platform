@@ -196,7 +196,7 @@ class IDVerificationService(object):
             if user_status['should_display']:
                 user_status['status'] = 'expired'
                 user_status['error'] = _("Your {platform_name} verification has expired.").format(
-                    platform_name=configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+                    platform_name=configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
                 )
             else:
                 # If we have a verification attempt that never would have displayed to the user,

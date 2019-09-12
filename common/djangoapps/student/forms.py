@@ -25,7 +25,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from openedx.core.djangoapps.theming.helpers import get_current_site
 from openedx.core.djangoapps.user_api import accounts as accounts_settings
 from openedx.core.djangoapps.user_api.preferences.api import get_user_preference
-from student.message_types import PasswordReset
+from student.message_types import PasswordReset, PasswordCreate
 from student.models import CourseEnrollmentAllowed, email_exists_or_retired
 from util.password_policy_validators import password_max_length, password_min_length, validate_password
 
@@ -82,6 +82,84 @@ class PasswordResetFormNoActive(PasswordResetForm):
             })
 
             msg = PasswordReset().personalize(
+                recipient=Recipient(user.username, user.email),
+                language=get_user_preference(user, LANGUAGE_KEY),
+                user_context=message_context,
+            )
+            ace.send(msg)
+
+
+class PasswordCreateResetFormNoActive(PasswordResetForm):
+    error_messages = {
+        'unknown': _("That e-mail address doesn't have an associated "
+                     "user account."),
+        'unusable': _("The user account associated with this e-mail "
+                      "address cannot reset the password."),
+    }
+
+    def __init__(self, data=None, course_name=""):
+        super(PasswordCreateResetFormNoActive, self).__init__(data)
+        self.course_name = course_name
+
+    def clean_email(self):
+        """
+        This is a literal copy from Django 1.4.5's django.contrib.auth.forms.PasswordResetForm
+        Except removing the requirement of active users
+        Validates that a user exists with the given email address.
+        """
+        email = self.cleaned_data["email"]
+        #The line below contains the only change, removing is_active=True
+        self.users_cache = User.objects.filter(email__iexact=email)
+        if not len(self.users_cache):
+            raise forms.ValidationError(self.error_messages['unknown'])
+        if any((user.password.startswith(UNUSABLE_PASSWORD_PREFIX))
+               for user in self.users_cache):
+            raise forms.ValidationError(self.error_messages['unusable'])
+        return email
+
+    def save(self,
+             domain_override=None,
+             use_https=False,
+             token_generator=default_token_generator,
+             request=None,
+             **_kwargs):
+        """
+        Generates a one-use only link for resetting password and sends to the
+        user.
+        """
+        # This import is here because we are copying and modifying the .save from Django 1.4.5's
+        # django.contrib.auth.forms.PasswordResetForm directly, which has this import in this place.
+        # from django.core.mail import send_mail
+        # from lms.djangoapps.bulk_email.tasks import send_mail_with_alias as send_mail
+        for user in self.users_cache:
+            site = get_current_site()
+            message_context = get_base_template_context(site)
+
+            if not domain_override:
+                site_name = configuration_helpers.get_value(
+                    'SITE_NAME',
+                    settings.SITE_NAME
+                )
+            else:
+                site_name = domain_override
+
+            message_context.update({
+                'request': request,  # Used by google_analytics_tracking_pixel
+                # TODO: This overrides `platform_name` from `get_base_template_context` to make the tests passes
+                'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
+                'email_from_alias': configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS),
+                'user_email': user.email,
+                'create_link': '{protocol}://{site}{link}'.format(
+                    protocol='https' if use_https else 'http',
+                    site=site_name,
+                    link=reverse('password_create_confirm', kwargs={
+                        'uidb36': int_to_base36(user.id),
+                        'token': token_generator.make_token(user),
+                    }),
+                )
+            })
+
+            msg = PasswordCreate().personalize(
                 recipient=Recipient(user.username, user.email),
                 language=get_user_preference(user, LANGUAGE_KEY),
                 user_context=message_context,

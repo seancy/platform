@@ -128,6 +128,19 @@ from student.roles import studio_access_role
     </div>
     <div class="results" id="update-results"></div>
   </form>
+
+    <hr/>
+    <fieldset class="auto_send_welcoming_email batch-enrollment membership-section">
+        <legend id="heading-batch-enrollment" class="hd hd-3">${_("Welcoming Email")}</legend>
+        <label>
+          ${_("To send a welcoming email to users registered and enrolled by batch, enter email addresses separated by new lines or commas.")}
+          <textarea rows="6" name="student-emails-for-welcoming" placeholder="${_("Email Addresses")}" spellcheck="false"></textarea>
+        </label>
+        <div>
+          <input type="button" name="send-welcoming-email_button" value="${_("Send Emails")}" data-endpoint="${ section_data['send_welcoming_email_url'] }" >
+        </div>
+        <div class="results"></div>
+    </fieldset>
 %endif
 
 <hr/>

@@ -232,7 +232,7 @@ def page_title_breadcrumbs(*crumbs, **kwargs):
     It will output the correct platform name for the request.
     Pass in a `separator` kwarg to override the default of " | "
     """
-    platform_name = get_value('platform_name', settings.PLATFORM_NAME)
+    platform_name = get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
     separator = kwargs.get("separator", " | ")
     crumbs = [c for c in crumbs if c is not None]
     if crumbs:

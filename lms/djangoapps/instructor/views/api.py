@@ -150,6 +150,9 @@ from .tools import (
     strip_if_string
 )
 
+from student.forms import PasswordCreateResetFormNoActive
+
+
 log = logging.getLogger(__name__)
 
 TASK_SUBMISSION_OK = 'created'
@@ -914,6 +917,55 @@ def batch_update_student(request, course_id):
     return JsonResponse(results)
 
 
+@require_POST
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+@require_level('staff')
+def send_welcoming_email(request, course_id):
+    """
+    Send a welcoming email to students with a link to create (reset) password.
+    It is intended to be used after a batch register and enroll.
+    Passing a list of email addresses.
+    Requires staff access.
+    """
+
+    # emails_raw = request.POST.get('emails')
+    emails_raw = request.POST.get('emails')
+    emails = emails_raw.splitlines()
+    emails = [s.strip() for s in emails]
+    emails = [s for s in emails if s != '']
+
+    row_errors = []
+    row_successes = []
+    course_key = CourseKey.from_string(course_id)
+    course_name = ""
+
+    try:
+        course = CourseOverview.get_from_id(course_key)
+        course_name = course.display_name
+    except CourseOverview.DoesNotExist:
+        pass
+
+    for email in emails:
+        form = PasswordCreateResetFormNoActive({'email': email}, course_name)
+        if form.is_valid():
+            form.save(use_https=request.is_secure(),
+                      domain_override=request.get_host(),
+                      request=request)
+            row_successes.append(email)
+
+        else:
+            # No user with the provided email address exists.
+            row_errors.append(email)
+
+    results = {
+        'row_errors': row_errors,
+        'row_successes': row_successes
+
+    }
+    return JsonResponse(results)
+
+
 def generate_random_string(length):
     """
     Create a string of random characters of specified length
@@ -1081,7 +1133,7 @@ def create_and_enroll_user(email, username, name, country, password, course_id, 
                 'message': 'account_creation_and_enrollment',
                 'email_address': email,
                 'password': password,
-                'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+                'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
             })
             send_mail_to_student(email, email_params)
         except Exception as ex:  # pylint: disable=broad-except
@@ -2268,7 +2320,7 @@ def generate_registration_codes(request, course_id):
         'registration_codes': registration_codes,
         'currency_symbol': settings.PAID_COURSE_REGISTRATION_CURRENCY[1],
         'course_url': course_url,
-        'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+        'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
         'dashboard_url': dashboard_url,
         'contact_email': from_address,
         'corp_address': configuration_helpers.get_value('invoice_corp_address', settings.INVOICE_CORP_ADDRESS),

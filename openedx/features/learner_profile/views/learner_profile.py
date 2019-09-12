@@ -111,7 +111,7 @@ def learner_profile_context(request, profile_username, user_is_staff):
     context = {
         'own_profile': own_profile,
         'achievements_fragment': achievements_fragment,
-        'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+        'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
         'data': {
             'profile_user_id': profile_user.id,
             'default_public_account_fields': settings.ACCOUNT_VISIBILITY_CONFIGURATION['public_fields'],
@@ -133,7 +133,7 @@ def learner_profile_context(request, profile_username, user_is_staff):
             'badges_logo': staticfiles_storage.url('certificates/images/backpack-logo.png'),
             'badges_icon': staticfiles_storage.url('certificates/images/ico-mozillaopenbadges.png'),
             'backpack_ui_img': staticfiles_storage.url('certificates/images/backpack-ui.png'),
-            'platform_name': configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME),
+            'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
             'social_platforms': settings.SOCIAL_PLATFORMS,
         },
         'show_program_listing': ProgramsApiConfig.is_enabled(),

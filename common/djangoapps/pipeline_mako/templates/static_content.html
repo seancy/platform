@@ -229,7 +229,7 @@ else:
 %></%def>
 
 <%def name="get_platform_name()"><%
-    return get_value('platform_name', settings.PLATFORM_NAME)
+    return get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
 %></%def>
 
 <%def name="get_value(val_name, default=None, **kwargs)"><%

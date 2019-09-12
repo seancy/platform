@@ -185,7 +185,7 @@ def _create_recent_enrollment_message(course_enrollments, course_modes):  # pyli
             for enrollment in recently_enrolled_courses
         )
 
-        platform_name = configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
+        platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
 
         return render_to_string(
             'enrollment/course_enrollment_message.html',
@@ -557,7 +557,7 @@ def student_dashboard(request):
     if not UserProfile.objects.filter(user=user).exists():
         return redirect(reverse('account_settings'))
 
-    platform_name = configuration_helpers.get_value("platform_name", settings.PLATFORM_NAME)
+    platform_name = configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME)
 
     enable_verified_certificates = configuration_helpers.get_value(
         'ENABLE_VERIFIED_CERTIFICATES',

@@ -106,7 +106,7 @@ def _do_third_party_auth(request):
     backend_name = running_pipeline['backend']
     third_party_uid = running_pipeline['kwargs']['uid']
     requested_provider = provider.Registry.get_from_pipeline(running_pipeline)
-    platform_name = configuration_helpers.get_value("platform_name", settings.PLATFORM_NAME)
+    platform_name = configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME)
 
     try:
         return pipeline.get_authenticated_user(requested_provider, username, third_party_uid)
@@ -566,7 +566,7 @@ def signin_user(request):
         'pipeline_running': 'true' if pipeline.running(request) else 'false',
         'pipeline_url': auth_pipeline_urls(pipeline.AUTH_ENTRY_LOGIN, redirect_url=redirect_to),
         'platform_name': configuration_helpers.get_value(
-            'platform_name',
+            'PLATFORM_NAME',
             settings.PLATFORM_NAME
         ),
         'third_party_auth_error': third_party_auth_error

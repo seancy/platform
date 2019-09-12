@@ -28,7 +28,7 @@ def platform_name():
     Django template tag that outputs the current platform name:
     {% platform_name %}
     """
-    return configuration_helpers.get_value('platform_name', settings.PLATFORM_NAME)
+    return configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
 
 
 @register.simple_tag(name="favicon_path")

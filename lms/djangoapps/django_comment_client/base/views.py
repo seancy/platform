@@ -238,6 +238,7 @@ def body_with_country_tag(body, user, is_anonymous=False):
             return body + " #" + unicode(user.profile.country)
     return body
 
+
 @require_POST
 @login_required
 @permitted
@@ -269,6 +270,7 @@ def create_thread(request, course_id, commentable_id):
 
     if is_sensitive_data(request.POST["title"], request.POST["body"]):
         return JsonError(_("Remove sensitive data in the content and try again"))
+
 
     body = body_with_country_tag(post["body"], user, anonymous)
 

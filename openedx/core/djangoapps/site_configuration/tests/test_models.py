@@ -20,7 +20,7 @@ class SiteConfigurationTests(TestCase):
 
     test_config1 = {
         "university": "Test University",
-        "platform_name": "Test Education Program",
+        "PLATFORM_NAME": "Test Education Program",
         "SITE_NAME": "test.localhost",
         "course_org_filter": "TestX",
         "css_overrides_file": "test/css/site.css",
@@ -32,7 +32,7 @@ class SiteConfigurationTests(TestCase):
 
     test_config2 = {
         "university": "Test Another University",
-        "platform_name": "Test Another Education Program",
+        "PLATFORM_NAME": "Test Another Education Program",
         "SITE_NAME": "test-another.localhost",
         "course_org_filter": "TestAnotherX",
         "css_overrides_file": "test-another/css/site.css",
@@ -133,7 +133,7 @@ class SiteConfigurationTests(TestCase):
 
         # Make sure entry is saved and retrieved correctly
         self.assertEqual(site_configuration.get_value("university"), self.test_config1['university'])
-        self.assertEqual(site_configuration.get_value("platform_name"), self.test_config1['platform_name'])
+        self.assertEqual(site_configuration.get_value("PLATFORM_NAME"), self.test_config1['PLATFORM_NAME'])
         self.assertEqual(site_configuration.get_value("SITE_NAME"), self.test_config1['SITE_NAME'])
         self.assertEqual(site_configuration.get_value("course_org_filter"), self.test_config1['course_org_filter'])
         self.assertEqual(site_configuration.get_value("css_overrides_file"), self.test_config1['css_overrides_file'])
@@ -160,7 +160,7 @@ class SiteConfigurationTests(TestCase):
 
         self.assertEqual(site_configuration.get_value("university"), None)
         self.assertEqual(
-            site_configuration.get_value("platform_name", "Default Platform Name"),
+            site_configuration.get_value("PLATFORM_NAME", "Default Platform Name"),
             "Default Platform Name",
         )
         self.assertEqual(site_configuration.get_value("SITE_NAME", "Default Site Name"), "Default Site Name")
@@ -186,7 +186,7 @@ class SiteConfigurationTests(TestCase):
 
         # make sure get_value returns default_value for invalid json data
         with patch.object(logger, "exception") as mock_logger:
-            value = site_configuration.get_value("platform_name", "Default Platform Name")
+            value = site_configuration.get_value("PLATFORM_NAME", "Default Platform Name")
             self.assertTrue(mock_logger.called)
             self.assertEqual(value, "Default Platform Name")
 
@@ -210,8 +210,8 @@ class SiteConfigurationTests(TestCase):
             self.test_config1['university'],
         )
         self.assertEqual(
-            SiteConfiguration.get_value_for_org(self.test_config1['course_org_filter'], "platform_name"),
-            self.test_config1['platform_name'],
+            SiteConfiguration.get_value_for_org(self.test_config1['course_org_filter'], "PLATFORM_NAME"),
+            self.test_config1['PLATFORM_NAME'],
         )
         self.assertEqual(
             SiteConfiguration.get_value_for_org(self.test_config1['course_org_filter'], "SITE_NAME"),
@@ -232,8 +232,8 @@ class SiteConfigurationTests(TestCase):
             self.test_config2['university'],
         )
         self.assertEqual(
-            SiteConfiguration.get_value_for_org(self.test_config2['course_org_filter'], "platform_name"),
-            self.test_config2['platform_name'],
+            SiteConfiguration.get_value_for_org(self.test_config2['course_org_filter'], "PLATFORM_NAME"),
+            self.test_config2['PLATFORM_NAME'],
         )
         self.assertEqual(
             SiteConfiguration.get_value_for_org(self.test_config2['course_org_filter'], "SITE_NAME"),
@@ -270,7 +270,7 @@ class SiteConfigurationTests(TestCase):
         self.assertEqual(
             SiteConfiguration.get_value_for_org(
                 "non-existent-org",
-                "platform_name",
+                "PLATFORM_NAME",
                 "dummy-default-value"),
             "dummy-default-value",
         )

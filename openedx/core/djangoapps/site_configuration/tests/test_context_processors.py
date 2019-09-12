@@ -27,7 +27,7 @@ class ContextProcessorTests(TestCase):
 
         self.assertEqual(context['platform_name'], PLATFORM_NAME)
 
-    @with_site_configuration(configuration={"platform_name": "Testing Configuration Platform Name"})
+    @with_site_configuration(configuration={"PLATFORM_NAME": "Testing Configuration Platform Name"})
     def test_configuration_platform_name(self):
         """
         Verify the context includes  correct platform name.

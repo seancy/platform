@@ -13,6 +13,7 @@ such that the value can be defined later than this assignment (file load order).
     var AuthListWidget,
         Membership,
         BatchEnrollment,
+        SendWelcomingEmail,
         BetaTesterBulkAddition,
         MemberListWidget,
         emailStudents, plantTimeout, statusAjaxError, enableAddButton,
@@ -1083,6 +1084,68 @@ such that the value can be defined later than this assignment (file load order).
         return batchEnrollment;
     }());
 
+    SendWelcomingEmail = (function() {
+        function sendWelcomingEmail($container) {
+            var sendEmail = this;
+            this.$container = $container;
+            this.$emails_textarea = this.$container.find("textarea[name='student-emails-for-welcoming']");
+            this.$submit_button = this.$container.find("input[name='send-welcoming-email_button']");
+            this.$results = this.$container.find("div.results");
+
+            this.$submit_button.click(function(event) {
+                var sendData = {
+                    emails: sendEmail.$emails_textarea.val(),
+                };
+                return $.ajax({
+                    dataType: 'json',
+                    type: 'POST',
+                    url: sendEmail.$submit_button.data('endpoint'),
+                    data: sendData,
+                    success: function(data) {
+                        return sendEmail.display_response(data);
+                    },
+                });
+            });
+        }
+
+        sendWelcomingEmail.prototype.clear_input = function() {
+            return this.$emails_textarea.val('');
+        };
+
+        sendWelcomingEmail.prototype.display_response = function(dataFromServer) {
+            this.clear_input();
+            this.$results.empty();
+            var title;
+
+            if (dataFromServer.row_errors.length) {
+                title = gettext('The following email addresses are invalid:')
+                this.$results.append(this.render_notification_view('error', title, dataFromServer.row_errors))
+            }
+
+            if (dataFromServer.row_successes.length) {
+                title = gettext("Successfully sent welcoming emails to the following addresses:")
+                this.$results.append(this.render_notification_view('confirmation', title, dataFromServer.row_successes))
+            }
+        };
+
+        sendWelcomingEmail.prototype.render_notification_view = function(type, title, email_addresses) {
+            var notification_model, view;
+            notification_model = new NotificationModel();
+            notification_model.set({
+                type: type,
+                title: title,
+                details: email_addresses,
+            });
+            view = new NotificationView({
+                model: notification_model
+            });
+            view.render();
+            return view.$el.html();
+        };
+
+        return sendWelcomingEmail;
+    }());
+
     this.AuthList = (function() {
         function authList($container, rolename) {
             var authlist = this;
@@ -1208,6 +1271,9 @@ such that the value can be defined later than this assignment (file load order).
             this.$section.data('wrapper', this);
             plantTimeout(0, function() {
                 return new BatchEnrollment(thismembership.$section.find('.batch-enrollment'));
+            });
+            plantTimeout(0, function() {
+                return new SendWelcomingEmail(thismembership.$section.find('.auto_send_welcoming_email'));
             });
             plantTimeout(0, function() {
                 return new AutoEnrollmentViaCsv(thismembership.$section.find('.auto_enroll_csv'));

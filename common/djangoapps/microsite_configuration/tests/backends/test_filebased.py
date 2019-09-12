@@ -41,7 +41,7 @@ class FilebasedMicrositeBackendTests(TestCase):
         Tests microsite.get_value works as expected.
         """
         microsite.set_by_domain(self.microsite_subdomain)
-        self.assertEqual(microsite.get_value('platform_name'), 'Test Site')
+        self.assertEqual(microsite.get_value('PLATFORM_NAME'), 'Test Site')
 
     def test_is_request_in_microsite(self):
         """
@@ -55,7 +55,7 @@ class FilebasedMicrositeBackendTests(TestCase):
         Tests microsite.has_override_value works as expected.
         """
         microsite.set_by_domain(self.microsite_subdomain)
-        self.assertTrue(microsite.has_override_value('platform_name'))
+        self.assertTrue(microsite.has_override_value('PLATFORM_NAME'))
 
     def test_get_value_for_org(self):
         """
@@ -63,7 +63,7 @@ class FilebasedMicrositeBackendTests(TestCase):
         """
         microsite.set_by_domain(self.microsite_subdomain)
         self.assertEqual(
-            microsite.get_value_for_org('TestSiteX', 'platform_name'),
+            microsite.get_value_for_org('TestSiteX', 'PLATFORM_NAME'),
             'Test Site'
         )
 
@@ -71,7 +71,7 @@ class FilebasedMicrositeBackendTests(TestCase):
         microsite.clear()
         with patch('django.conf.settings.MICROSITE_CONFIGURATION', False):
             self.assertEqual(
-                microsite.get_value_for_org('TestSiteX', 'platform_name', 'Default Value'),
+                microsite.get_value_for_org('TestSiteX', 'PLATFORM_NAME', 'Default Value'),
                 'Default Value'
             )
 
@@ -99,11 +99,11 @@ class FilebasedMicrositeBackendTests(TestCase):
         """
         microsite.set_by_domain(self.microsite_subdomain)
         self.assertEqual(
-            microsite.get_value('platform_name'),
+            microsite.get_value('PLATFORM_NAME'),
             'Test Site'
         )
         microsite.clear()
-        self.assertIsNone(microsite.get_value('platform_name'))
+        self.assertIsNone(microsite.get_value('PLATFORM_NAME'))
 
     def test_get_all_configs(self):
         """

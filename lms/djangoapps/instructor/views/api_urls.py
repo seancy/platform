@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^register_and_enroll_students_precheck$', api.register_and_enroll_students_precheck,
         name='register_and_enroll_students_precheck'),
     url(r'^students_batch_update$', api.batch_update_student, name='students_batch_update'),
+    url(r'^send_students_welcoming_email$', api.send_welcoming_email, name="send_students_welcoming_email"),
     url(r'^list_course_role_members$', api.list_course_role_members, name='list_course_role_members'),
     url(r'^modify_access$', api.modify_access, name='modify_access'),
     url(r'^bulk_beta_modify_access$', api.bulk_beta_modify_access, name='bulk_beta_modify_access'),

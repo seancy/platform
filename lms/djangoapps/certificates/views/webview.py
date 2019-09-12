@@ -493,7 +493,7 @@ def render_html_view(request, user_id, course_id):
         raise Http404
 
     preview_mode = request.GET.get('preview', None)
-    platform_name = configuration_helpers.get_value("platform_name", settings.PLATFORM_NAME)
+    platform_name = configuration_helpers.get_value("PLATFORM_NAME", settings.PLATFORM_NAME)
     configuration = CertificateHtmlViewConfiguration.get_config()
 
     # Kick the user back to the "Invalid" screen if the feature is disabled globally

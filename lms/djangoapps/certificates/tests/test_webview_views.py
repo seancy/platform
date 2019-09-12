@@ -293,7 +293,7 @@ class CertificatesViewsTests(CommonCertificatesTestCase):
         params = OrderedDict([
             ('_ed', settings.MICROSITE_CONFIGURATION['test_site']['LINKEDIN_COMPANY_ID'],),
             ('pfCertificationName', '{platform_name} Honor Code Certificate for {course_name}'.format(
-                platform_name=settings.MICROSITE_CONFIGURATION['test_site']['platform_name'],
+                platform_name=settings.MICROSITE_CONFIGURATION['test_site']['PLATFORM_NAME'],
                 course_name=self.course.display_name,
             ),),
             ('pfCertificationUrl', 'http://' + settings.MICROSITE_TEST_HOSTNAME + test_url,),

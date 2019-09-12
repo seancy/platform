@@ -424,7 +424,7 @@ MICROSITE_CONFIGURATION = {
     "test_site": {
         "domain_prefix": "test-site",
         "university": "test_site",
-        "platform_name": "Test Site",
+        "PLATFORM_NAME": "Test Site",
         "logo_image_url": "test_site/images/header-logo.png",
         "email_from_address": "test_site@edx.org",
         "ACTIVATION_EMAIL_FROM_ADDRESS": "test_activate@edx.org",
@@ -456,7 +456,7 @@ MICROSITE_CONFIGURATION = {
     "site_with_logistration": {
         "domain_prefix": "logistration",
         "university": "logistration",
-        "platform_name": "Test logistration",
+        "PLATFORM_NAME": "Test logistration",
         "logo_image_url": "test_site/images/header-logo.png",
         "email_from_address": "test_site@edx.org",
         "ACTIVATION_EMAIL_FROM_ADDRESS": "test_activate@edx.org",
