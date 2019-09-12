@@ -25,6 +25,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from openedx.core.djangoapps.theming.helpers import get_current_site
 from openedx.core.djangoapps.user_api import accounts as accounts_settings
 from openedx.core.djangoapps.user_api.preferences.api import get_user_preference
+from instructor.enrollment import get_user_email_language
 from student.message_types import PasswordReset, PasswordCreate
 from student.models import CourseEnrollmentAllowed, email_exists_or_retired
 from util.password_policy_validators import password_max_length, password_min_length, validate_password
@@ -149,6 +150,8 @@ class PasswordCreateResetFormNoActive(PasswordResetForm):
                 'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
                 'email_from_alias': configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS),
                 'user_email': user.email,
+                'course_name': self.course_name,
+                'language': get_user_email_language(user),
                 'create_link': '{protocol}://{site}{link}'.format(
                     protocol='https' if use_https else 'http',
                     site=site_name,
