@@ -354,7 +354,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
               <label for="course-category">${_("Course Category")}</label>
               <select id="course-category">
                 % for category, label in category_options:
-                  <option value="${category}">${label}</option>
+                  <option value="${category}">${_(label)}</option>
                 % endfor
               </select>
               <span class="tip tip-stacked">${_("Identify the course category here.")}</span>

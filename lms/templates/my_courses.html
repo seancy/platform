@@ -205,7 +205,7 @@ from xmodule.modulestore.django import modulestore
                     course_descriptor = modulestore().get_course(enrollment.course_id)
                     if course_descriptor:
                       is_mandatory = course_descriptor.course_mandatory_enabled
-                      course_category = course_descriptor.course_category
+                      course_category = dict(settings.COURSE_CATEGORIES).get(course_descriptor.course_category, None)
                       course_language = course_descriptor.language
                       nb_of_badges = CourseGradeFactory().get_nb_trophies_possible(course_descriptor)
                       progress = int(CourseGradeFactory().get_course_completion_percentage(user, enrollment.course_id)*100)

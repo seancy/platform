@@ -233,7 +233,7 @@ from xmodule.modulestore.django import modulestore
                 course_duration = CourseDetails.fetch_about_attribute(enrollment.course_id, 'duration')
                 summary = progress_summaries.get(enrollment.course_id, {})
                 is_mandatory = summary.get('is_mandatory', False)
-                course_category = summary.get('course_category', None)
+                course_category = dict(settings.COURSE_CATEGORIES).get(summary.get('course_category', None), None)
                 course_language = summary.get('course_language', 'en')
                 nb_of_badges = summary.get('nb_trophies_possible', 0)
                 progress = summary.get('progress', 0)
