@@ -27506,8 +27506,8 @@ msgid "Session recorded"
 msgstr "实时活动记录"
 
 #: cms/templates/login.html
-msgid "Welcome to your training platform, log in to find your learning space!"
-msgstr "欢迎来到您的培训平台，登录查找您的学习空间！"
+msgid "Welcome to your training platform, log in to find your training space!"
+msgstr "欢迎来到您的培训平台，登录查找您的培训空间！"
 
 #: XBlock: xblock-certificate icxblock.html
 msgid "You have successfully obtained the {type} badge with a score of {score}%."
@@ -27695,3 +27695,7 @@ msgstr "查看考勤表"
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Acknowledge reception of the attendance sheet"
 msgstr "确认收到出勤表"
+
+#: cms/templates/login.html
+msgid "Welcome to Joyson Open Online Courses, log in to explore more!"
+msgstr "欢迎来到均胜网络课堂，请登录，让我们一起来探索未知!"

@@ -2032,6 +2032,7 @@
     "Webcam": "\u6444\u50cf\u5934", 
     "Weekly Highlight Emails": "\u6bcf\u5468\u4eae\u70b9\u7535\u5b50\u90ae\u4ef6", 
     "Weight of Total Grade": "\u6210\u7ee9\u4e2d\u7684\u6743\u91cd", 
+    "Welcome to Joyson Open Online Courses, log in to explore more!": "\u6b22\u8fce\u6765\u5230\u5747\u80dc\u7f51\u7edc\u8bfe\u5802\uff0c\u8bf7\u767b\u5f55\uff0c\u8ba9\u6211\u4eec\u4e00\u8d77\u6765\u63a2\u7d22\u672a\u77e5!", 
     "Welcome to your training platform, log in to find your learning space!": "\u6b22\u8fce\u6765\u5230\u60a8\u7684\u57f9\u8bad\u5e73\u53f0\uff0c\u767b\u5f55\u67e5\u627e\u60a8\u7684\u5b66\u4e60\u7a7a\u95f4\uff01", 
     "We\u2019re sorry to see you go!": "\u6211\u4eec\u5f88\u62b1\u6b49\u770b\u5230\u60a8\u8981\u79bb\u5f00\u6211\u4eec\u5e73\u53f0\uff01", 
     "What You Need for Verification": "\u8ba4\u8bc1\u6240\u9700", 
