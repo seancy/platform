@@ -23584,7 +23584,7 @@ msgid "Analytics - Global Report"
 msgstr "Reporting global"
 
 #: lms/templates/triboo_analytics/microsite.html:38
-msgid "Let's have a look at your learning data."
+msgid "Let's have a look at your learning data"
 msgstr "Vos données d'apprentissage en un clin d'oeil"
 
 #: lms/templates/triboo_analytics/microsite.html:49

@@ -68,12 +68,21 @@ from models import (
     CourseDailyReport,
     LearnerSectionReport,
     MicrositeDailyReport,
-    CountryDailyReport
+    CountryDailyReport,
+    IltSession,
+    IltLearnerReport
 )
 from tasks import generate_export_table as generate_export_table_task, links_for, \
     send_waiver_request_email
-from tables import TranscriptTable, LearnerDailyTable, CourseTable, \
-    get_progress_table_class, get_time_spent_table_class
+from tables import (
+    get_progress_table_class,
+    get_time_spent_table_class,
+    TranscriptTable,
+    LearnerDailyTable,
+    CourseTable,
+    IltTable,
+    IltLearnerTable
+)
 
 logger = logging.getLogger('triboo_analytics')
 
@@ -109,6 +118,10 @@ def day2str(day):
     return day.strftime("%Y-%m-%d")
 
 
+def dt2str(daytime):
+    return daytime.strftime("%Y-%m-%d %H:%M:%S %Z")
+
+
 def config_tables(request, *tables):
     config = RequestConfig(request, paginate={'per_page': 50})
     for t in tables:
@@ -118,7 +131,7 @@ def config_tables(request, *tables):
 def get_transcript_table(orgs, user_id, last_update):
     queryset = LearnerCourseDailyReport.objects.none()
     for org in orgs:
-        new_queryset = LearnerCourseDailyReport.filter_by_day(day=last_update, org=org, user_id=user_id)
+        new_queryset = LearnerCourseDailyReport.filter_by_day(date_time=last_update, org=org, user_id=user_id)
         queryset = queryset | new_queryset
     return TranscriptTable(queryset), queryset
 
@@ -148,7 +161,7 @@ def _transcript_view(user, request, template, report_type):
     if last_reportlog:
         last_update = last_reportlog.created
 
-        learner_report = LearnerDailyReport.get_by_day(day=last_update, user=user, org=org)
+        learner_report = LearnerDailyReport.get_by_day(date_time=last_update, user=user, org=org)
         if learner_report:
             learner_report_enrollments = learner_report.enrollments
             learner_report_average_final_score = learner_report.average_final_score
@@ -189,7 +202,7 @@ def _transcript_view(user, request, template, report_type):
             {
                 'course_contents': course_contents,
                 'courses': courses,
-                'last_update': day2str(last_update),
+                'last_update': dt2str(last_update),
                 'learner_report_enrollments': learner_report_enrollments if learner_report_enrollments else None,
                 'learner_report_average_final_score': learner_report_average_final_score,
                 'learner_report_badges': learner_report_badges,
@@ -526,7 +539,7 @@ def _transcript_export_table(request, user):
             'orgs': orgs,
             'user_id': user.id,
             'username': user.username,
-            'last_update': day2str(last_reportlog.created)
+            'last_update': dt2str(last_reportlog.created)
         }
         return _export_table(request, CourseKeyField.Empty, 'transcript', report_args)
     return JsonResponseBadRequest({"message": _("No report to export.")})
@@ -602,10 +615,9 @@ def get_filter_kwargs_with_table_exclude(request):
 
 
 def get_learner_table_filters(request, orgs, as_string=False):
-    learner_report_org = ""
-    for org in orgs:
-        learner_report_org += "+%s" % org
-    learner_report_org = learner_report_org[1:]
+    learner_report_org = orgs[0]
+    if len(orgs) > 1:
+        learner_report_org = get_combined_org(orgs)
 
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
@@ -613,7 +625,7 @@ def get_learner_table_filters(request, orgs, as_string=False):
         filter_form, user_properties_form, filter_kwargs, exclude  = get_filter_kwargs_with_table_exclude(request)
         filter_kwargs.update({
             'org': learner_report_org,
-            'day': day2str(last_update) if as_string else last_update
+            'date_time': day2str(last_update) if as_string else last_update
         })
         return filter_form, user_properties_form, filter_kwargs, exclude, last_update
 
@@ -623,7 +635,7 @@ def get_learner_table_filters(request, orgs, as_string=False):
 def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
     filter_form, user_properties_form, filter_kwargs, exclude = get_filter_kwargs_with_table_exclude(request)
     filter_kwargs.update({
-        'day': dt2str(last_update) if as_string else last_update,
+        'date_time': day2str(last_update) if as_string else last_update,
         'course_id': "%s" % course_key if as_string else course_key
     })
     return filter_form, user_properties_form, filter_kwargs, exclude
@@ -654,7 +666,7 @@ def learner_view(request):
     if last_update:
         learner_table, row_count = get_table(LearnerDailyReport, filter_kwargs, LearnerDailyTable, exclude)
         config_tables(request, learner_table)
-        last_update = day2str(last_update)
+        last_update = dt2str(last_update)
 
     return render_to_response(
         "triboo_analytics/learner.html",
@@ -839,7 +851,7 @@ def course_view(request):
         last_reportlog = ReportLog.get_latest()
         if last_reportlog:
             last_update = last_reportlog.course
-            course_report = CourseDailyReport.get_by_day(day=last_update, course_id=course_key)
+            course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
             enrollments_csv_data = CourseDailyReport.get_enrollments_csv_data(course_key)
 
             if report == "summary":
@@ -878,7 +890,7 @@ def course_view(request):
                     time_spent_table, row_count = get_course_time_spent_table(course_key, filter_kwargs, exclude)
                     config_tables(request, time_spent_table)
 
-            last_update = day2str(last_update)
+            last_update = dt2str(last_update)
 
         return render_to_response(
             "triboo_analytics/course.html",
@@ -963,21 +975,20 @@ def microsite_view(request):
     if not orgs or len(orgs) == 0:
         return HttpResponseNotFound()
 
-    microsite_report_org = ""
-    for org in orgs:
-        microsite_report_org += "+%s" % org
-    microsite_report_org = microsite_report_org[1:]
+    microsite_report_org = orgs[0]
+    if len(orgs) > 1:
+        microsite_report_org = get_combined_org(orgs)
 
     last_reportlog = ReportLog.get_latest()
     last_update = ""
     if last_reportlog:
         last_update = last_reportlog.created
-        microsite_report = MicrositeDailyReport.get_by_day(day=last_update, org=microsite_report_org)
+        microsite_report = MicrositeDailyReport.get_by_day(date_time=last_update, org=microsite_report_org)
 
         unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(microsite_report_org)
 
         users_by_country_csv_data = ""
-        country_reports = CountryDailyReport.filter_by_day(day=last_update, org=microsite_report_org)
+        country_reports = CountryDailyReport.filter_by_day(date_time=last_update, org=microsite_report_org)
         for report in country_reports:
             country_code = report.country.numeric
             if country_code:
@@ -993,7 +1004,7 @@ def microsite_view(request):
         return render_to_response(
                 "triboo_analytics/microsite.html",
                 {
-                    'last_update': day2str(last_update),
+                    'last_update': dt2str(last_update),
                     'microsite_report': microsite_report,
                     'unique_visitors_csv_data': unique_visitors_csv_data,
                     'users_by_country_csv_data': users_by_country_csv_data,
@@ -1010,5 +1021,95 @@ def microsite_view(request):
         }
     )
 
+
+def get_ilt_report_table(orgs):
+    ilt_reports = IltSession.objects.none()
+    for org in orgs:
+        org_ilt_reports = IltSession.objects.filter(org=org)
+        ilt_reports = ilt_reports | org_ilt_reports
+    row_count = ilt_reports.count()
+    ilt_report_table = IltTable(ilt_reports)
+    return ilt_report_table, row_count
+
+
+def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
+    ilt_reports = IltSession.objects.none()
+    for org in orgs:
+        org_ilt_reports = IltSession.objects.filter(org=org)
+        ilt_reports = ilt_reports | org_ilt_reports
+    module_ids = ilt_reports.values_list('ilt_module_id', flat=True)
+    ilt_learner_reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
+    row_count = ilt_learner_reports.count()
+    ilt_learner_report_table = IltLearnerTable(ilt_learner_reports, exclude=exclude)
+    return ilt_learner_report_table, row_count
+
+
+@analytics_on
+@login_required
+@analytics_member_required
+@ensure_csrf_cookie
+def ilt_view(request):
+    report = request.GET.get('report', "global")
+    if report not in ['global', 'learner']:
+        report = "global"
+
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs or len(orgs) == 0:
+        return HttpResponseNotFound()
+
+    ilt_report_table = False
+    ilt_learner_report_table = False
+    filter_form = None
+    user_properties_form = None
+    row_count = 0
+
+    if report == "global":
+        ilt_report_table, row_count = get_ilt_report_table(orgs)
+        config_tables(request, ilt_report_table)
+
+    elif report == "learner":
+        filter_form, user_properties_form, filter_kwargs, exclude  = get_filter_kwargs_with_table_exclude(request)
+        ilt_learner_report_table, row_count = get_ilt_learner_report_table(orgs, filter_kwargs, exclude)
+        config_tables(request, ilt_learner_report_table)
+
+    return render_to_response(
+        "triboo_analytics/ilt.html",
+        {
+            'ilt_report_table': ilt_report_table,
+            'ilt_learner_report_table': ilt_learner_report_table,
+            'filter_form': filter_form,
+            'user_properties_form': user_properties_form,
+            'row_count': row_count,
+            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
+        }
+    )
+
+
+@transaction.non_atomic_requests
+@analytics_on
+@analytics_member_required
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def ilt_export_table(request):
+    report = request.GET.get('report', "global")
+    if report not in ['global', 'learner']:
+        report = "global"
+
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs or len(orgs) == 0:
+        return HttpResponseNotFound()
+
+    if report == "global":
+        report_args = {'orgs': orgs}
+        return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
+
+    # report == "learner"
+    unused_filter_form, unused_prop_form, filter_kwargs, exclude  = get_filter_kwargs_with_table_exclude(request)
+    report_args = {
+        'orgs': orgs,
+        'filter_kwargs': filter_kwargs,
+        'exclude': list(exclude)
+    }
+    return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
 
 

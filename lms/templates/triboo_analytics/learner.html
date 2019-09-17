@@ -4,6 +4,7 @@
     from django.utils.translation import ugettext as _
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
+    from triboo_analytics.models import ANALYTICS_LIMITED_ACCESS_GROUP
 %>
 
 <%block name="pagetitle">${_("Analytics - Learner Report")}</%block>
@@ -14,6 +15,7 @@
         <section class="banner">
           <section class="welcome-wrapper">
             <h2>${_("Analytics")}</h2>
+            <h3>${_("Let's have a look at your learning data")}</h3>
           </section>
         </section>
         <nav>
@@ -23,33 +25,30 @@
               % if ANALYTICS_LIMITED_ACCESS_GROUP not in [group.name for group in user.groups.all()]:
                 <li class="tab"><a href="${reverse('analytics_learner')}" class="active">${_("Learner Report")}</a></li>
               % endif
+                <li class="tab"><a href="${reverse('analytics_ilt')}">${_("ILT Report")}</a></li>
             </ol>
         </nav>
-        <section class="analytics-wrapper">
-            ## <h2>${_("Welcome to the Learner Report")}</h2>
-            <div class="report-wrapper learner">
+        <section class="analytics-wrapper learner">
+            <div class="report-wrapper">
               % if learner_table:
-                  <div class="analytics-detailed-summary last-update">
-                    <div class="last-update">
-                      <i class="fa fa-bell"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                    </div>
+                  <div class="last-update">
+                    <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
                   </div>
-                  <div class="analytics-detailed-summary">
-                    <form class="table-filter-form" action="${reverse('analytics_learner')}" method="get">
-                        ${filter_form}
-                        <input type="submit" value="${_("Filter")}" />
-                    </form>
-                    <form class="table-user-properties-form" action="${reverse('analytics_learner')}" method="get">
-                        <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
-                        <div id="user-properties-selection">
-                            ${user_properties_form}
-                            <input type="submit" value="${_("Go")}"/>
-                        </div>
-                    </form>
-                    <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_table 'triboo_analytics/table.html' %}" %>
-                    ${Template(tpl).render(Context({'learner_table': learner_table, 'request': request,
-                    'row_count': row_count, 'list_table_downloads_url': list_table_downloads_url}))}
-                  </div>
+
+                  <form class="table-filter-form" action="${reverse('analytics_learner')}" method="get">
+                      ${filter_form}
+                      <input type="submit" value="${_("Filter")}" />
+                  </form>
+                  <form class="table-user-properties-form" action="${reverse('analytics_learner')}" method="get">
+                      <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
+                      <div id="user-properties-selection">
+                          ${user_properties_form}
+                          <input type="submit" value="${_("Go")}"/>
+                      </div>
+                  </form>
+                  <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_table 'triboo_analytics/table.html' %}" %>
+                  ${Template(tpl).render(Context({'learner_table': learner_table, 'request': request, 'row_count': row_count}))}
+
 
                   <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
               %endif

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from collections import defaultdict
 import logging
 from datetime import date
+import json
 import multiprocessing
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
@@ -11,22 +12,26 @@ from django.db import models, connections
 from django.db.models import Sum, Count
 from django.http import Http404
 from django.utils import timezone
+from django.utils.translation import ugettext_noop
 from django_countries.fields import CountryField
 from model_utils.fields import AutoLastModifiedField
 from model_utils.models import TimeStampedModel
 from requests import ConnectionError
 
 from courseware.courses import get_course_by_id
+from courseware.models import XModuleUserStateSummaryField, StudentModule
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 import lms.lib.comment_client as cc
-from opaque_keys.edx.keys import CourseKey
+from opaque_keys.edx.keys import CourseKey, UsageKey
+from opaque_keys.edx.django.models import CourseKeyField, UsageKeyField
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
-from openedx.core.djangoapps.content.course_structures.api.v0.api import course_structure
+from openedx.core.djangoapps.content.course_structures.api.v0.api import course_structure, CourseStructureNotAvailableError
+from openedx.core.djangoapps.models.course_details import CourseDetails
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 from student.models import CourseEnrollment
 from track.backends.django import TrackingLog
 from xmodule.modulestore.django import modulestore
-from opaque_keys.edx.django.models import CourseKeyField
+from six import text_type
 
 ANALYTICS_ACCESS_GROUP = "Triboo Analytics Admin"
 ANALYTICS_LIMITED_ACCESS_GROUP = "Restricted Triboo Analytics Admin"
@@ -220,6 +225,9 @@ class TrackingLogHelper(object):
         return section
 
 
+def get_day():
+    return timezone.now().date()
+
 class AutoCreatedField(models.DateField):
     """
     A DateField that automatically populates itself at
@@ -230,7 +238,7 @@ class AutoCreatedField(models.DateField):
     """
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('editable', False)
-        kwargs.setdefault('default', date.today)
+        kwargs.setdefault('default', get_day)
         super(AutoCreatedField, self).__init__(*args, **kwargs)
 
 
@@ -249,13 +257,13 @@ class TimeModel(models.Model):
 
 class ReportMixin(object):
     @classmethod
-    def filter_by_day(cls, day=None, **kwargs):
-        day = day.date() if day else date.today()
+    def filter_by_day(cls, date_time=None, **kwargs):
+        day = date_time.date() if date_time else timezone.now().date()
         return cls.objects.filter(created=day, **kwargs)
 
     @classmethod
-    def get_by_day(cls, day=None, **kwargs):
-        day = day.date() if day else date.today()
+    def get_by_day(cls, date_time=None, **kwargs):
+        day = date_time.date() if date_time else timezone.now().date()
         try:
             return cls.objects.get(created=day, **kwargs)
         except cls.DoesNotExist:
@@ -341,7 +349,7 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 reports[(l.course_id, l.device)] += l.time_spent
 
         if not day:
-            day = date.today()
+            day = timezone.now().date()
         for (course_id, device), time_spent in reports.iteritems():
             org = course_id.org if course_id != CourseKeyField.Empty else None
 
@@ -444,7 +452,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     def update_or_create(cls, enrollment):
         course_key = enrollment.course_id
         user = enrollment.user
-        day = date.today()
+        day = timezone.now().date()
 
         with modulestore().bulk_operations(course_key):
             if user.is_active:
@@ -606,7 +614,7 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                 Sum('time_spent')).get('time_spent__sum') or 0)
 
         cls.objects.update_or_create(
-            created=date.today(),
+            created=timezone.now().date(),
             user_id=user_id,
             org=org,
             defaults={'enrollments': len(learner_course_reports),
@@ -697,7 +705,7 @@ class CourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             average_complete_time = total_time / nb_completed_courses
 
         cls.objects.update_or_create(
-            created=date.today(),
+            created=timezone.now().date(),
             course_id=course_id,
             defaults={'enrollments': len(learner_course_reports),
                       'average_final_score': average_final_score,
@@ -782,7 +790,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             average_time_spent = (total_time_spent_on_mobile + total_time_spent_on_desktop) / all_unique_visitors
 
         cls.objects.update_or_create(
-            created=date.today(),
+            created=timezone.now().date(),
             org=org,
             defaults={'users': len(users),
                       'courses': len(course_ids),
@@ -830,7 +838,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
         logger.debug("microsite report for org=%s" % combined_org)
         cls.objects.update_or_create(
-            created=date.today(),
+            created=timezone.now().date(),
             org=combined_org,
             defaults={'users': len(users),
                       'courses': courses,
@@ -843,7 +851,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def update_or_create_unique_visitors(cls, day, org):
-        unique_visitors = (LearnerVisitsDailyReport.filter_by_day(day=day, org=org).aggregate(
+        unique_visitors = (LearnerVisitsDailyReport.filter_by_day(date_time=day, org=org).aggregate(
                             Count('user_id', distinct=True)).get('user_id__count') or 0)
         cls.objects.update_or_create(
             created=day,
@@ -856,7 +864,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         combined_org = get_combined_org(org_combination)
         learner_visits = LearnerVisitsDailyReport.objects.none()
         for org in org_combination:
-            org_learner_visits = LearnerVisitsDailyReport.filter_by_day(day=day, org=org)
+            org_learner_visits = LearnerVisitsDailyReport.filter_by_day(date_time=day, org=org)
             learner_visits = learner_visits | org_learner_visits
         unique_visitors = (learner_visits.aggregate(Count('user_id', distinct=True)).get('user_id__count') or 0)
         cls.objects.update_or_create(
@@ -913,7 +921,7 @@ class CountryDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
         for country, nb_users in users_by_country.iteritems():
             cls.objects.update_or_create(
-                created=date.today(),
+                created=timezone.now().date(),
                 org=org,
                 country=country,
                 defaults={'nb_users': nb_users})
@@ -929,6 +937,261 @@ class CountryDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
         logger.debug("country reports for org=%s" % combined_org)
         cls.update_or_create(combined_org, learner_course_reports)
+
+
+class IltModule(TimeStampedModel):
+    class Meta(object):
+        app_label = "triboo_analytics"
+
+    id = UsageKeyField(db_index=True, primary_key=True, max_length=255)
+    course_id = CourseKeyField(max_length=255, null=False)
+    course_display_name = models.TextField(null=False)
+    course_country = models.TextField(null=True, blank=True)
+    course_tags = models.TextField(null=True, blank=True)
+    chapter_display_name = models.TextField(null=True, blank=True)
+    section_display_name = models.TextField(null=True, blank=True)
+
+
+class IltSession(TimeStampedModel):
+    class Meta(object):
+        app_label = "triboo_analytics"
+        unique_together = ('ilt_module', 'session_nb')
+        index_together = ['ilt_module', 'session_nb']
+
+    ilt_module = models.ForeignKey(IltModule, null=False)
+    session_nb = models.PositiveSmallIntegerField(null=True)
+    org = models.CharField(max_length=255, db_index=True, null=True, default=None)
+    start = models.DateTimeField(default=None, null=True, blank=True)
+    end = models.DateTimeField(default=None, null=True, blank=True)
+    duration = models.PositiveSmallIntegerField(default=0)
+    seats = models.PositiveSmallIntegerField(default=0)
+    ack_attendance_sheet = models.BooleanField(default=False)
+    location_id = models.TextField(null=True, blank=True, default=None)
+    location = models.TextField(null=True, blank=True, default=None)
+    address = models.TextField(null=True, blank=True, default=None)
+    zip_code = models.TextField(null=True, blank=True, default=None)
+    city = models.TextField(null=True, blank=True, default=None)
+    area = models.TextField(null=True, blank=True, default=None)
+    enrollees = models.PositiveSmallIntegerField(default=0)
+    attendees = models.PositiveSmallIntegerField(default=0)
+
+    def session_id(self):
+        module_id = "%s" % self.ilt_module.id
+        start = module_id.find("@ilt+block@")
+        if start > 0:
+            module_id = module_id[start+11:]
+        return "%s_%d" % (module_id, self.session_nb)
+
+    @classmethod
+    def get_ilt_blocks(cls):
+        overviews = CourseOverview.objects.all()
+        ilt_blocks = {}
+        for overview in overviews:
+            course_ilt_blocks = []
+            try:
+                course_details = CourseDetails.fetch(overview.id)
+                outline = course_structure(overview.id)
+                outline = outline['blocks']
+                for block_id, block in outline.iteritems():
+                    if block['type'] == "ilt":
+                        course_ilt_blocks.append(block_id)
+                        ilt_blocks[block_id] = {
+                            'course_id': overview.id,
+                            'course_display_name': overview.display_name,
+                            'course_country': course_details.course_country,
+                            'course_tags': course_details.vendor
+                        }
+                    for child in block['children']:
+                        outline[child]['parent'] = block_id
+
+                for ilt_block_id in course_ilt_blocks:
+                    parent_id = outline[ilt_block_id]['parent']
+                    vertical = outline[parent_id]
+                    sequential = outline[vertical['parent']]
+                    ilt_blocks[ilt_block_id]['section_display_name'] = sequential['display_name']
+                    chapter = outline[sequential['parent']]
+                    ilt_blocks[ilt_block_id]['chapter_display_name'] = chapter['display_name']
+
+            except CourseStructureNotAvailableError:
+                pass
+
+        return ilt_blocks
+
+
+    @classmethod
+    def generate_today_reports(cls):
+        ilt_blocks = cls.get_ilt_blocks()
+        for ilt_block_id, ilt_block_info in ilt_blocks.iteritems():
+            ilt_module_id = UsageKey.from_string(ilt_block_id)
+            ilt_module, _ = IltModule.objects.update_or_create(
+                                id=ilt_module_id,
+                                defaults={'course_id': ilt_block_info['course_id'],
+                                          'course_display_name': ilt_block_info['course_display_name'],
+                                          'course_country': ilt_block_info['course_country'],
+                                          'course_tags': ilt_block_info['course_tags'],
+                                          'chapter_display_name': ilt_block_info['chapter_display_name'],
+                                          'section_display_name': ilt_block_info['section_display_name']})
+
+            sessions = XModuleUserStateSummaryField.objects.filter(usage_id=ilt_module_id,
+                                                                   field_name="sessions").only('value')
+            if len(sessions) == 1:
+                sessions = json.loads(sessions[0].value)
+                if "counter" in sessions.keys():
+                    del(sessions['counter'])
+
+            else:
+                sessions = {}
+                logger.info("ILT Module %s has no sessions => pass" % ilt_block_id)
+                pass
+
+            registrations = XModuleUserStateSummaryField.objects.filter(usage_id=ilt_module_id,
+                                                                        field_name="enrolled_users").only('value')
+            registrations = json.loads(registrations[0].value) if len(registrations) == 1 else {}
+
+            scores = StudentModule.objects.filter(module_state_key=ilt_module_id).only('student_id', 'grade')
+
+            users = {}
+            for score in scores:
+                users[score.student.id] = {
+                    'user': score.student,
+                    'session_nb': None,
+                    'registration': None,
+                    'attendee': (score.grade and score.grade > 0)
+                }
+            for session_nb, session_registrations in registrations.iteritems():
+                for user_id, registration in session_registrations.iteritems():
+                    user_id = int(user_id)
+                    if user_id in users.keys():
+                        users[user_id]['session_nb'] = session_nb
+                        users[user_id]['registration'] = registration
+                    else:
+                        try:
+                            user = User.objects.get(id=user_id)
+                            users[user_id] = {
+                                'user': user,
+                                'session_nb': session_nb,
+                                'registration': registration,
+                                'attendee': False
+                            }
+                        except User.DoesNotExist:
+                            pass
+
+            cls.update_or_create(ilt_module, ilt_module_id.org, sessions, users)
+            IltLearnerReport.generate_today_reports(ilt_module, users)
+        # TO DO: delete unmodified reports
+
+
+    @classmethod
+    def update_or_create(cls, ilt_module, org, sessions, users):
+        for session_nb, session in sessions.iteritems():
+            enrollees = 0
+            attendees = 0
+            for user_id, user_session in users.iteritems():
+                if user_session['session_nb'] == session_nb:
+                    if user_session['registration']['status'] in ["accepted", "confirmed"]:
+                        enrollees += 1
+                    if user_session['attendee']:
+                        attendees += 1
+            ack_attendance_sheet = False
+            if 'ack_attendance_sheet' in session.keys():
+                ack_attendance_sheet = session['ack_attendance_sheet']
+            cls.objects.update_or_create(ilt_module=ilt_module,
+                                         session_nb=session_nb,
+                                         defaults={'start': session['start_at'],
+                                                   'end': session['end_at'],
+                                                   'duration': session['duration'],
+                                                   'seats': session['total_seats'],
+                                                   'ack_attendance_sheet': ack_attendance_sheet,
+                                                   'location_id': session['location_id'],
+                                                   'location': session['location'],
+                                                   'address': session['address'],
+                                                   'zip_code': session['zip_code'],
+                                                   'city': session['city'],
+                                                   'area': session['area_region'],
+                                                   'org': org,
+                                                   'enrollees': enrollees,
+                                                   'attendees': attendees})
+
+        # enrollees = 0
+        # attendees = 0
+        # for user_id, user_session in users.iteritems():
+        #     if not user_session['session_nb']:
+        #         enrollees += 1
+        #         if user_session['attendee']:
+        #             attendees += 1
+
+        # cls.objects.update_or_create(ilt_module=ilt_module,
+        #                             session_nb=None,
+        #                             defaults={'org': org,
+        #                                       'enrollees': enrollees,
+        #                                       'attendees': attendees})
+
+
+class IltLearnerReport(TimeModel):
+    class Meta(object):
+        app_label = "triboo_analytics"
+        unique_together = ('ilt_module', 'user')
+        index_together = ['ilt_module', 'user']
+
+    ilt_module = models.ForeignKey(IltModule, db_index=True, null=False)
+    user = models.ForeignKey(User, db_index=True, null=False)
+    org = models.CharField(max_length=255, db_index=True, null=True, default=None)
+    ilt_session = models.ForeignKey(IltSession, null=True)
+    STATUS_CHOICES = (
+        ('pending', ugettext_noop("Pending")),
+        ('accepted', ugettext_noop("Accepted")),
+        ('confirmed', ugettext_noop("Confirmed")),
+        ('refused', ugettext_noop("Refused"))
+    )
+    status = models.CharField(null=False, max_length=9, choices=STATUS_CHOICES)
+    attendee = models.BooleanField(default=False)
+    outward_trips = models.PositiveSmallIntegerField(default=0)
+    return_trips = models.PositiveSmallIntegerField(default=0)
+    accommodation = models.BooleanField(default=False)
+    comment = models.TextField(null=True, blank=True, default=None)
+    hotel = models.TextField(null=True, blank=True, default=None)
+
+
+    @classmethod
+    def generate_today_reports(cls, ilt_module, users):
+        for _, user_session in users.iteritems():
+            cls.update_or_create(ilt_module, user_session)
+
+
+    @classmethod
+    def update_or_create(cls, ilt_module, user_session):
+        ilt_session = None
+        if user_session['session_nb']:
+            ilt_session = IltSession.objects.get(ilt_module=ilt_module, session_nb=user_session['session_nb'])
+
+        status = "Confirmed"
+        outward_trips = 1
+        return_trips = 1
+        accommodation = False
+        comment = user_session['registration']['comment'] if user_session['registration'] else None
+        hotel = None
+
+        if user_session['registration']:
+            status = user_session['registration']['status']
+            outward_trips = user_session['registration']['number_of_one_way']
+            return_trips = user_session['registration']['number_of_return']
+            if user_session['registration']['accommodation'] == "yes":
+                accommodation = True
+            comment = user_session['registration']['comment']
+            if 'hotel' in user_session['registration'].keys():
+                hotel = user_session['registration']['hotel']
+
+        cls.objects.update_or_create(ilt_module=ilt_module,
+                                     user=user_session['user'],
+                                     defaults={'org': ilt_module.id.org,
+                                               'ilt_session': ilt_session,
+                                               'status': status,
+                                               'attendee': user_session['attendee'],
+                                               'outward_trips': outward_trips,
+                                               'return_trips': return_trips,
+                                               'accommodation': accommodation,
+                                               'comment': comment,
+                                               'hotel': hotel})
 
 
 def get_org_combinations():
@@ -966,14 +1229,17 @@ def generate_today_reports(multi_process=False):
     logger.info("start Learner reports")
     LearnerDailyReport.generate_today_reports(learner_course_reports, org_combinations)
 
-    logger.info("start Course Reports")
+    logger.info("start Course reports")
     CourseDailyReport.generate_today_reports(learner_course_reports)
 
-    logger.info("start Microsite Reports")
+    logger.info("start Microsite reports")
     MicrositeDailyReport.generate_today_reports(course_ids, learner_course_reports, org_combinations)
 
     logger.info("start Country reports")
     CountryDailyReport.generate_today_reports(learner_course_reports, org_combinations)
+
+    logger.info("start ILT reports")
+    IltSession.generate_today_reports()
 
 
 def check_generated_learner_course_reports(course_ids, sections_by_course):

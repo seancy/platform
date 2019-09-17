@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from six import text_type
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django_countries import countries
@@ -6,7 +7,15 @@ import django_tables2 as tables
 from django_tables2.utils import A
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
-from .models import LearnerCourseDailyReport, LearnerDailyReport, CourseStatus, format_time_spent, get_badges
+from .models import (
+    CourseStatus,
+    format_time_spent,
+    get_badges,
+    LearnerCourseDailyReport,
+    LearnerDailyReport,
+    IltSession,
+    IltLearnerReport
+)
 
 
 EXPORT_FORMATS = ['csv', 'xls', 'json']
@@ -94,7 +103,6 @@ class _RenderMixin(object):
         value = self.value_total_time_spent(record, value)
         return value if value != '' else '-'
 
-
     def value_badges(self, record, value):
         x, y = get_badges(value)
         return "{} (/ {})".format(x, y)
@@ -114,11 +122,15 @@ class TranscriptTable(_RenderMixin, tables.Table):
     class Meta:
         model = LearnerCourseDailyReport
         template = 'django_tables2/bootstrap.html'
-        fields = ('course_title', 'status', 'progress',
-                  'badges', 'current_score', 'total_time_spent',
-                  'enrollment_date', 'completion_date')
-        unlocalize = ('course_title', 'progress', 'badges',
-                      'current_score', 'total_time_spent',
+        fields = ('course_title',
+                  'status',
+                  'progress',
+                  'badges',
+                  'current_score',
+                  'total_time_spent',
+                  'enrollment_date',
+                  'completion_date')
+        unlocalize = ('course_title', 'progress', 'badges', 'current_score', 'total_time_spent',
                       'enrollment_date', 'completion_date')
 
     def __init__(self, data=None, order_by=None, orderable=None, empty_text=None, exclude=None, attrs=None,
@@ -165,6 +177,8 @@ class UserBaseTable(tables.Table):
     user_date_joined = tables.Column(accessor='user.date_joined', verbose_name='Date Joined')
 
     user_country = tables.Column(accessor='user.profile.country', verbose_name='Country')
+    user_lt_area = tables.Column(accessor='user.profile.lt_area', verbose_name='Commercial Zone')
+    user_lt_sub_area = tables.Column(accessor='user.profile.lt_sub_area', verbose_name='Commercial Region')
     user_city = tables.Column(accessor='user.profile.city', verbose_name='City')
     user_location = tables.Column(accessor='user.profile.location', verbose_name='Location')
     user_lt_address = tables.Column(accessor='user.profile.lt_address', verbose_name='Address')
@@ -179,6 +193,7 @@ class UserBaseTable(tables.Table):
     user_lt_job_description = tables.Column(accessor='user.profile.lt_job_description', verbose_name='Job Description')
     user_lt_department = tables.Column(accessor='user.profile.lt_department', verbose_name='Department')
     user_lt_supervisor = tables.Column(accessor='user.profile.lt_supervisor', verbose_name='Supervisor')
+    user_lt_ilt_supervisor = tables.Column(accessor='user.profile.lt_ilt_supervisor', verbose_name='ILT Supervisor')
     user_lt_learning_group = tables.Column(accessor='user.profile.lt_learning_group', verbose_name='Learning Group')
     user_lt_exempt_status = tables.Column(accessor='user.profile.lt_exempt_status', verbose_name='Exempt Status')
     user_lt_comments = tables.Column(accessor='user.profile.lt_comments', verbose_name='Comments')
@@ -199,15 +214,27 @@ class UserBaseTable(tables.Table):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__date_joined')
         return queryset, True
 
+    # def render_user_country(self, value):
+    #     return dict(countries)[value]
+
+    def order_user_country(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__country')
+        return queryset, True
+
+    def order_user_lt_area(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_area')
+        return queryset, True
+
+    def order_user_lt_sub_area(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_sub_area')
+        return queryset, True
+
     def order_user_city(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__city')
         return queryset, True
 
-    def render_user_country(self, value):
-        return dict(countries)[value]
-
-    def order_user_country(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__country')
+    def order_user_location(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__location')
         return queryset, True
 
     def order_user_lt_address(self, queryset, is_descending):
@@ -218,16 +245,28 @@ class UserBaseTable(tables.Table):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_address_2')
         return queryset, True
 
-    def order_user_lt_learning_group(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_learning_group')
+    def order_user_lt_phone_number(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_phone_number')
         return queryset, True
 
-    def order_user_lt_department(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_department')
+    def order_user_lt_gdpr(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_gdpr')
+        return queryset, True
+
+    def order_user_lt_company(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_company')
         return queryset, True
 
     def order_user_lt_employee_id(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_employee_id')
+        return queryset, True
+
+    def order_user_lt_hire_date(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_hire_date')
+        return queryset, True
+
+    def order_user_lt_level(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_level')
         return queryset, True
 
     def order_user_lt_job_code(self, queryset, is_descending):
@@ -238,16 +277,20 @@ class UserBaseTable(tables.Table):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_job_description')
         return queryset, True
 
-    def order_user_location(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__location')
-        return queryset, True
-
-    def order_user_lt_hire_date(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_hire_date')
+    def order_user_lt_department(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_department')
         return queryset, True
 
     def order_user_lt_supervisor(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_supervisor')
+        return queryset, True
+
+    def order_user_lt_ilt_supervisor(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_ilt_supervisor')
+        return queryset, True
+
+    def order_user_lt_learning_group(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_learning_group')
         return queryset, True
 
     def order_user_lt_exempt_status(self, queryset, is_descending):
@@ -256,22 +299,6 @@ class UserBaseTable(tables.Table):
 
     def order_user_lt_comments(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_comments')
-        return queryset, True
-
-    def order_user_lt_company(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_company')
-        return queryset, True
-
-    def order_user_lt_level(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_level')
-        return queryset, True
-
-    def order_user_lt_phone_number(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_phone_number')
-        return queryset, True
-
-    def order_user_lt_gdpr(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__lt_gdpr')
         return queryset, True
 
 
@@ -357,7 +384,6 @@ class LearnerBaseTable(UserBaseTable):
     total_time_spent = TimeSpentFooterColumn()
 
 
-
 class CourseTable(_RenderMixin, LearnerBaseTable):
     current_score = tables.Column(footer=lambda table: "{}%".format(
                          get_avg(None, [r.current_score for r in table.data if r.status != CourseStatus.not_started])))
@@ -365,23 +391,47 @@ class CourseTable(_RenderMixin, LearnerBaseTable):
                          get_avg(None, [r.progress for r in table.data])))
     posts = SumFooterColumn()
 
-
     class Meta:
         model = LearnerCourseDailyReport
         template = 'django_tables2/bootstrap.html'
-        fields = ('user_name', 'user_username', 'user_email', 'user_lt_phone_number', 'user_lt_gdpr',
-                'user_date_joined', 'user_country', 'user_city', 'user_location',
-                'user_gos_address', 'user_gos_address_2', 'user_lt_learning_group', 'user_lt_exempt_status',
-                'user_lt_employee_id', 'user_lt_hire_date', 'user_lt_job_code', 'user_lt_job_description',
-                'user_lt_level', 'user_lt_department', 'user_lt_company', 'user_lt_supervisor',
-                'user_lt_comments',
-                'status', 'progress', 'current_score', 'badges', 'posts', 'total_time_spent', 'enrollment_date', 'completion_date')
-        unlocalize = ('user_name', 'user_username', 'user_email', 'user_lt_phone_number', 'user_lt_gdpr',
-                    'user_date_joined', 'user_city', 'user_location',
-                    'user_gos_address', 'user_gos_address_2', 'user_lt_learning_group', 'user_lt_exempt_status',
-                    'user_lt_employee_id', 'user_lt_hire_date', 'user_lt_job_code', 'user_lt_job_description',
-                    'user_lt_level', 'user_lt_department', 'user_lt_company', 'user_lt_supervisor',
-                    'user_lt_comments',
+        fields = ('user_name',
+                  'user_email',
+                  'user_username',
+                  'user_date_joined',
+                  'user_country',
+                  'user_lt_area',
+                  'user_lt_sub_area',
+                  'user_city',
+                  'user_location',
+                  'user_lt_address',
+                  'user_lt_address_2',
+                  'user_lt_phone_number',
+                  'user_lt_gdpr',
+                  'user_lt_company',
+                  'user_lt_employee_id',
+                  'user_lt_hire_date',
+                  'user_lt_level',
+                  'user_lt_job_code',
+                  'user_lt_job_description',
+                  'user_lt_department',
+                  'user_lt_supervisor',
+                  'user_lt_ilt_supervisor',
+                  'user_lt_learning_group',
+                  'user_lt_exempt_status',
+                  'user_lt_comments',
+                  'status',
+                  'progress',
+                  'current_score',
+                  'badges',
+                  'posts',
+                  'total_time_spent',
+                  'enrollment_date',
+                  'completion_date')
+        unlocalize = ('user_name', 'user_email', 'user_username', 'user_date_joined', 'user_country',
+                    'user_lt_area', 'user_lt_sub_area', 'user_city', 'user_location', 'user_lt_address', 'user_lt_address_2',
+                    'user_lt_phone_number', 'user_lt_gdpr', 'user_lt_company', 'user_lt_employee_id', 'user_lt_hire_date',
+                    'user_lt_level', 'user_lt_job_code', 'user_lt_job_description', 'user_lt_department', 'user_lt_supervisor',
+                    'user_lt_ilt_supervisor', 'user_lt_learning_group', 'user_lt_exempt_status', 'user_lt_comments',
                     'progress', 'current_score', 'badges', 'posts', 'total_time_spent', 'enrollment_date', 'completion_date')
 
 
@@ -401,20 +451,46 @@ class LearnerDailyTable(LearnerBaseTable):
     class Meta:
         model = LearnerDailyReport
         template = 'django_tables2/bootstrap.html'
-        fields = ('user_name', 'user_username', 'user_email', 'user_lt_phone_number', 'user_lt_gdpr',
-                'user_date_joined', 'user_country', 'user_city', 'user_location',
-                'user_gos_address', 'user_gos_address_2', 'user_lt_learning_group', 'user_lt_exempt_status',
-                'user_lt_employee_id', 'user_lt_hire_date', 'user_lt_job_code', 'user_lt_job_description',
-                'user_lt_level', 'user_lt_department', 'user_lt_company', 'user_lt_supervisor',
-                'user_lt_comments',
-                'enrollments', 'finished', 'failed', 'in_progress', 'not_started', 'average_final_score',
-                'badges', 'posts', 'total_time_spent', 'user_last_login')
-        unlocalize = ('user_name', 'user_username', 'user_email', 'user_lt_phone_number', 'user_lt_gdpr',
-                    'user_date_joined', 'user_city', 'user_location',
-                    'user_gos_address', 'user_gos_address_2', 'user_lt_learning_group', 'user_lt_exempt_status',
-                    'user_lt_employee_id', 'user_lt_hire_date', 'user_lt_job_code', 'user_lt_job_description',
-                    'user_lt_level', 'user_lt_department', 'user_lt_company', 'user_lt_supervisor',
-                    'user_lt_comments',
+        fields = ('user_name',
+                  'user_email',
+                  'user_username',
+                  'user_date_joined',
+                  'user_country',
+                  'user_lt_area',
+                  'user_lt_sub_area',
+                  'user_city',
+                  'user_location',
+                  'user_lt_address',
+                  'user_lt_address_2',
+                  'user_lt_phone_number',
+                  'user_lt_gdpr',
+                  'user_lt_company',
+                  'user_lt_employee_id',
+                  'user_lt_hire_date',
+                  'user_lt_level',
+                  'user_lt_job_code',
+                  'user_lt_job_description',
+                  'user_lt_department',
+                  'user_lt_supervisor',
+                  'user_lt_ilt_supervisor',
+                  'user_lt_learning_group',
+                  'user_lt_exempt_status',
+                  'user_lt_comments',
+                  'enrollments',
+                  'finished',
+                  'failed',
+                  'in_progress',
+                  'not_started',
+                  'average_final_score',
+                  'badges',
+                  'posts',
+                  'total_time_spent',
+                  'user_last_login')
+        unlocalize = ('user_name', 'user_email', 'user_username', 'user_date_joined', 'user_country',
+                    'user_lt_area', 'user_lt_sub_area', 'user_city', 'user_location', 'user_lt_address', 'user_lt_address_2',
+                    'user_lt_phone_number', 'user_lt_gdpr', 'user_lt_company', 'user_lt_employee_id', 'user_lt_hire_date',
+                    'user_lt_level', 'user_lt_job_code', 'user_lt_job_description', 'user_lt_department', 'user_lt_supervisor',
+                    'user_lt_ilt_supervisor', 'user_lt_learning_group', 'user_lt_exempt_status', 'user_lt_comments',
                     'enrollments', 'finished', 'failed', 'in_progress', 'not_started', 'average_final_score',
                     'badges', 'posts', 'total_time_spent', 'user_last_login')
 
@@ -434,4 +510,205 @@ class LearnerDailyTable(LearnerBaseTable):
     def order_user_last_login(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__last_login')
         return queryset, True
+
+
+class IltBaseTable(tables.Table):
+    export_formats = EXPORT_FORMATS
+    
+    course_area =  tables.Column(accessor='ilt_module.course_country', verbose_name='Geographical area')
+    course_country = tables.Column(accessor='ilt_module.course_country', verbose_name='Course country')
+    course_tags = tables.Column(accessor='ilt_module.course_tags', verbose_name='Course tags')
+    course_code = tables.Column(accessor='ilt_module.course_id', verbose_name='Course code')
+    course_display_name = tables.Column(accessor='ilt_module.course_display_name', verbose_name='Course')
+    chapter_display_name = tables.Column(accessor='ilt_module.chapter_display_name', verbose_name='Chapter')
+    section_display_name = tables.Column(accessor='ilt_module.section_display_name', verbose_name='Section')
+
+    def render_course_area(self, value):
+        if value:
+            if value == "All countries":
+                return "All"
+            elif value == "France":
+                return "FR"
+            elif value == "Romania":
+                return "BK"
+        return "-"
+
+    def order_session_id(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'ilt_module__course_country')
+        return queryset, True
+
+    def render_course_code(self, record, value):
+        prefix = "course-v1:%s+" % record.org
+        return text_type(value)[len(prefix):]
+
+    def render_start_day(self, value):
+        return value.strftime('%d/%m/%Y')
+
+    def render_start_time(self, value):
+        return value.strftime("%H:%M:%S")
+
+    def render_end_day(self, value):
+        return value.strftime('%d/%m/%Y')
+
+    def render_end_time(self, value):
+        return value.strftime("%H:%M:%S")
+
+    def render_ack_attendance_sheet(self, value):
+        return "Received" if value else "Expected"
+
+
+class IltTable(IltBaseTable):
+    area = tables.Column(verbose_name='Zone/Region')
+    session_id = tables.Column(verbose_name='Session ID')
+    start_day = tables.Column(accessor='start', verbose_name='Start date')
+    start_time = tables.Column(accessor='start', verbose_name='Start time')
+    end_day = tables.Column(accessor='end', verbose_name='End date')
+    end_time = tables.Column(accessor='end', verbose_name='End time')
+    duration = tables.Column(verbose_name='Duration (in hours)')
+    seats = tables.Column(verbose_name='Max capacity')
+    enrollees = tables.Column(verbose_name='Enrollees')
+    attendees = tables.Column(verbose_name='Attendees')
+    ack_attendance_sheet = tables.Column(verbose_name='Attendance sheet')
+    location_id = tables.Column(verbose_name='Location ID')
+    location = tables.Column(verbose_name='Location name')
+    address = tables.Column(verbose_name='Address')
+    zip_code = tables.Column(verbose_name='Zip code')
+    city = tables.Column(verbose_name='City')
+
+    class Meta:
+        model = IltSession
+        template = 'django_tables2/bootstrap.html'
+        fields = ('course_area',
+                  'course_country',
+                  'area',
+                  'course_tags',
+                  'course_code',
+                  'course_display_name',
+                  'chapter_display_name',
+                  'section_display_name',
+                  'session_id',
+                  'start_day',
+                  'start_time',
+                  'end_day',
+                  'end_time',
+                  'duration',
+                  'seats',
+                  'enrollees',
+                  'attendees',
+                  'ack_attendance_sheet',
+                  'location_id',
+                  'location',
+                  'address',
+                  'zip_code',
+                  'city')
+        unlocalize = ('area', 'course_tags', 'course_code', 'course_display_name',
+                      'chapter_display_name', 'section_display_name', 'session_id',
+                      'start_day', 'start_time', 'end_day', 'end_time', 'duration', 'seats',
+                      'enrollees', 'attendees', 'location_id', 'location', 'address', 'zip_code', 'city')
+
+    def order_session_id(self, queryset, is_descending):
+        order = '-' if is_descending else ''
+        queryset = queryset.order_by(order + 'ilt_module__id', order + 'session_nb')
+        return queryset, True
+
+
+class IltLearnerTable(IltBaseTable, UserBaseTable):
+    area = tables.Column(accessor='ilt_session.area', verbose_name='Zone/Region')
+    session_id = tables.Column(accessor='ilt_session.session_id', verbose_name='Session ID')
+    start_day = tables.Column(accessor='ilt_session.start', verbose_name='Start date')
+    start_time = tables.Column(accessor='ilt_session.start', verbose_name='Start time')
+    end_day = tables.Column(accessor='ilt_session.end', verbose_name='End date')
+    end_time = tables.Column(accessor='ilt_session.end', verbose_name='End time')
+    duration = tables.Column(accessor='ilt_session.duration', verbose_name='Duration (in hours)')
+    seats = tables.Column(accessor='ilt_session.seats', verbose_name='Max capacity')
+    enrollees = tables.Column(accessor='ilt_session.enrollees', verbose_name='Enrollees')
+    attendees = tables.Column(accessor='ilt_session.attendees', verbose_name='Attendees')
+    ack_attendance_sheet = tables.Column(accessor='ilt_session.ack_attendance_sheet', verbose_name='Attendance sheet')
+    location_id = tables.Column(accessor='ilt_session.location_id', verbose_name='Location ID')
+    location = tables.Column(accessor='ilt_session.location', verbose_name='Location name')
+    address = tables.Column(accessor='ilt_session.address', verbose_name='Address')
+    zip_code = tables.Column(accessor='ilt_session.zip_code', verbose_name='Zip code')
+    city = tables.Column(accessor='ilt_session.city', verbose_name='City')
+    status = tables.Column(verbose_name='Enrollment status')
+    attendee = tables.Column(verbose_name='Attendee')
+    outward_trips = tables.Column(verbose_name='Outward trips')
+    return_trips = tables.Column(verbose_name='Return trips')
+    accommodation = tables.Column(verbose_name='Overnight stay')
+    hotel = tables.Column(verbose_name='Overnight stay address')
+    comment = tables.Column(verbose_name='Comment')
+
+    class Meta:
+        model = IltLearnerReport
+        template = 'django_tables2/bootstrap.html'
+        fields = ('course_area',
+                  'course_country',
+                  'area',
+                  'course_tags',
+                  'course_code',
+                  'course_display_name',
+                  'chapter_display_name',
+                  'section_display_name',
+                  'session_id',
+                  'start_day',
+                  'start_time',
+                  'end_day',
+                  'end_time',
+                  'duration',
+                  'seats',
+                  'enrollees',
+                  'attendees',
+                  'ack_attendance_sheet',
+                  'location_id',
+                  'location',
+                  'address',
+                  'zip_code',
+                  'city',
+                  'user_name',
+                  'user_email',
+                  'user_username',
+                  'user_date_joined',
+                  'user_country',
+                  'user_lt_area',
+                  'user_lt_sub_area',
+                  'user_city',
+                  'user_location',
+                  'user_lt_address',
+                  'user_lt_address_2',
+                  'user_lt_phone_number',
+                  'user_lt_gdpr',
+                  'user_lt_company',
+                  'user_lt_employee_id',
+                  'user_lt_hire_date',
+                  'user_lt_level',
+                  'user_lt_job_code',
+                  'user_lt_job_description',
+                  'user_lt_department',
+                  'user_lt_supervisor',
+                  'user_lt_ilt_supervisor',
+                  'user_lt_learning_group',
+                  'user_lt_exempt_status',
+                  'user_lt_comments',
+                  'status',
+                  'attendee',
+                  'outward_trips',
+                  'return_trips',
+                  'accommodation',
+                  'hotel',
+                  'comment')
+        unlocalize = ('area', 'course_tags', 'course_code', 'course_display_name',
+                      'chapter_display_name', 'section_display_name', 'session_id',
+                      'start_day', 'start_time', 'end_day', 'end_time', 'duration', 'seats',
+                      'enrollees', 'attendees', 'location_id', 'location', 'address', 'zip_code', 'city',
+                      'user_name', 'user_email', 'user_username', 'user_date_joined', 'user_country',
+                      'user_lt_area', 'user_lt_sub_area', 'user_city', 'user_location', 'user_lt_address', 'user_lt_address_2',
+                      'user_lt_phone_number', 'user_lt_gdpr', 'user_lt_company', 'user_lt_employee_id', 'user_lt_hire_date',
+                      'user_lt_level', 'user_lt_job_code', 'user_lt_job_description', 'user_lt_department', 'user_lt_supervisor',
+                      'user_lt_ilt_supervisor', 'user_lt_learning_group', 'user_lt_exempt_status', 'user_lt_comments',
+                      'attendee', 'outward_trips', 'return_trips', 'accommodation', 'hotel', 'comment')
+
+    def order_session_id(self, queryset, is_descending):
+        order = '-' if is_descending else ''
+        queryset = queryset.order_by(order + 'ilt_module__id', order + 'ilt_session__session_nb')
+        return queryset, True
+
 

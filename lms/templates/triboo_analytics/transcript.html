@@ -5,7 +5,7 @@
   from django.utils.translation import ungettext
   from django.core.urlresolvers import reverse
   from django.template import Template, Context
-  from triboo_analytics.models import CourseStatus, format_time_spent
+  from triboo_analytics.models import CourseStatus, format_time_spent, ANALYTICS_LIMITED_ACCESS_GROUP
 %>
 
 <%block name="pagetitle">${_("Analytics - Learner Transcript")}</%block>
@@ -25,64 +25,67 @@
               % if ANALYTICS_LIMITED_ACCESS_GROUP not in [group.name for group in user.groups.all()]:
                 <li class="tab"><a href="${reverse('analytics_learner')}" class="active">${_("Learner Report")}</a></li>
               % endif
+                <li class="tab"><a href="${reverse('analytics_ilt')}">${_("ILT Report")}</a></li>
             </ol>
         </nav>
-        <section class="analytics-wrapper">
-          <div class="report-wrapper transcript">
-            % if error_message:
-              <p class="intro">${_("Learning Transcript")}</p>
-              <div class="analytics-summary">
-                  <p class="error">${error_message}</p>
-              </div>
-            % else:
-              <p class="intro">${_("Learning Transcript of")} ${request.user.profile.name}</p>
-            % endif
+        <section class="analytics-wrapper transcript">
+          <div class="report-wrapper">
+            <div class="analytics-header">
+              % if error_message:
+                <h2>${_("Learning Transcript")}</h2>
+                <div class="analytics-summary">
+                    <p class="error">${error_message}</p>
+                </div>
+              % else:
+                <h2>${_("Learning Transcript of")} ${request.user.profile.name}</h2>
+              % endif
+            </div>
+
             % if learner_report_enrollments:
-              <div class="analytics-summary">
-                  <div class="analytics-figures">
-                      <div class="figures-line">
-                          <div class="analytics-figure">
+              <div class="analytics-basic-wrapper">
+                  <div class="analytics-float-wrapper">
+                      <div class="analytics-basic-wrapper">
+                          <div class="analytics-widget-24 analytics-figure">
                               <p class="figure">${learner_report_enrollments}</p>
                               <p class="title">${ungettext("Enrollment", "Enrollments", learner_report_enrollments)}</p>
                           </div>
-                          <div class="analytics-figure">
+                          <div class="analytics-widget-24 analytics-figure">
                               <p class="figure">${format_time_spent(learner_report_total_time_spent)}</p>
                               <p class="title">${_("Time spent on the platform")}</p>
                           </div>
                       </div>
-                      <div class="figures-line">
-                          <div class="analytics-figure">
+                      <div class="analytics-basic-wrapper">
+                          <div class="analytics-widget-24 analytics-figure">
                               <p class="figure">${learner_report_average_final_score}&nbsp;%</p>
                               <p class="title">${_("Average Final Score")}</p>
                           </div>
-                          <div class="analytics-figure">
+                          <div class="analytics-widget-24 analytics-figure">
                               <p class="figure">${learner_report_posts}</p>
                               <p class="title">${ungettext("Post", "Posts", learner_report_posts)}</p>
                           </div>
                       </div>
                   </div>
-                  <div class="analytics-piechart">
-                      <div id="pieChart">
-                          <svg></svg>
-                      </div>
-                      <div class="legend">
-                        <p><span class="finished">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.finished])}</p>
-                        <p><span class="failed">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.failed])}</p>
-                        <p><span class="in-progress">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</p>
-                        <p><span class="not-started">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.not_started])}</p>
-                      </div>
+                  <div class="analytics-float-wrapper">
+                    <div class="analytics-widget-24 analytics-piechart">
+                        <div id="pieChart">
+                            <svg></svg>
+                        </div>
+                        <div class="legend">
+                          <p><span class="finished">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.finished])}</p>
+                          <p><span class="failed">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.failed])}</p>
+                          <p><span class="in-progress">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</p>
+                          <p><span class="not-started">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.not_started])}</p>
+                        </div>
+                    </div>
                   </div>
               </div>
-              <div class="analytics-detailed-summary last-update">
-                <div class="last-update">
-                  <i class="fa fa-bell"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                </div>
+
+              <div class="last-update">
+                <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
               </div>
-              <div class="analytics-detailed-summary">
-                  <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
-                  ${Template(tpl).render(Context({'learner_course_table': learner_course_table, 'request': request,
-                      'list_table_downloads_url': list_table_downloads_url}))}
-              </div>
+
+              <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
+              ${Template(tpl).render(Context({'learner_course_table': learner_course_table, 'request': request}))}
 
               <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
             % endif

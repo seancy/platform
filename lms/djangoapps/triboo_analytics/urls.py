@@ -15,15 +15,18 @@ urlpatterns = [
 
     url(r'^global/$', views.microsite_view, name='analytics_microsite'),
 
-    url(r'^course/?$', views.course_view, name='analytics_course'),
+    url(r'^course/$', views.course_view, name='analytics_course'),
 
     url(r'^learner/$', views.learner_view, name='analytics_learner'),
     url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),
 
-    url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
+    url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
         views.list_table_downloads, name='list_table_downloads'),
     url(r'^transcript/export/$', views.my_transcript_export_table, name='analytics_my_transcript_export'),
     url(r'^learner_transcript/(?P<user_id>\w+)/export/$', views.transcript_export_table, name='analytics_transcript_export'),
     url(r'^learner/export/$', views.learner_export_table, name='analytics_learner_export'),
     url(r'^course/export/$', views.course_export_table, name='analytics_course_export'),
+
+    url(r'^ilt/$', views.ilt_view, name='analytics_ilt'),
+    url(r'^ilt/export/$', views.ilt_export_table, name='analytics_ilt_export'),
 ]

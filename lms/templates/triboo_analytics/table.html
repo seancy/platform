@@ -92,7 +92,7 @@
 
 {% if row_count and row_count >= 0 %}
   <p class="table-count">
-    {% blocktrans count row_count as nb_learners %}Total: {{nb_learners}} learner{% plural %}Total: {{nb_learners}} learners{% endblocktrans %}
+    {% blocktrans count row_count as nb_rows %}Total: {{nb_rows}} row{% plural %}Total: {{nb_rows}} rows{% endblocktrans %}
   </p>
 
   {% if table.page %}

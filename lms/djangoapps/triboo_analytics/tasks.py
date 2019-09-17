@@ -9,6 +9,8 @@ from celery import task
 from six import text_type
 from django.conf import settings
 from django.utils import timezone
+from datetime import datetime
+import pytz
 from django_tables2.export import TableExport
 from eventtracking import tracker
 from lms.djangoapps.instructor.enrollment import send_mail_to_student, send_custom_waiver_email
@@ -18,10 +20,9 @@ from lms.djangoapps.instructor_task.tasks_helper.runner import run_main_task
 from lms.djangoapps.instructor_task.tasks_helper.utils import REPORT_REQUESTED_EVENT_NAME
 from opaque_keys.edx.keys import CourseKey
 from student.models import CourseEnrollment
+from util.file import course_filename_prefix_generator
 import models
 import tables
-from util.file import course_filename_prefix_generator
-
 
 @task(routing_key=settings.HIGH_PRIORITY_QUEUE)
 def send_waiver_request_email(users, kwargs):
@@ -80,7 +81,7 @@ def links_for(storage, course_id, user, report):
 
 
 def upload_file_to_store(user_id, course_key, filename, export_format, content, username=None):
-    report_store = ReportStore.from_config('ANALYTICS_REPORTS')
+    report_store = ReportStore.from_config('TRIBOO_ANALYTICS_REPORTS')
     if filename == "transcript":
         _filename = "{}_{}_{}.{}".format(filename,
                                          username,
@@ -103,16 +104,31 @@ def upload_file_to_store(user_id, course_key, filename, export_format, content, 
 
 
 def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
-    from .views import get_transcript_table, get_course_progress_table, get_course_time_spent_table, \
-        get_table, str2dt
+    from .views import (
+        get_ilt_report_table,
+        get_ilt_learner_report_table,
+        get_transcript_table,
+        get_course_progress_table,
+        get_course_time_spent_table,
+        get_table
+    )
 
     if not TableExport.is_valid_format(_task_input['export_format']):
         raise UnsupportedExportFormatError()
 
     if _task_input['report_name'] == "transcript":
         table, _ = get_transcript_table(_task_input['report_args']['orgs'],
-                                     _task_input['report_args']['user_id'],
-                                     str2dt(_task_input['report_args']['last_update']))
+                                        _task_input['report_args']['user_id'],
+                                        datetime.strptime(_task_input['report_args']['last_update'], "%Y-%m-%d"))
+    
+    elif _task_input['report_name'] == "ilt_global_report":
+        table, _ = get_ilt_report_table(_task_input['report_args']['orgs'])
+
+    elif _task_input['report_name'] == "ilt_learner_report":
+        table, _ = get_ilt_learner_report_table(_task_input['report_args']['orgs'],
+                                                _task_input['report_args']['filter_kwargs'],
+                                                _task_input['report_args']['exclude'])
+
     else:
         kwargs = _task_input['report_args']['filter_kwargs']
         exclude = _task_input['report_args']['exclude']
@@ -127,8 +143,8 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         else:
             report_cls = getattr(models, _task_input['report_args']['report_cls'])
             table_cls = getattr(tables, _task_input['report_args']['table_cls'])
-            if 'day' in kwargs.keys():
-                kwargs['day'] = str2dt(kwargs['day'])
+            if 'date_time' in kwargs.keys():
+                kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
             if 'course_id' in kwargs.keys():
                 kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
             table, _ = get_table(report_cls, kwargs, table_cls, exclude)
@@ -159,7 +175,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
 def generate_export_table(entry_id, xmodule_instance_args):
     action_name = 'triboo_analytics_exported'
     TASK_LOG.info(
-        u"Task: %s, InstructorTask ID: %s, Task type: %s, Preparing for task execution",
+        u"Task: %s, Triboo Analytics Task ID: %s, Task type: %s, Preparing for task execution",
         xmodule_instance_args.get('task_id'), entry_id, action_name
     )
 

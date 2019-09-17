@@ -5,8 +5,7 @@
     from django.utils.translation import ugettext as _, ungettext
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
-    from triboo_analytics.models import CourseStatus, format_time_spent
-    from triboo_analytics.models import ANALYTICS_LIMITED_ACCESS_GROUP
+    from triboo_analytics.models import CourseStatus, format_time_spent, ANALYTICS_LIMITED_ACCESS_GROUP
 %>
 
 <%block name="pagetitle">${_("Analytics - Course Report")}</%block>
@@ -17,6 +16,7 @@
         <section class="banner">
           <section class="welcome-wrapper">
             <h2>${_("Analytics")}</h2>
+            <h3>${_("Let's have a look at your learning data")}</h3>
           </section>
         </section>
         <nav>
@@ -26,11 +26,11 @@
               % if ANALYTICS_LIMITED_ACCESS_GROUP not in [group.name for group in user.groups.all()]:
                 <li class="tab"><a href="${reverse('analytics_learner')}">${_("Learner Report")}</a></li>
               % endif
+                <li class="tab"><a href="${reverse('analytics_ilt')}">${_("ILT Report")}</a></li>
             </ol>
         </nav>
-        <section class="analytics-wrapper">
-            ## <h2>${_("Welcome to the Course Report")}</h2>
-            <div class="report-wrapper course">
+        <section class="analytics-wrapper course">
+          <div class="report-wrapper">
                 <div class="analytics-header">
                   % if courses:
                     <form action="${reverse('analytics_course')}" method="get">
@@ -57,31 +57,32 @@
                     <a href="${reverse('info', args=[course_id])}"><h2>${course_name}</h2></a>
                   % endif
                 </div>
-              % if course_report:
-                <div class="analytics-summary">
-                    <div class="analytics-figures">
-                        <div class="figures-line">
-                            <div class="analytics-figure">
+            % if course_report:
+                <div class="analytics-basic-wrapper">
+                    <div class="analytics-float-wrapper">
+                        <div class="analytics-basic-wrapper">
+                            <div class="analytics-widget-24 analytics-figure">
                                 <p class="figure">${course_report.enrollments}</p>
                                 <p class="title">${ungettext("Enrollment", "Enrollments", course_report.enrollments)}</p>
                             </div>
-                            <div class="analytics-figure">
+                            <div class="analytics-widget-24 analytics-figure">
                                 <p class="figure">${format_time_spent(course_report.average_complete_time)}</p>
                                 <p class="title">${_("Average time to complete the course")}</p>
                             </div>
                         </div>
-                        <div class="figures-line">
-                            <div class="analytics-figure">
+                        <div class="analytics-basic-wrapper">
+                            <div class="analytics-widget-24 analytics-figure">
                                 <p class="figure">${course_report.average_final_score}&nbsp;%</p>
                                 <p class="title">${_("Average Final Score")}</p>
                             </div>
-                            <div class="analytics-figure">
+                            <div class="analytics-widget-24 analytics-figure">
                                 <p class="figure">${course_report.posts}</p>
                                 <p class="title">${ungettext("Post", "Posts", course_report.posts)}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="analytics-piechart">
+                    <div class="analytics-float-wrapper">
+                      <div class="analytics-widget-24 analytics-piechart">
                         <div id="pieChart">
                             <svg></svg>
                         </div>
@@ -91,95 +92,87 @@
                             <p><span class="in-progress">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</p>
                             <p><span class="not-started">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.not_started])}</p>
                         </div>
+                      </div>
                     </div>
                 </div>
-                % if len(enrollments_csv_data) > 0:
-                    <div class="analytics-detailed-summary">
-                        <div class="analytics-linechart">
-                            <h3>${_("Number of Enrollments")}</h3>
-                            <div id="lineChart">
-                                <svg>
-                                    <defs>
-                                        <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
-                                          <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
-                                          <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                % endif
-                <div class="analytics-detailed-summary last-update">
-                    <div class="last-update">
-                      <i class="fa fa-bell"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
+              % if len(enrollments_csv_data) > 0:
+                <div class="analytics-widget-100 analytics-linechart">
+                    <h3>${_("Number of Enrollments")}</h3>
+                    <div id="lineChart">
+                        <svg>
+                            <defs>
+                                <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
+                                  <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
+                                  <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
                     </div>
                 </div>
-
-                <%
-                summary_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'summary'}))
-                progress_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'progress'}))
-                time_spent_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'time_spent'}))
-                %>
-                <div class="analytics-detailed-summary tabs">
-                  % if learner_course_table:
-                    <ul class="course-report-nav">
-                        <li class="nav-item active">${_("Summary")}</li>
-                        <li class="nav-item"><a href="${progress_url}">${_("Progress")}</a></li>
-                        <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
-                    </ul>
-                  % elif learner_course_progress_table:
-                      <ul class="course-report-nav">
-                          <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
-                          <li class="nav-item active">${_("Progress")}</li>
-                          <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
-                      </ul>
-                  % elif learner_course_time_spent_table:
-                      <ul class="course-report-nav">
-                          <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
-                          <li class="nav-item"><a href="${progress_url}">${_("Progress")}</a></li>
-                          <li class="nav-item active">${_("Time Spent")}</li>
-                      </ul>
-                  % endif
-
-                    <form class="table-filter-form" action="${reverse('analytics_course')}" method="get">
-                        ${filter_form}
-                        <input type="submit" value="${_("Filter")}"/>
-                    </form>
-                    <form class="table-user-properties-form" action="${reverse('analytics_course')}" method="get">
-                        <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
-                        <div id="user-properties-selection">
-                            ${user_properties_form}
-                            <input type="submit" value="${_("Go")}"/>
-                        </div>
-                    </form>
-
-                  % if learner_course_table:
-                    <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
-                    ${Template(tpl).render(Context({'learner_course_table': learner_course_table,
-                                                    'request': request,
-                                                    'row_count': row_count,
-                                                    'list_table_downloads_url': list_table_downloads_url}))}
-
-                  % elif learner_course_progress_table:
-                    <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_progress_table 'triboo_analytics/table.html' %}" %>
-                    ${Template(tpl).render(Context({'learner_course_progress_table': learner_course_progress_table,
-                                                    'request': request,
-                                                    'row_count': row_count,
-                                                    'list_table_downloads_url': list_table_downloads_url}))}
-
-                  % elif learner_course_time_spent_table:
-                    <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_time_spent_table 'triboo_analytics/table-double-header.html' %}" %>
-                    ${Template(tpl).render(Context({'learner_course_time_spent_table': learner_course_time_spent_table,
-                                                    'request': request,
-                                                    'row_count': row_count,
-                                                    'list_table_downloads_url': list_table_downloads_url}))}
-                  % endif
-                </div>
-
-                <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
               % endif
-            </div>
+                <div class="last-update">
+                  <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
+                </div>
+
+              <%
+              summary_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'summary'}))
+              progress_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'progress'}))
+              time_spent_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'time_spent'}))
+              %>
+              % if learner_course_table:
+                <ul class="analytics-nav">
+                    <li class="nav-item active">${_("Summary")}</li>
+                    <li class="nav-item"><a href="${progress_url}">${_("Progress")}</a></li>
+                    <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
+                </ul>
+              % elif learner_course_progress_table:
+                  <ul class="analytics-nav">
+                      <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
+                      <li class="nav-item active">${_("Progress")}</li>
+                      <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
+                  </ul>
+              % elif learner_course_time_spent_table:
+                  <ul class="analytics-nav">
+                      <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
+                      <li class="nav-item"><a href="${progress_url}">${_("Progress")}</a></li>
+                      <li class="nav-item active">${_("Time Spent")}</li>
+                  </ul>
+              % endif
+
+                <form class="table-filter-form" action="${reverse('analytics_course')}" method="get">
+                    ${filter_form}
+                    <input type="submit" value="${_("Filter")}"/>
+                </form>
+                <form class="table-user-properties-form" action="${reverse('analytics_course')}" method="get">
+                    <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
+                    <div id="user-properties-selection">
+                        ${user_properties_form}
+                        <input type="submit" value="${_("Go")}"/>
+                    </div>
+                </form>
+
+              % if learner_course_table:
+                <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
+                ${Template(tpl).render(Context({'learner_course_table': learner_course_table,
+                                                'request': request,
+                                                'row_count': row_count}))}
+
+              % elif learner_course_progress_table:
+                <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_progress_table 'triboo_analytics/table.html' %}" %>
+                ${Template(tpl).render(Context({'learner_course_progress_table': learner_course_progress_table,
+                                                'request': request,
+                                                'row_count': row_count}))}
+
+              % elif learner_course_time_spent_table:
+                <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_time_spent_table 'triboo_analytics/table-double-header.html' %}" %>
+                ${Template(tpl).render(Context({'learner_course_time_spent_table': learner_course_time_spent_table,
+                                                'request': request,
+                                                'row_count': row_count}))}
+              % endif
+
+              <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
+            % endif
+          </div>
         </section>
     </div>
 </main>

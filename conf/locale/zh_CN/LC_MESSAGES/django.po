@@ -22112,8 +22112,8 @@ msgid "Analytics - Global Report"
 msgstr "学习分析 - 整体报告"
 
 #: lms/templates/triboo_analytics/microsite.html:38
-msgid "Let's have a look at your learning data."
-msgstr "让我们来看看你的学习数据。"
+msgid "Let's have a look at your learning data"
+msgstr "让我们来看看你的学习数据"
 
 #: lms/templates/triboo_analytics/microsite.html:49
 msgid "Active Learner"

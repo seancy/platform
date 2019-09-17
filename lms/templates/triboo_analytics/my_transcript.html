@@ -211,12 +211,12 @@
         <section class="banner">
           <section class="welcome-wrapper">
             <h2>${_("Learning Transcript")}</h2>
+            <h3>${_("Let's have a look at your learning experience!")}</h3>
           </section>
         </section>
-        <section class="analytics-wrapper">
-          <div class="report-wrapper transcript">
+        <section class="analytics-wrapper transcript">
+          <div class="report-wrapper">
               <div class="analytics-header">
-                  <span>${_("Let's have a look at your learning experience!")}</span>
                 % if configuration_helpers.get_value("ENABLE_WAIVER_REQUEST", False):
                   <button class="request-waiver" data-izimodal-open="#waiver-pop-up">${_("Request a waiver")}</button>
                 % endif
@@ -250,30 +250,31 @@
                   </form>
               </div>
             % if learner_report_enrollments:
-              <div class="analytics-summary">
-                  <div class="analytics-figures">
-                      <div class="figures-line">
-                          <div class="analytics-figure">
+              <div class="analytics-basic-wrapper">
+                  <div class="analytics-float-wrapper">
+                      <div class="analytics-basic-wrapper">
+                          <div class="analytics-widget-24 analytics-figure">
                               <p class="figure">${learner_report_enrollments}</p>
                               <p class="title">${ungettext("Enrollment", "Enrollments", learner_report_enrollments)}</p>
                           </div>
-                          <div class="analytics-figure">
+                          <div class="analytics-widget-24 analytics-figure">
                               <p class="figure">${format_time_spent(learner_report_total_time_spent)}</p>
                               <p class="title">${_("Time spent on the platform")}</p>
                           </div>
                       </div>
-                      <div class="figures-line">
-                          <div class="analytics-figure">
+                      <div class="analytics-basic-wrapper">
+                          <div class="analytics-widget-24 analytics-figure">
                               <p class="figure">${learner_report_average_final_score}&nbsp;%</p>
                               <p class="title">${_("Average Final Score")}</p>
                           </div>
-                          <div class="analytics-figure">
+                          <div class="analytics-widget-24 analytics-figure">
                               <p class="figure">${learner_report_posts}</p>
                               <p class="title">${ungettext("Post", "Posts", learner_report_posts)}</p>
                           </div>
                       </div>
                   </div>
-                  <div class="analytics-piechart">
+                  <div class="analytics-float-wrapper">
+                    <div class="analytics-widget-24 analytics-piechart">
                       <div id="pieChart">
                           <svg></svg>
                       </div>
@@ -283,18 +284,16 @@
                         <p><span class="in-progress">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</p>
                         <p><span class="not-started">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.not_started])}</p>
                       </div>
+                    </div>
                   </div>
               </div>
-              <div class="analytics-detailed-summary last-update">
-                <div class="last-update">
-                  <i class="fa fa-bell"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                </div>
+
+              <div class="last-update">
+                <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
               </div>
-              <div class="analytics-detailed-summary">
-                  <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
-                  ${Template(tpl).render(Context({'learner_course_table': learner_course_table, 'request': request,
-                      'list_table_downloads_url': list_table_downloads_url}))}
-              </div>
+
+              <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
+              ${Template(tpl).render(Context({'learner_course_table': learner_course_table, 'request': request}))}
 
               <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
             % endif

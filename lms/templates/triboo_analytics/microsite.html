@@ -21,6 +21,7 @@
         <section class="banner">
           <section class="welcome-wrapper">
             <h2>${_("Analytics")}</h2>
+            <h3>${_("Let's have a look at your learning data")}</h3>
           </section>
         </section>
         <nav>
@@ -30,37 +31,33 @@
               % if ANALYTICS_LIMITED_ACCESS_GROUP not in [group.name for group in user.groups.all()]:
                 <li class="tab"><a href="${reverse('analytics_learner')}">${_("Learner Report")}</a></li>
               % endif
+                <li class="tab"><a href="${reverse('analytics_ilt')}">${_("ILT Report")}</a></li>
             </ol>
         </nav>
-        <section class="analytics-wrapper">
-            ## <h2>${_('{platform_name} Analytics').format(platform_name=settings.PLATFORM_NAME)}</h2>
-            <div class="report-wrapper microsite">
-                <p class="intro">${_("Let's have a look at your learning data.")}</p>
+        <section class="analytics-wrapper microsite">
+            <div class="report-wrapper">
               % if microsite_report:
-                <div class="analytics-summary">
-                    <div class="analytics-figures">
-                        <div class="figures-line">
-                            <div class="analytics-figure">
-                                <p class="figure">${microsite_report.courses}</p>
-                                <p class="title">${ungettext("Course", "Courses", microsite_report.courses)}</p>
-                            </div>
-                            <div class="analytics-figure">
-                                <p class="figure">${microsite_report.users}</p>
-                                <p class="title">${ungettext("Active Learner", "Active Learners", microsite_report.users)}</p>
-                            </div>
-                            <div class="analytics-figure">
-                                <p class="figure">${microsite_report.finished}</p>
-                                <p class="title">${ungettext("Certificate Delivered", "Certificates Delivered", microsite_report.finished)}</p>
-                            </div>
-                            <div class="analytics-figure">
-                                <p class="figure">${format_time_spent(microsite_report.average_time_spent)}</p>
-                                <p class="title">${_("Average Time Spent Per Active Learner")}</p>
-                            </div>
-                        </div>
+                <div class="analytics-basic-wrapper">
+                    <div class="analytics-widget-24 analytics-figure">
+                        <p class="figure">${microsite_report.courses}</p>
+                        <p class="title">${ungettext("Course", "Courses", microsite_report.courses)}</p>
+                    </div>
+                    <div class="analytics-widget-24 analytics-figure">
+                        <p class="figure">${microsite_report.users}</p>
+                        <p class="title">${ungettext("Active Learner", "Active Learners", microsite_report.users)}</p>
+                    </div>
+                    <div class="analytics-widget-24 analytics-figure">
+                        <p class="figure">${microsite_report.finished}</p>
+                        <p class="title">${ungettext("Certificate Delivered", "Certificates Delivered", microsite_report.finished)}</p>
+                    </div>
+                    <div class="analytics-widget-24 analytics-figure">
+                        <p class="figure">${format_time_spent(microsite_report.average_time_spent)}</p>
+                        <p class="title">${_("Average Time Spent Per Active Learner")}</p>
                     </div>
                 </div>
-                <div class="analytics-detailed-summary">
-                    <div class="analytics-linechart">
+
+                <div class="analytics-basic-wrapper">
+                    <div class="analytics-widget-75 analytics-linechart">
                         <h3>${_("Number of Unique Visitors")}</h3>
                         <div id="lineChart">
                             <svg>
@@ -73,7 +70,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="analytics-piechart">
+                    <div class="analytics-widget-24 analytics-piechart">
                         <h3>${_("Device Use")}</h3>
                         <div id="pieChart">
                             <svg></svg>
@@ -83,17 +80,17 @@
                             <p><span class="mobile">&#9679;</span> ${_("Mobile")}</p>
                         </div>
                     </div>
-                    <div class="analytics-map">
-                        <h3>${_("Active Learners Location")}</h3>
-                        <div id="map">
-                            <svg></svg>
-                        </div>
+                </div>
+
+                <div class="analytics-widget-100 analytics-map">
+                    <h3>${_("Active Learners Location")}</h3>
+                    <div id="map">
+                        <svg></svg>
                     </div>
                 </div>
-                <div class="analytics-detailed-summary last-update">
-                    <div class="last-update">
-                      <i class="fa fa-bell"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                    </div>
+
+                <div class="last-update">
+                  <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
                 </div>
               % endif
             </div>
@@ -101,7 +98,7 @@
     </div>
 </main>
 
-% if len(unique_visitors_csv_data) > 0:
+% if (microsite_report and len(unique_visitors_csv_data) > 0):
     <script type="text/javascript">
         var lineChartCsvData = "date,value\n" + "${unique_visitors_csv_data}";
         drawLineChart('lineChart', lineChartCsvData);
