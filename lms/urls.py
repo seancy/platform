@@ -118,6 +118,9 @@ urlpatterns = [
     # User API endpoints
     url(r'^api/user/', include('openedx.core.djangoapps.user_api.urls')),
 
+    # DOT API endpoints
+    url(r'^api/dot/', include('openedx.core.djangoapps.oauth_dispatch.api.urls')),
+
     # Profile Images API endpoints
     url(r'^api/profile_images/', include('openedx.core.djangoapps.profile_images.urls')),
 

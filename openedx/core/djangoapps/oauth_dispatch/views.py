@@ -7,11 +7,12 @@ from __future__ import unicode_literals
 
 import hashlib
 import json
+import requests
 
 from Cryptodome.PublicKey import RSA
 from django.conf import settings
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.generic import View
 from edx_oauth2_provider import views as dop_views  # django-oauth2-provider views
 from jwkest.jwk import RSAKey
@@ -227,3 +228,38 @@ class JwksView(View):
         return JsonResponse({
             'keys': [self.serialize_rsa_key(key) for key in secret_keys if key],
         })
+
+def GetCookie(request):
+    if request.method == 'GET':
+        if 'user' in request.GET:
+            user_token = request.GET['user']
+            try:
+                token = dot_models.AccessToken.objects.get(token=user_token)
+            except dot_models.AccessToken.DoesNotExist:
+                return HttpResponse('Error Token', status=400)
+            if token.is_expired():
+                return HttpResponse('Token is expired', status=400)
+            get_cookie_url = 'https://' + settings.ENV_TOKENS['LMS_BASE'] + '/oauth2/login/'
+            url_headers = {'Authorization': 'Bearer ' + user_token}
+            r = requests.post(get_cookie_url, headers = url_headers)
+            if r.status_code != 204:
+                return HttpResponse(r.content, status=r.status_code)
+            r_cookies = r.cookies
+            sessionid = ''
+            csrftoken = ''
+            for key, value in r_cookies.iteritems():
+                if key == 'sessionid':
+                    sessionid = value
+                elif key == 'csrftoken':
+                    csrftoken = value
+            response = HttpResponse(status=301)
+            response['Location'] = 'https://' + settings.ENV_TOKENS['LMS_BASE']
+            response['Set-Cookie'] = 'sessionid=' + sessionid + '; Domain=.learning-tribes.com; Path=/'
+            response.set_cookie('csrftoken', value=csrftoken)
+            token.delete()
+            return response
+        else:
+            return HttpResponse('Error parameter', status=400)
+    else:
+        return HttpResponse('Error HTTP method', status=405)
+

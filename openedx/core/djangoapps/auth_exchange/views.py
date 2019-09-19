@@ -31,7 +31,7 @@ from rest_framework.views import APIView
 from openedx.core.djangoapps.auth_exchange.forms import AccessTokenExchangeForm
 from openedx.core.djangoapps.oauth_dispatch import adapters
 from openedx.core.lib.api.authentication import OAuth2AuthenticationAllowInactiveUser
-
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 class AccessTokenExchangeBase(APIView):
     """
@@ -189,11 +189,14 @@ class LoginWithAccessTokenView(APIView):
         if not hasattr(request.user, 'backend'):
             request.user.backend = self._get_path_of_arbitrary_backend_for_user(request.user)
 
-        if not self._is_grant_password(request.auth):
-            raise AuthenticationFailed({
-                u'error_code': u'non_supported_token',
-                u'developer_message': u'Only support DOT type access token with grant type password. '
-            })
+        if configuration_helpers.get_value('enable_clientcredentials_type', None):
+            pass
+        else:
+            if not self._is_grant_password(request.auth):
+                raise AuthenticationFailed({
+                    u'error_code': u'non_supported_token',
+                    u'developer_message': u'Only support DOT type access token with grant type password. '
+                })
 
         login(request, request.user)  # login generates and stores the user's cookies in the session
         return HttpResponse(status=204)  # cookies stored in the session are returned with the response
