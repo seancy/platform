@@ -1,12 +1,16 @@
 # pylint: disable=missing-docstring
-from urlparse import urlparse
+from urlparse import urlparse, urlunparse
 
 from crum import get_current_request
 from django import template
 from django.utils.safestring import mark_safe
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.conf import settings
 
 from openedx.core.djangoapps.ace_common.tracking import CampaignTrackingInfo, GoogleAnalyticsTrackingPixel
 from openedx.core.djangolib.markup import HTML
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+
 
 register = template.Library()  # pylint: disable=invalid-name
 
@@ -151,3 +155,42 @@ def ensure_url_is_absolute(site, relative_path):
         relative_path = relative_path.lstrip('/')
         url = u'https://{root}/{path}'.format(root=root, path=relative_path)
     return url
+
+
+def _absolute_url(is_secure, url_path):
+    """Construct an absolute URL back to the site.
+
+    Arguments:
+        is_secure (bool): If true, use HTTPS as the protocol.
+        url_path (unicode): The path of the URL.
+
+    Returns:
+        unicode
+
+    """
+    site_name = configuration_helpers.get_value('SITE_NAME', settings.SITE_NAME)
+    parts = ("https" if is_secure else "http", site_name, url_path, '', '', '')
+    return urlunparse(parts)
+
+
+@register.simple_tag(takes_context=True)
+def get_logo_url(context, is_secure=True):
+    """
+    Return the url for the branded logo image to be used.
+    Arguments:
+        is_secure (bool): If true, use HTTPS as the protocol.
+
+    """
+
+    # if the configuration has an override value for the logo_image_url
+    # let's use that
+    image_url = configuration_helpers.get_value('logo_image_url')
+    url_path = staticfiles_storage.url(image_url)
+    if image_url:
+        return _absolute_url(
+            is_secure=is_secure,
+            url_path=url_path,
+        )
+
+    return staticfiles_storage.url('images/logo.png')
+
