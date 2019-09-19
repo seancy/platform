@@ -3324,6 +3324,10 @@ msgstr ""
 msgid "Reset Your Password"
 msgstr "重置您的密码"
 
+#: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:91
+msgid "Create Your Password"
+msgstr "创建您的密码"
+
 #: common/static/bundles/PasswordResetConfirmation.js:191
 #: lms/static/js/student_account/components/PasswordResetConfirmation.jsx:96
 msgid "Enter and confirm your new password."
@@ -3348,6 +3352,10 @@ msgstr "密码不匹配。"
 #: lms/static/js/student_account/components/PasswordResetConfirmation.jsx:127
 msgid "Reset My Password"
 msgstr "重置我的密码"
+
+#: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:127
+msgid "Create My Password"
+msgstr "创建我的密码"
 
 #: common/static/bundles/PasswordResetConfirmation.js:269
 #: lms/static/js/student_account/components/PasswordResetInput.jsx:15

@@ -1,4 +1,4 @@
-#: cms/templates/login.html
+#: master-josyon:cms/templates/login.html:31
 msgid "Welcome to Joyson Open Online Courses, log in to explore more!
 "
 msgstr "欢迎来到均胜网络课堂，请登录，让我们一起来探索未知!"
