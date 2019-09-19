@@ -1367,6 +1367,7 @@
     "Save": "Enregistrer", 
     "Save Changes": "Enregistrer les modifications", 
     "Save changes": "Enregistrer les modifications", 
+    "Saved Successfully": "Enregistr\u00e9 avec succ\u00e8s", 
     "Saved cohort": "Cohorte enregistr\u00e9e", 
     "Saving": "Enregistrement en cours", 
     "Saving your email preference": "Enregistrement de vos pr\u00e9f\u00e9rences email", 
