@@ -138,6 +138,11 @@ msgstr ""
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
+msgid "Add or modify the hotel of the learners enrolled in the selected session. Learners will be notified by email when the session is confirmed."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
 msgid "Manage ILT sessions"
 msgstr ""
 

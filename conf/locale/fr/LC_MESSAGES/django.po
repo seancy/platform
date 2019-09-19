@@ -6990,6 +6990,16 @@ msgstr "Cette demande a été confirmé"
 msgid "This request has been refused"
 msgstr "Cette demande a été refusé"
 
+#: lms/djangoapps/courseware/views/views.py:1863
+#: lms/djangoapps/courseware/views/views.py:1936
+msgid "Enrollment refused"
+msgstr "Inscription refusée"
+
+#: lms/djangoapps/courseware/views/views.py:1865
+#: lms/djangoapps/courseware/views/views.py:1894
+msgid "Enrollment accepted. If a hotel request has been done, you will receive a confirmation as soon as it is processed."
+msgstr "Inscription validée. Si une demande d’hôtel a été faite, vous recevrez une confirmation dès qu’elle aura été traitée."
+
 #: lms/djangoapps/dashboard/git_import.py:47
 #, python-brace-format
 msgid ""
@@ -14497,7 +14507,7 @@ msgstr "Voir tous les cours"
 #: lms/templates/header/navbar-authenticated.html:39
 #: themes/edx.org/lms/templates/dashboard.html:35
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Tableau de bord"
 
 #: lms/templates/dashboard.html:142
 #: lms/templates/emails/ilt_confirmed_email_message.txt:8
@@ -14610,7 +14620,7 @@ msgstr "Enregistrer les paramètres"
 #: themes/edx.org/lms/templates/dashboard.html:365
 #: themes/edx.org/lms/templates/dashboard/_dashboard_entitlement_unenrollment_modal.html:29
 msgid "Unenroll"
-msgstr "Désinscrire"
+msgstr "Se désinscrire"
 
 #: lms/templates/edit_unit_link.html:5
 msgid "View Unit in Studio"
@@ -15304,6 +15314,10 @@ msgstr "Enregistrez votre réponse"
 #: lms/templates/problem.html:57
 msgid "Reset your answer"
 msgstr "Réinitialiser votre réponse"
+
+#: lms/templates/problem.html:122
+msgid "Answers are displayed within the problem"
+msgstr "Les réponses sont affichées dans le quiz"
 
 #: lms/templates/problem_notifications.html:14
 msgid "Next Hint"
@@ -17217,6 +17231,14 @@ msgstr "S'il vus plaît entre un nom de CCX valide."
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:140
 msgid "Email Addresses/Usernames"
 msgstr "Adresses email/Nom d'utilisateurs"
+
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:137
+msgid "Email Addresses"
+msgstr "Adresses mail"
+
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:140
+msgid "Send Emails"
+msgstr "Envoyer les emails"
 
 #: lms/templates/ccx/enrollment.html:14
 msgid ""
@@ -20672,6 +20694,14 @@ msgid ""
 msgstr ""
 "Entrez des adresses emails et/ou des noms d'utilisateurs séparés par des "
 "retours à la ligne ou des virgules."
+
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:134
+msgid "Welcoming Email"
+msgstr "Email de bienvenue"
+
+#: lms/templates/instructor/instructor_dashboard_2/membership.html:136
+msgid "To send a welcoming email to users registered and enrolled by batch, enter email addresses separated by new lines or commas."
+msgstr "Pour envoyer un email de bienvenue aux utilisateurs enregistrés et inscrits par lot, entrez les adresses mail séparées par de nouvelles lignes ou des virgules."
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:122
 msgid "The following users didn't get certificates:"
@@ -29572,6 +29602,11 @@ msgstr ""
 "Entrez une ou plusiers adresses mails ou noms d'utilisateurs séparés par un saut de ligne ou une virgule."
 "Vous ne recevrez pas de mails de notifications si l'adresse mail est incorrectes, verifiez bien les emails saisies."
 "Les apprenants seront inscrits à la session sélectionnée. Ils recevront une notification par email."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Add or modify the hotel of the learners enrolled in the selected session. Learners will be notified by email when the session is confirmed."
+msgstr "Ajouter ou modifier l'hôtel des apprenants inscrits à la session sélectionnée. Les apprenants seront avertis par e-mail lorsque la session sera confirmée."
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html

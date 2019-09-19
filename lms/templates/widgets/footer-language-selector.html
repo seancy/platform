@@ -27,9 +27,9 @@
         % for language in sorted(released_languages(), key=lambda x: x.code):
             <% language_name = Locale.parse(language.code.replace('_', '-'), sep='-').language_name %>
             % if language.code == LANGUAGE_CODE:
-                <option value="${language.code}" imagesrc="${static.url('images/country-icons/{}.png'.format(language.code))}" selected="selected">${language_name}</option>
+                <option value="${language.code}" imagesrc="${static.url('images/country-icons/{}.png'.format(language.code))}" selected="selected">${language_name.capitalize()}</option>
             % else:
-                <option value="${language.code}" imagesrc="${static.url('images/country-icons/{}.png'.format(language.code))}">${language_name}</option>
+                <option value="${language.code}" imagesrc="${static.url('images/country-icons/{}.png'.format(language.code))}">${language_name.capitalize()}</option>
             % endif
         % endfor
     </select>

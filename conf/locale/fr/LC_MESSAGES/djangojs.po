@@ -12264,3 +12264,9 @@ msgstr "Catégorie"
 #: lms/templates/discovery/facet.underscore
 msgid "Mandatory"
 msgstr "Obligatoire"
+
+#: xblock-ilt/ilt/static/js/src/ilt.js:196
+#: xblock-ilt/ilt/static/js/src/ilt.js:263
+#: xblock-ilt/ilt/static/js/src/ilt.js:435
+msgid "Saved Successfully"
+msgstr "Enregistré avec succès"
