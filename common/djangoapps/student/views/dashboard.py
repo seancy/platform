@@ -1141,7 +1141,7 @@ def get_enrolled_ilt(request):
                 ilt_block = modulestore().get_item(summary.usage_id)
                 value = json.loads(summary.value)
                 for k, v in value.items():
-                    if request.user.id in v:
+                    if str(request.user.id) in v:
                         sessions = ilt_summaries.get(field_name='sessions',
                                                      usage_id=summary.usage_id)
                         sessions_data = json.loads(sessions.value)

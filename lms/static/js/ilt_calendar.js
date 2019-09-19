@@ -137,6 +137,13 @@
     var current_day = day.clone();
     outer.addEventListener('click', function() {
       self.openDay(this, current_day);
+      var week_days = document.getElementsByClassName('day');
+      for (var i = 0; i < week_days.length; i++) {
+        week_days[i].classList.remove('active-day');
+        week_days[i].classList.add('inactive-day')
+      }
+      this.classList.add("active-day");
+      this.classList.remove("inactive-day");
     });
 
     //Day Name
@@ -152,7 +159,7 @@
 
     // outer.appendChild(name);
     outer.appendChild(number);
-    // outer.appendChild(events);
+    outer.appendChild(events);
     this.week.appendChild(outer);
   }
 
@@ -165,7 +172,7 @@
     }, []);
 
     todaysEvents.every(function (ev, index) {
-      var evSpan = createElement('span', ev.color);
+      var evSpan = createElement('span', 'event-square');
       element.appendChild(evSpan);
       return index < 1
     });

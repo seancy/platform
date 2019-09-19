@@ -15,7 +15,7 @@ def send_mail_with_alias(*args, **kwargs):
         args_list[2] = "{0} <{1}>".format(from_alias, args_list[2])
         no_email_address = getattr(settings, 'LEARNER_NO_EMAIL')
         if no_email_address:
-            args_list[3] = [x for x in args_list[3] if x != no_email_address ]
+            args_list[3] = [x for x in args_list[3] if not x.endswith(no_email_address)]
             if len(args_list[3]) == 0:
                 return
     except AttributeError:

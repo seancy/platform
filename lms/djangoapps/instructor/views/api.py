@@ -1245,7 +1245,7 @@ def students_update_enrollment(request, course_id):
             validate_email(email)  # Raises ValidationError if invalid
             no_email_address = getattr(settings, 'LEARNER_NO_EMAIL')
             if action == 'enroll':
-                if (no_email_address and email == no_email_address
+                if (no_email_address and email.endswith(no_email_address)
                     and auto_enroll and not email_students):
                     before, after, enrollment_obj = enroll_user(course_id, user)
                     results.append({
@@ -1287,7 +1287,7 @@ def students_update_enrollment(request, course_id):
                             state_transition = UNENROLLED_TO_ALLOWEDTOENROLL
 
             elif action == 'unenroll':
-                if (no_email_address and email == no_email_address
+                if (no_email_address and email.endswith(no_email_address)
                     and not email_students):
                     before, after = unenroll_user(course_id, user)
                     results.append({
@@ -1345,7 +1345,7 @@ def students_update_enrollment(request, course_id):
             })
 
         else:
-            if email != no_email_address:
+            if (no_email_address and not email.endswith(no_email_address)) or email != no_email_address:
                 ManualEnrollmentAudit.create_manual_enrollment_audit(
                     request.user, email, state_transition, reason, enrollment_obj, role
                 )
