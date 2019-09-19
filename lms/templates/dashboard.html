@@ -288,7 +288,9 @@ from xmodule.modulestore.django import modulestore
           var slidesNumber = $('.my-courses > .listing-courses > .course-item').length;
           if (((document.body.offsetWidth < 768) && (slidesNumber > 1))
             || ((document.body.offsetWidth < 992) && (slidesNumber > 2))
-            || ((document.body.offsetWidth < 1200) && (slidesNumber > 3))) {
+            || ((document.body.offsetWidth < 1200) && (slidesNumber > 3))
+            || ((document.body.offsetWidth >= 1200))
+          ) {
             swiperInit();
           }
 
