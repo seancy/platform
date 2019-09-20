@@ -1,4 +1,5 @@
 <%! from django.utils.translation import ugettext as _ %>
+<%! from django.utils.translation import pgettext %>
 <%! from django.conf import settings %>
 <%! from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers %>
 <%!
@@ -18,9 +19,9 @@ Session information:
     % endif
     ${_("Timezone")}: ${ session_info['timezone'] } ${ session_info['timezone_offset'] }h
     ${_("Area / Region")}: ${ session_info['area_region'] }
-    ${_("Location")}: ${ session_info['location'] }
+    ${pgettext('xblock-ilt', "Location")}: ${ session_info['location'] }
     % if 'address' in session_info:
-    ${_("Address")}: ${ session_info['address'] }
+    ${pgettext('xblock-ilt', "Address")}: ${ session_info['address'] }
     % endif
     % if 'zip_code' in session_info:
     ${_("Zip Code")}: ${ session_info['zip_code'] }

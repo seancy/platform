@@ -228,18 +228,6 @@ msgstr ""
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-msgctxt "xblock-ilt"
-msgid "Location"
-msgstr ""
-
-#: XBlock: xblock-ilt
-#: xblock-ilt/ilt/static/html/ilt.html
-msgctxt "xblock-ilt"
-msgid "Address"
-msgstr ""
-
-#: XBlock: xblock-ilt
-#: xblock-ilt/ilt/static/html/ilt.html
 #  msgid "Instructor"
 #  msgstr ""
 

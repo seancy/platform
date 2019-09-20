@@ -34,6 +34,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbid
 from django.shortcuts import redirect
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext as _
+from django.utils.translation import pgettext
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods, require_POST
@@ -1868,7 +1869,7 @@ def get_students_features(request, course_id, csv=False):  # pylint: disable=red
         'name': _('Name'),
         'email': _('Email'),
         'language': _('Language'),
-        'location': _('Location'),
+        'location': pgettext('user.profile', 'Location'),
         'year_of_birth': _('Birth Year'),
         'gender': _('Gender'),
         'level_of_education': _('Level of Education'),

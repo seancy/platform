@@ -6927,11 +6927,21 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py:1819
 #: lms/djangoapps/triboo_analytics/forms.py:14
+msgctxt "user.profile"
+msgid "Location"
+msgstr ""
+
 #: lms/templates/courseware/ilt_validation.html:56
+#: lms/templates/courseware/ilt_attendance_sheet.html:45
 #: lms/templates/emails/ilt_confirmed_email_message.txt:21
 #: lms/templates/emails/ilt_enrolled_email_message.txt:21
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:25
+msgctxt "xblock-ilt"
 msgid "Location"
+msgstr ""
+
+#: lms/djangoapps/instructor/views/api.py:1820
+msgid "Birth Year"
 msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py:1820
@@ -9244,10 +9254,15 @@ msgid "Date Joined"
 msgstr ""
 
 #: lms/djangoapps/triboo_analytics/forms.py:15
+msgctxt "user.profile"
+msgid "Address"
+msgstr ""
+
 #: lms/templates/courseware/ilt_validation.html:58
 #: lms/templates/emails/ilt_confirmed_email_message.txt:23
 #: lms/templates/emails/ilt_enrolled_email_message.txt:23
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:27
+msgctxt "xblock-ilt"
 msgid "Address"
 msgstr ""
 

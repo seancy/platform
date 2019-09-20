@@ -2,6 +2,7 @@
 <%!
     import json
     from django.utils.translation import ugettext as _
+    from django.utils.translation import pgettext
     from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
     from openedx.core.djangolib.js_utils import dump_js_escaped_json
 %>
@@ -53,9 +54,9 @@
                     % endif
                     <p><span class="timezone"><i class="fa fa-globe" aria-hidden="true"></i>${_("Timezone")}:</span> ${ currentSession['timezone'] } ${ currentSession['timezone_offset'] }h</p>
                     <p><span class="area-region"><i class="fa fa-globe-stand" aria-hidden="true"></i>${_("Area / Region")}:</span> ${ currentSession['area_region'] }</p>
-                    <p><span class="location"><i class="fa fa-map-marker" aria-hidden="true"></i>${_("Location")}:</span> ${ currentSession['location'] }</p>
+                    <p><span class="location"><i class="fa fa-map-marker" aria-hidden="true"></i>${pgettext('xblock-ilt', "Location")}:</span> ${ currentSession['location'] }</p>
                     % if 'address' in currentSession:
-                    <p><span class="address"><i class="fa fa-map-marker" aria-hidden="true"></i>${_("Address")}:</span> ${ currentSession['address'] }</p>
+                    <p><span class="address"><i class="fa fa-map-marker" aria-hidden="true"></i>${pgettext('xblock-ilt', "Address")}:</span> ${ currentSession['address'] }</p>
                     % endif
                     % if 'zip_code' in currentSession:
                     <p><span class="zip-code"><i class="fa fa-map-marker" aria-hidden="true"></i>${_("Zip Code")}:</span> ${ currentSession['zip_code'] }</p>

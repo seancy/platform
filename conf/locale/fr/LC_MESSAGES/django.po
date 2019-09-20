@@ -3803,7 +3803,7 @@ msgid ""
 "them directly to course content."
 msgstr ""
 "Ne pas montrer l'onglet d'accueil du cours quand les étudiants arrivent du "
-"tablea de bord, en les envoyant directement au contenu du cours."
+"tableau de bord, en les envoyant directement au contenu du cours."
 
 #: common/lib/xmodule/xmodule/course_module.py:851
 msgid "Enable Subsection Prerequisites"
@@ -3915,7 +3915,7 @@ msgstr "Ordre du cours"
 
 #: common/lib/xmodule/xmodule/course_module.py:952
 msgid "Sort the courses to display on dashboard in ascending order."
-msgstr "Trier les cours afin de les afficher dans un ordre ascendant sur le dashbaord."
+msgstr "Trier les cours afin de les afficher dans un ordre ascendant sur le tableau de bord."
 
 #: common/lib/xmodule/xmodule/course_module.py:958
 msgid "Course Mandatory Enabled"
@@ -6802,7 +6802,7 @@ msgstr ""
 
 #: lms/djangoapps/courseware/views/views.py:143
 msgid "We're working on it..."
-msgstr "En cours..."
+msgstr "En cours…"
 
 #: lms/djangoapps/courseware/views/views.py:145
 msgid ""
@@ -7613,14 +7613,14 @@ msgid ""
 "Row #{row_num}: Missing country, a 2-character country code is expected (e."
 "g. FR, CN, US, BR)."
 msgstr ""
-"Colonne #{row_num}: le code du pays est manquant (format: FR, CN, US...)."
+"Colonne #{row_num}: le code du pays est manquant (format: FR, CN, US…)."
 
 #: lms/djangoapps/instructor/views/api.py:400
 #, python-brace-format
 msgid ""
 "Row #{row_num}: Invalid country, a 2-character country code is expected (e."
 "g. FR, CN, US, BR)."
-msgstr "Colonne #{row_num}: le code du pays est invalide (format: FR, US, CN...)."
+msgstr "Colonne #{row_num}: le code du pays est invalide (format: FR, US, CN…)."
 
 #: lms/djangoapps/instructor/views/api.py:405
 #, python-brace-format
@@ -7898,12 +7898,19 @@ msgstr "Langue"
 
 #: lms/djangoapps/instructor/views/api.py:1819
 #: lms/djangoapps/triboo_analytics/forms.py:14
+msgctxt "user.profile"
+msgid "Location"
+msgstr "Adresse"
+
 #: lms/templates/courseware/ilt_validation.html:56
+#: lms/templates/courseware/ilt_attendance_sheet.html:45
 #: lms/templates/emails/ilt_confirmed_email_message.txt:21
 #: lms/templates/emails/ilt_enrolled_email_message.txt:21
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:25
+msgctxt "xblock-ilt"
 msgid "Location"
-msgstr "Adresse"
+msgstr "Lieu de formation"
+
 
 #: lms/djangoapps/instructor/views/api.py:1820
 msgid "Birth Year"
@@ -10588,12 +10595,17 @@ msgid "Date Joined"
 msgstr "Date d'inscription"
 
 #: lms/djangoapps/triboo_analytics/forms.py:15
+msgctxt "user.profile"
+msgid "Address"
+msgstr "Adresse 1"
+
 #: lms/templates/courseware/ilt_validation.html:58
 #: lms/templates/emails/ilt_confirmed_email_message.txt:23
 #: lms/templates/emails/ilt_enrolled_email_message.txt:23
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:27
+msgctxt "xblock-ilt"
 msgid "Address"
-msgstr "Adresse 1"
+msgstr "Adresse"
 
 #: lms/djangoapps/triboo_analytics/forms.py:16
 #: lms/templates/shoppingcart/receipt.html:237
@@ -10713,8 +10725,8 @@ msgid ""
 "to download the report when it is complete, it can take several minutes to "
 "appear."
 msgstr ""
-"Votre rapport est en cours de création. Il apparaitra dans le section"
-"'Mes rapports' en bas de la page quand il sera prêt. La génération peut"
+"Votre rapport est en cours de création. Il apparaitra dans la section "
+"'Mes rapports' en bas de la page quand il sera prêt. La génération peut "
 "prendre quelques minutes."
 
 #: lms/djangoapps/triboo_analytics/views.py:532
@@ -11183,7 +11195,7 @@ msgstr "Articles qui vont être supprimés"
 
 #: lms/templates/wiki/delete.html:31 wiki/templates/wiki/delete.html:30
 msgid "...and more!"
-msgstr "...et plus !"
+msgstr "… et plus !"
 
 #: lms/templates/wiki/delete.html:39 wiki/templates/wiki/delete.html:38
 msgid "You are deleting an article. Please confirm."
@@ -15075,7 +15087,7 @@ msgstr "Accès aux cours"
 #: lms/templates/register.html:95
 #: themes/stanford-style/lms/templates/register-shib.html:76
 msgid "Processing your account information"
-msgstr "Traitement de vos informations..."
+msgstr "Traitement de vos informations…"
 
 #: lms/templates/login.html:137 wiki/templates/wiki/accounts/login.html:6
 msgid "Please log in"
@@ -17589,7 +17601,7 @@ msgstr ""
 
 #: lms/templates/commerce/checkout_receipt.html:56
 msgid "Loading Order Data..."
-msgstr "Chargement des données de la commande..."
+msgstr "Chargement des données de la commande…"
 
 #: lms/templates/commerce/checkout_receipt.html:57
 msgid "Please wait while we retrieve your order details."
@@ -18018,7 +18030,7 @@ msgstr "Validation de l'inscription à une session présentiel"
 
 #: lms/templates/courseware/ilt_validation.html:25
 msgid "Requester"
-msgstr "S'inscrire"
+msgstr "Demande de"
 
 #: lms/templates/courseware/ilt_validation.html:27
 msgid "Session Name"
@@ -19226,7 +19238,7 @@ msgstr "Rechercher des notes pour:"
 
 #: lms/templates/edxnotes/edxnotes.html:36
 msgid "Search notes for..."
-msgstr "Rechercher des notes sur..."
+msgstr "Rechercher des notes sur…"
 
 #: lms/templates/edxnotes/edxnotes.html:56
 msgid "View notes by:"
@@ -19238,7 +19250,7 @@ msgid ""
 "course are using notes to:"
 msgstr ""
 "Vous n'avez pas encore crée de notes pour ce cours. Les autres étudiants de "
-"ce cours utilisent les notes pour:"
+"ce cours utilisent les notes pour :"
 
 #: lms/templates/edxnotes/edxnotes.html:75
 msgid "Mark a passage or concept so that it's easy to find later."
@@ -20448,7 +20460,7 @@ msgstr ""
 "{platform_name} est à but non lucratif pour offrir a tous des enseignement "
 "de grande qualité dans le monde entier. Grâce à votre aide nous pouvons "
 "améliorer constamment l'expérience d'apprentissage pour des millions de "
-"gens ... "
+"gens…"
 
 #: lms/templates/enrollment/course_enrollment_message.html:26
 msgid "Donation Actions"
@@ -23729,7 +23741,7 @@ msgstr "Reporting - Demande de dérogation"
 
 #: lms/templates/triboo_analytics/process_waiver_request.html:35
 msgid "Forwarding to gradebook page ... "
-msgstr "Renvoi vers le rapport de note..."
+msgstr "Renvoi vers le rapport de note…"
 
 #: lms/templates/triboo_analytics/transcript.html:11
 msgid "Analytics - Learner Transcript"
@@ -26408,7 +26420,7 @@ msgstr "Cours en Cours de Traitement"
 
 #: cms/templates/index.html:242
 msgid "This course run is currently being created."
-msgstr "Création de cette session de cours..."
+msgstr "Création de cette session de cours…"
 
 #. Translators: This is a status message, used to inform the user of
 #. what the system is doing. This status means that the user has
@@ -28174,7 +28186,7 @@ msgstr "Pièces-jointes Wiki"
 
 #: wiki/forms.py:31
 msgid "Only localhost... muahahaha"
-msgstr "Seulement en local... ahahahah "
+msgstr "Seulement en local… ahahahah "
 
 #: wiki/forms.py:37
 msgid "Initial title of the article. May be overridden with revision titles."
@@ -28540,7 +28552,7 @@ msgstr "Un court résumé de ce que le fichier contient"
 
 #: wiki/plugins/attachments/forms.py:19
 msgid "Yes I am sure..."
-msgstr "Oui, je suis sûr..."
+msgstr "Oui, je suis sûr…"
 
 #: wiki/plugins/attachments/markdown_extensions.py:33
 msgid "Click to download file"
@@ -28715,16 +28727,6 @@ msgid ""
 "efficient....\n"
 "  "
 msgstr ""
-"\n"
-"  Replacing an attachment means adding a new file that will be used in its "
-"place. All references to the file will be replaced by the one you upload and "
-"the file will be downloaded as <strong>%(filename)s</strong>. Please note "
-"that this attachment is in use on other articles, you may distort contents. "
-"However, do not hestitate to take advantage of this and make replacements "
-"for the listed articles where necessary. This way of working is more "
-"efficient....\n"
-"  "
-
 
 #: wiki/plugins/attachments/templates/wiki/plugins/attachments/replace.html:15
 msgid "Articles using"
@@ -29075,7 +29077,7 @@ msgstr "Effacer la liste de notifications"
 
 #: wiki/templates/wiki/base.html:113
 msgid "Search..."
-msgstr "Recherche..."
+msgstr "Recherche…"
 
 #: wiki/templates/wiki/base.html:129
 msgid "Log out"
@@ -29198,7 +29200,7 @@ msgstr "Cet article est actuellement verrouillé pour l'édition."
 
 #: wiki/templates/wiki/accounts/login.html:12
 msgid "Log me in..."
-msgstr "Connectez-moi..."
+msgstr "Connectez-moi…"
 
 #: wiki/templates/wiki/accounts/login.html:18
 msgid "Don't have an account?"
@@ -29206,7 +29208,7 @@ msgstr "Pas de compte ?"
 
 #: wiki/templates/wiki/accounts/signup.html:12
 msgid "Sign me up..."
-msgstr "Inscrivez-moi..."
+msgstr "Inscrivez-moi…"
 
 #: wiki/templates/wiki/article/create_root.html:4
 msgid "Create root article"
@@ -29222,7 +29224,7 @@ msgid ""
 "create the first one, the root article. In the beginning, it will only be "
 "editable by administrators, but you can define permissions after."
 msgstr ""
-"Vous avez installé django-wiki... mais il n'y a aucun article. Il est grand "
+"Vous avez installé django-wiki… mais il n'y a aucun article. Il est grand "
 "temps de créer le premier, l'article racine. Au début, seuls les "
 "administrateurs pourront le modifier, mais vous pourrez définir les "
 "permissions par la suite."
@@ -29255,7 +29257,7 @@ msgstr "Aucun sous-article"
 
 #: wiki/templates/wiki/includes/breadcrumbs.html:31
 msgid "...and more"
-msgstr "... et plus encore"
+msgstr "… et plus encore"
 
 #: wiki/templates/wiki/includes/breadcrumbs.html:35
 msgid "Browse articles in this level"
@@ -29284,7 +29286,7 @@ msgstr "déverrouillé"
 #: wiki/views/accounts.py:25
 msgid "You are now sign up... and now you can sign in!"
 msgstr ""
-"Vous êtes maintenant enregistré... et vous pouvez maintenant vous "
+"Vous êtes maintenant enregistré… et vous pouvez maintenant vous "
 "identifier !"
 
 #: wiki/views/accounts.py:32
@@ -29662,19 +29664,7 @@ msgstr "Votre demande a été refusée"
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "accommodation, preferences, specific diet ..."
-msgstr "hébergement, préférence, régime spécifique ..."
-
-#: XBlock: xblock-ilt
-#: xblock-ilt/ilt/static/html/ilt.html
-msgctxt "xblock-ilt"
-msgid "Location"
-msgstr "Lieu"
-
-#: XBlock: xblock-ilt
-#: xblock-ilt/ilt/static/html/ilt.html
-msgctxt "xblock-ilt"
-msgid "Address"
-msgstr "Adresse"
+msgstr "hébergement, préférence, régime spécifique…"
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
