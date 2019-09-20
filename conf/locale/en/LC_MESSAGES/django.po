@@ -15786,6 +15786,38 @@ msgstr ""
 msgid "Your score is {current_score}%. You have passed the entrance exam."
 msgstr ""
 
+#: lms/templates/courseware/ilt_attendance_sheet.html:13
+msgid "ILT Attendance Sheet"
+msgstr ""
+
+#: lms/templates/courseware/ilt_attendance_sheet.html:27
+msgid "Attendance Sheet"
+msgstr ""
+
+#: lms/templates/courseware/ilt_attendance_sheet.html:31
+msgid "Instructor's Signature"
+msgstr ""
+
+#: lms/templates/courseware/ilt_attendance_sheet.html:39
+msgid "Session"
+msgstr ""
+
+#: lms/templates/courseware/ilt_attendance_sheet.html:42
+msgid "Date and Time"
+msgstr ""
+
+#: lms/templates/courseware/ilt_attendance_sheet.html:58
+msgid "Store"
+msgstr ""
+
+#: lms/templates/courseware/ilt_attendance_sheet.html:59
+msgid "Signature (morning)"
+msgstr ""
+
+#: lms/templates/courseware/ilt_attendance_sheet.html:60
+msgid "Signature (afternoon)"
+msgstr ""
+
 #: lms/templates/courseware/ilt_validation.html:12
 msgid "ILT Validation"
 msgstr ""

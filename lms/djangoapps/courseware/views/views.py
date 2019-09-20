@@ -1824,6 +1824,7 @@ def get_financial_aid_courses(user):
 def ilt_registration_validation(request, course_id, usage_id, user_id):
 
     usage_key = UsageKey.from_string(usage_id)
+    learner_no_email = settings.LEARNER_NO_EMAIL
     try:
         user = User.objects.get(id=user_id)
         request.user = user
@@ -1889,8 +1890,10 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
 
     if request.method == "POST":
         action = request.POST.get("action")
+        session_number = request.POST.get("session_number")
+        session_info = session_data[session_number]
         if action == 'accept':
-            session_number = request.POST.get("session_number")
+
             msg = _("Enrollment accepted. If a hotel request has been done, "
                     "you will receive a confirmation as soon as it is processed.")
             for k in registration_info:
@@ -1910,8 +1913,13 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
                           'name': user.profile.name or user.username,
                           'ilt_link': url, 'site_name': None,
                           'ilt_name': ilt_block.display_name,
-                          'course_name': course.display_name}
-                send_mail_to_student(user.email, params, language=get_user_email_language(user))
+                          'course_name': course.display_name,
+                          'session_info': session_info}
+
+                email = user.email
+                if learner_no_email and email.endswith(learner_no_email):
+                    email = user.profile.lt_ilt_supervisor
+                send_mail_to_student(email, params, language=get_user_email_language(user))
 
             # in case ILT supervisor altered learner's request session number
             if session_number != registered_session:
@@ -1931,8 +1939,13 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
                       'name': user.profile.name or user.username,
                       'ilt_link': url, 'site_name': None,
                       'ilt_name': ilt_block.display_name,
-                      'course_name': course.display_name}
-            send_mail_to_student(user.email, params, language=get_user_email_language(user))
+                      'course_name': course.display_name,
+                      'session_info': session_info}
+
+            email = user.email
+            if learner_no_email and email.endswith(learner_no_email):
+                email = user.profile.lt_ilt_supervisor
+            send_mail_to_student(email, params, language=get_user_email_language(user))
             msg = _("Enrollment refused")
         summary.value = json.dumps(data)
         summary.save()
