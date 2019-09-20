@@ -27695,8 +27695,8 @@ msgid "Your request has been confirmed"
 msgstr "您的请求已确认"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "Your request has been refused"
-msgstr "您的请求已被拒绝"
+msgid "Your request has been refused. You can make a new demand."
+msgstr "您的请求已被拒绝。您可以重新选择。"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "accommodation, preferences, specific diet ..."

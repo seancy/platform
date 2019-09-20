@@ -218,7 +218,7 @@ msgstr ""
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-msgid "Your request has been refused"
+msgid "Your request has been refused. You can make a new demand."
 msgstr ""
 
 #: XBlock: xblock-ilt
