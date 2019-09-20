@@ -1418,6 +1418,7 @@
     "Save": "\u4fdd\u5b58", 
     "Save Changes": "\u4fdd\u5b58\u66f4\u6539", 
     "Save changes": "\u4fdd\u5b58\u4fee\u6539", 
+    "Saved Successfully": "\u4fdd\u5b58\u6210\u529f", 
     "Saved cohort": "\u5df2\u4fdd\u5b58\u7684\u7fa4\u7ec4", 
     "Saving": "\u6b63\u5728\u4fdd\u5b58", 
     "Saving your email preference": "\u6b63\u5728\u4fdd\u5b58\u60a8\u7684\u7535\u5b50\u90ae\u4ef6\u504f\u597d", 
