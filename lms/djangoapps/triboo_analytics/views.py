@@ -214,6 +214,7 @@ def _transcript_view(user, request, template, report_type):
                 'learner_report_total_time_spent': learner_report_total_time_spent,
                 'learner_course_table': learner_course_table,
                 'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': report_type}),
+                'user_profile_name': user.profile.name
             }
         )
 

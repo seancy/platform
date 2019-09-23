@@ -19,6 +19,6 @@ logger.addHandler(log_handler)
 logger.info("Starting Triboo Analytics...")
 start_time = datetime.now()
 
-generate_today_reports(multi_process=True)
+generate_today_reports(multi_process=False)
 
 logger.info("Finished reports after {}".format(datetime.now() - start_time))

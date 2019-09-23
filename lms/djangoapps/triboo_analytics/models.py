@@ -1057,7 +1057,7 @@ class IltSession(TimeStampedModel):
                     'user': score.student,
                     'session_nb': None,
                     'registration': None,
-                    'attendee': (score.grade and score.grade > 0)
+                    'attendee': (score.grade > 0) if score.grade else False
                 }
             for session_nb, session_registrations in registrations.iteritems():
                 for user_id, registration in session_registrations.iteritems():
