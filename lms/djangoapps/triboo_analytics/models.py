@@ -26,6 +26,7 @@ from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.django.models import CourseKeyField, UsageKeyField
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.content.course_structures.api.v0.api import course_structure, CourseStructureNotAvailableError
+from openedx.core.djangoapps.content.course_structures.tasks import update_course_structure
 from openedx.core.djangoapps.models.course_details import CourseDetails
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 from student.models import CourseEnrollment
@@ -1208,7 +1209,11 @@ def generate_today_reports(multi_process=False):
     overviews = CourseOverview.objects.filter(start__lte=yesterday).only('id')
     course_ids = [o.id for o in overviews]
 
-    logger.info("start to update tracking logs")
+    logger.info("start updating course structures")
+    for course_id in course_ids:
+        update_course_structure.apply(args=[text_type(course_id)])
+
+    logger.info("start updating tracking logs")
     tracking_log_helper = TrackingLogHelper(course_ids)
     tracking_log_helper.update_logs(day=yesterday)
 
