@@ -55,6 +55,7 @@
         <thead>
             <tr>
                 <th class="learner">${_("Learner")}</th>
+                <th class="employee-id">${_("Employee ID")}</th>
                 <th class="store">${_("Store")}</th>
                 <th class="sig">${_("Signature (morning)")}</th>
                 <th class="sig">${_("Signature (afternoon)")}</th>
@@ -64,6 +65,7 @@
         % for user in enrolled_users:
         <tr>
             <td>${user.profile.name or user.username}</td>
+            <td>${user.profile.lt_employee_id}</td>
             <td>${user.profile.location}</td>
             <td></td>
             <td></td>

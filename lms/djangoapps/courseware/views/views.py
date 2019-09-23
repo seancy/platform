@@ -5,6 +5,7 @@ import json
 import logging
 import urllib
 from collections import OrderedDict, namedtuple
+from copy import deepcopy
 from datetime import datetime
 
 import analytics
@@ -1821,6 +1822,20 @@ def get_financial_aid_courses(user):
     return financial_aid_courses
 
 
+def decode_datetime(dts):
+    return datetime.strptime(dts, '%Y-%m-%dT%H:%M')
+
+
+def convert_datetime(date_str, date_format=None):
+    if not date_format:
+        date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "YYYY-MM-DD HH:mm")
+    date_format = date_format.replace("YYYY", "%Y").replace("DD", "%d").replace(
+        "MM", "%m"
+    ).replace("HH", "%H").replace("mm", "%M")
+
+    return decode_datetime(date_str).strftime(date_format)
+
+
 def ilt_registration_validation(request, course_id, usage_id, user_id):
 
     usage_key = UsageKey.from_string(usage_id)
@@ -1891,7 +1906,10 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
     if request.method == "POST":
         action = request.POST.get("action")
         session_number = request.POST.get("session_number")
-        session_info = session_data[session_number]
+        session_info = deepcopy(session_data[session_number])
+        if 'start_at' in session_info and 'end_at' in session_info:
+            session_info['start_at'] = convert_datetime(session_info['start_at'])
+            session_info['end_at'] = convert_datetime(session_info['end_at'])
         if action == 'accept':
 
             msg = _("Enrollment accepted. If a hotel request has been done, "
@@ -1953,9 +1971,6 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
 
 
 def ilt_attendance_sheet(request, course_id, usage_id, sess_key):
-
-    def decode_datetime(dts):
-        return datetime.strptime(dts, '%Y-%m-%dT%H:%M')
 
     course_key = CourseKey.from_string(course_id)
     usage_key = UsageKey.from_string(usage_id)
