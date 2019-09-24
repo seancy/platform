@@ -7515,10 +7515,15 @@ msgstr "语言"
 
 #: lms/djangoapps/instructor/views/api.py:1819
 #: lms/djangoapps/triboo_analytics/forms.py:14
+msgctxt "user.profile"
+msgid "Location"
+msgstr "位置"
+
 #: lms/templates/courseware/ilt_validation.html:56
 #: lms/templates/emails/ilt_confirmed_email_message.txt:21
 #: lms/templates/emails/ilt_enrolled_email_message.txt:21
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:25
+msgctxt "xblock-ilt"
 msgid "Location"
 msgstr "位置"
 
@@ -9985,10 +9990,15 @@ msgid "Date Joined"
 msgstr "加入日期"
 
 #: lms/djangoapps/triboo_analytics/forms.py:15
+msgctxt "user.profile"
+msgid "Address"
+msgstr "地址"
+
 #: lms/templates/courseware/ilt_validation.html:58
 #: lms/templates/emails/ilt_confirmed_email_message.txt:23
 #: lms/templates/emails/ilt_enrolled_email_message.txt:23
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:27
+msgctxt "xblock-ilt"
 msgid "Address"
 msgstr "地址"
 
@@ -27536,17 +27546,17 @@ msgstr "在线课程"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html
 #: lms/templates/courseware/course_banner.html
-msgid "Offline"
+msgid "ILT"
 msgstr "线下课程"
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-msgid "Live session"
+msgid "Virtual classroom"
 msgstr "实时活动"
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-msgid "Session recorded"
+msgid "Blended learning"
 msgstr "实时活动记录"
 
 #: cms/templates/login.html
@@ -27701,16 +27711,6 @@ msgstr "您的请求已被拒绝。您可以重新选择。"
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "accommodation, preferences, specific diet ..."
 msgstr "住宿，喜好，饮食偏好..."
-
-#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgctxt "xblock-ilt"
-msgid "Location"
-msgstr "位置"
-
-#: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgctxt "xblock-ilt"
-msgid "Address"
-msgstr "地址"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Enroll"

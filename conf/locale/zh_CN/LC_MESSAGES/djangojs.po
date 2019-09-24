@@ -11595,7 +11595,7 @@ msgid "Online"
 msgstr "在线课程"
 
 #: lms/templates/discovery/facet_option.underscore
-msgid "Offline"
+msgid "ILT"
 msgstr "线下课程"
 
 #: lms/templates/discovery/facet_option.underscore

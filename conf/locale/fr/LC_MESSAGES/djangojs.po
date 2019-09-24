@@ -12246,8 +12246,8 @@ msgid "Online"
 msgstr "En ligne"
 
 #: lms/templates/discovery/facet_option.underscore
-msgid "Offline"
-msgstr "Présentiel"
+msgid "ILT"
+msgstr "Présentielle"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Future"

@@ -19,7 +19,7 @@ msgid "Online"
 msgstr ""
 
 #: lms/templates/discovery/facet_option.underscore
-msgid "Offline"
+msgid "ILT"
 msgstr ""
 
 #: lms/templates/discovery/facet_option.underscore

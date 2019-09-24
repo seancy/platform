@@ -353,17 +353,17 @@ msgstr ""
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-msgid "Offline"
+msgid "ILT"
 msgstr ""
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-msgid "Live session"
+msgid "Virtual classroom"
 msgstr ""
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-msgid "Session recorded"
+msgid "Blended learning"
 msgstr ""
 
 # edx_xblock_scorm/scormxblock/static/html/scormxblock.html

@@ -3454,9 +3454,9 @@ COURSE_ENROLLMENT_MODES = {
 COURSES_API_CACHE_TIMEOUT = 3600  # Value is in seconds
 COURSE_CATEGORIES = (
     ('online', 'Online'),
-    ('offline', 'Offline'),
-    ('live_session', 'Live session'),
-    ('session_recorded', 'Session recorded'),
+    ('offline', 'ILT'),
+    ('live_session', 'Virtual classroom'),
+    ('session_recorded', 'Blended learning'),
 )
 
 ############## Settings for CourseGraph ############################

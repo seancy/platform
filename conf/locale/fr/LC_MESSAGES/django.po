@@ -29760,18 +29760,18 @@ msgstr "En ligne"
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-msgid "Offline"
-msgstr "Présentiel"
+msgid "ILT"
+msgstr "Présentielle"
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-msgid "Live session"
-msgstr "Session live"
+msgid "Virtual classroom"
+msgstr "Classe virtuelle"
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-msgid "Session recorded"
-msgstr "Session enregistrée"
+msgid "Blended learning"
+msgstr "Blended learning"
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:3
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:3

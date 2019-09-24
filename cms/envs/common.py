@@ -1493,9 +1493,9 @@ ENTERPRISE_REPORTING_SECRET = '0000000000000000'
 COURSE_CATALOG_API_URL = None
 COURSE_CATEGORIES = (
     ('online', 'Online'),
-    ('offline', 'Offline'),
-    ('live_session', 'Live session'),
-    ('session_recorded', 'Session recorded'),
+    ('offline', 'ILT'),
+    ('live_session', 'Virtual classroom'),
+    ('session_recorded', 'Blended learning'),
 )
 
 ############################# Persistent Grades ####################################
