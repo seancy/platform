@@ -37,6 +37,8 @@ def xblock_name = []
 def tag_theme = ''
 def tag_restart_service = ''
 def tag_config_file = ''
+def commit_id = ''
+def lt_user_id = ''
 
 
 pipeline {
@@ -65,6 +67,15 @@ pipeline {
             steps {
                 dir('inventory') {
                     git credentialsId: 'slidemoon', branch: 'master', url: 'https://github.com/Learningtribes/hawthorn_inventory.git'
+                }
+            }
+        }
+        stage('Get build user') {
+            steps {
+                script {
+                    wrap([$class: 'BuildUser']) {
+                            lt_user_id = env.BUILD_USER_ID
+                    }
                 }
             }
         }
@@ -316,10 +327,26 @@ pipeline {
                             restart_service_process = true
                             tag_restart_service = 'restart-all'
                             if (this_platform_branch == 'master-master') {
-                                sh """
-                                . /tmp/.venvec2/bin/activate
-                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production" -e "migrate_lt_db=${dbMigrate}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
-                                """
+                                if ( lt_user_id == 'yves' ) {
+                                    commit_id = input message: "Input Commit ID", parameters: [string(name:'id:', defaultValue: 'NONE', description: 'Which commit ID to deploy')]
+                                    if (commit_id != 'NONE') {
+                                        println commit_id
+                                        sh """
+                                        . /tmp/.venvec2/bin/activate
+                                        ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production-commitid"  -e "edx_platform_commitid=${commit_id}" -e "migrate_lt_db=${dbMigrate}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                        """
+                                    } else {
+                                        sh """
+                                        . /tmp/.venvec2/bin/activate
+                                        ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production" -e "migrate_lt_db=${dbMigrate}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                        """
+                                    }
+                                } else {
+                                    sh """
+                                    . /tmp/.venvec2/bin/activate
+                                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production" -e "migrate_lt_db=${dbMigrate}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                    """
+                                }                                
                             } else {
                                 sh """
                                 . /tmp/.venvec2/bin/activate
@@ -346,46 +373,15 @@ pipeline {
             steps {
                 script {
                     try {
-                        timeout(time:2) {
-                            def folder_stdout = ''
-                            for (ip in instance_ip.split(',')) {
-                                folderout = sh script: "ssh -i /opt/instanceskey/${ec2_location}_platform_key.pem ubuntu@${ip} 'ls /edx/app/edxapp/themes/'", returnStdout: true
-                                folder_stdout += folderout
-                            }
-                            def list_theme = [] 
-                            def list_themes = []
-                            for (i in folder_stdout.split('\n')) {
-                                list_theme.add(i)
-                            }
-                            list_theme = list_theme.unique()
-                            for (theme_folder in list_theme) {
-                                def parameter_boolean2 = [$class: 'BooleanParameterDefinition', defaultValue: false, description: '', name: theme_folder]
-                                list_themes.add(parameter_boolean2)
-                            }
-                            list_themes.add([$class: 'BooleanParameterDefinition', defaultValue: false, description: '', name: 'CMS'])
-                            list_themes.add([$class: 'BooleanParameterDefinition', defaultValue: false, description: '', name: 'ALL'])
-                            chooseOptions2 = input(id: 'chooseOptions2', message: 'Select theme options', parameters: list_themes)
-                            for (item in chooseOptions2) {
-                                if (item.key == 'ALL' && item.value == true) {
-                                    compile_theme = list_theme
-                                    tag_theme = 'all-theme'
-                                    break
-                                }
-                                if (item.key == 'CMS' && item.value == true) {
-                                    def cms_folder_name = ''
-                                    compile_theme = []
-                                    cms_folder_name = 'hawthorn-' + ec2_region.toLowerCase()
-                                    compile_theme.add(cms_folder_name)
-                                    tag_theme = 'cms-theme'
-                                    break
-                                }
-                                if (item.value == true) {
-                                    compile_theme.add(item.key)
-                                    tag_theme = 'lms-theme'
-                                }
-                            }
-                            print compile_theme
-                            if (compile_theme == []) {
+                        timeout(time:2) { 
+                            get_app = input message: "Which APP to Compile", parameters: [choice(name: 'compile_app', choices: ['lms', 'cms', 'lms+cms'], description: 'Which APP to Compile')]
+                            if (get_app == 'lms') {
+                                tag_theme = 'lms-theme'
+                            } else if (get_app == 'cms') {
+                                tag_theme = 'cms-theme'
+                            } else if (get_app == 'lms+cms') {
+                                tag_theme = 'all-theme'
+                            } else {
                                 proceed = false
                             }
                         }
@@ -465,10 +461,26 @@ pipeline {
                         restart_service_process = true
                         tag_restart_service = 'restart-edxapp'
                         if (stage_auto_proceed == false) {
-                            sh """
-                            . /tmp/.venvec2/bin/activate
-                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "${tag_theme}" -e "{'LT_THEME': ${compile_theme}}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
-                            """
+                            if ( lt_user_id == 'yves') {
+                                commit_id = input message: "Input Commit ID", parameters: [string(name:'id:', defaultValue: 'NONE', description: 'Which commit ID to deploy')]
+                                if ( commit_id != 'NONE') {
+                                    println commit_id
+                                    sh """
+                                    . /tmp/.venvec2/bin/activate
+                                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "${tag_theme}-commitid" -e "{'LT_THEME': ${compile_theme}}" -e "lt_ec2_region=${ec2_location}" -e "theme_commitid=${commit_id}" lt_pipeline_jobs.yml
+                                    """
+                                } else {
+                                    sh """
+                                    . /tmp/.venvec2/bin/activate
+                                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "${tag_theme}" -e "{'LT_THEME': ${compile_theme}}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                    """
+                                }
+                            } else {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "${tag_theme}" -e "{'LT_THEME': ${compile_theme}}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                """
+                            }                            
                         } else if (stage_auto_proceed == true) {
                             sh """
                             . /tmp/.venvec2/bin/activate
@@ -489,10 +501,28 @@ pipeline {
                     tag_restart_service = 'restart-all'
                 }
                 dir('configuration/playbooks') {
-                    sh """
-                    . /tmp/.venvec2/bin/activate
-                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-certs" lt_pipeline_jobs.yml
-                    """
+                    script {
+                        if (lt_user_id == 'yves') {
+                            commit_id = input message: "Input Commit ID", parameters: [string(name:'id:', defaultValue: 'NONE', description: 'Which commit ID to deploy')]
+                            if (commit_id != 'NONE') {
+                                println commit_id
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-certs-commitid" -e "certs_commitid=${commit_id}" lt_pipeline_jobs.yml
+                                """
+                            } else {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-certs" -e '@${env.WORKSPACE}/inventory/group_vars/tenants/certs-vars.yml' lt_pipeline_jobs.yml
+                                """
+                            }
+                        } else {
+                            sh """
+                            . /tmp/.venvec2/bin/activate
+                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-certs" -e '@${env.WORKSPACE}/inventory/group_vars/tenants/certs-vars.yml' lt_pipeline_jobs.yml
+                            """
+                        }
+                    }   
                 }
             }
         }
@@ -536,10 +566,28 @@ pipeline {
                     tag_restart_service = 'restart-all'
                 }
                 dir('configuration/playbooks') {
-                    sh """
-                    . /tmp/.venvec2/bin/activate
-                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" --tags "deploy-xblock" lt_pipeline_jobs.yml
-                    """
+                    script {
+                        if (lt_user_id == 'yves') {
+                            commit_id = input message: "Input Commit ID", parameters: [string(name:'id:', defaultValue: 'NONE', description: 'Which commit ID to deploy')]
+                            if (commit_id != 'NONE') {
+                                println commit_id
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "xblock_commitid=${commit_id}" -e "{'xblock_name':${xblock_name}}" --tags "deploy-xblock-commitid" lt_pipeline_jobs.yml
+                                """
+                            } else {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" --tags "deploy-xblock" lt_pipeline_jobs.yml
+                                """
+                            }
+                        } else {
+                            sh """
+                            . /tmp/.venvec2/bin/activate
+                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" --tags "deploy-xblock" lt_pipeline_jobs.yml
+                            """
+                        }
+                    }
                 }
             }
         }
