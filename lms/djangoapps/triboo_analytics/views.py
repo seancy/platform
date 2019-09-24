@@ -184,16 +184,18 @@ def _transcript_view(user, request, template, report_type):
                 courses.append({'id': overview.id, 'display_name': overview.display_name_with_default})
 
         course_contents = {}
-        if report_type == "my_transcript":
+        if configuration_helpers.get_value("ENABLE_WAIVER_REQUEST", False) and report_type == "my_transcript":
             for report in learner_course_reports:
                 content = toc_for_course(
                             user, request, modulestore().get_course(report.course_id), None, None, None)
                 for chapter in content['chapters']:
                     chapter['disabled'] = True
                     for section in chapter['sections']:
+                        section.pop('due', None)
                         if section['graded']:
                             chapter['disabled'] = False
                             break
+
                 course_contents[unicode(report.course_id)] = content
             course_contents = json.dumps(course_contents)
 
