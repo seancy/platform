@@ -11,7 +11,8 @@
 
       var $courseIndex = $('.course-index');
       var outlineVisibleInit = function(){
-        if ($courseIndex.hasClass('None') &&  $('.course-navigation').find('>a').length > 1 && $(window).width() > 768){
+        //always show course outline on desktop version
+        if ($courseIndex.hasClass('None') && $(window).width() > 768){
           $courseIndex.addClass('showing');
         }
       }
