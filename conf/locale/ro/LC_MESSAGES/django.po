@@ -25860,3 +25860,23 @@ msgstr "Inainte de a accepta o cerere si pentru a optimiza organizarea logistica
 #: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
 msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
 msgstr "APROBARE NECESARA - Solicita inscrierea la trainingul - {name}"
+
+#: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_message.txt:10
+msgid "This email is to inform you that the learners ({learners}) has been unenrolled from the {ilt_name} in-class training in the course '{course_name}' on the {platform_name} platform. For more information about the session, please click on the link below:"
+msgstr ""
+
+#: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_subject.txt:2
+msgid "In-class training batch unenrollment notification"
+msgstr ""
+
+#: master-sephora:ilt_self_unenroll_email_html_message.txt:6
+msgid "This email is to inform you that {name} has canceled his/her enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}. For more information about the session, please click on the link below:"
+msgstr ""
+
+#: master-sephora:lms/templates/emails/ilt_session_canceled_email_message.txt:16
+msgid "Please invite the following participants to reschedule their training: {learners}."
+msgstr ""
+
+#: master-sephora:lms/templates/emails/ilt_session_canceled_email_subject.txt:2
+msgid "In-class training canceled"
+msgstr ""

@@ -1,6 +1,7 @@
 <%page expression_filter="h"/>
 <%!
     import json
+    from datetime import datetime
     from django.utils.translation import ugettext as _
     from django.utils.translation import pgettext
     from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
@@ -13,6 +14,21 @@
 <%block name="pagetitle">${_("ILT Validation")}</%block>
 
 <%block name="header" />
+
+<%!
+    def decode_datetime(dts):
+        return datetime.strptime(dts, '%Y-%m-%dT%H:%M')
+
+
+    def convert_datetime(date_str, date_format=None):
+        if not date_format:
+            date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "YYYY-MM-DD HH:mm")
+        date_format = date_format.replace("YYYY", "%Y").replace("DD", "%d").replace(
+            "MM", "%m"
+        ).replace("HH", "%H").replace("mm", "%M")
+
+        return decode_datetime(date_str).strftime(date_format)
+%>
 
 <div class="ilt-validation">
     <aside>
@@ -48,7 +64,7 @@
                 <div class="ilt-session-details" id="session-${idx}" data-session="${val[0]}">
                 % endif
 
-                    <p><span class="time"><i class="fa fa-calendar-check" aria-hidden="true"></i>${_("From")}:</span> ${currentSession['start_at']}&nbsp&nbsp&nbsp&nbsp<span>${_("To")}:</span> ${currentSession['end_at']}</p>
+                    <p><span class="time"><i class="fa fa-calendar-check" aria-hidden="true"></i>${_("From")}:</span> ${convert_datetime(currentSession['start_at'])}&nbsp&nbsp&nbsp&nbsp<span>${_("To")}:</span> ${convert_datetime(currentSession['end_at'])}</p>
                     % if 'duration' in currentSession:
                     <p><span class="duration"><i class="fa fa-clock-o" aria-hidden="true"></i>${_("Duration")}:</span> ${ currentSession['duration'] } h</p>
                     % endif
