@@ -19848,12 +19848,12 @@ msgstr "Bonjour,"
 
 #: lms/templates/emails/ilt_batch_unenroll_email_message.txt:10
 msgid ""
-"This email is to inform you that the learners ({learners}) has been "
+"This email is to inform you that the learners ({learners}) have been "
 "unenrolled from the ILT session '{ilt_name}' in the course '{course_name}' "
 "on the {platform_name} platform. For more information about the session, "
 "please click on the link below:"
 msgstr ""
-"Nous vous informons que l'apprenant ({learners}) a été désinscrit"
+"Nous vous informons que des apprenants ({learners}) ont été désinscrits"
 "de la session de formation '{ilt_name}' du cours {course_name}'"
 "sur {platform_name}. Pour plus d'informations, merci de cliquer"
 "sur le lien ci-dessous:"
@@ -29993,7 +29993,7 @@ msgstr "Vous avez reçu de la part de {name} une demande de participation pour l
 
 #: master-sephora:lms/templates/emails/ilt_validate_email_message.txt:15
 msgid "Click on the link below to accept, edit or decline the request:"
-msgstr "Cliquez sur le lien ci-dessous pour accepter, modifier ou refuser la demande:"
+msgstr "Cliquez sur le lien ci-dessous pour accepter, modifier ou refuser la demande :"
 
 #: master-sephora:lms/templates/emails/ilt_validate_email_message.txt:18
 msgid "PLEASE NOTE:"
@@ -30011,25 +30011,25 @@ msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
 msgstr "POUR VALIDATION -Demande d'inscription formation - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_message.txt:10
-msgid "This email is to inform you that the learners ({learners}) has been unenrolled from the {ilt_name} in-class training in the course '{course_name}' on the {platform_name} platform. For more information about the session, please click on the link below:"
+msgid "This email is to inform you that the learners ({learners}) have been unenrolled from the {ilt_name} in-class training in the course '{course_name}' on the {platform_name} platform. For more information about the session, please click on the link below:"
 msgstr ""
-"Nous vous informons que l'apprenant ({learners}) a été désinscrit"
-"de la session de formation '{ilt_name}' du cours {course_name}'"
-"sur {platform_name}. Pour plus d'informations, merci de cliquer"
-"sur le lien ci-dessous:"
+"Nous vous informons que des apprenants ({learners}) ont été désinscrits "
+"de la session de formation '{ilt_name}' du cours {course_name}' "
+"sur {platform_name}. Pour plus d'informations, merci de cliquer "
+"sur le lien ci-dessous :"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_subject.txt:2
 msgid "In-class training batch unenrollment notification"
-msgstr "Formation: confirmation de désinscription d'une session"
+msgstr "Annulation inscription formation"
 
 #: master-sephora:ilt_self_unenroll_email_html_message.txt:6
 msgid "This email is to inform you that {name} has canceled his/her enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}. For more information about the session, please click on the link below:"
-msgstr ""
+msgstr "Nous vous informons que {name} a annulé sa demande de participation pour la formation en salle {ilt_name} prévue le {start} à {address} située {address}, {zipcode} {city}. Pour plus d'informations, merci de cliquer sur le lien ci-dessous :"
 
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_message.txt:16
 msgid "Please invite the following participants to reschedule their training: {learners}."
-msgstr ""
+msgstr "Invitez les apprenants suivants à vérifier la disponibilité d'une nouvelle date de formation : {learners}."
 
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_subject.txt:2
 msgid "In-class training canceled"
-msgstr "Formation: annulation d'une session"
+msgstr "Annulation session formation"

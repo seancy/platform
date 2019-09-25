@@ -17317,7 +17317,7 @@ msgstr ""
 
 #: lms/templates/emails/ilt_batch_unenroll_email_message.txt:10
 msgid ""
-"This email is to inform you that the learners ({learners}) has been "
+"This email is to inform you that the learners ({learners}) have been "
 "unenrolled from the ILT session '{ilt_name}' in the course '{course_name}' "
 "on the {platform_name} platform. For more information about the session, "
 "please click on the link below:"
@@ -25862,7 +25862,7 @@ msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
 msgstr "APROBARE NECESARA - Solicita inscrierea la trainingul - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_message.txt:10
-msgid "This email is to inform you that the learners ({learners}) has been unenrolled from the {ilt_name} in-class training in the course '{course_name}' on the {platform_name} platform. For more information about the session, please click on the link below:"
+msgid "This email is to inform you that the learners ({learners}) have been unenrolled from the {ilt_name} in-class training in the course '{course_name}' on the {platform_name} platform. For more information about the session, please click on the link below:"
 msgstr ""
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_subject.txt:2

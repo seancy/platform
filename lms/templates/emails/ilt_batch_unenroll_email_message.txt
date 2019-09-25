@@ -7,7 +7,7 @@
 
 ${_("Hello,")}
 
-${_("This email is to inform you that the learners ({learners}) has been unenrolled from the ILT session '{ilt_name}' in the course '{course_name}' on the {platform_name} platform. For more information about the session, please click on the link below:").format(learners=learners, course_name=course_name, platform_name=platform_name, ilt_name=ilt_name)}
+${_("This email is to inform you that the learners ({learners}) have been unenrolled from the ILT session '{ilt_name}' in the course '{course_name}' on the {platform_name} platform. For more information about the session, please click on the link below:").format(learners=learners, course_name=course_name, platform_name=platform_name, ilt_name=ilt_name)}
 
 ${ilt_link}
 
