@@ -4,7 +4,7 @@ Courseware views functions
 import json
 import logging
 import urllib
-from collections import OrderedDict, namedtuple
+from collections import OrderedDict, namedtuple, defaultdict
 from copy import deepcopy
 from datetime import datetime
 
@@ -1083,7 +1083,7 @@ def _get_badges_section(progress_summary):
     Returns:
         A dict mapping different sections to individual badges
     """
-    badges_section = {'obtained': [], 'not-obtained': [], 'not-started': []}
+    badges_section = defaultdict(list)
     for chapter in progress_summary['trophies_by_chapter']:
         for trophy in chapter['trophies']:
             trophy['url'] = chapter['url']
