@@ -48,6 +48,12 @@
       var toggleCourseOutline = function () {
         $courseIndex.toggleClass('showing');
         iconStatusInit();
+
+        // 850 ms is a little bit more then 800ms the effect of course outline suppose to take.
+        setTimeout(function () {
+          window.dispatchEvent(new Event('resize'));
+        }, 850)
+
       };
       $leftSideIcon.on('click', toggleCourseOutline);
       $('.course-content > .page-header > i').on('click', toggleCourseOutline);

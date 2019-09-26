@@ -295,7 +295,7 @@ function(HTML5Video, HTML5HLSVideo, Resizer, HLS, _, Time) {
             state.trigger('videoFullScreen.updateControlsHeight', null);
             state.el.trigger('caption:resize');
             state.resizer.align();
-        }, 100));
+        }, 870));
     }
 
     // function _restartUsingFlash(state)

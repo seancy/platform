@@ -74,6 +74,9 @@ def get_trophy_path(trophy_img):
                         </li>
                     % endfor
                 </ul>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
             </section>
           % endif
 
@@ -96,6 +99,8 @@ def get_trophy_path(trophy_img):
                         </li>
                     % endfor
                 </ul>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </section>
           % endif
@@ -119,15 +124,55 @@ def get_trophy_path(trophy_img):
                         </li>
                     % endfor
                 </ul>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </section>
           % endif
 
             <script type="text/javascript">
-              var swiper = new Swiper('.swiper-container', {
+                new Swiper('.obtained-badges', {
                 slidesPerView: 'auto',
                 spaceBetween: 13,
                 slidesOffsetAfter:160,
+
+                  navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                  },
+
+                pagination: {
+                  el: '.swiper-pagination',
+                  clickable: true,
+                },
+              });
+
+              var swiper = new Swiper('.not-obtained-badges', {
+                slidesPerView: 'auto',
+                spaceBetween: 13,
+                slidesOffsetAfter:160,
+
+                  navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                  },
+
+                pagination: {
+                  el: '.swiper-pagination',
+                  clickable: true,
+                },
+              });
+
+              new Swiper('.not-started-badges', {
+                slidesPerView: 'auto',
+                spaceBetween: 13,
+                slidesOffsetAfter:160,
+
+                  navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                  },
+
                 pagination: {
                   el: '.swiper-pagination',
                   clickable: true,

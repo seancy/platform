@@ -64,7 +64,7 @@
     var self = this;
     if(this.month) {
       this.oldMonth = this.month;
-      this.oldMonth.className = 'month out ' + (self.next ? 'next' : 'prev');
+      this.oldMonth.className = 'month out ' + (!self.next ? 'next' : 'prev');
       this.oldMonth.addEventListener('webkitAnimationEnd', function() {
         self.oldMonth.parentNode.removeChild(self.oldMonth);
         self.month = createElement('div', 'month');
@@ -73,7 +73,7 @@
         self.fowardFill();
         self.el.appendChild(self.month);
         window.setTimeout(function() {
-          self.month.className = 'month in ' + (self.next ? 'next' : 'prev');
+          self.month.className = 'month in ' + (!self.next ? 'next' : 'prev');
           var $calendar = $("#calendar");
           $(".ilt-events-list").height($calendar.outerHeight());
         }, 16);
