@@ -7904,8 +7904,8 @@ msgstr "讨论区"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:12
 #, python-format
-msgid "How to use %(platform_name)s discussions"
-msgstr "如何使用 %(platform_name)s 讨论"
+msgid "How to use discussions"
+msgstr "如何使用讨论"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:18
 msgid "Engage with posts"

@@ -8248,8 +8248,8 @@ msgstr "Page d'accueil de Discussion"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:12
 #, python-format
-msgid "How to use %(platform_name)s discussions"
-msgstr "Comment utiliser les discussions %(platform_name)s"
+msgid "How to use discussions"
+msgstr "Comment utiliser les discussions"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:18
 msgid "Engage with posts"

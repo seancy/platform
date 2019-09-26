@@ -8,10 +8,7 @@
 
   <% if (window.ENABLE_DISCUSSION_HOME_PANEL) { %>
     <span class="label label-settings">
-      <%- interpolate(
-            gettext("How to use %(platform_name)s discussions"),
-            {platform_name: window.PLATFORM_NAME}, true
-          ) %>
+      <%- gettext("How to use discussions") %>
     </span>
     <table class="home-helpgrid" cellspacing=0 cellpadding=0>
       <tr class="helpgrid-row helpgrid-row-participation">

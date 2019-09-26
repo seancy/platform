@@ -7624,7 +7624,7 @@ msgstr ""
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:12
 #, python-format
-msgid "How to use %(platform_name)s discussions"
+msgid "How to use discussions"
 msgstr ""
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:18
