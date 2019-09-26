@@ -3421,6 +3421,7 @@ msgstr ""
 #: common/static/bundles/StudentAccountDeletionInitializer.js:301
 #: lms/static/js/student_account/components/StudentAccountDeletion.jsx:71
 msgid "Once your account is deleted, you cannot use it to take courses on "
+"{platformName}."
 msgstr ""
 
 #: common/static/bundles/StudentAccountDeletion.js:164
