@@ -362,8 +362,8 @@ class GradesTransformerTestCase(CourseStructureTestCase):
 
     def test_grading_policy_collected(self):
         # the calculated hash of the original and updated grading policies of the test course
-        original_grading_policy_hash = u'HAtIeHwH3KNe421rwzEAzNKaEHI='
-        updated_grading_policy_hash = u'QTNas9G3POrY6ZPfwkgMA9zC4Lc='
+        original_grading_policy_hash = u'254c/s1hzb4ClFJK6OLNNXIN6P0='
+        updated_grading_policy_hash = u'jdWsaFWBfbpeBVm0Myn4zlcGg84='
 
         blocks = self.build_course_with_problems()
         course_block = blocks[u'course']
@@ -375,9 +375,15 @@ class GradesTransformerTestCase(CourseStructureTestCase):
         # make sure the hash changes when the course grading policy is edited
         grading_policy_with_updates = course_block.grading_policy
         original_grading_policy = deepcopy(grading_policy_with_updates)
-        for section in grading_policy_with_updates['GRADER']:
-            self.assertNotEqual(section['weight'], 0.25)
-            section['weight'] = 0.25
+        test_grading_policy = {
+            "type": "Homework",
+            "min_count": 12,
+            "drop_count": 2,
+            "short_label": "HW",
+            "threshold": 1,
+            "weight": 0.25,
+        }
+        grading_policy_with_updates['GRADER'].append(test_grading_policy)
 
         self._update_course_grading_policy(course_block, grading_policy_with_updates)
         self._validate_grading_policy_hash(

@@ -326,7 +326,7 @@ class CourseGradeFactory(object):
         for chapter in chapter_grades:
             trophies = []
             for section in chapter['sections']:
-                if section.graded:
+                if section.graded and grading_rules_dict:
                     grader = grading_rules_dict[section.format]
                     trophy = {
                         'result': section.percent_graded,

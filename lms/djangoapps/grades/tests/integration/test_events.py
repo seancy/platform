@@ -98,8 +98,8 @@ class GradesEventIntegrationTest(ProblemSubmissionTestMixin, SharedModuleStoreTe
                     events.COURSE_GRADE_CALCULATED,
                     {
                         'course_version': unicode(course.course_version),
-                        'percent_grade': 0.02,
-                        'grading_policy_hash': u'HAtIeHwH3KNe421rwzEAzNKaEHI=',
+                        'percent_grade': 0.0,
+                        'grading_policy_hash': u'254c/s1hzb4ClFJK6OLNNXIN6P0=',
                         'user_id': unicode(self.student.id),
                         'letter_grade': u'',
                         'event_transaction_id': event_transaction_id,
@@ -139,7 +139,7 @@ class GradesEventIntegrationTest(ProblemSubmissionTestMixin, SharedModuleStoreTe
             events.COURSE_GRADE_CALCULATED,
             {
                 'percent_grade': 0.0,
-                'grading_policy_hash': u'HAtIeHwH3KNe421rwzEAzNKaEHI=',
+                'grading_policy_hash': u'254c/s1hzb4ClFJK6OLNNXIN6P0=',
                 'user_id': unicode(self.student.id),
                 'letter_grade': u'',
                 'event_transaction_id': event_transaction_id,
@@ -199,8 +199,8 @@ class GradesEventIntegrationTest(ProblemSubmissionTestMixin, SharedModuleStoreTe
                     events.COURSE_GRADE_CALCULATED,
                     {
                         'course_version': unicode(course.course_version),
-                        'percent_grade': 0.02,
-                        'grading_policy_hash': u'HAtIeHwH3KNe421rwzEAzNKaEHI=',
+                        'percent_grade': 0.0,
+                        'grading_policy_hash': u'254c/s1hzb4ClFJK6OLNNXIN6P0=',
                         'user_id': unicode(self.student.id),
                         'letter_grade': u'',
                         'event_transaction_id': event_transaction_id,

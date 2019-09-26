@@ -7,6 +7,7 @@ import logging
 import random
 import re
 import string  # pylint: disable=deprecated-module
+import os.path
 
 import django.utils
 import six
@@ -101,6 +102,9 @@ from xmodule.tabs import CourseTab, CourseTabList, InvalidTabsException
 from .component import ADVANCED_COMPONENT_TYPES
 from .item import create_xblock_info
 from .library import LIBRARIES_ENABLED, get_library_creator_status
+
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from contentstore.views.assets import update_course_run_asset
 
 log = logging.getLogger(__name__)
 
@@ -889,6 +893,15 @@ def create_new_course_in_store(store, user, org, number, run, fields):
             user.id,
             fields=fields,
         )
+
+    # Upload the default image for each course created
+    default_image_file ="triboo_default_image.jpg"
+    default_course_image_path = settings.CMS_ROOT + '/static/images/' + default_image_file
+    with open(default_course_image_path) as f:
+        default_image_loaded = InMemoryUploadedFile(f, 'images_course_image', 'images_course_image.jpg', 'image/jpg',
+                                                    os.path.getsize(default_course_image_path), None)
+        course_key = new_course.id
+        update_course_run_asset(course_key, default_image_loaded)
 
     # Make sure user has instructor and staff access to the new course
     add_instructor(new_course.id, user, user)

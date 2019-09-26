@@ -910,7 +910,7 @@ class TestProblemGradeReport(TestReportMixin, InstructorTaskModuleTestCase):
                     self.student_1.email,
                     self.student_1.username,
                     ENROLLED_IN_COURSE,
-                    '0.01', '1.0', '2.0',
+                    '0.0', '1.0', '2.0',
                 ]
             )),
             dict(zip(
@@ -978,7 +978,7 @@ class TestProblemGradeReport(TestReportMixin, InstructorTaskModuleTestCase):
                     self.student_1.email,
                     self.student_1.username,
                     ENROLLED_IN_COURSE,
-                    '0.01', '1.0', '2.0',
+                    '0.0', '1.0', '2.0',
                 ]
             )),
             dict(zip(

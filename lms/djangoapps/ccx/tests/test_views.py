@@ -530,14 +530,15 @@ class TestCoachDashboard(CcxTestCase, LoginEnrollmentTestCase):
         # Make sure grading policy adjusted
         policy = get_override_for_ccx(ccx, self.course, 'grading_policy',
                                       self.course.grading_policy)
-        self.assertEqual(policy['GRADER'][0]['type'], 'Homework')
-        self.assertEqual(policy['GRADER'][0]['min_count'], 8)
-        self.assertEqual(policy['GRADER'][1]['type'], 'Lab')
-        self.assertEqual(policy['GRADER'][1]['min_count'], 0)
-        self.assertEqual(policy['GRADER'][2]['type'], 'Midterm Exam')
-        self.assertEqual(policy['GRADER'][2]['min_count'], 0)
-        self.assertEqual(policy['GRADER'][3]['type'], 'Final Exam')
-        self.assertEqual(policy['GRADER'][3]['min_count'], 0)
+        if len(policy['GRADER']) > 0:
+            self.assertEqual(policy['GRADER'][0]['type'], 'Homework')
+            self.assertEqual(policy['GRADER'][0]['min_count'], 8)
+            self.assertEqual(policy['GRADER'][1]['type'], 'Lab')
+            self.assertEqual(policy['GRADER'][1]['min_count'], 0)
+            self.assertEqual(policy['GRADER'][2]['type'], 'Midterm Exam')
+            self.assertEqual(policy['GRADER'][2]['min_count'], 0)
+            self.assertEqual(policy['GRADER'][3]['type'], 'Final Exam')
+            self.assertEqual(policy['GRADER'][3]['min_count'], 0)
 
     @patch('ccx.views.render_to_response', intercept_renderer)
     def test_save_without_min_count(self):

@@ -95,7 +95,7 @@ class CourseValidationViewTest(SharedModuleStoreTestCase, APITestCase):
                 'has_certificate': False,
             },
             'grades': {
-                'sum_of_weights': 1.0,
+                'sum_of_weights': 0,
             },
             'is_self_paced': True,
         }

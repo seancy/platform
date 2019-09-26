@@ -380,6 +380,13 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <input type="text" id="course-vendor">
               <span class="tip tip-stacked">${_("Identify the course label here.")}</span>
             </li>
+            <li class="field" id="field-course-mandatory">
+                <label for="course-mandatory">${_("Course Mandatory Flag")}</label>
+                <div class="heading">
+                    <input type="checkbox" id="course-mandatory-enabled" />
+                    <label for="course-mandatory-enabled">${_("Indicate to the learners that the course is important and required for their training.")}</label>
+                </div>
+            </li>
           </ol>
         </div>
         % endif
@@ -641,16 +648,6 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                     <button type="submit" class="sr" name="submit" value="submit">${_("set pre-requisite course")}</button>
                 </li>
                 % endif
-
-                <li class="field">
-                    <h3 id="heading-course-mandatory">${_("Course Mandatory Flag")}</h3>
-                    <div class="show-data">
-                        <div class="heading">
-                            <input type="checkbox" id="course-mandatory-enabled" />
-                            <label for="course-mandatory-enabled">${_("Indicate to the learners that the course is important and required for their training.")}</label>
-                        </div>
-                    </div>
-                </li>
 
                 % if is_entrance_exams_enabled:
                 <li>

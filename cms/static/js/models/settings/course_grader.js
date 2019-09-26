@@ -2,11 +2,11 @@ define(['backbone', 'underscore', 'gettext'], function(Backbone, _, gettext) {
     var CourseGrader = Backbone.Model.extend({
         defaults: {
             type: '',    // must be unique w/in collection (ie. w/in course)
-            min_count: 1,
-            drop_count: 0,
+            min_count: null,
+            drop_count: null,
             short_label: '', // what to use in place of type if space is an issue
-            threshold: 100,
-            weight: 0 // int 0..100
+            threshold: null,
+            weight: null // int 0..100
         },
         parse: function(attrs) {
         // round off values while converting them to integer
@@ -20,7 +20,7 @@ define(['backbone', 'underscore', 'gettext'], function(Backbone, _, gettext) {
                 attrs.drop_count = Math.round(attrs.drop_count);
             }
             if (attrs.threshold) {
-                attrs.threshold = Math.round(attrs.threshold)
+                attrs.threshold = Math.round(attrs.threshold);
             }
             return attrs;
         },

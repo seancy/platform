@@ -230,39 +230,7 @@ class CourseFields(object):
     grading_policy = Dict(
         help=_("Grading policy definition for this class"),
         default={
-            "GRADER": [
-                {
-                    "type": "Homework",
-                    "min_count": 12,
-                    "drop_count": 2,
-                    "short_label": "HW",
-                    "threshold": 1,
-                    "weight": 0.15,
-                },
-                {
-                    "type": "Lab",
-                    "min_count": 12,
-                    "drop_count": 2,
-                    "threshold": 1,
-                    "weight": 0.15,
-                },
-                {
-                    "type": "Midterm Exam",
-                    "short_label": "Midterm",
-                    "min_count": 1,
-                    "drop_count": 0,
-                    "threshold": 1,
-                    "weight": 0.3,
-                },
-                {
-                    "type": "Final Exam",
-                    "short_label": "Final",
-                    "min_count": 1,
-                    "drop_count": 0,
-                    "threshold": 1,
-                    "weight": 0.4,
-                }
-            ],
+            "GRADER": [],
             "GRADE_CUTOFFS": {
                 "Pass": 0.5,
             },

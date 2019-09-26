@@ -178,8 +178,8 @@ class TestCourseHomePage(CourseHomePageTestCase):
         course_home_url(self.course)
 
         # Fetch the view and verify the query counts
-        with self.assertNumQueries(77, table_blacklist=QUERY_COUNT_TABLE_BLACKLIST):
-            with check_mongo_calls(9):
+        with self.assertNumQueries(76, table_blacklist=QUERY_COUNT_TABLE_BLACKLIST):
+            with check_mongo_calls(5):
                 url = course_home_url(self.course)
                 self.client.get(url)
 
