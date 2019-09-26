@@ -131,10 +131,24 @@ def get_trophy_path(trophy_img):
           % endif
 
             <script type="text/javascript">
-                new Swiper('.obtained-badges', {
+                var breakpoints = {
+                    576:{
+                        slidesOffsetBefore:8,
+                    },
+                    768:{
+                        slidesOffsetBefore:21,
+                    },
+                    992:{
+                        slidesOffsetBefore:23,
+                    }
+                  }
+
+              new Swiper('.obtained-badges', {
                 slidesPerView: 'auto',
                 spaceBetween: 13,
                 slidesOffsetAfter:160,
+                slidesOffsetBefore:110,
+                breakpoints: breakpoints,
 
                   navigation: {
                     nextEl: '.swiper-button-next',
@@ -151,6 +165,8 @@ def get_trophy_path(trophy_img):
                 slidesPerView: 'auto',
                 spaceBetween: 13,
                 slidesOffsetAfter:160,
+                slidesOffsetBefore:110,
+                breakpoints: breakpoints,
 
                   navigation: {
                     nextEl: '.swiper-button-next',
@@ -167,6 +183,8 @@ def get_trophy_path(trophy_img):
                 slidesPerView: 'auto',
                 spaceBetween: 13,
                 slidesOffsetAfter:160,
+                slidesOffsetBefore:110,
+                breakpoints: breakpoints,
 
                   navigation: {
                     nextEl: '.swiper-button-next',
