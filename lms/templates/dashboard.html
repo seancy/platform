@@ -167,6 +167,10 @@ from xmodule.modulestore.django import modulestore
 
 
         <div class="my-courses swiper-container" id="my-courses">
+          % if display_dashboard_courses:
+            <%include file="learner_dashboard/_dashboard_navigation_courses.html"/>
+          % endif
+
           % if len(course_entitlements + course_enrollments) > 0:
             <ul class="listing-courses swiper-wrapper">
             <%
