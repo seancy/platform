@@ -17349,7 +17349,7 @@ msgstr ""
 #: lms/templates/emails/ilt_hotel_cancel_email_message.txt:21
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:43
 msgid "For more information about the session, please click on the link below:"
-msgstr ""
+msgstr "Pentru mai multe informații despre trainingul, vă rugăm să faceți clic pe linkul de mai jos:"
 
 #: lms/templates/emails/ilt_confirmed_email_subject.txt:2
 #: lms/templates/emails/ilt_enrolled_email_subject.txt:2
@@ -25862,21 +25862,21 @@ msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
 msgstr "APROBARE NECESARA - Solicita inscrierea la trainingul - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_message.txt:10
-msgid "This email is to inform you that the learners ({learners}) have been unenrolled from the {ilt_name} in-class training in the course '{course_name}' on the {platform_name} platform. For more information about the session, please click on the link below:"
-msgstr ""
+msgid "This email is to inform you that the learners ({learners}) have been unenrolled from the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}. For more information about the session, please click on the link below:"
+msgstr "Te rugam sa iei la cunostinta că cursanții ({learners}) au fost dezabonați de la trainingul in sala {ilt_name} programat pentru {start} la {location} situată {address}, {city} {zipcode}. Pentru mai multe informații despre trainingul, vă rugăm să faceți clic pe linkul de mai jos:"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_subject.txt:2
 msgid "In-class training batch unenrollment notification"
-msgstr ""
+msgstr "Anularea inscrierii la trainingul in sala"
 
 #: master-sephora:ilt_self_unenroll_email_html_message.txt:6
-msgid "This email is to inform you that {name} has canceled his/her enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}. For more information about the session, please click on the link below:"
-msgstr ""
+msgid "This email is to inform you that {name} has canceled his/her enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}."
+msgstr "Te rugam sa iei la cunostinta că {name} a anulat participarea la antrenamentul {ilt_name} programat pentru {start} la {location} situată {address}, {city} {zipcode}."
 
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_message.txt:16
 msgid "Please invite the following participants to reschedule their training: {learners}."
-msgstr ""
+msgstr "Vă rugăm să invitați următorii participanți să își reprogramați pregătirea: {learners}."
 
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_subject.txt:2
 msgid "In-class training canceled"
-msgstr ""
+msgstr "Anularea trainingului"
