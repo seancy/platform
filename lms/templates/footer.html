@@ -104,6 +104,9 @@
 
               <li><a href="${reverse('my_courses')}">${_('My Courses')}</a></li>
               <li><a href="${reverse('account_settings')}">${_('My Account')}</a></li>
+            % if configuration_helpers.get_value('ENABLE_FAQ_LINK', settings.FEATURES.get('ENABLE_FAQ_LINK', False)):
+              <li><a href="${reverse('faq')}">${_('FAQ')}</a></li>
+            % endif
           </ol>
         </nav>
 

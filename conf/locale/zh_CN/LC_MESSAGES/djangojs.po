@@ -3548,7 +3548,7 @@ msgid ""
 "instructions for {htmlStart}printing or downloading a certificate{htmlEnd}."
 msgstr ""
 "您可能无法访问已验证的证书。如果要在继续删除之前记录复制这些副本，请按照 "
-"{htmlStart}]打印或下载证书 {htmlEnd} 的说明进行操作。"
+"{htmlStart}打印或下载证书 {htmlEnd} 的说明进行操作。"
 
 #: common/static/bundles/StudentAccountDeletion.js:128
 #: common/static/bundles/StudentAccountDeletionInitializer.js:275
