@@ -148,8 +148,8 @@ def generate_user_certificates(student, course_key, course=None, insecure=False,
                        will be skipped.
     """
     xqueue = XQueueCertInterface()
-    if insecure:
-        xqueue.use_https = False
+    #if insecure:
+    #    xqueue.use_https = False
 
     if not course:
         course = modulestore().get_course(course_key, depth=0)
@@ -201,8 +201,8 @@ def regenerate_user_certificates(student, course_key, course=None, forced_grade=
         insecure - (Boolean)
     """
     xqueue = XQueueCertInterface()
-    if insecure:
-        xqueue.use_https = False
+    #if insecure:
+    #    xqueue.use_https = False
 
     if not course:
         course = modulestore().get_course(course_key, depth=0)

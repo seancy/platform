@@ -60,6 +60,7 @@ def can_show_certificate_message(course, student, course_grade, certificates_ena
     is_whitelisted = CertificateWhitelist.objects.filter(user=student, course_id=course.id, whitelist=True).exists()
     auto_cert_gen_enabled = auto_certificate_generation_enabled()
     has_active_enrollment = CourseEnrollment.is_enrolled(student, course.id)
+    enrollment = CourseEnrollment.get_enrollment(student, course.id)
     certificates_are_viewable = certificates_viewable_for_course(course)
 
     # Adding a temporary logging for EDUCATOR-2017.
@@ -84,6 +85,7 @@ def can_show_certificate_message(course, student, course_grade, certificates_ena
     if not (
         (auto_cert_gen_enabled or certificates_enabled_for_course) and
         has_active_enrollment and
+        enrollment.completed and
         certificates_are_viewable and
         (course_grade.passed or is_whitelisted)
     ):

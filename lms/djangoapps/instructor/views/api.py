@@ -3452,12 +3452,11 @@ def generate_example_certificates(request, course_id=None):  # pylint: disable=u
 
     """
     course_key = CourseKey.from_string(course_id)
-    insecure = True
-    if request.is_secure():
-        insecure = False
+    # insecure = True
+    # if request.is_secure():
+    #     insecure = False
     certs_api.generate_example_certificates(
         course_key,
-        insecure=insecure,
         request_user=request.user,
         site=request.site
     )
@@ -4044,10 +4043,10 @@ def certificates_export(request, course_id):
     zip file.
     """
     xqueue = XQueueCertInterface()
-    if request.is_secure():
-        xqueue.use_https = True
-    else:
-        xqueue.use_https = False
+    #if request.is_secure():
+    #    xqueue.use_https = True
+    #else:
+    #    xqueue.use_https = False
     course_key = CourseKey.from_string(course_id)
     identifiers_raw = request.POST.get('identifiers')
     identifiers = _split_input_list(identifiers_raw)
