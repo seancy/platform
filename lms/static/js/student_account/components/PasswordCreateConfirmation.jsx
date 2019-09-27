@@ -84,6 +84,7 @@ class PasswordCreateConfirmation extends React.Component {
             open={!!this.props.errorMessage}
             dialog={this.props.errorMessage}
           />
+          <div className="article-inner-wrapper">
 
           <form id="passwordreset-form" method="post" action="">
             <h2 className="section-title lines">
@@ -127,6 +128,7 @@ class PasswordCreateConfirmation extends React.Component {
               label={gettext('Create My Password')}
             />
           </form>
+          </div>
         </article>
       </section>
     );
