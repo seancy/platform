@@ -311,13 +311,10 @@ class XQueueCertInterface(object):
                     positions = json.loads(pdf_config.positions)
                     tmp_info = zip(canvas, positions, font_info)
 
-                    # make sure this only works for Myacademy
-                    if site.domain == "myacademy.learning-tribes.com":
-                        with override_language(get_user_email_language(student)):
-                            trans_sentences = [_(x) for x in sentences]
-                            pdf_info = OrderedDict(zip(trans_sentences, tmp_info))
-                    else:
-                        pdf_info = OrderedDict(zip(sentences, tmp_info))
+
+                    with override_language(get_user_email_language(student)):
+                        trans_sentences = [_(x) for x in sentences]
+                        pdf_info = OrderedDict(zip(trans_sentences, tmp_info))
                     pdf_info.update({"font": font_name, "template_dir": template_dir})
 
         if template_file is not None:

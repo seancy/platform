@@ -27508,8 +27508,8 @@ msgstr "产生新的修订版本：合并修订版本#%(r1)d与#%(r2)d"
 #~ msgstr "注册{studio_name}"
 
 # certificate translation for joyson
-#~ msgid "You have completed the online training of"
-#~ msgstr "成功完成了线上课程"
+msgid "You have completed the online training of"
+msgstr "成功完成了线上课程"
 
 
 

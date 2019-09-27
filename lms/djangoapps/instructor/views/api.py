@@ -1346,7 +1346,8 @@ def students_update_enrollment(request, course_id):
             })
 
         else:
-            if (no_email_address and not email.endswith(no_email_address)) or email != no_email_address:
+            if (no_email_address and not email.endswith(no_email_address)) or \
+                    (no_email_address is None and email is not None):
                 ManualEnrollmentAudit.create_manual_enrollment_audit(
                     request.user, email, state_transition, reason, enrollment_obj, role
                 )
