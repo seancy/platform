@@ -514,14 +514,14 @@ class LearnerDailyTable(LearnerBaseTable):
 
 class IltBaseTable(tables.Table):
     export_formats = EXPORT_FORMATS
-    
+
     course_area =  tables.Column(accessor='ilt_module.course_country', verbose_name='Geographical area')
     course_country = tables.Column(accessor='ilt_module.course_country', verbose_name='Course country')
     course_tags = tables.Column(accessor='ilt_module.course_tags', verbose_name='Course tags')
     course_code = tables.Column(accessor='ilt_module.course_id', verbose_name='Course code')
     course_display_name = tables.Column(accessor='ilt_module.course_display_name', verbose_name='Course')
-    chapter_display_name = tables.Column(accessor='ilt_module.chapter_display_name', verbose_name='Chapter')
-    section_display_name = tables.Column(accessor='ilt_module.section_display_name', verbose_name='Section')
+    chapter_display_name = tables.Column(accessor='ilt_module.chapter_display_name', verbose_name='Section')
+    section_display_name = tables.Column(accessor='ilt_module.section_display_name', verbose_name='Subsection')
 
     def render_course_area(self, value):
         if value:
@@ -620,10 +620,6 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
     end_day = tables.Column(accessor='ilt_session.end', verbose_name='End date')
     end_time = tables.Column(accessor='ilt_session.end', verbose_name='End time')
     duration = tables.Column(accessor='ilt_session.duration', verbose_name='Duration (in hours)')
-    seats = tables.Column(accessor='ilt_session.seats', verbose_name='Max capacity')
-    enrollees = tables.Column(accessor='ilt_session.enrollees', verbose_name='Enrollees')
-    attendees = tables.Column(accessor='ilt_session.attendees', verbose_name='Attendees')
-    ack_attendance_sheet = tables.Column(accessor='ilt_session.ack_attendance_sheet', verbose_name='Attendance sheet')
     location_id = tables.Column(accessor='ilt_session.location_id', verbose_name='Location ID')
     location = tables.Column(accessor='ilt_session.location', verbose_name='Location name')
     address = tables.Column(accessor='ilt_session.address', verbose_name='Address')
@@ -654,10 +650,6 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
                   'end_day',
                   'end_time',
                   'duration',
-                  'seats',
-                  'enrollees',
-                  'attendees',
-                  'ack_attendance_sheet',
                   'location_id',
                   'location',
                   'address',
@@ -697,18 +689,25 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
                   'comment')
         unlocalize = ('area', 'course_tags', 'course_code', 'course_display_name',
                       'chapter_display_name', 'section_display_name', 'session_id',
-                      'start_day', 'start_time', 'end_day', 'end_time', 'duration', 'seats',
-                      'enrollees', 'attendees', 'location_id', 'location', 'address', 'zip_code', 'city',
+                      'start_day', 'start_time', 'end_day', 'end_time', 'duration',
+                      'location_id', 'location', 'address', 'zip_code', 'city',
                       'user_name', 'user_email', 'user_username', 'user_date_joined', 'user_country',
                       'user_lt_area', 'user_lt_sub_area', 'user_city', 'user_location', 'user_lt_address', 'user_lt_address_2',
                       'user_lt_phone_number', 'user_lt_gdpr', 'user_lt_company', 'user_lt_employee_id', 'user_lt_hire_date',
                       'user_lt_level', 'user_lt_job_code', 'user_lt_job_description', 'user_lt_department', 'user_lt_supervisor',
                       'user_lt_ilt_supervisor', 'user_lt_learning_group', 'user_lt_exempt_status', 'user_lt_comments',
-                      'attendee', 'outward_trips', 'return_trips', 'accommodation', 'hotel', 'comment')
+                      'outward_trips', 'return_trips', 'hotel', 'comment')
 
     def order_session_id(self, queryset, is_descending):
         order = '-' if is_descending else ''
         queryset = queryset.order_by(order + 'ilt_module__id', order + 'ilt_session__session_nb')
         return queryset, True
 
+
+    def render_accommodation(self, value):
+        return "Yes" if value else "No"
+
+
+    def render_attendee(self, value):
+        return "Yes" if value else "No"
 

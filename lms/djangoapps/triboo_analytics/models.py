@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 import logging
-from datetime import date
 import json
 import multiprocessing
 from django.contrib.auth.models import User
@@ -11,7 +10,9 @@ from django.core.validators import MaxValueValidator
 from django.db import models, connections
 from django.db.models import Sum, Count
 from django.http import Http404
+from datetime import date, datetime
 from django.utils import timezone
+from pytz import UTC
 from django.utils.translation import ugettext_noop
 from django_countries.fields import CountryField
 from model_utils.fields import AutoLastModifiedField
@@ -975,6 +976,7 @@ class IltSession(TimeStampedModel):
     area = models.TextField(null=True, blank=True, default=None)
     enrollees = models.PositiveSmallIntegerField(default=0)
     attendees = models.PositiveSmallIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
 
     def session_id(self):
         module_id = "%s" % self.ilt_module.id
@@ -1021,6 +1023,9 @@ class IltSession(TimeStampedModel):
 
     @classmethod
     def generate_today_reports(cls):
+        cls.objects.all().update(is_active=False)
+        IltLearnerReport.objects.all().update(is_active=False)
+
         ilt_blocks = cls.get_ilt_blocks()
         for ilt_block_id, ilt_block_info in ilt_blocks.iteritems():
             ilt_module_id = UsageKey.from_string(ilt_block_id)
@@ -1079,7 +1084,9 @@ class IltSession(TimeStampedModel):
 
             cls.update_or_create(ilt_module, ilt_module_id.org, sessions, users)
             IltLearnerReport.generate_today_reports(ilt_module, users)
-        # TO DO: delete unmodified reports
+
+        cls.objects.filter(is_active=False).delete()
+        IltLearnerReport.objects.filter(is_active=False).delete()
 
 
     @classmethod
@@ -1098,8 +1105,8 @@ class IltSession(TimeStampedModel):
                 ack_attendance_sheet = session['ack_attendance_sheet']
             cls.objects.update_or_create(ilt_module=ilt_module,
                                          session_nb=session_nb,
-                                         defaults={'start': session['start_at'],
-                                                   'end': session['end_at'],
+                                         defaults={'start': datetime.strptime(session['start_at'], '%Y-%m-%dT%H:%M').replace(tzinfo=UTC),
+                                                   'end': datetime.strptime(session['end_at'], '%Y-%m-%dT%H:%M').replace(tzinfo=UTC),
                                                    'duration': session['duration'],
                                                    'seats': session['total_seats'],
                                                    'ack_attendance_sheet': ack_attendance_sheet,
@@ -1111,21 +1118,8 @@ class IltSession(TimeStampedModel):
                                                    'area': session['area_region'],
                                                    'org': org,
                                                    'enrollees': enrollees,
-                                                   'attendees': attendees})
-
-        # enrollees = 0
-        # attendees = 0
-        # for user_id, user_session in users.iteritems():
-        #     if not user_session['session_nb']:
-        #         enrollees += 1
-        #         if user_session['attendee']:
-        #             attendees += 1
-
-        # cls.objects.update_or_create(ilt_module=ilt_module,
-        #                             session_nb=None,
-        #                             defaults={'org': org,
-        #                                       'enrollees': enrollees,
-        #                                       'attendees': attendees})
+                                                   'attendees': attendees,
+                                                   'is_active': True})
 
 
 class IltLearnerReport(TimeModel):
@@ -1151,13 +1145,13 @@ class IltLearnerReport(TimeModel):
     accommodation = models.BooleanField(default=False)
     comment = models.TextField(null=True, blank=True, default=None)
     hotel = models.TextField(null=True, blank=True, default=None)
+    is_active = models.BooleanField(default=True)
 
 
     @classmethod
     def generate_today_reports(cls, ilt_module, users):
         for _, user_session in users.iteritems():
             cls.update_or_create(ilt_module, user_session)
-
 
     @classmethod
     def update_or_create(cls, ilt_module, user_session):
@@ -1192,7 +1186,8 @@ class IltLearnerReport(TimeModel):
                                                'return_trips': return_trips,
                                                'accommodation': accommodation,
                                                'comment': comment,
-                                               'hotel': hotel})
+                                               'hotel': hotel,
+                                               'is_active': True})
 
 
 def get_org_combinations():
