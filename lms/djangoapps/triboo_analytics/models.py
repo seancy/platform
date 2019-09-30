@@ -1028,6 +1028,7 @@ class IltSession(TimeStampedModel):
 
         ilt_blocks = cls.get_ilt_blocks()
         for ilt_block_id, ilt_block_info in ilt_blocks.iteritems():
+            logger.info("ILT Module %s" % ilt_block_id)
             ilt_module_id = UsageKey.from_string(ilt_block_id)
             ilt_module, _ = IltModule.objects.update_or_create(
                                 id=ilt_module_id,
