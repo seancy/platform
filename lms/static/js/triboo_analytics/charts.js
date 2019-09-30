@@ -75,7 +75,7 @@ function drawLineChart(elementId, csvData, marginLeft, marginRight) {
             .attr('viewBox', '0 0 '+ width  +' ' + height)
             .attr('width', '100%')
             .attr('height', '100%'),
-      margin = {top: 10, right: marginRight || 15, bottom: 23, left: marginLeft || 15},
+      margin = {top: 10, right: marginRight || 0, bottom: 23, left: marginLeft || 0},
       detailWidth  = 58,
       detailHeight = 35,
       detailMarginBottom = 10,

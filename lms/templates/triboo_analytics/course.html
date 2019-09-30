@@ -81,7 +81,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="analytics-float-wrapper">
+                    <div class="analytics-float-wrapper analytics-piechart-wrapper">
                       <div class="analytics-widget-24 analytics-piechart">
                         <div id="pieChart">
                             <svg></svg>
@@ -213,7 +213,7 @@
 % if enrollments_csv_data and len(enrollments_csv_data) > 0:
     <script type="text/javascript">
         var lineChartCsvData = "date,value\n" + "${enrollments_csv_data}";
-        drawLineChart('lineChart', lineChartCsvData, 30, 30);
+        drawLineChart('lineChart', lineChartCsvData, 0, 0);
     </script>
 % endif
 <script type="text/javascript">
