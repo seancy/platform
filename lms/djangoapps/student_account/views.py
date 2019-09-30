@@ -31,7 +31,7 @@ from openedx.core.djangoapps.lang_pref.api import all_languages, released_langua
 from openedx.core.djangoapps.programs.models import ProgramsApiConfig
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.theming.helpers import is_request_in_themed_site, get_current_site
-from openedx.core.djangoapps.user_api.accounts.api import request_password_change
+from openedx.core.djangoapps.user_api.accounts.api import request_password_change, get_account_settings
 from openedx.core.djangoapps.user_api.api import (
     RegistrationFormFactory,
     get_login_session_form,
@@ -537,6 +537,7 @@ def account_settings_context(request):
         user_orders = []
 
     extra_fields = configuration_helpers.get_value('REGISTRATION_EXTRA_FIELDS', settings.REGISTRATION_EXTRA_FIELDS)
+    account_settings_data = get_account_settings(request, [user.username])[0]
 
     context = {
         'auth': {},
@@ -578,6 +579,13 @@ def account_settings_context(request):
             'ENABLE_ACCOUNT_DELETION', settings.FEATURES.get('ENABLE_ACCOUNT_DELETION', False)
         ),
         'extended_profile_fields': _get_extended_profile_fields(),
+        'image_info': {
+            'profile_image_upload_url': reverse('profile_image_upload', kwargs={'username': user.username}),
+            'profile_image_remove_url': reverse('profile_image_remove', kwargs={'username': user.username}),
+            'profile_image_max_bytes': settings.PROFILE_IMAGE_MAX_BYTES,
+            'profile_image_min_bytes': settings.PROFILE_IMAGE_MIN_BYTES,
+        },
+        'account_settings_data': account_settings_data,
     }
 
     enterprise_customer = get_enterprise_customer_for_learner(site=request.site, user=request.user)

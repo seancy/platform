@@ -7,10 +7,14 @@
         'js/student_account/views/account_settings_fields',
         'js/student_account/views/account_settings_view',
         'edx-ui-toolkit/js/utils/string-utils',
-        'edx-ui-toolkit/js/utils/html-utils'
+        'edx-ui-toolkit/js/utils/html-utils',
+        'js/views/message_banner',
     ], function(gettext, $, _, Backbone, Logger, UserAccountModel, UserPreferencesModel,
-                 AccountSettingsFieldViews, AccountSettingsView, StringUtils, HtmlUtils) {
+                 AccountSettingsFieldViews, AccountSettingsView, StringUtils, HtmlUtils,
+                MessageBannerView) {
         return function(
+            imageInfo,
+            accountSettingsData,
             fieldsData,
             ordersHistoryData,
             authData,
@@ -37,11 +41,15 @@
                 showLoadingError, orderNumber, getUserField, userFields, timeZoneDropdownField, countryDropdownField,
                 emailFieldView, socialFields, accountDeletionFields, platformData,
                 aboutSectionMessageType, aboutSectionMessage, fullnameFieldView, countryFieldView,
-                fullNameFieldData, emailFieldData, countryFieldData, additionalFields, fieldItem, accountFields;
+                fullNameFieldData, emailFieldData, countryFieldData, additionalFields, fieldItem, accountFields,
+                profileImageFieldData, profileImageFieldView;
 
             $accountSettingsElement = $('.wrapper-account-settings');
 
-            userAccountModel = new UserAccountModel();
+            userAccountModel = new UserAccountModel(
+                _.extend(
+                    accountSettingsData
+                ));
             userAccountModel.url = userAccountsApiUrl;
 
             userPreferencesModel = new UserPreferencesModel();
@@ -124,6 +132,29 @@
                 };
             }
 
+            profileImageFieldData = {
+                model: userAccountModel,
+                valueAttribute: 'profile_image',
+                messageView: new MessageBannerView({ el: $('.message-banner') }),
+                title: gettext('Username'),
+                imageMaxBytes: imageInfo.profile_image_max_bytes,
+                imageMinBytes: imageInfo.profile_image_min_bytes,
+                imageUploadUrl: imageInfo.profile_image_upload_url,
+                imageRemoveUrl: imageInfo.profile_image_remove_url,
+                helpMessage: gettext('You can upload an image that you want to associate with your username. Your image must be a .gif, .jpg or .png file. We recommend to use the format 200x200 pixels. The size of the image must be below 1Mb.')
+            };
+            if (syncLearnerProfileData && enterpriseReadonlyAccountFields.fields.indexOf('profile_image') !== -1) {
+                profileImageFieldData.editable = 'never';
+                profileImageFieldView = {
+                    view: new AccountSettingsFieldViews.ProfileImageFieldView(profileImageFieldData)
+                };
+            } else {
+                profileImageFieldData.editable = 'toggle';
+                profileImageFieldView = {
+                    view: new AccountSettingsFieldViews.ProfileImageFieldView(profileImageFieldData)
+                };
+            }
+
             aboutSectionsData = [
                 {
                     title: gettext('Basic Account Information'),
@@ -133,6 +164,7 @@
                     message: aboutSectionMessage,
 
                     fields: [
+                        profileImageFieldView,
                         {
                             view: new AccountSettingsFieldViews.ReadonlyFieldView({
                                 model: userAccountModel,

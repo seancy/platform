@@ -6163,6 +6163,15 @@ msgid ""
 "username."
 msgstr "在  {platform_name}上标识您的名称。您不能更改用户名。"
 
+#: lms/static/js/student_account/views/account_settings_factory.js:144
+msgid ""
+"You can upload an image that you want to associate with your username. "
+"Your image must be a .gif, .jpg or .png file. We recommend to use the "
+"format 200x200 pixels. The size of the image must be below 1Mb."
+msgstr ""
+"您可以上传一个想要与您的用户名关联起来的图片。您的图片必须是一个 .gif、.jpg 或 "
+".png 文件。我们建议您使用的格式为 200x200 像素。图片的大小必须小于 1Mb。"
+
 #: lms/static/js/student_account/views/account_settings_factory.js:152
 msgid "Phone Number"
 msgstr "电话号码"
@@ -6294,6 +6303,10 @@ msgstr ""
 msgid ""
 "You must sign out and sign back in before your language changes take effect."
 msgstr "语言设置将在您重新登录后生效"
+
+#: lms/static/js/student_account/views/account_settings_factory.js:126
+msgid "PROFILE IMAGE"
+msgstr "用户图片"
 
 #: lms/static/js/student_account/views/account_settings_fields.js:218
 msgid ""

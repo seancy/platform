@@ -899,6 +899,8 @@ class AccountSettingsViewTest(ThirdPartyAuthTestMixin, TestCase, ProgramsApiConf
     @mock.patch('openedx.features.enterprise_support.api.get_enterprise_customer_for_learner')
     def test_context(self, mock_get_enterprise_customer_for_learner):
         self.request.site = SiteFactory.create()
+        self.request.META['SERVER_NAME'] = self.request.site.domain
+        self.request.META['SERVER_PORT'] = 8003
         mock_get_enterprise_customer_for_learner.return_value = {}
         context = account_settings_context(self.request)
 
@@ -941,6 +943,8 @@ class AccountSettingsViewTest(ThirdPartyAuthTestMixin, TestCase, ProgramsApiConf
         }
         mock_get_enterprise_customer_for_learner.return_value = dummy_enterprise_customer
         self.request.site = SiteFactory.create()
+        self.request.META['SERVER_NAME'] = self.request.site.domain
+        self.request.META['SERVER_PORT'] = 8003
         mock_get_auth_provider.return_value.sync_learner_profile_data = True
         context = account_settings_context(self.request)
 

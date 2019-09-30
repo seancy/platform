@@ -6413,6 +6413,16 @@ msgstr ""
 "Le nom qui vous identifie sur {platform_name}. Vous ne pouvez pas modifier "
 "votre nom d'utilisateur."
 
+#: lms/static/js/student_account/views/account_settings_factory.js:144
+msgid ""
+"You can upload an image that you want to associate with your username. "
+"Your image must be a .gif, .jpg or .png file. We recommend to use the "
+"format 200x200 pixels. The size of the image must be below 1Mb."
+msgstr ""
+"Vous pouvez charger une image associée à votre profil. Votre image doit "
+"être au format .gif .jpg or .png. Nous recommandons d'utiliser une taille "
+"de 200x200 pixels. La taille maximale ne doit pas dépasser 1Mb."
+
 #: lms/static/js/student_account/views/account_settings_factory.js:152
 msgid "Phone Number"
 msgstr "Numéro de téléphone"
@@ -6557,6 +6567,10 @@ msgid ""
 msgstr ""
 "Vous devez vous déconnecter puis vous connecter à nouveau afin que les "
 "paramètres de langue prennent effet."
+
+#: lms/static/js/student_account/views/account_settings_factory.js:126
+msgid "PROFILE IMAGE"
+msgstr "IMAGE DU PROFIL"
 
 #: lms/static/js/student_account/views/account_settings_fields.js:218
 msgid ""

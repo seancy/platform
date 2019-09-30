@@ -5921,6 +5921,13 @@ msgid ""
 "username."
 msgstr ""
 
+#: lms/static/js/student_account/views/account_settings_factory.js:144
+msgid ""
+"You can upload an image that you want to associate with your username. "
+"Your image must be a .gif, .jpg or .png file. We recommend to use the "
+"format 200x200 pixels. The size of the image must be below 1Mb."
+msgstr ""
+
 #: lms/static/js/student_account/views/account_settings_factory.js:152
 msgid "Phone Number"
 msgstr ""
@@ -6045,6 +6052,10 @@ msgstr ""
 #: lms/static/js/student_account/views/account_settings_fields.js:97
 msgid ""
 "You must sign out and sign back in before your language changes take effect."
+msgstr ""
+
+#: lms/static/js/student_account/views/account_settings_factory.js:126
+msgid "PROFILE IMAGE"
 msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_fields.js:218

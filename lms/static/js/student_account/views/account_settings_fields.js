@@ -6,6 +6,8 @@
         'underscore',
         'backbone',
         'js/views/fields',
+        'js/views/image_field',
+        'text!templates/fields/field_image_account.underscore',
         'text!templates/fields/field_text_account.underscore',
         'text!templates/fields/field_readonly_account.underscore',
         'text!templates/fields/field_link_account.underscore',
@@ -18,6 +20,8 @@
     ], function(
         gettext, $, _, Backbone,
         FieldViews,
+        ImageFieldView,
+        field_image_account_template,
         field_text_account_template,
         field_readonly_account_template,
         field_link_account_template,
@@ -37,6 +41,98 @@
             }),
             DropdownFieldView: FieldViews.DropdownFieldView.extend({
                 fieldTemplate: field_dropdown_account_template
+            }),
+            ProfileImageFieldView: ImageFieldView.extend({
+
+                fieldTemplate: field_image_account_template,
+                screenReaderTitle: gettext('Profile Image'),
+
+                imageUrl: function() {
+                    return this.model.profileImageUrl();
+                },
+
+                imageAltText: function() {
+                    return StringUtils.interpolate(
+                        gettext('Profile image for {username}'),
+                        {username: this.model.get('username')}
+                    );
+                },
+
+                imageChangeSucceeded: function() {
+                    var view = this;
+                    // Update model to get the latest urls of profile image.
+                    this.model.fetch().done(function() {
+                        view.setCurrentStatus('');
+                        view.render();
+                        view.$('.u-field-upload-button').focus();
+                    }).fail(function() {
+                        view.setCurrentStatus('');
+                        view.showErrorMessage(view.errorMessage);
+                    });
+                },
+
+                imageChangeFailed: function(e, data) {
+                    this.setCurrentStatus('');
+                    this.showImageChangeFailedMessage(data.jqXHR.status, data.jqXHR.responseText);
+                },
+
+                showImageChangeFailedMessage: function(status, responseText) {
+                    var errors;
+                    if (_.contains([400, 404], status)) {
+                        try {
+                            errors = JSON.parse(responseText);
+                            this.showErrorMessage(errors.user_message);
+                        } catch (error) {
+                            this.showErrorMessage(this.errorMessage);
+                        }
+                    } else {
+                        this.showErrorMessage(this.errorMessage);
+                    }
+                },
+
+                showErrorMessage: function(message) {
+                    this.options.messageView.showMessage(message);
+                },
+
+                isEditingAllowed: function() {
+                    return this.model.isAboveMinimumAge();
+                },
+
+                isShowingPlaceholder: function() {
+                    return !this.model.hasProfileImage();
+                },
+
+                clickedRemoveButton: function(e, data) {
+                    this.options.messageView.hideMessage();
+                    this._super(e, data);
+                },
+
+                fileSelected: function(e, data) {
+                    this.options.messageView.hideMessage();
+                    this._super(e, data);
+                },
+
+                render: function() {
+                    HtmlUtils.setHtml(this.$el, HtmlUtils.template(this.fieldTemplate)({
+                        id: this.options.valueAttribute,
+                        inputName: (this.options.inputName || 'file'),
+                        imageUrl: _.result(this, 'imageUrl'),
+                        imageAltText: _.result(this, 'imageAltText'),
+                        uploadButtonIcon: _.result(this, 'iconUpload'),
+                        uploadButtonTitle: _.result(this, 'uploadButtonTitle'),
+                        removeButtonIcon: _.result(this, 'iconRemove'),
+                        removeButtonTitle: _.result(this, 'removeButtonTitle'),
+                        screenReaderTitle: _.result(this, 'screenReaderTitle'),
+                        title: gettext('PROFILE IMAGE'),
+                        value: this.modelValue(),
+                        message: this.helpMessage,
+                        placeholder: this.options.placeholder || ''
+                    }));
+                    this.delegateEvents();
+                    this.updateButtonsVisibility();
+                    this.watchForPageUnload();
+                    return this;
+                },
             }),
             EmailFieldView: FieldViews.TextFieldView.extend({
                 fieldTemplate: field_text_account_template,
