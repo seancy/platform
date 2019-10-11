@@ -497,12 +497,6 @@ PARSE_KEYS = AUTH_TOKENS.get("PARSE_KEYS", {})
 # Example: {'CN': 'http://api.xuetangx.com/edx/video?s3_url='}
 VIDEO_CDN_URL = ENV_TOKENS.get('VIDEO_CDN_URL', {})
 
-if FEATURES['ENABLE_COURSEWARE_INDEX'] or FEATURES['ENABLE_LIBRARY_INDEX']:
-    # Use ElasticSearch for the search engine
-    SEARCH_ENGINE = "search.elastic.ElasticSearchEngine"
-
-ELASTIC_SEARCH_CONFIG = ENV_TOKENS.get('ELASTIC_SEARCH_CONFIG', [{}])
-
 XBLOCK_SETTINGS = ENV_TOKENS.get('XBLOCK_SETTINGS', {})
 XBLOCK_SETTINGS.setdefault("VideoDescriptor", {})["licensing_enabled"] = FEATURES.get("LICENSING", False)
 XBLOCK_SETTINGS.setdefault("VideoModule", {})['YOUTUBE_API_KEY'] = AUTH_TOKENS.get('YOUTUBE_API_KEY', YOUTUBE_API_KEY)
@@ -622,3 +616,9 @@ FEATURES['ENABLE_VIDEO_UPLOAD_PIPELINE'] = True
 FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False
 FEATURES['ENABLE_SPECIAL_EXAMS'] = True
 FEATURES['MILESTONES_APP'] = True
+
+if FEATURES['ENABLE_COURSEWARE_INDEX'] or FEATURES['ENABLE_LIBRARY_INDEX']:
+    # Use ElasticSearch for the search engine
+    SEARCH_ENGINE = "search.elastic.ElasticSearchEngine"
+
+ELASTIC_SEARCH_CONFIG = ENV_TOKENS.get('ELASTIC_SEARCH_CONFIG', [{}])
