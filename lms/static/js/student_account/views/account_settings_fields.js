@@ -95,7 +95,7 @@
                 },
 
                 isEditingAllowed: function() {
-                    return this.model.isAboveMinimumAge();
+                    return true;
                 },
 
                 isShowingPlaceholder: function() {
