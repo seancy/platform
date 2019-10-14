@@ -19903,6 +19903,14 @@ msgstr ""
 "le cours {course_name} sur la plateforme {platform_name}. Pour plus d'informations,"
 "merci de cliquer sur le lien ci-dessous:"
 
+#: lms/templates/emails/ilt_hotel_booking_check_message.txt:11
+msgid "Please take note of the accommodation requests for each of the sessions below:"
+msgstr "Nous vous invitons à prendre connaissance des demandes d’hôtel reçues pour chacune des sessions ci-dessous:"
+
+#: lms/templates/emails/ilt_hotel_booking_check_subject.txt:2
+msgid "PENDING - Accommodation requests"
+msgstr "À TRAITER - Demandes d’hôte"
+
 #: lms/templates/emails/ilt_hotel_cancel_email_message.txt:11
 msgid ""
 "This email is to inform you that the following learners have been unenrolled "
@@ -29544,7 +29552,7 @@ msgstr "Complété"
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-msgid "INSTRUCTOR LEAD TRAINING"
+msgid "INSTRUCTOR LED TRAINING"
 msgstr "Formation présentielle"
 
 #: XBlock: xblock-ilt

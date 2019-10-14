@@ -1426,6 +1426,7 @@ main_vendor_js = base_vendor_js + [
     'js/vendor/timepicker/jquery.timepicker.js',
     'js/vendor/notify.min.js',
     'js/vendor/iziModal.min.js',
+    'js/vendor/datepicker-translation.js',
 ]
 
 # Common files used by both RequireJS code and non-RequireJS code

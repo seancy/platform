@@ -48,7 +48,7 @@ msgstr ""
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-msgid "INSTRUCTOR LEAD TRAINING"
+msgid "INSTRUCTOR LED TRAINING"
 msgstr ""
 
 #: XBlock: xblock-ilt

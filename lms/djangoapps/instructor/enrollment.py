@@ -505,6 +505,11 @@ def send_mail_to_student(student, param_dict, language=None):
     message_type = param_dict['message']
 
     email_template_dict = {
+        'ilt_hotel_booking_check': (
+            'emails/ilt_hotel_booking_check_subject.txt',
+            'emails/ilt_hotel_booking_check_message.txt',
+            'emails/ilt_hotel_booking_check_html_message.txt'
+        ),
         'ilt_hotel_cancel': (
             'emails/ilt_hotel_cancel_email_subject.txt',
             'emails/ilt_hotel_cancel_email_message.txt',

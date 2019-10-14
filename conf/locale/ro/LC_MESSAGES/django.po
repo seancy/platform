@@ -17363,6 +17363,14 @@ msgid ""
 "the session, please click on the link below:"
 msgstr ""
 
+#: lms/templates/emails/ilt_hotel_booking_check_message.txt:11
+msgid "Please take note of the accommodation requests for each of the sessions below:"
+msgstr "Te rugăm să ai în vedere următoarele cereri de cazare pentru fiecare dintre sesiunile de mai jos:"
+
+#: lms/templates/emails/ilt_hotel_booking_check_subject.txt:2
+msgid "PENDING - Accommodation requests"
+msgstr "ÎN AȘTEPTARE – Cereri de cazare"
+
 #: lms/templates/emails/ilt_hotel_cancel_email_message.txt:11
 msgid ""
 "This email is to inform you that the following learners have been unenrolled "

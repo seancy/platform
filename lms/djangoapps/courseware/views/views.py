@@ -7,8 +7,10 @@ import urllib
 from collections import OrderedDict, namedtuple, defaultdict
 from copy import deepcopy
 from datetime import datetime
+from dateutil import relativedelta
 
 import analytics
+from completion.models import BlockCompletion
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser, User
@@ -19,6 +21,7 @@ from django.db.models import Q
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.shortcuts import redirect
 from django.template.context_processors import csrf
+from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.http import urlquote_plus
 from django.utils.text import slugify
@@ -69,8 +72,17 @@ from lms.djangoapps.ccx.custom_exception import CCXLocatorValidationException
 from lms.djangoapps.commerce.utils import EcommerceService
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect, Redirect
 from lms.djangoapps.experiments.utils import get_experiment_user_metadata_context
+from lms.djangoapps.grades.config.models import PersistentGradesEnabledFlag
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
-from lms.djangoapps.instructor.enrollment import uses_shib, send_mail_to_student, get_user_email_language
+from lms.djangoapps.grades.models import (
+    PersistentCourseGrade,
+    PersistentCourseProgress,
+    PersistentSubsectionGrade,
+    PersistentSubsectionGradeOverride
+)
+from lms.djangoapps.instructor.enrollment import (
+    uses_shib, send_mail_to_student, get_user_email_language, get_email_params, render_message_to_string
+)
 from lms.djangoapps.instructor.views.api import require_global_staff
 from lms.djangoapps.verify_student.services import IDVerificationService
 from openedx.core.djangoapps.catalog.utils import get_programs, get_programs_with_type
@@ -99,8 +111,10 @@ from openedx.features.course_experience.waffle import ENABLE_COURSE_ABOUT_SIDEBA
 from openedx.features.enterprise_support.api import data_sharing_consent_required
 from shoppingcart.utils import is_shopping_cart_enabled
 from student.models import CourseEnrollment, UserTestGroup
+from student.roles import CourseInstructorRole
 from util.cache import cache, cache_if_anonymous
 from util.db import outer_atomic
+from util.email_utils import send_mail_with_alias as send_mail
 from util.json_request import JsonResponse
 from util.milestones_helpers import get_prerequisite_courses_display
 from util.views import _record_feedback_in_zendesk, ensure_valid_course_key, ensure_valid_usage_key
@@ -113,6 +127,8 @@ from ..entrance_exams import user_can_skip_entrance_exam
 from ..module_render import get_module, get_module_by_usage_id, get_module_for_descriptor
 
 log = logging.getLogger("edx.courseware")
+ilt_log = logging.getLogger("edx.scripts.ilt_hotel_daily_check")
+reminder_log = logging.getLogger("edx.scripts.course_email_reminder")
 
 
 # Only display the requirements on learner dashboard for
@@ -1439,7 +1455,7 @@ def generate_user_cert(request, course_id):
     """Start generating a new certificate for the user.
 
     Certificate generation is allowed if:
-    * The user has passed the course, and
+    * The user has passed & completed the course, and
     * The user does not already have a pending/completed certificate.
 
     Note that if an error occurs during certificate generation
@@ -1497,7 +1513,8 @@ def generate_user_cert(request, course_id):
         # mark the certificate with "error" status, so it can be re-run
         # with a management command.  From the user's perspective,
         # it will appear that the certificate task was submitted successfully.
-        certs_api.generate_user_certificates(student, course.id, course=course, generation_mode='self')
+        certs_api.generate_user_certificates(
+            student, course.id, course=course, generation_mode='self', site=request.site)
         _track_successful_certificate_generation(student.id, course.id)
         return HttpResponse()
 
@@ -1975,19 +1992,21 @@ def ilt_attendance_sheet(request, course_id, usage_id, sess_key):
 
     course_key = CourseKey.from_string(course_id)
     usage_key = UsageKey.from_string(usage_id)
-    summary = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="enrolled_users")
+    try:
+        summary = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="enrolled_users")
+        enrolled_data = json.loads(summary.value)
+        enrolled_user_ids = [key for key in enrolled_data.get(sess_key, {})
+                             if enrolled_data[sess_key][key]['status'] in ("accepted", "confirmed")]
+        enrolled_users = User.objects.filter(id__in=enrolled_user_ids).select_related("profile")
+    except Exception as e:
+        enrolled_users = []
+
     sessions = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="sessions")
-    enrolled_data = json.loads(summary.value)
     session_data = json.loads(sessions.value)
     course = modulestore().get_course(course_key)
     ilt_block = modulestore().get_item(usage_key)
 
     session = session_data[sess_key]
-    enrolled_user_ids = [key for key in enrolled_data.get(sess_key, {})
-                         if enrolled_data[sess_key][key]['status'] in ("accepted", "confirmed")]
-    enrolled_users = User.objects.filter(id__in=enrolled_user_ids).select_related("profile")
-    print("enrolled_users: ", enrolled_users)
-    print("data:", enrolled_data)
 
     date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "")
     if date_format:
@@ -2015,3 +2034,356 @@ def ilt_attendance_sheet(request, course_id, usage_id, sess_key):
         'enrolled_users': enrolled_users
     }
     return render_to_response('courseware/ilt_attendance_sheet.html', context)
+
+
+def session_to_str(session_info, session_number):
+    default_format = "{start_at} - {end_at} | {timezone} | location: {location} | #{nb}"
+    custom_format = configuration_helpers.get_value("ILT_DROPDOWN_LIST_FORMAT", "")
+    if not custom_format:
+        custom_format = default_format
+
+    session_info['start_at'] = convert_datetime(session_info['start_at'])
+    session_info['end_at'] = convert_datetime(session_info['end_at'])
+    session_info['nb'] = session_number
+    return custom_format.format(**session_info)
+
+
+# ilt ILT: daily script for hotel booking
+def group_courses_by_admin():
+
+    summaries = XModuleUserStateSummaryField.objects.filter(field_name='enrolled_users')
+    admin_course_dict = {}
+    course_session_dict = {}
+    for s in summaries:
+        try:
+            usage_id = s.usage_id
+            ilt_block = modulestore().get_item(usage_id)
+            course_id = ilt_block.course_id
+            enrolled_user_info = json.loads(s.value)
+            sessions = XModuleUserStateSummaryField.objects.get(usage_id=usage_id, field_name="sessions")
+            sessions_info = json.loads(sessions.value)
+            remind_session_list = []
+            for session_id, users in enrolled_user_info.items():
+                for v in users.values():
+                    if v.get('accommodation') == 'yes' and v.get('status') == 'accepted':
+                        info = sessions_info[session_id]
+
+                        remind_session_list.append(session_to_str(info, session_id))
+                        break
+            if not remind_session_list:
+                continue
+            remind_session_list.sort()
+            if course_id in course_session_dict:
+                course_session_dict[course_id][ilt_block] = remind_session_list
+            else:
+                course_session_dict[course_id] = {ilt_block: remind_session_list}
+
+        except ItemNotFoundError:
+            ilt_log.error("ilt block: {usage_id} does not exist.".format(usage_id=usage_id))
+
+    course_id_list = list(course_session_dict)
+    for c in course_id_list:
+        try:
+
+            course_admins = CourseInstructorRole(c).users_with_role()
+            for admin in course_admins:
+                if admin in admin_course_dict:
+                    admin_course_dict[admin].append(c)
+                else:
+                    admin_course_dict[admin] = [c]
+        except Exception as e:
+            ilt_log.error(e.message)
+
+    return admin_course_dict, course_session_dict
+
+
+def process_ilt_hotel_check_email():
+
+    admin_course_dict, course_session_dict = group_courses_by_admin()
+    stripped_site_name = configuration_helpers.get_value(
+        'SITE_NAME',
+        settings.SITE_NAME
+    )
+    for admin, courses in admin_course_dict.items():
+        email = admin.email
+        params = {"course_list": [], "message": "ilt_hotel_booking_check", "site_name": None}
+        for c in courses:
+            course = modulestore().get_course(c)
+            course_name = course.display_name
+            temp = {"course_name": course_name, "modules": []}
+            block_sessions = course_session_dict[c]
+            for ilt_block, sessions in block_sessions.items():
+                module_name = ilt_block.display_name
+                section_id = ilt_block.get_parent().parent.block_id
+                chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+                url = u'{proto}://{site}{path}'.format(
+                    proto="https",
+                    site=stripped_site_name,
+                    path=reverse('courseware_section', args=[unicode(c), chapter_id, section_id])
+                )
+                x = {"module_name": module_name, "sessions": sessions, 'link': url}
+                temp["modules"].append(x)
+            params["course_list"].append(temp)
+
+        ilt_log.info("sending notification email to {email}, course: {course_id}, "
+                    "chapter: {chapter_id}, ilt_module: {ilt_module}".format(email=email,
+                                                                             course_id=unicode(c),
+                                                                             chapter_id=chapter_id,
+                                                                             ilt_module=module_name))
+        send_mail_to_student(email, params, language=get_user_email_language(admin))
+
+
+# course reminder
+class CourseReminder():
+
+    TIME_NOW = timezone.now()
+
+    def set_time(self, timez):
+        """
+        for testing
+        """
+        self.TIME_NOW = timez
+
+    def course_filter(self, course_id):
+        descriptor = modulestore().get_course(course_id)
+        if descriptor:
+            return len(descriptor.reminder_info) > 0
+        return False
+
+    def get_course_with_reminders(self):
+        """
+        get all the courses' ID that have course email reminders
+        """
+
+        # filter the course that not end yet or doesn't have end date
+        overviews = CourseOverview.objects.all().filter(Q(end__gte=self.TIME_NOW) | Q(end=None))
+        course_ids = [c.id for c in overviews if self.course_filter(c.id) and c.has_started()]
+        return course_ids
+
+    def get_course_enrollment(self):
+        """
+        return a dict including unfinished course_enrollment
+        and finished course_enrollment
+        """
+        unfinished = CourseEnrollment.objects.filter(
+            course_id__in=self.get_course_with_reminders(),
+            is_active=True,
+            completed__isnull=True
+        ).select_related('user')
+
+        finished = CourseEnrollment.objects.filter(
+            is_active=True,
+            completed__isnull=False
+        ).select_related('user')
+        return {
+            "unfinished": unfinished,
+            "finished": finished
+        }
+
+    def course_re_enroll(self, course_enrollment):
+        """
+        re-enroll a student in the course, reset the enrollment date and completed day
+        and delete the student state
+        """
+        course_enrollment.created = timezone.now()
+        course_enrollment.completed = None
+        course_enrollment.save()
+        student_modules = StudentModule.objects.filter(
+            course_id=course_enrollment.course_id,
+            student=course_enrollment.user
+        )
+        student_modules.delete()
+
+        if PersistentGradesEnabledFlag(course_enrollment.course_id):
+            try:
+                grade = PersistentCourseGrade.read(course_enrollment.user_id, course_enrollment.course_id)
+                grade.delete()
+                reminder_log.info("reset course grade for user: {user_name}, course_id: {course_id}".format(
+                    user_name=course_enrollment.user.username,
+                    course_id=course_enrollment.course_id
+                ))
+            except Exception as e:
+                reminder_log.error("failed to reset course grade for user: {user_name}, course_id: {course_id}, "
+                             "reason: {reason}".format(user_name=course_enrollment.user.username,
+                                                       course_id=course_enrollment.course_id,
+                                                       reason=e
+                                                       ))
+
+            try:
+                progress = PersistentCourseProgress.read(course_enrollment.user_id, course_enrollment.course_id)
+                progress.percent_progress = 0
+                progress.save()
+                reminder_log.info("reset course progress for user: {user_name}, course_id: {course_id}".format(
+                    user_name=course_enrollment.user.username,
+                    course_id=course_enrollment.course_id
+                ))
+            except Exception as e:
+                reminder_log.error("failed to reset course progress for user: {user_name}, course_id: {course_id}, "
+                             "reason: {reason}".format(user_name=course_enrollment.user.username,
+                                                       course_id=course_enrollment.course_id,
+                                                       reason=e
+                                                       ))
+
+            try:
+                completions = BlockCompletion.user_course_completion_queryset(
+                    course_enrollment.user, course_enrollment.course_id
+                )
+                completions.update(completion=0)
+                reminder_log.info("reset course page completions for user: {user_name}, course_id: {course_id}".format(
+                    user_name=course_enrollment.user.username,
+                    course_id=course_enrollment.course_id
+                ))
+            except Exception as e:
+                reminder_log.error("failed to reset course page completions for user: {user_name}, course_id: {course_id}, "
+                             "reason: {reason}".format(user_name=course_enrollment.user.username,
+                                                       course_id=course_enrollment.course_id,
+                                                       reason=e
+                                                       ))
+
+            try:
+                subsection_grades = PersistentSubsectionGrade.bulk_read_grades(
+                    course_enrollment.user_id, course_enrollment.course_id
+                )
+                for i in subsection_grades:
+                    i.earned_all = 0
+                    i.earned_graded = 0
+                    i.first_attempted = None
+                    i.save()
+                    try:
+                        override = PersistentSubsectionGradeOverride.objects.get(grade=i)
+                        override.delete()
+                    except PersistentSubsectionGradeOverride.DoesNotExist:
+                        pass
+
+                reminder_log.info("reset course subsection grade for user: {user_name}, course_id: {course_id}".format(
+                    user_name=course_enrollment.user.username,
+                    course_id=course_enrollment.course_id
+                ))
+            except Exception as e:
+                reminder_log.error("failed to reset course subsection grade for user: {user_name}, course_id: {course_id}, "
+                             "reason: {reason}".format(user_name=course_enrollment.user.username,
+                                                       course_id=course_enrollment.course_id,
+                                                       reason=e
+                                                       ))
+
+    def send_re_enroll_email(self, course_enrollment):
+        """
+        send email to student who is automatically re-enrolled in the course
+        """
+        descriptor = modulestore().get_course(course_enrollment.course_id)
+        re_enroll_time = descriptor.course_re_enroll_time
+
+        # if the course doesn't have a automatically re-enroll time, just pass
+        if not re_enroll_time:
+            pass
+        else:
+            print(course_enrollment.id)
+            time_unit = descriptor.re_enroll_time_unit or 'month'
+            completed = course_enrollment.completed
+            r = relativedelta.relativedelta(self.TIME_NOW, completed)
+            sending_mail = False
+            if time_unit == 'month' and r.years * 12 + r.months >= re_enroll_time:
+                sending_mail = True
+            elif time_unit == 'year' and r.years >= re_enroll_time:
+                sending_mail = True
+
+            if sending_mail:
+                # sending_mail is true means we have to re-enroll the student in the course
+                self.course_re_enroll(course_enrollment)
+                course = course_enrollment.course_overview
+                username = course_enrollment.user.first_name or course_enrollment.user.profile.name \
+                           or course_enrollment.user.username
+                params = get_email_params(course, True)
+                params['finish_days'] = descriptor.course_finish_days
+                params['username'] = username
+                params['re_enroll_time'] = descriptor.course_re_enroll_time
+                params['time_unit'] = time_unit
+                params['email_address'] = course_enrollment.user.email
+                subject, message = render_message_to_string(
+                    'emails/course_re_enroll_email_subject.txt',
+                    'emails/course_re_enroll_email_message.txt',
+                    params,
+                    language=get_user_email_language(course_enrollment.user)
+                )
+                subject = subject.strip('\n')
+                try:
+                    send_mail(subject, message, settings.CONTACT_EMAIL, [course_enrollment.user.email],
+                              fail_silently=False)
+                    reminder_log.info("send re_enroll_email to username: {username}, id: {user_id}, "
+                                "email: {email}, course_id: {course_id}".format(
+                        username=course_enrollment.user.username,
+                        user_id=course_enrollment.user.id,
+                        email=course_enrollment.user.email,
+                        course_id=course_enrollment.course_id
+                    ))
+                except Exception:
+                    reminder_log.exception(Exception)
+
+    def send_reminder_email(self, course_enrollment):
+        """
+        send reminder email to student, to reminder him/her the deadline of the course
+        """
+        descriptor = modulestore().get_course(course_enrollment.course_id)
+        finish_days = descriptor.course_finish_days
+
+        # if the course is required to finish within certain days, we check the reminder info,
+        # otherwise do nothing
+        if not finish_days:
+            return
+
+        created = course_enrollment.created
+        delta = self.TIME_NOW - created
+        send = False
+
+        if descriptor.periodic_reminder_enabled and descriptor.periodic_reminder_day > 0:
+            if delta.days > 0 and delta.days % descriptor.periodic_reminder_day == 0:
+                send = True
+        elif delta.days in descriptor.reminder_info:
+            send = True
+
+        if send:
+            if delta.days > finish_days:
+                overdue = True
+                days_left = delta.days - finish_days
+            else:
+                overdue = False
+                days_left = finish_days - delta.days
+            time_unit = descriptor.re_enroll_time_unit or 'month'
+            course = course_enrollment.course_overview
+            username = course_enrollment.user.first_name or course_enrollment.user.profile.name \
+                       or course_enrollment.user.username
+            params = get_email_params(course, True)
+            params['username'] = username
+            params['overdue'] = overdue
+            params['days_left'] = days_left
+            params['finish_days'] = finish_days
+            params['re_enroll_time'] = descriptor.course_re_enroll_time
+            params['time_unit'] = time_unit
+            params['email_address'] = course_enrollment.user.email
+            subject, message = render_message_to_string(
+                'emails/course_reminder_email_subject.txt',
+                'emails/course_reminder_email_message.txt',
+                params,
+                language=get_user_email_language(course_enrollment.user)
+            )
+            subject = subject.strip('\n')
+            try:
+                send_mail(subject, message, settings.CONTACT_EMAIL, [course_enrollment.user.email], fail_silently=False)
+                reminder_log.info("send reminder_email to username: {username}, id: {user_id}, "
+                            "email: {email}, course_id: {course_id}".format(
+                    username=course_enrollment.user.username,
+                    user_id=course_enrollment.user.id,
+                    email=course_enrollment.user.email,
+                    course_id=course_enrollment.course_id
+                ))
+            except Exception:
+                reminder_log.exception(Exception)
+
+    def process_email(self):
+        """
+        send email to students
+        """
+        for enrollment in self.get_course_enrollment().get('finished'):
+            self.send_re_enroll_email(enrollment)
+        for enrollment in self.get_course_enrollment().get('unfinished'):
+            self.send_reminder_email(enrollment)

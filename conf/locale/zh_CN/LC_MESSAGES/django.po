@@ -18393,8 +18393,8 @@ msgid ""
 msgid_plural ""
 "You will be automatically re-enrolled in this course after {re_enroll_time} "
 "months after completion."
-msgstr[0] "完成{re_enroll_time 一个月后，您将自动重新注册此课程。"
-msgstr[1] "完成{re_enroll_time 一个月后，您将自动重新注册此课程。"
+msgstr[0] "完成{re_enroll_time} 个月后，您将自动重新注册此课程。"
+msgstr[1] "完成{re_enroll_time} 个月后，您将自动重新注册此课程。"
 
 #: lms/templates/emails/course_re_enroll_email_message.txt:34
 #: lms/templates/emails/course_reminder_email_message.txt:46
@@ -18404,8 +18404,8 @@ msgid ""
 msgid_plural ""
 "You will be automatically re-enrolled in this course after {re_enroll_time} "
 "years after completion."
-msgstr[0] "完成 {re_enroll_time} 一年后，您将自动重新注册此课程。"
-msgstr[1] "完成 {re_enroll_time} 一年后，您将自动重新注册此课程。"
+msgstr[0] "完成 {re_enroll_time} 年后，您将自动重新注册此课程。"
+msgstr[1] "完成 {re_enroll_time} 年后，您将自动重新注册此课程。"
 
 #: lms/templates/emails/course_re_enroll_email_message.txt:43
 #: lms/templates/emails/course_reminder_email_message.txt:55
@@ -27592,7 +27592,7 @@ msgid "Done"
 msgstr "完成"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "INSTRUCTOR LEAD TRAINING"
+msgid "INSTRUCTOR LED TRAINING"
 msgstr "讲师引导式培训"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
