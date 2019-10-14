@@ -825,6 +825,8 @@ such that the value can be defined later than this assignment (file load order).
 
             this.$enrollment_button.click(function(event) {
                 var sendData;
+                var $target = $(event.currentTarget);
+                $target.parent().addClass('loading-wrapper');
                 if (!batchEnroll.$reason_field.val()) {
                     batchEnroll.$reason_field.val('');
                 }
@@ -842,15 +844,20 @@ such that the value can be defined later than this assignment (file load order).
                     email_students: emailStudents,
                     reason: batchEnroll.$reason_field.val()
                 };
+                var removeLoading = function () {
+                    $target.parent().removeClass('loading-wrapper');
+                }
                 return $.ajax({
                     dataType: 'json',
                     type: 'POST',
                     url: $(event.target).data('endpoint'),
                     data: sendData,
                     success: function(data) {
+                        removeLoading();
                         return batchEnroll.display_response(data);
                     },
                     error: statusAjaxError(function() {
+                        removeLoading();
                         return batchEnroll.fail_with_error(gettext('Error enrolling/unenrolling users.'));
                     })
                 });

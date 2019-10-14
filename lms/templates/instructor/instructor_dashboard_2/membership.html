@@ -60,8 +60,14 @@ from student.roles import studio_access_role
         </label>
     </div>
     <div class="action-wrapper">
-        <input type="button" name="enrollment-button" class="enrollment-button" value="${_("Unenroll")}" data-endpoint="${ section_data['unenroll_button_url'] }" data-action="unenroll" >
-        <input type="button" name="enrollment-button" class="enrollment-button" value="${pgettext('someone','Enroll')}" data-endpoint="${ section_data['enroll_button_url'] }" data-action="enroll" >
+        <span>
+            <input type="button" name="enrollment-button" class="enrollment-button" value="${_("Unenroll")}" data-endpoint="${ section_data['unenroll_button_url'] }" data-action="unenroll" >
+            <span class="icon"></span>
+        </span>
+        <span>
+            <input type="button" name="enrollment-button" class="enrollment-button" value="${pgettext('someone','Enroll')}" data-endpoint="${ section_data['enroll_button_url'] }" data-action="enroll" >
+            <span class="icon"/>
+        </span>
     </div>
     <div class="request-response"></div>
     <div class="request-response-error"></div>
