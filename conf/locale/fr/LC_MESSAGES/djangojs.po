@@ -12264,6 +12264,16 @@ msgstr "En ligne"
 msgid "ILT"
 msgstr "Présentielle"
 
+#: lms/templates/discovery/course_card.underscore:14
+#: lms/templates/discovery/facet_option.underscore:3
+msgid "Virtual classroom"
+msgstr "Classe virtuelle"
+
+#: lms/templates/discovery/course_card.underscore:14
+#: lms/templates/discovery/facet_option.underscore:3
+msgid "Blended learning"
+msgstr "Blended learning"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "Future"
 msgstr "À venir"

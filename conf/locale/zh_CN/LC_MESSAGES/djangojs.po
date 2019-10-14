@@ -11612,6 +11612,16 @@ msgstr "在线课程"
 msgid "ILT"
 msgstr "线下课程"
 
+#: lms/templates/discovery/course_card.underscore:14
+#: lms/templates/discovery/facet_option.underscore:3
+msgid "Virtual classroom"
+msgstr "实时活动"
+
+#: lms/templates/discovery/course_card.underscore:14
+#: lms/templates/discovery/facet_option.underscore:3
+msgid "Blended learning"
+msgstr "实时活动记录"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "Future"
 msgstr "即将开始"
