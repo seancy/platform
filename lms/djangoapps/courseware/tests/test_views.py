@@ -102,7 +102,7 @@ class TestJumpTo(ModuleStoreTestCase):
         # can't use the reverse calls from the CMS
         jumpto_url = '{0}/{1}/jump_to/{2}'.format('/courses', unicode(self.course_key), unicode(location))
         response = self.client.get(jumpto_url)
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 302)
 
     def test_jumpto_from_section(self):
         course = CourseFactory.create()

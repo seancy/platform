@@ -287,7 +287,8 @@ def jump_to(_request, course_id, location):
     try:
         redirect_url = get_redirect_url(course_key, usage_key)
     except ItemNotFoundError:
-        raise Http404(u"No data at this location: {0}".format(usage_key))
+        return redirect('openedx.course_experience.course_home',
+                        course_id=course_id)
     except NoPathToItem:
         raise Http404(u"This location is not in any class: {0}".format(usage_key))
 
