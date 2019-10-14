@@ -253,8 +253,15 @@ def GetCookie(request):
                 elif key == 'csrftoken':
                     csrftoken = value
             response = HttpResponse(status=301)
-            response['Location'] = 'https://' + settings.ENV_TOKENS['LMS_BASE']
-            response['Set-Cookie'] = 'sessionid=' + sessionid + '; Domain=.learning-tribes.com; Path=/'
+            if 'next' in request.GET:
+                login_page = request.GET['next']
+                if login_page[0] == '/':
+                    response['Location'] = 'https://' + settings.ENV_TOKENS['LMS_BASE'] + login_page
+                else:
+                    response['Location'] = 'https://' + settings.ENV_TOKENS['LMS_BASE'] + '/' + login_page
+            else:
+                response['Location'] = 'https://' + settings.ENV_TOKENS['LMS_BASE']
+            response['Set-Cookie'] = 'sessionid=' + sessionid + '; Domain=' + settings.ENV_TOKENS['SESSION_COOKIE_DOMAIN'] + '; Path=/'
             response.set_cookie('csrftoken', value=csrftoken)
             token.delete()
             return response

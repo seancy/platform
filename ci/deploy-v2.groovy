@@ -20,11 +20,13 @@ def theme_compile_process = false
 def platform_with_theme_process = false
 def restart_service_process = false
 def certs_process = false
+def stage_certs_process = false
 def xblock_process = false
 def config_file_process = false
 def proceed = true
 def manual = true
 def stage_auto_proceed = false
+def stage_xblock_process = false
 def this_environment = ''
 def sub_theme_process = ''
 def sub_restart_service_process = ''
@@ -33,7 +35,8 @@ def key_file = '/opt/password.txt'
 def ec2_location = null
 def instance_ip = ""
 def compile_theme = []
-def xblock_name = []
+def xblock_name = ''
+def xblock_branch_name = ''
 def tag_theme = ''
 def tag_restart_service = ''
 def tag_config_file = ''
@@ -166,8 +169,14 @@ pipeline {
                                 }
                             } else if (this_process == 'certs') {
                                 certs_process = true
+                                if (this_environment == 'STAGING') {
+                                    stage_certs_process = true
+                                }
                             } else if (this_process == 'xblock') {
                                 xblock_process = true
+                                if (this_environment == 'STAGING') {
+                                    stage_xblock_process = true
+                                }
                             } else if (this_process == 'config file') {
                                 config_file_process = true
                                 sub_config_file_process = input message: "which service to update configuration file", parameters: [choice(name: 'service', choices: ['nginx', 'platform'], description: 'which service to update configuration file')]
@@ -491,6 +500,30 @@ pipeline {
                 }
             }
         }
+        stage("Set certificates branch name") {
+            when {
+                expression { return proceed == true && certs_process == true && stage_certs_process == true }
+            }
+            steps {
+                script {
+                    try {
+                        timeout(time: 2) {
+                            def list_certs_branchs = []
+                            branchout3 = sh script: "python ${env.WORKSPACE}/configuration/playbooks/roles/lt_certs/files/get_certs_branch_list.py", returnStdout: true
+                            for (i in branchout3.split('\n')) {
+                                list_certs_branchs.add(i)
+                            }
+                            certs_branch_name = input message: 'Select certificates branch options', parameters: [choice(name: 'branch', choices: list_certs_branchs, description: 'which branch to deply')]
+                            println certs_branch_name
+                        }                       
+                    } catch (err) {
+                        println err
+                        proceed = false
+                        throw err
+                    }
+                }
+            }
+        }
         stage("Deploy certificates") {
             when {
                 expression { return proceed == true && certs_process == true }
@@ -517,10 +550,17 @@ pipeline {
                                 """
                             }
                         } else {
-                            sh """
-                            . /tmp/.venvec2/bin/activate
-                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-certs" -e '@${env.WORKSPACE}/inventory/group_vars/tenants/certs-vars.yml' lt_pipeline_jobs.yml
-                            """
+                            if (this_environment == 'PROD') {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-certs" -e '@${env.WORKSPACE}/inventory/group_vars/tenants/certs-vars.yml' lt_pipeline_jobs.yml
+                                """   
+                            } else if (this_environment == 'STAGING') {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "stage-deploy-certs" -e '@${env.WORKSPACE}/inventory/group_vars/tenants/certs-vars.yml' -e "{'branch_name':${certs_branch_name}}" lt_pipeline_jobs.yml
+                                """
+                            }
                         }
                     }   
                 }
@@ -537,17 +577,35 @@ pipeline {
                             def list_repoes = []
                             repoout = sh script: "python ${env.WORKSPACE}/configuration/playbooks/roles/lt_xblock/files/get_xblock_repo_list.py", returnStdout: true
                             for (i in repoout.split('\n')) {
-                                def parameter_boolean4 = [$class: 'BooleanParameterDefinition', defaultValue: false, description: '', name: i]
-                                list_repoes.add(parameter_boolean4)
+                                list_repoes.add(i)
                             }
-                            chooseOptions4 = input(id: 'chooseOptions4', message: 'Select xblock repo options', parameters: list_repoes)
-                            for (item in chooseOptions4) {
-                                if (item.value == true) {
-                                    xblock_name.add(item.key)
-                                }
-                            }
+                            xblock_name = input message: 'Select xblock repo options', parameters: [choice(name: 'repo', choices: list_repoes, description: 'which repository xblock to depoly')]
                             println xblock_name
                         }
+                    } catch (err) {
+                        println err
+                        proceed = false
+                        throw err
+                    }
+                }
+            }
+        }
+        stage("Set xblock branch name") {
+            when {
+                expression { return proceed == true && xblock_process == true && stage_xblock_process == true }
+            }
+            steps {
+                script {
+                    try {
+                        timeout(time: 2) {
+                            def list_xblock_branchs = []
+                            branchout2 = sh script: "python ${env.WORKSPACE}/configuration/playbooks/roles/lt_xblock/files/get_xblock_branch_list.py ${xblock_name}", returnStdout: true
+                            for (i in branchout2.split('\n')) {
+                                list_xblock_branchs.add(i)
+                            }
+                            xblock_branch_name = input message: 'Select xblock branch options', parameters: [choice(name: 'branch', choices: list_xblock_branchs, description: 'which branch to deply this xblock')]
+                            println xblock_branch_name
+                        }                       
                     } catch (err) {
                         println err
                         proceed = false
@@ -582,10 +640,18 @@ pipeline {
                                 """
                             }
                         } else {
-                            sh """
-                            . /tmp/.venvec2/bin/activate
-                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" --tags "deploy-xblock" lt_pipeline_jobs.yml
-                            """
+                            if ( this_environment == 'PROD') {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" --tags "deploy-xblock" lt_pipeline_jobs.yml
+                                """
+                            }
+                            else if ( this_environment == 'STAGING' ) {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" -e "{'branch_name': ${xblock_branch_name}}" --tags "stage-deploy-xblock" lt_pipeline_jobs.yml
+                                """
+                            }
                         }
                     }
                 }
