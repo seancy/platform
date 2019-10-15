@@ -231,11 +231,8 @@ class VisibleBlocks(models.Model):
         Returns a dictionary mapping hashes of these block records to the
         block record objects.
         """
-        grades_with_blocks = PersistentSubsectionGrade.objects.select_related('visible_blocks').filter(
-            user_id=user_id,
-            course_id=course_key,
-        )
-        prefetched = {grade.visible_blocks.hashed: grade.visible_blocks for grade in grades_with_blocks}
+        existent_visible_blocks = cls.objects.filter(course_id=course_key)
+        prefetched = {block.hashed: block for block in existent_visible_blocks}
         get_cache(cls._CACHE_NAMESPACE)[cls._cache_key(user_id, course_key)] = prefetched
         return prefetched
 
