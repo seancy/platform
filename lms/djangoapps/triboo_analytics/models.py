@@ -469,9 +469,10 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                         Sum('time_spent')).get('time_spent__sum') or 0)
 
                 progress = CourseGradeFactory().get_progress(user, course)
+                progress['progress'] *= 100.0
                 if not progress:
                     logger.warning('course=%s user_id=%d does not have progress info => empty report.' % (
-                        course_id, user.id))
+                        course_key, user.id))
                     cls.objects.update_or_create(
                         created=day,
                         user=user,
@@ -1101,22 +1102,19 @@ class IltSession(TimeStampedModel):
                         enrollees += 1
                     if user_session['attendee']:
                         attendees += 1
-            ack_attendance_sheet = False
-            if 'ack_attendance_sheet' in session.keys():
-                ack_attendance_sheet = session['ack_attendance_sheet']
             cls.objects.update_or_create(ilt_module=ilt_module,
                                          session_nb=session_nb,
                                          defaults={'start': datetime.strptime(session['start_at'], '%Y-%m-%dT%H:%M').replace(tzinfo=UTC),
                                                    'end': datetime.strptime(session['end_at'], '%Y-%m-%dT%H:%M').replace(tzinfo=UTC),
-                                                   'duration': session['duration'],
+                                                   'duration': session.get('duration', ""),
                                                    'seats': session['total_seats'],
-                                                   'ack_attendance_sheet': ack_attendance_sheet,
-                                                   'location_id': session['location_id'],
+                                                   'ack_attendance_sheet': session.get('ack_attendance_sheet', False),
+                                                   'location_id': session.get('location_id', ""),
                                                    'location': session['location'],
-                                                   'address': session['address'],
-                                                   'zip_code': session['zip_code'],
-                                                   'city': session['city'],
-                                                   'area': session['area_region'],
+                                                   'address': session.get('address', ""),
+                                                   'zip_code': session.get('zip_code', ""),
+                                                   'city': session.get('city', ""),
+                                                   'area': session.get('area_region', ""),
                                                    'org': org,
                                                    'enrollees': enrollees,
                                                    'attendees': attendees,
@@ -1164,7 +1162,7 @@ class IltLearnerReport(TimeModel):
         outward_trips = 1
         return_trips = 1
         accommodation = False
-        comment = user_session['registration']['comment'] if user_session['registration'] else None
+        comment = None
         hotel = None
 
         if user_session['registration']:
@@ -1174,8 +1172,7 @@ class IltLearnerReport(TimeModel):
             if user_session['registration']['accommodation'] == "yes":
                 accommodation = True
             comment = user_session['registration']['comment']
-            if 'hotel' in user_session['registration'].keys():
-                hotel = user_session['registration']['hotel']
+            hotel = user_session['registration'].get('hotel', None)
 
         cls.objects.update_or_create(ilt_module=ilt_module,
                                      user=user_session['user'],
