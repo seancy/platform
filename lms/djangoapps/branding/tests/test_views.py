@@ -328,32 +328,31 @@ class TestIndex(SiteMixin, TestCase):
         self.assertIn(self.site_configuration_other.values["MKTG_URLS"]["ROOT"], response.content)
 
 
-class TestMyMoocCatalog(TestCase):
-    """ Test the mymooc_catalog view """
+class TestEdFlexCatalog(TestCase):
+    """ Test the edflex_catalog view """
 
     def setUp(self):
-        super(TestMyMoocCatalog, self).setUp()
-        self.disable_mymooc_config_1 = {"ENABLE_MYMOOC_CATALOG": False}
-        self.disable_mymooc_config_2 = {"ENABLE_MYMOOC_CATALOG": True, "MYMOOC_URL": ""}
-        self.enable_redirection_config = {"ENABLE_MYMOOC_CATALOG": True, "MYMOOC_URL": "http://test.com",
-                                          "ENABLE_MYMOOC_REDIRECTION": True}
+        super(TestEdFlexCatalog, self).setUp()
+        self.disable_edflex_config_1 = {"ENABLE_EDFLEX_CATALOG": False}
+        self.disable_edflex_config_2 = {"ENABLE_EDFLEX_CATALOG": True, "EDFLEX_URL": ""}
+        self.enable_redirection_config = {"ENABLE_EDFLEX_CATALOG": True, "EDFLEX_URL": "http://test.com"}
         self.user = UserFactory()
         self.client.login(username=self.user.username, password="test")
 
-    def test_with_mymooc_catalog_disabled(self):
-        """ Test mymooc_catalog view returns 404 if ENABLE_MYMOOC_CATALOG=False """
-        with with_site_configuration_context(configuration=self.disable_mymooc_config_1):
-            response = self.client.get(reverse("mymooc_catalog"))
+    def test_with_edflex_catalog_disabled(self):
+        """ Test edflex_catalog view returns 404 if ENABLE_EDFLEX_CATALOG=False """
+        with with_site_configuration_context(configuration=self.disable_edflex_config_1):
+            response = self.client.get(reverse("edflex_catalog"))
             self.assertEqual(response.status_code, 404)
 
-    def test_with_empty_mymooc_url(self):
-        """ Test mymooc_catalog view returns 404 if MYMOOC_URL is not provided """
-        with with_site_configuration_context(configuration=self.disable_mymooc_config_2):
-            response = self.client.get(reverse("mymooc_catalog"))
+    def test_with_empty_edflex_url(self):
+        """ Test edflex_catalog view returns 404 if EDFLEX_URL is not provided """
+        with with_site_configuration_context(configuration=self.disable_edflex_config_2):
+            response = self.client.get(reverse("edflex_catalog"))
             self.assertEqual(response.status_code, 404)
 
-    def test_with_mymooc_redirection_enabled(self):
-        """ Test mymooc_catalog view will redirect if ENABLE_MYMOOC_REDIRECTION=True """
+    def test_with_redirection_enabled_by_default(self):
+        """ Test edflex_catalog view will redirect by default """
         with with_site_configuration_context(configuration=self.enable_redirection_config):
-            response = self.client.get(reverse("mymooc_catalog"))
+            response = self.client.get(reverse("edflex_catalog"))
             self.assertEqual(response.status_code, 302)

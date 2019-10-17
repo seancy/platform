@@ -316,8 +316,8 @@ urlpatterns += [
 
     url(r'^courses/?$', branding_views.courses, name='courses'),
 
-    # view of mymooc catalog
-    url(r'^courses/mymooc_catalog$', branding_views.mymooc_catalog, name='mymooc_catalog'),
+    # view of edflex catalog
+    url(r'^courses/edflex_catalog$', branding_views.edflex_catalog, name='edflex_catalog'),
 
     #About the course
     url(

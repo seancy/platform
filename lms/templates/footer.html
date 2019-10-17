@@ -9,7 +9,7 @@
   from openedx.core.djangoapps.lang_pref.api import footer_language_selector_is_enabled
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
   from branding.api import get_footer
-  from branding.views import CATALOG_DENIED_GROUP, MYMOOC_DENIED_GROUP
+  from branding.views import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP
   from student.roles import studio_access_role
   from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
 %>
@@ -96,10 +96,10 @@
               <li><a href="${marketing_link('COURSES')}">${_("Explore")}</a></li>
             % endif
 
-            % if (configuration_helpers.get_value('ENABLE_MYMOOC_CATALOG', settings.FEATURES.get('ENABLE_MYMOOC_CATALOG', False)) \
-              and configuration_helpers.get_value('MYMOOC_URL', None) \
-              and MYMOOC_DENIED_GROUP not in [group.name for group in user.groups.all()]):
-              <li><a href="${reverse('mymooc_catalog')}">${_("My Mooc")}</a></li>
+            % if (configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG', settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False)) \
+              and configuration_helpers.get_value('EDFLEX_URL', None) \
+              and EDFLEX_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+              <li><a href="${reverse('edflex_catalog')}">${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}</a></li>
             % endif
 
               <li><a href="${reverse('my_courses')}">${_('My Courses')}</a></li>

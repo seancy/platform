@@ -8,7 +8,7 @@
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from branding.views import CATALOG_DENIED_GROUP, MYMOOC_DENIED_GROUP
+from branding.views import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP
 from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
 from student.roles import studio_access_role
 %>
@@ -51,13 +51,13 @@ from student.roles import studio_access_role
       % endif
 
   ##  % if show_explore_courses:
-      % if (configuration_helpers.get_value('ENABLE_MYMOOC_CATALOG', settings.FEATURES.get('ENABLE_MYMOOC_CATALOG', False)) \
-        and configuration_helpers.get_value('MYMOOC_URL', None) \
-        and MYMOOC_DENIED_GROUP not in [group.name for group in user.groups.all()]):
-        <div class="mobile-nav-item hidden-mobile nav-item nav-tab mymooc-tab">
-          <a class="tab-nav-link" href="${reverse('mymooc_catalog')}">
-            <span class="label"><span class="icon far fa-book-open" aria-hidden="true"></span></span>
-            ${_("My Mooc")}
+      % if (configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG', settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False)) \
+        and configuration_helpers.get_value('EDFLEX_URL', None) \
+        and EDFLEX_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab edflex-tab">
+          <a class="tab-nav-link" target="_blank" href="${reverse('edflex_catalog')}">
+            <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
+            ${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}
           </a>
         </div>
       % endif
