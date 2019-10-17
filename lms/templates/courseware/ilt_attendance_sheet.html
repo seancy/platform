@@ -47,7 +47,7 @@
                 <p>${location_name}</p>
                 <p>${location_id}</p>
                 <p>${address}</p>
-                <p>${zip_code}</p>
+                <p>${zip_code} ${city}</p>
             </div>
         </li>
     </ul>
@@ -66,7 +66,7 @@
         <tr>
             <td>${user.profile.name or user.username}</td>
             <td>${user.profile.lt_employee_id}</td>
-            <td>${user.profile.location}</td>
+            <td>${user.profile.lt_address_2}</td>
             <td></td>
             <td></td>
         </tr>
