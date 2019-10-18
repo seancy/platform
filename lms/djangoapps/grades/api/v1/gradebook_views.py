@@ -305,7 +305,7 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
 
         if email_list:
             # we don't finish the anaytics transcript feature yet, so use this fake link
-            transcript_link = reverse('analytics_my_transcript')
+            transcript_link = request.build_absolute_uri(reverse('analytics_my_transcript'))
             course_name = course.display_name_with_default_escaped
             platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
             send_grade_override_email.apply_async(
