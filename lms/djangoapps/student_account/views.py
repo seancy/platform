@@ -79,7 +79,7 @@ def login_and_registration_form(request, initial_mode="login"):
     """
     custom_third_party_domain = configuration_helpers.get_value('REDIRECT_THIRD_PART_DOMAIN', None)
     if custom_third_party_domain and request.get_full_path() != '/':
-        custom_redirect_uri = custom_third_party_domain + request.get_full_path()
+        custom_redirect_uri = custom_third_party_domain + request.get_full_path().lstrip(settings.LOGIN_URL)
         return redirect(custom_redirect_uri, permanent=True)
     # Determine the URL to redirect to following login/registration/third_party_auth
     redirect_to = get_next_url_for_login_page(request)

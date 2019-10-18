@@ -260,7 +260,7 @@ def GetCookie(request):
                 else:
                     response['Location'] = 'https://' + settings.ENV_TOKENS['LMS_BASE'] + '/' + login_page
             else:
-                response['Location'] = 'https://' + settings.ENV_TOKENS['LMS_BASE']
+                response['Location'] = 'https://' + settings.ENV_TOKENS['LMS_BASE'] + '/dashboard'
             response['Set-Cookie'] = 'sessionid=' + sessionid + '; Domain=' + settings.ENV_TOKENS['SESSION_COOKIE_DOMAIN'] + '; Path=/'
             response.set_cookie('csrftoken', value=csrftoken)
             token.delete()
