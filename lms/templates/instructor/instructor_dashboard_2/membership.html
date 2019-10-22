@@ -61,11 +61,11 @@ from student.roles import studio_access_role
     </div>
     <div class="action-wrapper">
         <span>
-            <input type="button" name="enrollment-button" class="enrollment-button" value="${_("Unenroll")}" data-endpoint="${ section_data['unenroll_button_url'] }" data-action="unenroll" >
+            <input type="button" name="enrollment-button" class="enrollment-button loading-button" value="${_("Unenroll")}" data-endpoint="${ section_data['unenroll_button_url'] }" data-action="unenroll" >
             <span class="icon"></span>
         </span>
         <span>
-            <input type="button" name="enrollment-button" class="enrollment-button" value="${pgettext('someone','Enroll')}" data-endpoint="${ section_data['enroll_button_url'] }" data-action="enroll" >
+            <input type="button" name="enrollment-button" class="enrollment-button loading-button" value="${pgettext('someone','Enroll')}" data-endpoint="${ section_data['enroll_button_url'] }" data-action="enroll" >
             <span class="icon"/>
         </span>
     </div>
@@ -99,8 +99,15 @@ from student.roles import studio_access_role
             <span class="file-size"></span>
             <div class="progress-bar" data-percent="40%" percent="40"><i></i></div>
         </div>
-      <input type="button" name="enrollment-signup-button" value="${_("Test CSV file")}" data-endpoint="${ section_data['precheck_upload_student_csv_button_url'] }" data-action="precheck">
-      <input type="button" name="enrollment-signup-button" value="${_("Register/Enroll")}" data-endpoint="${ section_data['upload_student_csv_button_url'] }" data-action="register-enroll">
+        <span>
+            <input type="button" name="enrollment-signup-button" class="loading-button" value="${_("Test CSV file")}" data-endpoint="${ section_data['precheck_upload_student_csv_button_url'] }" data-action="precheck">
+            <span class="icon"></span>
+        </span>
+        <span>
+            <input type="button" name="enrollment-signup-button" class="loading-button" value="${_("Register/Enroll")}" data-endpoint="${ section_data['upload_student_csv_button_url'] }" data-action="register-enroll">
+            <span class="icon"></span>
+        </span>
+
       <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
     </div>
     <div class="results" id="register-enroll-results"></div>
@@ -129,7 +136,10 @@ from student.roles import studio_access_role
             <span class="file-size"></span>
             <div class="progress-bar" data-percent="40%" percent="40"><i></i></div>
         </div>
-      <input type="button" name="update_button" value="${_("Update user accounts")}" data-endpoint="${ section_data['update_student_csv_button_url'] }">
+        <span>
+            <input type="button" name="update_button" class="loading-button" value="${_("Update user accounts")}" data-endpoint="${ section_data['update_student_csv_button_url'] }">
+            <span class="icon"></span>
+        </span>
       <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
     </div>
     <div class="results" id="update-results"></div>
@@ -142,9 +152,10 @@ from student.roles import studio_access_role
           ${_("To send a welcoming email to users registered and enrolled by batch, enter email addresses separated by new lines or commas.")}
           <textarea rows="6" name="student-emails-for-welcoming" placeholder="${_("Email Addresses")}" spellcheck="false"></textarea>
         </label>
-        <div>
-          <input type="button" name="send-welcoming-email_button" value="${_("Send Emails")}" data-endpoint="${ section_data['send_welcoming_email_url'] }" >
-        </div>
+        <span>
+          <input type="button" name="send-welcoming-email_button" class="loading-button" value="${_("Send Emails")}" data-endpoint="${ section_data['send_welcoming_email_url'] }" >
+            <span class="icon"></span>
+        </span>
         <div class="results"></div>
     </fieldset>
 %endif
@@ -187,8 +198,14 @@ from student.roles import studio_access_role
         </label>
     </div>
     <div class="action-wrapper">
-        <input type="button" name="beta-testers" class="enrollment-button btn-secondary" value="${_("Remove beta testers")}" data-endpoint="${ section_data['modify_beta_testers_button_url'] }" data-action="remove" >
-        <input type="button" name="beta-testers" class="enrollment-button btn-primary" value="${_("Add beta testers")}" data-endpoint="${ section_data['modify_beta_testers_button_url'] }" data-action="add" >
+        <span>
+            <input type="button" name="beta-testers" class="loading-button enrollment-button btn-secondary" value="${_("Remove beta testers")}" data-endpoint="${ section_data['modify_beta_testers_button_url'] }" data-action="remove" >
+            <span class="icon"></span>
+        </span>
+        <span>
+            <input type="button" name="beta-testers" class="loading-button enrollment-button btn-primary" value="${_("Add beta testers")}" data-endpoint="${ section_data['modify_beta_testers_button_url'] }" data-action="add" >
+            <span class="icon"></span>
+        </span>
     </div>
     <div class="request-response"></div>
     <div class="request-response-error"></div>

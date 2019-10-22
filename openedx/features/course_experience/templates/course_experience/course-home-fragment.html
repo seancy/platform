@@ -122,6 +122,19 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 
     % endif
 
+    setTimeout(function () {
+      var $courseDescription = $('.course-description');
+      var $description = $(' .description');
+      if ($description.height() == 172){
+        $courseDescription.addClass('extend-mode');
+      }
+    }, 2000)
+
+    $('body').delegate('.extend-link', 'click', function (e) {
+      var $src = $(e.currentTarget);
+      var $courseDescription = $src.parent();
+      $courseDescription.toggleClass('all-paragraphs');
+    })
   })(this)
   </script>
 
@@ -167,6 +180,8 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           <div class="course-description">
             <p class="subtitle">${CourseDetails.fetch(course.id).subtitle}</p>
             <div class="description">${HTML(CourseDetails.fetch(course.id).description)}</div>
+            <div class="extend-link readmore">${_('Read more')}</div>
+            <div class="extend-link readless">${_('Read less')}</div>
           </div>
         </div>
 

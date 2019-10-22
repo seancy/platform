@@ -22,6 +22,18 @@ such that the value can be defined later than this assignment (file load order).
         __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
         /* eslint-enable */
 
+    var removeLoading = function ($target) {
+        return function(){
+            $target.parent().removeClass('loading-wrapper');
+        }
+    }
+
+    var startLoading = function(e){
+        var $target = $(e.currentTarget);
+        $target.parent().addClass('loading-wrapper');
+        return $target;
+    }
+
     plantTimeout = function() {
         return window.InstructorDashboard.util.plantTimeout.apply(this, arguments);
     };
@@ -332,6 +344,7 @@ such that the value can be defined later than this assignment (file load order).
                 if (autoenrollviacsv.activeFiles && autoenrollviacsv.activeFiles.length>0){
                     data.append('students_list', autoenrollviacsv.activeFiles[0]);
                 }
+                var $target = startLoading(event);
                 return $.ajax({
                     dataType: 'json',
                     type: 'POST',
@@ -340,6 +353,7 @@ such that the value can be defined later than this assignment (file load order).
                     processData: false,
                     contentType: false,
                     success: function(responsedata) {
+                        removeLoading($target)();
                         autoenrollviacsv.processing = false;
                         return autoenrollviacsv.display_response(responsedata, $(event.target).data('action'));
                     },
@@ -357,6 +371,7 @@ such that the value can be defined later than this assignment (file load order).
                         return xhr;
                     },
                     error: function(responsedata) {
+                        removeLoading($target)();
                         autoenrollviacsv.processing = false;
                         return autoenrollviacsv.display_response(responsedata, $(event.target).data('action'));
                     }
@@ -511,6 +526,7 @@ such that the value can be defined later than this assignment (file load order).
                 if (autoupdateviacsv.activeFiles && autoupdateviacsv.activeFiles.length>0){
                     data.append('students_list', autoupdateviacsv.activeFiles[0]);
                 }
+                var $target = startLoading(event);
                 return $.ajax({
                     dataType: 'json',
                     type: 'POST',
@@ -520,6 +536,7 @@ such that the value can be defined later than this assignment (file load order).
                     contentType: false,
                     success: function(responsedata) {
                         autoupdateviacsv.processing = false;
+                        removeLoading($target)();
                         return autoupdateviacsv.display_response(responsedata, $(event.target).data('action'));
                     },
                     xhr: function() {
@@ -537,6 +554,7 @@ such that the value can be defined later than this assignment (file load order).
                     },
                     error: function(responsedata) {
                         autoupdateviacsv.processing = false;
+                        removeLoading($target)();
                         return autoupdateviacsv.display_response(responsedata, $(event.target).data('action'));
                     }
                 });
@@ -658,15 +676,18 @@ such that the value can be defined later than this assignment (file load order).
                     email_students: emailStudents,
                     auto_enroll: autoEnroll
                 };
+                var $target = startLoading(event);
                 return $.ajax({
                     dataType: 'json',
                     type: 'POST',
                     url: betatest.$btn_beta_testers.data('endpoint'),
                     data: sendData,
                     success: function(data) {
+                        removeLoading($target)();
                         return betatest.display_response(data);
                     },
                     error: statusAjaxError(function() {
+                        removeLoading($target)();
                         return betatest.fail_with_error(gettext('Error adding/removing users as beta testers.'));
                     })
                 });
@@ -825,8 +846,6 @@ such that the value can be defined later than this assignment (file load order).
 
             this.$enrollment_button.click(function(event) {
                 var sendData;
-                var $target = $(event.currentTarget);
-                $target.parent().addClass('loading-wrapper');
                 if (!batchEnroll.$reason_field.val()) {
                     batchEnroll.$reason_field.val('');
                 }
@@ -844,20 +863,18 @@ such that the value can be defined later than this assignment (file load order).
                     email_students: emailStudents,
                     reason: batchEnroll.$reason_field.val()
                 };
-                var removeLoading = function () {
-                    $target.parent().removeClass('loading-wrapper');
-                }
+                var $target = startLoading(event);
                 return $.ajax({
                     dataType: 'json',
                     type: 'POST',
                     url: $(event.target).data('endpoint'),
                     data: sendData,
                     success: function(data) {
-                        removeLoading();
+                        removeLoading($target)();
                         return batchEnroll.display_response(data);
                     },
                     error: statusAjaxError(function() {
-                        removeLoading();
+                        removeLoading($target)();
                         return batchEnroll.fail_with_error(gettext('Error enrolling/unenrolling users.'));
                     })
                 });
@@ -1103,12 +1120,14 @@ such that the value can be defined later than this assignment (file load order).
                 var sendData = {
                     emails: sendEmail.$emails_textarea.val(),
                 };
+                var $target = startLoading(event);
                 return $.ajax({
                     dataType: 'json',
                     type: 'POST',
                     url: sendEmail.$submit_button.data('endpoint'),
                     data: sendData,
                     success: function(data) {
+                        removeLoading($target)();
                         return sendEmail.display_response(data);
                     },
                 });
