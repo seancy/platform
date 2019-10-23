@@ -106,24 +106,11 @@ from student.roles import studio_access_role
 
     % endif
 
-    setTimeout(function () {
-      var $courseDescription = $('.course-description');
-      var $description = $(' .description');
-      if ($description.height() == 172){
-        $courseDescription.addClass('extend-mode');
-      }
-    }, 2000)
-
-    $('body').delegate('.extend-link', 'click', function (e) {
-      var $src = $(e.currentTarget);
-      var $courseDescription = $src.parent();
-      $courseDescription.toggleClass('all-paragraphs');
-    })
-
   })(this)
   </script>
 
   <script src="${static.url('js/course_info.js')}"></script>
+  <script src="${static.url('js/courseware/course_overview.js')}"></script>
 </%block>
 
 <%block name="pagetitle">${course.display_name_with_default_escaped}</%block>
@@ -187,8 +174,10 @@ from student.roles import studio_access_role
             % endif
           </div>
           <div class="course-description">
-            <p class="subtitle">${CourseDetails.fetch(course.id).subtitle}</p>
-            <div class="description">${CourseDetails.fetch(course.id).description}</div>
+            <div class="subtitle-description-wrapper">
+              <p class="subtitle">${CourseDetails.fetch(course.id).subtitle}</p>
+              <div class="description">${CourseDetails.fetch(course.id).description}</div>
+            </div>
             <div class="extend-link readmore">${_('Read more')}</div>
             <div class="extend-link readless">${_('Read less')}</div>
           </div>
