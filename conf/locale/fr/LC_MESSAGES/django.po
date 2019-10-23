@@ -29575,7 +29575,7 @@ msgstr "Choisir une session de formation"
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
+msgid "NO SESSIONS AVAILABLE"
 msgstr "Pas de session disponible"
 
 #: XBlock: xblock-ilt
@@ -29748,6 +29748,26 @@ msgstr "Voir la feuille de présence"
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "Acknowledge reception of the attendance sheet"
 msgstr "Accuser la réception de la feuille de présence"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "There are not enough seats available!"
+msgstr "Il n'y a plus de places disponibles!"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "NO INCOMING SESSIONS AVAILABLE"
+msgstr "Aucune session à venir"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "This session is full"
+msgstr "Cette session est pleine"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Total seats number cannot be lower than {enrolled}"
+msgstr "Le nombre total de places disponibles ne peut être inférieur à {enrolled}"
 
 #: lms/templates/courseware/courses.html
 msgid "Availability"

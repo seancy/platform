@@ -63,7 +63,7 @@ msgstr ""
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
+msgid "NO SESSIONS AVAILABLE"
 msgstr ""
 
 #: XBlock: xblock-ilt
@@ -324,6 +324,26 @@ msgstr ""
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "Acknowledge reception of the attendance sheet"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "There are not enough seats available!"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "NO INCOMING SESSIONS AVAILABLE"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "This session is full"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Total seats number cannot be lower than {enrolled}"
 msgstr ""
 
 #: lms/templates/courseware/courses.html

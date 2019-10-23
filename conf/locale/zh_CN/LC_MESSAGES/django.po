@@ -27612,7 +27612,7 @@ msgid "CHOOSE A SESSION TO ENROLL"
 msgstr "选择注册一门课程"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
+msgid "NO SESSIONS AVAILABLE"
 msgstr "当前无班级"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
@@ -27747,6 +27747,26 @@ msgstr "查看考勤表"
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Acknowledge reception of the attendance sheet"
 msgstr "确认收到出勤表"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "There are not enough seats available!"
+msgstr "没有足够的座位！"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "NO INCOMING SESSIONS AVAILABLE"
+msgstr "没有即将到来的课程"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "This session is full"
+msgstr "该课程已满"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Total seats number cannot be lower than {enrolled}"
+msgstr "总座位数不能低于 {enrolled}"
 
 #: cms/templates/login.html
 msgid "Welcome to Joyson Open Online Courses, log in to explore more!"
