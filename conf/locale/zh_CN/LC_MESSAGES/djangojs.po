@@ -6243,8 +6243,8 @@ msgstr "社交媒体链接"
 #: lms/static/js/student_account/views/account_settings_factory.js:299
 msgid ""
 "Optionally, link your personal accounts to the social media icons on your "
-"edX profile."
-msgstr "或者，将您的个人帐户链接到 edX 个人资料上的社交媒体图标。"
+"{platform_name} profile."
+msgstr "或者，将您的个人帐户链接到 {platform_name} 个人资料上的社交媒体图标。"
 
 #: lms/static/js/student_account/views/account_settings_factory.js:309
 msgid "{platform_name} Link"

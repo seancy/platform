@@ -327,7 +327,9 @@
             // Add the social link fields
             socialFields = {
                 title: gettext('Social Media Links'),
-                subtitle: gettext('Optionally, link your personal accounts to the social media icons on your edX profile.'),  // eslint-disable-line max-len
+                subtitle: StringUtils.interpolate(gettext('Optionally, link your personal accounts to the social media icons on your {platform_name} profile.'), { // eslint-disable-line max-len
+                    platform_name: platformName
+                }),
                 fields: []
             };
 

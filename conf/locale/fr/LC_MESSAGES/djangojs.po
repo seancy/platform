@@ -6499,10 +6499,10 @@ msgstr "Liens vers les réseaux sociaux"
 #: lms/static/js/student_account/views/account_settings_factory.js:299
 msgid ""
 "Optionally, link your personal accounts to the social media icons on your "
-"edX profile."
+"{platform_name} profile."
 msgstr ""
 "Vous pouvez facultativement établir un lien entre vos comptes personnels et "
-"les icônes de réseaux sociaux sur votre profil edX."
+"les icônes de réseaux sociaux sur votre profil {platform_name}."
 
 #: lms/static/js/student_account/views/account_settings_factory.js:309
 msgid " Link"
