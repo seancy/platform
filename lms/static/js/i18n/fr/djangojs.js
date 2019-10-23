@@ -1138,7 +1138,7 @@
     "Option Deleted": "Option supprim\u00e9e", 
     "Optional Characteristics": "Caract\u00e9ristiques optionnelles", 
     "Optional long description": "Description longue optionnelle", 
-    "Optionally, link your personal accounts to the social media icons on your edX profile.": "Vous pouvez facultativement \u00e9tablir un lien entre vos comptes personnels et les ic\u00f4nes de r\u00e9seaux sociaux sur votre profil edX.", 
+    "Optionally, link your personal accounts to the social media icons on your {platform_name} profile.": "Vous pouvez facultativement \u00e9tablir un lien entre vos comptes personnels et les ic\u00f4nes de r\u00e9seaux sociaux sur votre profil {platform_name}.", 
     "Options for {license_name}": "Options pour {license_name}", 
     "Order Details": "D\u00e9tails de la commande", 
     "Order History": "Historique des commandes", 

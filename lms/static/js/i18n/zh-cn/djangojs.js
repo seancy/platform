@@ -1192,7 +1192,7 @@
     "Option Deleted": "\u9009\u9879\u5df2\u5220\u9664", 
     "Optional Characteristics": "\u53ef\u9009\u7279\u70b9", 
     "Optional long description": "\u53ef\u9009\u957f\u63cf\u8ff0", 
-    "Optionally, link your personal accounts to the social media icons on your edX profile.": "\u6216\u8005\uff0c\u5c06\u60a8\u7684\u4e2a\u4eba\u5e10\u6237\u94fe\u63a5\u5230 edX \u4e2a\u4eba\u8d44\u6599\u4e0a\u7684\u793e\u4ea4\u5a92\u4f53\u56fe\u6807\u3002", 
+    "Optionally, link your personal accounts to the social media icons on your {platform_name} profile.": "\u6216\u8005\uff0c\u5c06\u60a8\u7684\u4e2a\u4eba\u5e10\u6237\u94fe\u63a5\u5230 {platform_name} \u4e2a\u4eba\u8d44\u6599\u4e0a\u7684\u793e\u4ea4\u5a92\u4f53\u56fe\u6807\u3002", 
     "Options for {license_name}": " {license_name}\u540d\u79f0\u7684\u9009\u9879", 
     "Order Details": "\u8ba2\u5355\u7ec6\u8282", 
     "Order History": "\u8ba2\u5355\u8bb0\u5f55", 
