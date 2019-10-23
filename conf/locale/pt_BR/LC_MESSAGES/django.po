@@ -20755,6 +20755,14 @@ msgstr ""
 msgid "Upgrade ({price})"
 msgstr ""
 
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:185
+msgid "Read more"
+msgstr "Ler mais"
+
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:186
+msgid "Read less"
+msgstr "Ler menos"
+
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "Expand All"
 msgstr ""

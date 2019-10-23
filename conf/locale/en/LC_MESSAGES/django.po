@@ -15607,6 +15607,14 @@ msgstr ""
 msgid "No prerequisite required for this course"
 msgstr ""
 
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:185
+msgid "Read more"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:186
+msgid "Read less"
+msgstr ""
+
 #: lms/templates/courseware/course_about.html:259
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:246
 msgid "Additional Resources"

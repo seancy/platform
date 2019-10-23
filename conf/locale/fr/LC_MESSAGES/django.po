@@ -17833,6 +17833,14 @@ msgstr ""
 msgid "No prerequisite required for this course"
 msgstr "Il n'y a pas de prérequis pour ce cours"
 
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:185
+msgid "Read more"
+msgstr "Voir plus"
+
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:186
+msgid "Read less"
+msgstr "Voir moins"
+
 #: lms/templates/courseware/course_about.html:259
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:246
 msgid "Additional Resources"

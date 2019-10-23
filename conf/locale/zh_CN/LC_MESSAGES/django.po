@@ -16732,6 +16732,14 @@ msgstr "您必须先完成{link_start}{prc_display}{link_end}才能开始此课�
 msgid "No prerequisite required for this course"
 msgstr "这门课程没有先修条件"
 
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:185
+msgid "Read more"
+msgstr "更多内容"
+
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:186
+msgid "Read less"
+msgstr "收起"
+
 #: lms/templates/courseware/course_about.html:259
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:246
 msgid "Additional Resources"
