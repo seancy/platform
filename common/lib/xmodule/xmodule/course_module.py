@@ -829,7 +829,7 @@ class CourseFields(object):
             "subsection until learners earn a minimum score in another, "
             "prerequisite subsection."
         ),
-        default=False,
+        default=True,
         scope=Scope.settings
     )
 

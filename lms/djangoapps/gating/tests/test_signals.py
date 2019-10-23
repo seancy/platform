@@ -36,6 +36,7 @@ class TestHandleScoreChanged(ModuleStoreTestCase):
 
     @patch('lms.djangoapps.gating.api.gating_api.get_gating_milestone')
     def test_gating_disabled(self, mock_gating_milestone):
+        self.course.enable_subsection_gating = False
         evaluate_subsection_gated_milestones(
             sender=None,
             user=self.user,

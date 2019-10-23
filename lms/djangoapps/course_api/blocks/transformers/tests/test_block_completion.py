@@ -81,6 +81,7 @@ class BlockCompletionTransformerTestCase(TransformerRegistryTestMixin, Completio
     def test_transform_gives_value_for_completable(self):
         signals.post_save.disconnect(receiver=recalculate_course_completion_percentage, sender=BlockCompletion)
         course = CourseFactory.create()
+        course.enable_subsection_gating = False
         block = ItemFactory.create(category='comp', parent=course)
         BlockCompletion.objects.submit_completion(
             user=self.user,

@@ -2,6 +2,7 @@
 API entry point to the course_blocks app with top-level
 get_course_blocks function.
 """
+import sys
 from django.conf import settings
 
 from openedx.core.djangoapps.content.block_structure.api import get_block_structure_manager
