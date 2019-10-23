@@ -5,7 +5,7 @@
 #: master-sephora:lms/templates/emails/ilt_session_time_changed_email_message.txt:3
 #: master-sephora:lms/templates/emails/ilt_unenrolled_email_message.txt:3
 msgid "Dear {name},"
-msgstr "Draga {name},"
+msgstr "Dragă {name},"
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:6
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:6
@@ -13,7 +13,7 @@ msgstr "Draga {name},"
 msgid ""
 "We are writing to confirm your enrollment in the {ilt_name} in-class "
 "training on {start}."
-msgstr "Asteptam sa confirmi inscrierea la trainingul in sala {ilt_name} de pe data de {start}."
+msgstr "Îți confirmăm înscrierea pe care ai făcut-o la trainingul în sală {ilt_name} de pe data de {start}."
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:11
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:11
@@ -26,34 +26,34 @@ msgstr "PROGRAM:"
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:16
 #: master-sephora:lms/templates/emails/ilt_session_time_changed_email_message.txt:20
 msgid "The training begins on {start_day} at {start_time} {timezone}."
-msgstr "Trainingul incepe pe data de {start_day} la ora {start_time} {timezone}."
+msgstr "Trainingul începe pe data de {start_day} la ora {start_time} {timezone}."
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:18
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:18
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:19
 #: master-sephora:lms/templates/emails/ilt_session_time_changed_email_message.txt:23
 msgid "We recommend to arrive 15 minutes before the training begins."
-msgstr "Iti recomandam sa sosesti cu 20 minute inaintea inceperii trainingului."
+msgstr "Îți recomandăm să sosești cu 20 minute înaintea începerii trainingului."
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:22
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:22
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:23
 #: master-sephora:lms/templates/emails/ilt_session_time_changed_email_message.txt:27
 msgid "The training ends on {end_day} at {end_time} {timezone}."
-msgstr "Trainingul se finalizeaza pe data de {end_day} la ora {end_time} {timezone}."
+msgstr "Trainingul se finalizează pe data de {end_day} la ora {end_time} {timezone}."
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:25
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:25
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:26
 #: master-sephora:lms/templates/emails/ilt_session_time_changed_email_message.txt:30
 msgid "Total duration of the training: {duration} hour(s)."
-msgstr "Durata totala a trainingului: {duration} ore."
+msgstr "Durata totală a trainingului: {duration} ore."
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:29
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:29
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:30
 msgid "LOCATION OF THE TRAINING:"
-msgstr "LOCATIA TRAININGULUI:"
+msgstr "LOCAȚIA TRAININGULUI:"
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:43
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:44
@@ -64,19 +64,19 @@ msgstr "CAZARE:"
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:43
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:50
 msgid "Please note:"
-msgstr "MENTIUNI:"
+msgstr "Mențiuni:"
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:50
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:44
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:51
 msgid "Remember to bring your brushes to makeup trainings."
-msgstr "Asigura-te ca iti aduci centura cu pensule la toate trainingurile de make-up."
+msgstr "Asigură-te că îți aduci centura cu pensule la toate trainingurile de make-up."
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:51
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:45
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:52
 msgid "Make sure you are briefed by your manager before the training."
-msgstr "Asigura-te ca ai o discutie cu managerul tau inainte de participarea la training."
+msgstr "Asigură-te că ai o discuție cu managerul tău înainte de participarea la training."
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:53
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:47
@@ -89,7 +89,7 @@ msgstr "Asigura-te ca ai o discutie cu managerul tau inainte de participarea la 
 #: master-sephora:lms/templates/emails/ilt_unenrolled_email_message.txt:17
 #: master-sephora:lms/templates/emails/ilt_validate_email_message.txt:22
 msgid "See you soon."
-msgstr "Ne vedem in curand."
+msgstr "Ne vedem în curând."
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:54
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:48
@@ -115,7 +115,7 @@ msgstr "<a href=\"{ilt_link}\">Click aici</a> pentru a accesa platforma My Sepho
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_subject.txt:2
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_subject.txt:2
 msgid "INVITATION to the in-class training - {name}"
-msgstr "INVITATIE - Trainingul - {name}"
+msgstr "INVITAȚIE - Trainingul - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_hotel_cancel_email_message.txt:6
 msgid ""
@@ -131,32 +131,32 @@ msgstr "<a href=\"{ilt_link}\">Click aici</a> pentru a accesa platforma My Sepho
 
 #: master-sephora:lms/templates/emails/ilt_hotel_cancel_email_subject.txt:2
 msgid "FOR PROCESSING - Enrollment cancellations"
-msgstr "DE PROCESAT - Anularea inscrierilor"
+msgstr "ÎN AȘTEPTARE – Anularea înscrierilor"
 
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_message.txt:5
 msgid "Your hotel information has been changed. Please see below for details."
-msgstr "Informatiile referitoare la cazare au fost modificate. Te rog sa vezi modificarile mai jos."
+msgstr "Informațiile referitoare la cazare au fost modificate. Te rog să vezi modificările mai jos."
 
 #: master-sephora:lms/templates/emails/ilt_hotel_updated_email_subject.txt:2
 msgid "INVITATION UPDATE - in-class training - {name}"
-msgstr "ACTUALIZARE INVITATIE - Trainingul - {name}"
+msgstr "ACTUALIZARE INVITAȚIE - Trainingul - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_refused_email_message.txt:5
 msgid ""
 "You have declined the request from {name} to the {ilt_name} in-class "
 "training scheduled for {start} in {location} at {address}, {city} {zipcode}."
-msgstr "Ai respins cererea emisa de {name} la trainingul in sala {ilt_name} programat la data de {start} la {location}, {address}, {city} {zipcode}."
+msgstr "Ai respins cererea emisă de {name} la trainingul în sală {ilt_name} programat la data de {start} la {location}, {address}, {city} {zipcode}."
 
 #: master-sephora:lms/templates/emails/ilt_refused_email_subject.txt:2
 msgid "DECLINED - Enrollment in the in-class training - {name}"
-msgstr "RESPINSA - Inscrierea la trainingul - {name}"
+msgstr "RESPINSĂ – Înscrierea la trainingul - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_message.txt:5
 msgid ""
 "We are writing to confirm that your enrollment in the {ilt_name} in-class "
 "training scheduled for {start} in {location} at {address}, {city} {zipcode} "
 "has been canceled."
-msgstr "Te rugam sa iei la cunostinta ca inscrierea la trainingul in sala {ilt_name} programat pe data de {start} la {location}, {address}, {city} {zipcode} a fost anulata."
+msgstr "Te rugăm să iei la cunoștință faptul că înscrierea ta la trainingul în sală {ilt_name} programat pe data de {start} la {location}, {address}, {city} {zipcode} a fost anulată."
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_message.txt:13
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_message.txt:18
@@ -164,21 +164,21 @@ msgstr "Te rugam sa iei la cunostinta ca inscrierea la trainingul in sala {ilt_n
 msgid ""
 "Please visit <a href=\"{ilt_link}\">My Sephora University</a> for available "
 "times to reschedule your training."
-msgstr "Acceseaza platforma <a href=\"{ilt_link}\">My Sephora University</a> pentru a descoperi celelalte date cand te poti reprograma."
+msgstr "Accesează platforma <a href=\"{ilt_link}\">My Sephora University</a> pentru a descoperi celelalte date când te poți reprograma."
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_subject.txt:3
 msgid "Cancellation of the in-class training"
-msgstr "Anularea trainingului"
+msgstr "Anularea înscrierii la trainingul"
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_subject.txt:5
 msgid "Cancellation of the in-class training - {name}"
-msgstr "Anularea trainingului - {name}"
+msgstr "Anularea înscrierii la trainingul - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_message.txt:10
 msgid ""
 "Please be informed that the {ilt_name} in-class training scheduled for "
 "{start} in {location} at {address}, {city} {zip_code} has been canceled."
-msgstr "Te rugam sa iei la cunostinta ca inscrierea la trainingul in sala {ilt_name} programat pe data de {start} la {location}, {address}, {city} {zip_code} a fost anulata."
+msgstr "Te rugăm să iei la cunoștință faptul că înscrierea ta la trainingul în sală {ilt_name} programat pe data de {start} la {location}, {address}, {city} {zip_code} a fost anulată."
 
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_message.txt:20
 #: master-sephora:lms/templates/emails/ilt_unenrolled_email_message.txt:15
@@ -189,7 +189,7 @@ msgstr "Ne cerem scuze pentru inconvenientul creat."
 msgid ""
 "The times for the {ilt_name} in-class training scheduled for {start} in "
 "{location} at {address}, {city} {zipcode} have been changed."
-msgstr "Perioada pentru trainingul in sala {ilt_name} programat la data de {start} la {location}, {address}, {city} {zipcode} a fost modificata."
+msgstr "Perioada pentru trainingul în sală {ilt_name} programat la data de {start} la {location}, {address}, {city} {zipcode} a fost modificată."
 
 #: master-sephora:lms/templates/emails/ilt_session_time_changed_email_message.txt:16
 msgid "NEW SCHEDULE:"
@@ -197,18 +197,18 @@ msgstr "NOUL PROGRAM:"
 
 #: master-sephora:lms/templates/emails/ilt_session_time_changed_email_subject.txt:2
 msgid "Changes to the in-class training session schedule - {name}"
-msgstr "Modificari ale sesiunii de training - {name}"
+msgstr "Modificări ale sesiunii de training - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_unenrolled_email_message.txt:5
 msgid ""
 "Please be informed that your enrollment in the {ilt_name} in-class training "
 "scheduled for {start} in {location} at {address}, {city} {zip_code} had to "
 "be canceled."
-msgstr "Te rugam sa iei la cunostinta ca inscrierea la trainingul in sala {ilt_name} programat pe data de {start} la {location} la {address}, {city} {zip_code} a fost anulata."
+msgstr "Te rugăm să iei la cunoștință faptul că înscrierea ta la trainingul în sală {ilt_name} programat pe data de {start} la {location} la {address}, {city} {zip_code} a fost anulată."
 
 #: master-sephora:lms/templates/emails/ilt_unenrolled_email_subject.txt:2
 msgid "Cancellation of enrollment in the in-class training - {name}"
-msgstr "Anularea inscrierii la trainingul - {name}"
+msgstr "Anularea înscrierii la trainingul - {name}"
 
 #: master-sephora:lms/templates/emails/ilt_validate_email_message.txt:5
 msgid ""
@@ -222,15 +222,23 @@ msgstr "Click pe link-ul de mai jos pentru a accepta, edita sau respinge cererea
 
 #: master-sephora:lms/templates/emails/ilt_validate_email_message.txt:18
 msgid "PLEASE NOTE:"
-msgstr "Mentiuni:"
+msgstr "MENȚIUNI:"
 
 #: master-sephora:lms/templates/emails/ilt_validate_email_message.txt:19
 msgid ""
 "Before accepting any request and in order to optimize logistics organization "
 "(meals, hotel, etc.), we ask that you check if this training is taking place "
 "at least two weeks from now. If not, the enrollment should be declined."
-msgstr "Inainte de a accepta o cerere si pentru a optimiza organizarea logistica (catering, cazare, etc.), te rugam sa verifici daca trainingul se desfasoara in minim doua saptamani de acum. Daca nu, inscrierea ar trebui declinata."
+msgstr "Înainte de a accepta o cerere și pentru a optimiza organizarea logistică (catering, cazare, etc.), te rugăm să verifici dacă trainingul se desfășoară în minim două săptămâni de acum. Dacă nu, înscrierea ar trebui declinată."
 
 #: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
 msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
-msgstr "APROBARE NECESARA - Solicita inscrierea la trainingul - {name}"
+msgstr "APROBARE NECESARĂ – Solicitare înscriere la trainingul - {name}"
+
+#: lms/templates/emails/ilt_hotel_booking_check_message.txt:11
+msgid "Please take note of the accommodation requests for each of the sessions below:"
+msgstr "Te rugăm să ai în vedere următoarele cereri de cazare pentru fiecare dintre sesiunile de mai jos:"
+
+#: lms/templates/emails/ilt_hotel_booking_check_subject.txt:2
+msgid "PENDING - Accommodation requests"
+msgstr "ÎN AȘTEPTARE – Cereri de cazare"
