@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import pgettext
+from django.utils.translation import pgettext_lazy
 
 
 AVAILABLE_CHOICES = {
@@ -16,8 +16,8 @@ AVAILABLE_CHOICES = {
     'lt_area': _('Commercial Zone'),
     'lt_sub_area': _('Commercial Region'),
     'city': _('City'),
-    'location': pgettext('user.profile', 'Location'),
-    'lt_address': pgettext('user.profile', 'Address'),
+    'location': pgettext_lazy('user.profile', 'Location'),
+    'lt_address': pgettext_lazy('user.profile', 'Address'),
     'lt_address_2': _('Address 2'),
     'lt_phone_number': _('Phone Number'),
     'lt_gdpr': _('GDPR'),

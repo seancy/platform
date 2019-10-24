@@ -10597,7 +10597,7 @@ msgstr "Date d'inscription"
 #: lms/djangoapps/triboo_analytics/forms.py:15
 msgctxt "user.profile"
 msgid "Address"
-msgstr "Adresse 1"
+msgstr "Adresse"
 
 #: lms/templates/courseware/ilt_validation.html:58
 #: lms/templates/emails/ilt_confirmed_email_message.txt:23
