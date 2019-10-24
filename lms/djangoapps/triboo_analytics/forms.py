@@ -11,6 +11,7 @@ AVAILABLE_CHOICES = {
     'username': _('Username'),
     'date_joined': _('Date Joined'),
     'level_of_education': _('Education'),
+    'gender': _('Gender'),
     'country': _('Country'),
     'lt_area': _('Commercial Zone'),
     'lt_sub_area': _('Commercial Region'),

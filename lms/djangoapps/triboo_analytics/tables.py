@@ -176,6 +176,7 @@ class UserBaseTable(tables.Table):
     user_username = tables.Column(accessor='user.username', verbose_name='Username')
     user_date_joined = tables.Column(accessor='user.date_joined', verbose_name='Date Joined')
 
+    user_gender = tables.Column(accessor='user.profile.gender', verbose_name='Gender')
     user_country = tables.Column(accessor='user.profile.country', verbose_name='Country')
     user_lt_area = tables.Column(accessor='user.profile.lt_area', verbose_name='Commercial Zone')
     user_lt_sub_area = tables.Column(accessor='user.profile.lt_sub_area', verbose_name='Commercial Region')
@@ -212,6 +213,10 @@ class UserBaseTable(tables.Table):
 
     def order_user_date_joined(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__date_joined')
+        return queryset, True
+
+    def order_user_gender(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__gender')
         return queryset, True
 
     # def render_user_country(self, value):
@@ -398,6 +403,7 @@ class CourseTable(_RenderMixin, LearnerBaseTable):
                   'user_email',
                   'user_username',
                   'user_date_joined',
+                  'user_gender',
                   'user_country',
                   'user_lt_area',
                   'user_lt_sub_area',
@@ -455,6 +461,7 @@ class LearnerDailyTable(LearnerBaseTable):
                   'user_email',
                   'user_username',
                   'user_date_joined',
+                  'user_gender',
                   'user_country',
                   'user_lt_area',
                   'user_lt_sub_area',
@@ -659,6 +666,7 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
                   'user_email',
                   'user_username',
                   'user_date_joined',
+                  'user_gender',
                   'user_country',
                   'user_lt_area',
                   'user_lt_sub_area',

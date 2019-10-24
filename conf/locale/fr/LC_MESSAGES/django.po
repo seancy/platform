@@ -7900,7 +7900,7 @@ msgstr "Langue"
 #: lms/djangoapps/triboo_analytics/forms.py:14
 msgctxt "user.profile"
 msgid "Location"
-msgstr "Adresse"
+msgstr "Lieu"
 
 #: lms/templates/courseware/ilt_validation.html:56
 #: lms/templates/courseware/ilt_attendance_sheet.html:45
@@ -30065,3 +30065,23 @@ msgstr "Invitez les apprenants suivants à vérifier la disponibilité d'une nou
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_subject.txt:2
 msgid "In-class training canceled"
 msgstr "Annulation session formation"
+
+#: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:15
+msgid "Commercial Zone"
+msgstr "Zone Commerciale"
+
+#: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:16
+msgid "Commercial Region"
+msgstr "Région Commerciale"
+
+#: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:18
+msgid "Store"
+msgstr "Magasin"
+
+#: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:20
+msgid "Store ID"
+msgstr "ID Magasin"
+
+#: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:26
+msgid "Contract Type"
+msgstr "Type de Contrat"
