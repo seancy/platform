@@ -30074,10 +30074,6 @@ msgstr "Zone Commerciale"
 msgid "Commercial Region"
 msgstr "Région Commerciale"
 
-#: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:18
-msgid "Store"
-msgstr "Magasin"
-
 #: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:20
 msgid "Store ID"
 msgstr "ID Magasin"
