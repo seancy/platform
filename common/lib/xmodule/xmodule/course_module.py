@@ -476,7 +476,7 @@ class CourseFields(object):
         ),
         scope=Scope.settings,
         # Ensure that courses imported from XML keep their image
-        default="images_course_image.jpg"
+        default=""
     )
     video_thumbnail_image = String(
         display_name=_("Course Video Thumbnail Image"),

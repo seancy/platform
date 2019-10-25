@@ -19932,7 +19932,7 @@ msgstr "Nous vous invitons à prendre connaissance des demandes d’hôtel reçu
 
 #: lms/templates/emails/ilt_hotel_booking_check_subject.txt:2
 msgid "PENDING - Accommodation requests"
-msgstr "À TRAITER - Demandes d’hôte"
+msgstr "À TRAITER - Demandes d'hôtel"
 
 #: lms/templates/emails/ilt_hotel_cancel_email_message.txt:11
 msgid ""

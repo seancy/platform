@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.conf import settings
 from courseware.courses import get_course_about_section
+from openedx.core.lib.courses import course_image_url
 from six import string_types
 %>
 
@@ -13,9 +14,22 @@ from six import string_types
   </%static:require_module_async>
 </%block>
 
+<%
+   banner_img_url = course_image_url(course, image_key="banner_image")
+%>
+
+% if banner_img_url != settings.STATIC_URL + settings.DEFAULT_COURSE_ABOUT_IMAGE_URL:
+<style type="text/css">
+  body.view-in-course nav.course-banner .course-banner-image {
+    background-image: url("${request.build_absolute_uri(banner_img_url)}");
+  }
+</style>
+% endif
 
 <header class="course-profile">
   <nav class="course-banner" aria-label="${_('Course View')}">
+    <section class="course-banner-image"></section>
+    <section class="course-banner-shade"></section>
     <section class="welcome-wrapper">
       <h2>${course.display_name_with_default_escaped}</h2>
       <ul>
