@@ -413,3 +413,43 @@ msgstr ""
 # edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "failed"
 msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 119
+msgid "SCORM module"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 120
+msgid "SCORM module in .zip format"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 108
+msgid "Ratio"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 109
+msgid "Aspect ratio of this module"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 66
+msgid "Display name for this module"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 82
+msgid "Does this SCORM need to be scored?"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 90
+msgid "Icon"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 91
+msgid "Icon used in course page"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 100
+msgid "Relative weight in this course section"
+msgstr ""
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 170
+msgid "Does this SCORM allow users to submit answer multiple times?"
+msgstr ""

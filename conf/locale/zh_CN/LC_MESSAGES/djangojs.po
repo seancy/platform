@@ -5577,6 +5577,14 @@ msgid ""
 "These users were not affiliated with the course so could not be unenrolled:"
 msgstr "这些用户并不属于本课程学员，因此无法使其放弃选修："
 
+#: lms/static/js/instructor_dashboard/membership.js:1147
+msgid "The following email addresses are invalid:"
+msgstr "以下邮件地址无效："
+
+#: lms/static/js/instructor_dashboard/membership.js:1152
+msgid "Successfully sent welcoming emails to the following addresses:"
+msgstr "以下地址的欢迎邮件已成功发送："
+
 #: lms/static/js/instructor_dashboard/send_email.js:67
 msgid "Your message must have a subject."
 msgstr "您的消息必须有一个标题。"

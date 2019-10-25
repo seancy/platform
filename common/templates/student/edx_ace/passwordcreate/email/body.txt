@@ -1,7 +1,7 @@
 {% load i18n %}{% autoescape off %}
 {% blocktrans %}Welcome to {{ platform_name }}.{% endblocktrans %}
 
-{% blocktrans %}You can login with your email address: {{ user_email }}{% endblocktrans %}
+{% blocktrans %}You can sign in with your email address: {{ user_email }}{% endblocktrans %}
 
 
 {% trans "Please go to the following page to create your password:" %}

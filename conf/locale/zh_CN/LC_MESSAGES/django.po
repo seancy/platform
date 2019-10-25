@@ -5322,6 +5322,21 @@ msgstr "谢谢您访问我们的网站！"
 msgid "The %(platform_name)s Team"
 msgstr "%(platform_name)s 团队"
 
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:2
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:10
+msgid "Welcome to %(platform_name)s."
+msgstr "欢迎来到 %(platform_name)s。"
+
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:4
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:14
+msgid "You can sign in with your email address: %(user_email)s"
+msgstr "您可以使用您的电子邮件地址进行登录：%(user_email)s"
+
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:7
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:19
+msgid "Please go to the following page to create your password:"
+msgstr "请到以下页面创建您的密码："
+
 #: common/templates/student/edx_ace/passwordreset/email/subject.txt:3
 #, python-format
 msgid "Password reset on %(platform_name)s"
@@ -20966,7 +20981,7 @@ msgstr "所有尝试次数恢复为零"
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:117
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:168
 msgid "Rescore"
-msgstr "无法对可能的文件提交重新评分"
+msgstr "重新评分"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:53
 msgid ""
@@ -21395,33 +21410,46 @@ msgstr "密码重置已完成"
 #: lms/templates/registration/password_reset_complete.html:45
 msgid ""
 "Your password has been reset. {start_link}Sign-in to your account.{end_link}"
-msgstr "你的密码已重置。{start_link}登录你的帐号。{end_link}"
+msgstr "您的密码已重置。{start_link}登录您的帐号。{end_link}"
 
-#: lms/templates/registration/password_reset_confirm.html:49
-msgid ""
-"This password reset link is invalid. It may have been used already. To reset"
-" your password, go to the {start_link}sign-in{end_link} page and select "
-"{start_strong}Forgot password{end_strong}."
-msgstr ""
+#: lms/templates/registration/password_create_complete.html:43
+msgid "Password Creation Complete"
+msgstr "密码创建已完成"
 
-#: lms/templates/registration/password_create_confirm.html:49
+#: lms/templates/registration/password_create_complete.html:45
 msgid ""
-"This password creation link is invalid. It may have been used already. To reset"
-" your password, go to the {start_link}sign-in{end_link} page and select "
-"{start_strong}Forgot password{end_strong}."
-msgstr ""
+"Your password has been created. {start_link}Sign-in to your account.{end_link}"
+msgstr "您的密码已创建。{start_link}登录您的帐号。{end_link}"
 
 #: lms/templates/registration/password_reset_confirm.html:14
 msgid "Reset Your {platform_name} Password"
-msgstr "重置你的 {platform_name} 密码"
+msgstr "重置您的 {platform_name} 密码"
 
 #: lms/templates/registration/password_reset_confirm.html:47
 msgid "Invalid Password Reset Link"
 msgstr "无效的密码重置链接"
 
+#: lms/templates/registration/password_reset_confirm.html:50
+msgid  ""
+"This password reset link is invalid. It may have been used already. "
+"To reset your password, go to the {start_link}sign-in{end_link} page and "
+"select {start_strong}Forgot password{end_strong}."
+msgstr ""
+"该密码重置链接已失效，它可能已经被使用过。要重置您的密码，请到"
+"{start_link}登录{end_link}页面选择{start_strong}忘记密码{end_strong}。"
+
 #: lms/templates/registration/password_create_confirm.html:47
 msgid "Invalid Password Creation Link"
 msgstr "无效的密码创建链接"
+
+#: lms/templates/registration/password_create_confirm.html:50
+msgid  ""
+"This password creation link is invalid. It may have been used already. "
+"To reset your password, go to the {start_link}sign-in{end_link} page and "
+"select {start_strong}Forgot password{end_strong}."
+msgstr ""
+"该密码创建链接已失效，它可能已经被使用过。要重置您的密码，请到"
+"{start_link}登录{end_link}页面选择{start_strong}忘记密码{end_strong}。"
 
 #: lms/templates/registration/password_reset_done.html:3
 msgid "Password reset successful"
@@ -27795,3 +27823,43 @@ msgstr "通过"
 # edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "failed"
 msgstr "未通过"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 119
+msgid "SCORM module"
+msgstr "SCORM 模块"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 120
+msgid "SCORM module in .zip format"
+msgstr ".zip 格式的 SCORM 模块"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 108
+msgid "Ratio"
+msgstr "宽高比"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 109
+msgid "Aspect ratio of this module"
+msgstr "该模块的宽高比"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 66
+msgid "Display name for this module"
+msgstr "该模块的显示名称"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 82
+msgid "Does this SCORM need to be scored?"
+msgstr "该 SCORM 需要评分吗？"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 90
+msgid "Icon"
+msgstr "图标"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 91
+msgid "Icon used in course page"
+msgstr "课程页面中使用的图标"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 100
+msgid "Relative weight in this course section"
+msgstr "该课程区域的相关权重"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 170
+msgid "Does this SCORM allow users to submit answer multiple times?"
+msgstr "该 SCORM 允许用户多次提交回答吗？"

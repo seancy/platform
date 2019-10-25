@@ -5762,6 +5762,14 @@ msgstr ""
 "Les utilisateurs suivants n'étant pas inscrits au cours, ils n’ont pas pu "
 "être désinscrits :"
 
+#: lms/static/js/instructor_dashboard/membership.js:1147
+msgid "The following email addresses are invalid:"
+msgstr "Les adresses e-mail suivantes sont invalides :"
+
+#: lms/static/js/instructor_dashboard/membership.js:1152
+msgid "Successfully sent welcoming emails to the following addresses:"
+msgstr "Emails de bienvenue correctement envoyés aux adresses suivantes :"
+
 #: lms/static/js/instructor_dashboard/send_email.js:67
 msgid "Your message must have a subject."
 msgstr "Votre message doit contenir un sujet."

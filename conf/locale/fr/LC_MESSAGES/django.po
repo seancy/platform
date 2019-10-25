@@ -5533,6 +5533,21 @@ msgstr "Merci de votre fidélité !"
 msgid "The %(platform_name)s Team"
 msgstr "L'équipe  %(platform_name)s"
 
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:2
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:10
+msgid "Welcome to %(platform_name)s."
+msgstr "Bienvenue sur %(platform_name)s."
+
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:4
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:14
+msgid "You can sign in with your email address: %(user_email)s"
+msgstr "Vous pouvez vous connecter avec l’adresse e-mail : %(user_email)s"
+
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:7
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:19
+msgid "Please go to the following page to create your password:"
+msgstr "Veuillez vous rendre sur la page suivante pour créer votre mot de passe :"
+
 #: common/templates/student/edx_ace/passwordreset/email/subject.txt:3
 #, python-format
 msgid "Password reset on %(platform_name)s"
@@ -22923,6 +22938,16 @@ msgstr ""
 "Votre mot de passe a été réinitialisé. {start_link}Connectez-vous à votre "
 "compte.{end_link}"
 
+#: lms/templates/registration/password_create_complete.html:43
+msgid "Password Creation Complete"
+msgstr "Mot de passe créé"
+
+#: lms/templates/registration/password_create_complete.html:45
+msgid ""
+"Your password has been created. {start_link}Sign-in to your account.{end_link}"
+msgstr ""
+"Votre mot de passe a été créé. {start_link}Connectez-vous à votre compte.{end_link}"
+
 #: lms/templates/registration/password_reset_confirm.html:14
 msgid "Reset Your {platform_name} Password"
 msgstr "Réinitialiser votre mot de passe {platform_name}"
@@ -22930,6 +22955,30 @@ msgstr "Réinitialiser votre mot de passe {platform_name}"
 #: lms/templates/registration/password_reset_confirm.html:47
 msgid "Invalid Password Reset Link"
 msgstr "Lien de réinitialisation du mot de passe invalide"
+
+#: lms/templates/registration/password_reset_confirm.html:50
+msgid  ""
+"This password reset link is invalid. It may have been used already. "
+"To reset your password, go to the {start_link}sign-in{end_link} page and "
+"select {start_strong}Forgot password{end_strong}."
+msgstr ""
+"Ce lien de réinitialisation du mot de passe est invalide. Il a peut-être déjà été utilisé. "
+"Pour réinitialiser votre mot de passe, veuillez retourner sur la page de "
+"{start_link}connexion{end_link} et sélectionez {start_strong}Mot de passe oublié{end_strong}."
+
+#: lms/templates/registration/password_create_confirm.html:47
+msgid "Invalid Password Creation Link"
+msgstr "Lien de création de mot de passe invalide"
+
+#: lms/templates/registration/password_create_confirm.html:50
+msgid  ""
+"This password creation link is invalid. It may have been used already. "
+"To reset your password, go to the {start_link}sign-in{end_link} page and "
+"select {start_strong}Forgot password{end_strong}."
+msgstr ""
+"Ce lien de création du mot de passe est invalide. Il a peut-être déjà été utilisé. "
+"Pour réinitialiser votre mot de passe, veuillez retourner sur la page de "
+"{start_link}connexion{end_link} et sélectionez {start_strong}Mot de passe oublié{end_strong}."
 
 #: lms/templates/registration/password_reset_done.html:3
 msgid "Password reset successful"
@@ -29808,6 +29857,46 @@ msgstr "Classe virtuelle"
 #: lms/templates/courseware/course_banner.html
 msgid "Blended learning"
 msgstr "Blended learning"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 119
+msgid "SCORM module"
+msgstr "Module SCORM"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 120
+msgid "SCORM module in .zip format"
+msgstr "Module SCORM au format .zip"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 108
+msgid "Ratio"
+msgstr ""
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 109
+msgid "Aspect ratio of this module"
+msgstr "Format d’affichage de ce module"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 66
+msgid "Display name for this module"
+msgstr "Nom d’affichage de ce module"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 82
+msgid "Does this SCORM need to be scored?"
+msgstr "Ce module doit-il être noté ?"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 90
+msgid "Icon"
+msgstr "Icône"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 91
+msgid "Icon used in course page"
+msgstr "Icône utilisée sur la page de cours"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 100
+msgid "Relative weight in this course section"
+msgstr "Poids relatif de cette section de cours"
+
+#: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 170
+msgid "Does this SCORM allow users to submit answer multiple times?"
+msgstr "Ce module autorise-t-il les apprenants à soumettre leur réponse plusieurs fois ?"
 
 #: master-sephora:lms/templates/emails/ilt_confirmed_email_message.txt:3
 #: master-sephora:lms/templates/emails/ilt_enrolled_email_message.txt:3

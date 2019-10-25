@@ -4805,6 +4805,21 @@ msgstr ""
 msgid "The %(platform_name)s Team"
 msgstr ""
 
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:2
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:10
+msgid "Welcome to %(platform_name)s."
+msgstr ""
+
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:4
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:14
+msgid "You can sign in with your email address: %(user_email)s"
+msgstr ""
+
+#: common/templates/student/edx_ace/passwordcreate/email/body.txt:7
+#: common/templates/student/edx_ace/passwordcreate/email/body.html:19
+msgid "Please go to the following page to create your password:"
+msgstr ""
+
 #: common/templates/student/edx_ace/passwordreset/email/subject.txt:3
 #, python-format
 msgid "Password reset on %(platform_name)s"
@@ -20051,12 +20066,39 @@ msgid ""
 "Your password has been reset. {start_link}Sign-in to your account.{end_link}"
 msgstr ""
 
+#: lms/templates/registration/password_create_complete.html:43
+msgid "Password Creation Complete"
+msgstr ""
+
+#: lms/templates/registration/password_create_complete.html:45
+msgid ""
+"Your password has been created. {start_link}Sign-in to your account.{end_link}"
+msgstr ""
+
 #: lms/templates/registration/password_reset_confirm.html:14
 msgid "Reset Your {platform_name} Password"
 msgstr ""
 
 #: lms/templates/registration/password_reset_confirm.html:47
 msgid "Invalid Password Reset Link"
+msgstr ""
+
+#: lms/templates/registration/password_reset_confirm.html:50
+msgid  ""
+"This password reset link is invalid. It may have been used already. "
+"To reset your password, go to the {start_link}sign-in{end_link} page and "
+"select {start_strong}Forgot password{end_strong}."
+msgstr ""
+
+#: lms/templates/registration/password_create_confirm.html:47
+msgid "Invalid Password Creation Link"
+msgstr ""
+
+#: lms/templates/registration/password_create_confirm.html:50
+msgid  ""
+"This password creation link is invalid. It may have been used already. "
+"To reset your password, go to the {start_link}sign-in{end_link} page and "
+"select {start_strong}Forgot password{end_strong}."
 msgstr ""
 
 #: lms/templates/registration/password_reset_done.html:3

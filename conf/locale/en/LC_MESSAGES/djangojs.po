@@ -5368,6 +5368,14 @@ msgid ""
 "These users were not affiliated with the course so could not be unenrolled:"
 msgstr ""
 
+#: lms/static/js/instructor_dashboard/membership.js:1147
+msgid "The following email addresses are invalid:"
+msgstr ""
+
+#: lms/static/js/instructor_dashboard/membership.js:1152
+msgid "Successfully sent welcoming emails to the following addresses:"
+msgstr ""
+
 #: lms/static/js/instructor_dashboard/send_email.js:67
 msgid "Your message must have a subject."
 msgstr ""
