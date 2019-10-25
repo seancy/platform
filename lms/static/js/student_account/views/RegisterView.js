@@ -6,6 +6,7 @@
         'gettext',
         'edx-ui-toolkit/js/utils/string-utils',
         'edx-ui-toolkit/js/utils/html-utils',
+        'js/student_account/views/slowMovingPicture',
         'js/student_account/views/FormView',
         'text!templates/student_account/form_status.underscore'
     ],
@@ -13,6 +14,7 @@
             $, _, gettext,
             StringUtils,
             HtmlUtils,
+            SlowMovingPicture,
             FormView,
             formStatusTpl
         ) {
@@ -168,6 +170,8 @@
                         this.submitForm();
                     }
 
+                    var $bg = this.$el.find('.instruction-text'), $bgImg = $bg.find('img');
+                    SlowMovingPicture($bgImg, $bg);
                     return this;
                 },
 

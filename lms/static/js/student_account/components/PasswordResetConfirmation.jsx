@@ -8,6 +8,7 @@ import { Button, StatusAlert } from '@edx/paragon/static';
 
 import PasswordResetInput from './PasswordResetInput';
 import Aside from './Aside';
+import '../views/slowMovingPictureOriginal'
 
 // NOTE: Use static paragon with this because some internal classes (StatusAlert at least)
 // conflict with some standard LMS ones ('alert' at least). This means that you need to do
@@ -73,11 +74,16 @@ class PasswordResetConfirmation extends React.Component {
   }
 
   render() {
+    setTimeout(function () {
+      var $bg = $('.instruction-text'), $bgImg = $bg.find('img');
+      window.Animation_SlowMovingPicture($bgImg, $bg);
+    },1000)
     return (
       <section id="password-reset-confirm-anchor" className="form-type">
         <Aside/>
 
         <article id="password-reset-confirm-form" className="form-wrapper" aria-live="polite">
+          <div className="article-inner-wrapper">
           <StatusAlert
             alertType="danger"
             dismissible={false}
@@ -127,6 +133,7 @@ class PasswordResetConfirmation extends React.Component {
               label={gettext('Reset My Password')}
             />
           </form>
+          </div>
         </article>
       </section>
     );

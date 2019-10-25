@@ -512,6 +512,7 @@ class StaticCourseTabView(EdxFragmentView):
             'fragment': fragment,
             'uses_pattern_library': False,
             'disable_courseware_js': True,
+            'progress': None
         })
 
 
