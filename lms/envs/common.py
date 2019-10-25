@@ -2372,6 +2372,13 @@ REST_FRAMEWORK = {
 }
 
 
+################ Enable terms of service page feature ####################
+
+FEATURES['TERMS_OF_SERVICE_AGREED_ALL'] = False
+FEATURES['ENABLE_TERMS_OF_SERVICE_PAGE'] = False
+MIDDLEWARE_CLASSES.append('student.middleware.TermsOfServiceMiddleware')
+
+
 ######################### MARKETING SITE ###############################
 EDXMKTG_LOGGED_IN_COOKIE_NAME = 'edxloggedin'
 EDXMKTG_USER_INFO_COOKIE_NAME = 'edx-user-info'

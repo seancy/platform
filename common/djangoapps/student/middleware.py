@@ -4,9 +4,14 @@ disabled accounts from accessing the site.
 """
 from django.conf import settings
 from django.http import HttpResponseForbidden
+from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext as _
+from django.contrib.auth.models import User
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 from student.models import UserStanding
+from student.models import UserProfile
+
 
 
 class UserStandingMiddleware(object):
@@ -35,3 +40,30 @@ class UserStandingMiddleware(object):
                     ),
                 )
                 return HttpResponseForbidden(msg)
+
+
+class TermsOfServiceMiddleware(object):
+    """
+    Check if a user's lt_is_tos_agreed is true.
+    Returns to tos_page if it's not the case.
+    """
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if request.user.is_authenticated() is False:
+            return
+        if request.user.is_superuser:
+            return
+        profile = UserProfile.objects.filter(user=request.user.id).first()
+        if configuration_helpers.get_value('ENABLE_TERMS_OF_SERVICE_PAGE', settings.FEATURES.get('ENABLE_TERMS_OF_SERVICE_PAGE', False)):
+            tos_agreed_flag = configuration_helpers.get_value('TERMS_OF_SERVICE_AGREED_ALL', settings.FEATURES.get('TERMS_OF_SERVICE_AGREED_ALL', False))
+            users = User.objects.all()
+            for user in users:
+                user_profile = UserProfile.objects.filter(user=user.id).first()
+                if user_profile.lt_is_tos_agreed != tos_agreed_flag:
+                    user_profile.lt_is_tos_agreed = tos_agreed_flag
+                    user_profile.save()
+            if view_func.func_name in ['tos_page', 'confirm_tos', 'LogoutView']:
+                return
+            if profile.lt_is_tos_agreed:
+                return
+            return HttpResponseRedirect('/tos_page')
+        return

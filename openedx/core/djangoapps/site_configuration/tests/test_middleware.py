@@ -22,6 +22,7 @@ from microsite_configuration.tests.tests import (
 )
 from openedx.core.djangoapps.site_configuration.tests.factories import SiteConfigurationFactory, SiteFactory
 from openedx.core.djangolib.testing.utils import skip_unless_lms
+from openedx.core.djangoapps.site_configuration.tests.test_util import with_site_configuration_context
 
 
 # NOTE: We set SESSION_SAVE_EVERY_REQUEST to True in order to make sure
@@ -84,13 +85,14 @@ class SessionCookieDomainMicrositeOverrideTests(DatabaseMicrositeTestCase):
         Tests to make sure that a Microsite that specifies None for 'SESSION_COOKIE_DOMAIN' does not
         set a domain on the session cookie
         """
-        with patch('microsite_configuration.microsite.get_value') as mock_get_value:
-            mock_get_value.side_effect = side_effect_for_get_value('SESSION_COOKIE_DOMAIN', None)
-            with patch('microsite_configuration.microsite.BACKEND',
-                       get_backend(site_backend, BaseMicrositeBackend)):
-                response = self.client.get(reverse('branding_index'), HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
-                self.assertNotIn('test_site.localhost', str(response.cookies['sessionid']))
-                self.assertNotIn('Domain', str(response.cookies['sessionid']))
+        with with_site_configuration_context(configuration={'SESSION_COOKIE_DOMAIN': None}):
+            with patch('microsite_configuration.microsite.get_value') as mock_get_value:
+                mock_get_value.side_effect = side_effect_for_get_value('SESSION_COOKIE_DOMAIN', None)
+                with patch('microsite_configuration.microsite.BACKEND',
+                           get_backend(site_backend, BaseMicrositeBackend)):
+                    response = self.client.get(reverse('branding_index'), HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
+                    self.assertNotIn('test_site.localhost', str(response.cookies['sessionid']))
+                    self.assertNotIn('Domain', str(response.cookies['sessionid']))
 
 
 # NOTE: We set SESSION_SAVE_EVERY_REQUEST to True in order to make sure

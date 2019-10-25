@@ -1,16 +1,26 @@
 <%page expression_filter="h"/>
-<%! from django.utils.translation import ugettext as _ %>
+<%!
+from django.urls import reverse
+from django.utils.translation import ugettext as _ %>
 <%inherit file="../main.html" />
 
-<%block name="pagetitle">${_("Terms of Service")}</%block>
+<%block name="pagetitle">${_("GDPR Consent Form")}</%block>
 
-<main id="main" aria-label="Content" tabindex="-1">
+<main class="tos" id="main" aria-label="Content" tabindex="-1">
+    <section class="banner">
+        <section class="welcome-wrapper">
+            <h2>${_("GDPR Consent Form")}</h2>
+        </section>
+    </section>
     <section class="container about">
-        <h1>
-            <%block name="pageheader">${page_header or _("Terms of Service")}</%block>
-        </h1>
         <p>
             <%block name="pagecontent">${page_content or _("This page left intentionally blank. Feel free to add your own content.")}</%block>
         </p>
+        <hr>
+        <form class="tos-form" action="${reverse('confirm_tos')}" method="post">
+            <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}">
+            <button class="tos-form-button" type="submit" name="accept-tos">ACCEPT</button>
+            <button class="tos-form-button" type="submit" name="dissagree-tos">DO NOT ACCEPT</button>
+        </form>
     </section>
 </main>

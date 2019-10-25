@@ -826,3 +826,28 @@ class LogoutView(TemplateView):
         })
 
         return context
+
+
+@require_GET
+@login_required
+@ensure_csrf_cookie
+def tos_page(request):
+    profile = UserProfile.objects.filter(user=request.user.id).first()
+
+    context = {
+        'enable_tos_button': settings.FEATURES.get('ENABLE_TERMS_OF_SERVICE_PAGE', False),
+        'exempt_status': profile.lt_exempt_status,
+        'country': profile.country,
+    }
+
+    return render_to_response("static_templates/tos.html", context)
+
+
+@require_POST
+@login_required
+@ensure_csrf_cookie
+def confirm_tos(request):
+    if 'accept-tos' in request.POST:
+        UserProfile.objects.filter(user=request.user.id).update(lt_is_tos_agreed=True)
+        return redirect('dashboard')
+    return redirect('logout')

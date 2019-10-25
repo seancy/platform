@@ -157,6 +157,11 @@ urlpatterns = [
     url(r'^analytics/', include('triboo_analytics.urls')),
 ]
 
+urlpatterns += [
+    url(r'^tos_page$', student_views.tos_page, name="tos_page"),
+    url(r'^confirm_tos$', student_views.confirm_tos, name="confirm_tos"),
+]
+
 # TODO: This needs to move to a separate urls.py once the student_account and
 # student views below find a home together
 if settings.FEATURES.get('ENABLE_COMBINED_LOGIN_REGISTRATION'):
