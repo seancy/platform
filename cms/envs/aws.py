@@ -617,6 +617,9 @@ FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False
 FEATURES['ENABLE_SPECIAL_EXAMS'] = True
 FEATURES['MILESTONES_APP'] = True
 
+########################## AUTHOR PERMISSION #######################
+FEATURES['ENABLE_CREATOR_GROUP'] = False
+
 if FEATURES['ENABLE_COURSEWARE_INDEX'] or FEATURES['ENABLE_LIBRARY_INDEX']:
     # Use ElasticSearch for the search engine
     SEARCH_ENGINE = "search.elastic.ElasticSearchEngine"
