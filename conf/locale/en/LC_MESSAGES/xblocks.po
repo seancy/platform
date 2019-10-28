@@ -414,42 +414,150 @@ msgstr ""
 msgid "failed"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 119
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:119
 msgid "SCORM module"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 120
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:120
 msgid "SCORM module in .zip format"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 108
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:108
 msgid "Ratio"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 109
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:109
 msgid "Aspect ratio of this module"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 66
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:66
 msgid "Display name for this module"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 82
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:82
 msgid "Does this SCORM need to be scored?"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 90
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:90
 msgid "Icon"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 91
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:91
 msgid "Icon used in course page"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 100
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:100
 msgid "Relative weight in this course section"
 msgstr ""
 
-#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 170
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:170
 msgid "Does this SCORM allow users to submit answer multiple times?"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Successful"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Unsuccessful"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course country"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr ""
+
+#  #: lms/templates/triboo_analytics/table.html
+#  msgid "Address"
+#  msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
 msgstr ""

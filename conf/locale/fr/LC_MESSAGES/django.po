@@ -30170,3 +30170,99 @@ msgstr "ID Magasin"
 #: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:26
 msgid "Contract Type"
 msgstr "Type de Contrat"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr "Score actuel"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr "Temps passé total"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr "Date de complétion"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr "Inscriptions"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Successful"
+msgstr "Acquis"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Unsuccessful"
+msgstr "Non acquis"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr "Dernière connexion"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr "Zone géographique"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course country"
+msgstr "Pays du cours"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr "Région / Zone"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr "Labels du cours"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr "Code du cours"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr "ID de session"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr "Date de début"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr "Heure de début"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr "Date de fin"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr "Heure de fin"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr "Durée (en heures)"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr "Nombre de places"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr "Inscrits"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr "Présents"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr "Feuille de présence"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr "Nom du lieu"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "Code postal"

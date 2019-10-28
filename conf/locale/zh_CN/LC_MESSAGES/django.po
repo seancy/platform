@@ -27863,3 +27863,99 @@ msgstr "该课程区域的相关权重"
 #: edx_xblock_scorm/scormxblock/static/scormxblock.py: 170
 msgid "Does this SCORM allow users to submit answer multiple times?"
 msgstr "该 SCORM 允许用户多次提交回答吗？"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr "当前分数"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr "总使用时间"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr "完成日期"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr "选课"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Successful"
+msgstr "成功"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Unsuccessful"
+msgstr "不成功"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr "上次登录""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr "地理区域"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course country"
+msgstr "课程所在国家"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr "地区/地区"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr "课程标签"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr "课程代码"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr "会话ID"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr "开始日期""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr "开始时间"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr "结束日期"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr "结束时间"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr "持续时间（以小时为单位）"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr "最大容量"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr "选课人数"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr "参与人数"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr "考勤表"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr "地点名称"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "邮政编码"
