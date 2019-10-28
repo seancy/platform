@@ -13912,7 +13912,7 @@ msgstr "外部认证失败"
 msgid ""
 "Triboo is the Learning Experience Platform powered by Learning Tribes, "
 "international training organization."
-msgstr "Triboo 是学习体验平台，由国际培训组织\"Learning Tribes\"提供支技术持。"
+msgstr "Triboo 是学习体验平台，由国际培训组织\"Learning Tribes\"提供技术支持。"
 
 #: lms/templates/footer.html:90
 msgid "Navigation"
