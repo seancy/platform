@@ -27890,7 +27890,7 @@ msgstr "不成功"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Last Login"
-msgstr "上次登录""
+msgstr "上次登录"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Geographical area"
@@ -27918,7 +27918,7 @@ msgstr "会话ID"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Start date"
-msgstr "开始日期""
+msgstr "开始日期"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Start time"
