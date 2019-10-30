@@ -768,6 +768,8 @@ class LogoutView(TemplateView):
         if target_url and is_safe_url(target_url, allowed_hosts={self.request.META.get('HTTP_HOST')}, require_https=True):
             return target_url
         else:
+            if configuration_helpers.get_value('REDIRECT_LOGOUT_URL', None):
+                self.default_target = configuration_helpers.get_value('REDIRECT_LOGOUT_URL', '/')
             return self.default_target
 
     def dispatch(self, request, *args, **kwargs):  # pylint: disable=missing-docstring
