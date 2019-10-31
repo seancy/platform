@@ -126,6 +126,7 @@ def pdf_index(request, course_id, book_index, chapter=None, page=None):
             'current_chapter': current_chapter,
             'staff_access': staff_access,
             'current_url': current_url,
+            'progress': None
         },
     )
 
