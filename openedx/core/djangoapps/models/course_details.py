@@ -5,6 +5,7 @@ import re
 import logging
 
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
 from xmodule.fields import Date
 from xmodule.modulestore.exceptions import ItemNotFoundError
@@ -200,7 +201,7 @@ class CourseDetails(object):
         """
         Updates the Course's about video to the given video ID.
         """
-        recomposed_video_tag = CourseDetails.recompose_video_tag(video_id)
+        recomposed_video_tag = CourseDetails.recompose_video_tag(course.id, video_id)
         cls.update_about_item(course, 'video', recomposed_video_tag, user_id)
 
     @classmethod
@@ -392,6 +393,8 @@ class CourseDetails(object):
         keystring_matcher = re.search(r'(?<=embed/)[a-zA-Z0-9_-]+', raw_video)
         if keystring_matcher is None:
             keystring_matcher = re.search(r'<?=\d+:[a-zA-Z0-9_-]+', raw_video)
+            if keystring_matcher is None:
+                keystring_matcher = re.search(r'(?<=data-video-id=")[a-zA-Z0-9_-]+', raw_video)
 
         if keystring_matcher:
             return keystring_matcher.group(0)
@@ -400,18 +403,28 @@ class CourseDetails(object):
             return None
 
     @staticmethod
-    def recompose_video_tag(video_key):
+    def recompose_video_tag(course_key, video_key):
         """
         Returns HTML string to embed the video in an iFrame.
         """
         # TODO should this use a mako template? Of course, my hope is
         # that this is a short-term workaround for the db not storing
         #  the right thing
+        from contentstore.views.videos import _get_encoded_video_url
         result = None
         if video_key:
-            result = (
-                '<iframe title="YouTube Video" width="560" height="315" src="//www.youtube.com/embed/' +
-                video_key +
-                '?rel=0" frameborder="0" allowfullscreen=""></iframe>'
-            )
+            encoded_video_url = _get_encoded_video_url(unicode(course_key), video_key)
+            if encoded_video_url is None:
+                result = (
+                        '<iframe title="YouTube Video" width="560" height="315" src="//www.youtube.com/embed/' +
+                        video_key +
+                        '?rel=0" frameborder="0" allowfullscreen=""></iframe>'
+                )
+            else:
+                result = ('<video id="intro-video" controls="" width="560" height="315">' +
+                          '<source src="{url}" data-video-id="{video_id}">'.format(
+                              url=encoded_video_url, video_id=video_key) +
+                          _("Your browser does not support this video format. Try using a different browser.") +
+                          '</video>'
+                          )
         return result

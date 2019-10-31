@@ -14,6 +14,7 @@ from xblock.core import XBlock
 
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.models.course_details import CourseDetails
+from openedx.core.djangolib.testing.utils import skip_unless_cms
 from xmodule.course_module import DEFAULT_START_DATE
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import check_mongo_calls
@@ -95,6 +96,7 @@ class TestCourseSerializer(CourseApiFactoryMixin, ModuleStoreTestCase):
         course_overview = CourseOverview.get_from_id(course.id)
         return self.serializer_class(course_overview, context={'request': self._get_request()}).data
 
+    @skip_unless_cms
     def test_basic(self):
         course = self.create_course()
         CourseDetails.update_about_video(course, 'test_youtube_id', self.staff_user.id)  # pylint: disable=no-member

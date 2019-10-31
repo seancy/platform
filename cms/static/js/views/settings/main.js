@@ -135,7 +135,25 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    );
                    this.codeMirrorize(null, $('#course-about-sidebar-html')[0]);
 
-                   this.$el.find('.current-course-introduction-video iframe').attr('src', this.model.videosourceSample());
+                   var videoSample = this.model.videosourceSample();
+                   if (videoSample == null) {
+                       // just pass
+                   }
+                   else if (videoSample.includes("//www.youtube.com/embed/")) {
+                       this.$el.find('.current-course-introduction-video iframe').attr('src', videoSample).show();
+                       this.$el.find('.current-course-introduction-video video').hide()
+                   }
+                   else {
+                       this.$el.find('.current-course-introduction-video iframe').hide();
+                       this.$el.find('.current-course-introduction-video video').show().find('source').attr('src', videoSample);
+                       this.$el.find('#intro-video').get(0).load();
+                       if (videoSample == '') {
+                           this.$el.find('.current-course-introduction-video .video-error').show()
+                       }
+                       else {
+                           this.$el.find('.current-course-introduction-video .video-error').hide()
+                       }
+                   }
                    this.$el.find('#' + this.fieldToSelectorMap.intro_video).val(this.model.get('intro_video') || '');
                    if (this.model.has('intro_video')) {
                        this.$el.find('.remove-course-introduction-video').show();
@@ -385,7 +403,25 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        var previewsource = this.model.set_videosource($(event.currentTarget).val());
                        clearTimeout(this.videoTimer);
                        this.videoTimer = setTimeout(_.bind(function() {
-                           this.$el.find('.current-course-introduction-video iframe').attr('src', previewsource);
+                           if (previewsource == null) {
+                               this.$el.find('.current-course-introduction-video iframe').attr('src', '').show();
+                               this.$el.find('.current-course-introduction-video video').hide()
+                           }
+                           else if (previewsource.includes("//www.youtube.com/embed/")) {
+                               this.$el.find('.current-course-introduction-video iframe').attr('src', previewsource).show();
+                               this.$el.find('.current-course-introduction-video video').hide()
+                           }
+                           else {
+                               this.$el.find('.current-course-introduction-video iframe').hide();
+                               this.$el.find('.current-course-introduction-video video').show().find('source').attr('src', previewsource);
+                               this.$el.find('#intro-video').get(0).load();
+                               if (previewsource == '') {
+                                   this.$el.find('.current-course-introduction-video .video-error').show()
+                               }
+                               else {
+                                   this.$el.find('.current-course-introduction-video .video-error').hide()
+                               }
+                           }
                            if (this.model.has('intro_video')) {
                                this.$el.find('.remove-course-introduction-video').show();
                            } else {
@@ -460,7 +496,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    event.preventDefault();
                    if (this.model.has('intro_video')) {
                        this.model.set_videosource(null);
-                       this.$el.find('.current-course-introduction-video iframe').attr('src', '');
+                       this.$el.find('.current-course-introduction-video iframe').attr('src', '').show();
+                       this.$el.find('.current-course-introduction-video video').hide();
                        this.$el.find('#' + this.fieldToSelectorMap.intro_video).val('');
                        this.$el.find('.remove-course-introduction-video').hide();
                    }

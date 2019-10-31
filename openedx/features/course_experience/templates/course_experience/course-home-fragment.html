@@ -152,9 +152,15 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
         <div class="intro">
           <div class="course-image">
             % if get_course_about_section(request, course, "video"):
+              <%
+              thumbnail = CourseDetails.fetch(course.id).video_thumbnail_image_asset_path
+              if thumbnail == settings.STATIC_URL + settings.DEFAULT_COURSE_ABOUT_IMAGE_URL:
+                thumbnail = course_image_urls['large']
+              %>
               <a href="#video-modal" class="media" rel="leanModal">
                 <div class="hero">
-                  <img src="${course_image_urls['large']}" alt="" />
+                  <i class="fa fa-4x fa-play-circle"></i>
+                  <img src="${thumbnail}" alt="" />
                   <div class="play-intro"></div>
                 </div>
               </a>

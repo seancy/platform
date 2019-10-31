@@ -567,17 +567,24 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                   <label for="course-introduction-video">${_("Course Introduction Video")}</label>
                   <div class="input input-existing">
                     <div class="current current-course-introduction-video">
-                      <iframe width="618" height="350" title="${_('Course Introduction Video')}" src="" frameborder="0" allowfullscreen></iframe>
+                      <iframe title="${_('Course Introduction Video')}" src="" frameborder="0" allowfullscreen></iframe>
+                      <h4 class="video-error is-hidden">${_('No playable video sources found.')}</h4>
+                      <video id="intro-video" class="is-hidden" controls>
+                        <source src="">
+                        <h4 class="video-error">
+                            ${_('Your browser does not support this video format. Try using a different browser.')}
+                        </h4>
+                      </video>
                     </div>
                     <div class="actions">
-                      <a href="#" class="remove-item remove-course-introduction-video remove-video-data"><span class="delete-icon"></span>${_("Delete Current Video")}</a>
+                      <a href="#" class="remove-item remove-course-introduction-video remove-video-data" style="display: none"><span class="delete-icon"></span>${_("Delete Current Video")}</a>
                     </div>
                   </div>
 
                   <div class="input">
                     ## Translators: This is the placeholder text for a field that requests a YouTube video ID for a course video
-                    <input type="text"  dir="ltr" class="long new-course-introduction-video add-video-data" id="course-introduction-video" value="" placeholder="${_("your YouTube video's ID")}" autocomplete="off" />
-                    <span class="tip tip-stacked">${_("Enter your YouTube video's ID (along with any restriction parameters)")}</span>
+                    <input type="text"  dir="ltr" class="long new-course-introduction-video add-video-data" id="course-introduction-video" value="" placeholder="${_("your YouTube video's ID or the uploaded video's ID")}" autocomplete="off" />
+                    <span class="tip tip-stacked">${_("Enter your YouTube video's ID or the uploaded video's ID (along with any restriction parameters)")}</span>
                   </div>
                 </li>
                   % endif

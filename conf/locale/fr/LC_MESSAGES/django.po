@@ -27558,13 +27558,13 @@ msgstr "Supprimer la vidéo actuelle"
 #. Translators: This is the placeholder text for a field that requests a
 #. YouTube video ID for a course video
 #: cms/templates/settings.html:563
-msgid "your YouTube video's ID"
-msgstr "ID de votre vidéo YouTube"
+msgid "your YouTube video's ID or the uploaded video's ID"
+msgstr "Votre vidéo Youtube ID ou l'ID de votre vidéo upload"
 
 #: cms/templates/settings.html:564
-msgid "Enter your YouTube video's ID (along with any restriction parameters)"
+msgid "Enter your YouTube video's ID or the uploaded video's ID (along with any restriction parameters)"
 msgstr ""
-"Entrez ici l'ID de votre vidéo Youtube (avec les paramètres de restriction "
+"Copier/coller l'ID de votre vidéo Youtube ou l'ID de votre vidéo uploadé dans votre librairie vidéo (avec les paramètres de restriction "
 "éventuels)"
 
 #: cms/templates/settings.html:575

@@ -104,6 +104,7 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
                 if (_.isEmpty(newsource) && !_.isEmpty(this.get('intro_video'))) this.set({intro_video: null}, {validate: true});
         // TODO remove all whitespace w/in string
                 else {
+                    if (_.isEmpty(newsource)) newsource = null;
                     if (this.get('intro_video') !== newsource) this.set('intro_video', newsource, {validate: true});
                 }
 
@@ -111,8 +112,30 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
             },
 
             videosourceSample: function() {
-                if (this.has('intro_video')) return '//www.youtube.com/embed/' + this.get('intro_video');
-                else return '';
+                var course_id = window.location.pathname.split('/').pop(),
+                    sample = '';
+                if (this.has('intro_video')) {
+                    var intro_video = this.get('intro_video');
+                    $.ajax({
+                        type: 'GET',
+                        url: '/get_encoded_video_url/' + course_id + '/' + this.get('intro_video'),
+                        async: false,
+                        success: function (data) {
+
+                            if (data['url'] !== null) {
+                                sample = data['url'];
+                            }
+                            else {
+                                sample = '//www.youtube.com/embed/' + intro_video
+                            }
+                        }
+                    });
+                    return sample
+                }
+
+                else {
+                    return null;
+                }
             },
 
     // Whether or not the course pacing can be toggled. If the course

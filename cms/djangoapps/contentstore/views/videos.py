@@ -44,6 +44,7 @@ from openedx.core.djangoapps.video_config.models import VideoTranscriptEnabledFl
 from openedx.core.djangoapps.waffle_utils import WaffleSwitchNamespace
 from util.json_request import JsonResponse, expect_json
 from student.roles import studio_login_required
+from xmodule.modulestore.django import modulestore
 
 from .course import get_course_and_check_access
 
@@ -52,6 +53,7 @@ __all__ = [
     'video_encodings_download',
     'video_images_handler',
     'transcript_preferences_handler',
+    'get_encoded_video_url'
 ]
 
 LOGGER = logging.getLogger(__name__)
@@ -185,6 +187,27 @@ def videos_handler(request, course_key_string, edx_video_id=None):
             return send_video_status_update(request.json)
 
         return videos_post(course, request)
+
+
+@require_http_methods(["GET"])
+def get_encoded_video_url(request, course_key_string, edx_video_id):
+    url = _get_encoded_video_url(course_key_string, edx_video_id)
+    return JsonResponse({"url": url}, status=200)
+
+
+def _get_encoded_video_url(course_key_string, edx_video_id):
+    course_key = CourseKey.from_string(course_key_string)
+    course = modulestore().get_course(course_key)
+    videos = _get_videos(course)
+    for video in videos:
+        if video.get("edx_video_id") == edx_video_id:
+            if video["status"] in ("Ready", "In Progress"):
+                encoded_videos = video['encoded_videos']
+                for v in encoded_videos:
+                    if "url" in v:
+                        return v["url"]
+            return ""
+    return None
 
 
 def validate_video_image(image_file):

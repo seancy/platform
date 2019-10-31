@@ -146,6 +146,8 @@ urlpatterns = [
         contentstore.views.textbooks_detail_handler, name='textbooks_detail_handler'),
     url(r'^videos/{}(?:/(?P<edx_video_id>[-\w]+))?$'.format(settings.COURSE_KEY_PATTERN),
         contentstore.views.videos_handler, name='videos_handler'),
+    url(r'^get_encoded_video_url/{}(?:/(?P<edx_video_id>[-\w]+))?$'.format(settings.COURSE_KEY_PATTERN),
+        contentstore.views.get_encoded_video_url, name='encoded_video_url'),
     url(r'^video_images/{}(?:/(?P<edx_video_id>[-\w]+))?$'.format(settings.COURSE_KEY_PATTERN),
         contentstore.views.video_images_handler, name='video_images_handler'),
     url(r'^transcript_preferences/{}$'.format(settings.COURSE_KEY_PATTERN),

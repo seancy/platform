@@ -12,7 +12,6 @@ from openedx.features.course_experience import course_home_url_name
 from openedx.core.djangolib.markup import HTML
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.lib.courses import course_image_url
-from openedx.core.djangoapps.models.course_details import CourseDetails
 from six import string_types
 from instructor.views.instructor_dashboard import InstructorDashboardTab
 from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
@@ -159,9 +158,15 @@ from student.roles import studio_access_role
         <div class="intro">
           <div class="course-image">
             % if get_course_about_section(request, course, "video"):
+              <%
+              thumbnail = course_details.video_thumbnail_image_asset_path
+              if thumbnail == settings.STATIC_URL + settings.DEFAULT_COURSE_ABOUT_IMAGE_URL:
+                thumbnail = course_image_urls['large']
+              %>
               <a href="#video-modal" class="media" rel="leanModal">
                 <div class="hero">
-                  <img src="${course_image_urls['large']}" alt="" />
+                  <i class="fa fa-4x fa-play-circle"></i>
+                  <img src="${thumbnail}" alt="" />
                   <div class="play-intro"></div>
                 </div>
               </a>
@@ -175,8 +180,8 @@ from student.roles import studio_access_role
           </div>
           <div class="course-description">
             <div class="subtitle-description-wrapper">
-              <p class="subtitle">${CourseDetails.fetch(course.id).subtitle}</p>
-              <div class="description">${CourseDetails.fetch(course.id).description}</div>
+              <p class="subtitle">${course_details.subtitle}</p>
+              <div class="description">${course_details.description}</div>
             </div>
             <div class="extend-link readmore">${_('Read more')}</div>
             <div class="extend-link readless">${_('Read less')}</div>
@@ -226,7 +231,7 @@ from student.roles import studio_access_role
         </div>
         % endif
 
-        <% course_instructors = CourseDetails.fetch(course.id).instructor_info['instructors'] %>
+        <% course_instructors = course_details.instructor_info['instructors'] %>
         % if len(course_instructors) > 0:
         <div class="instructor-wrapper">
           <h2 class="instructor-title">Instructors</h2>

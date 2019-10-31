@@ -25697,12 +25697,12 @@ msgstr "删除当前视频"
 #. Translators: This is the placeholder text for a field that requests a
 #. YouTube video ID for a course video
 #: cms/templates/settings.html:563
-msgid "your YouTube video's ID"
-msgstr "您的 YouTube 视频 ID"
+msgid "your YouTube video's ID or the uploaded video's ID"
+msgstr "您的 YouTube 视频 ID 或者上传的视频 ID"
 
 #: cms/templates/settings.html:564
-msgid "Enter your YouTube video's ID (along with any restriction parameters)"
-msgstr "请输入您的YouTube视频编号(以及任何必要的限制参数)"
+msgid "Enter your YouTube video's ID or the uploaded video's ID (along with any restriction parameters)"
+msgstr "请输入您的YouTube视频编号或者上传的视频ID(以及任何必要的限制参数)"
 
 #: cms/templates/settings.html:575
 msgid "Learning Outcomes"

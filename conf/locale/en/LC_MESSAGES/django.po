@@ -24058,11 +24058,11 @@ msgstr ""
 #. Translators: This is the placeholder text for a field that requests a
 #. YouTube video ID for a course video
 #: cms/templates/settings.html:563
-msgid "your YouTube video's ID"
+msgid "your YouTube video's ID or the uploaded video's ID"
 msgstr ""
 
 #: cms/templates/settings.html:564
-msgid "Enter your YouTube video's ID (along with any restriction parameters)"
+msgid "Enter your YouTube video's ID or the uploaded video's ID (along with any restriction parameters)"
 msgstr ""
 
 #: cms/templates/settings.html:575

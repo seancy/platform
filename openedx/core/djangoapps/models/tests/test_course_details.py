@@ -12,6 +12,7 @@ from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
 
 from openedx.core.djangoapps.models.course_details import CourseDetails, ABOUT_ATTRIBUTES
+from openedx.core.djangolib.testing.utils import skip_unless_cms
 
 
 @attr(shard=2)
@@ -48,6 +49,7 @@ class CourseDetailsTestCase(ModuleStoreTestCase):
         self.assertIsNone(details.language, "language somehow initialized" + str(details.language))
         self.assertFalse(details.self_paced)
 
+    @skip_unless_cms
     def test_update_and_fetch(self):
         jsondetails = CourseDetails.fetch(self.course.id)
         jsondetails.syllabus = "<a href='foo'>bar</a>"
@@ -145,6 +147,7 @@ class CourseDetailsTestCase(ModuleStoreTestCase):
                 jsondetails.instructor_info
             )
 
+    @skip_unless_cms
     def test_toggle_pacing_during_course_run(self):
         self.course.start = datetime.datetime.now()
         self.store.update_item(self.course, self.user.id)
@@ -172,6 +175,7 @@ class CourseDetailsTestCase(ModuleStoreTestCase):
         with self.assertRaises(ValueError):
             CourseDetails.fetch_about_attribute(self.course.id, attribute_name)
 
+    @skip_unless_cms
     def test_fetch_video(self):
         video_value = 'test_video_id'
         with self.store.branch_setting(ModuleStoreEnum.Branch.draft_preferred, self.course.id):
