@@ -4,6 +4,7 @@ import hashlib
 import json
 import logging
 import operator
+import collections
 from six import text_type
 
 from django.conf import settings
@@ -573,6 +574,63 @@ def transcript_export_table(request, user_id):
     return _transcript_export_table(request, user)
 
 
+def get_query_dict(request):
+    query_dict = collections.OrderedDict()
+    data = request.GET.copy()
+
+    if data.has_key('clear'):
+        return query_dict
+
+    if data.has_key('queried_field'):
+        for key, value in data.items():
+            if 'queried_field_' in key or 'query_string_' in key:
+                query_dict[key] = value
+
+        changed = 0
+        # New query will not be added to old queries. One in old queries will be deleted or updated
+        current_string, current_field = data['query_string'], data['queried_field']
+        for k, v in query_dict.items():
+            if v == current_field:
+                _, i = k.rsplit('_', 1)
+                corresponding_str_key = 'query_string_' + i
+                if data.has_key('delete'):
+                    del query_dict[k]
+                    del query_dict[corresponding_str_key]
+                else:
+                    query_dict[corresponding_str_key] = data['query_string']
+                changed = 1
+                break
+
+        # New query will be added to old queries
+        if changed == 0:
+            query_dict.clear()
+            if data.has_key('queried_field_1'):
+                for key, value in data.items():
+                    if 'queried_field_' in key:
+                        _, i = key.rsplit('_', 1)
+                        new_key = 'queried_field_' + str(int(i) + 1)
+                        new_string_key = 'query_string_' + str(int(i) + 1)
+                        new_string_value = data['query_string_' + i]
+                        query_dict[new_key] = value
+                        query_dict[new_string_key] = new_string_value
+            else:
+                for key, value in data.items():
+                    if 'queried_field_' in key or 'query_string_' in key:
+                        query_dict[key] = value
+            query_dict['queried_field_1'] = data['queried_field']
+            query_dict['query_string_1'] = data['query_string']
+
+    return query_dict
+
+
+def new_request_copy(request_copy):
+    if request_copy.has_key('clear') or request_copy.has_key('delete'):
+        for k in request_copy.keys():
+            if 'queried_field' in k or 'query_string' in k:
+                del request_copy[k]
+    return request_copy
+
+
 def get_filter_kwargs_with_table_exclude(request):
     kwargs = {}
     analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
@@ -580,32 +638,41 @@ def get_filter_kwargs_with_table_exclude(request):
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
 
     request_copy = request.GET.copy()
+    request_copy = new_request_copy(request_copy)
     filter_form = TableFilterForm(request_copy, user_properties_helper.get_possible_choices())
+    query_dict = get_query_dict(request)
     if filter_form.is_valid():
-        data = filter_form.cleaned_data
-        if data['query_string']:
-            if data['queried_field'] == "user__profile__country":
-                queried_country = data['query_string'].lower()
-                country_code_by_name = {name.lower(): code for code, name in list(countries)}
-                country_codes = []
-                for country_name in country_code_by_name.keys():
-                    if queried_country in country_name:
-                        country_codes.append(country_code_by_name[country_name])
-                if len(country_codes) > 0:
-                    kwargs['user__profile__country__in'] = country_codes
-                else:
-                    kwargs['invalid'] = True
+        query_tuples = []
+        for key, value in query_dict.items():
+            if 'query_string' in key:
+                suffix = '_' + key.split('_')[-1] if 'query_string_' in key else ''
+                query_field_key = 'queried_field' + suffix
+                query_tuples.append((value, query_dict[query_field_key]))
 
-            elif data['queried_field'] == "user__profile__lt_gdpr":
-                queried_str = data['query_string'].lower()
-                if queried_str == "true":
-                    kwargs[data['queried_field']] = True
-                elif queried_str == "false":
-                    kwargs[data['queried_field']] = False
+        for query_string, queried_field in query_tuples:
+            if query_string:
+                if queried_field == "user__profile__country":
+                    queried_country = query_string.lower()
+                    country_code_by_name = {name.lower(): code for code, name in list(countries)}
+                    country_codes = []
+                    for country_name in country_code_by_name.keys():
+                        if queried_country in country_name:
+                            country_codes.append(country_code_by_name[country_name])
+                    if len(country_codes) > 0:
+                        kwargs['user__profile__country__in'] = country_codes
+                    else:
+                        kwargs['invalid'] = True
+
+                elif queried_field == "user__profile__lt_gdpr":
+                    queried_str = query_string.lower()
+                    if queried_str == "true":
+                        kwargs[queried_field] = True
+                    elif queried_str == "false":
+                        kwargs[queried_field] = False
+                    else:
+                        kwargs['invalid'] = True
                 else:
-                    kwargs['invalid'] = True
-            else:
-                kwargs[data['queried_field'] + '__icontains'] = data['query_string']
+                    kwargs[queried_field + '__icontains'] = query_string
     exclude = []
     user_properties_form = UserPropertiesForm(request_copy,
                                               user_properties_helper.get_possible_choices(False),
@@ -614,7 +681,7 @@ def get_filter_kwargs_with_table_exclude(request):
         data = user_properties_form.cleaned_data
         exclude = data['excluded_properties']
 
-    return filter_form, user_properties_form, kwargs, exclude
+    return filter_form, user_properties_form, kwargs, exclude, query_dict
 
 
 def get_learner_table_filters(request, orgs, as_string=False):
@@ -625,23 +692,23 @@ def get_learner_table_filters(request, orgs, as_string=False):
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
         last_update = last_reportlog.created
-        filter_form, user_properties_form, filter_kwargs, exclude  = get_filter_kwargs_with_table_exclude(request)
+        filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
         filter_kwargs.update({
             'org': learner_report_org,
             'date_time': day2str(last_update) if as_string else last_update
         })
-        return filter_form, user_properties_form, filter_kwargs, exclude, last_update
+        return filter_form, user_properties_form, filter_kwargs, exclude, last_update, query_dict
 
     return None, None, None, None, None
 
 
 def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
-    filter_form, user_properties_form, filter_kwargs, exclude = get_filter_kwargs_with_table_exclude(request)
+    filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
     filter_kwargs.update({
         'date_time': day2str(last_update) if as_string else last_update,
         'course_id': "%s" % course_key if as_string else course_key
     })
-    return filter_form, user_properties_form, filter_kwargs, exclude
+    return filter_form, user_properties_form, filter_kwargs, exclude, query_dict
 
 
 def get_table(report_cls, filter_kwargs, table_cls, exclude):
@@ -652,6 +719,20 @@ def get_table(report_cls, filter_kwargs, table_cls, exclude):
     row_count = queryset.count()
     table = table_cls(queryset, exclude=exclude)
     return table, row_count
+
+
+def get_query_triples(query_dict):
+    query_triples = []
+    for key, value in query_dict.items():
+        if 'query_string' in key and value:
+            suffix = '_' + key.split('_')[-1] if 'query_string_' in key else ''
+            query_field_key = 'queried_field' + suffix
+            field_name = query_dict[query_field_key].split('__')[-1]
+            if 'lt' in field_name:
+                field_name = field_name.split('_', 1)[-1]
+            field_name = field_name.capitalize()
+            query_triples.append((value, field_name, query_dict[query_field_key]))
+    return query_triples
 
 
 @login_required
@@ -665,11 +746,13 @@ def learner_view(request):
 
     row_count = 0
     learner_table = None
-    filter_form, user_properties_form, filter_kwargs, exclude, last_update = get_learner_table_filters(request, orgs)
+    filter_form, user_properties_form, filter_kwargs, exclude, last_update, query_dict = get_learner_table_filters(request, orgs)
     if last_update:
         learner_table, row_count = get_table(LearnerDailyReport, filter_kwargs, LearnerDailyTable, exclude)
         config_tables(request, learner_table)
         last_update = dt2str(last_update)
+        query_dict = query_dict
+        query_triples = get_query_triples(query_dict)
 
     return render_to_response(
         "triboo_analytics/learner.html",
@@ -677,6 +760,8 @@ def learner_view(request):
             'row_count': row_count,
             'learner_table': learner_table,
             'filter_form': filter_form,
+            'query_dict': query_dict,
+            'query_triples': query_triples,
             'user_properties_form': user_properties_form,
             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'learner'}),
             'last_update': last_update
@@ -858,16 +943,16 @@ def course_view(request):
             enrollments_csv_data = CourseDailyReport.get_enrollments_csv_data(course_key)
 
             if report == "summary":
-                filter_form, user_properties_form, filter_kwargs, exclude = get_course_summary_table_filters(
-                                                                                request,
-                                                                                course_key,
-                                                                                last_update)
+                filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
+                                                                                            request,
+                                                                                            course_key,
+                                                                                            last_update)
                 summary_table, row_count = get_table(LearnerCourseDailyReport, filter_kwargs, CourseTable, exclude)
                 config_tables(request, summary_table)
 
             else:
-                filter_form, user_properties_form, filter_kwargs, exclude = get_filter_kwargs_with_table_exclude(
-                                                                                request)
+                filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
+                                                                                            request)
                 report_args = {
                     'filter_kwargs': filter_kwargs,
                     'exclude': exclude
@@ -894,6 +979,8 @@ def course_view(request):
                     config_tables(request, time_spent_table)
 
             last_update = dt2str(last_update)
+            query_dict = query_dict
+            query_triples = get_query_triples(query_dict)
 
         return render_to_response(
             "triboo_analytics/course.html",
@@ -904,6 +991,8 @@ def course_view(request):
                 'last_update': last_update,
                 'course_report': course_report,
                 'enrollments_csv_data': enrollments_csv_data,
+                'query_dict': query_dict,
+                'query_triples': query_triples,
                 'learner_course_table': summary_table,
                 'learner_course_progress_table': progress_table,
                 'learner_course_time_spent_table': time_spent_table,
@@ -942,11 +1031,11 @@ def course_export_table(request):
         last_update = last_reportlog.created
 
         if report == "summary":
-            unused_filter_form, unused_prop_form, filter_kwargs, exclude = get_course_summary_table_filters(
-                                                                            request,
-                                                                            course_key,
-                                                                            last_update,
-                                                                            as_string=True)
+            unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
+                                                                                        request,
+                                                                                        course_key,
+                                                                                        last_update,
+                                                                                        as_string=True)
             report_args = {
                 'report_cls': LearnerCourseDailyReport.__name__,
                 'filter_kwargs': filter_kwargs,
@@ -956,8 +1045,8 @@ def course_export_table(request):
             return _export_table(request, course_key, 'summary_report', report_args)
 
         else:
-            unused_filter_form, unused_prop_form, filter_kwargs, exclude = get_filter_kwargs_with_table_exclude(
-                                                                            request)
+            unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
+                                                                                        request)
             report_args = {
                 'filter_kwargs': filter_kwargs,
                 'exclude': list(exclude)
@@ -1071,7 +1160,7 @@ def ilt_view(request):
         config_tables(request, ilt_report_table)
 
     elif report == "learner":
-        filter_form, user_properties_form, filter_kwargs, exclude  = get_filter_kwargs_with_table_exclude(request)
+        filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
         ilt_learner_report_table, row_count = get_ilt_learner_report_table(orgs, filter_kwargs, exclude)
         config_tables(request, ilt_learner_report_table)
 
@@ -1107,7 +1196,7 @@ def ilt_export_table(request):
         return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
 
     # report == "learner"
-    unused_filter_form, unused_prop_form, filter_kwargs, exclude  = get_filter_kwargs_with_table_exclude(request)
+    unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
     report_args = {
         'orgs': orgs,
         'filter_kwargs': filter_kwargs,
