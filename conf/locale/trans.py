@@ -74,15 +74,13 @@ def msg_merge(def_po, ref_pot, update=False):
 
 
 def msg_cat(output, partials, use_first=False):
-    """Concatenates different partails into a single PO file.
-    Using msgcat to different partails into a single PO file.
-    """
+    """Concatenates different partails into a single PO file."""
     for part in partials:
         if not os.path.isfile(part):
             print "{} is invaild file name, will be skipped".format(part)
     partials = [part for part in partials if os.path.isfile(part)]
     cmd = ["msgcat", "--use-first", "-o", output
-           ] + partials if use_first else ["msgcat", "-o", output]
+           ] + partials if use_first else ["msgcat", "-o", output] + partials
     execute_cmd(cmd)
 
 
