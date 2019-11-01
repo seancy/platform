@@ -4,7 +4,7 @@
     from django.utils.translation import ugettext as _
     from django.utils.translation import ungettext
     from django.core.urlresolvers import reverse
-    from triboo_analytics.models import format_time_spent, ANALYTICS_LIMITED_ACCESS_GROUP
+    from triboo_analytics.models import format_time_spent
 %>
 
 <%block name="headextra">
@@ -18,22 +18,7 @@
 
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="main-container">
-        <section class="banner">
-          <section class="welcome-wrapper">
-            <h2>${_("Analytics")}</h2>
-            <h3>${_("Let's have a look at your learning data")}</h3>
-          </section>
-        </section>
-        <nav>
-            <ol class="tabs analytics-tabs">
-                <li class="tab"><a href="${reverse('analytics_microsite')}" class="active">${_("Global Report")}</a></li>
-                <li class="tab"><a href="${reverse('analytics_course')}">${_("Course Report")}</a></li>
-              % if ANALYTICS_LIMITED_ACCESS_GROUP not in [group.name for group in user.groups.all()]:
-                <li class="tab"><a href="${reverse('analytics_learner')}">${_("Learner Report")}</a></li>
-              % endif
-                <li class="tab"><a href="${reverse('analytics_ilt')}">${_("ILT Report")}</a></li>
-            </ol>
-        </nav>
+        <%include file="banner_nav.html" args="active_page='global'" />
         <section class="analytics-wrapper microsite">
             <div class="report-wrapper">
               % if microsite_report:
@@ -98,7 +83,7 @@
     </div>
 </main>
 
-% if (microsite_report and len(unique_visitors_csv_data) > 0):
+% if microsite_report and unique_visitors_csv_data:
     <script type="text/javascript">
         var lineChartCsvData = "date,value\n" + "${unique_visitors_csv_data}";
         drawLineChart('lineChart', lineChartCsvData);
@@ -121,7 +106,7 @@
         drawPieChart('pieChart', pieChartData);
     </script>
 % endif
-% if len(users_by_country_csv_data) > 0:
+% if users_by_country_csv_data:
     <script type="text/javascript">
         var mapCsvData =  "id,label,value\n" + "${users_by_country_csv_data}";
         drawMap('map', mapCsvData, '${static.url('js/triboo_analytics/world-110m.v1.json')}');

@@ -139,7 +139,7 @@ def get_transcript_table(orgs, user_id, last_update):
 
 def _transcript_view(user, request, template, report_type):
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
 
     if len(orgs) == 1:
@@ -534,7 +534,7 @@ def _export_table(request, course_key, report_name, report_args):
 
 def _transcript_export_table(request, user):
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
 
     last_reportlog = ReportLog.get_latest()
@@ -658,7 +658,7 @@ def get_filter_kwargs_with_table_exclude(request):
                     for country_name in country_code_by_name.keys():
                         if queried_country in country_name:
                             country_codes.append(country_code_by_name[country_name])
-                    if len(country_codes) > 0:
+                    if country_codes:
                         kwargs['user__profile__country__in'] = country_codes
                     else:
                         kwargs['invalid'] = True
@@ -741,7 +741,7 @@ def get_query_triples(query_dict):
 @ensure_csrf_cookie
 def learner_view(request):
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
 
     row_count = 0
@@ -776,7 +776,7 @@ def learner_view(request):
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def learner_export_table(request):
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
 
     unused_filter_form, unused_prop_form, filter_kwargs, exclude, unused_update = get_learner_table_filters(
@@ -892,7 +892,7 @@ def course_view(request):
         report = "summary"
 
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
 
     course_overviews = CourseOverview.objects.none()
@@ -1020,7 +1020,7 @@ def course_export_table(request):
     if report not in ['summary', 'progress', 'time_spent']:
         report = "summary"
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
     try:
         course_key = CourseKey.from_string(request.GET.get('course_id', None))
@@ -1064,7 +1064,7 @@ def course_export_table(request):
 @ensure_csrf_cookie
 def microsite_view(request):
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
 
     microsite_report_org = orgs[0]
@@ -1146,7 +1146,7 @@ def ilt_view(request):
         report = "global"
 
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
 
     ilt_report_table = False
@@ -1188,7 +1188,7 @@ def ilt_export_table(request):
         report = "global"
 
     orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs or len(orgs) == 0:
+    if not orgs:
         return HttpResponseNotFound()
 
     if report == "global":

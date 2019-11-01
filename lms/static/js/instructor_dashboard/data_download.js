@@ -119,12 +119,12 @@
             this.clear_display();
 
             this.$section.on('click', '.slickgrid', function(e) {
+                var $table = $(e.currentTarget);
                 if (!$(e.target).hasClass('slick-cell')) {
-                    var $table = $(e.currentTarget);
                     if ($table.hasClass('extended')) {
-                        $table.removeClass('extended')
+                        $table.removeClass('extended');
                     } else {
-                        $table.addClass('extended')
+                        $table.addClass('extended');
                     }
                 }
             });

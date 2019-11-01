@@ -4,7 +4,6 @@
     from django.utils.translation import ugettext as _
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
-    from triboo_analytics.models import ANALYTICS_LIMITED_ACCESS_GROUP
 %>
 
 <%block name="pagetitle">${_("Analytics - Learner Report")}</%block>
@@ -12,22 +11,7 @@
 
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="main-container">
-        <section class="banner">
-          <section class="welcome-wrapper">
-            <h2>${_("Analytics")}</h2>
-            <h3>${_("Let's have a look at your learning data")}</h3>
-          </section>
-        </section>
-        <nav>
-            <ol class="tabs analytics-tabs">
-                <li class="tab"><a href="${reverse('analytics_microsite')}">${_("Global Report")}</a></li>
-                <li class="tab"><a href="${reverse('analytics_course')}">${_("Course Report")}</a></li>
-              % if ANALYTICS_LIMITED_ACCESS_GROUP not in [group.name for group in user.groups.all()]:
-                <li class="tab"><a href="${reverse('analytics_learner')}" class="active">${_("Learner Report")}</a></li>
-              % endif
-                <li class="tab"><a href="${reverse('analytics_ilt')}">${_("ILT Report")}</a></li>
-            </ol>
-        </nav>
+        <%include file="banner_nav.html" args="active_page='learner'" />
         <section class="analytics-wrapper learner">
             <div class="report-wrapper">
               % if learner_table:
