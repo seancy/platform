@@ -1,14 +1,19 @@
 <%page args="section_data" expression_filter="h"/>
 <%!
 from django.utils.translation import ugettext as _
+
 from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.lib.courses import course_image_url
 %>
 
+<%
+   course_img_url = course_image_url(course, image_key="course_image")
+%>
 <div class="basic-wrapper">
   <h4 class="hd hd-4">${_("Basic Course Information")}</h4>
 
   <figure class="board-layer">
-      <img src="/asset-v1:edX+DemoX+Demo_Course+type@asset+block@images_course_image.jpg" alt="${ section_data['course_display_name']}">
+      <img src="${course_img_url}" alt="${ section_data['course_display_name']}">
       <figcaption>${ section_data['course_display_name']}</figcaption>
   </figure>
 

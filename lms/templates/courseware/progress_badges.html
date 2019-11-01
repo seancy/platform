@@ -13,7 +13,6 @@ from course_modes.models import CourseMode
 from courseware.courses import get_course_about_section
 from lms.djangoapps.certificates.models import CertificateStatuses
 from openedx.core.djangolib.markup import HTML, Text
-from openedx.core.lib.courses import course_image_url
 from openedx.features.enterprise_support.utils import get_enterprise_learner_generic_name
 from xmodule.contentstore.django import contentstore
 %>
@@ -36,16 +35,13 @@ username = get_enterprise_learner_generic_name(request) or student.username
 
 <%
 def get_trophy_path(trophy_img):
-    try:
-        asset_key = course.id.make_asset_key('asset', trophy_img + '.png')
-        contentstore().find(asset_key)
+    for img_type in ('.png', '.PNG', '.jpg', '.JPG', '.jpeg' '.JPEG'):
+        asset_key = course.id.make_asset_key('asset', trophy_img + img_type)
+        content = contentstore().find(asset_key, throw_on_not_found=False)
+        if content is not None:
+            return '/' + unicode(asset_key)
 
-        img_path = course_image_url(course)
-        at_pos = img_path.rfind("@")
-        return img_path[:at_pos] + "@" + trophy_img + '.png'
-
-    except:
-        return static.url("images/badge.png")
+    return static.url("images/badge.png")
 %>
 
 <%include file="/courseware/course_banner.html" />

@@ -8,6 +8,8 @@ from datetime import datetime, timedelta
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.template import RequestContext
+
+from branding.views import CATALOG_DENIED_GROUP
 from entitlements.models import CourseEntitlement
 from third_party_auth import pipeline
 from util.date_utils import strftime_localized
@@ -234,7 +236,8 @@ from xmodule.modulestore.django import modulestore
                     % if empty_dashboard_message:
                       <p class="custom-message">${empty_dashboard_message | n, decode.utf8}</p>
                     %endif
-                    % if settings.FEATURES.get('COURSES_ARE_BROWSABLE'):
+                    % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
+                      and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
                       <a class="btn btn-primary" href="${marketing_link('COURSES')}">
                         ${_("Explore courses")}
                       </a>
