@@ -18,7 +18,7 @@ def plugin_settings(settings):
 
         # Disable instructor dash buttons for downloading course data
         # when enrollment exceeds this number
-        'MAX_ENROLLMENT_INSTR_BUTTONS': 200,
+        'MAX_ENROLLMENT_INSTR_BUTTONS': 20000,
 
         # Grade calculation started from the instructor dashboard will write grades
         # CSV files to the configured storage backend and give links for downloads.
