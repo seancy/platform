@@ -699,7 +699,7 @@ def get_learner_table_filters(request, orgs, as_string=False):
         })
         return filter_form, user_properties_form, filter_kwargs, exclude, last_update, query_dict
 
-    return None, None, None, None, None
+    return None, None, None, None, None, None
 
 
 def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
@@ -779,7 +779,7 @@ def learner_export_table(request):
     if not orgs:
         return HttpResponseNotFound()
 
-    unused_filter_form, unused_prop_form, filter_kwargs, exclude, unused_update = get_learner_table_filters(
+    unused_filter_form, unused_prop_form, filter_kwargs, exclude, unused_update, query_dict = get_learner_table_filters(
                                                                                     request,
                                                                                     orgs,
                                                                                     as_string=True)
