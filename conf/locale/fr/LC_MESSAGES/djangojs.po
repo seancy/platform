@@ -7688,6 +7688,11 @@ msgstr ""
 "Pour que le calcul des notes fonctionne, vous devez modifier toutes les sous-"
 "sections {oldName} à {newName}."
 
+#: cms/static/js/views/settings/grader.js:59
+msgid ""
+"Warning: If you rename this assignment type, this new type must be reset in the subsections of the course outline."
+msgstr "Attention: si vous renommez le type de devoir, vous devez réassigner le nouveau type aux sous-sections concernées dans le plan du cours."
+
 #: cms/static/js/views/settings/main.js:65
 msgid "Course Credit Requirements"
 msgstr "Critères d'obtention de crédit du cours"

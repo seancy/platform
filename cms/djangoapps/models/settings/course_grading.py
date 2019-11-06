@@ -5,6 +5,7 @@ import json
 
 from contentstore.signals.signals import GRADING_POLICY_CHANGED
 from eventtracking import tracker
+from openedx.core.djangoapps.content.block_structure.api import clear_course_from_cache
 from track.event_transaction_utils import create_new_event_transaction_id
 from xmodule.modulestore.django import modulestore
 
@@ -74,6 +75,20 @@ class CourseGradingModel(object):
         CourseGradingModel.update_grace_period_from_json(course_key, jsondict['grace_period'], user)
 
         CourseGradingModel.update_minimum_grade_credit_from_json(course_key, jsondict['minimum_grade_credit'], user)
+
+        # if grader is renamed or deleted, we need to unbind it if it is assigned to a subsection
+        new_grader_types = [i['type'] for i in graders_parsed]
+        blocks = modulestore().get_items(course_key)
+        sequentials = [b for b in blocks if b.category == 'sequential' and b.graded and
+                       b.format not in new_grader_types]
+
+        if sequentials:
+            for s in sequentials:
+                del s.format
+                del s.graded
+                modulestore().update_item(s, user.id)
+            clear_course_from_cache(course_key)
+
         _grading_event_and_signal(course_key, user.id)
 
         return CourseGradingModel.fetch(course_key)

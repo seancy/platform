@@ -56,7 +56,7 @@ define(['js/views/validation',
                 // overload the error display logic
                         this._cacheValidationErrors.push(event.currentTarget);
                         var message = StringUtils.interpolate(
-                    gettext('For grading to work, you must change all {oldName} subsections to {newName}.'),
+                    gettext('Warning: If you rename this assignment type, this new type must be reset in the subsections of the course outline.'),
                             {
                                 oldName: this.oldName,
                                 newName: this.model.get('type')

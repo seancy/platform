@@ -342,7 +342,8 @@ class AssignmentFormatGrader(CourseGrader):
             short_label=None,
             show_only_average=False,
             hide_average=False,
-            starting_index=1
+            starting_index=1,
+            threshold=1.0
     ):
         self.type = type
         self.min_count = min_count
@@ -353,6 +354,7 @@ class AssignmentFormatGrader(CourseGrader):
         self.show_only_average = show_only_average
         self.starting_index = starting_index
         self.hide_average = hide_average
+        self.threshold = threshold
 
     def total_with_drops(self, breakdown):
         """

@@ -7366,6 +7366,11 @@ msgid ""
 "For grading to work, you must change all {oldName} subsections to {newName}."
 msgstr "要进行分级工作，必须将所有  {oldName}子节更改为 {newName}。"
 
+#: cms/static/js/views/settings/grader.js:59
+msgid ""
+"Warning: If you rename this assignment type, this new type must be reset in the subsections of the course outline."
+msgstr "注意：如果你要重新命名这个作业类型，请勿必把新的类型分配到原来的课程章节。"
+
 #: cms/static/js/views/settings/main.js:65
 msgid "Course Credit Requirements"
 msgstr "课程证书要求"

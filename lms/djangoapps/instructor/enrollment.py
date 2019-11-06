@@ -727,7 +727,7 @@ def send_mail_with_image(subject, message, from_email, recipient_list, fail_sile
     connection = connection or get_connection(username=auth_user,
                                               password=auth_password,
                                               fail_silently=fail_silently)
-    email_showname = configuration_helpers.get_value('email_from_showname', settings.DEFAULT_FROM_EMAIL_SHOW_NAME)
+    email_showname = configuration_helpers.get_value('email_from_showname', settings.DEFAULT_FROM_EMAIL_ALIAS)
     from_email = "{0}<{1}>".format(email_showname, from_email)
     mail = EmailMultiAlternatives(subject, message, from_email, recipient_list,
                                   connection=connection)
