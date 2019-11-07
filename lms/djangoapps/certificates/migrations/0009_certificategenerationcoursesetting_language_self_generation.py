@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='certificategenerationcoursesetting',
             name='self_generation_enabled',
-            field=models.BooleanField(default=False, help_text='Allow learners to generate their own certificates for the course. Enabling this does NOT affect usage of the management command used for batch certificate generation.'),
+            field=models.BooleanField(default=False, help_text='Allow students to generate their own certificates for the course. Enabling this does NOT affect usage of the management command used for batch certificate generation.'),
         ),
         migrations.AlterField(
             model_name='certificategenerationcoursesetting',
