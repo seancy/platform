@@ -82,7 +82,7 @@
         <div class="wrapper-logo">
           <figure>
             <img src="${static.url(u'images/logo.png')}" class="logo-triboo"/>
-            <figcaption>${_('Triboo is the Learning Experience Platform powered by Learning Tribes, international training organization.')}</figcaption>
+                <figcaption>${_(configuration_helpers.get_value('FOOTER_SENTENCE', ' '))}</figcaption>
           </figure>
         </div>
 
