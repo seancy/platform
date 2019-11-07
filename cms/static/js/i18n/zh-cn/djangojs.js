@@ -2022,6 +2022,7 @@
     "Vote for this post,": "\u4e3a\u8be5\u5e16\u6295\u7968", 
     "Want to confirm your identity later?": "\u5e0c\u671b\u7a0d\u540e\u518d\u9a8c\u8bc1\u4f60\u7684\u8eab\u4efd\uff1f", 
     "Warning": "\u8b66\u544a", 
+    "Warning: If you rename this assignment type, this new type must be reset in the subsections of the course outline.": "\u6ce8\u610f\uff1a\u5982\u679c\u4f60\u8981\u91cd\u65b0\u547d\u540d\u8fd9\u4e2a\u4f5c\u4e1a\u7c7b\u578b\uff0c\u8bf7\u52ff\u5fc5\u628a\u65b0\u7684\u7c7b\u578b\u5206\u914d\u5230\u539f\u6765\u7684\u8bfe\u7a0b\u7ae0\u8282\u3002", 
     "We ask you to activate your account to ensure it is really you creating the account and to prevent fraud.": "\u6211\u4eec\u8981\u6c42\u60a8\u6fc0\u6d3b\u60a8\u7684\u5e10\u53f7\u662f\u4e3a\u4e86\u786e\u8ba4\u771f\u7684\u662f\u60a8\u521b\u5efa\u4e86\u5e10\u6237\uff0c\u9632\u6b62\u6b3a\u8bc8\u3002", 
     "We couldn't create your account.": "\u65e0\u6cd5\u521b\u5efa\u60a8\u7684\u5e10\u6237\u3002", 
     "We couldn't find any results for \"%s\".": "\u6211\u4eec\u627e\u4e0d\u5230\u6709\u5173\u201c%s\u201d\u7684\u4efb\u4f55\u7ed3\u679c\u3002", 

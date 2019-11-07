@@ -1961,6 +1961,7 @@
     "Vote for this post,": "Voter pour ce message, ", 
     "Want to confirm your identity later?": "Voulez-vous confirmer votre identit\u00e9 plus tard?", 
     "Warning": "Avertissement", 
+    "Warning: If you rename this assignment type, this new type must be reset in the subsections of the course outline.": "Attention: si vous renommez le type de devoir, vous devez r\u00e9assigner le nouveau type aux sous-sections concern\u00e9es dans le plan du cours.", 
     "We ask you to activate your account to ensure it is really you creating the account and to prevent fraud.": "Nous vous demandons d'activer votre compte pour nous assurer que c'est bien vous qui cr\u00e9er le compte et afin de pr\u00e9venir la fraude.", 
     "We couldn't create your account.": "Nous n'avons pas pu cr\u00e9er votre compte.", 
     "We couldn't find any results for \"%s\".": "Nous ne trouvons pas de r\u00e9sultat pour \"%s\".", 
