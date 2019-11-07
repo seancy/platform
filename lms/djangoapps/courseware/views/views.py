@@ -505,6 +505,24 @@ class StaticCourseTabView(EdxFragmentView):
         """
         Renders this static tab's fragment to HTML for a standalone page.
         """
+
+        show_courseware_link = False
+        resume_course_url = None
+        progress = None
+        if course:
+            show_courseware_link = bool(
+                has_access(request.user, 'load', course)
+                or settings.FEATURES.get('ENABLE_LMS_MIGRATION')
+            )
+
+            if show_courseware_link:
+                resume_course_url = get_resume_course_url(request, course)
+
+                if not isinstance(request.user, AnonymousUser):
+                    progress = CourseGradeFactory().get_course_completion_percentage(
+                                        request.user, course.id)
+                    progress = int(progress * 100)
+
         return render_to_response('courseware/static_tab.html', {
             'course': course,
             'active_page': 'static_tab_{0}'.format(tab['url_slug']),
@@ -512,7 +530,10 @@ class StaticCourseTabView(EdxFragmentView):
             'fragment': fragment,
             'uses_pattern_library': False,
             'disable_courseware_js': True,
-            'progress': None
+            'registered': registered_for_course(course, request.user),
+            'show_courseware_link': show_courseware_link,
+            'resume_course_url': resume_course_url,
+            'progress': progress
         })
 
 

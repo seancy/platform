@@ -3,15 +3,19 @@ Views for serving static textbooks.
 """
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 from django.http import Http404
+from django.conf import settings
 from opaque_keys.edx.keys import CourseKey
 
 from courseware.access import has_access
 from courseware.courses import get_course_with_access
+from courseware.views.views import get_resume_course_url, registered_for_course
 from edxmako.shortcuts import render_to_response
 from notes.utils import notes_enabled_for_course
 from static_replace import replace_static_urls
 from xmodule.annotator_token import retrieve_token
+from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 
 
 @login_required
@@ -114,6 +118,23 @@ def pdf_index(request, course_id, book_index, chapter=None, page=None):
     else:
         template = 'static_pdfbook.html'
 
+    show_courseware_link = False
+    resume_course_url = None
+    progress = None
+    if course:
+        show_courseware_link = bool(
+            has_access(request.user, 'load', course)
+            or settings.FEATURES.get('ENABLE_LMS_MIGRATION')
+        )
+
+        if show_courseware_link:
+            resume_course_url = get_resume_course_url(request, course)
+
+            if not isinstance(request.user, AnonymousUser):
+                progress = CourseGradeFactory().get_course_completion_percentage(
+                                    request.user, course.id)
+                progress = int(progress * 100)
+
     return render_to_response(
         template,
         {
@@ -126,7 +147,10 @@ def pdf_index(request, course_id, book_index, chapter=None, page=None):
             'current_chapter': current_chapter,
             'staff_access': staff_access,
             'current_url': current_url,
-            'progress': None
+            'registered': registered_for_course(course, request.user),
+            'show_courseware_link': show_courseware_link,
+            'resume_course_url': resume_course_url,
+            'progress': progress
         },
     )
 
