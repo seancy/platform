@@ -207,7 +207,7 @@ class CourseFields(object):
     cosmetic_display_price = Integer(
         display_name=_("Cosmetic Course Display Price"),
         help=_(
-            "The cost displayed to students for enrolling in the course. If a paid course registration price is "
+            "The cost displayed to learner for enrolling in the course. If a paid course registration price is "
             "set by an administrator in the database, that price will be displayed instead of this one."
         ),
         default=0,
@@ -239,7 +239,7 @@ class CourseFields(object):
     )
     show_calculator = Boolean(
         display_name=_("Show Calculator"),
-        help=_("Enter true or false. When true, students can see the calculator in the course."),
+        help=_("Enter true or false. When true, learners can see the calculator in the course."),
         default=False,
         scope=Scope.settings
     )
@@ -266,7 +266,7 @@ class CourseFields(object):
     discussion_blackouts = List(
         display_name=_("Discussion Blackout Dates"),
         help=_(
-            'Enter pairs of dates between which students cannot post to discussion forums. Inside the provided '
+            'Enter pairs of dates between which learners cannot post to discussion forums. Inside the provided '
             'brackets, enter an additional set of square brackets surrounding each pair of dates you add. '
             'Format each pair of dates as ["YYYY-MM-DD", "YYYY-MM-DD"]. To specify times as well as dates, '
             'format each pair as ["YYYY-MM-DDTHH:MM", "YYYY-MM-DDTHH:MM"]. Be sure to include the "T" between '
@@ -305,7 +305,7 @@ class CourseFields(object):
     cohort_config = Dict(
         display_name=_("Cohort Configuration"),
         help=_(
-            "Enter policy keys and values to enable the cohort feature, define automated student assignment to "
+            "Enter policy keys and values to enable the cohort feature, define automated learners assignment to "
             "groups, or identify any course-wide discussion topics as private to cohort members."
         ),
         scope=Scope.settings
@@ -337,7 +337,7 @@ class CourseFields(object):
     )
     disable_progress_graph = Boolean(
         display_name=_("Disable Progress Graph"),
-        help=_("Enter true or false. If true, students cannot view the progress graph."),
+        help=_("Enter true or false. If true, learners cannot view the progress graph."),
         default=False,
         scope=Scope.settings
     )
@@ -388,14 +388,14 @@ class CourseFields(object):
     )
     allow_anonymous = Boolean(
         display_name=_("Allow Anonymous Discussion Posts"),
-        help=_("Enter true or false. If true, students can create discussion posts that are anonymous to all users."),
+        help=_("Enter true or false. If true, learners can create discussion posts that are anonymous to all users."),
         scope=Scope.settings, default=True
     )
     allow_anonymous_to_peers = Boolean(
         display_name=_("Allow Anonymous Discussion Posts to Peers"),
         help=_(
-            "Enter true or false. If true, students can create discussion posts that are anonymous to other "
-            "students. This setting does not make posts anonymous to course staff."
+            "Enter true or false. If true, learners can create discussion posts that are anonymous to other "
+            "learners. This setting does not make posts anonymous to course staff."
         ),
         scope=Scope.settings, default=False
     )
@@ -409,7 +409,7 @@ class CourseFields(object):
     info_sidebar_name = String(
         display_name=_("Course Home Sidebar Name"),
         help=_(
-            "Enter the heading that you want students to see above your course handouts on the Course Home page. "
+            "Enter the heading that you want learners to see above your course handouts on the Course Home page. "
             "Your course handouts appear in the right panel of the page."
         ),
         deprecated=True,
@@ -431,13 +431,13 @@ class CourseFields(object):
     )
     enrollment_domain = String(
         display_name=_("External Login Domain"),
-        help=_("Enter the external login method students can use for the course."),
+        help=_("Enter the external login method learners can use for the course."),
         scope=Scope.settings
     )
     certificates_show_before_end = Boolean(
         display_name=_("Certificates Downloadable Before End"),
         help=_(
-            "Enter true or false. If true, students can download certificates before the course ends, if they've "
+            "Enter true or false. If true, learners can download certificates before the course ends, if they've "
             "met certificate requirements."
         ),
         scope=Scope.settings,
@@ -448,11 +448,11 @@ class CourseFields(object):
     certificates_display_behavior = String(
         display_name=_("Certificates Display Behavior"),
         help=_(
-            "Enter end, early_with_info, or early_no_info. After certificate generation, students who passed see a "
-            "link to their certificates on the dashboard and students who did not pass see information about the "
-            "grading configuration. The default is end, which displays this certificate information to all students "
-            "after the course end date. To display this certificate information to all students as soon as "
-            "certificates are generated, enter early_with_info. To display only the links to passing students as "
+            "Enter end, early_with_info, or early_no_info. After certificate generation, learners who passed see a "
+            "link to their certificates on the dashboard and learners who did not pass see information about the "
+            "grading configuration. The default is end, which displays this certificate information to all learners "
+            "after the course end date. To display this certificate information to all learners as soon as "
+            "certificates are generated, enter early_with_info. To display only the links to passing learners as "
             "soon as certificates are generated, enter early_no_info."
         ),
         scope=Scope.settings,
@@ -500,8 +500,8 @@ class CourseFields(object):
     cert_name_short = String(
         help=_(
             'Use this setting only when generating PDF certificates. '
-            'Between quotation marks, enter the short name of the type of certificate that '
-            'students receive when they complete the course. For instance, "Certificate".'
+            'Between quotation marks, enter the short name of the type of certificate that learners '
+            'receive when they complete the course. For instance, "Certificate".'
         ),
         display_name=_("Certificate Name (Short)"),
         scope=Scope.settings,
@@ -510,7 +510,7 @@ class CourseFields(object):
     cert_name_long = String(
         help=_(
             'Use this setting only when generating PDF certificates. '
-            'Between quotation marks, enter the long name of the type of certificate that students '
+            'Between quotation marks, enter the long name of the type of certificate that learners '
             'receive when they complete the course. For instance, "Certificate of Achievement".'
         ),
         display_name=_("Certificate Name (Long)"),
@@ -600,10 +600,10 @@ class CourseFields(object):
     )
 
     max_student_enrollments_allowed = Integer(
-        display_name=_("Course Maximum Student Enrollment"),
+        display_name=_("Course Maximum Learner Enrollment"),
         help=_(
-            "Enter the maximum number of students that can enroll in the course. To allow an unlimited number of "
-            "students, enter null."
+            "Enter the maximum number of learners that can enroll in the course. To allow an unlimited number of "
+            "learners, enter null."
         ),
         scope=Scope.settings
     )
@@ -636,7 +636,7 @@ class CourseFields(object):
     course_survey_required = Boolean(
         display_name=_("Pre-Course Survey Required"),
         help=_(
-            "Specify whether students must complete a survey before they can view your course content. If you "
+            "Specify whether learners must complete a survey before they can view your course content. If you "
             "set this value to true, you must add a name for the survey to the Course Survey Name setting above."
         ),
         default=False,
@@ -662,7 +662,7 @@ class CourseFields(object):
     entrance_exam_enabled = Boolean(
         display_name=_("Entrance Exam Enabled"),
         help=_(
-            "Specify whether students must complete an entrance exam before they can view your course content. "
+            "Specify whether learners must complete an entrance exam before they can view your course content. "
             "Note, you must enable Entrance Exams for this course setting to take effect."
         ),
         default=False,
@@ -675,7 +675,7 @@ class CourseFields(object):
     entrance_exam_minimum_score_pct = Float(
         display_name=_("Entrance Exam Minimum Score (%)"),
         help=_(
-            "Specify a minimum percentage score for an entrance exam before students can view your course content. "
+            "Specify a minimum percentage score for an entrance exam before learners can view your course content. "
             "Note, you must enable Entrance Exams for this course setting to take effect."
         ),
         default=65,
@@ -804,7 +804,7 @@ class CourseFields(object):
         display_name=_("Self Paced"),
         help=_(
             "Set this to \"true\" to mark this course as self-paced. Self-paced courses do not have "
-            "due dates for assignments, and students can progress through the course at any rate before "
+            "due dates for assignments, and learners can progress through the course at any rate before "
             "the course ends."
         ),
         default=False,
@@ -814,7 +814,7 @@ class CourseFields(object):
     bypass_home = Boolean(
         display_name=_("Bypass Course Home"),
         help=_(
-            "Bypass the course home tab when students arrive from the dashboard, "
+            "Bypass the course home tab when learners arrive from the dashboard, "
             "sending them directly to course content."
         ),
         default=False,
@@ -835,7 +835,7 @@ class CourseFields(object):
 
     learning_info = List(
         display_name=_("Course Learning Information"),
-        help=_("Specify what student can learn from the course."),
+        help=_("Specify what learner can learn from the course."),
         default=[],
         scope=Scope.settings
     )
@@ -881,14 +881,14 @@ class CourseFields(object):
     )
     reminder_info = List(
         display_name=_("Course Reminder Information"),
-        help=_("Configure reminders to students who enroll in this course"),
+        help=_("Configure reminders to learners who enroll in this course"),
         default=[],
         scope=Scope.settings
     )
 
     course_finish_days = Integer(
         display_name=_("Course Finish Days"),
-        help=_("Students have to finish the course within the required days above"),
+        help=_("Learners have to finish the course within the required days above"),
         default=None,
         scope=Scope.settings
     )
@@ -902,7 +902,7 @@ class CourseFields(object):
 
     re_enroll_time_unit = String(
         display_name=_("Course Re-enroll Time Unit"),
-        help=_("Students will be automatically re-enrolled in this course after the given time above after completion"),
+        help=_("Learners will be automatically re-enrolled in this course after the given time above after completion"),
         default="month",
         scope=Scope.settings
     )
@@ -1209,7 +1209,7 @@ class CourseDescriptor(CourseFields, SequenceDescriptor, LicenseMixin):
     @property
     def auto_cohort_groups(self):
         """
-        Return the list of groups to put students into.  Returns [] if not
+        Return the list of groups to put learners into.  Returns [] if not
         specified. Returns specified list even if is_cohorted and/or auto_cohort are
         false.
 

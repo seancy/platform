@@ -19,7 +19,7 @@ def i_see_only_the_settings_and_values(step):
         [
             ['Display Name', "Discussion", False],
             ['Category', "Week 1", False],
-            ['Subcategory', "Topic-Level Student-Visible Label", False]
+            ['Subcategory', "Topic-Level Learner-visible Label", False]
         ])
 
 

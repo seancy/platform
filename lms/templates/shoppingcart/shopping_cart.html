@@ -79,7 +79,7 @@ from openedx.core.lib.courses import course_image_url
               <div class="col-1">
                   % if item.is_discounted:
                     <% discount_applied = True %>
-                    <div class="price">${_('Price per student:')}
+                    <div class="price">${_('Price per learner:')}
                       <span class="line-through">
                         ## Translators: currency_symbol is a symbol indicating type of currency, ex "$".
                         ## This string would look like this when all variables are in:
@@ -91,7 +91,7 @@ from openedx.core.lib.courses import course_image_url
                       <span>${unit_cost}</span>
                     </div>
                   % else:
-                    <div class="price">${_('Price per student:')}
+                    <div class="price">${_('Price per learner:')}
                       <span>${unit_cost}</span>
                     </div>
                   % endif
@@ -99,7 +99,7 @@ from openedx.core.lib.courses import course_image_url
               <div class="col-2">
                 % if enable_bulk_purchase:
                 <div class="numbers-row" aria-live="polite">
-                  <label for="field_${item.id}">${_('Students:')}</label>
+                  <label for="field_${item.id}">${_('Learners:')}</label>
                   <div class="counter">
                       <input maxlength="3" class="spin-counter" title="${_('Input quantity and press enter.')}" max="999" type="text" name="students" value="${item.qty}" id="field_${item.id}" data-unit-cost="${item.unit_cost}" data-qty="${item.qty}" data-item-id="${item.id}" aria-describedby="students-${item.id}">
                   </div>
@@ -164,7 +164,7 @@ from openedx.core.lib.courses import course_image_url
                         <span class="icon fa fa-caret-right" aria-hidden="true"></span>
                       </button>
                       <p id="billing_business_helper_text">
-                          ${_('After this purchase is complete, a receipt is generated with relative billing details and registration codes for students.')}
+                          ${_('After this purchase is complete, a receipt is generated with relative billing details and registration codes for learners.')}
                       </p>
                   </div>
                    <div name="payment" class="hidden">
@@ -188,7 +188,7 @@ from openedx.core.lib.courses import course_image_url
                         <span class="icon fa fa-caret-right" aria-hidden="true"></span>
                       </button>
                       <p id="billing_helper_text">
-                          ${_('After this purchase is complete, a receipt is generated with relative billing details and registration codes for students.')}
+                          ${_('After this purchase is complete, a receipt is generated with relative billing details and registration codes for learners.')}
                       </p>
                   </div>
                %endif

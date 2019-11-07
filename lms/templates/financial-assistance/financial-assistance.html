@@ -31,7 +31,7 @@ from edxmako.shortcuts import marketing_link
       faq_link = marketing_link('FAQ')
     %>
     % if faq_link != '#':
-      <a class="faq-link" href="${faq_link}">${_("Back to Student FAQs")}</a>
+      <a class="faq-link" href="${faq_link}">${_("Back to Learner FAQs")}</a>
     % endif
     <a class="action-link" href="${reverse('financial_assistance_form')}">${_("Apply for Financial Assistance")}</a>
   </div>

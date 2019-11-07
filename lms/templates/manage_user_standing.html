@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 %>
 
-<h2>${_("Manage student accounts")}</h2>
+<h2>${_("Manage learner accounts")}</h2>
 <form action="${reverse('disable_account_ajax')}" method="post" data-remote="true" class="manage-accounts-form">
     <label for="username">${_("Username:")}</label>
     <input type="text" id="username" name="username" required="true">
@@ -38,7 +38,7 @@ from django.utils.translation import ugettext as _
 
 
 <p class="account-change-status"></p>
-<h2>${_("Students whose accounts have been disabled")}</h2>
+<h2>${_("Learners whose accounts have been disabled")}</h2>
 <p>${_("(reload your page to refresh)")}</p>
 <table id="account-table" border='1'>
     <tr>

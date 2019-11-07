@@ -17,9 +17,9 @@ var onCertificatesReady = null;
                 confirmMessage = '';
 
             if (isEnabled) {
-                confirmMessage = gettext('Allow students to generate certificates for this course?');
+                confirmMessage = gettext('Allow learners to generate certificates for this course?');
             } else {
-                confirmMessage = gettext('Prevent students from generating certificates in this course?');
+                confirmMessage = gettext('Prevent learners from generating certificates in this course?');
             }
 
             if (!confirm(confirmMessage)) {
@@ -90,7 +90,7 @@ var onCertificatesReady = null;
          */
         var $section = $('section#certificates');
         $section.on('click', '#btn-start-generating-certificates', function(event) {
-            if (!confirm(gettext('Start generating certificates for all students in this course?'))) {
+            if (!confirm(gettext('Start generating certificates for all learners in this course?'))) {
                 event.preventDefault();
                 return;
             }
@@ -115,7 +115,7 @@ var onCertificatesReady = null;
          * Start regenerating certificates for students.
          */
         $section.on('click', '#btn-start-regenerating-certificates', function(event) {
-            if (!confirm(gettext('Start regenerating certificates for students in this course?'))) {
+            if (!confirm(gettext('Start regenerating certificates for learners in this course?'))) {
                 event.preventDefault();
                 return;
             }

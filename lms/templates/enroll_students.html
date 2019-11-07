@@ -1,25 +1,25 @@
 <%! from django.utils.translation import ugettext as _ %>
 
-<h1>${_("Student Enrollment Form")} </h1>
+<h1>${_("Learner Enrollment Form")} </h1>
 
 <p> ${_("Course: ") % course}
 
 <form method="POST"> 
 <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
-<h2> ${_("Add new students")} </h2>
+<h2> ${_("Add new learners")} </h2>
 <textarea name="new_students">
 </textarea>
 <input type="submit">
 </form>
 
-<p> ${_("Existing students:")}
+<p> ${_("Existing learners:")}
 
 <p> ${ existing_students }
 
-<p> ${_("New students added: ")}
+<p> ${_("New learners added: ")}
 ${ added_students }
 
-<p> ${_("Students rejected: ")}
+<p> ${_("Learners rejected: ")}
 ${ rejected_students }
 
 <p> ${_("Debug: ")}

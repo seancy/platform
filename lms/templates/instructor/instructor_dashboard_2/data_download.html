@@ -14,8 +14,8 @@ from openedx.core.djangolib.markup import HTML, Text
 
   <div id="anonymized-ids" class="data-download-container action-type-container">
     <hr>
-    <p>${_("Click to download a CSV of anonymized student IDs:")}</p>
-    <p><input type="button" name="list-anon-ids" value="${_("Get Student Anonymized IDs CSV")}" data-csv="true" class="csv" data-endpoint="${ section_data['get_anon_ids_url'] }" class="${'is-disabled' if disable_buttons else ''}" aria-disabled="${'true' if disable_buttons else 'false'}" ></p>
+    <p>${_("Click to download a CSV of anonymized learner IDs:")}</p>
+    <p><input type="button" name="list-anon-ids" value="${_("Get Learner Anonymized IDs CSV")}" data-csv="true" class="csv" data-endpoint="${ section_data['get_anon_ids_url'] }" class="${'is-disabled' if disable_buttons else ''}" aria-disabled="${'true' if disable_buttons else 'false'}" ></p>
     <div class="request-response-error msg msg-error copy" id="data-request-response-error"></div>
   </div>
 
@@ -29,13 +29,13 @@ from openedx.core.djangolib.markup import HTML, Text
 
     <div id="profile-reports" class="detailed-action-type-container">
       <div id="enrolled-profiles" class="detailed-action-type">
-        <p>${_("Click to generate a CSV file of all students enrolled in this course, along with profile information such as email address and username:")}</p>
+        <p>${_("Click to generate a CSV file of all learners enrolled in this course, along with profile information such as email address and username:")}</p>
         <p><input type="button" name="list-profiles-csv" value="${_("Download profile information as a CSV")}" data-endpoint="${ section_data['get_students_features_url'] }" data-csv="true"></p>
       </div>
       % if not disable_buttons:
         <div id="enrolled-profiles-table" class="detailed-action-type">
-          <p>${_("For smaller courses, click to list profile information for enrolled students directly on this page:")}</p>
-          <p><input type="button" name="list-profiles" value="${_("List enrolled students' profile information")}" data-endpoint="${ section_data['get_students_features_url'] }"></p>
+          <p>${_("For smaller courses, click to list profile information for enrolled learners directly on this page:")}</p>
+          <p><input type="button" name="list-profiles" value="${_("List enrolled learners' profile information")}" data-endpoint="${ section_data['get_students_features_url'] }"></p>
         </div>
       %endif
       <div id="may-enroll-info" class="detailed-action-type">
@@ -56,7 +56,7 @@ from openedx.core.djangolib.markup import HTML, Text
 
       <div id="problem-answers" class="detailed-action-type">
         <h4>${_("Problem Answers")}</h4>
-        <p>${_("To generate a CSV file that lists all student answers to a given problem, enter the location of the problem (from its Staff Debug Info).")}</p>
+        <p>${_("To generate a CSV file that lists all learner answers to a given problem, enter the location of the problem (from its Staff Debug Info).")}</p>
         <p>
           <label>
             <span>${_("Problem location: ")}</span>
@@ -78,7 +78,7 @@ from openedx.core.djangolib.markup import HTML, Text
       %if settings.FEATURES.get('ALLOW_COURSE_STAFF_GRADE_DOWNLOADS') or section_data['access']['admin']:
         <div class="grades detailed-action-type">
           <h4>${_("Grade Reports")}</h4>
-          <p>${_("Click to generate a CSV grade report for all currently enrolled students.")}</p>
+          <p>${_("Click to generate a CSV grade report for all currently enrolled learners.")}</p>
           <p>
             <input type="button" name="calculate-grades-csv" class="async-report-btn" value="${_("Generate Grade Report")}" data-endpoint="${ section_data['calculate_grades_csv_url'] }"/>
             <input type="button" name="problem-grade-report" class="async-report-btn" value="${_("Generate Problem Grade Report")}" data-endpoint="${ section_data['problem_grade_report_url'] }"/>
@@ -114,7 +114,7 @@ from openedx.core.djangolib.markup import HTML, Text
 
     ## Translators: a table of URL links to report files appears after this sentence.
     <p>
-        ${Text(_("{strong_start}Note{strong_end}: To keep student data secure, you cannot save or email these links for direct access. Copies of links expire within 5 minutes.")).format(
+        ${Text(_("{strong_start}Note{strong_end}: To keep learner data secure, you cannot save or email these links for direct access. Copies of links expire within 5 minutes.")).format(
             strong_start=HTML("<strong>"),
             strong_end=HTML("</strong>"),
         )}

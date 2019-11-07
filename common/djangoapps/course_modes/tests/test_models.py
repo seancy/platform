@@ -412,12 +412,12 @@ class CourseModeModelTest(TestCase):
         display_values = {
             "verify_need_to_verify": ["Your verification is pending", "Verified: Pending Verification", True,
                                       'ID verification pending', 'verified'],
-            "verify_approved": ["You're enrolled as a verified student", "Verified", True, 'ID Verified Ribbon/Badge',
+            "verify_approved": ["You're enrolled as a verified leaner", "Verified", True, 'ID Verified Ribbon/Badge',
                                 'verified'],
             "verify_none": ["", "", False, '', 'audit'],
-            "honor": ["You're enrolled as an honor code student", "Honor Code", False, '', 'honor'],
+            "honor": ["You're enrolled as an honor code learner", "Honor Code", False, '', 'honor'],
             "audit": ["", "", False, '', 'audit'],
-            "professional": ["You're enrolled as a professional education student", "Professional Ed", False, '',
+            "professional": ["You're enrolled as a professional education learner", "Professional Ed", False, '',
                              'professional']
         }
         if dict_type in ['verify_need_to_verify', 'verify_submitted']:

@@ -192,10 +192,10 @@
                             'Week 1': {
                                 subcategories: {},
                                 children: [
-                                    ['Topic-Level Student-Visible Label', 'entry']
+                                    ['Topic-Level Learner-visible Label', 'entry']
                                 ],
                                 entries: {
-                                    'Topic-Level Student-Visible Label': {
+                                    'Topic-Level Learner-visible Label': {
                                         sort_key: null,
                                         is_divided: false,
                                         id: '2b3a858d0c884eb4b272dbbe3f2ffddd'
@@ -269,10 +269,10 @@
                             'Week 1': {
                                 subcategories: {},
                                 children: [
-                                    ['Topic-Level Student-Visible Label', 'entry']
+                                    ['Topic-Level Learner-visible Label', 'entry']
                                 ],
                                 entries: {
-                                    'Topic-Level Student-Visible Label': {
+                                    'Topic-Level Learner-visible Label': {
                                         sort_key: null,
                                         is_divided: false,
                                         id: '2b3a858d0c884eb4b272dbbe3f2ffddd'

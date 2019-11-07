@@ -556,12 +556,12 @@ def post_metrics_data_csv(request):
 
     results = []
     if data_type == 'subsection':
-        header = [_("Section"), _("Subsection"), _("Opened by this number of students")]
+        header = [_("Section"), _("Subsection"), _("Opened by this number of learners")]
         filename = sanitize_filename(_('subsections') + '_' + course_id)
     elif data_type == 'problem':
         header = [
-            _("Section"), _("Problem"), _("Name"), _("Count of Students"),
-            _("Percent of Students"), _("Score"),
+            _("Section"), _("Problem"), _("Name"), _("Count of Learners"),
+            _("Percent of Learners"), _("Score"),
         ]
         filename = sanitize_filename(_('problems') + '_' + course_id)
 

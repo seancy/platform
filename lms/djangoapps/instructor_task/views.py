@@ -157,40 +157,40 @@ def get_task_completion_info(instructor_task):
         # this reports on actions on problems for a particular student:
         if num_attempted == 0:
             # Translators: {action} is a past-tense verb that is localized separately. {student} is a student identifier.
-            msg_format = _("Unable to find submission to be {action} for student '{student}'")
+            msg_format = _("Unable to find submission to be {action} for learner '{student}'")
         elif num_succeeded == 0:
             # Translators: {action} is a past-tense verb that is localized separately. {student} is a student identifier.
-            msg_format = _("Problem failed to be {action} for student '{student}'")
+            msg_format = _("Problem failed to be {action} for learner '{student}'")
         else:
             succeeded = True
             # Translators: {action} is a past-tense verb that is localized separately. {student} is a student identifier.
-            msg_format = _("Problem successfully {action} for student '{student}'")
+            msg_format = _("Problem successfully {action} for learner '{student}'")
     elif student is not None and entrance_exam_url is not None:
         # this reports on actions on entrance exam for a particular student:
         if num_attempted == 0:
             # Translators: {action} is a past-tense verb that is localized separately.
             # {student} is a student identifier.
-            msg_format = _("Unable to find entrance exam submission to be {action} for student '{student}'")
+            msg_format = _("Unable to find entrance exam submission to be {action} for learner '{student}'")
         else:
             succeeded = True
             # Translators: {action} is a past-tense verb that is localized separately.
             # {student} is a student identifier.
-            msg_format = _("Entrance exam successfully {action} for student '{student}'")
+            msg_format = _("Entrance exam successfully {action} for learner '{student}'")
     elif student is None and problem_url is not None:
         # this reports on actions on problems for all students:
         if num_attempted == 0:
             # Translators: {action} is a past-tense verb that is localized separately.
-            msg_format = _("Unable to find any students with submissions to be {action}")
+            msg_format = _("Unable to find any learners with submissions to be {action}")
         elif num_succeeded == 0:
             # Translators: {action} is a past-tense verb that is localized separately. {attempted} is a count.
-            msg_format = _("Problem failed to be {action} for any of {attempted} students")
+            msg_format = _("Problem failed to be {action} for any of {attempted} learners")
         elif num_succeeded == num_attempted:
             succeeded = True
             # Translators: {action} is a past-tense verb that is localized separately. {attempted} is a count.
-            msg_format = _("Problem successfully {action} for {attempted} students")
+            msg_format = _("Problem successfully {action} for {attempted} learners")
         else:  # num_succeeded < num_attempted
             # Translators: {action} is a past-tense verb that is localized separately. {succeeded} and {attempted} are counts.
-            msg_format = _("Problem {action} for {succeeded} of {attempted} students")
+            msg_format = _("Problem {action} for {succeeded} of {attempted} learners")
     elif email_id is not None:
         # this reports on actions on bulk emails
         if num_attempted == 0:

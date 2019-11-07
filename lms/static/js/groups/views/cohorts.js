@@ -265,7 +265,7 @@
                                 self.showNotification({
                                     type: 'confirmation',
                                     title: interpolate_text(
-                                        gettext('The {cohortGroupName} cohort has been created. You can manually add students to this cohort below.'),
+                                        gettext('The {cohortGroupName} cohort has been created. You can manually add learners to this cohort below.'),
                                         {cohortGroupName: newCohort.get('name')}
                                     )
                                 });
@@ -298,10 +298,10 @@
                     if (!this.fileUploaderView) {
                         this.fileUploaderView = new FileUploaderView({
                             el: uploadElement,
-                            title: gettext('Assign students to cohorts by uploading a CSV file.'),
+                            title: gettext('Assign learners to cohorts by uploading a CSV file.'),
                             inputLabel: gettext('Choose a .csv file'),
                             inputTip: gettext('Only properly formatted .csv files will be accepted.'),
-                            submitButtonText: gettext('Upload File and Assign Students'),
+                            submitButtonText: gettext('Upload File and Assign Learners'),
                             extensions: '.csv',
                             url: this.context.uploadCohortsCsvUrl,
                             successNotification: function(file, event, data) {

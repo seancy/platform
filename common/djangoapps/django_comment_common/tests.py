@@ -41,7 +41,7 @@ class RoleAssignmentTest(TestCase):
     def test_enrollment_auto_role_creation(self):
         student_role = Role.objects.get(
             course_id=self.course_key,
-            name="Student"
+            name="Learner"
         )
 
         self.assertEqual([student_role], list(self.staff_user.roles.all()))
@@ -61,7 +61,7 @@ class RoleAssignmentTest(TestCase):
     #     # Make sure we didn't delete the actual Role
     #     student_role = Role.objects.get(
     #         course_id=self.course_id,
-    #         name="Student"
+    #         name="Learner"
     #     )
     #     self.assertNotIn(student_role, self.student_user.roles.all())
     #     self.assertIn(student_role, another_student.roles.all())

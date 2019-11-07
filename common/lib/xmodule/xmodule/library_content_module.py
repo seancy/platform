@@ -94,7 +94,7 @@ class LibraryContentFields(object):
     )
     max_count = Integer(
         display_name=_("Count"),
-        help=_("Enter the number of components to display to each student."),
+        help=_("Enter the number of components to display to each learner."),
         default=1,
         scope=Scope.settings,
     )

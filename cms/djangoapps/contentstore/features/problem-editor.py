@@ -170,9 +170,9 @@ def my_display_name_is_persisted_on_save(step):
     verify_unset_display_name()
 
 
-@step('I can select Per Student for Randomization')
+@step('I can select Per Learner for Randomization')
 def i_can_select_per_student_for_randomization(_step):
-    world.browser.select(RANDOMIZATION, "Per Student")
+    world.browser.select(RANDOMIZATION, "Per Learner")
     verify_modified_randomization()
 
 
@@ -358,7 +358,7 @@ def verify_modified_weight():
 
 
 def verify_modified_randomization():
-    world.verify_setting_entry(world.get_setting_entry(RANDOMIZATION), RANDOMIZATION, "Per Student", True)
+    world.verify_setting_entry(world.get_setting_entry(RANDOMIZATION), RANDOMIZATION, "Per Learner", True)
 
 
 def verify_modified_display_name():

@@ -79,7 +79,7 @@ def require_student_from_identifier(unique_student_identifier):
         return get_student_from_identifier(unique_student_identifier)
     except User.DoesNotExist:
         raise DashboardError(
-            _("Could not find student matching identifier: {student_identifier}").format(
+            _("Could not find learner matching identifier: {student_identifier}").format(
                 student_identifier=unique_student_identifier
             )
         )
@@ -174,7 +174,7 @@ def set_due_date_extension(course, unit, student, due_date):
     else:
         # We are deleting a due date extension. Check that it exists:
         if not get_override_for_user(student, unit, 'due'):
-            raise DashboardError(_("No due date extension is set for that student and unit."))
+            raise DashboardError(_("No due date extension is set for that learner and unit."))
 
         clear_override_for_user(student, unit, 'due')
 

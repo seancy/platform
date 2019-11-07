@@ -84,7 +84,7 @@ def get_certificate_description(mode, certificate_type, platform_name):
         # courses related to each other in a meaningful way, such as a specific topic or theme, or even an organization
         certificate_type_description = _("An {cert_type} certificate demonstrates a high level of "
                                          "achievement in a program of study, and includes verification of "
-                                         "the student's identity.").format(cert_type=certificate_type)
+                                         "the learner's identity.").format(cert_type=certificate_type)
     return certificate_type_description
 
 
@@ -143,7 +143,7 @@ def _update_certificate_context(context, course, user_certificate, platform_name
     # Translators: This text describes the purpose (and therefore, value) of a course certificate
     context['certificate_info_description'] = _("{platform_name} acknowledges achievements through "
                                                 "certificates, which are awarded for course activities "
-                                                "that {platform_name} students complete.").format(
+                                                "that {platform_name} learners complete.").format(
         platform_name=platform_name,
         tos_url=context.get('company_tos_url'),
         verified_cert_url=context.get('company_verified_certificate_url'))
@@ -195,7 +195,7 @@ def _update_context_with_basic_info(context, course_id, platform_name, configura
         platform_name=platform_name
     )
 
-    context['certificate_verify_title'] = _("How {platform_name} Validates Student Certificates").format(
+    context['certificate_verify_title'] = _("How {platform_name} Validates Learner Certificates").format(
         platform_name=platform_name
     )
 
@@ -223,7 +223,7 @@ def _update_context_with_basic_info(context, course_id, platform_name, configura
     context['company_contact_urltext'] = _("Contact {platform_name}").format(platform_name=platform_name)
 
     # Translators:  This text appears near the top of the certficate and describes the guarantee provided by edX
-    context['document_banner'] = _("{platform_name} acknowledges the following student accomplishment").format(
+    context['document_banner'] = _("{platform_name} acknowledges the following learner accomplishment").format(
         platform_name=platform_name
     )
 

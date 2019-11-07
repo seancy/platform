@@ -306,16 +306,16 @@ from openedx.core.lib.courses import course_image_url
               % if item.status == "purchased":
                 <div class="col-1">
                   % if item.is_discounted:
-                    <div class="price">${_('Price per student:')} <span class="line-through">  ${currency_symbol}${"{0:0.2f}".format(item.list_price)}</span>
+                    <div class="price">${_('Price per learner:')} <span class="line-through">  ${currency_symbol}${"{0:0.2f}".format(item.list_price)}</span>
                     </div>
                     <div class="price green">${_('Discount Applied:')} <span>   ${currency_symbol}${"{0:0.2f}".format(item.unit_cost)} </span></div>
                   % else:
-                    <div class="price">${_('Price per student:')} <span>  ${currency_symbol}${"{0:0.2f}".format(item.unit_cost)}</span></div>
+                    <div class="price">${_('Price per learner:')} <span>  ${currency_symbol}${"{0:0.2f}".format(item.unit_cost)}</span></div>
                   % endif
                 </div>
                 <div class="col-2">
                   <div class="numbers-row">
-                    <label>${_("Students")}:</label>
+                    <label>${_("Learners")}:</label>
                     <div class="counter no-border text-dark-grey">
                       ${item.qty}
                     </div>
@@ -324,18 +324,18 @@ from openedx.core.lib.courses import course_image_url
               % elif item.status == "refunded":
                 <div class="col-1">
                   % if item.is_discounted:
-                    <div class="price">${_('Price per student:')} <span class="line-through">   ${currency_symbol}${"{0:0.2f}".format(item.list_price)}</span>
+                    <div class="price">${_('Price per learner:')} <span class="line-through">   ${currency_symbol}${"{0:0.2f}".format(item.list_price)}</span>
                     </div>
                     <div class="price green">${_('Discount Applied:')} <span><del>  ${currency_symbol}${"{0:0.2f}".format(item.unit_cost)}
                     </del></span></div>
                   % else:
-                    <div class="price">${_('Price per student:')} <span><del>  ${currency_symbol}${"{0:0.2f}".format(item.unit_cost)}</del></span>
+                    <div class="price">${_('Price per learner:')} <span><del>  ${currency_symbol}${"{0:0.2f}".format(item.unit_cost)}</del></span>
                     </div>
                   % endif
                 </div>
                 <div class="col-2">
                   <div class="numbers-row">
-                    <label>${_("Students")}:</label>
+                    <label>${_("Learners")}:</label>
                     <div class="counter no-border">
                       <del>${item.qty}</del>
                     </div>

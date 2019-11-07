@@ -34,17 +34,17 @@ class PollFields(object):
     )
 
     voted = Boolean(
-        help=_("Whether this student has voted on the poll"),
+        help=_("Whether this learner has voted on the poll"),
         scope=Scope.user_state,
         default=False
     )
     poll_answer = String(
-        help=_("Student answer"),
+        help=_("Learner answer"),
         scope=Scope.user_state,
         default=''
     )
     poll_answers = Dict(
-        help=_("Poll answers from all students"),
+        help=_("Poll answers from all learners"),
         scope=Scope.user_state_summary
     )
 

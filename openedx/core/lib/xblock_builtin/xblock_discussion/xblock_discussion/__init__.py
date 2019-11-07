@@ -58,7 +58,7 @@ class DiscussionXBlock(XBlock, StudioEditableXBlockMixin, XmlParserMixin):
     )
     discussion_target = String(
         display_name=_("Subcategory"),
-        default="Topic-Level Student-Visible Label",
+        default="Topic-Level Learner-visible Label",
         help=_(
             "A subcategory name for the discussion. "
             "This name appears in the left pane of the discussion forum for the course."

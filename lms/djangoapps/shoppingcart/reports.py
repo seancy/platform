@@ -220,7 +220,7 @@ class CertificateStatusReport(Report):
             _("Verified Enrollment"),
             _("Gross Revenue"),
             _("Gross Revenue over the Minimum"),
-            _("Number of Verified Students Contributing More than the Minimum"),
+            _("Number of Verified Learners Contributing More than the Minimum"),
             _("Number of Refunds"),
             _("Dollars Refunded"),
         ]

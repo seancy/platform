@@ -271,7 +271,7 @@ class DiscussionNavigationTest(BaseDiscussionTestCase):
         # Verify the thread's topic has been pushed to breadcrumbs
         breadcrumbs = self.thread_page.q(css=".breadcrumbs .nav-item")
         self.assertEqual(len(breadcrumbs), 3)
-        self.assertEqual(breadcrumbs[2].text, "Topic-Level Student-Visible Label")
+        self.assertEqual(breadcrumbs[2].text, "Topic-Level Learner-visible Label")
 
     @skip("andya: 10/19/17: re-enable once the failure on Jenkins is determined")
     def test_breadcrumbs_back_to_all_topics(self):

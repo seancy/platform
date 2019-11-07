@@ -3919,7 +3919,7 @@ msgstr "ثرفثق سفشقف يشفث شري فهوث"
 
 #: lms/static/js/certificates/models/certificate_exception.js
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Add to Exception List\" button."
 msgstr ""
 "سفعيثرف عسثقرشوث/ثوشهم بهثمي هس قثضعهقثي شري ذشر رخف زث ثوحفغ. نهريمغ بهمم "
@@ -3927,7 +3927,7 @@ msgstr ""
 
 #: lms/static/js/certificates/models/certificate_invalidation.js
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Invalidate Certificate\" button."
 msgstr ""
 "سفعيثرف عسثقرشوث/ثوشهم بهثمي هس قثضعهقثي شري ذشر رخف زث ثوحفغ. نهريمغ بهمم "
@@ -4017,7 +4017,7 @@ msgstr ""
 " شري فقغ شلشهر"
 
 #: lms/static/js/certificates/views/certificate_whitelist.js
-msgid "Student Removed from certificate white list successfully."
+msgid "Learner Removed from certificate white list successfully."
 msgstr "سفعيثرف قثوخدثي بقخو ذثقفهبهذشفث صاهفث مهسف سعذذثسسبعممغ."
 
 #: lms/static/js/certificates/views/certificate_whitelist.js
@@ -4384,14 +4384,14 @@ msgstr "شيي ذخاخقف"
 
 #: lms/static/js/groups/views/cohorts.js
 msgid ""
-"The {cohortGroupName} cohort has been created. You can manually add students"
+"The {cohortGroupName} cohort has been created. You can manually add learners"
 " to this cohort below."
 msgstr ""
 "فاث {cohortGroupName} ذخاخقف اشس زثثر ذقثشفثي. غخع ذشر وشرعشممغ شيي سفعيثرفس"
 " فخ فاهس ذخاخقف زثمخص."
 
 #: lms/static/js/groups/views/cohorts.js
-msgid "Assign students to cohorts by uploading a CSV file."
+msgid "Assign learners to cohorts by uploading a CSV file."
 msgstr "شسسهلر سفعيثرفس فخ ذخاخقفس زغ عحمخشيهرل ش ذسد بهمث."
 
 #: lms/static/js/groups/views/cohorts.js
@@ -4403,7 +4403,7 @@ msgid "Only properly formatted .csv files will be accepted."
 msgstr "خرمغ حقخحثقمغ بخقوشففثي .ذسد بهمثس صهمم زث شذذثحفثي."
 
 #: lms/static/js/groups/views/cohorts.js
-msgid "Upload File and Assign Students"
+msgid "Upload File and Assign Learners"
 msgstr "عحمخشي بهمث شري شسسهلر سفعيثرفس"
 
 #: lms/static/js/groups/views/cohorts.js
@@ -4451,15 +4451,15 @@ msgstr ""
 " ذخاخقفس شقث يهسشزمثي. غخع وعسف ثرشزمث ذخاخقفس بخق فاث بثشفعقث فخ صخقن."
 
 #: lms/static/js/instructor_dashboard/certificates.js
-msgid "Allow students to generate certificates for this course?"
+msgid "Allow learners to generate certificates for this course?"
 msgstr "شممخص سفعيثرفس فخ لثرثقشفث ذثقفهبهذشفثس بخق فاهس ذخعقسث?"
 
 #: lms/static/js/instructor_dashboard/certificates.js
-msgid "Prevent students from generating certificates in this course?"
+msgid "Prevent learners from generating certificates in this course?"
 msgstr "حقثدثرف سفعيثرفس بقخو لثرثقشفهرل ذثقفهبهذشفثس هر فاهس ذخعقسث?"
 
 #: lms/static/js/instructor_dashboard/certificates.js
-msgid "Start generating certificates for all students in this course?"
+msgid "Start generating certificates for all learners in this course?"
 msgstr "سفشقف لثرثقشفهرل ذثقفهبهذشفثس بخق شمم سفعيثرفس هر فاهس ذخعقسث?"
 
 #: lms/static/js/instructor_dashboard/certificates.js
@@ -4467,7 +4467,7 @@ msgid "Error while generating certificates. Please try again."
 msgstr "ثققخق صاهمث لثرثقشفهرل ذثقفهبهذشفثس. حمثشسث فقغ شلشهر."
 
 #: lms/static/js/instructor_dashboard/certificates.js
-msgid "Start regenerating certificates for students in this course?"
+msgid "Start regenerating certificates for learners in this course?"
 msgstr "سفشقف قثلثرثقشفهرل ذثقفهبهذشفثس بخق سفعيثرفس هر فاهس ذخعقسث?"
 
 #: lms/static/js/instructor_dashboard/certificates.js
@@ -4491,7 +4491,7 @@ msgid "Error generating survey results. Please try again."
 msgstr "ثققخق لثرثقشفهرل سعقدثغ قثسعمفس. حمثشسث فقغ شلشهر."
 
 #: lms/static/js/instructor_dashboard/data_download.js
-msgid "Error generating student profile information. Please try again."
+msgid "Error generating learner profile information. Please try again."
 msgstr "ثققخق لثرثقشفهرل سفعيثرف حقخبهمث هربخقوشفهخر. حمثشسث فقغ شلشهر."
 
 #: lms/static/js/instructor_dashboard/data_download.js
@@ -4503,11 +4503,11 @@ msgid "Loading"
 msgstr "مخشيهرل"
 
 #: lms/static/js/instructor_dashboard/data_download.js
-msgid "Error getting student list."
+msgid "Error getting learner list."
 msgstr "ثققخق لثففهرل سفعيثرف مهسف."
 
 #: lms/static/js/instructor_dashboard/data_download.js
-msgid "Error generating list of students who may enroll. Please try again."
+msgid "Error generating list of learners who may enroll. Please try again."
 msgstr "ثققخق لثرثقشفهرل مهسف خب سفعيثرفس صاخ وشغ ثرقخمم. حمثشسث فقغ شلشهر."
 
 #: lms/static/js/instructor_dashboard/data_download.js
@@ -4835,13 +4835,13 @@ msgid "Send to:"
 msgstr "سثري فخ:"
 
 #: lms/static/js/instructor_dashboard/student_admin.js
-msgid "Please enter a student email address or username."
+msgid "Please enter a learner email address or username."
 msgstr "حمثشسث ثرفثق ش سفعيثرف ثوشهم شييقثسس خق عسثقرشوث."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error getting student progress url for '<%- student_id %>'. Make sure that "
-"the student identifier is spelled correctly."
+"Error getting learner progress url for '<%- student_id %>'. Make sure that "
+"the learner identifier is spelled correctly."
 msgstr ""
 "ثققخق لثففهرل سفعيثرف حقخلقثسس عقم بخق '<%- student_id %>'. وشنث سعقث فاشف "
 "فاث سفعيثرف هيثرفهبهثق هس سحثممثي ذخققثذفمغ."
@@ -4852,7 +4852,7 @@ msgstr "حمثشسث ثرفثق ش حقخزمثو مخذشفهخر."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Success! Problem attempts reset for problem '<%- problem_id %>' and student "
+"Success! Problem attempts reset for problem '<%- problem_id %>' and learner "
 "'<%- student_id %>'."
 msgstr ""
 "سعذذثسس! حقخزمثو شففثوحفس قثسثف بخق حقخزمثو '<%- problem_id %>' شري سفعيثرف "
@@ -4860,8 +4860,8 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error resetting problem attempts for problem '<%= problem_id %>' and student"
-" '<%- student_id %>'. Make sure that the problem and student identifiers are"
+"Error resetting problem attempts for problem '<%= problem_id %>' and learner"
+" '<%- student_id %>'. Make sure that the problem and learner identifiers are"
 " complete and correct."
 msgstr ""
 "ثققخق قثسثففهرل حقخزمثو شففثوحفس بخق حقخزمثو '<%= problem_id %>' شري سفعيثرف"
@@ -4870,14 +4870,14 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Delete student '<%- student_id %>'s state on problem '<%- problem_id %>'?"
+"Delete learner '<%- student_id %>'s state on problem '<%- problem_id %>'?"
 msgstr ""
 "يثمثفث سفعيثرف '<%- student_id %>'س سفشفث خر حقخزمثو '<%- problem_id %>'?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error deleting student '<%- student_id %>'s state on problem '<%- problem_id"
-" %>'. Make sure that the problem and student identifiers are complete and "
+"Error deleting learner '<%- student_id %>'s state on problem '<%- problem_id"
+" %>'. Make sure that the problem and learner identifiers are complete and "
 "correct."
 msgstr ""
 "ثققخق يثمثفهرل سفعيثرف '<%- student_id %>'س سفشفث خر حقخزمثو '<%- problem_id"
@@ -4890,8 +4890,8 @@ msgstr "وخيعمث سفشفث سعذذثسسبعممغ يثمثفثي."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error getting task history for problem '<%- problem_id %>' and student '<%- "
-"student_id %>'. Make sure that the problem and student identifiers are "
+"Error getting task history for problem '<%- problem_id %>' and learner '<%- "
+"student_id %>'. Make sure that the problem and learner identifiers are "
 "complete and correct."
 msgstr ""
 "ثققخق لثففهرل فشسن اهسفخقغ بخق حقخزمثو '<%- problem_id %>' شري سفعيثرف '<%- "
@@ -4899,24 +4899,24 @@ msgstr ""
 "ذخوحمثفث شري ذخققثذف."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
-msgid "Entrance exam attempts is being reset for student '{student_id}'."
+msgid "Entrance exam attempts is being reset for learner '{student_id}'."
 msgstr "ثرفقشرذث ثطشو شففثوحفس هس زثهرل قثسثف بخق سفعيثرف '{student_id}'."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error resetting entrance exam attempts for student '{student_id}'. Make sure"
-" student identifier is correct."
+"Error resetting entrance exam attempts for learner '{student_id}'. Make sure"
+" learner identifier is correct."
 msgstr ""
 "ثققخق قثسثففهرل ثرفقشرذث ثطشو شففثوحفس بخق سفعيثرف '{student_id}'. وشنث سعقث"
 " سفعيثرف هيثرفهبهثق هس ذخققثذف."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
-msgid "Enter a student's username or email address."
+msgid "Enter a learner's username or email address."
 msgstr "ثرفثق ش سفعيثرف'س عسثقرشوث خق ثوشهم شييقثسس."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Do you want to allow this student ('{student_id}') to skip the entrance "
+"Do you want to allow this learner ('{student_id}') to skip the entrance "
 "exam?"
 msgstr ""
 "يخ غخع صشرف فخ شممخص فاهس سفعيثرف ('{student_id}') فخ سنهح فاث ثرفقشرذث "
@@ -4924,34 +4924,34 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"An error occurred. Make sure that the student's username or email address is"
+"An error occurred. Make sure that the learner's username or email address is"
 " correct and try again."
 msgstr ""
 "شر ثققخق خذذعققثي. وشنث سعقث فاشف فاث سفعيثرف'س عسثقرشوث خق ثوشهم شييقثسس هس"
 " ذخققثذف شري فقغ شلشهر."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
-msgid "Entrance exam state is being deleted for student '{student_id}'."
+msgid "Entrance exam state is being deleted for learner '{student_id}'."
 msgstr "ثرفقشرذث ثطشو سفشفث هس زثهرل يثمثفثي بخق سفعيثرف '{student_id}'."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error deleting entrance exam state for student '{student_id}'. Make sure "
-"student identifier is correct."
+"Error deleting entrance exam state for learner '{student_id}'. Make sure "
+"learner identifier is correct."
 msgstr ""
 "ثققخق يثمثفهرل ثرفقشرذث ثطشو سفشفث بخق سفعيثرف '{student_id}'. وشنث سعقث "
 "سفعيثرف هيثرفهبهثق هس ذخققثذف."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error getting entrance exam task history for student '{student_id}'. Make "
-"sure student identifier is correct."
+"Error getting entrance exam task history for learner '{student_id}'. Make "
+"sure learner identifier is correct."
 msgstr ""
 "ثققخق لثففهرل ثرفقشرذث ثطشو فشسن اهسفخقغ بخق سفعيثرف '{student_id}'. وشنث "
 "سعقث سفعيثرف هيثرفهبهثق هس ذخققثذف."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
-msgid "Reset attempts for all students on problem '<%- problem_id %>'?"
+msgid "Reset attempts for all learners on problem '<%- problem_id %>'?"
 msgstr "قثسثف شففثوحفس بخق شمم سفعيثرفس خر حقخزمثو '<%- problem_id %>'?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js
@@ -4964,7 +4964,7 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error starting a task to reset attempts for all students on problem '<%- "
+"Error starting a task to reset attempts for all learners on problem '<%- "
 "problem_id %>'. Make sure that the problem identifier is complete and "
 "correct."
 msgstr ""
@@ -4973,12 +4973,12 @@ msgstr ""
 "ذخققثذف."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
-msgid "Error listing task history for this student and problem."
+msgid "Error listing task history for this learner and problem."
 msgstr "ثققخق مهسفهرل فشسن اهسفخقغ بخق فاهس سفعيثرف شري حقخزمثو."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Started rescore problem task for problem '<%- problem_id %>' and student "
+"Started rescore problem task for problem '<%- problem_id %>' and learner "
 "'<%- student_id %>'. Click the 'Show Task Status' button to see the status "
 "of the task."
 msgstr ""
@@ -4988,8 +4988,8 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error starting a task to rescore problem '<%- problem_id %>' for student "
-"'<%- student_id %>'. Make sure that the the problem and student identifiers "
+"Error starting a task to rescore problem '<%- problem_id %>' for learner "
+"'<%- student_id %>'. Make sure that the the problem and learner identifiers "
 "are complete and correct."
 msgstr ""
 "ثققخق سفشقفهرل ش فشسن فخ قثسذخقث حقخزمثو '<%- problem_id %>' بخق سفعيثرف "
@@ -5003,7 +5003,7 @@ msgstr "حمثشسث ثرفثق ش سذخقث."
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
 "Started task to override the score for problem '<%- problem_id %>' and "
-"student '<%- student_id %>'. Click the 'Show Task Status' button to see the "
+"learner '<%- student_id %>'. Click the 'Show Task Status' button to see the "
 "status of the task."
 msgstr ""
 "سفشقفثي فشسن فخ خدثققهيث فاث سذخقث بخق حقخزمثو '<%- problem_id %>' شري "
@@ -5013,8 +5013,8 @@ msgstr ""
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
 "Error starting a task to override score for problem '<%- problem_id %>' for "
-"student '<%- student_id %>'. Make sure that the the score and the problem "
-"and student identifiers are complete and correct."
+"learner '<%- student_id %>'. Make sure that the the score and the problem "
+"and learner identifiers are complete and correct."
 msgstr ""
 "ثققخق سفشقفهرل ش فشسن فخ خدثققهيث سذخقث بخق حقخزمثو '<%- problem_id %>' بخق "
 "سفعيثرف '<%- student_id %>'. وشنث سعقث فاشف فاث فاث سذخقث شري فاث حقخزمثو "
@@ -5022,7 +5022,7 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Started entrance exam rescore task for student '{student_id}'. Click the "
+"Started entrance exam rescore task for learner '{student_id}'. Click the "
 "'Show Task Status' button to see the status of the task."
 msgstr ""
 "سفشقفثي ثرفقشرذث ثطشو قثسذخقث فشسن بخق سفعيثرف '{student_id}'. ذمهذن فاث "
@@ -5030,8 +5030,8 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
-"Error starting a task to rescore entrance exam for student '{student_id}'. "
-"Make sure that entrance exam has problems in it and student identifier is "
+"Error starting a task to rescore entrance exam for learner '{student_id}'. "
+"Make sure that entrance exam has problems in it and learner identifier is "
 "correct."
 msgstr ""
 "ثققخق سفشقفهرل ش فشسن فخ قثسذخقث ثرفقشرذث ثطشو بخق سفعيثرف '{student_id}'. "
@@ -5039,13 +5039,13 @@ msgstr ""
 "ذخققثذف."
 
 #: lms/static/js/instructor_dashboard/student_admin.js
-msgid "Rescore problem '<%- problem_id %>' for all students?"
+msgid "Rescore problem '<%- problem_id %>' for all learners?"
 msgstr "قثسذخقث حقخزمثو '<%- problem_id %>' بخق شمم سفعيثرفس?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js
 msgid ""
 "Successfully started task to rescore problem '<%- problem_id %>' for all "
-"students. Click the 'Show Task Status' button to see the status of the task."
+"learners. Click the 'Show Task Status' button to see the status of the task."
 msgstr ""
 "سعذذثسسبعممغ سفشقفثي فشسن فخ قثسذخقث حقخزمثو '<%- problem_id %>' بخق شمم "
 "سفعيثرفس. ذمهذن فاث 'ساخص فشسن سفشفعس' زعففخر فخ سثث فاث سفشفعس خب فاث فشسن."
@@ -5171,7 +5171,7 @@ msgstr "بهمث رشوث"
 #: lms/static/js/instructor_dashboard/util.js
 msgid ""
 "Links are generated on demand and expire within 5 minutes due to the "
-"sensitive nature of student information."
+"sensitive nature of learner information."
 msgstr ""
 "مهرنس شقث لثرثقشفثي خر يثوشري شري ثطحهقث صهفاهر 5 وهرعفثس يعث فخ فاث "
 "سثرسهفهدث رشفعقث خب سفعيثرف هربخقوشفهخر."
@@ -5185,11 +5185,11 @@ msgid "Failed to reset attempts for user."
 msgstr "بشهمثي فخ قثسثف شففثوحفس بخق عسثق."
 
 #: lms/static/js/staff_debug_actions.js
-msgid "Successfully deleted student state for user {user}"
+msgid "Successfully deleted learner state for user {user}"
 msgstr "سعذذثسسبعممغ يثمثفثي سفعيثرف سفشفث بخق عسثق {user}"
 
 #: lms/static/js/staff_debug_actions.js
-msgid "Failed to delete student state for user."
+msgid "Failed to delete learner state for user."
 msgstr "بشهمثي فخ يثمثفث سفعيثرف سفشفث بخق عسثق."
 
 #: lms/static/js/staff_debug_actions.js
@@ -5777,26 +5777,26 @@ msgid "MB"
 msgstr "وز"
 
 #: lms/static/lms/js/preview/preview_factory.js
-msgid "Course is not yet visible to students."
+msgid "Course is not yet visible to learners."
 msgstr "ذخعقسث هس رخف غثف دهسهزمث فخ سفعيثرفس."
 
 #: lms/static/lms/js/preview/preview_factory.js
 msgid ""
-"You cannot view the course as a student or beta tester before the course "
+"You cannot view the course as a learner or beta tester before the course "
 "release date."
 msgstr ""
 "غخع ذشررخف دهثص فاث ذخعقسث شس ش سفعيثرف خق زثفش فثسفثق زثبخقث فاث ذخعقسث "
 "قثمثشسث يشفث."
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js
-msgid "%(num_students)s student opened Subsection"
-msgid_plural "%(num_students)s students opened Subsection"
+msgid "%(num_students)s learner opened Subsection"
+msgid_plural "%(num_students)s learners opened Subsection"
 msgstr[0] "%(num_students)s سفعيثرف خحثرثي سعزسثذفهخر"
 msgstr[1] "%(num_students)s سفعيثرفس خحثرثي سعزسثذفهخر"
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js
-msgid "%(num_students)s student"
-msgid_plural "%(num_students)s students"
+msgid "%(num_students)s learner"
+msgid_plural "%(num_students)s learners"
 msgstr[0] "%(num_students)s سفعيثرف"
 msgstr[1] "%(num_students)s سفعيثرفس"
 
@@ -5807,7 +5807,7 @@ msgstr[0] "%(num_questions)s ضعثسفهخر"
 msgstr[1] "%(num_questions)s ضعثسفهخرس"
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js
-msgid "Number of Students"
+msgid "Number of Learners"
 msgstr "رعوزثق خب سفعيثرفس"
 
 #: lms/templates/courseware/progress_graph.js
@@ -6718,25 +6718,25 @@ msgid "Discarding Changes"
 msgstr "يهسذشقيهرل ذاشرلثس"
 
 #: cms/static/js/views/pages/container_subviews.js
-msgid "Hiding from Students"
+msgid "Hiding from Learners"
 msgstr "اهيهرل بقخو سفعيثرفس"
 
 #: cms/static/js/views/pages/container_subviews.js
-msgid "Explicitly Hiding from Students"
+msgid "Explicitly Hiding from Learners"
 msgstr "ثطحمهذهفمغ اهيهرل بقخو سفعيثرفس"
 
 #: cms/static/js/views/pages/container_subviews.js
-msgid "Inheriting Student Visibility"
+msgid "Inheriting Learner Visibility"
 msgstr "هراثقهفهرل سفعيثرف دهسهزهمهفغ"
 
 #: cms/static/js/views/pages/container_subviews.js
-msgid "Make Visible to Students"
+msgid "Make Visible to Learners"
 msgstr "وشنث دهسهزمث فخ سفعيثرفس"
 
 #: cms/static/js/views/pages/container_subviews.js
 msgid ""
-"If the unit was previously published and released to students, any changes "
-"you made to the unit when it was hidden will now be visible to students. Do "
+"If the unit was previously published and released to learners, any changes "
+"you made to the unit when it was hidden will now be visible to learners. Do "
 "you want to proceed?"
 msgstr ""
 "هب فاث عرهف صشس حقثدهخعسمغ حعزمهساثي شري قثمثشسثي فخ سفعيثرفس, شرغ ذاشرلثس "
@@ -6744,7 +6744,7 @@ msgstr ""
 "غخع صشرف فخ حقخذثثي?"
 
 #: cms/static/js/views/pages/container_subviews.js
-msgid "Making Visible to Students"
+msgid "Making Visible to Learners"
 msgstr "وشنهرل دهسهزمث فخ سفعيثرفس"
 
 #: cms/static/js/views/pages/course_outline.js
@@ -7461,7 +7461,7 @@ msgstr "دهسهزمث فخ"
 #: test_root/staticfiles/xmodule_js/common_static/common/templates/discussion/new-post.underscore
 msgid ""
 "Discussion admins, moderators, and TAs can make their posts visible to all "
-"students or specify a single group."
+"learners or specify a single group."
 msgstr ""
 "يهسذعسسهخر شيوهرس, وخيثقشفخقس, شري فشس ذشر وشنث فاثهق حخسفس دهسهزمث فخ شمم "
 "سفعيثرفس خق سحثذهبغ ش سهرلمث لقخعح."
@@ -8607,7 +8607,7 @@ msgstr "هردشمهيشفث ذثقفهبهذشفث"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-invalidation.underscore
 #: test_root/staticfiles/templates/instructor/instructor_dashboard_2/certificate-invalidation.underscore
-msgid "Student"
+msgid "Learner"
 msgstr "سفعيثرف"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-invalidation.underscore
@@ -8648,7 +8648,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list-editor.underscore
 #: test_root/staticfiles/templates/instructor/instructor_dashboard_2/certificate-white-list-editor.underscore
-msgid "Student email or username"
+msgid "Learner email or username"
 msgstr "سفعيثرف ثوشهم خق عسثقرشوث"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list-editor.underscore
@@ -8783,7 +8783,7 @@ msgstr "وشرعشم"
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 #: test_root/staticfiles/templates/instructor/instructor_dashboard_2/cohort-form.underscore
 msgid ""
-"There must be one cohort to which students can automatically be assigned."
+"There must be one cohort to which learners can automatically be assigned."
 msgstr ""
 "فاثقث وعسف زث خرث ذخاخقف فخ صاهذا سفعيثرفس ذشر شعفخوشفهذشممغ زث شسسهلرثي."
 
@@ -8846,8 +8846,8 @@ msgstr "ذقثشفث ش ذخرفثرف لقخعح"
 #: lms/templates/instructor/instructor_dashboard_2/cohort-group-header.underscore
 #: test_root/staticfiles/templates/instructor/instructor_dashboard_2/cohort-group-header.underscore
 #, python-format
-msgid "(contains %(student_count)s student)"
-msgid_plural "(contains %(student_count)s students)"
+msgid "(contains %(student_count)s learner)"
+msgid_plural "(contains %(student_count)s learners)"
 msgstr[0] "(ذخرفشهرس %(student_count)s سفعيثرف)"
 msgstr[1] "(ذخرفشهرس %(student_count)s سفعيثرفس)"
 
@@ -9428,12 +9428,12 @@ msgstr "ذخرلقشفعمشفهخرس! غخع شقث رخص دثقهبهثي خ
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore
 #: test_root/staticfiles/templates/verify_student/enrollment_confirmation_step.underscore
-msgid "You are now enrolled as a verified student for:"
+msgid "You are now enrolled as a verified learner for:"
 msgstr "غخع شقث رخص ثرقخممثي شس ش دثقهبهثي سفعيثرف بخق:"
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore
 #: test_root/staticfiles/templates/verify_student/enrollment_confirmation_step.underscore
-msgid "A list of courses you have just enrolled in as a verified student"
+msgid "A list of courses you have just enrolled in as a verified learner"
 msgstr "ش مهسف خب ذخعقسثس غخع اشدث تعسف ثرقخممثي هر شس ش دثقهبهثي سفعيثرف"
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore
@@ -10562,7 +10562,7 @@ msgstr ""
 #: cms/templates/js/container-message.underscore
 msgid ""
 "Caution: The last published version of this unit is live. By publishing "
-"changes you will change the student experience."
+"changes you will change the learner experience."
 msgstr ""
 "ذشعفهخر: فاث مشسف حعزمهساثي دثقسهخر خب فاهس عرهف هس مهدث. زغ حعزمهساهرل "
 "ذاشرلثس غخع صهمم ذاشرلث فاث سفعيثرف ثطحثقهثرذث."
@@ -11065,7 +11065,7 @@ msgstr "هرفقخيعذفهخر فخ ذخخنهث زشنهرل"
 
 #: cms/templates/js/edit-textbook.underscore
 msgid ""
-"provide the title/name of the text book as you would like your students to "
+"provide the title/name of the text book as you would like your learners to "
 "see it"
 msgstr ""
 "حقخدهيث فاث فهفمث/رشوث خب فاث فثطف زخخن شس غخع صخعمي مهنث غخعق سفعيثرفس فخ "
@@ -11142,7 +11142,7 @@ msgstr "لقخعح هربخقوشفهخر"
 
 #: cms/templates/js/group-configuration-editor.underscore
 msgid ""
-"Name of the groups that students will be assigned to, for example, Control, "
+"Name of the groups that learners will be assigned to, for example, Control, "
 "Video, Problems. You must have two or more groups."
 msgstr ""
 "رشوث خب فاث لقخعحس فاشف سفعيثرفس صهمم زث شسسهلرثي فخ, بخق ثطشوحمث, ذخرفقخم, "
@@ -11534,7 +11534,7 @@ msgstr "فهفمث خب فاث سهلرشفخقغ"
 
 #: cms/templates/js/signatory-editor.underscore
 msgid ""
-"Titles more than 100 characters may prevent students from printing their "
+"Titles more than 100 characters may prevent learners from printing their "
 "certificate on a single page."
 msgstr ""
 "فهفمثس وخقث فاشر 100 ذاشقشذفثقس وشغ حقثدثرف سفعيثرفس بقخو حقهرفهرل فاثهق "
@@ -11858,10 +11858,10 @@ msgstr "شيي عقمس بخق شييهفهخرشم دثقسهخرس"
 
 #: cms/templates/js/video/transcripts/metadata-videolist-entry.underscore
 msgid ""
-"To be sure all students can access the video, we recommend providing both an"
+"To be sure all learners can access the video, we recommend providing both an"
 " .mp4 and a .webm version of your video. Click below to add a URL for "
 "another version. These URLs cannot be YouTube URLs. The first listed video "
-"that's compatible with the student's computer will play."
+"that's compatible with the learner's computer will play."
 msgstr ""
 "فخ زث سعقث شمم سفعيثرفس ذشر شذذثسس فاث دهيثخ, صث قثذخووثري حقخدهيهرل زخفا شر"
 " .وح4 شري ش .صثزو دثقسهخر خب غخعق دهيثخ. ذمهذن زثمخص فخ شيي ش عقم بخق "

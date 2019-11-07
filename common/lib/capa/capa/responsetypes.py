@@ -2185,7 +2185,7 @@ class CustomResponse(LoncapaResponse):
             submission = [student_answers[k] for k in idset]
         except Exception as err:
             msg = u"[courseware.capa.responsetypes.customresponse] {message}\n idset = {idset}, error = {err}".format(
-                message=_("error getting student answer from {student_answers}").format(
+                message=_("error getting learner answer from {student_answers}").format(
                     student_answers=student_answers,
                 ),
                 idset=idset,

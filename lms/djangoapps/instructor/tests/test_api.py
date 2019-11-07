@@ -2035,7 +2035,7 @@ class TestInstructorAPIEnrollment(SharedModuleStoreTestCase, LoginEnrollmentTest
         )
         self.assertEqual(
             mail.outbox[0].body,
-            "Dear student,\n\nYou have been invited to join {} at edx.org by a member of the course staff.\n\n"
+            "Dear learner,\n\nYou have been invited to join {} at edx.org by a member of the course staff.\n\n"
             "To finish your registration, please visit {proto}://{site}/register and fill out the "
             "registration form making sure to use robot-not-an-email-yet@robot.org in the E-mail field.\n"
             "Once you have registered and activated your account, "
@@ -2059,7 +2059,7 @@ class TestInstructorAPIEnrollment(SharedModuleStoreTestCase, LoginEnrollmentTest
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             mail.outbox[0].body,
-            "Dear student,\n\nYou have been invited to join {display_name}"
+            "Dear learner,\n\nYou have been invited to join {display_name}"
             " at edx.org by a member of the course staff.\n\n"
             "To finish your registration, please visit {proto}://{site}/register and fill out the registration form "
             "making sure to use robot-not-an-email-yet@robot.org in the E-mail field.\n"
@@ -2090,7 +2090,7 @@ class TestInstructorAPIEnrollment(SharedModuleStoreTestCase, LoginEnrollmentTest
         self.assertEqual(manual_enrollments[0].state_transition, UNENROLLED_TO_ALLOWEDTOENROLL)
         self.assertEqual(
             mail.outbox[0].body,
-            "Dear student,\n\nYou have been invited to join {display_name}"
+            "Dear learner,\n\nYou have been invited to join {display_name}"
             " at edx.org by a member of the course staff.\n\n"
             "To finish your registration, please visit {proto}://{site}/register and fill out the registration form "
             "making sure to use robot-not-an-email-yet@robot.org in the E-mail field.\n"
@@ -2245,7 +2245,7 @@ class TestInstructorAPIEnrollment(SharedModuleStoreTestCase, LoginEnrollmentTest
         )
         self.assertEqual(
             mail.outbox[0].body,
-            "Dear Student,\n\nYou have been un-enrolled from course {display_name} by a member of the course staff. "
+            "Dear Learner,\n\nYou have been un-enrolled from course {display_name} by a member of the course staff. "
             "Please disregard the invitation previously sent.\n\n----\n"
             "This email was automatically sent from edx.org to robot-allowed@robot.org".format(
                 display_name=self.course.display_name,
@@ -2272,7 +2272,7 @@ class TestInstructorAPIEnrollment(SharedModuleStoreTestCase, LoginEnrollmentTest
 
         self.assertEqual(
             mail.outbox[0].body,
-            "Dear student,\n\nYou have been invited to join {display_name} at edx.org by a member of the course staff.\n\n"
+            "Dear learner,\n\nYou have been invited to join {display_name} at edx.org by a member of the course staff.\n\n"
             "To access the course visit {proto}://{site}{about_path} and register for the course.\n\n----\n"
             "This email was automatically sent from edx.org to robot-not-an-email-yet@robot.org".format(
                 proto=protocol, site=self.site_name, about_path=self.about_path,
@@ -2295,7 +2295,7 @@ class TestInstructorAPIEnrollment(SharedModuleStoreTestCase, LoginEnrollmentTest
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             mail.outbox[0].body,
-            "Dear student,\n\nYou have been invited to join {} at edx.org by a member of the course staff.\n\n----\n"
+            "Dear learner,\n\nYou have been invited to join {} at edx.org by a member of the course staff.\n\n----\n"
             "This email was automatically sent from edx.org to robot-not-an-email-yet@robot.org".format(
                 self.course.display_name,
             )
@@ -2323,7 +2323,7 @@ class TestInstructorAPIEnrollment(SharedModuleStoreTestCase, LoginEnrollmentTest
 
         self.assertEqual(
             mail.outbox[0].body,
-            "Dear student,\n\nYou have been invited to join {display_name}"
+            "Dear learner,\n\nYou have been invited to join {display_name}"
             " at edx.org by a member of the course staff.\n\n"
             "To access the course visit {proto}://{site}{course_path} and login.\n\n----\n"
             "This email was automatically sent from edx.org to robot-not-an-email-yet@robot.org".format(
@@ -4401,7 +4401,7 @@ class TestEntranceExamInstructorAPIRegradeTask(SharedModuleStoreTestCase, LoginE
         })
         self.assertEqual(response.status_code, 200)
         # check response
-        message = _('This student (%s) will skip the entrance exam.') % self.student.email
+        message = _('This learner (%s) will skip the entrance exam.') % self.student.email
         self.assertContains(response, message)
 
         # post again with same student
@@ -4410,7 +4410,7 @@ class TestEntranceExamInstructorAPIRegradeTask(SharedModuleStoreTestCase, LoginE
         })
 
         # This time response message should be different
-        message = _('This student (%s) is already allowed to skip the entrance exam.') % self.student.email
+        message = _('This learner (%s) is already allowed to skip the entrance exam.') % self.student.email
         self.assertContains(response, message)
 
 

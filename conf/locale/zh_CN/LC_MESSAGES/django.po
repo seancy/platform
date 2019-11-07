@@ -512,8 +512,8 @@ msgid "ID verification pending"
 msgstr "身份证件验证挂起"
 
 #: common/djangoapps/course_modes/helpers.py:39
-msgid "You're enrolled as a verified student"
-msgstr "你正作为已认证的学生选修"
+msgid "You're enrolled as a verified leaner"
+msgstr "你正作为已认证的学员选修"
 
 #: common/djangoapps/course_modes/helpers.py:40
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:113
@@ -525,7 +525,7 @@ msgid "ID Verified Ribbon/Badge"
 msgstr "身份证件已验证时的色带／徽章"
 
 #: common/djangoapps/course_modes/helpers.py:44
-msgid "You're enrolled as an honor code student"
+msgid "You're enrolled as an honor code learner"
 msgstr "您已作为诚信准则学员选修"
 
 #: common/djangoapps/course_modes/helpers.py:45
@@ -539,8 +539,8 @@ msgid "Honor Code"
 msgstr "诚信准则"
 
 #: common/djangoapps/course_modes/helpers.py:47
-msgid "You're enrolled as a professional education student"
-msgstr "你已作为专业教育学生选修"
+msgid "You're enrolled as a professional education learner"
+msgstr "你已作为专业教育学员选修"
 
 #: common/djangoapps/course_modes/helpers.py:48
 msgid "Professional Ed"
@@ -677,8 +677,8 @@ msgstr "社区助教"
 
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
-msgid "Student"
-msgstr "学生"
+msgid "Learner"
+msgstr "学员"
 
 #: common/djangoapps/student/admin.py:224
 msgid "User profile"
@@ -893,7 +893,7 @@ msgstr "男"
 msgid "Female"
 msgstr "女"
 
-#. Translators: 'Other' refers to the student's gender
+#. Translators: 'Other' refers to the learner's gender
 #: common/djangoapps/student/models.py:425
 msgid "Other/Prefer Not to Say"
 msgstr "其他/不想说"
@@ -926,12 +926,12 @@ msgstr "初中"
 msgid "Elementary/primary school"
 msgstr "小学"
 
-#. Translators: 'None' refers to the student's level of education
+#. Translators: 'None' refers to the learner's level of education
 #: common/djangoapps/student/models.py:444
 msgid "No formal education"
 msgstr "没有正规教育"
 
-#. Translators: 'Other' refers to the student's level of education
+#. Translators: 'Other' refers to the learner's level of education
 #: common/djangoapps/student/models.py:446
 msgid "Other education"
 msgstr "其他教育"
@@ -2289,8 +2289,8 @@ msgstr "自定义评估脚本"
 
 #: common/lib/capa/capa/responsetypes.py:2188
 #, python-brace-format
-msgid "error getting student answer from {student_answers}"
-msgstr "获取学生答案 {student_answers} 时发生错误"
+msgid "error getting learner answer from {student_answers}"
+msgstr "获取学员答案 {student_answers} 时发生错误"
 
 #: common/lib/capa/capa/responsetypes.py:2212
 msgid "No answer entered!"
@@ -2448,8 +2448,8 @@ msgid "Blank Advanced Problem"
 msgstr "空白进阶问题"
 
 #: common/lib/xmodule/xmodule/capa_base.py:107
-msgid "Number of attempts taken by the student on this problem"
-msgstr "学生尝试解答这个问题的次数"
+msgid "Number of attempts taken by the learner on this problem"
+msgstr "学员尝试解答这个问题的次数"
 
 #: common/lib/xmodule/xmodule/capa_base.py:112
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:149
@@ -2458,10 +2458,10 @@ msgstr "最大尝试次数"
 
 #: common/lib/xmodule/xmodule/capa_base.py:113
 msgid ""
-"Defines the number of times a student can try to answer this problem. If the "
+"Defines the number of times a learner can try to answer this problem. If the "
 "value is not set, infinite attempts are allowed."
 msgstr ""
-"定义学生在回答这个问题时所允许的尝试次数。如果未设置，则允许无限次尝试。"
+"定义学员在回答这个问题时所允许的尝试次数。如果未设置，则允许无限次尝试。"
 
 #: common/lib/xmodule/xmodule/capa_base.py:117
 msgid "Date that this problem is due by"
@@ -2564,40 +2564,40 @@ msgid "On Reset"
 msgstr "在重置时"
 
 #: common/lib/xmodule/xmodule/capa_base.py:176
-msgid "Per Student"
-msgstr "每学生"
+msgid "Per Learner"
+msgstr "每学员"
 
 #: common/lib/xmodule/xmodule/capa_base.py:180
 msgid "XML data for the problem"
 msgstr "问题的XML数据"
 
 #: common/lib/xmodule/xmodule/capa_base.py:185
-msgid "Dictionary with the correctness of current student answers"
-msgstr "当前学生答案正确性词典"
+msgid "Dictionary with the correctness of current learner answers"
+msgstr "当前学员答案正确性词典"
 
 #: common/lib/xmodule/xmodule/capa_base.py:187
 msgid "Dictionary for maintaining the state of inputtypes"
 msgstr "维护状态的输入类型词典"
 
 #: common/lib/xmodule/xmodule/capa_base.py:188
-msgid "Dictionary with the current student responses"
-msgstr "当前学生的回应词典"
+msgid "Dictionary with the current learner responses"
+msgstr "当前学员的回应词典"
 
 #: common/lib/xmodule/xmodule/capa_base.py:191
-msgid "Dictionary with the current student score"
-msgstr "字典与当前的学生成绩"
+msgid "Dictionary with the current learner score"
+msgstr "字典与当前的学员成绩"
 
 #: common/lib/xmodule/xmodule/capa_base.py:192
 msgid "Whether or not the answers have been saved since last submit"
 msgstr "自上次提交以来是否已保存答案"
 
 #: common/lib/xmodule/xmodule/capa_base.py:194
-msgid "Whether the student has answered the problem"
-msgstr "学生是否已经回答问题"
+msgid "Whether the learner has answered the problem"
+msgstr "学员是否已经回答问题"
 
 #: common/lib/xmodule/xmodule/capa_base.py:195
-msgid "Random seed for this student"
-msgstr "该学生的随机名次"
+msgid "Random seed for this learner"
+msgstr "该学员的随机名次"
 
 #: common/lib/xmodule/xmodule/capa_base.py:196
 msgid "Last submission time"
@@ -2609,9 +2609,9 @@ msgstr "两次尝试答题间计时"
 
 #: common/lib/xmodule/xmodule/capa_base.py:199
 msgid ""
-"Seconds a student must wait between submissions for a problem with multiple "
+"Seconds a learner must wait between submissions for a problem with multiple "
 "attempts."
-msgstr "一个学生再次尝试答题前需等待的时间。"
+msgstr "一个学员再次尝试答题前需等待的时间。"
 
 #: common/lib/xmodule/xmodule/capa_base.py:203
 msgid "Problem Weight"
@@ -2811,7 +2811,7 @@ msgstr "您无法为已关闭的问题选择重置。"
 msgid "You must submit an answer before you can select Reset."
 msgstr "您必须先提交答案，然后才能选择重置。"
 
-#. Translators: 'rescoring' refers to the act of re-submitting a student's
+#. Translators: 'rescoring' refers to the act of re-submitting a learner's
 #. solution so it can get a new score.
 #: common/lib/xmodule/xmodule/capa_base.py:1613
 msgid "Problem's definition does not support rescoring."
@@ -2961,11 +2961,11 @@ msgstr "掩饰课程显示价格"
 
 #: common/lib/xmodule/xmodule/course_module.py:210
 msgid ""
-"The cost displayed to students for enrolling in the course. If a paid course "
+"The cost displayed to learner for enrolling in the course. If a paid course "
 "registration price is set by an administrator in the database, that price "
 "will be displayed instead of this one."
 msgstr ""
-"费用已经显示给了选修该课程的学生。如果管理员在数据库中修改了付费课程的注册价"
+"费用已经显示给了选修该课程的学员。如果管理员在数据库中修改了付费课程的注册价"
 "格，那么该价格将会覆盖原来的费用。"
 
 #: common/lib/xmodule/xmodule/course_module.py:217
@@ -2999,9 +2999,9 @@ msgstr "显示计算器"
 
 #: common/lib/xmodule/xmodule/course_module.py:274
 msgid ""
-"Enter true or false. When true, students can see the calculator in the "
+"Enter true or false. When true, learners can see the calculator in the "
 "course."
-msgstr "输入对或错。当输入为对时，学生可以造课程中看到计算器。"
+msgstr "输入对或错。当输入为对时，学员可以造课程中看到计算器。"
 
 #: common/lib/xmodule/xmodule/course_module.py:279
 msgid ""
@@ -3039,7 +3039,7 @@ msgstr "讨论管制日期"
 
 #: common/lib/xmodule/xmodule/course_module.py:301
 msgid ""
-"Enter pairs of dates between which students cannot post to discussion "
+"Enter pairs of dates between which learners cannot post to discussion "
 "forums. Inside the provided brackets, enter an additional set of square "
 "brackets surrounding each pair of dates you add. Format each pair of dates "
 "as [\"YYYY-MM-DD\", \"YYYY-MM-DD\"]. To specify times as well as dates, "
@@ -3049,7 +3049,7 @@ msgid ""
 "brackets: [[\"2015-09-15\", \"2015-09-21\"], [\"2015-10-01\", "
 "\"2015-10-08\"]] "
 msgstr ""
-"输入一对日期，在此期间内不允许学生往在讨论区上发帖。请在所提供的括号之内输入"
+"输入一对日期，在此期间内不允许学员往在讨论区上发帖。请在所提供的括号之内输入"
 "日期，每一对日期应由一组方括号包围，其格式为 [\"YYYY-MM-DD\", \"YYYY-MM-DD"
 "\"]。如果还需要指定时间，请使用格式 [\"YYYY-MM-DDTHH:MM\", \"YYYY-MM-DDTHH:MM"
 "\"]，请确保在日期和时间的中间一定要有“T”。例如，一项定义了两段禁用时期的项应"
@@ -3107,10 +3107,10 @@ msgstr "群组配置"
 #: common/lib/xmodule/xmodule/course_module.py:340
 msgid ""
 "Enter policy keys and values to enable the cohort feature, define automated "
-"student assignment to groups, or identify any course-wide discussion topics "
+"learners assignment to groups, or identify any course-wide discussion topics "
 "as private to cohort members."
 msgstr ""
-"请输入策略键和值以启用群组功能、定义如何自动将学生分配到群组中、或者将任何全"
+"请输入策略键和值以启用群组功能、定义如何自动将学员分配到群组中、或者将任何全"
 "课程范围内的讨论主题标识为对群组成员私有的主题。"
 
 #: common/lib/xmodule/xmodule/course_module.py:346
@@ -3156,8 +3156,8 @@ msgid "Disable Progress Graph"
 msgstr "禁用进度图表"
 
 #: common/lib/xmodule/xmodule/course_module.py:372
-msgid "Enter true or false. If true, students cannot view the progress graph."
-msgstr "输入true或者false。如果输入true，学生将不能看到进度图。"
+msgid "Enter true or false. If true, learners cannot view the progress graph."
+msgstr "输入true或者false。如果输入true，学员将不能看到进度图。"
 
 #: common/lib/xmodule/xmodule/course_module.py:377
 msgid "PDF Textbooks"
@@ -3233,9 +3233,9 @@ msgstr "允许匿名讨论帖"
 
 #: common/lib/xmodule/xmodule/course_module.py:423
 msgid ""
-"Enter true or false. If true, students can create discussion posts that are "
+"Enter true or false. If true, learners can create discussion posts that are "
 "anonymous to all users."
-msgstr "输入真或假。如果是真的，学生可以匿名创建讨论的帖子。"
+msgstr "输入真或假。如果是真的，学员可以匿名创建讨论的帖子。"
 
 #: common/lib/xmodule/xmodule/course_module.py:427
 msgid "Allow Anonymous Discussion Posts to Peers"
@@ -3243,11 +3243,11 @@ msgstr "允许同伴间的匿名讨论帖"
 
 #: common/lib/xmodule/xmodule/course_module.py:429
 msgid ""
-"Enter true or false. If true, students can create discussion posts that are "
-"anonymous to other students. This setting does not make posts anonymous to "
+"Enter true or false. If true, learners can create discussion posts that are "
+"anonymous to other learners. This setting does not make posts anonymous to "
 "course staff."
 msgstr ""
-"输入 true 或者 false。如果输入为 true ，学生可以创建对其它学生匿名的讨论帖。"
+"输入 true 或者 false。如果输入为 true ，学员可以创建对其它学员匿名的讨论帖。"
 "这个设置不能对课程工作人员匿名发帖。"
 
 #: common/lib/xmodule/xmodule/course_module.py:435
@@ -3265,11 +3265,11 @@ msgstr "课程主页的边栏名称"
 
 #: common/lib/xmodule/xmodule/course_module.py:444
 msgid ""
-"Enter the heading that you want students to see above your course handouts "
+"Enter the heading that you want learners to see above your course handouts "
 "on the Course Home page. Your course handouts appear in the right panel of "
 "the page."
 msgstr ""
-"输入您想要学生可以在课程首页看到此课程讲义的标题。您的讲义会出现在页面的右"
+"输入您想要学员可以在课程首页看到此课程讲义的标题。您的讲义会出现在页面的右"
 "边。"
 
 #: common/lib/xmodule/xmodule/course_module.py:448
@@ -3302,8 +3302,8 @@ msgid "External Login Domain"
 msgstr "外部登录域"
 
 #: common/lib/xmodule/xmodule/course_module.py:466
-msgid "Enter the external login method students can use for the course."
-msgstr "输入学生可参加课程的外部登陆方法。"
+msgid "Enter the external login method learners can use for the course."
+msgstr "输入学员可参加课程的外部登陆方法。"
 
 #: common/lib/xmodule/xmodule/course_module.py:470
 msgid "Certificates Downloadable Before End"
@@ -3311,10 +3311,10 @@ msgstr "课程结束前可下载证书"
 
 #: common/lib/xmodule/xmodule/course_module.py:472
 msgid ""
-"Enter true or false. If true, students can download certificates before the "
+"Enter true or false. If true, learners can download certificates before the "
 "course ends, if they've met certificate requirements."
 msgstr ""
-"输入真或假。如果是真的，学生遇到下载证书的要求，可以在课程结束前下载证书。"
+"输入真或假。如果是真的，学员遇到下载证书的要求，可以在课程结束前下载证书。"
 
 #: common/lib/xmodule/xmodule/course_module.py:481
 msgid "Certificates Display Behavior"
@@ -3323,19 +3323,19 @@ msgstr "认证演示行为"
 #: common/lib/xmodule/xmodule/course_module.py:483
 msgid ""
 "Enter end, early_with_info, or early_no_info. After certificate generation, "
-"students who passed see a link to their certificates on the dashboard and "
-"students who did not pass see information about the grading configuration. "
+"learners who passed see a link to their certificates on the dashboard and "
+"learners who did not pass see information about the grading configuration. "
 "The default is end, which displays this certificate information to all "
-"students after the course end date. To display this certificate information "
-"to all students as soon as certificates are generated, enter "
-"early_with_info. To display only the links to passing students as soon as "
+"learners after the course end date. To display this certificate information "
+"to all learners as soon as certificates are generated, enter "
+"early_with_info. To display only the links to passing learners as soon as "
 "certificates are generated, enter early_no_info."
 msgstr ""
 "输入“end”、“early_with_info”或“early_no_info”。在证书生成后，所有通过考核的学"
-"生们会在他们的课程面板上看到证书的链接，而没有通过的学生则会看到关于成绩配置"
-"的信息。默认值是“end”，即在课程结束日期之后向所有学生显示证书信息。如果希望在"
-"证书生成后尽快让所有学生看到证书信息，请输入“early_with_info”。而如果只是希望"
-"在证书生成后尽快向已经通过的学生显示链接，请输入“early_no_info”。"
+"生们会在他们的课程面板上看到证书的链接，而没有通过的学员则会看到关于成绩配置"
+"的信息。默认值是“end”，即在课程结束日期之后向所有学员显示证书信息。如果希望在"
+"证书生成后尽快让所有学员看到证书信息，请输入“early_with_info”。而如果只是希望"
+"在证书生成后尽快向已经通过的学员显示链接，请输入“early_no_info”。"
 
 #: common/lib/xmodule/xmodule/course_module.py:494
 msgid "Course About Page Image"
@@ -3388,11 +3388,11 @@ msgstr "为该课程颁发徽章。徽章在证书创建的时候已经生成了
 #: common/lib/xmodule/xmodule/course_module.py:534
 msgid ""
 "Use this setting only when generating PDF certificates. Between quotation "
-"marks, enter the short name of the type of certificate that students receive "
+"marks, enter the short name of the type of certificate that learners receive "
 "when they complete the course. For instance, \"Certificate\"."
 msgstr ""
-"只有在要产生证书的PDF档时，才使用这项设定。当学生完成课程所获得的证书，在引文"
-"标号中间输入 证书类型简称於学生证书上。例如，“修课证明”。"
+"只有在要产生证书的PDF档时，才使用这项设定。当学员完成课程所获得的证书，在引文"
+"标号中间输入 证书类型简称於学员证书上。例如，“修课证明”。"
 
 #: common/lib/xmodule/xmodule/course_module.py:538
 msgid "Certificate Name (Short)"
@@ -3401,11 +3401,11 @@ msgstr "证书名称(短)"
 #: common/lib/xmodule/xmodule/course_module.py:544
 msgid ""
 "Use this setting only when generating PDF certificates. Between quotation "
-"marks, enter the long name of the type of certificate that students receive "
+"marks, enter the long name of the type of certificate that learners receive "
 "when they complete the course. For instance, \"Certificate of Achievement\"."
 msgstr ""
-"只有在要产生证书的PDF档时，才使用这项设定。当学生完成课程所获得的证书，在引文"
-"标号中间输入 证书类型全名於学生证书上。例如，“成绩证书”。"
+"只有在要产生证书的PDF档时，才使用这项设定。当学员完成课程所获得的证书，在引文"
+"标号中间输入 证书类型全名於学员证书上。例如，“成绩证书”。"
 
 #: common/lib/xmodule/xmodule/course_module.py:548
 msgid "Certificate Name (Long)"
@@ -3500,14 +3500,14 @@ msgstr ""
 "使用你在创建课程时输入的课程编号，请输入空值。"
 
 #: common/lib/xmodule/xmodule/course_module.py:635
-msgid "Course Maximum Student Enrollment"
-msgstr "最大选课学生人数"
+msgid "Course Maximum Learner Enrollment"
+msgstr "最大选课学员人数"
 
 #: common/lib/xmodule/xmodule/course_module.py:637
 msgid ""
-"Enter the maximum number of students that can enroll in the course. To allow "
-"an unlimited number of students, enter null."
-msgstr "输入该课程的最大选课学生人数；如无限制，输入null。"
+"Enter the maximum number of learners that can enroll in the course. To allow "
+"an unlimited number of learners, enter null."
+msgstr "输入该课程的最大选课学员人数；如无限制，输入null。"
 
 #: common/lib/xmodule/xmodule/course_module.py:644
 msgid "Allow Public Wiki Access"
@@ -3542,11 +3542,11 @@ msgstr "开课前需要填写调查问卷"
 
 #: common/lib/xmodule/xmodule/course_module.py:671
 msgid ""
-"Specify whether students must complete a survey before they can view your "
+"Specify whether learners must complete a survey before they can view your "
 "course content. If you set this value to true, you must add a name for the "
 "survey to the Course Survey Name setting above."
 msgstr ""
-"指定学生在查看您的课程内容之前是否必须完成一项调查。如果您设置该值为true，那"
+"指定学员在查看您的课程内容之前是否必须完成一项调查。如果您设置该值为true，那"
 "么您必须在以上的课程调查名称设置中为该调查添加一个名称。"
 
 #: common/lib/xmodule/xmodule/course_module.py:680
@@ -3592,11 +3592,11 @@ msgstr "入学考试开启"
 
 #: common/lib/xmodule/xmodule/course_module.py:697
 msgid ""
-"Specify whether students must complete an entrance exam before they can view "
+"Specify whether learners must complete an entrance exam before they can view "
 "your course content. Note, you must enable Entrance Exams for this course "
 "setting to take effect."
 msgstr ""
-"指定是否学生在浏览您的课程内容前必须完成一个入学考试。注意，您必须烤漆此课程"
+"指定是否学员在浏览您的课程内容前必须完成一个入学考试。注意，您必须烤漆此课程"
 "设置的入学考试以便此设置起作用。"
 
 #: common/lib/xmodule/xmodule/course_module.py:708
@@ -3605,11 +3605,11 @@ msgstr "入学考试最小分数(%)"
 
 #: common/lib/xmodule/xmodule/course_module.py:710
 msgid ""
-"Specify a minimum percentage score for an entrance exam before students can "
+"Specify a minimum percentage score for an entrance exam before learners can "
 "view your course content. Note, you must enable Entrance Exams for this "
 "course setting to take effect."
 msgstr ""
-"为学生能浏览您的课程前的入学考试定义一个的最小的百分比分数。注意，您必须开启"
+"为学员能浏览您的课程前的入学考试定义一个的最小的百分比分数。注意，您必须开启"
 "此课程设置的入学考试以便此设置起作用。"
 
 #: common/lib/xmodule/xmodule/course_module.py:718
@@ -3753,10 +3753,10 @@ msgstr "自定进度"
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:240
 msgid ""
 "Set this to \"true\" to mark this course as self-paced. Self-paced courses "
-"do not have due dates for assignments, and students can progress through the "
+"do not have due dates for assignments, and learners can progress through the "
 "course at any rate before the course ends."
 msgstr ""
-"将其设置为“true”，以设定这门课程为自学课程，没有截止日期的作业，学生可以在任"
+"将其设置为“true”，以设定这门课程为自学课程，没有截止日期的作业，学员可以在任"
 "何速度在课程结束之前进行学习。"
 
 #: common/lib/xmodule/xmodule/course_module.py:840
@@ -3765,9 +3765,9 @@ msgstr "跳过课程主页"
 
 #: common/lib/xmodule/xmodule/course_module.py:842
 msgid ""
-"Bypass the course home tab when students arrive from the dashboard, sending "
+"Bypass the course home tab when learners arrive from the dashboard, sending "
 "them directly to course content."
-msgstr "当学生从仪表板进入时跳过课程主页选项卡，让他们直接跳转到课程目录。"
+msgstr "当学员从仪表板进入时跳过课程主页选项卡，让他们直接跳转到课程目录。"
 
 #: common/lib/xmodule/xmodule/course_module.py:851
 msgid "Enable Subsection Prerequisites"
@@ -3786,8 +3786,8 @@ msgid "Course Learning Information"
 msgstr "课程学习信息"
 
 #: common/lib/xmodule/xmodule/course_module.py:863
-msgid "Specify what student can learn from the course."
-msgstr "指定学生可以从课程中学到什么。"
+msgid "Specify what learner can learn from the course."
+msgstr "指定学员可以从课程中学到什么。"
 
 #: common/lib/xmodule/xmodule/course_module.py:883
 msgid "Course Instructor"
@@ -3831,16 +3831,16 @@ msgstr "课程提醒信息"
 
 #: common/lib/xmodule/xmodule/course_module.py:909
 #: cms/templates/settings.html:299
-msgid "Configure reminders to students who enroll in this course"
-msgstr "为参加此课程的学生配置提醒"
+msgid "Configure reminders to learners who enroll in this course"
+msgstr "为参加此课程的学员配置提醒"
 
 #: common/lib/xmodule/xmodule/course_module.py:915
 msgid "Course Finish Days"
 msgstr "课程结束天数"
 
 #: common/lib/xmodule/xmodule/course_module.py:916
-msgid "Students have to finish the course within the required days above"
-msgstr "学生必须在上述规定的日期内完成课程"
+msgid "Learners have to finish the course within the required days above"
+msgstr "学员必须在上述规定的日期内完成课程"
 
 #: common/lib/xmodule/xmodule/course_module.py:922
 msgid "Course Re-enroll Time"
@@ -3852,9 +3852,9 @@ msgstr "课程重新注册时间"
 
 #: common/lib/xmodule/xmodule/course_module.py:930
 msgid ""
-"Students will be automatically re-enrolled in this course after the given "
+"Learners will be automatically re-enrolled in this course after the given "
 "time above after completion"
-msgstr "学生将在完成上述给定时间后自动重新注册本课程"
+msgstr "学员将在完成上述给定时间后自动重新注册本课程"
 
 #: common/lib/xmodule/xmodule/course_module.py:936
 msgid "Periodic Reminder Enabled"
@@ -4098,8 +4098,8 @@ msgid "Count"
 msgstr "计算"
 
 #: common/lib/xmodule/xmodule/library_content_module.py:97
-msgid "Enter the number of components to display to each student."
-msgstr "输入显示给每个学生的组件数量。"
+msgid "Enter the number of components to display to each learner."
+msgstr "输入显示给每个学员的组件数量。"
 
 #: common/lib/xmodule/xmodule/library_content_module.py:102
 msgid "Problem Type"
@@ -4247,12 +4247,12 @@ msgstr "在新的窗口打开"
 
 #: common/lib/xmodule/xmodule/lti_module.py:162
 msgid ""
-"Select True if you want students to click a link that opens the LTI tool in "
+"Select True if you want learners to click a link that opens the LTI tool in "
 "a new window. Select False if you want the LTI content to open in an IFrame "
 "in the current page. This setting is only used when Hide External Tool is "
 "set to False.  "
 msgstr ""
-"如果你想要学生通过点击一个链接在一个新窗口中打开LTI工具，选择True。如果你想要"
+"如果你想要学员通过点击一个链接在一个新窗口中打开LTI工具，选择True。如果你想要"
 "在当前页面的一个IFrame中打开LTI内容，选择False。这个设置只有在 隐藏外部工具 "
 "设置为False的时候才能使用。"
 
@@ -4456,7 +4456,7 @@ msgid ""
 msgstr ""
 "指定隐含变量值多久会发生问题是采随机系统默认。此设定应设为“从不”，除非你打算"
 "提供一个Python script 来随机辨识您的课程中大部分问题。有效字段为“永远”，“当"
-"reset 时”，“从不”，以及“每名学生”。"
+"reset 时”，“从不”，以及“每名学员”。"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:131
 msgid "Days Early for Beta Users"
@@ -4494,15 +4494,15 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:150
 msgid ""
-"Enter the maximum number of times a student can try to answer problems. By "
-"default, Maximum Attempts is set to null, meaning that students have an "
+"Enter the maximum number of times a learner can try to answer problems. By "
+"default, Maximum Attempts is set to null, meaning that learners have an "
 "unlimited number of attempts for problems. You can override this course-wide "
 "setting for individual problems. However, if the course-wide setting is a "
 "specific number, you cannot set the Maximum Attempts for individual problems "
 "to unlimited."
 msgstr ""
-"请输入学生可以尝试回答问题的最大次数。最大尝试次数默认被设置为null，也就是说"
-"学生可以无限制的尝试回答问题。对于不同的问题您可以设置不同的回答次数限制。"
+"请输入学员可以尝试回答问题的最大次数。最大尝试次数默认被设置为null，也就是说"
+"学员可以无限制的尝试回答问题。对于不同的问题您可以设置不同的回答次数限制。"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:155
 msgid ""
@@ -4528,8 +4528,8 @@ msgid "Group Configurations"
 msgstr "组配置"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:166
-msgid "Enter the configurations that govern how students are grouped together."
-msgstr "请输入学生分组的标准。"
+msgid "Enter the configurations that govern how learners are grouped together."
+msgstr "请输入学员分组的标准。"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:171
 msgid "Enable video caching system"
@@ -4546,11 +4546,11 @@ msgstr "启用视频自动前进功能"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:179
 msgid ""
-"Specify whether to show an auto-advance button in videos. If the student "
+"Specify whether to show an auto-advance button in videos. If the learner "
 "clicks it, when the last video in a unit finishes it will automatically move "
 "to the next unit and autoplay the first video."
 msgstr ""
-"指定是否在视频中显示自动前进按钮。 如果学生点击它，当单元中的最后一个视频完成"
+"指定是否在视频中显示自动前进按钮。 如果学员点击它，当单元中的最后一个视频完成"
 "时，它将自动移动到下一个单元并自动播放第一个视频。"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:185
@@ -4584,19 +4584,19 @@ msgstr ""
 "个问题的设置中重设。当该课程范围内的设置改变时，所有已存在的问题都将受影响。"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:216
-msgid "Enable Student Notes"
-msgstr "启用学生笔记"
+msgid "Enable Learner Notes"
+msgstr "启用学员笔记"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:217
 msgid ""
-"Enter true or false. If true, students can use the Student Notes feature."
-msgstr "输入true或false。为true时，学生可以使用学生笔记特性。"
+"Enter true or false. If true, learners can use the Learner Notes feature."
+msgstr "输入true或false。为true时，学员可以使用学员笔记特性。"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:223
 msgid ""
-"Indicates whether Student Notes are visible in the course. Students can also "
+"Indicates whether Learner Notes are visible in the course. Learners can also "
 "show or hide their notes in the courseware."
-msgstr "表明学生笔记是否在课程中可见。学生也可以在课件中显示或隐藏他们的笔记。"
+msgstr "表明学员笔记是否在课程中可见。学员也可以在课件中显示或隐藏他们的笔记。"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:230
 msgid "Tag this module as part of an Entrance Exam section"
@@ -4620,16 +4620,16 @@ msgid "Partition for segmenting users by enrollment track"
 msgstr "按注册跟踪细分用户的分区"
 
 #: common/lib/xmodule/xmodule/poll_module.py:37
-msgid "Whether this student has voted on the poll"
-msgstr "这名学生是否投了票"
+msgid "Whether this learner has voted on the poll"
+msgstr "这名学员是否投了票"
 
 #: common/lib/xmodule/xmodule/poll_module.py:42
-msgid "Student answer"
-msgstr "学生回答"
+msgid "Learner answer"
+msgstr "学员回答"
 
 #: common/lib/xmodule/xmodule/poll_module.py:47
-msgid "Poll answers from all students"
-msgstr "民意调查回答所有学生"
+msgid "Poll answers from all learners"
+msgstr "民意调查回答所有学员"
 
 #: common/lib/xmodule/xmodule/poll_module.py:53
 msgid "Poll answers from xml"
@@ -4671,9 +4671,9 @@ msgstr "时间是否受限"
 
 #: common/lib/xmodule/xmodule/seq_module.py:85
 msgid ""
-"This setting indicates whether students have a limited time to view or "
+"This setting indicates whether learners have a limited time to view or "
 "interact with this courseware component."
-msgstr "该设置表明学生是否有一段有限的时间去查看或与课件组件交互。"
+msgstr "该设置表明学员是否有一段有限的时间去查看或与课件组件交互。"
 
 #: common/lib/xmodule/xmodule/seq_module.py:93
 msgid "Time Limit in Minutes"
@@ -4681,9 +4681,9 @@ msgstr "时间限制在几分钟内"
 
 #: common/lib/xmodule/xmodule/seq_module.py:95
 msgid ""
-"The number of minutes available to students for viewing or interacting with "
+"The number of minutes available to learners for viewing or interacting with "
 "this courseware component."
-msgstr "学生可查看或与课件交互的时间（分钟）。"
+msgstr "学员可查看或与课件交互的时间（分钟）。"
 
 #: common/lib/xmodule/xmodule/seq_module.py:102
 msgid "Is Proctoring Enabled"
@@ -4741,8 +4741,8 @@ msgstr "本节是先决条件。 您必须完成此部分才能解锁其他内�
 
 #: common/lib/xmodule/xmodule/seq_module.py:704
 msgid ""
-"A list summarizing what students should look forward to in this section."
-msgstr "列表总结了学生在本节中应该期待的内容。"
+"A list summarizing what learners should look forward to in this section."
+msgstr "列表总结了学员在本节中应该期待的内容。"
 
 #: common/lib/xmodule/xmodule/split_test_module.py:31
 #, python-brace-format
@@ -4764,17 +4764,17 @@ msgstr "实验内容"
 #: common/lib/xmodule/xmodule/split_test_module.py:69
 #: lms/djangoapps/lms_xblock/mixin.py:144
 msgid ""
-"The list of group configurations for partitioning students in content "
+"The list of group configurations for partitioning learners in content "
 "experiments."
-msgstr "在内容实验中学生分组的组配置列表。"
+msgstr "在内容实验中学员分组的组配置列表。"
 
 #: common/lib/xmodule/xmodule/split_test_module.py:75
 msgid ""
 "The configuration defines how users are grouped for this content experiment. "
-"Caution: Changing the group configuration of a student-visible experiment "
+"Caution: Changing the group configuration of a learner-visible experiment "
 "will impact the experiment data."
 msgstr ""
-"该配置定义了用户如何为该内容实验分组。谨记：改变一个学生可见实验的组配置会影"
+"该配置定义了用户如何为该内容实验分组。谨记：改变一个学员可见实验的组配置会影"
 "响实验数据。"
 
 #: common/lib/xmodule/xmodule/split_test_module.py:77
@@ -4782,8 +4782,8 @@ msgid "Group Configuration"
 msgstr "组配置"
 
 #: common/lib/xmodule/xmodule/split_test_module.py:88
-msgid "Which child module students in a particular group_id should see"
-msgstr "哪个子模块学生将会被特別的gouup_id所检视"
+msgid "Which child module learners in a particular group_id should see"
+msgstr "哪个子模块学员将会被特別的gouup_id所检视"
 
 #: common/lib/xmodule/xmodule/split_test_module.py:228
 #, python-brace-format
@@ -5012,11 +5012,11 @@ msgstr "下载视频"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py:85
 msgid ""
-"Allow students to download versions of this video in different formats if "
+"Allow learners to download versions of this video in different formats if "
 "they cannot use the edX video player or do not have access to YouTube. You "
 "must add at least one non-YouTube URL in the Video File URLs field."
 msgstr ""
-"如果学生无法使用 edX 视频播放器，或者不能访问 YouTube，则可以允许学生以不同的"
+"如果学员无法使用 edX 视频播放器，或者不能访问 YouTube，则可以允许学员以不同的"
 "格式下载该视频。为此，必须在“视频文件 URL”域中添加至少一个非 YouTube 的视频 "
 "URL。"
 
@@ -5029,14 +5029,14 @@ msgid ""
 "The URL or URLs where you've posted non-YouTube versions of the video. Each "
 "URL must end in .mpeg, .mp4, .ogg, or .webm and cannot be a YouTube URL. "
 "(For browser compatibility, we strongly recommend .mp4 and .webm format.) "
-"Students will be able to view the first listed video that's compatible with "
-"the student's computer. To allow students to download these videos, set "
+"Learners will be able to view the first listed video that's compatible with "
+"the learner's computer. To allow learners to download these videos, set "
 "Video Download Allowed to True."
 msgstr ""
 "非 YouTube 版本的视频 URL。每个 URL 应当以 .mpeg、.mp4、.ogg 或者 .webm 结"
 "尾，并且不得为 YouTube URL。(为了浏览器的兼容性考虑，我们强烈建议您使用 .mp4 "
-"和 .webm 格式。)每个学生将看到列表中第一个与他自己的计算机兼容的视频。如果想"
-"让学生下载这些视频，请将“允许下载视频”设置为“True”。"
+"和 .webm 格式。)每个学员将看到列表中第一个与他自己的计算机兼容的视频。如果想"
+"让学员下载这些视频，请将“允许下载视频”设置为“True”。"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py:92
 msgid "Video File URLs"
@@ -5044,18 +5044,18 @@ msgstr "视频文件 URL"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py:96
 msgid ""
-"By default, students can download an .srt or .txt transcript when you set "
+"By default, learners can download an .srt or .txt transcript when you set "
 "Download Transcript Allowed to True. If you want to provide a downloadable "
 "transcript in a different format, we recommend that you upload a handout by "
 "using the Upload a Handout field. If this isn't possible, you can post a "
 "transcript file on the Files & Uploads page or on the Internet, and then add "
-"the URL for the transcript here. Students see a link to download that "
+"the URL for the transcript here. Learners see a link to download that "
 "transcript below the video."
 msgstr ""
-"默认情况下，当“允许下载字幕”设置为“True”的时候，学生可以下载 .srt 或者 .txt "
-"格式的字幕。如果您需要提供不同文件格式的字幕供学生下载，我们建议您首先考虑使"
+"默认情况下，当“允许下载字幕”设置为“True”的时候，学员可以下载 .srt 或者 .txt "
+"格式的字幕。如果您需要提供不同文件格式的字幕供学员下载，我们建议您首先考虑使"
 "用“上传讲义”域上传您的讲义；其次您可以将字幕文件上传至“文件＆上传”页面或者 "
-"Internet，并在这里添加下载字幕的 URL。学生们会在视频的下方看到一个下载字幕的"
+"Internet，并在这里添加下载字幕的 URL。学员们会在视频的下方看到一个下载字幕的"
 "链接。"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py:97
@@ -5064,12 +5064,12 @@ msgstr "字幕下载 URL"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py:102
 msgid ""
-"Allow students to download the timed transcript. A link to download the file "
+"Allow learners to download the timed transcript. A link to download the file "
 "appears below the video. By default, the transcript is an .srt or .txt file. "
 "If you want to provide the transcript for download in a different format, "
 "upload a file by using the Upload Handout field."
 msgstr ""
-"允许学生下载字幕。下载链接会出现在视频的下方。默认情况下，下载的字幕是一个 ."
+"允许学员下载字幕。下载链接会出现在视频的下方。默认情况下，下载的字幕是一个 ."
 "srt 或者 .txt 文件。如果您需要提供不同文件格式的字幕下载，使用“上传讲义”域上"
 "传该文件。"
 
@@ -5151,10 +5151,10 @@ msgstr "指定 YouTube 是否对用户可用。"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py:168
 msgid ""
-"Upload a handout to accompany this video. Students can download the handout "
+"Upload a handout to accompany this video. Learners can download the handout "
 "by clicking Download Handout under the video."
 msgstr ""
-"上传与该视频相关的讲义。学生可以单击视频下方的“下载讲义”按钮来下载该讲义。"
+"上传与该视频相关的讲义。学员可以单击视频下方的“下载讲义”按钮来下载该讲义。"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py:169
 msgid "Upload Handout"
@@ -5259,8 +5259,8 @@ msgid "Whether this learner has posted words to the cloud."
 msgstr "此学习者是否已将文字发布到云端。"
 
 #: common/lib/xmodule/xmodule/word_cloud_module.py:78
-msgid "Student answer."
-msgstr "学生答案"
+msgid "Learner answer."
+msgstr "学员答案"
 
 #: common/lib/xmodule/xmodule/word_cloud_module.py:83
 msgid "All possible words from all learners."
@@ -5802,8 +5802,8 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "An {cert_type} certificate demonstrates a high level of achievement in a "
-"program of study, and includes verification of the student's identity."
-msgstr "一张 {cert_type} 证书证明学习课程高水準的成果，并包括验证学生的身份。"
+"program of study, and includes verification of the learner's identity."
+msgstr "一张 {cert_type} 证书证明学习课程高水準的成果，并包括验证学员的身份。"
 
 #: lms/djangoapps/certificates/views/webview.py:109
 #, python-brace-format
@@ -5827,7 +5827,7 @@ msgstr ""
 msgid "{partner_short_name} {course_number} Certificate | {platform_name}"
 msgstr "{partner_short_name} {course_number} 修课证明 | {platform_name}"
 
-#. Translators:  This text fragment appears after the student's name
+#. Translators:  This text fragment appears after the learner's name
 #. (displayed in a large font) on the certificate
 #. screen.  The text describes the accomplishment represented by the
 #. certificate information displayed to the user
@@ -5844,9 +5844,9 @@ msgstr "完成课程、测验及格，并荣获该{platform_name} {certificate_t
 #, python-brace-format
 msgid ""
 "{platform_name} acknowledges achievements through certificates, which are "
-"awarded for course activities that {platform_name} students complete."
+"awarded for course activities that {platform_name} learners complete."
 msgstr ""
-"{platform_name} 借由证书承认已完成修习课程，该课之修课证书证明学生完成 "
+"{platform_name} 借由证书承认已完成修习课程，该课之修课证书证明学员完成 "
 "{platform_name} 课程活动。"
 
 #. Translators:  'All rights reserved' is a legal term used in copyrighting to
@@ -5898,8 +5898,8 @@ msgstr "关于 {platform_name} 认证证书"
 
 #: lms/djangoapps/certificates/views/webview.py:198
 #, python-brace-format
-msgid "How {platform_name} Validates Student Certificates"
-msgstr "{platform_name}如何验证学生证书"
+msgid "How {platform_name} Validates Learner Certificates"
+msgstr "{platform_name}如何验证学员证书"
 
 #. Translators:  This text describes the validation mechanism for a
 #. certificate file (known as GPG security)
@@ -5955,8 +5955,8 @@ msgstr "联系{platform_name}"
 #. describes the guarantee provided by edX
 #: lms/djangoapps/certificates/views/webview.py:226
 #, python-brace-format
-msgid "{platform_name} acknowledges the following student accomplishment"
-msgstr "{platform_name}承认以下的学生成就"
+msgid "{platform_name} acknowledges the following learner accomplishment"
+msgstr "{platform_name}承认以下的学员成就"
 
 #. Translators:  This text represents the description of course
 #: lms/djangoapps/certificates/views/webview.py:243
@@ -6038,20 +6038,20 @@ msgid "Percent"
 msgstr "百分比"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py:559
-msgid "Opened by this number of students"
-msgstr "打开过的学生"
+msgid "Opened by this number of learners"
+msgstr "打开过的学员"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py:560
 msgid "subsections"
 msgstr "节"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py:563
-msgid "Count of Students"
-msgstr "学生数量"
+msgid "Count of Learners"
+msgstr "学员数量"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py:564
-msgid "Percent of Students"
-msgstr "学生百分比"
+msgid "Percent of Learners"
+msgstr "学员百分比"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py:564
 #: lms/templates/courseware/progress_badges.html:71
@@ -6419,8 +6419,8 @@ msgstr "没有使用者名称或email{user_name} 注册这门课程。"
 #: lms/djangoapps/courseware/masquerade.py:260
 msgid ""
 "This type of component cannot be shown while viewing the course as a "
-"specific student."
-msgstr "特定学生查看课程时，该类型组件无法显示。"
+"specific learner."
+msgstr "特定学员查看课程时，该类型组件无法显示。"
 
 #: lms/djangoapps/courseware/models.py:387
 #: lms/djangoapps/courseware/models.py:418
@@ -7440,11 +7440,11 @@ msgstr "用户名 {user} 已经存在了。"
 #, python-brace-format
 msgid ""
 "Error '{error}' while sending email to new user (user email={email}). "
-"Without the email student would not be able to login. Please contact support "
+"Without the email learner would not be able to login. Please contact support "
 "for further information."
 msgstr ""
 "Error '{error}'同时发送电子邮件给新用户(user email={email})。\n"
-"如果没有电子邮件的学生将无法登录。请联系以获取更多讯息的支援。"
+"如果没有电子邮件的学员将无法登录。请联系以获取更多讯息的支援。"
 
 #: lms/djangoapps/instructor/views/api.py:1554
 #: lms/djangoapps/instructor_task/api_helper.py:106
@@ -7745,8 +7745,8 @@ msgstr "课程无有效的入学测试部分。"
 
 #: lms/djangoapps/instructor/views/api.py:2604
 #: lms/djangoapps/instructor/views/api.py:2790
-msgid "All Students"
-msgstr "所有学生"
+msgid "All Learners"
+msgstr "所有学员"
 
 #: lms/djangoapps/instructor/views/api.py:2778
 msgid "Cannot rescore with all_students and unique_student_identifier."
@@ -7769,8 +7769,8 @@ msgstr "问题等级"
 
 #: lms/djangoapps/instructor/views/api.py:3288
 #, python-brace-format
-msgid "Successfully changed due date for student {0} for {1} to {2}"
-msgstr "成功修改了学生{0}的截止日期从{1}变为{2}"
+msgid "Successfully changed due date for learner {0} for {1} to {2}"
+msgstr "成功修改了学员{0}的截止日期从{1}变为{2}"
 
 #: lms/djangoapps/instructor/views/api.py:3310
 msgid "Successfully removed invalid due date extension (unit has no due date)."
@@ -7778,26 +7778,26 @@ msgstr "已经成功的移除了无效的延长截止日期 (单元没有截止�
 
 #: lms/djangoapps/instructor/views/api.py:3315
 #, python-brace-format
-msgid "Successfully reset due date for student {0} for {1} to {2}"
-msgstr "成功重置了学生{0}的截止日期从{1}变为{2}"
+msgid "Successfully reset due date for learner {0} for {1} to {2}"
+msgstr "成功重置了学员{0}的截止日期从{1}变为{2}"
 
 #: lms/djangoapps/instructor/views/api.py:3447
 #, python-format
-msgid "This student (%s) will skip the entrance exam."
-msgstr "此学生 (%s) 将会跳过入学考试。"
+msgid "This learner (%s) will skip the entrance exam."
+msgstr "此学员 (%s) 将会跳过入学考试。"
 
 #: lms/djangoapps/instructor/views/api.py:3449
 #, python-format
-msgid "This student (%s) is already allowed to skip the entrance exam."
-msgstr "此学生 (%s) 已被允许跳过入学考试。"
+msgid "This learner (%s) is already allowed to skip the entrance exam."
+msgstr "此学员 (%s) 已被允许跳过入学考试。"
 
 #: lms/djangoapps/instructor/views/api.py:3468
 msgid ""
-"Certificate generation task for all students of this course has been "
+"Certificate generation task for all learners of this course has been "
 "started. You can view the status of the generation task in the \"Pending "
 "Tasks\" section."
 msgstr ""
-"该课程所有学生的证书生成任务已经启动，您可以在“主讲教师待处理的任务”板块中查"
+"该课程所有学员的证书生成任务已经启动，您可以在“主讲教师待处理的任务”板块中查"
 "看该生成任务的状态。"
 
 #: lms/djangoapps/instructor/views/api.py:3495
@@ -7820,8 +7820,8 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py:3573
 #, python-brace-format
-msgid "Student (username/email={user}) already in certificate exception list."
-msgstr "学生 (username/email={user}) 已经排除於证书名单之外。"
+msgid "Learner (username/email={user}) already in certificate exception list."
+msgstr "学员 (username/email={user}) 已经排除於证书名单之外。"
 
 #: lms/djangoapps/instructor/views/api.py:3618
 #, python-brace-format
@@ -7833,10 +7833,10 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py:3653
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Add to Exception List\" button."
 msgstr ""
-"学生使用者名称及电子邮件是必填且不能空白。请填入使用者名称及电子邮件，并按“加"
+"学员使用者名称及电子邮件是必填且不能空白。请填入使用者名称及电子邮件，并按“加"
 "入例外名单”按钮。"
 
 #: lms/djangoapps/instructor/views/api.py:3670
@@ -7861,8 +7861,8 @@ msgid "Invalid data, generate_for must be \"new\" or \"all\"."
 msgstr "无效数据，generate_for 必须为 \"新\" 或 \"全部\"。"
 
 #: lms/djangoapps/instructor/views/api.py:3736
-msgid "Certificate generation started for white listed students."
-msgstr "被批准的学生之证书开始产生。"
+msgid "Certificate generation started for white listed learners."
+msgstr "被批准的学员之证书开始产生。"
 
 #: lms/djangoapps/instructor/views/api.py:3771
 #, python-brace-format
@@ -7884,10 +7884,10 @@ msgstr "使用者之证书 {user} 已经无失效。请确认拼字或再试一�
 #: lms/djangoapps/instructor/views/api.py:3896
 #, python-brace-format
 msgid ""
-"Certificate for student {user} is already invalid, kindly verify that "
-"certificate was generated for this student and then proceed."
+"Certificate for learner {user} is already invalid, kindly verify that "
+"certificate was generated for this learner and then proceed."
 msgstr ""
-"学生  {user}的证书已无效，请核对该证书是否是为此学生产出后再做后续动作。"
+"学员  {user}的证书已无效，请核对该证书是否是为此学员产出后再做后续动作。"
 
 #: lms/djangoapps/instructor/views/api.py:3935
 msgid ""
@@ -7897,20 +7897,20 @@ msgstr "证书失效是不存在的，请重新载入页面或再试一次。"
 
 #: lms/djangoapps/instructor/views/api.py:3963
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Invalidate Certificate\" button."
 msgstr ""
-"学生使用者名称及email是必填的且不能空白。请填入使用者名称及email，并按“作废证"
+"学员使用者名称及email是必填的且不能空白。请填入使用者名称及email，并按“作废证"
 "书”的按钮。"
 
 #: lms/djangoapps/instructor/views/api.py:3972
 #, python-brace-format
 msgid ""
-"The student {student} does not have certificate for the course {course}. "
-"Kindly verify student username/email and the selected course are correct and "
+"The learner {student} does not have certificate for the course {course}. "
+"Kindly verify learner username/email and the selected course are correct and "
 "try again."
 msgstr ""
-"学生 {student} 没有此门课程 {course}之修课证明。请验证学生使用者名称/email以"
+"学员 {student} 没有此门课程 {course}之修课证明。请验证学员使用者名称/email以"
 "及确认所选之课程是否正确，然后再试一次。"
 
 #: lms/djangoapps/instructor/views/coupons.py:31
@@ -7986,10 +7986,10 @@ msgstr "主讲教师"
 #: lms/djangoapps/instructor/views/instructor_dashboard.py:225
 #, python-brace-format
 msgid ""
-"To gain insights into student enrollment and participation {link_start}visit "
+"To gain insights into learner enrollment and participation {link_start}visit "
 "{analytics_dashboard_name}, our new course analytics product{link_end}."
 msgstr ""
-"要深入了解学生的选课和参与信息，请{link_start}访问我们全新的课程分析产品"
+"要深入了解学员的选课和参与信息，请{link_start}访问我们全新的课程分析产品"
 "{analytics_dashboard_name}{link_end}。"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py:369
@@ -8045,8 +8045,8 @@ msgstr "讨论"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py:673
 #: lms/templates/ccx/coach_dashboard.html:65
-msgid "Student Admin"
-msgstr "学生管理"
+msgid "Learner Admin"
+msgstr "学员管理"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py:702
 msgid "Extensions"
@@ -8127,8 +8127,8 @@ msgstr "针对redemption 注册代码 ({code})是不存在的。"
 
 #: lms/djangoapps/instructor/views/tools.py:82
 #, python-brace-format
-msgid "Could not find student matching identifier: {student_identifier}"
-msgstr "无法找到与标识符：{student_identifier}匹配的学生"
+msgid "Could not find learner matching identifier: {student_identifier}"
+msgstr "无法找到与标识符：{student_identifier}匹配的学员"
 
 #: lms/djangoapps/instructor/views/tools.py:96
 msgid "Unable to parse date: "
@@ -8149,8 +8149,8 @@ msgid "An extended due date must be later than the original due date."
 msgstr "延长的截止日期必须在正常截止日期之后。"
 
 #: lms/djangoapps/instructor/views/tools.py:177
-msgid "No due date extension is set for that student and unit."
-msgstr "还没有为学生和单元设置可延长的截止日期。"
+msgid "No due date extension is set for that learner and unit."
+msgstr "还没有为学员和单元设置可延长的截止日期。"
 
 #. Translators: This label appears above a field on the registration form
 #. meant to hold the user's full name.
@@ -8416,65 +8416,65 @@ msgstr "进度: 目前 {attempted}的{action} {succeeded} "
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py:160
 #, python-brace-format
-msgid "Unable to find submission to be {action} for student '{student}'"
-msgstr "无法找到学生“{student}”的要被{action}的提交"
+msgid "Unable to find submission to be {action} for learner '{student}'"
+msgstr "无法找到学员“{student}”的要被{action}的提交"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py:163
 #, python-brace-format
-msgid "Problem failed to be {action} for student '{student}'"
-msgstr "学生“{student}”的问题{action}失败"
+msgid "Problem failed to be {action} for learner '{student}'"
+msgstr "学员“{student}”的问题{action}失败"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py:167
 #, python-brace-format
-msgid "Problem successfully {action} for student '{student}'"
-msgstr "学生“{student}”的问题{action}成功"
+msgid "Problem successfully {action} for learner '{student}'"
+msgstr "学员“{student}”的问题{action}成功"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py:173
 #, python-brace-format
 msgid ""
-"Unable to find entrance exam submission to be {action} for student "
+"Unable to find entrance exam submission to be {action} for learner "
 "'{student}'"
-msgstr "无法找到学生“{student}”的要被{action}的入学考试提交"
+msgstr "无法找到学员“{student}”的要被{action}的入学考试提交"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py:178
 #, python-brace-format
-msgid "Entrance exam successfully {action} for student '{student}'"
-msgstr "为学生 '{student}'{action} 入学考试成功"
+msgid "Entrance exam successfully {action} for learner '{student}'"
+msgstr "为学员 '{student}'{action} 入学考试成功"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #: lms/djangoapps/instructor_task/views.py:183
 #, python-brace-format
-msgid "Unable to find any students with submissions to be {action}"
-msgstr "无法找到任何为{action}提交的学生"
+msgid "Unable to find any learners with submissions to be {action}"
+msgstr "无法找到任何为{action}提交的学员"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {attempted} is a count.
 #: lms/djangoapps/instructor_task/views.py:186
 #, python-brace-format
-msgid "Problem failed to be {action} for any of {attempted} students"
-msgstr "对于{attempted}学生的问题{action}失败"
+msgid "Problem failed to be {action} for any of {attempted} learners"
+msgstr "对于{attempted}学员的问题{action}失败"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {attempted} is a count.
 #: lms/djangoapps/instructor_task/views.py:190
 #, python-brace-format
-msgid "Problem successfully {action} for {attempted} students"
-msgstr "对于{attempted}学生的问题{action}成功"
+msgid "Problem successfully {action} for {attempted} learners"
+msgstr "对于{attempted}学员的问题{action}成功"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {succeeded} and {attempted} are counts.
 #: lms/djangoapps/instructor_task/views.py:193
 #, python-brace-format
-msgid "Problem {action} for {succeeded} of {attempted} students"
-msgstr "对于{attempted} 学生的问题 {action}{succeeded}"
+msgid "Problem {action} for {succeeded} of {attempted} learners"
+msgstr "对于{attempted} 学员的问题 {action}{succeeded}"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #: lms/djangoapps/instructor_task/views.py:198
@@ -9652,8 +9652,8 @@ msgid "Gross Revenue over the Minimum"
 msgstr "总收入超过最低"
 
 #: lms/djangoapps/shoppingcart/reports.py:223
-msgid "Number of Verified Students Contributing More than the Minimum"
-msgstr "已验证的学生贡献数量超过最低"
+msgid "Number of Verified Learners Contributing More than the Minimum"
+msgstr "已验证的学员贡献数量超过最低"
 
 #: lms/djangoapps/shoppingcart/reports.py:224
 msgid "Number of Refunds"
@@ -11284,8 +11284,8 @@ msgstr "您无法创建两个具有相同名称的群组。"
 
 #: openedx/core/djangoapps/course_groups/cohorts.py:541
 msgid ""
-"There must be one cohort to which students can automatically be assigned."
-msgstr "必须存在一个可以将学生自动分配进去的群组。"
+"There must be one cohort to which learners can automatically be assigned."
+msgstr "必须存在一个可以将学员自动分配进去的群组。"
 
 #: openedx/core/djangoapps/course_groups/views.py:172
 msgid "A cohort with the same name already exists."
@@ -11389,10 +11389,10 @@ msgstr ""
 #: openedx/core/djangoapps/credit/models.py:93
 msgid ""
 "URL from the credit provider where the user can check the status of his or "
-"her request for credit.  This is displayed to students *after* they have "
+"her request for credit.  This is displayed to learners *after* they have "
 "requested credit."
 msgstr ""
-"信贷提供者可从网址让使用者可检查他或她申请贷款之状态。这是显示於学生们申请贷"
+"信贷提供者可从网址让使用者可检查他或她申请贷款之状态。这是显示於学员们申请贷"
 "款后。"
 
 #: openedx/core/djangoapps/credit/models.py:102
@@ -12863,8 +12863,8 @@ msgstr "“{0}”的副本"
 #: cms/djangoapps/contentstore/views/item.py:1156
 #, python-brace-format
 msgid ""
-"Students must score {score}{pct_sign} or higher to access course materials."
-msgstr "学生必须获得 {score}{pct_sign} 或者更高的分数才能查看课程资料。"
+"Learners must score {score}{pct_sign} or higher to access course materials."
+msgstr "学员必须获得 {score}{pct_sign} 或者更高的分数才能查看课程资料。"
 
 #. Translators: This is the percent sign. It will be used to represent
 #. a percent value out of 100, e.g. "58%" means "58/100".
@@ -13877,28 +13877,28 @@ msgid "Don't enroll"
 msgstr "不选修"
 
 #: lms/templates/enroll_students.html:3
-msgid "Student Enrollment Form"
-msgstr "学生选课表"
+msgid "Learner Enrollment Form"
+msgstr "学员选课表"
 
 #: lms/templates/enroll_students.html:5
 msgid "Course: "
 msgstr "课程："
 
 #: lms/templates/enroll_students.html:9
-msgid "Add new students"
-msgstr "添加新学生"
+msgid "Add new learners"
+msgstr "添加新学员"
 
 #: lms/templates/enroll_students.html:15
-msgid "Existing students:"
-msgstr "现有学生："
+msgid "Existing learners:"
+msgstr "现有学员："
 
 #: lms/templates/enroll_students.html:19
-msgid "New students added: "
-msgstr "新增学生："
+msgid "New learners added: "
+msgstr "新增学员："
 
 #: lms/templates/enroll_students.html:22
-msgid "Students rejected: "
-msgstr "被拒绝的学生："
+msgid "Learners rejected: "
+msgstr "被拒绝的学员："
 
 #: lms/templates/enroll_students.html:25
 msgid "Debug: "
@@ -14191,16 +14191,16 @@ msgstr "由于密钥的时效有限，请检查是否已过期。"
 #: lms/templates/library-block-author-preview-header.html:6
 msgid ""
 "Showing all matching content eligible to be added into {display_name}. Each "
-"student will be assigned {max_count} component drawn randomly from this list."
+"learner will be assigned {max_count} component drawn randomly from this list."
 msgid_plural ""
 "Showing all matching content eligible to be added into {display_name}. Each "
-"student will be assigned {max_count} components drawn randomly from this "
+"learner will be assigned {max_count} components drawn randomly from this "
 "list."
 msgstr[0] ""
-"显示可添加到 {display_name} 的全部匹配内容。每位学生都将从此列表随机分配到 "
+"显示可添加到 {display_name} 的全部匹配内容。每位学员都将从此列表随机分配到 "
 "{max_count} 个组件。"
 msgstr[1] ""
-"显示可添加到 {display_name} 的全部匹配内容。每位学生都将从此列表随机分配到 "
+"显示可添加到 {display_name} 的全部匹配内容。每位学员都将从此列表随机分配到 "
 "{max_count} 个组件。"
 
 #: lms/templates/login-sidebar.html:7
@@ -14305,7 +14305,7 @@ msgstr "以 {provider_name}登陆"
 msgid "External resource"
 msgstr "外部资源"
 
-#. Translators: "points" is the student's achieved score on this LTI unit, and
+#. Translators: "points" is the learner's achieved score on this LTI unit, and
 #. "total_points" is the maximum number of points achievable.
 #: lms/templates/lti.html:15
 msgid "{points} / {total_points} points"
@@ -14335,8 +14335,8 @@ msgid "Press to Launch"
 msgstr "点击来启动"
 
 #: lms/templates/manage_user_standing.html:8
-msgid "Manage student accounts"
-msgstr "管理学生账户"
+msgid "Manage learner accounts"
+msgstr "管理学员账户"
 
 #: lms/templates/manage_user_standing.html:10
 msgid "Username:"
@@ -14375,8 +14375,8 @@ msgid "Remove Profile Image"
 msgstr "删除用户资料照片"
 
 #: lms/templates/manage_user_standing.html:41
-msgid "Students whose accounts have been disabled"
-msgstr "学生帐户已被停用"
+msgid "Learners whose accounts have been disabled"
+msgstr "学员帐户已被停用"
 
 #: lms/templates/manage_user_standing.html:42
 msgid "(reload your page to refresh)"
@@ -14906,7 +14906,7 @@ msgstr "分数（仅适用于覆盖）"
 
 #: lms/templates/staff_problem_info.html:79
 msgid "Reset Learner's Attempts to Zero"
-msgstr "学生尝试次数恢复为零"
+msgstr "学员尝试次数恢复为零"
 
 #: lms/templates/staff_problem_info.html:82
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:79
@@ -14917,7 +14917,7 @@ msgstr "删除学员的状态"
 #: lms/templates/staff_problem_info.html:85
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:56
 msgid "Rescore Learner's Submission"
-msgstr "重置学生提交分数"
+msgstr "重置学员提交分数"
 
 #: lms/templates/staff_problem_info.html:87
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:57
@@ -14980,7 +14980,7 @@ msgstr "用户"
 #: lms/templates/sysadmin_dashboard.html:60
 #: lms/templates/sysadmin_dashboard_gitlogs.html:117
 msgid "Staffing and Enrollment"
-msgstr "教员配备及学生选课"
+msgstr "教员配备及学员选课"
 
 #. Translators: refers to http://git-scm.com/docs/git-log
 #: lms/templates/sysadmin_dashboard.html:62
@@ -15838,7 +15838,7 @@ msgstr ""
 msgid ""
 "To the maximum extent permitted by applicable law, you agree to defend, hold "
 "harmless and indemnify {platform_name} and the {platform_name} Participants, "
-"and their respective subsidiaries, affiliates, officers, faculty, students, "
+"and their respective subsidiaries, affiliates, officers, faculty, learners, "
 "fellows, governing board members, agents and employees from and against any "
 "third-party claims, actions or demands arising out of, resulting from or in "
 "any way related to your use of the APIs and any API Content, including any "
@@ -15849,7 +15849,7 @@ msgid ""
 "notice of such claim, action or demand."
 msgstr ""
 "在适用法律允许的最大范围内，您同意为 {platform_name} 和{platform_name}参与者"
-"及其各自的子公司、关联公司、管理人员、教职员工、学生、研究员、理事会进行辩"
+"及其各自的子公司、关联公司、管理人员、教职员工、学员、研究员、理事会进行辩"
 "护、维持和赔偿因您使用 API 和任何 API 内容而产生或以任何方式导致的任何第三方"
 "索赔、行动或要求，包括因任何和所有索赔、损失而产生的任何责任或费用，其成员、"
 "代理人和员工，各种种类和性质的损害赔偿（实际和后果）、诉讼、判决、诉讼费用和"
@@ -16027,9 +16027,9 @@ msgstr "使用方向键在提示中导航或者使用tab键返回到计算器"
 msgid ""
 "For detailed information, see {math_link_start}Entering Mathematical and "
 "Scientific Expressions{math_link_end} in the {guide_link_start}edX Guide for "
-"Students{guide_link_end}."
+"Learners{guide_link_end}."
 msgstr ""
-"更多详细信息, 请访问{guide_link_start}学生使用指南{guide_link_end} 里的"
+"更多详细信息, 请访问{guide_link_start}学员使用指南{guide_link_end} 里的"
 "{math_link_start}输入数学和科学表达式{math_link_end} 。"
 
 #: lms/templates/calculator/toggle_calculator.html:36
@@ -16193,8 +16193,8 @@ msgstr "批量选课"
 
 #: lms/templates/ccx/coach_dashboard.html:77
 #: lms/templates/ccx/student_admin.html:5
-msgid "Student Grades"
-msgstr "学生评分"
+msgid "Learner Grades"
+msgstr "学员评分"
 
 #: lms/templates/ccx/coach_dashboard.html:152
 msgid "Please enter a valid CCX name."
@@ -16278,12 +16278,12 @@ msgid "Enroll"
 msgstr "注册"
 
 #: lms/templates/ccx/enrollment.html:71
-msgid "Student List Management"
-msgstr "学生列表管理"
+msgid "Learner List Management"
+msgstr "学员列表管理"
 
 #: lms/templates/ccx/enrollment.html:73
-msgid "CCX student list management response message"
-msgstr "CCX学生列表管理响应消息"
+msgid "CCX learner list management response message"
+msgstr "CCX学员列表管理响应消息"
 
 #: lms/templates/ccx/enrollment.html:85 lms/templates/ccx/enrollment.html:93
 msgid "Revoke access"
@@ -16393,8 +16393,8 @@ msgid "View gradebook"
 msgstr "查看记分册"
 
 #: lms/templates/ccx/student_admin.html:7
-msgid "Download student grades"
-msgstr "下载学生评分"
+msgid "Download learner grades"
+msgstr "下载学员评分"
 
 #: lms/templates/certificates/_accomplishment-banner.html:48
 #: themes/edx.org/lms/templates/certificates/_accomplishment-banner.html:31
@@ -16670,7 +16670,7 @@ msgid ""
 "{b_end}"
 msgstr ""
 "免费旁听此课程并获得访问所有课程资料、活动、测试及论坛的所有权限。{b_start}请"
-"注意，此方向不为通过课程的学生颁发证书。{b_end}"
+"注意，此方向不为通过课程的学员颁发证书。{b_end}"
 
 #: lms/templates/courseware/accordion.html:13
 msgid "{chapter} current chapter"
@@ -17184,8 +17184,8 @@ msgid "View Grading in studio"
 msgstr "在Studio中查看评分情况"
 
 #: lms/templates/courseware/progress.html:64
-msgid "Course Progress for Student '{username}' ({email})"
-msgstr "学生'{username}' ({email})的学习进度"
+msgid "Course Progress for Learner '{username}' ({email})"
+msgstr "学员'{username}' ({email})的学习进度"
 
 #: lms/templates/courseware/progress.html:79
 msgid "View Certificate"
@@ -17733,7 +17733,7 @@ msgid ""
 "the course. {line_break}{link_start}Learn more about the verified "
 "{cert_name_long}{link_end}."
 msgstr ""
-"证书由官方正式颁发，易于分享，已证明能激励学生完成课程。{line_break}"
+"证书由官方正式颁发，易于分享，已证明能激励学员完成课程。{line_break}"
 "{link_start}了解更多关于认证{cert_name_long}的信息{link_end}。"
 
 #. Translators: provider_name is the name of a credit provider or university
@@ -18068,8 +18068,8 @@ msgid "by most votes"
 msgstr "最多票数"
 
 #: lms/templates/edxnotes/edxnotes.html:13
-msgid "Student Notes"
-msgstr "学生笔记"
+msgid "Learner Notes"
+msgstr "学员笔记"
 
 #: lms/templates/edxnotes/edxnotes.html:28
 msgid "Highlights and notes you've made in course content"
@@ -18089,9 +18089,9 @@ msgstr "浏览笔记："
 
 #: lms/templates/edxnotes/edxnotes.html:71
 msgid ""
-"You have not made any notes in this course yet. Other students in this "
+"You have not made any notes in this course yet. Other learners in this "
 "course are using notes to:"
-msgstr "您在本课中尚未做任何笔记。其他学生在本课程中使用笔记:"
+msgstr "您在本课中尚未做任何笔记。其他学员在本课程中使用笔记:"
 
 #: lms/templates/edxnotes/edxnotes.html:75
 msgid "Mark a passage or concept so that it's easy to find later."
@@ -18306,11 +18306,11 @@ msgstr "订单号: {order_number}"
 #: lms/templates/emails/business_order_confirmation_email.txt:68
 msgid ""
 "A CSV file of your registration URLs is attached. Please distribute "
-"registration URLs to each student planning to enroll using the email "
+"registration URLs to each learner planning to enroll using the email "
 "template below."
 msgstr ""
 "包含您注册URL的CSV文件已附上。请使用以下邮件模板将注册URL分发给每个计划招收的"
-"学生。"
+"学员。"
 
 #. Translators: This is followed by the instructor or course team name (so
 #. could be singular or plural)
@@ -18362,8 +18362,8 @@ msgstr "(3) 在选课确认页面，点击“激活选课码”按钮，您将�
 #: lms/templates/emails/business_order_confirmation_email.txt:96
 msgid ""
 "(4) You should be able to click on 'view course' button or see your course "
-"on your student dashboard at {url}"
-msgstr "(4)您可以点击“查看课程”按钮或者通过{url}处的学生课程面板查看你的课程。"
+"on your learner dashboard at {url}"
+msgstr "(4)您可以点击“查看课程”按钮或者通过{url}处的学员课程面板查看你的课程。"
 
 #: lms/templates/emails/business_order_confirmation_email.txt:99
 msgid "(5) Course materials will not be available until the course start date."
@@ -18535,7 +18535,7 @@ msgid "Request to change {platform_name} account e-mail"
 msgstr "变更 {platform_name} 账户电子邮件的请求"
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:3
-msgid "Dear student,"
+msgid "Dear learner,"
 msgstr "亲爱的同学，"
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:5
@@ -18860,11 +18860,11 @@ msgstr ""
 #: lms/templates/emails/registration_codes_sale_email.txt:7
 msgid ""
 "A .csv file that lists your enrollment codes is attached. You can use the "
-"email template below to distribute enrollment codes to your students. Each "
-"student must use a separate enrollment code."
+"email template below to distribute enrollment codes to your learners. Each "
+"learner must use a separate enrollment code."
 msgstr ""
 "附件中是带有您的选课码的.csv文件。您可以使用下面的邮件模板将选课码分发给您的"
-"学生。每个学生必须使用一个单独的选课码。"
+"学员。每个学员必须使用一个单独的选课码。"
 
 #. Translators: This is the signature of an email.  "\n" is a newline
 #. character
@@ -18897,10 +18897,10 @@ msgstr "附件CSV文件中的html链接"
 
 #: lms/templates/emails/registration_codes_sale_email.txt:25
 msgid ""
-"After you enroll, you can see the course on your student dashboard. You can "
+"After you enroll, you can see the course on your learner dashboard. You can "
 "see course materials after the course start date."
 msgstr ""
-"在你选课之后，你可以在你的学生课程面板中看到该课程。在课程开始后，你就可以看"
+"在你选课之后，你可以在你的学员课程面板中看到该课程。在课程开始后，你就可以看"
 "到课程的相关资料。"
 
 #. Translators: please translate the text inside [[ ]]. This is meant as a
@@ -18971,7 +18971,7 @@ msgid ""
 "All purchases are final. For more information, see the {site_name} "
 "cancellation policy."
 msgstr ""
-"如果我们没有收到付款，使用这些选课码的学生将被取消上课资格并无法访问课程资"
+"如果我们没有收到付款，使用这些选课码的学员将被取消上课资格并无法访问课程资"
 "料。所有付款都无法退换。欲了解更多信息，请参见{site_name}取消政策。"
 
 #: lms/templates/emails/registration_codes_sale_invoice_attachment.txt:42
@@ -19046,15 +19046,15 @@ msgstr "去看课件，选择以下链接:"
 
 #: lms/templates/emails/reverification_processed.txt:24
 msgid ""
-"If you have any questions, you can contact student support at {support_link}."
-msgstr "如果您有任何问题，您可以联系学生支持团队{support_link}。"
+"If you have any questions, you can contact learner support at {support_link}."
+msgstr "如果您有任何问题，您可以联系学员支持团队{support_link}。"
 
 #: lms/templates/emails/reverification_processed.txt:26
 msgid "Thanks,"
 msgstr "谢谢，"
 
 #: lms/templates/emails/unenroll_email_allowedmessage.txt:3
-msgid "Dear Student,"
+msgid "Dear Learner,"
 msgstr "亲爱的同学，"
 
 #: lms/templates/emails/unenroll_email_allowedmessage.txt:5
@@ -19269,8 +19269,8 @@ msgid "Sincerely, Anant"
 msgstr "Anant 谨上"
 
 #: lms/templates/financial-assistance/financial-assistance.html:34
-msgid "Back to Student FAQs"
-msgstr "返回至学生常见问题解答"
+msgid "Back to Learner FAQs"
+msgstr "返回至学员常见问题解答"
 
 #: lms/templates/financial-assistance/financial-assistance.html:36
 msgid "Apply for Financial Assistance"
@@ -19363,23 +19363,23 @@ msgid "Refresh Status"
 msgstr "刷新状态"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:57
-msgid "Student-Generated Certificates"
-msgstr "学生生成证书"
+msgid "Learner-Generated Certificates"
+msgstr "学员生成证书"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:62
-msgid "Disable Student-Generated Certificates"
-msgstr "禁止学生生成证书"
+msgid "Disable Learner-Generated Certificates"
+msgstr "禁止学员生成证书"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:68
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:72
-msgid "Enable Student-Generated Certificates"
-msgstr "允许学生发行的证书"
+msgid "Enable Learner-Generated Certificates"
+msgstr "允许学员发行的证书"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:71
 msgid ""
 "You must successfully generate example certificates before you enable "
-"student-generated certificates."
-msgstr "前你必须成功地生成示例证书使学生证书。"
+"learner-generated certificates."
+msgstr "前你必须成功地生成示例证书使学员证书。"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:81
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:85
@@ -19578,8 +19578,8 @@ msgid "Enrollment Information"
 msgstr "选课信息"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:108
-msgid "Total of enrollees (admins, staff, and students)"
-msgstr "总参与人数(包括管理员、员工和学生)"
+msgid "Total of enrollees (admins, staff, and learners)"
+msgstr "总参与人数(包括管理员、员工和学员)"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:128
 msgid "Professional"
@@ -19605,12 +19605,12 @@ msgstr ""
 "和回答问题两类)，评分配置可以在职员界面的‘设置’项下个‘评分’进行调整。"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:17
-msgid "Click to download a CSV of anonymized student IDs:"
-msgstr "点击下载匿名学生的CSV（逗号分隔值的文本）编号清单："
+msgid "Click to download a CSV of anonymized learner IDs:"
+msgstr "点击下载匿名学员的CSV（逗号分隔值的文本）编号清单："
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:18
-msgid "Get Student Anonymized IDs CSV"
-msgstr "获取学生匿名ID CSV文件"
+msgid "Get Learner Anonymized IDs CSV"
+msgstr "获取学员匿名ID CSV文件"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:25
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html:99
@@ -19637,10 +19637,10 @@ msgstr "请耐心等待,不要多次单击这些按钮。多次点击这些按�
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:32
 msgid ""
-"Click to generate a CSV file of all students enrolled in this course, along "
+"Click to generate a CSV file of all learners enrolled in this course, along "
 "with profile information such as email address and username:"
 msgstr ""
-"点击来生成一个CSV文件，里面包含所有选此课的学生的用户信息，比如电子邮件及用户"
+"点击来生成一个CSV文件，里面包含所有选此课的学员的用户信息，比如电子邮件及用户"
 "名："
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:33
@@ -19649,24 +19649,24 @@ msgstr "以CSV格式下载用户资料"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:37
 msgid ""
-"For smaller courses, click to list profile information for enrolled students "
+"For smaller courses, click to list profile information for enrolled learners "
 "directly on this page:"
 msgstr ""
-"对于学员规模较小的课程，可以直接在此页面点击查看选课学生的用户资料信息："
+"对于学员规模较小的课程，可以直接在此页面点击查看选课学员的用户资料信息："
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:38
-msgid "List enrolled students' profile information"
-msgstr "列出选课学生个人资料信息"
+msgid "List enrolled learners' profile information"
+msgstr "列出选课学员个人资料信息"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:42
 msgid ""
 "Click to generate a CSV file that lists learners who can enroll in the "
 "course but have not yet done so."
-msgstr "点击生成一个CSV文件，列出有资格选修此课但还未选修的学生。"
+msgstr "点击生成一个CSV文件，列出有资格选修此课但还未选修的学员。"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:43
 msgid "Download a CSV of learners who can enroll"
-msgstr "下载一个列出有资格选修的学生名单的CSV文件"
+msgstr "下载一个列出有资格选修的学员名单的CSV文件"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:51
 msgid "Proctored Exams"
@@ -19687,10 +19687,10 @@ msgstr "问题答案"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:59
 msgid ""
-"To generate a CSV file that lists all student answers to a given problem, "
+"To generate a CSV file that lists all learner answers to a given problem, "
 "enter the location of the problem (from its Staff Debug Info)."
 msgstr ""
-"如需生成列出所有学生对特定问题的答案的CSV文件，请输入问题所在的位置 (from "
+"如需生成列出所有学员对特定问题的答案的CSV文件，请输入问题所在的位置 (from "
 "its Staff Debug info)"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:62
@@ -19719,8 +19719,8 @@ msgstr "评分报告"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:81
 msgid ""
-"Click to generate a CSV grade report for all currently enrolled students."
-msgstr "点击导出包含当前所有选修学生的成绩报告的CSV文件。"
+"Click to generate a CSV grade report for all currently enrolled learners."
+msgstr "点击导出包含当前所有选修学员的成绩报告的CSV文件。"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:83
 msgid "Generate Grade Report"
@@ -19775,11 +19775,11 @@ msgstr ""
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:117
 #: lms/templates/triboo_analytics/download.html:9
 msgid ""
-"{strong_start}Note{strong_end}: To keep student data secure, you cannot save "
+"{strong_start}Note{strong_end}: To keep learner data secure, you cannot save "
 "or email these links for direct access. Copies of links expire within 5 "
 "minutes."
 msgstr ""
-"{strong_start}注{strong_end}：为了确保学生数据的安全性，您无法保存或者用邮件"
+"{strong_start}注{strong_end}：为了确保学员数据的安全性，您无法保存或者用邮件"
 "发送这些有直接访问权的链接。复制的链接将在5分钟后失效。"
 
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html:19
@@ -19788,9 +19788,9 @@ msgstr "选课码"
 
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html:23
 msgid ""
-"Create one or more pre-paid course enrollment codes. Students can use these "
+"Create one or more pre-paid course enrollment codes. Learners can use these "
 "codes to enroll in the course."
-msgstr "创建一个或者多个课程的预付费选课码。学生可以使用这些选课码选修该课程。"
+msgstr "创建一个或者多个课程的预付费选课码。学员可以使用这些选课码选修该课程。"
 
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html:24
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html:19
@@ -19837,7 +19837,7 @@ msgstr "课程价格"
 
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html:63
 msgid "Course price per seat: "
-msgstr "每位学生需付的课程价格："
+msgstr "每位学员需付的课程价格："
 
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html:65
 msgid "Edit Price"
@@ -19917,7 +19917,7 @@ msgid ""
 "reports that you save outside of this page or that you send or receive in "
 "email expire after five minutes."
 msgstr ""
-"{strong_start}注{strong_end}：为了确保学生数据的安全性，您在本页外保存的报告"
+"{strong_start}注{strong_end}：为了确保学员数据的安全性，您在本页外保存的报告"
 "链接或者您通过电子邮件发送或收到的报告链接将在5分钟后失效。"
 
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html:152
@@ -20163,25 +20163,25 @@ msgstr "延长个别截止日期"
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:9
 msgid ""
 "In this section, you have the ability to grant extensions on specific units "
-"to individual students. Please note that the latest date is always taken; "
+"to individual learners. Please note that the latest date is always taken; "
 "you cannot use this tool to make an assignment due earlier for a particular "
-"student."
+"learner."
 msgstr ""
-"在这个部分，您可以在特定单元里给特定的学生延长截止日期。请注意，您不能选择最"
-"近的一日；您不能使用这个工具让某个学生的作业截止日期提早。"
+"在这个部分，您可以在特定单元里给特定的学员延长截止日期。请注意，您不能选择最"
+"近的一日；您不能使用这个工具让某个学员的作业截止日期提早。"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:15
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:70
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:93
 msgid ""
-"Specify the {platform_name} email address or username of a student here:"
-msgstr "在这可以查看{platform_name}的邮件地址以及学生的用户名："
+"Specify the {platform_name} email address or username of a learner here:"
+msgstr "在这可以查看{platform_name}的邮件地址以及学员的用户名："
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:17
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:72
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:95
-msgid "Student Email or Username"
-msgstr "学生e-mail或者用户名"
+msgid "Learner Email or Username"
+msgstr "学员e-mail或者用户名"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:20
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:55
@@ -20198,8 +20198,8 @@ msgid ""
 msgstr "请输入新的截止日期和时间(UTC 时间，请以 {format_string} 格式输入)。"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:39
-msgid "Change due date for student"
-msgstr "修改学生的截止日期"
+msgid "Change due date for learner"
+msgstr "修改学员的截止日期"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:45
 msgid "Viewing granted extensions"
@@ -20208,26 +20208,26 @@ msgstr "查看已授权的宽限期"
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:47
 msgid ""
 "Here you can see what extensions have been granted on particular units or "
-"for a particular student."
-msgstr "这里您可以查看已经授权给特别学生或者特殊单元的宽限期"
+"for a particular learner."
+msgstr "这里您可以查看已经授权给特别学员或者特殊单元的宽限期"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:51
 msgid ""
-"Choose a graded unit and click the button to obtain a list of all students "
+"Choose a graded unit and click the button to obtain a list of all learners "
 "who have extensions for the given unit."
-msgstr "请选择一个评分单元，单击获得当前单元中获得宽限期的学生列表"
+msgstr "请选择一个评分单元，单击获得当前单元中获得宽限期的学员列表"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:63
-msgid "List all students with due date extensions"
-msgstr "列出所有获得宽限期的学生"
+msgid "List all learners with due date extensions"
+msgstr "列出所有获得宽限期的学员"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:67
-msgid "Specify a student to see all of that student's extensions."
-msgstr "指定一个学生来查看该学生获得的所有宽限期。"
+msgid "Specify a learner to see all of that learner's extensions."
+msgstr "指定一个学员来查看该学员获得的所有宽限期。"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:74
-msgid "List date extensions for student"
-msgstr "为学生列出宽限期"
+msgid "List date extensions for learner"
+msgstr "为学员列出宽限期"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:86
 msgid "Resetting extensions"
@@ -20235,16 +20235,16 @@ msgstr "重设宽限期"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:88
 msgid ""
-"Resetting a problem's due date rescinds a due date extension for a student "
-"on a particular unit. This will revert the due date for the student back to "
+"Resetting a problem's due date rescinds a due date extension for a learner "
+"on a particular unit. This will revert the due date for the learner back to "
 "the problem's original due date."
 msgstr ""
-"重设一个问题的截止日期，将取消学生在指定单元上的宽限期，使学生的截止日期还原"
+"重设一个问题的截止日期，将取消学员在指定单元上的宽限期，使学员的截止日期还原"
 "为问题的原始截止日期。"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html:110
-msgid "Reset due date for student"
-msgstr "重置学生的截止日期"
+msgid "Reset due date for learner"
+msgstr "重置学员的截止日期"
 
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html:7
 msgid "Generate Registration Code Modal"
@@ -20351,8 +20351,8 @@ msgid "Instructor Dashboard"
 msgstr "教师面板"
 
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:63
-msgid "Search students"
-msgstr "搜索学生"
+msgid "Search learners"
+msgstr "搜索学员"
 
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:64
 #: lms/templates/triboo_analytics/course.html:147
@@ -20376,7 +20376,7 @@ msgid ""
 "left side of the learner's name. Clicking on this button will revert all the "
 "learner's grades to their original state."
 msgstr ""
-"如果学生的成绩被覆盖，则学员姓名左侧将有一个红色恢复按钮。单击此按钮会将学员"
+"如果学员的成绩被覆盖，则学员姓名左侧将有一个红色恢复按钮。单击此按钮会将学员"
 "的所有成绩恢复到其原始状态。"
 
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:105
@@ -20437,8 +20437,8 @@ msgstr "正在注册的用户的角色。"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:28
 msgid ""
-"Enter the reason why the students are to be manually enrolled or unenrolled."
-msgstr "输入学生需被手动加入选课或手动取消选课的原因。"
+"Enter the reason why the learners are to be manually enrolled or unenrolled."
+msgstr "输入学员需被手动加入选课或手动取消选课的原因。"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:29
 msgid ""
@@ -20455,8 +20455,8 @@ msgid "Reason"
 msgstr "原因"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:73
-msgid "Register/Enroll Students"
-msgstr "注册／录取学生"
+msgid "Register/Enroll Learners"
+msgstr "注册／录取学员"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:75
 msgid ""
@@ -20467,9 +20467,9 @@ msgstr "要注册并注册本课程中的用户列表，请选择基于以下模
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:77
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:106
 msgid ""
-"Please include one student per row and do not include any headers, footers, "
+"Please include one learner per row and do not include any headers, footers, "
 "or blank lines."
-msgstr "请每行包含一个学生，并且不包含任何标题、页脚或空白行。"
+msgstr "请每行包含一个学员，并且不包含任何标题、页脚或空白行。"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:78
 msgid ""
@@ -20573,7 +20573,7 @@ msgid ""
 "Insights. You can only give course team roles to enrolled users."
 msgstr ""
 "拥有工作人员权限的课程团队成员帮助您管理您的课程。工作人员可以帮您录取或移除"
-"学生，修改成绩和访问所有课程数据。工作人员也可以在Studio和Insights中访问您的"
+"学员，修改成绩和访问所有课程数据。工作人员也可以在Studio和Insights中访问您的"
 "课程。您只能授予已选课的用户课程团队成员职责。"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:214
@@ -20610,7 +20610,7 @@ msgid ""
 "sure that the content works, but have no additional privileges. You can only "
 "give course team roles to enrolled users."
 msgstr ""
-"Beta测试者可以比其他学生先看到课程内容。他们可以确保内容正常运行，但没有额外"
+"Beta测试者可以比其他学员先看到课程内容。他们可以确保内容正常运行，但没有额外"
 "特权。您只能将课程团队角色授予已选课的用户。"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:242
@@ -20703,9 +20703,9 @@ msgstr "CCX指导"
 msgid ""
 "CCX Coaches are able to create their own Custom Courses based on this "
 "course, which they can use to provide personalized instruction to their own "
-"students based in this course material."
+"learners based in this course material."
 msgstr ""
-"CCX指导可以根据本课程创建自己的定制课程，利用本课程的资料给自己的学生提供个性"
+"CCX指导可以根据本课程创建自己的定制课程，利用本课程的资料给自己的学员提供个性"
 "化指导。 "
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:313
@@ -20729,14 +20729,14 @@ msgid "Subsection Data"
 msgstr "小节数据"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:24
-msgid "Each bar shows the number of students that opened the subsection."
-msgstr "每个条形图显示了打开小节的学生数量"
+msgid "Each bar shows the number of learners that opened the subsection."
+msgstr "每个条形图显示了打开小节的学员数量"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:25
 msgid ""
-"You can click on any of the bars to list the students that opened the "
+"You can click on any of the bars to list the learners that opened the "
 "subsection."
-msgstr "您可以点击任一栏目去查看打开小节的学生名单"
+msgstr "您可以点击任一栏目去查看打开小节的学员名单"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:26
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:33
@@ -20757,10 +20757,10 @@ msgstr "每个条形图显示该问题的成绩分布区间"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:32
 msgid ""
-"You can click on any of the bars to list the students that attempted the "
+"You can click on any of the bars to list the learners that attempted the "
 "problem, along with the grades they received."
 msgstr ""
-"你可以点击任一每个条形图去查看所有尝试回答问题的学生名单以及他们获得的成绩"
+"你可以点击任一每个条形图去查看所有尝试回答问题的学员名单以及他们获得的成绩"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:34
 msgid "Download Problem Data for all Problems as a CSV"
@@ -20771,17 +20771,17 @@ msgid "Grade Distribution per Problem"
 msgstr "每个问题的成绩分布"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:58
-msgid "Download Student Opened as a CSV"
-msgstr "以CSV格式下载学生开放数据"
+msgid "Download Learner Opened as a CSV"
+msgstr "以CSV格式下载学员开放数据"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:59
-msgid "Download Student Grades as a CSV"
-msgstr "以CSV格式下载被评分的学生信息"
+msgid "Download Learner Grades as a CSV"
+msgstr "以CSV格式下载被评分的学员信息"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:99
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:139
-msgid "This is a partial list, to view all students download as a csv."
-msgstr "这是一个部分列表，查看所有以CSV格式下载的学生信息"
+msgid "This is a partial list, to view all learners download as a csv."
+msgstr "这是一个部分列表，查看所有以CSV格式下载的学员信息"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html:154
 msgid "There are no problems in this section."
@@ -20810,7 +20810,7 @@ msgstr "群组："
 
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:40
 msgid "(Learners not explicitly assigned to a cohort)"
-msgstr "(没有被分到特定群组的学生)"
+msgstr "(没有被分到特定群组的学员)"
 
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:55
 msgid "Learners in the {track_name} Track"
@@ -20835,7 +20835,7 @@ msgid ""
 "yourself first, so that you can preview the formatting and make sure "
 "embedded images and links work correctly."
 msgstr ""
-"我们建议您给学生发送邮件不多于一周一封。在您发送之前，仔细地检查文本，并先发"
+"我们建议您给学员发送邮件不多于一周一封。在您发送之前，仔细地检查文本，并先发"
 "送给自己，预览邮件格式，确保嵌入的图片和链接显示或运行正常。"
 
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:89
@@ -20904,18 +20904,18 @@ msgid "Allowance Section"
 msgstr "默认章节"
 
 #: lms/templates/instructor/instructor_dashboard_2/special_exams.html:14
-msgid "Student Special Exam Attempts"
-msgstr "学生特殊考试尝试"
+msgid "Learner Special Exam Attempts"
+msgstr "学员特殊考试尝试"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:6
 msgid "View gradebook for enrolled learners"
-msgstr "查看所有注册学生的成绩单"
+msgstr "查看所有注册学员的成绩单"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:7
 msgid ""
 "Note: This feature is available only to courses with a small number of "
 "enrolled learners."
-msgstr "注意：该功能只对小数量的注册学生有效。"
+msgstr "注意：该功能只对小数量的注册学员有效。"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:8
 msgid "View Gradebook"
@@ -20923,7 +20923,7 @@ msgstr "查看成绩单"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:14
 msgid "View a specific learner's grades and progress"
-msgstr "查看特定学生的成绩和进度"
+msgstr "查看特定学员的成绩和进度"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:16
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:33
@@ -20935,7 +20935,7 @@ msgstr "学员的{platform_name} 电子邮件地址或用户名"
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:35
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:103
 msgid "Learner email address or username"
-msgstr "学生的电子邮箱地址或用户名"
+msgstr "学员的电子邮箱地址或用户名"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:22
 msgid "View Progress Page"
@@ -20943,7 +20943,7 @@ msgstr "进度查看页面"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:31
 msgid "Adjust a learner's grade for a specific problem"
-msgstr "为特定问题调整学生成绩"
+msgstr "为特定问题调整学员成绩"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:38
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:156
@@ -20969,7 +20969,7 @@ msgstr "尝试"
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:46
 msgid ""
 "Allow a learner who has used up all attempts to work on the problem again."
-msgstr "允许学生在做题时使用限定的所有重试次数。"
+msgstr "允许学员在做题时使用限定的所有重试次数。"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:47
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:109
@@ -21039,11 +21039,11 @@ msgstr "显示任务状态"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:97
 msgid "Adjust a learner's entrance exam results"
-msgstr "调整学生的入学考试结果"
+msgstr "调整学员的入学考试结果"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:108
 msgid "Allow the learner to take the exam again."
-msgstr "允许学生重新获取该测验。"
+msgstr "允许学员重新获取该测验。"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:111
 msgid "Allow Skip"
@@ -21097,7 +21097,7 @@ msgstr "调整所有注册学员针对特定问题的成绩"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:164
 msgid "Allows all learners to work on the problem again."
-msgstr "允许所有学生重做这些答题。"
+msgstr "允许所有学员重做这些答题。"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:169
 msgid ""
@@ -21109,7 +21109,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:171
 msgid "Rescore All Learners' Submissions"
-msgstr "重置所有学生提交的分数"
+msgstr "重置所有学员提交的分数"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html:172
 msgid "Rescore Only If Scores Improve"
@@ -21270,8 +21270,8 @@ msgid "Hide Question"
 msgstr "隐藏问题"
 
 #: lms/templates/peer_grading/peer_grading_problem.html:32
-msgid "Student Response"
-msgstr "学生回复"
+msgid "Learner Response"
+msgstr "学员回复"
 
 #: lms/templates/peer_grading/peer_grading_problem.html:46
 msgid "Written Feedback"
@@ -21694,8 +21694,8 @@ msgstr "注册："
 #: lms/templates/shoppingcart/receipt.html:332
 #: lms/templates/shoppingcart/shopping_cart.html:82
 #: lms/templates/shoppingcart/shopping_cart.html:94
-msgid "Price per student:"
-msgstr "每位学生的费用："
+msgid "Price per learner:"
+msgstr "每位学员的费用："
 
 #: lms/templates/shoppingcart/receipt.html:311
 #: lms/templates/shoppingcart/receipt.html:329
@@ -21705,8 +21705,8 @@ msgstr "已使用的折扣："
 
 #: lms/templates/shoppingcart/receipt.html:318
 #: lms/templates/shoppingcart/receipt.html:338
-msgid "Students"
-msgstr "学生"
+msgid "Learners"
+msgstr "学员"
 
 #. Translators: Please keep the "<del>" and "</del>" tags around your
 #. translation of the word "this" in your translation.
@@ -21804,8 +21804,8 @@ msgid "Cover Image"
 msgstr "封面图片"
 
 #: lms/templates/shoppingcart/shopping_cart.html:102
-msgid "Students:"
-msgstr "学生:"
+msgid "Learners:"
+msgstr "学员:"
 
 #: lms/templates/shoppingcart/shopping_cart.html:104
 msgid "Input quantity and press enter."
@@ -21858,8 +21858,8 @@ msgstr "{currency_symbol}{price} {currency_abbr}"
 #: lms/templates/shoppingcart/shopping_cart.html:191
 msgid ""
 "After this purchase is complete, a receipt is generated with relative "
-"billing details and registration codes for students."
-msgstr "付款完成后，我们会为学生们生成一张包含费用明细和注册码的收据。"
+"billing details and registration codes for learners."
+msgstr "付款完成后，我们会为学员们生成一张包含费用明细和注册码的收据。"
 
 #: lms/templates/shoppingcart/shopping_cart.html:175
 #: lms/templates/shoppingcart/shopping_cart.html:182
@@ -21965,24 +21965,24 @@ msgstr "请稍候"
 
 #: lms/templates/support/certificates.html:19
 #: lms/templates/support/index.html:11 lms/templates/support/index.html:16
-msgid "Student Support"
-msgstr "学生支持"
+msgid "Learner Support"
+msgstr "学员支持"
 
 #: lms/templates/support/certificates.html:24
-msgid "Student Support: Certificates"
-msgstr "学生支持：证书"
+msgid "Learner Support: Certificates"
+msgstr "学员支持：证书"
 
 #: lms/templates/support/contact_us.html:16
 msgid "Contact {platform_name} Support"
 msgstr "联系{platform_name}支持"
 
 #: lms/templates/support/enrollment.html:26
-msgid "Student Support: Enrollment"
-msgstr "学生支持：选课"
+msgid "Learner Support: Enrollment"
+msgstr "学员支持：选课"
 
 #: lms/templates/support/manage_user.html:28
-msgid "Student Support: Manage User"
-msgstr "学生支持：管理用户"
+msgid "Learner Support: Manage User"
+msgstr "学员支持：管理用户"
 
 #: lms/templates/support/refund.html:55
 msgid "About to refund this order:"
@@ -22057,10 +22057,10 @@ msgstr "我为什么要完成填写这些信息？"
 #: lms/templates/survey/survey.html:60
 msgid ""
 "We use the information you provide to improve our course for both current "
-"and future students. The more we know about your specific needs, the better "
+"and future learners. The more we know about your specific needs, the better "
 "we can make your course experience."
 msgstr ""
-"我们使用您提供的信息来改善当前和未来的学生的课程学习体验。我们越了解您的具体"
+"我们使用您提供的信息来改善当前和未来的学员的课程学习体验。我们越了解您的具体"
 "需求，我们可以为您提供更好的课程体验。"
 
 #: lms/templates/survey/survey.html:65
@@ -23032,7 +23032,7 @@ msgstr "要查看示例证书，请选择课程模式并选择{em_start}预览�
 
 #: cms/templates/certificates.html:94
 msgid "Issuing Certificates to Learners"
-msgstr "给学生颁发证书"
+msgstr "给学员颁发证书"
 
 #: cms/templates/certificates.html:95
 msgid ""
@@ -23357,11 +23357,11 @@ msgstr "原始课程中的哪些内容不会复制过来？"
 
 #: cms/templates/course-create-rerun.html:146
 msgid ""
-"You are the only member of the new course's staff. No students are enrolled "
-"in the course, and there is no student data. There is no content in the "
+"You are the only member of the new course's staff. No learners are enrolled "
+"in the course, and there is no learner data. There is no content in the "
 "discussion topics or wiki."
 msgstr ""
-"您是新课程的唯一课程员工。没有学生选修该课程，没有学生数据，论坛或Wiki里也没"
+"您是新课程的唯一课程员工。没有学员选修该课程，没有学员数据，论坛或Wiki里也没"
 "有内容。"
 
 #: cms/templates/course-create-rerun.html:151
@@ -23378,12 +23378,12 @@ msgstr "新的更新"
 
 #: cms/templates/course_info.html:58
 msgid ""
-"Use course updates to notify students of important dates or exams, highlight "
+"Use course updates to notify learners of important dates or exams, highlight "
 "particular discussions in the forums, announce schedule changes, and respond "
-"to student questions. You add or edit updates in HTML."
+"to learner questions. You add or edit updates in HTML."
 msgstr ""
-"使用课程更新来通知学生重要的日期或者考试，高亮显示论坛中的特别讨论，发布进度"
-"变更，以及回复学生问题。您可以用HTML来编辑更新。"
+"使用课程更新来通知学员重要的日期或者考试，高亮显示论坛中的特别讨论，发布进度"
+"变更，以及回复学员问题。您可以用HTML来编辑更新。"
 
 #: cms/templates/course_outline.html:13 cms/templates/course_outline.html:123
 #: cms/templates/course_outline.html:217
@@ -23626,23 +23626,23 @@ msgstr "自定义页面"
 
 #: cms/templates/edit-tabs.html:148
 msgid ""
-"You can create and edit custom pages to provide students with additional "
+"You can create and edit custom pages to provide learners with additional "
 "course content. For example, you can create pages for the grading policy, "
 "course slides, and a course calendar. "
 msgstr ""
-"您可以通过创建个性化页面来为学生提供额外的课程内容。例如，您可以为评分策略、"
+"您可以通过创建个性化页面来为学员提供额外的课程内容。例如，您可以为评分策略、"
 "课程幻灯片、课程日历等创建自定义页面。"
 
 #: cms/templates/edit-tabs.html:151
-msgid "How do pages look to students in my course?"
-msgstr "学生看到的课程页面会是什么样子？"
+msgid "How do pages look to learners in my course?"
+msgstr "学员看到的课程页面会是什么样子？"
 
 #: cms/templates/edit-tabs.html:152
 msgid ""
-"Students see the default and custom pages at the top of your course and use "
+"Learners see the default and custom pages at the top of your course and use "
 "these links to navigate."
 msgstr ""
-"学生将会看到水平列于您课程主页上方的缺省页面及自定义页面的链接，并通过这些链"
+"学员将会看到水平列于您课程主页上方的缺省页面及自定义页面的链接，并通过这些链"
 "接来漫游整个课程。"
 
 #: cms/templates/edit-tabs.html:152
@@ -23994,10 +23994,10 @@ msgstr "使用这个来导出您的课程到Git源。"
 #: cms/templates/export_git.html:30
 msgid ""
 "This will then trigger an automatic update of the main LMS site and update "
-"the contents of your course visible there to students if automatic git "
+"the contents of your course visible there to learners if automatic git "
 "imports are configured."
 msgstr ""
-"这将触发主LMS站点的自动更新，若自动Git导入已配置好，学生可见的课程内容也会被"
+"这将触发主LMS站点的自动更新，若自动Git导入已配置好，学员可见的课程内容也会被"
 "自动更新。"
 
 #: cms/templates/export_git.html:35
@@ -24057,7 +24057,7 @@ msgid ""
 "view details of the course content that is designated for learners in the "
 "group."
 msgstr ""
-"您无法编辑学生群组，但可以展开每个组以查看为该组中的学员指定的课程内容的详细"
+"您无法编辑学员群组，但可以展开每个组以查看为该组中的学员指定的课程内容的详细"
 "信息。"
 
 #: cms/templates/group_configurations.html:96
@@ -24077,7 +24077,7 @@ msgid ""
 "Only learners in the cohorts that are associated with the specified content "
 "groups see the additional content."
 msgstr ""
-"您创建的每个内容组都可以与一个或多个学生群组相关联。除了向所有学员提供课程内"
+"您创建的每个内容组都可以与一个或多个学员群组相关联。除了向所有学员提供课程内"
 "容之外，您还可以限制特定内容组中学习者访问某些内容。只有与指定内容组关联的群"
 "组中的学员才能看到其中的内容。"
 
@@ -24156,10 +24156,10 @@ msgstr "保持您的课程有序组织"
 msgid ""
 "The backbone of your course is how it is organized. {studio_name} offers an "
 "{strong_start}Outline{strong_end} editor, providing a simple hierarchy and "
-"easy drag and drop to help you and your students stay organized."
+"easy drag and drop to help you and your learners stay organized."
 msgstr ""
 "如何组织你的课程结构？ {studio_name}提供{strong_start}大纲{strong_end}编辑"
-"器，通过简单的层次结构，轻松拖放以帮助您和您的学生清晰地知道课程的结构。"
+"器，通过简单的层次结构，轻松拖放以帮助您和您的学员清晰地知道课程的结构。"
 
 #: cms/templates/howitworks.html:57
 msgid "Simple Organization For Content"
@@ -24191,10 +24191,10 @@ msgstr "按星期或学期发布内容"
 
 #: cms/templates/howitworks.html:72
 msgid ""
-"Build and release {strong_start}sections{strong_end} to your students "
+"Build and release {strong_start}sections{strong_end} to your learners "
 "incrementally. You don't have to have it all done at once."
 msgstr ""
-"渐进地为您的学生创建和发布{strong_start}课程章节内容{strong_end}。您不必一次"
+"渐进地为您的学员创建和发布{strong_start}课程章节内容{strong_end}。您不必一次"
 "完成所有操作。"
 
 #: cms/templates/howitworks.html:84 cms/templates/howitworks.html:85
@@ -24217,9 +24217,9 @@ msgstr "创建学习路径"
 
 #: cms/templates/howitworks.html:99
 msgid ""
-"Help your students understand one concept at a time with multimedia, HTML, "
+"Help your learners understand one concept at a time with multimedia, HTML, "
 "and exercises."
-msgstr "通过多媒体、HTML和练习帮助您的学生每次理解一个概念。"
+msgstr "通过多媒体、HTML和练习帮助您的学员每次理解一个概念。"
 
 #: cms/templates/howitworks.html:103
 msgid "Work Visually, Organize Quickly"
@@ -24227,10 +24227,10 @@ msgstr "可视化地工作，快速地组织"
 
 #: cms/templates/howitworks.html:104
 msgid ""
-"Work visually and see exactly what your students will see. Reorganize all "
+"Work visually and see exactly what your learners will see. Reorganize all "
 "your content with drag and drop."
 msgstr ""
-"可视化地工作并且随时预览您的学生将要看的内容。通过拖放操作重新组织您的课程内"
+"可视化地工作并且随时预览您的学员将要看的内容。通过拖放操作重新组织您的课程内"
 "容。"
 
 #: cms/templates/howitworks.html:108
@@ -24241,7 +24241,7 @@ msgstr "丰富的平台库可以支持各种问题类型"
 msgid ""
 "It's more than just multiple choice. {studio_name} supports more than a "
 "dozen types of problems to challenge your learners."
-msgstr "不只是选择题，{studio_name}支持各种各样的题型来挑战您的学生们。"
+msgstr "不只是选择题，{studio_name}支持各种各样的题型来挑战您的学员们。"
 
 #: cms/templates/howitworks.html:118 cms/templates/howitworks.html:119
 msgid ""
@@ -24337,10 +24337,10 @@ msgstr "发布时间"
 #: cms/templates/howitworks.html:203
 msgid ""
 "Simply set the date of a section or subsection, and {studio_name} will "
-"publish it to your students for you."
+"publish it to your learners for you."
 msgstr ""
 "只需简单地设置章节的发布时间，{studio_name}会按照设定的时间为您发布这些内容给"
-"学生。"
+"学员。"
 
 #: cms/templates/html_error.html:11
 msgid "We're having trouble rendering your component"
@@ -24348,9 +24348,9 @@ msgstr "渲染组件时遇到问题"
 
 #: cms/templates/html_error.html:14
 msgid ""
-"Students will not be able to access this component. Re-edit your component "
+"Learners will not be able to access this component. Re-edit your component "
 "to fix the error."
-msgstr "学生无法访问这个组件。请重新编辑您的组件以修复错误。"
+msgstr "学员无法访问这个组件。请重新编辑您的组件以修复错误。"
 
 #: cms/templates/import.html:21 cms/templates/import.html:35
 msgid "Library Import"
@@ -24580,12 +24580,12 @@ msgstr "注意：导入发生于课程进行中"
 #: cms/templates/import.html:245
 msgid ""
 "If you perform an import while your course is running, and you change the "
-"URL names (or url_name nodes) of any Problem components, the student data "
+"URL names (or url_name nodes) of any Problem components, the learner data "
 "associated with those Problem components may be lost. This data includes "
-"students' problem scores."
+"learners' problem scores."
 msgstr ""
 "如果您在课程进行中执行了导入，并更改了任意问题组件的URL名字(或url名字节点) ，"
-"与此问题组件相关的学生数据将可能丢失。这些数据包括学生问题得分。"
+"与此问题组件相关的学员数据将可能丢失。这些数据包括学员问题得分。"
 
 #: cms/templates/import.html:248
 msgid "Learn more about importing a course"
@@ -25009,12 +25009,12 @@ msgid ""
 "course's Advanced Settings, then adding a Randomized Content Block to your "
 "courseware. In the settings for each Randomized Content Block, select this "
 "library as the source library, and specify the number of problems to be "
-"randomly selected and displayed to each student."
+"randomly selected and displayed to each learner."
 msgstr ""
 "要使用知识库，首先向课程高级设置页面中的“高级模块列表”项中添加{em_start}"
 "library_content{em_end}策略键，然后在课件中加入一个或多个“随机内容块”组件。在"
 "每个“随机内容块”组件的设置中，选择一个知识库作为源库，并指定要被随机选择并呈"
-"现给每个学生的问题的数量。"
+"现给每个学员的问题的数量。"
 
 #: cms/templates/library.html:101
 msgid "Learn more about content libraries"
@@ -25287,8 +25287,8 @@ msgid "Course Summary Page"
 msgstr "课程概要页面"
 
 #: cms/templates/settings.html:89
-msgid "(for student enrollment and access)"
-msgstr "(用于学生选修和访问)"
+msgid "(for learner enrollment and access)"
+msgstr "(用于学员选修和访问)"
 
 #: cms/templates/settings.html:100
 msgid "Enroll in {course_display_name}"
@@ -25304,12 +25304,12 @@ msgstr ""
 "{link_for_about_page}选修该课程。"
 
 #: cms/templates/settings.html:109
-msgid "Send a note to students via email"
-msgstr "通过电子邮件给学生发送笔记"
+msgid "Send a note to learners via email"
+msgstr "通过电子邮件给学员发送笔记"
 
 #: cms/templates/settings.html:111
-msgid "Invite your students"
-msgstr "邀请您的学生"
+msgid "Invite your learners"
+msgstr "邀请您的学员"
 
 #: cms/templates/settings.html:119
 msgid "Promoting Your Course with {platform_name}"
@@ -25416,8 +25416,8 @@ msgid "Enrollment Start Date"
 msgstr "选课开始日期"
 
 #: cms/templates/settings.html:262
-msgid "First day students can enroll"
-msgstr "学生可以选课的第一天"
+msgid "First day learners can enroll"
+msgstr "学员可以选课的第一天"
 
 #: cms/templates/settings.html:266
 msgid "Enrollment Start Time"
@@ -25428,8 +25428,8 @@ msgid "Enrollment End Date"
 msgstr "选课截止日期"
 
 #: cms/templates/settings.html:280
-msgid "Last day students can enroll."
-msgstr "学生可以选课的最后一天。"
+msgid "Last day learners can enroll."
+msgstr "学员可以选课的最后一天。"
 
 #: cms/templates/settings.html:282
 msgid "Contact your edX partner manager to update these settings."
@@ -25512,8 +25512,8 @@ msgid "Introducing Your Course"
 msgstr "介绍您的课程"
 
 #: cms/templates/settings.html:382
-msgid "Information for prospective students"
-msgstr "提供给预期学生的信息"
+msgid "Information for prospective learners"
+msgstr "提供给预期学员的信息"
 
 #: cms/templates/settings.html:388
 msgid "Course Title"
@@ -25562,9 +25562,9 @@ msgstr "课程简介"
 
 #: cms/templates/settings.html:417
 msgid ""
-"Appears on the course catalog page when students roll over the course name. "
+"Appears on the course catalog page when learners roll over the course name. "
 "Limit to ~150 characters"
-msgstr "将在学生浏览课程目录时出现。限制150个字符。"
+msgstr "将在学员浏览课程目录时出现。限制150个字符。"
 
 #: cms/templates/settings.html:423
 msgid "Course Overview"
@@ -25725,8 +25725,8 @@ msgid "Add Instructor"
 msgstr "添加教师"
 
 #: cms/templates/settings.html:611
-msgid "Expectations of the students taking this course"
-msgstr "对参加本门课程的学生的期望"
+msgid "Expectations of the learners taking this course"
+msgstr "对参加本门课程的学员的期望"
 
 #: cms/templates/settings.html:617
 msgid "Hours of Effort per Week"
@@ -25741,8 +25741,8 @@ msgid "Prerequisite Course"
 msgstr "先修课程"
 
 #: cms/templates/settings.html:631
-msgid "Course that students must complete before beginning this course"
-msgstr "学生在开始本课程之前必须完成的课程"
+msgid "Course that learners must complete before beginning this course"
+msgstr "学员在开始本课程之前必须完成的课程"
 
 #: cms/templates/settings.html:632
 msgid "set pre-requisite course"
@@ -25753,8 +25753,8 @@ msgid "Course Mandatory Flag"
 msgstr "必修课程标识"
 
 #: cms/templates/settings.html:652
-msgid "Require students to pass an exam before beginning the course."
-msgstr "要求学生在课程开始前通过考试。"
+msgid "Require learners to pass an exam before beginning the course."
+msgstr "要求学员在课程开始前通过考试。"
 
 #: cms/templates/settings.html:656
 msgid ""
@@ -25773,9 +25773,9 @@ msgstr "%"
 
 #: cms/templates/settings.html:662
 msgid ""
-"The score student must meet in order to successfully complete the entrance "
+"The score learner must meet in order to successfully complete the entrance "
 "exam. "
-msgstr "学生要顺利完成入学考试所必须满足的分数。"
+msgstr "学员要顺利完成入学考试所必须满足的分数。"
 
 #: cms/templates/settings.html:676
 msgid "Course Content License"
@@ -25797,19 +25797,19 @@ msgstr "如何使用这些设置？"
 
 #: cms/templates/settings.html:695
 msgid ""
-"Your course's schedule determines when students can enroll in and begin a "
+"Your course's schedule determines when learners can enroll in and begin a "
 "course."
-msgstr "您的课程时间表决定何时学生可以注册和开始本门课程。"
+msgstr "您的课程时间表决定何时学员可以注册和开始本门课程。"
 
 #: cms/templates/settings.html:697
 msgid ""
 "Other information from this page appears on the About page for your course. "
 "This information includes the course overview, course image, introduction "
-"video, and estimated time requirements. Students use About pages to choose "
+"video, and estimated time requirements. Learners use About pages to choose "
 "new courses to take."
 msgstr ""
 "本页面的其他信息将会出现在您课程的关于页面上。这些信息包括课程概要，课程图"
-"片，介绍视频，以及预估的时间要求。学生们使用关于页面来选择要上的课程。"
+"片，介绍视频，以及预估的时间要求。学员们使用关于页面来选择要上的课程。"
 
 #: cms/templates/settings_advanced.html:49
 msgid "Your policy changes have been saved."
@@ -25874,8 +25874,8 @@ msgid "Overall Grade Range"
 msgstr "整体评分范围"
 
 #: cms/templates/settings_graders.html:55
-msgid "Your overall grading scale for student final grades"
-msgstr "您对学生最终得分的整体评分范围"
+msgid "Your overall grading scale for learner final grades"
+msgstr "您对学员最终得分的整体评分范围"
 
 #: cms/templates/settings_graders.html:61
 msgid "Add grade"
@@ -25902,8 +25902,8 @@ msgid "Grading Rules &amp; Policies"
 msgstr "评分规则＆策略"
 
 #: cms/templates/settings_graders.html:109
-msgid "Deadlines, requirements, and logistics around grading student work"
-msgstr "对学生作业进行评分的截止日期，要求和流程"
+msgid "Deadlines, requirements, and logistics around grading learner work"
+msgstr "对学员作业进行评分的截止日期，要求和流程"
 
 #: cms/templates/settings_graders.html:114
 msgid "Grace Period on Deadline:"
@@ -25940,14 +25940,14 @@ msgstr ""
 
 #: cms/templates/settings_graders.html:146
 msgid ""
-"You can specify whether your course offers students a grace period for late "
+"You can specify whether your course offers learners a grace period for late "
 "assignments."
-msgstr "您可以指定您的课程是否给学生提供迟交作业的宽限期。"
+msgstr "您可以指定您的课程是否给学员提供迟交作业的宽限期。"
 
 #: cms/templates/settings_graders.html:147
 msgid ""
 "You can also create assignment types, such as homework, labs, quizzes, and "
-"exams, and specify how much of a student's grade each assignment type is "
+"exams, and specify how much of a learner's grade each assignment type is "
 "worth."
 msgstr ""
 "您也可以创建作业类型，比如家庭作业、实验、测验、以及考试，并且指定每个作业是"
@@ -25981,12 +25981,12 @@ msgstr "我什么我应该将教材拆分为章节？"
 #: cms/templates/textbooks.html:61
 msgid ""
 "Breaking your textbook into multiple chapters reduces loading times for "
-"students, especially those with slow Internet connections. Breaking up "
-"textbooks into chapters can also help students more easily find topic-based "
+"learners, especially those with slow Internet connections. Breaking up "
+"textbooks into chapters can also help learners more easily find topic-based "
 "information."
 msgstr ""
-"将您的教材拆分为多个章节将有助于学生降低内容加载时间，特别是对于网速较慢的学"
-"生很有帮助。同时有助于学生按主题找到他们所需的信息。"
+"将您的教材拆分为多个章节将有助于学员降低内容加载时间，特别是对于网速较慢的学"
+"生很有帮助。同时有助于学员按主题找到他们所需的信息。"
 
 #: cms/templates/textbooks.html:64
 msgid "What if my book isn't divided into chapters?"
@@ -27527,8 +27527,8 @@ msgstr "产生新的修订版本：合并修订版本#%(r1)d与#%(r2)d"
 #~ "name, and country. Please include one student per row and do not include "
 #~ "any headers, footers, or blank lines."
 #~ msgstr ""
-#~ "如果想在这门课程中批量注册并录取学生，请选择一个CSV文件，包含E-mail、用户"
-#~ "名、姓名和国家（严格按照此顺序）。每行包含一个学生，请不要添加任何页眉、页"
+#~ "如果想在这门课程中批量注册并录取学员，请选择一个CSV文件，包含E-mail、用户"
+#~ "名、姓名和国家（严格按照此顺序）。每行包含一个学员，请不要添加任何页眉、页"
 #~ "脚以及空行。"
 
 #~ msgid "Upload CSV"

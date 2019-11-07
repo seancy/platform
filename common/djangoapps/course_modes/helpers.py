@@ -36,15 +36,15 @@ def enrollment_mode_display(mode, verification_status, course_id):
             show_image = True
             image_alt = _("ID verification pending")
         elif verification_status == VERIFY_STATUS_APPROVED:
-            enrollment_title = _("You're enrolled as a verified student")
+            enrollment_title = _("You're enrolled as a verified leaner")
             enrollment_value = _("Verified")
             show_image = True
             image_alt = _("ID Verified Ribbon/Badge")
     elif display_mode == DISPLAY_HONOR:
-        enrollment_title = _("You're enrolled as an honor code student")
+        enrollment_title = _("You're enrolled as an honor code learner")
         enrollment_value = _("Honor Code")
     elif display_mode == DISPLAY_PROFESSIONAL:
-        enrollment_title = _("You're enrolled as a professional education student")
+        enrollment_title = _("You're enrolled as a professional education learner")
         enrollment_value = _("Professional Ed")
 
     return {

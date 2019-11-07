@@ -1146,7 +1146,7 @@ def create_and_enroll_user(email, username, name, country, password, course_id, 
                 'email': email,
                 'response':
                     _("Error '{error}' while sending email to new user (user email={email}). "
-                      "Without the email student would not be able to login. "
+                      "Without the email learner would not be able to login. "
                       "Please contact support for further information.").format(error=type(ex).__name__, email=email),
             })
         else:
@@ -2655,7 +2655,7 @@ def reset_student_attempts_for_entrance_exam(request, course_id):  # pylint: dis
     except InvalidKeyError:
         return HttpResponseBadRequest(_("Course has no valid entrance exam section."))
 
-    response_payload = {'student': student_identifier or _('All Students'), 'task': TASK_SUBMISSION_OK}
+    response_payload = {'student': student_identifier or _('All Learners'), 'task': TASK_SUBMISSION_OK}
     return JsonResponse(response_payload)
 
 
@@ -2841,7 +2841,7 @@ def rescore_entrance_exam(request, course_id):
     if student:
         response_payload['student'] = student_identifier
     else:
-        response_payload['student'] = _("All Students")
+        response_payload['student'] = _("All Learners")
 
     lms.djangoapps.instructor_task.api.submit_rescore_entrance_exam_for_student(
         request, entrance_exam_key, student, only_if_higher,
@@ -3339,7 +3339,7 @@ def change_due_date(request, course_id):
     set_due_date_extension(course, unit, student, due_date)
 
     return JsonResponse(_(
-        'Successfully changed due date for student {0} for {1} '
+        'Successfully changed due date for learner {0} for {1} '
         'to {2}').format(student.profile.name, _display_unit(unit),
                          due_date.strftime('%Y-%m-%d %H:%M')))
 
@@ -3366,7 +3366,7 @@ def reset_due_date(request, course_id):
 
     original_due_date_str = unit.due.strftime('%Y-%m-%d %H:%M')
     return JsonResponse(_(
-        'Successfully reset due date for student {0} for {1} '
+        'Successfully reset due date for learner {0} for {1} '
         'to {2}').format(student.profile.name, _display_unit(unit),
                          original_due_date_str))
 
@@ -3497,9 +3497,9 @@ def mark_student_can_skip_entrance_exam(request, course_id):  # pylint: disable=
 
     __, created = EntranceExamConfiguration.objects.get_or_create(user=student, course_id=course_id)
     if created:
-        message = _('This student (%s) will skip the entrance exam.') % student_identifier
+        message = _('This learner (%s) will skip the entrance exam.') % student_identifier
     else:
-        message = _('This student (%s) is already allowed to skip the entrance exam.') % student_identifier
+        message = _('This learner (%s) is already allowed to skip the entrance exam.') % student_identifier
     response_payload = {
         'message': message,
     }
@@ -3518,7 +3518,7 @@ def start_certificate_generation(request, course_id):
     """
     course_key = CourseKey.from_string(course_id)
     task = lms.djangoapps.instructor_task.api.generate_certificates_for_students(request, course_key)
-    message = _('Certificate generation task for all students of this course has been started. '
+    message = _('Certificate generation task for all learners of this course has been started. '
                 'You can view the status of the generation task in the "Pending Tasks" section.')
     response_payload = {
         'message': message,
@@ -3623,7 +3623,7 @@ def add_certificate_exception(course_key, student, certificate_exception):
     """
     if len(CertificateWhitelist.get_certificate_white_list(course_key, student)) > 0:
         raise ValueError(
-            _("Student (username/email={user}) already in certificate exception list.").format(user=student.username)
+            _("Learner (username/email={user}) already in certificate exception list.").format(user=student.username)
         )
 
     certificate_white_list, __ = CertificateWhitelist.objects.get_or_create(
@@ -3703,7 +3703,7 @@ def parse_request_data_and_get_user(request, course_key):
 
     user = certificate_exception.get('user_name', '') or certificate_exception.get('user_email', '')
     if not user:
-        raise ValueError(_('Student username/email field is required and can not be empty. '
+        raise ValueError(_('Learner username/email field is required and can not be empty. '
                            'Kindly fill in username/email and then press "Add to Exception List" button.'))
     db_user = get_student(user, course_key)
 
@@ -3786,7 +3786,7 @@ def generate_certificate_exceptions(request, course_id, generate_for=None):
     lms.djangoapps.instructor_task.api.generate_certificates_for_students(request, course_key, student_set=students)
     response_payload = {
         'success': True,
-        'message': _('Certificate generation started for white listed students.'),
+        'message': _('Certificate generation started for white listed learners.'),
     }
 
     return JsonResponse(response_payload)
@@ -3946,8 +3946,8 @@ def invalidate_certificate(request, generated_certificate, certificate_invalidat
     # Verify that certificate user wants to invalidate is a valid one.
     if not generated_certificate.is_valid():
         raise ValueError(
-            _("Certificate for student {user} is already invalid, kindly verify that certificate was generated "
-              "for this student and then proceed.").format(user=generated_certificate.user.username)
+            _("Certificate for learner {user} is already invalid, kindly verify that certificate was generated "
+              "for this learner and then proceed.").format(user=generated_certificate.user.username)
         )
 
     # Add CertificateInvalidation record for future reference or re-validation
@@ -4013,7 +4013,7 @@ def validate_request_data_and_get_certificate(certificate_invalidation, course_k
 
     if not user:
         raise ValueError(
-            _('Student username/email field is required and can not be empty. '
+            _('Learner username/email field is required and can not be empty. '
               'Kindly fill in username/email and then press "Invalidate Certificate" button.')
         )
 
@@ -4022,7 +4022,7 @@ def validate_request_data_and_get_certificate(certificate_invalidation, course_k
     certificate = GeneratedCertificate.certificate_for_student(student, course_key)
     if not certificate:
         raise ValueError(_(
-            "The student {student} does not have certificate for the course {course}. Kindly verify student "
+            "The learner {student} does not have certificate for the course {course}. Kindly verify learner "
             "username/email and the selected course are correct and try again."
         ).format(student=student.username, course=course_key.course))
     return certificate

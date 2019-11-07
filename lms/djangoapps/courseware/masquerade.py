@@ -257,5 +257,5 @@ def filter_displayed_blocks(block, unused_view, frag, unused_context):
     if getattr(block, 'show_in_read_only_mode', False):
         return frag
     return Fragment(
-        _(u'This type of component cannot be shown while viewing the course as a specific student.')
+        _(u'This type of component cannot be shown while viewing the course as a specific learner.')
     )

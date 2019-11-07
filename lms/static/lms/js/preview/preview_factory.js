@@ -10,7 +10,7 @@
 
                 if (options.disableStudentAccess) {
                     $selectElement.attr('disabled', true);
-                    $selectElement.attr('title', gettext('Course is not yet visible to students.'));
+                    $selectElement.attr('title', gettext('Course is not yet visible to learners.'));
                 }
 
                 if (options.specificStudentSelected) {
@@ -21,7 +21,7 @@
                 $selectElement.change(function() {
                     var selectedOption;
                     if ($selectElement.attr('disabled')) {
-                        return alert(gettext('You cannot view the course as a student or beta tester before the course release date.'));  // eslint-disable-line max-len, no-alert
+                        return alert(gettext('You cannot view the course as a learner or beta tester before the course release date.'));  // eslint-disable-line max-len, no-alert
                     }
                     selectedOption = $selectElement.find('option:selected');
                     if (selectedOption.val() === 'specific student') {

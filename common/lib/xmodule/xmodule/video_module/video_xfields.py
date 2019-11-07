@@ -82,24 +82,24 @@ class VideoFields(object):
         default=""
     )
     download_video = Boolean(
-        help=_("Allow students to download versions of this video in different formats if they cannot use the edX video player or do not have access to YouTube. You must add at least one non-YouTube URL in the Video File URLs field."),  # pylint: disable=line-too-long
+        help=_("Allow learners to download versions of this video in different formats if they cannot use the edX video player or do not have access to YouTube. You must add at least one non-YouTube URL in the Video File URLs field."),  # pylint: disable=line-too-long
         display_name=_("Video Download Allowed"),
         scope=Scope.settings,
         default=False
     )
     html5_sources = List(
-        help=_("The URL or URLs where you've posted non-YouTube versions of the video. Each URL must end in .mpeg, .mp4, .ogg, or .webm and cannot be a YouTube URL. (For browser compatibility, we strongly recommend .mp4 and .webm format.) Students will be able to view the first listed video that's compatible with the student's computer. To allow students to download these videos, set Video Download Allowed to True."),  # pylint: disable=line-too-long
+        help=_("The URL or URLs where you've posted non-YouTube versions of the video. Each URL must end in .mpeg, .mp4, .ogg, or .webm and cannot be a YouTube URL. (For browser compatibility, we strongly recommend .mp4 and .webm format.) Learners will be able to view the first listed video that's compatible with the learner's computer. To allow learners to download these videos, set Video Download Allowed to True."),  # pylint: disable=line-too-long
         display_name=_("Video File URLs"),
         scope=Scope.settings,
     )
     track = String(
-        help=_("By default, students can download an .srt or .txt transcript when you set Download Transcript Allowed to True. If you want to provide a downloadable transcript in a different format, we recommend that you upload a handout by using the Upload a Handout field. If this isn't possible, you can post a transcript file on the Files & Uploads page or on the Internet, and then add the URL for the transcript here. Students see a link to download that transcript below the video."),  # pylint: disable=line-too-long
+        help=_("By default, learners can download an .srt or .txt transcript when you set Download Transcript Allowed to True. If you want to provide a downloadable transcript in a different format, we recommend that you upload a handout by using the Upload a Handout field. If this isn't possible, you can post a transcript file on the Files & Uploads page or on the Internet, and then add the URL for the transcript here. Learners see a link to download that transcript below the video."),  # pylint: disable=line-too-long
         display_name=_("Downloadable Transcript URL"),
         scope=Scope.settings,
         default=''
     )
     download_track = Boolean(
-        help=_("Allow students to download the timed transcript. A link to download the file appears below the video. By default, the transcript is an .srt or .txt file. If you want to provide the transcript for download in a different format, upload a file by using the Upload Handout field."),  # pylint: disable=line-too-long
+        help=_("Allow learners to download the timed transcript. A link to download the file appears below the video. By default, the transcript is an .srt or .txt file. If you want to provide the transcript for download in a different format, upload a file by using the Upload Handout field."),  # pylint: disable=line-too-long
         display_name=_("Download Transcript Allowed"),
         scope=Scope.settings,
         default=False
@@ -165,7 +165,7 @@ class VideoFields(object):
         default=True
     )
     handout = String(
-        help=_("Upload a handout to accompany this video. Students can download the handout by clicking Download Handout under the video."),  # pylint: disable=line-too-long
+        help=_("Upload a handout to accompany this video. Learners can download the handout by clicking Download Handout under the video."),  # pylint: disable=line-too-long
         display_name=_("Upload Handout"),
         scope=Scope.settings,
     )

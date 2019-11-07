@@ -41,7 +41,7 @@ class PaidCourseEnrollmentReportProvider(BaseAbstractEnrollmentReportProvider):
         elif is_course_staff:
             enrollment_role = _('Course Staff')
         else:
-            enrollment_role = _('Student')
+            enrollment_role = _('Learner')
 
         course_enrollment = CourseEnrollment.get_enrollment(user=user, course_key=course_id)
 

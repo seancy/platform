@@ -80,7 +80,7 @@ class AccessUtilsTestCase(ModuleStoreTestCase):
 
         self.course = CourseFactory.create()
         self.course_id = self.course.id
-        self.student_role = RoleFactory(name='Student', course_id=self.course_id)
+        self.student_role = RoleFactory(name='Learner', course_id=self.course_id)
         self.moderator_role = RoleFactory(name='Moderator', course_id=self.course_id)
         self.community_ta_role = RoleFactory(name='Community TA', course_id=self.course_id)
         self.student1 = UserFactory(username='student', email='student@edx.org')
@@ -112,10 +112,10 @@ class AccessUtilsTestCase(ModuleStoreTestCase):
         self.assertTrue(utils.has_discussion_privileges(self.community_ta2, self.course_id))
 
     def test_has_forum_access(self):
-        ret = utils.has_forum_access('student', self.course_id, 'Student')
+        ret = utils.has_forum_access('student', self.course_id, 'Learner')
         self.assertTrue(ret)
 
-        ret = utils.has_forum_access('not_a_student', self.course_id, 'Student')
+        ret = utils.has_forum_access('not_a_student', self.course_id, 'Learner')
         self.assertFalse(ret)
 
         ret = utils.has_forum_access('student', self.course_id, 'NotARole')

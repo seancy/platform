@@ -322,7 +322,7 @@ class CohortHandlerTestCase(CohortViewsTestCase):
 
     def test_default_cohort(self):
         """
-        Verify that the default cohort is not created and included in the response until students are assigned to it.
+        Verify that the default cohort is not created and included in the response until learners are assigned to it.
         """
         # verify the default cohort is not created when the course is not cohorted
         self.verify_lists_expected_cohorts([])
@@ -513,7 +513,7 @@ class CohortHandlerTestCase(CohortViewsTestCase):
         data = {'name': cohort_name, 'assignment_type': CourseCohort.MANUAL}
         response_dict = self.put_handler(self.course, cohort, data=data, expected_response_code=400)
         self.assertEqual(
-            'There must be one cohort to which students can automatically be assigned.', response_dict.get("error")
+            'There must be one cohort to which learners can automatically be assigned.', response_dict.get("error")
         )
 
     def test_update_cohort_group_id(self):

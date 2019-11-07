@@ -21,7 +21,7 @@ ${_("We could not verify your identity for the {assessment} assessment in the {c
 ${_("To go to the courseware, select the following link:")}
 ${course_link}
 
-${_("If you have any questions, you can contact student support at {support_link}.").format(support_link=support_link)}
+${_("If you have any questions, you can contact learner support at {support_link}.").format(support_link=support_link)}
 
 ${_("Thanks,")}
 ${_("The {platform_name} team").format(platform_name=platform_name)}

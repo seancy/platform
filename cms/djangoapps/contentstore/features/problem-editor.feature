@@ -41,7 +41,7 @@ Feature: CMS.Problem Editor
   Scenario: User can select values in a Select
     Given I have created a Blank Common Problem
     When I edit and select Settings
-    Then I can select Per Student for Randomization
+    Then I can select Per Learner for Randomization
     And my change to randomization is persisted
     And I can revert to the default value for randomization
 

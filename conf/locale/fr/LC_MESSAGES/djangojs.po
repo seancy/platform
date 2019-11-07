@@ -775,45 +775,45 @@ msgstr "Annuler les modifications"
 #: cms/static/js/views/pages/container_subviews.js:233
 #: common/static/bundles/js/factories/container.js:1482
 #: common/static/bundles/js/factories/library.js:1745
-msgid "Hiding from Students"
-msgstr "Cacher aux étudiants"
+msgid "Hiding from Learners"
+msgstr "Cacher aux apprenants"
 
 #: cms/static/js/views/pages/container_subviews.js:236
 #: common/static/bundles/js/factories/container.js:1484
 #: common/static/bundles/js/factories/library.js:1747
-msgid "Explicitly Hiding from Students"
-msgstr "Cacher explicitement aux étudiants"
+msgid "Explicitly Hiding from Learners"
+msgstr "Cacher explicitement aux apprenants"
 
 #: cms/static/js/views/pages/container_subviews.js:239
 #: common/static/bundles/js/factories/container.js:1486
 #: common/static/bundles/js/factories/library.js:1749
-msgid "Inheriting Student Visibility"
-msgstr "Hériter la visibilité pour les étudiants"
+msgid "Inheriting Learner Visibility"
+msgstr "Hériter la visibilité pour les apprenants"
 
 #: cms/static/js/views/pages/container_subviews.js:242
 #: cms/static/js/views/pages/container_subviews.js:244
 #: common/static/bundles/js/factories/container.js:1488
 #: common/static/bundles/js/factories/library.js:1751
-msgid "Make Visible to Students"
-msgstr "Rendre visible aux étudiants"
+msgid "Make Visible to Learners"
+msgstr "Rendre visible aux apprenants"
 
 #: cms/static/js/views/pages/container_subviews.js:243
 #: common/static/bundles/js/factories/container.js:1488
 #: common/static/bundles/js/factories/library.js:1751
 msgid ""
-"If the unit was previously published and released to students, any changes "
-"you made to the unit when it was hidden will now be visible to students. Do "
+"If the unit was previously published and released to learners, any changes "
+"you made to the unit when it was hidden will now be visible to learners. Do "
 "you want to proceed?"
 msgstr ""
-"Si l'unité a déjà été publiée et diffusée aux étudiants, tous les "
+"Si l'unité a déjà été publiée et diffusée aux apprenants, tous les "
 "changements apportés à l'unité pendant qu' elle était cachée seront "
-"désormais visibles par les étudiants. Voulez-vous continuer?"
+"désormais visibles par les apprenants. Voulez-vous continuer?"
 
 #: cms/static/js/views/pages/container_subviews.js:246
 #: common/static/bundles/js/factories/container.js:1489
 #: common/static/bundles/js/factories/library.js:1752
-msgid "Making Visible to Students"
-msgstr "Rendre visible pour les étudiants"
+msgid "Making Visible to Learners"
+msgstr "Rendre visible pour les apprenants"
 
 #: cms/static/js/views/pages/paged_container.js:45
 #: common/static/bundles/js/factories/library.js:1854
@@ -3503,7 +3503,7 @@ msgstr "Nous contacter"
 #: lms/djangoapps/support/static/support/jsx/single_support_form.jsx:157
 msgid "Find answers to the top questions asked by learners."
 msgstr ""
-"Trouver les réponses aux principales questions posées par vos étudiants."
+"Trouver les réponses aux principales questions posées par vos apprenants."
 
 #: common/static/bundles/SingleSupportForm.js:800
 #: lms/djangoapps/support/static/support/jsx/single_support_form.jsx:168
@@ -4339,7 +4339,7 @@ msgid ""
 "A short description of the team to help other learners understand the goals "
 "or direction of the team (maximum 300 characters)."
 msgstr ""
-"Une courte description de l'équipe pour aider les autres étudiants à "
+"Une courte description de l'équipe pour aider les autres apprenants à "
 "comprendre les buts ou l'idée directrice de l'équipe (maximum 300 "
 "caractères)."
 
@@ -4872,19 +4872,19 @@ msgstr "Entrez la date et heure de début"
 
 #: lms/static/js/certificates/models/certificate_exception.js:31
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Add to Exception List\" button."
 msgstr ""
-"Le champ étudiant utilisateur/courriel est nécessaire et ne peut être vide. "
+"Le champ apprenant utilisateur/courriel est nécessaire et ne peut être vide. "
 "Veuillez remplir utilisateur/courriel et ensuite appuyer le bouton \"Ajouter "
 "à la liste de Dérogation\"."
 
 #: lms/static/js/certificates/models/certificate_invalidation.js:28
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Invalidate Certificate\" button."
 msgstr ""
-"Le champ nom d'utilisateur / email de l'étudiant est requis et ne peut être "
+"Le champ nom d'utilisateur / email de l'apprenant est requis et ne peut être "
 "vide. Merci de saisir le nom d'utilisateur / email et appuyer sur le bouton "
 "\"Invalidate Certificate\"."
 
@@ -4915,7 +4915,7 @@ msgstr ""
 #: lms/static/js/certificates/views/certificate_bulk_whitelist.js:171
 msgid " learners do not exist in LMS and not added to the exception list"
 msgstr ""
-"étudiants n'existent pas dans le LMS et n'ont pas été ajoutés à la liste des "
+"apprenants n'existent pas dans le LMS et n'ont pas été ajoutés à la liste des "
 "exceptions"
 
 #: lms/static/js/certificates/views/certificate_bulk_whitelist.js:173
@@ -4926,26 +4926,26 @@ msgstr ""
 #: lms/static/js/certificates/views/certificate_bulk_whitelist.js:177
 msgid " learners are already white listed and not added to the exception list"
 msgstr ""
-"étudiants déjà ajoutés à la liste blanche et non ajoutés à la liste des "
+"apprenants déjà ajoutés à la liste blanche et non ajoutés à la liste des "
 "exceptions"
 
 #: lms/static/js/certificates/views/certificate_bulk_whitelist.js:179
 msgid " learner is already white listed and not added to the exception list"
 msgstr ""
-"étudiant déjà ajouté à la liste blanche et non ajouté à la liste des "
+"apprenant déjà ajouté à la liste blanche et non ajouté à la liste des "
 "exceptions"
 
 #: lms/static/js/certificates/views/certificate_bulk_whitelist.js:184
 msgid ""
 " learners are not enrolled in course and not added to the exception list"
 msgstr ""
-"ces étudiants ne sont pas inscrits au cours et ne sont pas ajoutés à la "
+"ces apprenants ne sont pas inscrits au cours et ne sont pas ajoutés à la "
 "liste des exceptions"
 
 #: lms/static/js/certificates/views/certificate_bulk_whitelist.js:186
 msgid " learner is not enrolled in course and not added to the exception list"
 msgstr ""
-"cet étudiant n'est pas inscrit au cours et n'est pas ajouté à la liste des "
+"cet apprenant n'est pas inscrit au cours et n'est pas ajouté à la liste des "
 "exceptions"
 
 #: lms/static/js/certificates/views/certificate_invalidation_view.js:49
@@ -4985,8 +4985,8 @@ msgstr ""
 "rafraîchir la page et réessayer."
 
 #: lms/static/js/certificates/views/certificate_whitelist.js:58
-msgid "Student Removed from certificate white list successfully."
-msgstr "Étudiant retiré avec succès de la liste blanche des certificats."
+msgid "Learner Removed from certificate white list successfully."
+msgstr "Apprenant retiré avec succès de la liste blanche des certificats."
 
 #: lms/static/js/certificates/views/certificate_whitelist.js:68
 msgid ""
@@ -5107,8 +5107,8 @@ msgid ""
 "Discussions are unified; all learners interact with posts from other "
 "learners, regardless of the group they are in."
 msgstr ""
-"Les discussions sont unies ; tous les étudiants interagissent avec les "
-"messages d'autres étudiants, peu importe le groupe auquel ils appartiennent."
+"Les discussions sont unies ; tous les apprenants interagissent avec les "
+"messages d'autres apprenants, peu importe le groupe auquel ils appartiennent."
 
 #: lms/static/js/discussions_management/views/discussions.js:66
 msgid "Enrollment Tracks"
@@ -5122,9 +5122,9 @@ msgid ""
 "see and respond to each others’ posts."
 msgstr ""
 "Utilisez les parcours d'inscription comme base pour segmenter les "
-"discussions. Tous les étudiants, peu importe leur parcours d'inscription, "
+"discussions. Tous les apprenants, peu importe leur parcours d'inscription, "
 "peuvent voir les mêmes sujets de discussion. Cependant, dans le cas des "
-"sujets séparés, seuls les étudiants appartenant au même parcours "
+"sujets séparés, seuls les apprenants appartenant au même parcours "
 "d'inscription peuvent voir les messages des autres et y répondre entre eux."
 
 #: lms/static/js/discussions_management/views/discussions.js:73
@@ -5138,7 +5138,7 @@ msgid ""
 "members of the same cohort see and respond to each others’ posts. "
 msgstr ""
 "Utilisez les cohortes comme base de segmentation des discussions. Tous les "
-"étudiants, peu importe leur cohorte, voient les mêmes sujets de discussion. "
+"apprenants, peu importe leur cohorte, voient les mêmes sujets de discussion. "
 "Cependant, dans le cas de sujets séparés, seuls les membres d'une même "
 "cohorte peuvent voir et répondre aux messages des autres."
 
@@ -5351,15 +5351,15 @@ msgstr "Ajouter une cohorte"
 
 #: lms/static/js/groups/views/cohorts.js:268
 msgid ""
-"The {cohortGroupName} cohort has been created. You can manually add students "
+"The {cohortGroupName} cohort has been created. You can manually add learners "
 "to this cohort below."
 msgstr ""
 "La cohorte {cohortGroupName} a été crée. Vous pouvez y ajouter manuellement "
-"des étudiants ci-dessous."
+"des apprenants ci-dessous."
 
 #: lms/static/js/groups/views/cohorts.js:301
-msgid "Assign students to cohorts by uploading a CSV file."
-msgstr "Affecter les étudiants aux cohortes en important un fichier CSV."
+msgid "Assign learners to cohorts by uploading a CSV file."
+msgstr "Affecter les apprenants aux cohortes en important un fichier CSV."
 
 #: lms/static/js/groups/views/cohorts.js:302
 msgid "Choose a .csv file"
@@ -5370,8 +5370,8 @@ msgid "Only properly formatted .csv files will be accepted."
 msgstr "Seuls les fichiers au format .csv seront acceptés."
 
 #: lms/static/js/groups/views/cohorts.js:304
-msgid "Upload File and Assign Students"
-msgstr "Charger le fichier et associer les étudiants"
+msgid "Upload File and Assign Learners"
+msgstr "Charger le fichier et associer les apprenants"
 
 #: lms/static/js/groups/views/cohorts.js:309
 msgid ""
@@ -5427,17 +5427,17 @@ msgid "No Events"
 msgstr "Pas d'évenements"
 
 #: lms/static/js/instructor_dashboard/certificates.js:20
-msgid "Allow students to generate certificates for this course?"
-msgstr "Autoriser les étudiants à générer des certificats pour ce cours?"
+msgid "Allow learners to generate certificates for this course?"
+msgstr "Autoriser les apprenants à générer des certificats pour ce cours?"
 
 #: lms/static/js/instructor_dashboard/certificates.js:22
-msgid "Prevent students from generating certificates in this course?"
-msgstr "Empêcher les étudiants de générer des certificats pour ce cours?"
+msgid "Prevent learners from generating certificates in this course?"
+msgstr "Empêcher les apprenants de générer des certificats pour ce cours?"
 
 #: lms/static/js/instructor_dashboard/certificates.js:93
-msgid "Start generating certificates for all students in this course?"
+msgid "Start generating certificates for all learners in this course?"
 msgstr ""
-"Démarrer la génération des certificats pour tous les étudiants du cours?"
+"Démarrer la génération des certificats pour tous les apprenants du cours?"
 
 #: lms/static/js/instructor_dashboard/certificates.js:109
 msgid "Error while generating certificates. Please try again."
@@ -5445,9 +5445,9 @@ msgstr ""
 "Erreur lors de la génération des certificats. Merci d'essayer à nouveau."
 
 #: lms/static/js/instructor_dashboard/certificates.js:118
-msgid "Start regenerating certificates for students in this course?"
+msgid "Start regenerating certificates for learners in this course?"
 msgstr ""
-"Démarrer la régénération des certificats pour tous les étudiants du cours?"
+"Démarrer la régénération des certificats pour tous les apprenants du cours?"
 
 #: lms/static/js/instructor_dashboard/certificates.js:145
 msgid "Error while regenerating certificates. Please try again."
@@ -5475,9 +5475,9 @@ msgstr ""
 "nouveau."
 
 #: lms/static/js/instructor_dashboard/data_download.js:189
-msgid "Error generating student profile information. Please try again."
+msgid "Error generating learner profile information. Please try again."
 msgstr ""
-"Erreur lors de la création des informations du profil étudiant. Merci "
+"Erreur lors de la création des informations du profil apprenant. Merci "
 "d’essayer à nouveau."
 
 #: lms/static/js/instructor_dashboard/data_download.js:215
@@ -5488,13 +5488,13 @@ msgid "Loading"
 msgstr "Chargement en cours"
 
 #: lms/static/js/instructor_dashboard/data_download.js:223
-msgid "Error getting student list."
-msgstr "Erreur lors de la récupération de la liste des étudiants."
+msgid "Error getting learner list."
+msgstr "Erreur lors de la récupération de la liste des apprenants."
 
 #: lms/static/js/instructor_dashboard/data_download.js:289
-msgid "Error generating list of students who may enroll. Please try again."
+msgid "Error generating list of learners who may enroll. Please try again."
 msgstr ""
-"Erreur lors de la génération de la liste des étudiants pouvant s'inscrire. "
+"Erreur lors de la génération de la liste des apprenants pouvant s'inscrire. "
 "Merci d'essayer de nouveau."
 
 #: lms/static/js/instructor_dashboard/data_download.js:321
@@ -5722,7 +5722,7 @@ msgstr ""
 #: lms/static/js/instructor_dashboard/membership.js:1011
 msgid "These users will be allowed to enroll once they register:"
 msgstr ""
-"Ces étudiants seront autorisés à s'inscrire une fois qu'il se seront "
+"Ces apprenants seront autorisés à s'inscrire une fois qu'il se seront "
 "enregistrés  sur la plateforme :"
 
 #. Translators: A list of users appears after this sentence;
@@ -5808,7 +5808,7 @@ msgstr "Tous les apprenants de la cohorte {cohort_name}"
 
 #: lms/static/js/instructor_dashboard/send_email.js:93
 msgid "All learners in the {track_name} track"
-msgstr "Tout étudiant dans le parcours de {track_name}"
+msgstr "Tout apprenant dans le parcours de {track_name}"
 
 #: lms/static/js/instructor_dashboard/send_email.js:97
 msgid ""
@@ -5866,17 +5866,17 @@ msgstr "Envoyer à :"
 #: lms/static/js/instructor_dashboard/student_admin.js:479
 #: lms/static/js/instructor_dashboard/student_admin.js:532
 #: lms/static/js/instructor_dashboard/student_admin.js:588
-msgid "Please enter a student email address or username."
-msgstr "Merci d’entrer le nom d’utilisateur ou l’adresse e-mail d’un étudiant."
+msgid "Please enter a learner email address or username."
+msgstr "Merci d’entrer le nom d’utilisateur ou l’adresse e-mail d’un apprenant."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:85
 msgid ""
-"Error getting student progress url for '<%- student_id %>'. Make sure that "
-"the student identifier is spelled correctly."
+"Error getting learner progress url for '<%- student_id %>'. Make sure that "
+"the learner identifier is spelled correctly."
 msgstr ""
-"Erreur dans l'obtention de l'url de progression de l'étudiant '<%- "
+"Erreur dans l'obtention de l'url de progression de l'apprenant '<%- "
 "student_id %>'. Vérifiez qu'il n'y a pas d'erreur dans l'identifiant de "
-"l'étudiant. "
+"l'apprenant. "
 
 #: lms/static/js/instructor_dashboard/student_admin.js:118
 #: lms/static/js/instructor_dashboard/student_admin.js:163
@@ -5891,38 +5891,38 @@ msgstr "Merci d'entrer l'emplacement de l'exercice."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:126
 msgid ""
-"Success! Problem attempts reset for problem '<%- problem_id %>' and student "
+"Success! Problem attempts reset for problem '<%- problem_id %>' and learner "
 "'<%- student_id %>'."
 msgstr ""
 "Nombre d'essai réinitialisé pour l'exercice  '<%= problem_id %>' de "
-"l'étudiant '<%= student_id %>'."
+"l'apprenant '<%= student_id %>'."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:127
 msgid ""
-"Error resetting problem attempts for problem '<%= problem_id %>' and student "
-"'<%- student_id %>'. Make sure that the problem and student identifiers are "
+"Error resetting problem attempts for problem '<%= problem_id %>' and learner "
+"'<%- student_id %>'. Make sure that the problem and learner identifiers are "
 "complete and correct."
 msgstr ""
 "Erreur lors la réinitialisation des essais pour l'exercoce '<%= problem_id "
-"%>' et l'étudiant '<%= student_id %>'. Vérifiez qu'il n'y a pas d'erreur "
-"dans les identifiants du problème et de l'étudiant. "
+"%>' et l'apprenant '<%= student_id %>'. Vérifiez qu'il n'y a pas d'erreur "
+"dans les identifiants du problème et de l'apprenant. "
 
 #: lms/static/js/instructor_dashboard/student_admin.js:167
 msgid ""
-"Delete student '<%- student_id %>'s state on problem '<%- problem_id %>'?"
+"Delete learner '<%- student_id %>'s state on problem '<%- problem_id %>'?"
 msgstr ""
-"Supprimer l'état de l'étudiant '<%= student_id %>' sur le problème '<%= "
+"Supprimer l'état de l'apprenant '<%= student_id %>' sur le problème '<%= "
 "problem_id %>' ?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:178
 msgid ""
-"Error deleting student '<%- student_id %>'s state on problem '<%- problem_id "
-"%>'. Make sure that the problem and student identifiers are complete and "
+"Error deleting learner '<%- student_id %>'s state on problem '<%- problem_id "
+"%>'. Make sure that the problem and learner identifiers are complete and "
 "correct."
 msgstr ""
-"Erreur lors de la suppression de l'état de l'étudiant '<%- student_id %>' "
+"Erreur lors de la suppression de l'état de l'apprenant '<%- student_id %>' "
 "pour le problème '<%- problem_id %>' Vérifiez qu'il n'y a pas d'erreur dans "
-"les identifiants du problème et de l'étudiant. "
+"les identifiants du problème et de l'apprenant. "
 
 #: lms/static/js/instructor_dashboard/student_admin.js:189
 msgid "Module state successfully deleted."
@@ -5930,71 +5930,71 @@ msgstr "Etat du module supprimé avec succès."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:226
 msgid ""
-"Error getting task history for problem '<%- problem_id %>' and student '<%- "
-"student_id %>'. Make sure that the problem and student identifiers are "
+"Error getting task history for problem '<%- problem_id %>' and learner '<%- "
+"student_id %>'. Make sure that the problem and learner identifiers are "
 "complete and correct."
 msgstr ""
 "Erreur dans la récupération de l'historique du problème '<%- problem_id %>' "
-"pour l'étudiant '<%- student_id %>'. Vérifiez qu'il n'y a pas d'erreur dans "
-"les identifiants du problème et de l'étudiant. "
+"pour l'apprenant '<%- student_id %>'. Vérifiez qu'il n'y a pas d'erreur dans "
+"les identifiants du problème et de l'apprenant. "
 
 #: lms/static/js/instructor_dashboard/student_admin.js:265
-msgid "Entrance exam attempts is being reset for student '{student_id}'."
+msgid "Entrance exam attempts is being reset for learner '{student_id}'."
 msgstr ""
-"Le nombre d'examens d'entrée est réinitialisé pour l'étudiant '{student_id}'."
+"Le nombre d'examens d'entrée est réinitialisé pour l'apprenant '{student_id}'."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:273
 msgid ""
-"Error resetting entrance exam attempts for student '{student_id}'. Make sure "
-"student identifier is correct."
+"Error resetting entrance exam attempts for learner '{student_id}'. Make sure "
+"learner identifier is correct."
 msgstr ""
 "Erreur lors de la réinitialisation du nombre d'examens d'entrée pour "
-"l'étudiant '{student_id}'. Assurez-vous que l'identifiant étudiant est "
+"l'apprenant '{student_id}'. Assurez-vous que l'identifiant apprenant est "
 "correct."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:292
 #: lms/static/js/instructor_dashboard/student_admin.js:363
-msgid "Enter a student's username or email address."
+msgid "Enter a learner's username or email address."
 msgstr "Entrez un nom d'utilisateur et un email."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:295
 msgid ""
-"Do you want to allow this student ('{student_id}') to skip the entrance exam?"
-msgstr "Voulez-vous dispenser l'étudiant ('{student_id}') d'examen d'entrée?"
+"Do you want to allow this learner ('{student_id}') to skip the entrance exam?"
+msgstr "Voulez-vous dispenser l'apprenant ('{student_id}') d'examen d'entrée?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:313
 msgid ""
-"An error occurred. Make sure that the student's username or email address is "
+"An error occurred. Make sure that the learner's username or email address is "
 "correct and try again."
 msgstr ""
 "Une erreur est survenue. Assurez-vous que l'identifiant et le courriel de "
-"l'étudiant sont corrects et essayez de nouveau."
+"l'apprenant sont corrects et essayez de nouveau."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:341
-msgid "Entrance exam state is being deleted for student '{student_id}'."
+msgid "Entrance exam state is being deleted for learner '{student_id}'."
 msgstr ""
-"Effacement du status de l'examen d'entrée pour l'étudiant '{student_id}'."
+"Effacement du status de l'examen d'entrée pour l'apprenant '{student_id}'."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:349
 msgid ""
-"Error deleting entrance exam state for student '{student_id}'. Make sure "
-"student identifier is correct."
+"Error deleting entrance exam state for learner '{student_id}'. Make sure "
+"learner identifier is correct."
 msgstr ""
-"Erreur de suppression du status d'examen d'entrée pour l'étudiant "
-"'{student_id}'. Assurez-vous que l'identifiant étudiant est correct."
+"Erreur de suppression du status d'examen d'entrée pour l'apprenant "
+"'{student_id}'. Assurez-vous que l'identifiant apprenant est correct."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:380
 msgid ""
-"Error getting entrance exam task history for student '{student_id}'. Make "
-"sure student identifier is correct."
+"Error getting entrance exam task history for learner '{student_id}'. Make "
+"sure learner identifier is correct."
 msgstr ""
-"Erreur d'obtention de l'historique d'examen d'entrée pour l'étudiant "
-"'{student_id}'. Assurez-vous que l'identifiant étudiant est correct."
+"Erreur d'obtention de l'historique d'examen d'entrée pour l'apprenant "
+"'{student_id}'. Assurez-vous que l'identifiant apprenant est correct."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:399
-msgid "Reset attempts for all students on problem '<%- problem_id %>'?"
+msgid "Reset attempts for all learners on problem '<%- problem_id %>'?"
 msgstr ""
-"Réinitialiser les essais de tous les étudiants pour l'exercice '<%= "
+"Réinitialiser les essais de tous les apprenants pour l'exercice '<%= "
 "problem_id %>'?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:408
@@ -6008,39 +6008,39 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js:412
 msgid ""
-"Error starting a task to reset attempts for all students on problem '<%- "
+"Error starting a task to reset attempts for all learners on problem '<%- "
 "problem_id %>'. Make sure that the problem identifier is complete and "
 "correct."
 msgstr ""
-"Erreur dans la réinitialisation des essais de tous les étudiants pour le "
+"Erreur dans la réinitialisation des essais de tous les apprenants pour le "
 "problème '<%- problem_id %>'. Vérifiez que l'identifiant du problème est "
 "complet et correct. "
 
 #: lms/static/js/instructor_dashboard/student_admin.js:463
-msgid "Error listing task history for this student and problem."
+msgid "Error listing task history for this learner and problem."
 msgstr ""
-"Erreur lors de l'affichage de l'historique des tâches pour cet étudiant et "
+"Erreur lors de l'affichage de l'historique des tâches pour cet apprenant et "
 "cet exercice."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:494
 msgid ""
-"Started rescore problem task for problem '<%- problem_id %>' and student '<"
+"Started rescore problem task for problem '<%- problem_id %>' and learner '<"
 "%- student_id %>'. Click the 'Show Task Status' button to see the status of "
 "the task."
 msgstr ""
-"Le recalcul du score de l'exercice '<%- problem_id %>' de l'étudiant '<%- "
+"Le recalcul du score de l'exercice '<%- problem_id %>' de l'apprenant '<%- "
 "student_id %>' a commencé. Cliquez sur le bouton «Afficher l’état des "
 "tâches» pour voir l'état de la tâche."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:499
 msgid ""
-"Error starting a task to rescore problem '<%- problem_id %>' for student '<"
-"%- student_id %>'. Make sure that the the problem and student identifiers "
+"Error starting a task to rescore problem '<%- problem_id %>' for learner '<"
+"%- student_id %>'. Make sure that the the problem and learner identifiers "
 "are complete and correct."
 msgstr ""
 "Erreur dans le recalcul du score du problème '<%- problem_id %>' pour "
-"l'étudiant '<%- student_id %>'. Vérifiez qu'il n'y a pas d'erreur dans les "
-"identifiants du problème et de l'étudiant. "
+"l'apprenant '<%- student_id %>'. Vérifiez qu'il n'y a pas d'erreur dans les "
+"identifiants du problème et de l'apprenant. "
 
 #: lms/static/js/instructor_dashboard/student_admin.js:544
 msgid "Please enter a score."
@@ -6049,54 +6049,54 @@ msgstr "Veuillez saisir un résultat."
 #: lms/static/js/instructor_dashboard/student_admin.js:553
 msgid ""
 "Started task to override the score for problem '<%- problem_id %>' and "
-"student '<%- student_id %>'. Click the 'Show Task Status' button to see the "
+"learner '<%- student_id %>'. Click the 'Show Task Status' button to see the "
 "status of the task."
 msgstr ""
 "La tâche de remplacement de la note pour le problème '<%- problem_id %>' de "
-"l'étudiant '<%- student_id %>' a commencé. Cliquez sur le bouton «Afficher "
+"l'apprenant '<%- student_id %>' a commencé. Cliquez sur le bouton «Afficher "
 "l’état des tâches» pour voir l'état de la tâche."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:558
 msgid ""
 "Error starting a task to override score for problem '<%- problem_id %>' for "
-"student '<%- student_id %>'. Make sure that the the score and the problem "
-"and student identifiers are complete and correct."
+"learner '<%- student_id %>'. Make sure that the the score and the problem "
+"and learner identifiers are complete and correct."
 msgstr ""
 "Erreur dans le remplacement de la note du problème '<%- problem_id %>' de "
-"l'étudiant '<%- student_id %>'. Vérifiez qu'il n'y a pas d'erreur dans les "
-"identifiants du problème et de l'étudiant."
+"l'apprenant '<%- student_id %>'. Vérifiez qu'il n'y a pas d'erreur dans les "
+"identifiants du problème et de l'apprenant."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:603
 msgid ""
-"Started entrance exam rescore task for student '{student_id}'. Click the "
+"Started entrance exam rescore task for learner '{student_id}'. Click the "
 "'Show Task Status' button to see the status of the task."
 msgstr ""
-"Le recalcul du score de l'examen d'entrée de l'étudiant'{student_id}' a "
+"Le recalcul du score de l'examen d'entrée de l'apprenant'{student_id}' a "
 "commencé. Cliquez sur le bouton «Afficher l’état des tâches» pour voir "
 "l'état de la tâche."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:611
 msgid ""
-"Error starting a task to rescore entrance exam for student '{student_id}'. "
-"Make sure that entrance exam has problems in it and student identifier is "
+"Error starting a task to rescore entrance exam for learner '{student_id}'. "
+"Make sure that entrance exam has problems in it and learner identifier is "
 "correct."
 msgstr ""
 "Erreur dans le démarrage de la tâche de recalcul du score de l'examen "
-"d'entrée pour l'étudiant  '{student_id}'. Assurez-vous que l'examen d'entrée "
-"comporte des exercices et que l'identifiant de l'étudiant est correct."
+"d'entrée pour l'apprenant  '{student_id}'. Assurez-vous que l'examen d'entrée "
+"comporte des exercices et que l'identifiant de l'apprenant est correct."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:633
-msgid "Rescore problem '<%- problem_id %>' for all students?"
+msgid "Rescore problem '<%- problem_id %>' for all learners?"
 msgstr ""
-"Recalculer le score du problème '<%- problem_id %>' pour tous les étudiants ?"
+"Recalculer le score du problème '<%- problem_id %>' pour tous les apprenants ?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:643
 msgid ""
 "Successfully started task to rescore problem '<%- problem_id %>' for all "
-"students. Click the 'Show Task Status' button to see the status of the task."
+"learners. Click the 'Show Task Status' button to see the status of the task."
 msgstr ""
 "Démarrage de la tâche consistant à recalculer la note du problème'<%- "
-"problem_id %>' pour tous les étudiants effectué avec succès. Cliquez sur le "
+"problem_id %>' pour tous les apprenants effectué avec succès. Cliquez sur le "
 "bouton «Afficher l’état des tâches» pour voir l'état de la tâche."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:647
@@ -6221,10 +6221,10 @@ msgstr "Nom du fichier"
 #: lms/static/js/instructor_dashboard/util.js:485
 msgid ""
 "Links are generated on demand and expire within 5 minutes due to the "
-"sensitive nature of student information."
+"sensitive nature of learner information."
 msgstr ""
 "Les liens sont générés sur demande et expirent dans les 5 minutes à cause de "
-"la nature sensible des informations concernant l'étudiant."
+"la nature sensible des informations concernant l'apprenant."
 
 #: lms/static/js/staff_debug_actions.js:79
 msgid "Successfully reset the attempts for user {user}"
@@ -6235,12 +6235,12 @@ msgid "Failed to reset attempts for user."
 msgstr "Impossible de réinitialiser les essais pour cet utilisateur."
 
 #: lms/static/js/staff_debug_actions.js:90
-msgid "Successfully deleted student state for user {user}"
-msgstr "Suppression réussie de l'état de l'étudiant pour l'utilisateur {user}"
+msgid "Successfully deleted learner state for user {user}"
+msgstr "Suppression réussie de l'état de l'apprenant pour l'utilisateur {user}"
 
 #: lms/static/js/staff_debug_actions.js:91
-msgid "Failed to delete student state for user."
-msgstr "Impossible de supprimer l'état de l'étudiant pour cet utilisateur."
+msgid "Failed to delete learner state for user."
+msgstr "Impossible de supprimer l'état de l'apprenant pour cet utilisateur."
 
 #: lms/static/js/staff_debug_actions.js:101
 msgid "Successfully rescored problem for user {user}"
@@ -6836,26 +6836,26 @@ msgid "MB"
 msgstr "MB"
 
 #: lms/static/lms/js/preview/preview_factory.js:13
-msgid "Course is not yet visible to students."
-msgstr "Ce cours n'est pas encore visible pour les étudiants."
+msgid "Course is not yet visible to learners."
+msgstr "Ce cours n'est pas encore visible pour les apprenants."
 
 #: lms/static/lms/js/preview/preview_factory.js:24
 msgid ""
-"You cannot view the course as a student or beta tester before the course "
+"You cannot view the course as a learner or beta tester before the course "
 "release date."
 msgstr ""
-"Vous ne pouvez pas voir le cours en tant qu'étudiant ou en tant que bêta "
+"Vous ne pouvez pas voir le cours en tant qu'apprenant ou en tant que bêta "
 "testeur avant la date de publication du cours."
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js:354
-msgid "%(num_students)s student opened Subsection"
-msgid_plural "%(num_students)s students opened Subsection"
+msgid "%(num_students)s learner opened Subsection"
+msgid_plural "%(num_students)s learners opened Subsection"
 msgstr[0] ""
 msgstr[1] ""
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js:358
-msgid "%(num_students)s student"
-msgid_plural "%(num_students)s students"
+msgid "%(num_students)s learner"
+msgid_plural "%(num_students)s learners"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -6866,8 +6866,8 @@ msgstr[0] "%(num_questions)s question"
 msgstr[1] "%(num_questions)s questions"
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js:441
-msgid "Number of Students"
-msgstr "Nombre d'étudiants"
+msgid "Number of Learners"
+msgstr "Nombre d'apprenants"
 
 #: lms/templates/courseware/progress_graph.js:290
 msgid "Overall Score"
@@ -7601,7 +7601,7 @@ msgstr "Pas encore"
 
 #: cms/static/js/views/modals/course_outline_modals.js:754
 msgid "All Learners and Staff"
-msgstr "Tous les étudiants et l'équipe pédagogique"
+msgstr "Tous les apprenants et l'équipe pédagogique"
 
 #: cms/static/js/views/modals/course_outline_modals.js:1058
 msgid "Basic"
@@ -8062,7 +8062,7 @@ msgstr "Visible par"
 #: common/static/common/templates/discussion/new-post.underscore:20
 msgid ""
 "Discussion admins, moderators, and TAs can make their posts visible to all "
-"students or specify a single group."
+"learners or specify a single group."
 msgstr ""
 "Les administrateurs de discussions, modérateurs, et assistants peuvent "
 "rendre leur message visible pour tous les apprenants ou seulement un groupe "
@@ -8938,8 +8938,8 @@ msgid "Invalidate Certificate"
 msgstr "Invalider le Certificat"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-invalidation.underscore:28
-msgid "Student"
-msgstr "Étudiant"
+msgid "Learner"
+msgstr "Apprenant"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-invalidation.underscore:29
 msgid "Invalidated By"
@@ -8967,12 +8967,12 @@ msgid ""
 "Enter the username or email address of each learner that you want to add as "
 "an exception."
 msgstr ""
-"Saisissez le nom d'utilisateur ou l'adresse email de chaque étudiant que "
+"Saisissez le nom d'utilisateur ou l'adresse email de chaque apprenant que "
 "vous souhaitez ajouter comme exception."
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list-editor.underscore:5
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list-editor.underscore:6
-msgid "Student email or username"
+msgid "Learner email or username"
 msgstr "Nom d'utilisateur ou email"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list-editor.underscore:8
@@ -9021,15 +9021,15 @@ msgstr "Gérer les apprenants"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-editor.underscore:12
 msgid "Add learners to this cohort"
-msgstr "Ajouter des étudiants à cette cohorte"
+msgstr "Ajouter des apprenants à cette cohorte"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-editor.underscore:15
 msgid ""
 "Note: Learners can be in only one cohort. Adding learners to this group "
 "overrides any previous group assignment."
 msgstr ""
-"Remarque: Les étudiants peuvent être dans une seule cohorte. L'ajout "
-"d'étudiants à ce groupe prévaut sur toute affectation précédente à d'autres "
+"Remarque: Les apprenants peuvent être dans une seule cohorte. L'ajout "
+"d'apprenants à ce groupe prévaut sur toute affectation précédente à d'autres "
 "groupes."
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-editor.underscore:25
@@ -9038,7 +9038,7 @@ msgid ""
 "for the learners you want to add. *"
 msgstr ""
 "Saisissez les adresses e-mail et/ou les noms d'utilisateurs, séparés par des "
-"retours à la ligne ou des virgules, pour les étudiants que vous voulez "
+"retours à la ligne ou des virgules, pour les apprenants que vous voulez "
 "ajouter. *"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-editor.underscore:26
@@ -9088,9 +9088,9 @@ msgstr "Manuel"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore:57
 msgid ""
-"There must be one cohort to which students can automatically be assigned."
+"There must be one cohort to which learners can automatically be assigned."
 msgstr ""
-"Au moins une cohorte doit être créée pour ajouter les étudiants en "
+"Au moins une cohorte doit être créée pour ajouter les apprenants en "
 "automatique."
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore:63
@@ -9145,8 +9145,8 @@ msgstr "Créer un groupe de contenu"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-group-header.underscore:5
 #, python-format
-msgid "%(student_count)s students"
-msgid_plural "(contains %(student_count)s students)"
+msgid "%(student_count)s learners"
+msgid_plural "(contains %(student_count)s learners)"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -9191,7 +9191,7 @@ msgstr "Voir la cohorte"
 #: lms/templates/instructor/instructor_dashboard_2/cohorts.underscore:40
 msgid "Assign learners to cohorts by uploading a CSV file"
 msgstr ""
-"Répartissez les étudiants entre les cohortes en chargeant un fichier CSV"
+"Répartissez les apprenants entre les cohortes en chargeant un fichier CSV"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohorts.underscore:47
 msgid ""
@@ -9199,7 +9199,7 @@ msgid ""
 "file, download course profile information or cohort results on {link_start}"
 "the Data Download page{link_end}."
 msgstr ""
-"Pour revoir la répartition des étudiants entre les cohortes ou voir les "
+"Pour revoir la répartition des apprenants entre les cohortes ou voir les "
 "résultats d'un fichier CSV chargé, veuillez télécharger l'information du "
 "profile du cours ou des résultats de la cohorte sur la page de {link_start}"
 "Téléchargement des données{link_end}."
@@ -9663,13 +9663,13 @@ msgid "Congratulations! You are now verified on %(platformName)s!"
 msgstr "Félicitations! Vous êtes maintenant authentifié sur%(platformName)s!"
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore:5
-msgid "You are now enrolled as a verified student for:"
-msgstr "Vous vous êtes maintenant engagé en tant qu'étudiant vérifié pour :"
+msgid "You are now enrolled as a verified learner for:"
+msgstr "Vous vous êtes maintenant engagé en tant qu'apprenant vérifié pour :"
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore:12
-msgid "A list of courses you have just enrolled in as a verified student"
+msgid "A list of courses you have just enrolled in as a verified learner"
 msgstr ""
-"Une liste de cours où vous venez de vous inscrire en tant qu'étudiant vérifié"
+"Une liste de cours où vous venez de vous inscrire en tant qu'apprenant vérifié"
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore:31
 msgid "Explore your course!"
@@ -10616,15 +10616,15 @@ msgid ""
 "of learners."
 msgstr ""
 "L'accès à une partie du contenu de ce {blockType} est restreint à un groupe "
-"d'étudiants spécifique."
+"d'apprenants spécifique."
 
 #: cms/templates/js/container-message.underscore:5
 msgid ""
 "Caution: The last published version of this unit is live. By publishing "
-"changes you will change the student experience."
+"changes you will change the learner experience."
 msgstr ""
 "Attention: la dernière version publiée de cette unité est active. En "
-"publiant des modifications vous allez changer l'expérience des étudiants."
+"publiant des modifications vous allez changer l'expérience des apprenants."
 
 #: cms/templates/js/content-group-editor.underscore:10
 msgid "Content Group Name"
@@ -10675,7 +10675,7 @@ msgid ""
 "After the course\\'s end date has passed, learners can no longer access "
 "subsection content. The subsection remains included in grade calculations."
 msgstr ""
-"Une fois la date de fin du cours passée, les étudiants n'auront plus accès "
+"Une fois la date de fin du cours passée, les apprenants n'auront plus accès "
 "au contenu de la sous-section. La sous-section sera toujours prise en compte "
 "lors du calcul des notes."
 
@@ -10708,7 +10708,7 @@ msgid ""
 "hidden."
 msgstr ""
 "Si vous sélectionnez une option autre que « %(hide_label)s », les unités "
-"publiées dans cette sous-section deviendront disponibles aux étudiants à "
+"publiées dans cette sous-section deviendront disponibles aux apprenants à "
 "moins qu'elles ne soient clairement masquées."
 
 #: cms/templates/js/course-highlights-enable.underscore:3
@@ -10822,7 +10822,7 @@ msgid ""
 "learners"
 msgstr ""
 "L'accès à une partie du contenu de cette unité est restreint à un groupe "
-"d'étudiants spécifique."
+"d'apprenants spécifique."
 
 #: cms/templates/js/course-outline.underscore:80
 msgid "Ungraded"
@@ -11024,7 +11024,7 @@ msgid ""
 "Midterm Exam. This name is visible to learners."
 msgstr ""
 "La catégorie générale pour ce type de devoir, par exemple, devoirs maisons "
-"ou examen de moitié d'année. Ce nom est visible aux étudiants."
+"ou examen de moitié d'année. Ce nom est visible aux apprenants."
 
 #: cms/templates/js/course_grade_policy.underscore:9
 msgid "Abbreviation"
@@ -11175,11 +11175,11 @@ msgstr "Introduction à la réalisation de cookies"
 
 #: cms/templates/js/edit-textbook.underscore:14
 msgid ""
-"provide the title/name of the text book as you would like your students to "
+"provide the title/name of the text book as you would like your learners to "
 "see it"
 msgstr ""
 "veuillez fournir le titre/nom du manuel comme vous souhaiteriez que vos "
-"étudiants le voient."
+"apprenants le voient."
 
 #: cms/templates/js/edit-textbook.underscore:18
 msgid "Chapter information"
@@ -11253,10 +11253,10 @@ msgstr "Information sur le groupe"
 
 #: cms/templates/js/group-configuration-editor.underscore:31
 msgid ""
-"Name of the groups that students will be assigned to, for example, Control, "
+"Name of the groups that learners will be assigned to, for example, Control, "
 "Video, Problems. You must have two or more groups."
 msgstr ""
-"Nom des groupes auxquels les étudiants seront affectés, par exemple, "
+"Nom des groupes auxquels les apprenants seront affectés, par exemple, "
 "contrôle, vidéo, problèmes. Vous devez avoir deux groupes ou plus."
 
 #: cms/templates/js/group-configuration-editor.underscore:33
@@ -11282,7 +11282,7 @@ msgid ""
 "learners will not receive email messages."
 msgstr ""
 "Cette fonction est actuellement en train d'être contrôlée. L'équipe "
-"pédagogique peut saisir les points clés, mais les étudiants ne recevront pas "
+"pédagogique peut saisir les points clés, mais les apprenants ne recevront pas "
 "de courriels."
 
 #: cms/templates/js/highlights-editor.underscore:11
@@ -11291,7 +11291,7 @@ msgid ""
 "for this section (250 character limit)."
 msgstr ""
 "Saisissez 3-5 points clés à inclure au courriel qui sera envoyé aux "
-"étudiants de cette section (minimum 250 caractères)."
+"apprenants de cette section (minimum 250 caractères)."
 
 #: cms/templates/js/highlights-editor.underscore:42
 #: cms/templates/js/highlights-editor.underscore:55
@@ -11557,7 +11557,7 @@ msgid ""
 "When learners submit an answer to an assessment, they immediately see "
 "whether the answer is correct or incorrect, and the score received."
 msgstr ""
-"Lorsque les étudiants soumettent une réponse à une évaluation, ils voient "
+"Lorsque les apprenants soumettent une réponse à une évaluation, ils voient "
 "immédiatement si la réponse est juste ou fausse, et la note est donnée."
 
 #: cms/templates/js/show-correctness-editor.underscore:14
@@ -11569,7 +11569,7 @@ msgid ""
 "Learners never see whether their answers to assessments are correct or "
 "incorrect, nor the score received."
 msgstr ""
-"Les étudiants ne voient jamais si leurs réponses aux évaluations sont justes "
+"Les apprenants ne voient jamais si leurs réponses aux évaluations sont justes "
 "ou fausses, et ne reçoivent jamais la note."
 
 #: cms/templates/js/show-correctness-editor.underscore:21
@@ -11592,7 +11592,7 @@ msgid ""
 "If the course does not have an end date, learners always see their scores "
 "when they submit answers to assessments."
 msgstr ""
-"Si le cours ne comporte aucune date de fin du cours, les étudiants pourront "
+"Si le cours ne comporte aucune date de fin du cours, les apprenants pourront "
 "toujours voir leurs notes après avoir donné leurs réponses lors de "
 "l'évaluation. "
 
@@ -11611,7 +11611,7 @@ msgid ""
 "If the subsection does not have a due date, learners always see their scores "
 "when they submit answers to assessments."
 msgstr ""
-"Si la sous-section n'a aucune date d'échéance, les étudiants pourront "
+"Si la sous-section n'a aucune date d'échéance, les apprenants pourront "
 "toujours voir leurs notes après avoir donné leurs réponses lors de "
 "l'évaluation. "
 
@@ -11651,10 +11651,10 @@ msgstr "Titre du signataire"
 
 #: cms/templates/js/signatory-editor.underscore:23
 msgid ""
-"Titles more than 100 characters may prevent students from printing their "
+"Titles more than 100 characters may prevent learners from printing their "
 "certificate on a single page."
 msgstr ""
-"Les titres de plus de 100 caractères peuvent empêcher les étudiants "
+"Les titres de plus de 100 caractères peuvent empêcher les apprenants "
 "d'imprimer leur certificat sur une seule page."
 
 #: cms/templates/js/signatory-editor.underscore:29
@@ -11781,7 +11781,7 @@ msgid ""
 "examination rules."
 msgstr ""
 "Les examens vérifiés sont minutés et un enregistrement vidéo est fait que "
-"chaque étudiant. Les vidéo sont ensuite vérifiées pour s'assurer que les "
+"chaque apprenant. Les vidéo sont ensuite vérifiées pour s'assurer que les "
 "conditions de l'examen étaient correctes;"
 
 #: cms/templates/js/timed-examination-preference-editor.underscore:25
@@ -11795,7 +11795,7 @@ msgid ""
 msgstr ""
 "Utilisez un examen de pratique surveillé afin d'introduire les apprenants au "
 "processus et aux outils de surveillance. Les résultats d'un examen de "
-"pratique ne comptent pas pour la note finale de l'étudiant."
+"pratique ne comptent pas pour la note finale de l'apprenant."
 
 #: cms/templates/js/timed-examination-preference-editor.underscore:33
 msgid "Time Allotted (HH:MM):"
@@ -11828,7 +11828,7 @@ msgstr ""
 "révision d'examens surveillés doit imposer lors de la révision des vidéos. "
 "Par exemple, vous pourriez indiquer que les calculatrices sont permises. Ces "
 "règles précisées, ainsi que les {linkStart}règles générales d'examen "
-"surveillé{linkEnd}, sont visibles aux étudiants avant que les étudiants ne "
+"surveillé{linkEnd}, sont visibles aux apprenants avant que les apprenants ne "
 "commencent l'examen."
 
 #: cms/templates/js/timed-examination-preference-editor.underscore:53
@@ -11845,7 +11845,7 @@ msgstr ""
 "Veuillez indiquer toute règle ou exception à la règle que l'équipe de "
 "révision d'examens surveillés doit imposer lors de la révision des vidéos. "
 "Par exemple, vous pourriez indiquer que les calculatrices sont permises. Ces "
-"règles précisées sont visibles aux étudiants avant  que les étudiants ne "
+"règles précisées sont visibles aux apprenants avant  que les apprenants ne "
 "commencent l'examen."
 
 #: cms/templates/js/transcript-organization-credentials.underscore:3
@@ -11930,7 +11930,7 @@ msgid ""
 msgstr ""
 "Les apprenants qui ont besoin d'une vérification doivent passer par le point "
 "de contrôle sélectionné afin de voir le contenu de cette unité. Les "
-"étudiants qui n'ont pas besoin d'une vérification voient ce contenu par "
+"apprenants qui n'ont pas besoin d'une vérification voient ce contenu par "
 "défaut."
 
 #: cms/templates/js/video-thumbnail.underscore:17
@@ -11986,16 +11986,16 @@ msgstr "Ajoutez des URL pour des versions supplémentaires"
 
 #: cms/templates/js/video/transcripts/metadata-videolist-entry.underscore:11
 msgid ""
-"To be sure all students can access the video, we recommend providing both "
+"To be sure all learners can access the video, we recommend providing both "
 "an .mp4 and a .webm version of your video. Click below to add a URL for "
 "another version. These URLs cannot be YouTube URLs. The first listed video "
-"that's compatible with the student's computer will play."
+"that's compatible with the learner's computer will play."
 msgstr ""
-"Afin que tous les étudiants puisse accéder à la vidéo, nous vous "
+"Afin que tous les apprenants puisse accéder à la vidéo, nous vous "
 "recommandons de fournir une version .mp4 ainsi qu'une version .webm de la "
 "vidéo. Cliquer ci-dessous pour ajouter une URL pour une autre version. Les "
 "URLs youtube ne sont pas supportées. La première vidéo de la liste "
-"compatible avec l'ordinateur de l'étudiant sera vue."
+"compatible avec l'ordinateur de l'apprenant sera vue."
 
 #: cms/templates/js/video/transcripts/metadata-videolist-entry.underscore:25
 msgid "Default Timed Transcript"

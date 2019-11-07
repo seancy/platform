@@ -125,7 +125,7 @@ class CertificatesInstructorDashTest(SharedModuleStoreTestCase):
     @mock.patch.dict(settings.FEATURES, {'CERTIFICATES_HTML_VIEW': True})
     def test_show_enabled_button_for_html_certs(self):
         """
-        Tests `Enable Student-Generated Certificates` button is enabled
+        Tests `Enable Learner-Generated Certificates` button is enabled
         and `Generate Example Certificates` button is not available if
         course has Web/HTML certificates view enabled.
         """
@@ -134,14 +134,14 @@ class CertificatesInstructorDashTest(SharedModuleStoreTestCase):
         self.store.update_item(self.course, self.global_staff.id)  # pylint: disable=no-member
         self.client.login(username=self.global_staff.username, password="test")
         response = self.client.get(self.url)
-        self.assertContains(response, 'Enable Student-Generated Certificates')
+        self.assertContains(response, 'Enable Learner-Generated Certificates')
         self.assertContains(response, 'enable-certificates-submit')
         self.assertNotContains(response, 'Generate Example Certificates')
 
     @mock.patch.dict(settings.FEATURES, {'CERTIFICATES_HTML_VIEW': True})
     def test_buttons_for_html_certs_in_self_paced_course(self):
         """
-        Tests `Enable Student-Generated Certificates` button is enabled
+        Tests `Enable Learner-Generated Certificates` button is enabled
         and `Generate Certificates` button is not available if
         course has Web/HTML certificates view enabled on a self paced course.
         """
@@ -150,7 +150,7 @@ class CertificatesInstructorDashTest(SharedModuleStoreTestCase):
         self.store.update_item(self.course, self.global_staff.id)  # pylint: disable=no-member
         self.client.login(username=self.global_staff.username, password="test")
         response = self.client.get(self.url)
-        self.assertContains(response, 'Enable Student-Generated Certificates')
+        self.assertContains(response, 'Enable Learner-Generated Certificates')
         self.assertContains(response, 'enable-certificates-submit')
         self.assertNotContains(response, 'Generate Certificates')
         self.assertNotContains(response, 'btn-start-generating-certificates')
@@ -159,9 +159,9 @@ class CertificatesInstructorDashTest(SharedModuleStoreTestCase):
         """Check that the certificates section is visible on the instructor dash. """
         response = self.client.get(self.url)
         if is_visible:
-            self.assertContains(response, "Student-Generated Certificates")
+            self.assertContains(response, "Learner-Generated Certificates")
         else:
-            self.assertNotContains(response, "Student-Generated Certificates")
+            self.assertNotContains(response, "Learner-Generated Certificates")
 
     @contextlib.contextmanager
     def _certificate_status(self, description, status):
@@ -198,17 +198,17 @@ class CertificatesInstructorDashTest(SharedModuleStoreTestCase):
             self.fail("Invalid certificate status: {status}".format(status=expected_status))
 
     def _assert_enable_certs_button_is_disabled(self):
-        """Check that the "enable student-generated certificates" button is disabled. """
+        """Check that the "enable learner-Generated certificates" button is disabled. """
         response = self.client.get(self.url)
-        expected_html = '<button class="is-disabled" disabled>Enable Student-Generated Certificates</button>'
+        expected_html = '<button class="is-disabled" disabled>Enable Learner-Generated Certificates</button>'
         self.assertContains(response, expected_html)
 
     def _assert_enable_certs_button(self, is_enabled):
         """Check whether the button says "enable" or "disable" cert generation. """
         response = self.client.get(self.url)
         expected_html = (
-            'Enable Student-Generated Certificates' if is_enabled
-            else 'Disable Student-Generated Certificates'
+            'Enable Learner-Generated Certificates' if is_enabled
+            else 'Disable Learner-Generated Certificates'
         )
         self.assertContains(response, expected_html)
 
@@ -596,7 +596,7 @@ class CertificateExceptionViewInstructorApiTest(SharedModuleStoreTestCase):
         # Assert Error Message
         self.assertEqual(
             res_json['message'],
-            u'Student username/email field is required and can not be empty. '
+            u'Learner username/email field is required and can not be empty. '
             u'Kindly fill in username/email and then press "Add to Exception List" button.'
         )
 
@@ -622,13 +622,13 @@ class CertificateExceptionViewInstructorApiTest(SharedModuleStoreTestCase):
         # Assert Error Message
         self.assertEqual(
             res_json['message'],
-            u"Student (username/email={user_name}) already in certificate exception list.".format(user_name=user)
+            u"Learner (username/email={user_name}) already in certificate exception list.".format(user_name=user)
         )
 
     def test_certificate_exception_same_user_in_two_different_courses(self):
         """
         Test certificates exception addition api endpoint in scenario when same
-        student is added to two different courses.
+        learner is added to two different courses.
         """
         response = self.client.post(
             self.url,
@@ -828,7 +828,7 @@ class GenerateCertificatesInstructorApiTest(SharedModuleStoreTestCase):
         # Assert Message
         self.assertEqual(
             res_json['message'],
-            u"Certificate generation started for white listed students."
+            u"Certificate generation started for white listed learners."
         )
 
     def test_generate_certificate_exceptions_whitelist_not_generated(self):
@@ -856,7 +856,7 @@ class GenerateCertificatesInstructorApiTest(SharedModuleStoreTestCase):
         # Assert Message
         self.assertEqual(
             res_json['message'],
-            u"Certificate generation started for white listed students."
+            u"Certificate generation started for white listed learners."
         )
 
     def test_generate_certificate_exceptions_generate_for_incorrect_value(self):
@@ -1154,7 +1154,7 @@ class CertificateInvalidationViewTests(SharedModuleStoreTestCase):
         # Assert Error Message
         self.assertEqual(
             res_json['message'],
-            u'Student username/email field is required and can not be empty. '
+            u'Learner username/email field is required and can not be empty. '
             u'Kindly fill in username/email and then press "Invalidate Certificate" button.',
         )
 
@@ -1208,7 +1208,7 @@ class CertificateInvalidationViewTests(SharedModuleStoreTestCase):
 
     def test_no_generated_certificate_error(self):
         """
-        Test error message if there is no generated certificate for the student.
+        Test error message if there is no generated certificate for the learner.
         """
         self.certificate_invalidation_data.update({"user": self.enrolled_user_2.username})
 
@@ -1225,8 +1225,8 @@ class CertificateInvalidationViewTests(SharedModuleStoreTestCase):
         # Assert Error Message
         self.assertEqual(
             res_json['message'],
-            u"The student {student} does not have certificate for the course {course}. "
-            u"Kindly verify student username/email and the selected course are correct and try again.".format(
+            u"The learner {student} does not have certificate for the course {course}. "
+            u"Kindly verify learner username/email and the selected course are correct and try again.".format(
                 student=self.enrolled_user_2.username,
                 course=self.course.number,
             ),
@@ -1234,7 +1234,7 @@ class CertificateInvalidationViewTests(SharedModuleStoreTestCase):
 
     def test_certificate_already_invalid_error(self):
         """
-        Test error message if certificate for the student is already invalid.
+        Test error message if certificate for the learner is already invalid.
         """
         # Invalidate user certificate
         self.generated_certificate.invalidate()
@@ -1252,15 +1252,15 @@ class CertificateInvalidationViewTests(SharedModuleStoreTestCase):
         # Assert Error Message
         self.assertEqual(
             res_json['message'],
-            u"Certificate for student {user} is already invalid, kindly verify that certificate "
-            u"was generated for this student and then proceed.".format(
+            u"Certificate for learner {user} is already invalid, kindly verify that certificate "
+            u"was generated for this learner and then proceed.".format(
                 user=self.enrolled_user_1.username,
             ),
         )
 
     def test_duplicate_certificate_invalidation_error(self):
         """
-        Test error message if certificate invalidation for the student is already present.
+        Test error message if certificate invalidation for the learner is already present.
         """
         CertificateInvalidationFactory.create(
             generated_certificate=self.generated_certificate,

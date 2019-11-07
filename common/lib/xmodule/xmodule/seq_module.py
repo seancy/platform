@@ -82,7 +82,7 @@ class ProctoringFields(object):
     is_time_limited = Boolean(
         display_name=_("Is Time Limited"),
         help=_(
-            "This setting indicates whether students have a limited time"
+            "This setting indicates whether learners have a limited time"
             " to view or interact with this courseware component."
         ),
         default=False,
@@ -92,7 +92,7 @@ class ProctoringFields(object):
     default_time_limit_minutes = Integer(
         display_name=_("Time Limit in Minutes"),
         help=_(
-            "The number of minutes available to students for viewing or interacting with this courseware component."
+            "The number of minutes available to learners for viewing or interacting with this courseware component."
         ),
         default=None,
         scope=Scope.settings,
@@ -701,7 +701,7 @@ class SequenceDescriptor(SequenceFields, ProctoringFields, MakoModuleDescriptor,
 class HighlightsFields(object):
     """Only Sections have summaries now, but we may expand that later."""
     highlights = List(
-        help=_("A list summarizing what students should look forward to in this section."),
+        help=_("A list summarizing what learners should look forward to in this section."),
         scope=Scope.settings
     )
 

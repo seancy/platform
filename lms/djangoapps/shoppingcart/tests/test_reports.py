@@ -115,7 +115,7 @@ class ReportTypeTests(ModuleStoreTestCase):
             """.format(time_str=str(self.test_time)))
 
         self.CORRECT_CERT_STATUS_CSV = dedent("""
-            University,Course,Course Announce Date,Course Start Date,Course Registration Close Date,Course Registration Period,Total Enrolled,Audit Enrollment,Honor Code Enrollment,Verified Enrollment,Gross Revenue,Gross Revenue over the Minimum,Number of Verified Students Contributing More than the Minimum,Number of Refunds,Dollars Refunded
+            University,Course,Course Announce Date,Course Start Date,Course Registration Close Date,Course Registration Period,Total Enrolled,Audit Enrollment,Honor Code Enrollment,Verified Enrollment,Gross Revenue,Gross Revenue over the Minimum,Number of Verified Learners Contributing More than the Minimum,Number of Refunds,Dollars Refunded
             MITx,999 Robot Super Course,,,,,6,3,1,2,80.00,0.00,0,2,80.00
             """.format(time_str=str(self.test_time)))
 

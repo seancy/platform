@@ -938,7 +938,7 @@ such that the value can be defined later than this assignment (file load order).
                 } else if (!studentResults.after.enrollment) {
                     notenrolled.push(studentResults);
                 } else {
-                    console.warn('student results not reported to user');  // eslint-disable-line no-console
+                    console.warn('learner results not reported to user');  // eslint-disable-line no-console
                 }
             }
             renderList = function(label, ids) {

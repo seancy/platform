@@ -26,7 +26,7 @@ from student.roles import studio_access_role
     </div>
 
     <label>
-        ${_("Enter the reason why the students are to be manually enrolled or unenrolled.")}
+        ${_("Enter the reason why the learners are to be manually enrolled or unenrolled.")}
         ${_("This cannot be left blank and will be recorded and presented in Enrollment Reports.")}
         ${_("Therefore, please give enough detail to account for this action.")}
         <textarea rows="2" id="reason-field-id" name="reason-field" placeholder="${_('Reason')}" spellcheck="false"></textarea>
@@ -77,11 +77,11 @@ from student.roles import studio_access_role
   <hr/>
 
   <form class="auto_enroll auto_enroll_csv membership-section">
-    <legend class="hd hd-3">${_("Register/Enroll Students")}</legend>
+    <legend class="hd hd-3">${_("Register/Enroll Learners")}</legend>
     <label>
       ${_("To register and enroll a list of users in this course, choose a CSV file based on the following template:")}
       <a href="${static.url('documents/batch_register_enroll_template.csv')}">batch_register_enroll_template.csv</a><br/>
-      ${_("Please include one student per row and do not include any headers, footers, or blank lines.")}<br/>
+      ${_("Please include one learner per row and do not include any headers, footers, or blank lines.")}<br/>
       ${_("A maximum of 200 users by batch is advised to ensure optimal response times.")}
     </label>
     <div class="customBrowseBtn">
@@ -117,7 +117,7 @@ from student.roles import studio_access_role
     <label>
       ${_("To update a list of user accounts, choose a CSV file based on the following template:")}
       <a href="${static.url('documents/batch_update_template.csv')}">batch_update_template.csv</a><br/>
-      ${_("Please include one student per row and do not include any headers, footers, or blank lines.")}<br/>
+      ${_("Please include one learner per row and do not include any headers, footers, or blank lines.")}<br/>
       ${_("Note that users must have an activated {platform_name} account prior to this update.").format(platform_name=settings.PLATFORM_NAME)}
     </label>
     <div class="customBrowseBtn">
@@ -345,7 +345,7 @@ from student.roles import studio_access_role
       data-info-text="
         ${_("CCX Coaches are able to create their own Custom Courses "
             "based on this course, which they can use to provide personalized "
-            "instruction to their own students based in this course material.")}"
+            "instruction to their own learners based in this course material.")}"
       data-list-endpoint="${section_data['list_course_role_members_url']}"
       data-modify-endpoint="${section_data['modify_access_url']}"
       data-add-button-label="${_("Add CCX Coach")}"

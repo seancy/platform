@@ -75,7 +75,7 @@ class WordCloudFields(object):
         default=False
     )
     student_words = List(
-        help=_("Student answer."),
+        help=_("Learner answer."),
         scope=Scope.user_state,
         default=[]
     )

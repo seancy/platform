@@ -186,7 +186,7 @@
             });
             this.$list_studs_csv_btn.click(function() {
                 var url = dataDownloadObj.$list_studs_csv_btn.data('endpoint') + '/csv';
-                var errorMessage = gettext('Error generating student profile information. Please try again.');
+                var errorMessage = gettext('Error generating learner profile information. Please try again.');
                 dataDownloadObj.clear_display();
                 return $.ajax({
                     type: 'POST',
@@ -220,7 +220,7 @@
                     error: function() {
                         dataDownloadObj.clear_display();
                         dataDownloadObj.$download_request_response_error.text(
-                            gettext('Error getting student list.')
+                            gettext('Error getting learner list.')
                         );
                         return dataDownloadObj.$download_request_response_error.css({
                             display: 'block'
@@ -286,7 +286,7 @@
             });
             this.$list_may_enroll_csv_btn.click(function() {
                 var url = dataDownloadObj.$list_may_enroll_csv_btn.data('endpoint');
-                var errorMessage = gettext('Error generating list of students who may enroll. Please try again.');
+                var errorMessage = gettext('Error generating list of learners who may enroll. Please try again.');
                 dataDownloadObj.clear_display();
                 return $.ajax({
                     type: 'POST',

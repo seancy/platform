@@ -84,7 +84,7 @@ class InstructorTaskReportTest(InstructorTaskTestCase):
         task_id = instructor_task.task_id
         response = self._get_instructor_task_status(task_id)
         output = json.loads(response.content)
-        self.assertEquals(output['message'], "Problem rescored for 2 of 3 students (out of 5)")
+        self.assertEquals(output['message'], "Problem rescored for 2 of 3 learners (out of 5)")
         self.assertEquals(output['succeeded'], False)
         self.assertEquals(output['task_id'], task_id)
         self.assertEquals(output['task_state'], SUCCESS)
@@ -110,7 +110,7 @@ class InstructorTaskReportTest(InstructorTaskTestCase):
         task_id = instructor_task.task_id
         response = self._get_instructor_task_status(task_id)
         output = json.loads(response.content)
-        self.assertEquals(output['message'], "Problem rescored for 2 of 3 students (out of 5)")
+        self.assertEquals(output['message'], "Problem rescored for 2 of 3 learners (out of 5)")
         self.assertEquals(output['succeeded'], False)
         self.assertEquals(output['task_id'], task_id)
         self.assertEquals(output['task_state'], SUCCESS)
@@ -262,7 +262,7 @@ class InstructorTaskReportTest(InstructorTaskTestCase):
 
     def test_update_progress_to_success(self):
         output = self._get_output_for_task_success(10, 8, 10)
-        self.assertEquals(output['message'], "Problem rescored for 8 of 10 students")
+        self.assertEquals(output['message'], "Problem rescored for 8 of 10 learners")
         self.assertEquals(output['succeeded'], False)
         self.assertEquals(output['task_state'], SUCCESS)
         self.assertFalse(output['in_progress'])
@@ -276,35 +276,35 @@ class InstructorTaskReportTest(InstructorTaskTestCase):
 
     def test_success_messages(self):
         output = self._get_output_for_task_success(0, 0, 10)
-        self.assertEqual(output['message'], "Unable to find any students with submissions to be rescored (out of 10)")
+        self.assertEqual(output['message'], "Unable to find any learners with submissions to be rescored (out of 10)")
         self.assertFalse(output['succeeded'])
 
         output = self._get_output_for_task_success(10, 0, 10)
-        self.assertEqual(output['message'], "Problem failed to be rescored for any of 10 students")
+        self.assertEqual(output['message'], "Problem failed to be rescored for any of 10 learners")
         self.assertFalse(output['succeeded'])
 
         output = self._get_output_for_task_success(10, 8, 10)
-        self.assertEqual(output['message'], "Problem rescored for 8 of 10 students")
+        self.assertEqual(output['message'], "Problem rescored for 8 of 10 learners")
         self.assertFalse(output['succeeded'])
 
         output = self._get_output_for_task_success(9, 8, 10)
-        self.assertEqual(output['message'], "Problem rescored for 8 of 9 students (out of 10)")
+        self.assertEqual(output['message'], "Problem rescored for 8 of 9 learners (out of 10)")
         self.assertFalse(output['succeeded'])
 
         output = self._get_output_for_task_success(10, 10, 10)
-        self.assertEqual(output['message'], "Problem successfully rescored for 10 students")
+        self.assertEqual(output['message'], "Problem successfully rescored for 10 learners")
         self.assertTrue(output['succeeded'])
 
         output = self._get_output_for_task_success(0, 0, 1, student=self.student)
-        self.assertIn("Unable to find submission to be rescored for student", output['message'])
+        self.assertIn("Unable to find submission to be rescored for learner", output['message'])
         self.assertFalse(output['succeeded'])
 
         output = self._get_output_for_task_success(1, 0, 1, student=self.student)
-        self.assertIn("Problem failed to be rescored for student", output['message'])
+        self.assertIn("Problem failed to be rescored for learner", output['message'])
         self.assertFalse(output['succeeded'])
 
         output = self._get_output_for_task_success(1, 1, 1, student=self.student)
-        self.assertIn("Problem successfully rescored for student", output['message'])
+        self.assertIn("Problem successfully rescored for learner", output['message'])
         self.assertTrue(output['succeeded'])
 
     def test_email_success_messages(self):

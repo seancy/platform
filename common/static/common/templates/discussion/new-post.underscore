@@ -13,11 +13,11 @@
     <div class="post-field group-selector-wrapper <% if (!is_commentable_divided) { print('disabled'); } %>">
         <label class="field-label">
             <span class="field-label-text">
-                <% //Translators: This labels the selector for which group of students can view a post %>
+                <% //Translators: This labels the selector for which group of learners can view a post %>
                 <%- gettext("Visible to") %>
             </span>
             <div class="field-help" id="field_help_visible_to">
-                <%- gettext("Discussion admins, moderators, and TAs can make their posts visible to all students or specify a single group.") %>
+                <%- gettext("Discussion admins, moderators, and TAs can make their posts visible to all learners or specify a single group.") %>
             </div>
             <div class="field-input">
                 <select aria-describedby="field_help_visible_to" class="post-topic field-input js-group-select" name="group_id" <% if (!is_commentable_divided) { print("disabled"); } %>>

@@ -185,7 +185,7 @@ msgid "ID verification pending"
 msgstr "هي دثقهبهذشفهخر حثريهرل"
 
 #: common/djangoapps/course_modes/helpers.py
-msgid "You're enrolled as a verified student"
+msgid "You're enrolled as a verified leaner"
 msgstr "غخع'قث ثرقخممثي شس ش دثقهبهثي سفعيثرف"
 
 #: common/djangoapps/course_modes/helpers.py
@@ -198,7 +198,7 @@ msgid "ID Verified Ribbon/Badge"
 msgstr "هي دثقهبهثي قهززخر/زشيلث"
 
 #: common/djangoapps/course_modes/helpers.py
-msgid "You're enrolled as an honor code student"
+msgid "You're enrolled as an honor code learner"
 msgstr "غخع'قث ثرقخممثي شس شر اخرخق ذخيث سفعيثرف"
 
 #: common/djangoapps/course_modes/helpers.py lms/djangoapps/branding/api.py
@@ -210,7 +210,7 @@ msgid "Honor Code"
 msgstr "اخرخق ذخيث"
 
 #: common/djangoapps/course_modes/helpers.py
-msgid "You're enrolled as a professional education student"
+msgid "You're enrolled as a professional education learner"
 msgstr "غخع'قث ثرقخممثي شس ش حقخبثسسهخرشم ثيعذشفهخر سفعيثرف"
 
 #: common/djangoapps/course_modes/helpers.py
@@ -357,7 +357,7 @@ msgstr "ذخووعرهفغ فش"
 
 #: common/djangoapps/django_comment_common/models.py
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py
-msgid "Student"
+msgid "Learner"
 msgstr "سفعيثرف"
 
 #: common/djangoapps/student/admin.py
@@ -584,7 +584,7 @@ msgstr "وشمث"
 msgid "Female"
 msgstr "بثوشمث"
 
-#. Translators: 'Other' refers to the student's gender
+#. Translators: 'Other' refers to the learner's gender
 #: common/djangoapps/student/models.py
 msgid "Other/Prefer Not to Say"
 msgstr "خفاثق/حقثبثق رخف فخ سشغ"
@@ -617,12 +617,12 @@ msgstr "تعرهخق سثذخريشقغ/تعرهخق اهلا/وهييمث سذ�
 msgid "Elementary/primary school"
 msgstr "ثمثوثرفشقغ/حقهوشقغ سذاخخم"
 
-#. Translators: 'None' refers to the student's level of education
+#. Translators: 'None' refers to the learner's level of education
 #: common/djangoapps/student/models.py
 msgid "No formal education"
 msgstr "رخ بخقوشم ثيعذشفهخر"
 
-#. Translators: 'Other' refers to the student's level of education
+#. Translators: 'Other' refers to the learner's level of education
 #: common/djangoapps/student/models.py
 msgid "Other education"
 msgstr "خفاثق ثيعذشفهخر"
@@ -2010,7 +2010,7 @@ msgstr "ذعسفخو ثدشمعشفثي سذقهحف"
 
 #: common/lib/capa/capa/responsetypes.py
 #, python-brace-format
-msgid "error getting student answer from {student_answers}"
+msgid "error getting learner answer from {student_answers}"
 msgstr "ثققخق لثففهرل سفعيثرف شرسصثق بقخو {student_answers}"
 
 #: common/lib/capa/capa/responsetypes.py
@@ -2171,7 +2171,7 @@ msgid "Blank Advanced Problem"
 msgstr "زمشرن شيدشرذثي حقخزمثو"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Number of attempts taken by the student on this problem"
+msgid "Number of attempts taken by the learner on this problem"
 msgstr "رعوزثق خب شففثوحفس فشنثر زغ فاث سفعيثرف خر فاهس حقخزمثو"
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2181,7 +2181,7 @@ msgstr "وشطهوعو شففثوحفس"
 
 #: common/lib/xmodule/xmodule/capa_base.py
 msgid ""
-"Defines the number of times a student can try to answer this problem. If the"
+"Defines the number of times a learner can try to answer this problem. If the"
 " value is not set, infinite attempts are allowed."
 msgstr ""
 "يثبهرثس فاث رعوزثق خب فهوثس ش سفعيثرف ذشر فقغ فخ شرسصثق فاهس حقخزمثو. هب فاث"
@@ -2288,7 +2288,7 @@ msgid "On Reset"
 msgstr "خر قثسثف"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Per Student"
+msgid "Per Learner"
 msgstr "حثق سفعيثرف"
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2296,7 +2296,7 @@ msgid "XML data for the problem"
 msgstr "طوم يشفش بخق فاث حقخزمثو"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Dictionary with the correctness of current student answers"
+msgid "Dictionary with the correctness of current learner answers"
 msgstr "يهذفهخرشقغ صهفا فاث ذخققثذفرثسس خب ذعققثرف سفعيثرف شرسصثقس"
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2304,11 +2304,11 @@ msgid "Dictionary for maintaining the state of inputtypes"
 msgstr "يهذفهخرشقغ بخق وشهرفشهرهرل فاث سفشفث خب هرحعففغحثس"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Dictionary with the current student responses"
+msgid "Dictionary with the current learner responses"
 msgstr "يهذفهخرشقغ صهفا فاث ذعققثرف سفعيثرف قثسحخرسثس"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Dictionary with the current student score"
+msgid "Dictionary with the current learner score"
 msgstr "يهذفهخرشقغ صهفا فاث ذعققثرف سفعيثرف سذخقث"
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2316,11 +2316,11 @@ msgid "Whether or not the answers have been saved since last submit"
 msgstr "صاثفاثق خق رخف فاث شرسصثقس اشدث زثثر سشدثي سهرذث مشسف سعزوهف"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Whether the student has answered the problem"
+msgid "Whether the learner has answered the problem"
 msgstr "صاثفاثق فاث سفعيثرف اشس شرسصثقثي فاث حقخزمثو"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Random seed for this student"
+msgid "Random seed for this learner"
 msgstr "قشريخو سثثي بخق فاهس سفعيثرف"
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2333,7 +2333,7 @@ msgstr "فهوثق زثفصثثر شففثوحفس"
 
 #: common/lib/xmodule/xmodule/capa_base.py
 msgid ""
-"Seconds a student must wait between submissions for a problem with multiple "
+"Seconds a learner must wait between submissions for a problem with multiple "
 "attempts."
 msgstr ""
 "سثذخريس ش سفعيثرف وعسف صشهف زثفصثثر سعزوهسسهخرس بخق ش حقخزمثو صهفا وعمفهحمث "
@@ -2548,7 +2548,7 @@ msgstr "غخع ذشررخف سثمثذف قثسثف بخق ش حقخزمثو ف�
 msgid "You must submit an answer before you can select Reset."
 msgstr "غخع وعسف سعزوهف شر شرسصثق زثبخقث غخع ذشر سثمثذف قثسثف."
 
-#. Translators: 'rescoring' refers to the act of re-submitting a student's
+#. Translators: 'rescoring' refers to the act of re-submitting a learner's
 #. solution so it can get a new score.
 #: common/lib/xmodule/xmodule/capa_base.py
 msgid "Problem's definition does not support rescoring."
@@ -2708,7 +2708,7 @@ msgstr "ذخسوثفهذ ذخعقسث يهسحمشغ حقهذث"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"The cost displayed to students for enrolling in the course. If a paid course"
+"The cost displayed to learner for enrolling in the course. If a paid course"
 " registration price is set by an administrator in the database, that price "
 "will be displayed instead of this one."
 msgstr ""
@@ -2748,7 +2748,7 @@ msgstr "ساخص ذشمذعمشفخق"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter true or false. When true, students can see the calculator in the "
+"Enter true or false. When true, learners can see the calculator in the "
 "course."
 msgstr ""
 "ثرفثق فقعث خق بشمسث. صاثر فقعث, سفعيثرفس ذشر سثث فاث ذشمذعمشفخق هر فاث "
@@ -2792,7 +2792,7 @@ msgstr "يهسذعسسهخر زمشذنخعف يشفثس"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter pairs of dates between which students cannot post to discussion "
+"Enter pairs of dates between which learners cannot post to discussion "
 "forums. Inside the provided brackets, enter an additional set of square "
 "brackets surrounding each pair of dates you add. Format each pair of dates "
 "as [\"YYYY-MM-DD\", \"YYYY-MM-DD\"]. To specify times as well as dates, "
@@ -2867,7 +2867,7 @@ msgstr "ذخاخقف ذخربهلعقشفهخر"
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Enter policy keys and values to enable the cohort feature, define automated "
-"student assignment to groups, or identify any course-wide discussion topics "
+"learners assignment to groups, or identify any course-wide discussion topics "
 "as private to cohort members."
 msgstr ""
 "ثرفثق حخمهذغ نثغس شري دشمعثس فخ ثرشزمث فاث ذخاخقف بثشفعقث, يثبهرث شعفخوشفثي "
@@ -2921,7 +2921,7 @@ msgid "Disable Progress Graph"
 msgstr "يهسشزمث حقخلقثسس لقشحا"
 
 #: common/lib/xmodule/xmodule/course_module.py
-msgid "Enter true or false. If true, students cannot view the progress graph."
+msgid "Enter true or false. If true, learners cannot view the progress graph."
 msgstr ""
 "ثرفثق فقعث خق بشمسث. هب فقعث, سفعيثرفس ذشررخف دهثص فاث حقخلقثسس لقشحا."
 
@@ -3003,7 +3003,7 @@ msgstr "شممخص شرخرغوخعس يهسذعسسهخر حخسفس"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter true or false. If true, students can create discussion posts that are "
+"Enter true or false. If true, learners can create discussion posts that are "
 "anonymous to all users."
 msgstr ""
 "ثرفثق فقعث خق بشمسث. هب فقعث, سفعيثرفس ذشر ذقثشفث يهسذعسسهخر حخسفس فاشف شقث "
@@ -3015,8 +3015,8 @@ msgstr "شممخص شرخرغوخعس يهسذعسسهخر حخسفس فخ حث�
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter true or false. If true, students can create discussion posts that are "
-"anonymous to other students. This setting does not make posts anonymous to "
+"Enter true or false. If true, learners can create discussion posts that are "
+"anonymous to other learners. This setting does not make posts anonymous to "
 "course staff."
 msgstr ""
 "ثرفثق فقعث خق بشمسث. هب فقعث, سفعيثرفس ذشر ذقثشفث يهسذعسسهخر حخسفس فاشف شقث "
@@ -3038,7 +3038,7 @@ msgstr "ذخعقسث اخوث سهيثزشق رشوث"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter the heading that you want students to see above your course handouts "
+"Enter the heading that you want learners to see above your course handouts "
 "on the Course Home page. Your course handouts appear in the right panel of "
 "the page."
 msgstr ""
@@ -3079,7 +3079,7 @@ msgid "External Login Domain"
 msgstr "ثطفثقرشم مخلهر يخوشهر"
 
 #: common/lib/xmodule/xmodule/course_module.py
-msgid "Enter the external login method students can use for the course."
+msgid "Enter the external login method learners can use for the course."
 msgstr "ثرفثق فاث ثطفثقرشم مخلهر وثفاخي سفعيثرفس ذشر عسث بخق فاث ذخعقسث."
 
 #: common/lib/xmodule/xmodule/course_module.py
@@ -3088,7 +3088,7 @@ msgstr "ذثقفهبهذشفثس يخصرمخشيشزمث زثبخقث ثري"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter true or false. If true, students can download certificates before the "
+"Enter true or false. If true, learners can download certificates before the "
 "course ends, if they've met certificate requirements."
 msgstr ""
 "ثرفثق فقعث خق بشمسث. هب فقعث, سفعيثرفس ذشر يخصرمخشي ذثقفهبهذشفثس زثبخقث فاث "
@@ -3101,12 +3101,12 @@ msgstr "ذثقفهبهذشفثس يهسحمشغ زثاشدهخق"
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Enter end, early_with_info, or early_no_info. After certificate generation, "
-"students who passed see a link to their certificates on the dashboard and "
-"students who did not pass see information about the grading configuration. "
+"learners who passed see a link to their certificates on the dashboard and "
+"learners who did not pass see information about the grading configuration. "
 "The default is end, which displays this certificate information to all "
-"students after the course end date. To display this certificate information "
-"to all students as soon as certificates are generated, enter "
-"early_with_info. To display only the links to passing students as soon as "
+"learners after the course end date. To display this certificate information "
+"to all learners as soon as certificates are generated, enter "
+"early_with_info. To display only the links to passing learners as soon as "
 "certificates are generated, enter early_no_info."
 msgstr ""
 "ثرفثق ثري, ثشقمغ_صهفا_هربخ, خق ثشقمغ_رخ_هربخ. شبفثق ذثقفهبهذشفث لثرثقشفهخر, "
@@ -3171,7 +3171,7 @@ msgstr ""
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Use this setting only when generating PDF certificates. Between quotation "
-"marks, enter the short name of the type of certificate that students receive"
+"marks, enter the short name of the type of certificate that learners receive"
 " when they complete the course. For instance, \"Certificate\"."
 msgstr ""
 "عسث فاهس سثففهرل خرمغ صاثر لثرثقشفهرل حيب ذثقفهبهذشفثس. زثفصثثر ضعخفشفهخر "
@@ -3185,7 +3185,7 @@ msgstr "ذثقفهبهذشفث رشوث (ساخقف)"
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Use this setting only when generating PDF certificates. Between quotation "
-"marks, enter the long name of the type of certificate that students receive "
+"marks, enter the long name of the type of certificate that learners receive "
 "when they complete the course. For instance, \"Certificate of Achievement\"."
 msgstr ""
 "عسث فاهس سثففهرل خرمغ صاثر لثرثقشفهرل حيب ذثقفهبهذشفثس. زثفصثثر ضعخفشفهخر "
@@ -3294,13 +3294,13 @@ msgstr ""
 "رعمم."
 
 #: common/lib/xmodule/xmodule/course_module.py
-msgid "Course Maximum Student Enrollment"
+msgid "Course Maximum Learner Enrollment"
 msgstr "ذخعقسث وشطهوعو سفعيثرف ثرقخمموثرف"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter the maximum number of students that can enroll in the course. To allow"
-" an unlimited number of students, enter null."
+"Enter the maximum number of learners that can enroll in the course. To allow"
+" an unlimited number of learners, enter null."
 msgstr ""
 "ثرفثق فاث وشطهوعو رعوزثق خب سفعيثرفس فاشف ذشر ثرقخمم هر فاث ذخعقسث. فخ شممخص"
 " شر عرمهوهفثي رعوزثق خب سفعيثرفس, ثرفثق رعمم."
@@ -3339,7 +3339,7 @@ msgstr "حقث-ذخعقسث سعقدثغ قثضعهقثي"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Specify whether students must complete a survey before they can view your "
+"Specify whether learners must complete a survey before they can view your "
 "course content. If you set this value to true, you must add a name for the "
 "survey to the Course Survey Name setting above."
 msgstr ""
@@ -3385,7 +3385,7 @@ msgstr "ثرفقشرذث ثطشو ثرشزمثي"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Specify whether students must complete an entrance exam before they can view"
+"Specify whether learners must complete an entrance exam before they can view"
 " your course content. Note, you must enable Entrance Exams for this course "
 "setting to take effect."
 msgstr ""
@@ -3399,7 +3399,7 @@ msgstr "ثرفقشرذث ثطشو وهرهوعو سذخقث (%)"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Specify a minimum percentage score for an entrance exam before students can "
+"Specify a minimum percentage score for an entrance exam before learners can "
 "view your course content. Note, you must enable Entrance Exams for this "
 "course setting to take effect."
 msgstr ""
@@ -3541,7 +3541,7 @@ msgstr "سثمب حشذثي"
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
 "Set this to \"true\" to mark this course as self-paced. Self-paced courses "
-"do not have due dates for assignments, and students can progress through the"
+"do not have due dates for assignments, and learners can progress through the"
 " course at any rate before the course ends."
 msgstr ""
 "سثف فاهس فخ \"فقعث\" فخ وشقن فاهس ذخعقسث شس سثمب-حشذثي. سثمب-حشذثي ذخعقسثس "
@@ -3554,7 +3554,7 @@ msgstr "زغحشسس ذخعقسث اخوث"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Bypass the course home tab when students arrive from the dashboard, sending "
+"Bypass the course home tab when learners arrive from the dashboard, sending "
 "them directly to course content."
 msgstr ""
 "زغحشسس فاث ذخعقسث اخوث فشز صاثر سفعيثرفس شققهدث بقخو فاث يشسازخشقي, سثريهرل "
@@ -3577,7 +3577,7 @@ msgid "Course Learning Information"
 msgstr "ذخعقسث مثشقرهرل هربخقوشفهخر"
 
 #: common/lib/xmodule/xmodule/course_module.py
-msgid "Specify what student can learn from the course."
+msgid "Specify what learner can learn from the course."
 msgstr "سحثذهبغ صاشف سفعيثرف ذشر مثشقر بقخو فاث ذخعقسث."
 
 #: common/lib/xmodule/xmodule/course_module.py
@@ -3834,7 +3834,7 @@ msgid "Count"
 msgstr "ذخعرف"
 
 #: common/lib/xmodule/xmodule/library_content_module.py
-msgid "Enter the number of components to display to each student."
+msgid "Enter the number of components to display to each learner."
 msgstr "ثرفثق فاث رعوزثق خب ذخوحخرثرفس فخ يهسحمشغ فخ ثشذا سفعيثرف."
 
 #: common/lib/xmodule/xmodule/library_content_module.py
@@ -3991,7 +3991,7 @@ msgstr "خحثر هر رثص حشلث"
 
 #: common/lib/xmodule/xmodule/lti_module.py
 msgid ""
-"Select True if you want students to click a link that opens the LTI tool in "
+"Select True if you want learners to click a link that opens the LTI tool in "
 "a new window. Select False if you want the LTI content to open in an IFrame "
 "in the current page. This setting is only used when Hide External Tool is "
 "set to False.  "
@@ -4253,8 +4253,8 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Enter the maximum number of times a student can try to answer problems. By "
-"default, Maximum Attempts is set to null, meaning that students have an "
+"Enter the maximum number of times a learner can try to answer problems. By "
+"default, Maximum Attempts is set to null, meaning that learners have an "
 "unlimited number of attempts for problems. You can override this course-wide"
 " setting for individual problems. However, if the course-wide setting is a "
 "specific number, you cannot set the Maximum Attempts for individual problems"
@@ -4292,7 +4292,7 @@ msgstr "لقخعح ذخربهلعقشفهخرس"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Enter the configurations that govern how students are grouped together."
+"Enter the configurations that govern how learners are grouped together."
 msgstr ""
 "ثرفثق فاث ذخربهلعقشفهخرس فاشف لخدثقر اخص سفعيثرفس شقث لقخعحثي فخلثفاثق."
 
@@ -4312,7 +4312,7 @@ msgstr "ثرشزمث دهيثخ شعفخ-شيدشرذث"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Specify whether to show an auto-advance button in videos. If the student "
+"Specify whether to show an auto-advance button in videos. If the learner "
 "clicks it, when the last video in a unit finishes it will automatically move"
 " to the next unit and autoplay the first video."
 msgstr ""
@@ -4354,18 +4354,18 @@ msgstr ""
 "هس ذاشرلثي."
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
-msgid "Enable Student Notes"
+msgid "Enable Learner Notes"
 msgstr "ثرشزمث سفعيثرف رخفثس"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Enter true or false. If true, students can use the Student Notes feature."
+"Enter true or false. If true, learners can use the Learner Notes feature."
 msgstr ""
 "ثرفثق فقعث خق بشمسث. هب فقعث, سفعيثرفس ذشر عسث فاث سفعيثرف رخفثس بثشفعقث."
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Indicates whether Student Notes are visible in the course. Students can also"
+"Indicates whether Learner Notes are visible in the course. Learners can also"
 " show or hide their notes in the courseware."
 msgstr ""
 "هريهذشفثس صاثفاثق سفعيثرف رخفثس شقث دهسهزمث هر فاث ذخعقسث. سفعيثرفس ذشر شمسخ"
@@ -4393,15 +4393,15 @@ msgid "Partition for segmenting users by enrollment track"
 msgstr "حشقفهفهخر بخق سثلوثرفهرل عسثقس زغ ثرقخمموثرف فقشذن"
 
 #: common/lib/xmodule/xmodule/poll_module.py
-msgid "Whether this student has voted on the poll"
+msgid "Whether this learner has voted on the poll"
 msgstr "صاثفاثق فاهس سفعيثرف اشس دخفثي خر فاث حخمم"
 
 #: common/lib/xmodule/xmodule/poll_module.py
-msgid "Student answer"
+msgid "Learner answer"
 msgstr "سفعيثرف شرسصثق"
 
 #: common/lib/xmodule/xmodule/poll_module.py
-msgid "Poll answers from all students"
+msgid "Poll answers from all learners"
 msgstr "حخمم شرسصثقس بقخو شمم سفعيثرفس"
 
 #: common/lib/xmodule/xmodule/poll_module.py
@@ -4446,7 +4446,7 @@ msgstr "هس فهوث مهوهفثي"
 
 #: common/lib/xmodule/xmodule/seq_module.py
 msgid ""
-"This setting indicates whether students have a limited time to view or "
+"This setting indicates whether learners have a limited time to view or "
 "interact with this courseware component."
 msgstr ""
 "فاهس سثففهرل هريهذشفثس صاثفاثق سفعيثرفس اشدث ش مهوهفثي فهوث فخ دهثص خق "
@@ -4458,7 +4458,7 @@ msgstr "فهوث مهوهف هر وهرعفثس"
 
 #: common/lib/xmodule/xmodule/seq_module.py
 msgid ""
-"The number of minutes available to students for viewing or interacting with "
+"The number of minutes available to learners for viewing or interacting with "
 "this courseware component."
 msgstr ""
 "فاث رعوزثق خب وهرعفثس شدشهمشزمث فخ سفعيثرفس بخق دهثصهرل خق هرفثقشذفهرل صهفا "
@@ -4530,7 +4530,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/seq_module.py
 msgid ""
-"A list summarizing what students should look forward to in this section."
+"A list summarizing what learners should look forward to in this section."
 msgstr ""
 "ش مهسف سعووشقهظهرل صاشف سفعيثرفس ساخعمي مخخن بخقصشقي فخ هر فاهس سثذفهخر."
 
@@ -4554,7 +4554,7 @@ msgstr "ذخرفثرف ثطحثقهوثرف"
 #: common/lib/xmodule/xmodule/split_test_module.py
 #: lms/djangoapps/lms_xblock/mixin.py
 msgid ""
-"The list of group configurations for partitioning students in content "
+"The list of group configurations for partitioning learners in content "
 "experiments."
 msgstr ""
 "فاث مهسف خب لقخعح ذخربهلعقشفهخرس بخق حشقفهفهخرهرل سفعيثرفس هر ذخرفثرف "
@@ -4563,7 +4563,7 @@ msgstr ""
 #: common/lib/xmodule/xmodule/split_test_module.py
 msgid ""
 "The configuration defines how users are grouped for this content experiment."
-" Caution: Changing the group configuration of a student-visible experiment "
+" Caution: Changing the group configuration of a learner-visible experiment "
 "will impact the experiment data."
 msgstr ""
 "فاث ذخربهلعقشفهخر يثبهرثس اخص عسثقس شقث لقخعحثي بخق فاهس ذخرفثرف ثطحثقهوثرف."
@@ -4575,7 +4575,7 @@ msgid "Group Configuration"
 msgstr "لقخعح ذخربهلعقشفهخر"
 
 #: common/lib/xmodule/xmodule/split_test_module.py
-msgid "Which child module students in a particular group_id should see"
+msgid "Which child module learners in a particular group_id should see"
 msgstr "صاهذا ذاهمي وخيعمث سفعيثرفس هر ش حشقفهذعمشق لقخعح_هي ساخعمي سثث"
 
 #: common/lib/xmodule/xmodule/split_test_module.py
@@ -4820,7 +4820,7 @@ msgstr "يخصرمخشي دهيثخ"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
 msgid ""
-"Allow students to download versions of this video in different formats if "
+"Allow learners to download versions of this video in different formats if "
 "they cannot use the edX video player or do not have access to YouTube. You "
 "must add at least one non-YouTube URL in the Video File URLs field."
 msgstr ""
@@ -4837,8 +4837,8 @@ msgid ""
 "The URL or URLs where you've posted non-YouTube versions of the video. Each "
 "URL must end in .mpeg, .mp4, .ogg, or .webm and cannot be a YouTube URL. "
 "(For browser compatibility, we strongly recommend .mp4 and .webm format.) "
-"Students will be able to view the first listed video that's compatible with "
-"the student's computer. To allow students to download these videos, set "
+"Learners will be able to view the first listed video that's compatible with "
+"the learner's computer. To allow learners to download these videos, set "
 "Video Download Allowed to True."
 msgstr ""
 "فاث عقم خق عقمس صاثقث غخع'دث حخسفثي رخر-غخعفعزث دثقسهخرس خب فاث دهيثخ. ثشذا "
@@ -4854,12 +4854,12 @@ msgstr "دهيثخ بهمث عقمس"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
 msgid ""
-"By default, students can download an .srt or .txt transcript when you set "
+"By default, learners can download an .srt or .txt transcript when you set "
 "Download Transcript Allowed to True. If you want to provide a downloadable "
 "transcript in a different format, we recommend that you upload a handout by "
 "using the Upload a Handout field. If this isn't possible, you can post a "
 "transcript file on the Files & Uploads page or on the Internet, and then add"
-" the URL for the transcript here. Students see a link to download that "
+" the URL for the transcript here. Learners see a link to download that "
 "transcript below the video."
 msgstr ""
 "زغ يثبشعمف, سفعيثرفس ذشر يخصرمخشي شر .سقف خق .فطف فقشرسذقهحف صاثر غخع سثف "
@@ -4876,7 +4876,7 @@ msgstr "يخصرمخشيشزمث فقشرسذقهحف عقم"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
 msgid ""
-"Allow students to download the timed transcript. A link to download the file"
+"Allow learners to download the timed transcript. A link to download the file"
 " appears below the video. By default, the transcript is an .srt or .txt "
 "file. If you want to provide the transcript for download in a different "
 "format, upload a file by using the Upload Handout field."
@@ -4968,7 +4968,7 @@ msgstr "سحثذهبغ صاثفاثق غخعفعزث هس شدشهمشزمث ب�
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
 msgid ""
-"Upload a handout to accompany this video. Students can download the handout "
+"Upload a handout to accompany this video. Learners can download the handout "
 "by clicking Download Handout under the video."
 msgstr ""
 "عحمخشي ش اشريخعف فخ شذذخوحشرغ فاهس دهيثخ. سفعيثرفس ذشر يخصرمخشي فاث اشريخعف "
@@ -5080,7 +5080,7 @@ msgid "Whether this learner has posted words to the cloud."
 msgstr "صاثفاثق فاهس مثشقرثق اشس حخسفثي صخقيس فخ فاث ذمخعي."
 
 #: common/lib/xmodule/xmodule/word_cloud_module.py
-msgid "Student answer."
+msgid "Learner answer."
 msgstr "سفعيثرف شرسصثق."
 
 #: common/lib/xmodule/xmodule/word_cloud_module.py
@@ -5608,7 +5608,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "An {cert_type} certificate demonstrates a high level of achievement in a "
-"program of study, and includes verification of the student's identity."
+"program of study, and includes verification of the learner's identity."
 msgstr ""
 "شر {cert_type} ذثقفهبهذشفث يثوخرسفقشفثس ش اهلا مثدثم خب شذاهثدثوثرف هر ش "
 "حقخلقشو خب سفعيغ, شري هرذمعيثس دثقهبهذشفهخر خب فاث سفعيثرف'س هيثرفهفغ."
@@ -5635,7 +5635,7 @@ msgstr ""
 msgid "{partner_short_name} {course_number} Certificate | {platform_name}"
 msgstr "{partner_short_name} {course_number} ذثقفهبهذشفث | {platform_name}"
 
-#. Translators:  This text fragment appears after the student's name
+#. Translators:  This text fragment appears after the learner's name
 #. (displayed in a large font) on the certificate
 #. screen.  The text describes the accomplishment represented by the
 #. certificate information displayed to the user
@@ -5654,7 +5654,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "{platform_name} acknowledges achievements through certificates, which are "
-"awarded for course activities that {platform_name} students complete."
+"awarded for course activities that {platform_name} learners complete."
 msgstr ""
 "{platform_name} شذنرخصمثيلثس شذاهثدثوثرفس فاقخعلا ذثقفهبهذشفثس, صاهذا شقث "
 "شصشقيثي بخق ذخعقسث شذفهدهفهثس فاشف {platform_name} سفعيثرفس ذخوحمثفث."
@@ -5708,7 +5708,7 @@ msgstr "شزخعف {platform_name} ذثقفهبهذشفثس"
 
 #: lms/djangoapps/certificates/views/webview.py
 #, python-brace-format
-msgid "How {platform_name} Validates Student Certificates"
+msgid "How {platform_name} Validates Learner Certificates"
 msgstr "اخص {platform_name} دشمهيشفثس سفعيثرف ذثقفهبهذشفثس"
 
 #. Translators:  This text describes the validation mechanism for a
@@ -5766,7 +5766,7 @@ msgstr "ذخرفشذف {platform_name}"
 #. describes the guarantee provided by edX
 #: lms/djangoapps/certificates/views/webview.py
 #, python-brace-format
-msgid "{platform_name} acknowledges the following student accomplishment"
+msgid "{platform_name} acknowledges the following learner accomplishment"
 msgstr "{platform_name} شذنرخصمثيلثس فاث بخممخصهرل سفعيثرف شذذخوحمهساوثرف"
 
 #. Translators:  This text represents the description of course
@@ -5849,7 +5849,7 @@ msgid "Percent"
 msgstr "حثقذثرف"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
-msgid "Opened by this number of students"
+msgid "Opened by this number of learners"
 msgstr "خحثرثي زغ فاهس رعوزثق خب سفعيثرفس"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
@@ -5857,11 +5857,11 @@ msgid "subsections"
 msgstr "سعزسثذفهخرس"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
-msgid "Count of Students"
+msgid "Count of Learners"
 msgstr "ذخعرف خب سفعيثرفس"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
-msgid "Percent of Students"
+msgid "Percent of Learners"
 msgstr "حثقذثرف خب سفعيثرفس"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
@@ -6254,7 +6254,7 @@ msgstr ""
 #: lms/djangoapps/courseware/masquerade.py
 msgid ""
 "This type of component cannot be shown while viewing the course as a "
-"specific student."
+"specific learner."
 msgstr ""
 "فاهس فغحث خب ذخوحخرثرف ذشررخف زث ساخصر صاهمث دهثصهرل فاث ذخعقسث شس ش "
 "سحثذهبهذ سفعيثرف."
@@ -7025,7 +7025,7 @@ msgstr "عسثقرشوث {user} شمقثشيغ ثطهسفس."
 #, python-brace-format
 msgid ""
 "Error '{error}' while sending email to new user (user email={email}). "
-"Without the email student would not be able to login. Please contact support"
+"Without the email learner would not be able to login. Please contact support"
 " for further information."
 msgstr ""
 "ثققخق '{error}' صاهمث سثريهرل ثوشهم فخ رثص عسثق (عسثق ثوشهم={email}). "
@@ -7307,7 +7307,7 @@ msgid "Course has no valid entrance exam section."
 msgstr "ذخعقسث اشس رخ دشمهي ثرفقشرذث ثطشو سثذفهخر."
 
 #: lms/djangoapps/instructor/views/api.py
-msgid "All Students"
+msgid "All Learners"
 msgstr "شمم سفعيثرفس"
 
 #: lms/djangoapps/instructor/views/api.py
@@ -7331,7 +7331,7 @@ msgstr "حقخزمثو لقشيث"
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
-msgid "Successfully changed due date for student {0} for {1} to {2}"
+msgid "Successfully changed due date for learner {0} for {1} to {2}"
 msgstr "سعذذثسسبعممغ ذاشرلثي يعث يشفث بخق سفعيثرف {0} بخق {1} فخ {2}"
 
 #: lms/djangoapps/instructor/views/api.py
@@ -7342,22 +7342,22 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
-msgid "Successfully reset due date for student {0} for {1} to {2}"
+msgid "Successfully reset due date for learner {0} for {1} to {2}"
 msgstr "سعذذثسسبعممغ قثسثف يعث يشفث بخق سفعيثرف {0} بخق {1} فخ {2}"
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-format
-msgid "This student (%s) will skip the entrance exam."
+msgid "This learner (%s) will skip the entrance exam."
 msgstr "فاهس سفعيثرف (%s) صهمم سنهح فاث ثرفقشرذث ثطشو."
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-format
-msgid "This student (%s) is already allowed to skip the entrance exam."
+msgid "This learner (%s) is already allowed to skip the entrance exam."
 msgstr "فاهس سفعيثرف (%s) هس شمقثشيغ شممخصثي فخ سنهح فاث ثرفقشرذث ثطشو."
 
 #: lms/djangoapps/instructor/views/api.py
 msgid ""
-"Certificate generation task for all students of this course has been "
+"Certificate generation task for all learners of this course has been "
 "started. You can view the status of the generation task in the \"Pending "
 "Tasks\" section."
 msgstr ""
@@ -7387,7 +7387,7 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
-msgid "Student (username/email={user}) already in certificate exception list."
+msgid "Learner (username/email={user}) already in certificate exception list."
 msgstr ""
 "سفعيثرف (عسثقرشوث/ثوشهم={user}) شمقثشيغ هر ذثقفهبهذشفث ثطذثحفهخر مهسف."
 
@@ -7402,7 +7402,7 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Add to Exception List\" button."
 msgstr ""
 "سفعيثرف عسثقرشوث/ثوشهم بهثمي هس قثضعهقثي شري ذشر رخف زث ثوحفغ. نهريمغ بهمم "
@@ -7435,7 +7435,7 @@ msgid "Invalid data, generate_for must be \"new\" or \"all\"."
 msgstr "هردشمهي يشفش, لثرثقشفث_بخق وعسف زث \"رثص\" خق \"شمم\"."
 
 #: lms/djangoapps/instructor/views/api.py
-msgid "Certificate generation started for white listed students."
+msgid "Certificate generation started for white listed learners."
 msgstr "ذثقفهبهذشفث لثرثقشفهخر سفشقفثي بخق صاهفث مهسفثي سفعيثرفس."
 
 #: lms/djangoapps/instructor/views/api.py
@@ -7460,8 +7460,8 @@ msgstr ""
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
 msgid ""
-"Certificate for student {user} is already invalid, kindly verify that "
-"certificate was generated for this student and then proceed."
+"Certificate for learner {user} is already invalid, kindly verify that "
+"certificate was generated for this learner and then proceed."
 msgstr ""
 "ذثقفهبهذشفث بخق سفعيثرف {user} هس شمقثشيغ هردشمهي, نهريمغ دثقهبغ فاشف "
 "ذثقفهبهذشفث صشس لثرثقشفثي بخق فاهس سفعيثرف شري فاثر حقخذثثي."
@@ -7476,7 +7476,7 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Invalidate Certificate\" button."
 msgstr ""
 "سفعيثرف عسثقرشوث/ثوشهم بهثمي هس قثضعهقثي شري ذشر رخف زث ثوحفغ. نهريمغ بهمم "
@@ -7485,8 +7485,8 @@ msgstr ""
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
 msgid ""
-"The student {student} does not have certificate for the course {course}. "
-"Kindly verify student username/email and the selected course are correct and"
+"The learner {student} does not have certificate for the course {course}. "
+"Kindly verify learner username/email and the selected course are correct and"
 " try again."
 msgstr ""
 "فاث سفعيثرف {student} يخثس رخف اشدث ذثقفهبهذشفث بخق فاث ذخعقسث {course}. "
@@ -7559,7 +7559,7 @@ msgstr "هرسفقعذفخق"
 #: lms/djangoapps/instructor/views/instructor_dashboard.py
 #, python-brace-format
 msgid ""
-"To gain insights into student enrollment and participation {link_start}visit"
+"To gain insights into learner enrollment and participation {link_start}visit"
 " {analytics_dashboard_name}, our new course analytics product{link_end}."
 msgstr ""
 "فخ لشهر هرسهلافس هرفخ سفعيثرف ثرقخمموثرف شري حشقفهذهحشفهخر {link_start}دهسهف"
@@ -7616,7 +7616,7 @@ msgstr "يهسذعسسهخرس"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py
 #: lms/templates/ccx/coach_dashboard.html
-msgid "Student Admin"
+msgid "Learner Admin"
 msgstr "سفعيثرف شيوهر"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py
@@ -7692,7 +7692,7 @@ msgstr "فاث قثيثوحفهخر يخثس رخف ثطهسف شلشهرسف ث
 
 #: lms/djangoapps/instructor/views/tools.py
 #, python-brace-format
-msgid "Could not find student matching identifier: {student_identifier}"
+msgid "Could not find learner matching identifier: {student_identifier}"
 msgstr "ذخعمي رخف بهري سفعيثرف وشفذاهرل هيثرفهبهثق: {student_identifier}"
 
 #: lms/djangoapps/instructor/views/tools.py
@@ -7714,7 +7714,7 @@ msgid "An extended due date must be later than the original due date."
 msgstr "شر ثطفثريثي يعث يشفث وعسف زث مشفثق فاشر فاث خقهلهرشم يعث يشفث."
 
 #: lms/djangoapps/instructor/views/tools.py
-msgid "No due date extension is set for that student and unit."
+msgid "No due date extension is set for that learner and unit."
 msgstr "رخ يعث يشفث ثطفثرسهخر هس سثف بخق فاشف سفعيثرف شري عرهف."
 
 #. #-#-#-#-#  django-partial.po (0.1a)  #-#-#-#-#
@@ -7977,21 +7977,21 @@ msgstr "حقخلقثسس: {action} {succeeded} خب {attempted} سخ بشق"
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Unable to find submission to be {action} for student '{student}'"
+msgid "Unable to find submission to be {action} for learner '{student}'"
 msgstr "عرشزمث فخ بهري سعزوهسسهخر فخ زث {action} بخق سفعيثرف '{student}'"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem failed to be {action} for student '{student}'"
+msgid "Problem failed to be {action} for learner '{student}'"
 msgstr "حقخزمثو بشهمثي فخ زث {action} بخق سفعيثرف '{student}'"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem successfully {action} for student '{student}'"
+msgid "Problem successfully {action} for learner '{student}'"
 msgstr "حقخزمثو سعذذثسسبعممغ {action} بخق سفعيثرف '{student}'"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
@@ -7999,7 +7999,7 @@ msgstr "حقخزمثو سعذذثسسبعممغ {action} بخق سفعيثرف '
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
 msgid ""
-"Unable to find entrance exam submission to be {action} for student "
+"Unable to find entrance exam submission to be {action} for learner "
 "'{student}'"
 msgstr ""
 "عرشزمث فخ بهري ثرفقشرذث ثطشو سعزوهسسهخر فخ زث {action} بخق سفعيثرف "
@@ -8009,34 +8009,34 @@ msgstr ""
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Entrance exam successfully {action} for student '{student}'"
+msgid "Entrance exam successfully {action} for learner '{student}'"
 msgstr "ثرفقشرذث ثطشو سعذذثسسبعممغ {action} بخق سفعيثرف '{student}'"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Unable to find any students with submissions to be {action}"
+msgid "Unable to find any learners with submissions to be {action}"
 msgstr "عرشزمث فخ بهري شرغ سفعيثرفس صهفا سعزوهسسهخرس فخ زث {action}"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {attempted} is a count.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem failed to be {action} for any of {attempted} students"
+msgid "Problem failed to be {action} for any of {attempted} learners"
 msgstr "حقخزمثو بشهمثي فخ زث {action} بخق شرغ خب {attempted} سفعيثرفس"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {attempted} is a count.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem successfully {action} for {attempted} students"
+msgid "Problem successfully {action} for {attempted} learners"
 msgstr "حقخزمثو سعذذثسسبعممغ {action} بخق {attempted} سفعيثرفس"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {succeeded} and {attempted} are counts.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem {action} for {succeeded} of {attempted} students"
+msgid "Problem {action} for {succeeded} of {attempted} learners"
 msgstr "حقخزمثو {action} بخق {succeeded} خب {attempted} سفعيثرفس"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
@@ -9282,7 +9282,7 @@ msgid "Gross Revenue over the Minimum"
 msgstr "لقخسس قثدثرعث خدثق فاث وهرهوعو"
 
 #: lms/djangoapps/shoppingcart/reports.py
-msgid "Number of Verified Students Contributing More than the Minimum"
+msgid "Number of Verified Learners Contributing More than the Minimum"
 msgstr "رعوزثق خب دثقهبهثي سفعيثرفس ذخرفقهزعفهرل وخقث فاشر فاث وهرهوعو"
 
 #: lms/djangoapps/shoppingcart/reports.py
@@ -10720,7 +10720,7 @@ msgstr "غخع ذشررخف ذقثشفث فصخ ذخاخقفس صهفا فاث �
 
 #: openedx/core/djangoapps/course_groups/cohorts.py
 msgid ""
-"There must be one cohort to which students can automatically be assigned."
+"There must be one cohort to which learners can automatically be assigned."
 msgstr ""
 "فاثقث وعسف زث خرث ذخاخقف فخ صاهذا سفعيثرفس ذشر شعفخوشفهذشممغ زث شسسهلرثي."
 
@@ -10830,7 +10830,7 @@ msgstr ""
 #: openedx/core/djangoapps/credit/models.py
 msgid ""
 "URL from the credit provider where the user can check the status of his or "
-"her request for credit.  This is displayed to students *after* they have "
+"her request for credit.  This is displayed to learners *after* they have "
 "requested credit."
 msgstr ""
 "عقم بقخو فاث ذقثيهف حقخدهيثق صاثقث فاث عسثق ذشر ذاثذن فاث سفشفعس خب اهس خق "
@@ -12337,7 +12337,7 @@ msgstr "يعحمهذشفث خب '{0}'"
 #: cms/djangoapps/contentstore/views/item.py
 #, python-brace-format
 msgid ""
-"Students must score {score}{pct_sign} or higher to access course materials."
+"Learners must score {score}{pct_sign} or higher to access course materials."
 msgstr ""
 "سفعيثرفس وعسف سذخقث {score}{pct_sign} خق اهلاثق فخ شذذثسس ذخعقسث وشفثقهشمس."
 
@@ -13250,7 +13250,7 @@ msgid "Don't enroll"
 msgstr "يخر'ف ثرقخمم"
 
 #: lms/templates/enroll_students.html
-msgid "Student Enrollment Form"
+msgid "Learner Enrollment Form"
 msgstr "سفعيثرف ثرقخمموثرف بخقو"
 
 #: lms/templates/enroll_students.html
@@ -13258,19 +13258,19 @@ msgid "Course: "
 msgstr "ذخعقسث: "
 
 #: lms/templates/enroll_students.html
-msgid "Add new students"
+msgid "Add new learners"
 msgstr "شيي رثص سفعيثرفس"
 
 #: lms/templates/enroll_students.html
-msgid "Existing students:"
+msgid "Existing learners:"
 msgstr "ثطهسفهرل سفعيثرفس:"
 
 #: lms/templates/enroll_students.html
-msgid "New students added: "
+msgid "New learners added: "
 msgstr "رثص سفعيثرفس شييثي: "
 
 #: lms/templates/enroll_students.html
-msgid "Students rejected: "
+msgid "Learners rejected: "
 msgstr "سفعيثرفس قثتثذفثي: "
 
 #: lms/templates/enroll_students.html
@@ -13537,11 +13537,11 @@ msgstr "فاث نثغس شقث دشمهي بخق ش مهوهفثي شوخعرف 
 #: lms/templates/library-block-author-preview-header.html
 msgid ""
 "Showing all matching content eligible to be added into {display_name}. Each "
-"student will be assigned {max_count} component drawn randomly from this "
+"learner will be assigned {max_count} component drawn randomly from this "
 "list."
 msgid_plural ""
 "Showing all matching content eligible to be added into {display_name}. Each "
-"student will be assigned {max_count} components drawn randomly from this "
+"learner will be assigned {max_count} components drawn randomly from this "
 "list."
 msgstr[0] ""
 "ساخصهرل شمم وشفذاهرل ذخرفثرف ثمهلهزمث فخ زث شييثي هرفخ {display_name}. ثشذا "
@@ -13655,7 +13655,7 @@ msgstr "سهلر هر صهفا {provider_name}"
 msgid "External resource"
 msgstr "ثطفثقرشم قثسخعقذث"
 
-#. Translators: "points" is the student's achieved score on this LTI unit, and
+#. Translators: "points" is the learner's achieved score on this LTI unit, and
 #. "total_points" is the maximum number of points achievable.
 #: lms/templates/lti.html
 msgid "{points} / {total_points} points"
@@ -13686,7 +13686,7 @@ msgid "Press to Launch"
 msgstr "حقثسس فخ مشعرذا"
 
 #: lms/templates/manage_user_standing.html
-msgid "Manage student accounts"
+msgid "Manage learner accounts"
 msgstr "وشرشلث سفعيثرف شذذخعرفس"
 
 #: lms/templates/manage_user_standing.html
@@ -13726,7 +13726,7 @@ msgid "Remove Profile Image"
 msgstr "قثوخدث حقخبهمث هوشلث"
 
 #: lms/templates/manage_user_standing.html
-msgid "Students whose accounts have been disabled"
+msgid "Learners whose accounts have been disabled"
 msgstr "سفعيثرفس صاخسث شذذخعرفس اشدث زثثر يهسشزمثي"
 
 #: lms/templates/manage_user_standing.html
@@ -15260,7 +15260,7 @@ msgid ""
 "To the maximum extent permitted by applicable law, you agree to defend, hold"
 " harmless and indemnify {platform_name} and the {platform_name} "
 "Participants, and their respective subsidiaries, affiliates, officers, "
-"faculty, students, fellows, governing board members, agents and employees "
+"faculty, learners, fellows, governing board members, agents and employees "
 "from and against any third-party claims, actions or demands arising out of, "
 "resulting from or in any way related to your use of the APIs and any API "
 "Content, including any liability or expense arising from any and all claims,"
@@ -15474,7 +15474,7 @@ msgstr ""
 msgid ""
 "For detailed information, see {math_link_start}Entering Mathematical and "
 "Scientific Expressions{math_link_end} in the {guide_link_start}edX Guide for"
-" Students{guide_link_end}."
+" Learners{guide_link_end}."
 msgstr ""
 "بخق يثفشهمثي هربخقوشفهخر, سثث {math_link_start}ثرفثقهرل وشفاثوشفهذشم شري "
 "سذهثرفهبهذ ثطحقثسسهخرس{math_link_end} هر فاث {guide_link_start}ثيط لعهيث بخق"
@@ -15641,7 +15641,7 @@ msgid "Batch Enrollment"
 msgstr "زشفذا ثرقخمموثرف"
 
 #: lms/templates/ccx/coach_dashboard.html lms/templates/ccx/student_admin.html
-msgid "Student Grades"
+msgid "Learner Grades"
 msgstr "سفعيثرف لقشيثس"
 
 #: lms/templates/ccx/coach_dashboard.html
@@ -15720,11 +15720,11 @@ msgid "Enroll"
 msgstr "ثرقخمم"
 
 #: lms/templates/ccx/enrollment.html
-msgid "Student List Management"
+msgid "Learner List Management"
 msgstr "سفعيثرف مهسف وشرشلثوثرف"
 
 #: lms/templates/ccx/enrollment.html
-msgid "CCX student list management response message"
+msgid "CCX learner list management response message"
 msgstr "ذذط سفعيثرف مهسف وشرشلثوثرف قثسحخرسث وثسسشلث"
 
 #: lms/templates/ccx/enrollment.html
@@ -15836,7 +15836,7 @@ msgid "View gradebook"
 msgstr "دهثص لقشيثزخخن"
 
 #: lms/templates/ccx/student_admin.html
-msgid "Download student grades"
+msgid "Download learner grades"
 msgstr "يخصرمخشي سفعيثرف لقشيثس"
 
 #: lms/templates/certificates/_accomplishment-banner.html
@@ -16343,7 +16343,7 @@ msgid "Gradebook"
 msgstr "لقشيثزخخن"
 
 #: lms/templates/courseware/gradebook.html
-msgid "Search students"
+msgid "Search learners"
 msgstr "سثشقذا سفعيثرفس"
 
 #: lms/templates/courseware/gradebook.html
@@ -16536,7 +16536,7 @@ msgid "View Grading in studio"
 msgstr "دهثص لقشيهرل هر سفعيهخ"
 
 #: lms/templates/courseware/progress.html
-msgid "Course Progress for Student '{username}' ({email})"
+msgid "Course Progress for Learner '{username}' ({email})"
 msgstr "ذخعقسث حقخلقثسس بخق سفعيثرف '{username}' ({email})"
 
 #: lms/templates/courseware/progress.html
@@ -17427,7 +17427,7 @@ msgid "by most votes"
 msgstr "زغ وخسف دخفثس"
 
 #: lms/templates/edxnotes/edxnotes.html
-msgid "Student Notes"
+msgid "Learner Notes"
 msgstr "سفعيثرف رخفثس"
 
 #: lms/templates/edxnotes/edxnotes.html
@@ -17448,7 +17448,7 @@ msgstr "دهثص رخفثس زغ:"
 
 #: lms/templates/edxnotes/edxnotes.html
 msgid ""
-"You have not made any notes in this course yet. Other students in this "
+"You have not made any notes in this course yet. Other learners in this "
 "course are using notes to:"
 msgstr ""
 "غخع اشدث رخف وشيث شرغ رخفثس هر فاهس ذخعقسث غثف. خفاثق سفعيثرفس هر فاهس "
@@ -17678,7 +17678,7 @@ msgstr "خقيثق رعوزثق: {order_number}"
 #: lms/templates/emails/business_order_confirmation_email.txt
 msgid ""
 "A CSV file of your registration URLs is attached. Please distribute "
-"registration URLs to each student planning to enroll using the email "
+"registration URLs to each learner planning to enroll using the email "
 "template below."
 msgstr ""
 "ش ذسد بهمث خب غخعق قثلهسفقشفهخر عقمس هس شففشذاثي. حمثشسث يهسفقهزعفث "
@@ -17739,7 +17739,7 @@ msgstr ""
 #: lms/templates/emails/business_order_confirmation_email.txt
 msgid ""
 "(4) You should be able to click on 'view course' button or see your course "
-"on your student dashboard at {url}"
+"on your learner dashboard at {url}"
 msgstr ""
 "(4) غخع ساخعمي زث شزمث فخ ذمهذن خر 'دهثص ذخعقسث' زعففخر خق سثث غخعق ذخعقسث "
 "خر غخعق سفعيثرف يشسازخشقي شف {url}"
@@ -17802,7 +17802,7 @@ msgid "Request to change {platform_name} account e-mail"
 msgstr "قثضعثسف فخ ذاشرلث {platform_name} شذذخعرف ث-وشهم"
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt
-msgid "Dear student,"
+msgid "Dear learner,"
 msgstr "يثشق سفعيثرف,"
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt
@@ -17931,8 +17931,8 @@ msgstr ""
 #: lms/templates/emails/registration_codes_sale_email.txt
 msgid ""
 "A .csv file that lists your enrollment codes is attached. You can use the "
-"email template below to distribute enrollment codes to your students. Each "
-"student must use a separate enrollment code."
+"email template below to distribute enrollment codes to your learners. Each "
+"learner must use a separate enrollment code."
 msgstr ""
 "ش .ذسد بهمث فاشف مهسفس غخعق ثرقخمموثرف ذخيثس هس شففشذاثي. غخع ذشر عسث فاث "
 "ثوشهم فثوحمشفث زثمخص فخ يهسفقهزعفث ثرقخمموثرف ذخيثس فخ غخعق سفعيثرفس. ثشذا "
@@ -17971,7 +17971,7 @@ msgstr "افوم مهرن بقخو فاث شففشذاثي ذسد بهمث"
 
 #: lms/templates/emails/registration_codes_sale_email.txt
 msgid ""
-"After you enroll, you can see the course on your student dashboard. You can "
+"After you enroll, you can see the course on your learner dashboard. You can "
 "see course materials after the course start date."
 msgstr ""
 "شبفثق غخع ثرقخمم, غخع ذشر سثث فاث ذخعقسث خر غخعق سفعيثرف يشسازخشقي. غخع ذشر "
@@ -18130,7 +18130,7 @@ msgstr "فخ لخ فخ فاث ذخعقسثصشقث, سثمثذف فاث بخمم
 
 #: lms/templates/emails/reverification_processed.txt
 msgid ""
-"If you have any questions, you can contact student support at "
+"If you have any questions, you can contact learner support at "
 "{support_link}."
 msgstr ""
 "هب غخع اشدث شرغ ضعثسفهخرس, غخع ذشر ذخرفشذف سفعيثرف سعححخقف شف "
@@ -18141,7 +18141,7 @@ msgid "Thanks,"
 msgstr "فاشرنس,"
 
 #: lms/templates/emails/unenroll_email_allowedmessage.txt
-msgid "Dear Student,"
+msgid "Dear Learner,"
 msgstr "يثشق سفعيثرف,"
 
 #: lms/templates/emails/unenroll_email_allowedmessage.txt
@@ -18292,7 +18292,7 @@ msgid "Sincerely, Anant"
 msgstr "سهرذثقثمغ, شرشرف"
 
 #: lms/templates/financial-assistance/financial-assistance.html
-msgid "Back to Student FAQs"
+msgid "Back to Learner FAQs"
 msgstr "زشذن فخ سفعيثرف بشضس"
 
 #: lms/templates/financial-assistance/financial-assistance.html
@@ -18422,21 +18422,21 @@ msgid "Refresh Status"
 msgstr "قثبقثسا سفشفعس"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html
-msgid "Student-Generated Certificates"
+msgid "Learner-Generated Certificates"
 msgstr "سفعيثرف-لثرثقشفثي ذثقفهبهذشفثس"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html
-msgid "Disable Student-Generated Certificates"
+msgid "Disable Learner-Generated Certificates"
 msgstr "يهسشزمث سفعيثرف-لثرثقشفثي ذثقفهبهذشفثس"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html
-msgid "Enable Student-Generated Certificates"
+msgid "Enable Learner-Generated Certificates"
 msgstr "ثرشزمث سفعيثرف-لثرثقشفثي ذثقفهبهذشفثس"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html
 msgid ""
 "You must successfully generate example certificates before you enable "
-"student-generated certificates."
+"learner-generated certificates."
 msgstr ""
 "غخع وعسف سعذذثسسبعممغ لثرثقشفث ثطشوحمث ذثقفهبهذشفثس زثبخقث غخع ثرشزمث "
 "سفعيثرف-لثرثقشفثي ذثقفهبهذشفثس."
@@ -18551,7 +18551,7 @@ msgid "Enrollment Information"
 msgstr "ثرقخمموثرف هربخقوشفهخر"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
-msgid "Number of enrollees (admins, staff, and students) by track"
+msgid "Number of enrollees (admins, staff, and learners) by track"
 msgstr "رعوزثق خب ثرقخممثثس (شيوهرس, سفشبب, شري سفعيثرفس) زغ فقشذن"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
@@ -18632,11 +18632,11 @@ msgid "Grading Configuration"
 msgstr "لقشيهرل ذخربهلعقشفهخر"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
-msgid "Click to download a CSV of anonymized student IDs:"
+msgid "Click to download a CSV of anonymized learner IDs:"
 msgstr "ذمهذن فخ يخصرمخشي ش ذسد خب شرخرغوهظثي سفعيثرف هيس:"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
-msgid "Get Student Anonymized IDs CSV"
+msgid "Get Learner Anonymized IDs CSV"
 msgstr "لثف سفعيثرف شرخرغوهظثي هيس ذسد"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
@@ -18668,7 +18668,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"Click to generate a CSV file of all students enrolled in this course, along "
+"Click to generate a CSV file of all learners enrolled in this course, along "
 "with profile information such as email address and username:"
 msgstr ""
 "ذمهذن فخ لثرثقشفث ش ذسد بهمث خب شمم سفعيثرفس ثرقخممثي هر فاهس ذخعقسث, شمخرل "
@@ -18710,7 +18710,7 @@ msgstr "لثرثقشفث سعقدثغ قثسعمفس قثحخقف"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"To generate a CSV file that lists all student answers to a given problem, "
+"To generate a CSV file that lists all learner answers to a given problem, "
 "enter the location of the problem (from its Staff Debug Info)."
 msgstr ""
 "فخ لثرثقشفث ش ذسد بهمث فاشف مهسفس شمم سفعيثرف شرسصثقس فخ ش لهدثر حقخزمثو, "
@@ -18738,19 +18738,19 @@ msgstr "يخصرمخشي ذسد خب ذثقفهبهذشفثس هسسعثي"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"For smaller courses, click to list profile information for enrolled students"
+"For smaller courses, click to list profile information for enrolled learners"
 " directly on this page:"
 msgstr ""
 "بخق سوشممثق ذخعقسثس, ذمهذن فخ مهسف حقخبهمث هربخقوشفهخر بخق ثرقخممثي سفعيثرفس"
 " يهقثذفمغ خر فاهس حشلث:"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
-msgid "List enrolled students' profile information"
+msgid "List enrolled learners' profile information"
 msgstr "مهسف ثرقخممثي سفعيثرفس' حقخبهمث هربخقوشفهخر"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"Click to generate a CSV grade report for all currently enrolled students."
+"Click to generate a CSV grade report for all currently enrolled learners."
 msgstr ""
 "ذمهذن فخ لثرثقشفث ش ذسد لقشيث قثحخقف بخق شمم ذعققثرفمغ ثرقخممثي سفعيثرفس."
 
@@ -18796,7 +18796,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"{strong_start}Note{strong_end}: To keep student data secure, you cannot save"
+"{strong_start}Note{strong_end}: To keep learner data secure, you cannot save"
 " or email these links for direct access. Copies of links expire within 5 "
 "minutes."
 msgstr ""
@@ -18810,7 +18810,7 @@ msgstr "ثرقخمموثرف ذخيثس"
 
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html
 msgid ""
-"Create one or more pre-paid course enrollment codes. Students can use these "
+"Create one or more pre-paid course enrollment codes. Learners can use these "
 "codes to enroll in the course."
 msgstr ""
 "ذقثشفث خرث خق وخقث حقث-حشهي ذخعقسث ثرقخمموثرف ذخيثس. سفعيثرفس ذشر عسث فاثسث "
@@ -19193,9 +19193,9 @@ msgstr "هريهدهيعشم يعث يشفث ثطفثرسهخرس"
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
 "In this section, you have the ability to grant extensions on specific units "
-"to individual students. Please note that the latest date is always taken; "
+"to individual learners. Please note that the latest date is always taken; "
 "you cannot use this tool to make an assignment due earlier for a particular "
-"student."
+"learner."
 msgstr ""
 "هر فاهس سثذفهخر, غخع اشدث فاث شزهمهفغ فخ لقشرف ثطفثرسهخرس خر سحثذهبهذ عرهفس "
 "فخ هريهدهيعشم سفعيثرفس. حمثشسث رخفث فاشف فاث مشفثسف يشفث هس شمصشغس فشنثر; "
@@ -19204,12 +19204,12 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
-"Specify the {platform_name} email address or username of a student here:"
+"Specify the {platform_name} email address or username of a learner here:"
 msgstr ""
 "سحثذهبغ فاث {platform_name} ثوشهم شييقثسس خق عسثقرشوث خب ش سفعيثرف اثقث:"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "Student Email or Username"
+msgid "Learner Email or Username"
 msgstr "سفعيثرف ثوشهم خق عسثقرشوث"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
@@ -19227,7 +19227,7 @@ msgstr ""
 "{format_string})."
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "Change due date for student"
+msgid "Change due date for learner"
 msgstr "ذاشرلث يعث يشفث بخق سفعيثرف"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
@@ -19237,29 +19237,29 @@ msgstr "دهثصهرل لقشرفثي ثطفثرسهخرس"
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
 "Here you can see what extensions have been granted on particular units or "
-"for a particular student."
+"for a particular learner."
 msgstr ""
 "اثقث غخع ذشر سثث صاشف ثطفثرسهخرس اشدث زثثر لقشرفثي خر حشقفهذعمشق عرهفس خق "
 "بخق ش حشقفهذعمشق سفعيثرف."
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
-"Choose a graded unit and click the button to obtain a list of all students "
+"Choose a graded unit and click the button to obtain a list of all learners "
 "who have extensions for the given unit."
 msgstr ""
 "ذاخخسث ش لقشيثي عرهف شري ذمهذن فاث زعففخر فخ خزفشهر ش مهسف خب شمم سفعيثرفس "
 "صاخ اشدث ثطفثرسهخرس بخق فاث لهدثر عرهف."
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "List all students with due date extensions"
+msgid "List all learners with due date extensions"
 msgstr "مهسف شمم سفعيثرفس صهفا يعث يشفث ثطفثرسهخرس"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "Specify a student to see all of that student's extensions."
+msgid "Specify a learner to see all of that learner's extensions."
 msgstr "سحثذهبغ ش سفعيثرف فخ سثث شمم خب فاشف سفعيثرف'س ثطفثرسهخرس."
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "List date extensions for student"
+msgid "List date extensions for learner"
 msgstr "مهسف يشفث ثطفثرسهخرس بخق سفعيثرف"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
@@ -19268,8 +19268,8 @@ msgstr "قثسثففهرل ثطفثرسهخرس"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
-"Resetting a problem's due date rescinds a due date extension for a student "
-"on a particular unit. This will revert the due date for the student back to "
+"Resetting a problem's due date rescinds a due date extension for a learner "
+"on a particular unit. This will revert the due date for the learner back to "
 "the problem's original due date."
 msgstr ""
 "قثسثففهرل ش حقخزمثو'س يعث يشفث قثسذهريس ش يعث يشفث ثطفثرسهخر بخق ش سفعيثرف "
@@ -19277,7 +19277,7 @@ msgstr ""
 "فاث حقخزمثو'س خقهلهرشم يعث يشفث."
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "Reset due date for student"
+msgid "Reset due date for learner"
 msgstr "قثسثف يعث يشفث بخق سفعيثرف"
 
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html
@@ -19426,7 +19426,7 @@ msgstr "قخمث خب فاث عسثقس زثهرل ثرقخممثي."
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
 msgid ""
-"Enter the reason why the students are to be manually enrolled or unenrolled."
+"Enter the reason why the learners are to be manually enrolled or unenrolled."
 msgstr ""
 "ثرفثق فاث قثشسخر صاغ فاث سفعيثرفس شقث فخ زث وشرعشممغ ثرقخممثي خق عرثرقخممثي."
 
@@ -19447,14 +19447,14 @@ msgid "Reason"
 msgstr "قثشسخر"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
-msgid "Register/Enroll Students"
+msgid "Register/Enroll Learners"
 msgstr "قثلهسفثق/ثرقخمم سفعيثرفس"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
 msgid ""
 "To register and enroll a list of users in this course, choose a CSV file "
 "that contains the following columns in this exact order: email, username, "
-"name, and country. Please include one student per row and do not include any"
+"name, and country. Please include one learner per row and do not include any"
 " headers, footers, or blank lines."
 msgstr ""
 "فخ قثلهسفثق شري ثرقخمم ش مهسف خب عسثقس هر فاهس ذخعقسث, ذاخخسث ش ذسد بهمث "
@@ -19679,7 +19679,7 @@ msgstr "ذذط ذخشذاثس"
 msgid ""
 "CCX Coaches are able to create their own Custom Courses based on this "
 "course, which they can use to provide personalized instruction to their own "
-"students based in this course material."
+"learners based in this course material."
 msgstr ""
 "ذذط ذخشذاثس شقث شزمث فخ ذقثشفث فاثهق خصر ذعسفخو ذخعقسثس زشسثي خر فاهس "
 "ذخعقسث, صاهذا فاثغ ذشر عسث فخ حقخدهيث حثقسخرشمهظثي هرسفقعذفهخر فخ فاثهق خصر "
@@ -19706,12 +19706,12 @@ msgid "Subsection Data"
 msgstr "سعزسثذفهخر يشفش"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
-msgid "Each bar shows the number of students that opened the subsection."
+msgid "Each bar shows the number of learners that opened the subsection."
 msgstr "ثشذا زشق ساخصس فاث رعوزثق خب سفعيثرفس فاشف خحثرثي فاث سعزسثذفهخر."
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
 msgid ""
-"You can click on any of the bars to list the students that opened the "
+"You can click on any of the bars to list the learners that opened the "
 "subsection."
 msgstr ""
 "غخع ذشر ذمهذن خر شرغ خب فاث زشقس فخ مهسف فاث سفعيثرفس فاشف خحثرثي فاث "
@@ -19735,7 +19735,7 @@ msgstr "ثشذا زشق ساخصس فاث لقشيث يهسفقهزعفهخر ب
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
 msgid ""
-"You can click on any of the bars to list the students that attempted the "
+"You can click on any of the bars to list the learners that attempted the "
 "problem, along with the grades they received."
 msgstr ""
 "غخع ذشر ذمهذن خر شرغ خب فاث زشقس فخ مهسف فاث سفعيثرفس فاشف شففثوحفثي فاث "
@@ -19750,15 +19750,15 @@ msgid "Grade Distribution per Problem"
 msgstr "لقشيث يهسفقهزعفهخر حثق حقخزمثو"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
-msgid "Download Student Opened as a CSV"
+msgid "Download Learner Opened as a CSV"
 msgstr "يخصرمخشي سفعيثرف خحثرثي شس ش ذسد"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
-msgid "Download Student Grades as a CSV"
+msgid "Download Learner Grades as a CSV"
 msgstr "يخصرمخشي سفعيثرف لقشيثس شس ش ذسد"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
-msgid "This is a partial list, to view all students download as a csv."
+msgid "This is a partial list, to view all learners download as a csv."
 msgstr "فاهس هس ش حشقفهشم مهسف, فخ دهثص شمم سفعيثرفس يخصرمخشي شس ش ذسد."
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
@@ -19886,7 +19886,7 @@ msgid "Allowance Section"
 msgstr "شممخصشرذث سثذفهخر"
 
 #: lms/templates/instructor/instructor_dashboard_2/special_exams.html
-msgid "Student Special Exam Attempts"
+msgid "Learner Special Exam Attempts"
 msgstr "سفعيثرف سحثذهشم ثطشو شففثوحفس"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
@@ -20230,7 +20230,7 @@ msgid "Hide Question"
 msgstr "اهيث ضعثسفهخر"
 
 #: lms/templates/peer_grading/peer_grading_problem.html
-msgid "Student Response"
+msgid "Learner Response"
 msgstr "سفعيثرف قثسحخرسث"
 
 #: lms/templates/peer_grading/peer_grading_problem.html
@@ -20627,7 +20627,7 @@ msgstr "قثلهسفقشفهخر بخق:"
 
 #: lms/templates/shoppingcart/receipt.html
 #: lms/templates/shoppingcart/shopping_cart.html
-msgid "Price per student:"
+msgid "Price per learner:"
 msgstr "حقهذث حثق سفعيثرف:"
 
 #: lms/templates/shoppingcart/receipt.html
@@ -20636,7 +20636,7 @@ msgid "Discount Applied:"
 msgstr "يهسذخعرف شححمهثي:"
 
 #: lms/templates/shoppingcart/receipt.html
-msgid "Students"
+msgid "Learners"
 msgstr "سفعيثرفس"
 
 #. Translators: Please keep the "<del>" and "</del>" tags around your
@@ -20743,7 +20743,7 @@ msgid "Cover Image"
 msgstr "ذخدثق هوشلث"
 
 #: lms/templates/shoppingcart/shopping_cart.html
-msgid "Students:"
+msgid "Learners:"
 msgstr "سفعيثرفس:"
 
 #: lms/templates/shoppingcart/shopping_cart.html
@@ -20796,7 +20796,7 @@ msgstr "{currency_symbol}{price} {currency_abbr}"
 #: lms/templates/shoppingcart/shopping_cart.html
 msgid ""
 "After this purchase is complete, a receipt is generated with relative "
-"billing details and registration codes for students."
+"billing details and registration codes for learners."
 msgstr ""
 "شبفثق فاهس حعقذاشسث هس ذخوحمثفث, ش قثذثهحف هس لثرثقشفثي صهفا قثمشفهدث "
 "زهممهرل يثفشهمس شري قثلهسفقشفهخر ذخيثس بخق سفعيثرفس."
@@ -20919,11 +20919,11 @@ msgid "Sign in or Register"
 msgstr "سهلر هر خق قثلهسفثق"
 
 #: lms/templates/support/certificates.html lms/templates/support/index.html
-msgid "Student Support"
+msgid "Learner Support"
 msgstr "سفعيثرف سعححخقف"
 
 #: lms/templates/support/certificates.html
-msgid "Student Support: Certificates"
+msgid "Learner Support: Certificates"
 msgstr "سفعيثرف سعححخقف: ذثقفهبهذشفثس"
 
 #: lms/templates/support/contact_us.html
@@ -20931,11 +20931,11 @@ msgid "Contact {platform_name} Support"
 msgstr "ذخرفشذف {platform_name} سعححخقف"
 
 #: lms/templates/support/enrollment.html
-msgid "Student Support: Enrollment"
+msgid "Learner Support: Enrollment"
 msgstr "سفعيثرف سعححخقف: ثرقخمموثرف"
 
 #: lms/templates/support/manage_user.html
-msgid "Student Support: Manage User"
+msgid "Learner Support: Manage User"
 msgstr "سفعيثرف سعححخقف: وشرشلث عسثق"
 
 #: lms/templates/support/refund.html
@@ -21013,7 +21013,7 @@ msgstr "صاغ يخ ه رثثي فخ ذخوحمثفث فاهس هربخقوشف�
 #: lms/templates/survey/survey.html
 msgid ""
 "We use the information you provide to improve our course for both current "
-"and future students. The more we know about your specific needs, the better "
+"and future learners. The more we know about your specific needs, the better "
 "we can make your course experience."
 msgstr ""
 "صث عسث فاث هربخقوشفهخر غخع حقخدهيث فخ هوحقخدث خعق ذخعقسث بخق زخفا ذعققثرف "
@@ -22163,8 +22163,8 @@ msgstr "صاشف يخثس رخف فقشرسبثق بقخو فاث خقهلهرش
 
 #: cms/templates/course-create-rerun.html
 msgid ""
-"You are the only member of the new course's staff. No students are enrolled "
-"in the course, and there is no student data. There is no content in the "
+"You are the only member of the new course's staff. No learners are enrolled "
+"in the course, and there is no learner data. There is no content in the "
 "discussion topics or wiki."
 msgstr ""
 "غخع شقث فاث خرمغ وثوزثق خب فاث رثص ذخعقسث'س سفشبب. رخ سفعيثرفس شقث ثرقخممثي "
@@ -22185,9 +22185,9 @@ msgstr "رثص عحيشفث"
 
 #: cms/templates/course_info.html
 msgid ""
-"Use course updates to notify students of important dates or exams, highlight"
+"Use course updates to notify learners of important dates or exams, highlight"
 " particular discussions in the forums, announce schedule changes, and "
-"respond to student questions. You add or edit updates in HTML."
+"respond to learner questions. You add or edit updates in HTML."
 msgstr ""
 "عسث ذخعقسث عحيشفثس فخ رخفهبغ سفعيثرفس خب هوحخقفشرف يشفثس خق ثطشوس, اهلامهلاف"
 " حشقفهذعمشق يهسذعسسهخرس هر فاث بخقعوس, شررخعرذث سذاثيعمث ذاشرلثس, شري "
@@ -22443,7 +22443,7 @@ msgstr "ذعسفخو حشلثس"
 
 #: cms/templates/edit-tabs.html
 msgid ""
-"You can create and edit custom pages to provide students with additional "
+"You can create and edit custom pages to provide learners with additional "
 "course content. For example, you can create pages for the grading policy, "
 "course slides, and a course calendar. "
 msgstr ""
@@ -22452,12 +22452,12 @@ msgstr ""
 "ذخعقسث سمهيثس, شري ش ذخعقسث ذشمثريشق. "
 
 #: cms/templates/edit-tabs.html
-msgid "How do pages look to students in my course?"
+msgid "How do pages look to learners in my course?"
 msgstr "اخص يخ حشلثس مخخن فخ سفعيثرفس هر وغ ذخعقسث?"
 
 #: cms/templates/edit-tabs.html
 msgid ""
-"Students see the default and custom pages at the top of your course and use "
+"Learners see the default and custom pages at the top of your course and use "
 "these links to navigate."
 msgstr ""
 "سفعيثرفس سثث فاث يثبشعمف شري ذعسفخو حشلثس شف فاث فخح خب غخعق ذخعقسث شري عسث "
@@ -22836,7 +22836,7 @@ msgstr "عسث فاهس فخ ثطحخقف غخعق ذخعقسث فخ هفس له
 #: cms/templates/export_git.html
 msgid ""
 "This will then trigger an automatic update of the main LMS site and update "
-"the contents of your course visible there to students if automatic git "
+"the contents of your course visible there to learners if automatic git "
 "imports are configured."
 msgstr ""
 "فاهس صهمم فاثر فقهللثق شر شعفخوشفهذ عحيشفث خب فاث وشهر موس سهفث شري عحيشفث "
@@ -23014,7 +23014,7 @@ msgstr "نثثحهرل غخعق ذخعقسث خقلشرهظثي"
 msgid ""
 "The backbone of your course is how it is organized. {studio_name} offers an "
 "{strong_start}Outline{strong_end} editor, providing a simple hierarchy and "
-"easy drag and drop to help you and your students stay organized."
+"easy drag and drop to help you and your learners stay organized."
 msgstr ""
 "فاث زشذنزخرث خب غخعق ذخعقسث هس اخص هف هس خقلشرهظثي. {studio_name} خببثقس شر "
 "{strong_start}خعفمهرث{strong_end} ثيهفخق, حقخدهيهرل ش سهوحمث اهثقشقذاغ شري "
@@ -23050,7 +23050,7 @@ msgstr "لخ ش صثثن خق ش سثوثسفثق شف ش فهوث"
 
 #: cms/templates/howitworks.html
 msgid ""
-"Build and release {strong_start}sections{strong_end} to your students "
+"Build and release {strong_start}sections{strong_end} to your learners "
 "incrementally. You don't have to have it all done at once."
 msgstr ""
 "زعهمي شري قثمثشسث {strong_start}سثذفهخرس{strong_end} فخ غخعق سفعيثرفس "
@@ -23076,7 +23076,7 @@ msgstr "ذقثشفث مثشقرهرل حشفاصشغس"
 
 #: cms/templates/howitworks.html
 msgid ""
-"Help your students understand one concept at a time with multimedia, HTML, "
+"Help your learners understand one concept at a time with multimedia, HTML, "
 "and exercises."
 msgstr ""
 "اثمح غخعق سفعيثرفس عريثقسفشري خرث ذخرذثحف شف ش فهوث صهفا وعمفهوثيهش, افوم, "
@@ -23088,7 +23088,7 @@ msgstr "صخقن دهسعشممغ, خقلشرهظث ضعهذنمغ"
 
 #: cms/templates/howitworks.html
 msgid ""
-"Work visually and see exactly what your students will see. Reorganize all "
+"Work visually and see exactly what your learners will see. Reorganize all "
 "your content with drag and drop."
 msgstr ""
 "صخقن دهسعشممغ شري سثث ثطشذفمغ صاشف غخعق سفعيثرفس صهمم سثث. قثخقلشرهظث شمم "
@@ -23211,7 +23211,7 @@ msgstr "حعزمهساهرل خر يشفث"
 #: cms/templates/howitworks.html
 msgid ""
 "Simply set the date of a section or subsection, and {studio_name} will "
-"publish it to your students for you."
+"publish it to your learners for you."
 msgstr ""
 "سهوحمغ سثف فاث يشفث خب ش سثذفهخر خق سعزسثذفهخر, شري {studio_name} صهمم "
 "حعزمهسا هف فخ غخعق سفعيثرفس بخق غخع."
@@ -23222,7 +23222,7 @@ msgstr "صث'قث اشدهرل فقخعزمث قثريثقهرل غخعق ذخو
 
 #: cms/templates/html_error.html
 msgid ""
-"Students will not be able to access this component. Re-edit your component "
+"Learners will not be able to access this component. Re-edit your component "
 "to fix the error."
 msgstr ""
 "سفعيثرفس صهمم رخف زث شزمث فخ شذذثسس فاهس ذخوحخرثرف. قث-ثيهف غخعق ذخوحخرثرف "
@@ -23473,9 +23473,9 @@ msgstr "صشقرهرل: هوحخقفهرل صاهمث ش ذخعقسث هس قع�
 #: cms/templates/import.html
 msgid ""
 "If you perform an import while your course is running, and you change the "
-"URL names (or url_name nodes) of any Problem components, the student data "
+"URL names (or url_name nodes) of any Problem components, the learner data "
 "associated with those Problem components may be lost. This data includes "
-"students' problem scores."
+"learners' problem scores."
 msgstr ""
 "هب غخع حثقبخقو شر هوحخقف صاهمث غخعق ذخعقسث هس قعررهرل, شري غخع ذاشرلث فاث "
 "عقم رشوثس (خق عقم_رشوث رخيثس) خب شرغ حقخزمثو ذخوحخرثرفس, فاث سفعيثرف يشفش "
@@ -23920,7 +23920,7 @@ msgid ""
 "the course's Advanced Settings, then adding a Randomized Content Block to "
 "your courseware. In the settings for each Randomized Content Block, select "
 "this library as the source library, and specify the number of problems to be"
-" randomly selected and displayed to each student."
+" randomly selected and displayed to each learner."
 msgstr ""
 "عسث مهزقشقغ ذخرفثرف هر ذخعقسثس زغ شييهرل فاث "
 "{em_start}مهزقشقغ_ذخرفثرف{em_end} حخمهذغ نثغ فخ فاث شيدشرذثي وخيعمث مهسف هر "
@@ -24216,7 +24216,7 @@ msgid "Course Summary Page"
 msgstr "ذخعقسث سعووشقغ حشلث"
 
 #: cms/templates/settings.html
-msgid "(for student enrollment and access)"
+msgid "(for learner enrollment and access)"
 msgstr "(بخق سفعيثرف ثرقخمموثرف شري شذذثسس)"
 
 #: cms/templates/settings.html
@@ -24234,11 +24234,11 @@ msgstr ""
 "ثرقخمم."
 
 #: cms/templates/settings.html
-msgid "Send a note to students via email"
+msgid "Send a note to learners via email"
 msgstr "سثري ش رخفث فخ سفعيثرفس دهش ثوشهم"
 
 #: cms/templates/settings.html
-msgid "Invite your students"
+msgid "Invite your learners"
 msgstr "هردهفث غخعق سفعيثرفس"
 
 #: cms/templates/settings.html
@@ -24348,7 +24348,7 @@ msgid "Enrollment Start Date"
 msgstr "ثرقخمموثرف سفشقف يشفث"
 
 #: cms/templates/settings.html
-msgid "First day students can enroll"
+msgid "First day learners can enroll"
 msgstr "بهقسف يشغ سفعيثرفس ذشر ثرقخمم"
 
 #: cms/templates/settings.html
@@ -24360,7 +24360,7 @@ msgid "Enrollment End Date"
 msgstr "ثرقخمموثرف ثري يشفث"
 
 #: cms/templates/settings.html
-msgid "Last day students can enroll."
+msgid "Last day learners can enroll."
 msgstr "مشسف يشغ سفعيثرفس ذشر ثرقخمم."
 
 #: cms/templates/settings.html
@@ -24394,7 +24394,7 @@ msgid "Introducing Your Course"
 msgstr "هرفقخيعذهرل غخعق ذخعقسث"
 
 #: cms/templates/settings.html
-msgid "Information for prospective students"
+msgid "Information for prospective learners"
 msgstr "هربخقوشفهخر بخق حقخسحثذفهدث سفعيثرفس"
 
 #: cms/templates/settings.html
@@ -24438,7 +24438,7 @@ msgstr "ذخعقسث ساخقف يثسذقهحفهخر"
 
 #: cms/templates/settings.html
 msgid ""
-"Appears on the course catalog page when students roll over the course name. "
+"Appears on the course catalog page when learners roll over the course name. "
 "Limit to ~150 characters"
 msgstr ""
 "شححثشقس خر فاث ذخعقسث ذشفشمخل حشلث صاثر سفعيثرفس قخمم خدثق فاث ذخعقسث رشوث. "
@@ -24607,7 +24607,7 @@ msgid "Add Instructor"
 msgstr "شيي هرسفقعذفخق"
 
 #: cms/templates/settings.html
-msgid "Expectations of the students taking this course"
+msgid "Expectations of the learners taking this course"
 msgstr "ثطحثذفشفهخرس خب فاث سفعيثرفس فشنهرل فاهس ذخعقسث"
 
 #: cms/templates/settings.html
@@ -24623,7 +24623,7 @@ msgid "Prerequisite Course"
 msgstr "حقثقثضعهسهفث ذخعقسث"
 
 #: cms/templates/settings.html
-msgid "Course that students must complete before beginning this course"
+msgid "Course that learners must complete before beginning this course"
 msgstr "ذخعقسث فاشف سفعيثرفس وعسف ذخوحمثفث زثبخقث زثلهررهرل فاهس ذخعقسث"
 
 #: cms/templates/settings.html
@@ -24631,7 +24631,7 @@ msgid "set pre-requisite course"
 msgstr "سثف حقث-قثضعهسهفث ذخعقسث"
 
 #: cms/templates/settings.html
-msgid "Require students to pass an exam before beginning the course."
+msgid "Require learners to pass an exam before beginning the course."
 msgstr "قثضعهقث سفعيثرفس فخ حشسس شر ثطشو زثبخقث زثلهررهرل فاث ذخعقسث."
 
 #: cms/templates/settings.html
@@ -24652,7 +24652,7 @@ msgstr " %"
 
 #: cms/templates/settings.html
 msgid ""
-"The score student must meet in order to successfully complete the entrance "
+"The score learner must meet in order to successfully complete the entrance "
 "exam. "
 msgstr ""
 "فاث سذخقث سفعيثرف وعسف وثثف هر خقيثق فخ سعذذثسسبعممغ ذخوحمثفث فاث ثرفقشرذث "
@@ -24678,7 +24678,7 @@ msgstr "اخص شقث فاثسث سثففهرلس عسثي?"
 
 #: cms/templates/settings.html
 msgid ""
-"Your course's schedule determines when students can enroll in and begin a "
+"Your course's schedule determines when learners can enroll in and begin a "
 "course."
 msgstr ""
 "غخعق ذخعقسث'س سذاثيعمث يثفثقوهرثس صاثر سفعيثرفس ذشر ثرقخمم هر شري زثلهر ش "
@@ -24688,7 +24688,7 @@ msgstr ""
 msgid ""
 "Other information from this page appears on the About page for your course. "
 "This information includes the course overview, course image, introduction "
-"video, and estimated time requirements. Students use About pages to choose "
+"video, and estimated time requirements. Learners use About pages to choose "
 "new courses to take."
 msgstr ""
 "خفاثق هربخقوشفهخر بقخو فاهس حشلث شححثشقس خر فاث شزخعف حشلث بخق غخعق ذخعقسث. "
@@ -24763,7 +24763,7 @@ msgid "Overall Grade Range"
 msgstr "خدثقشمم لقشيث قشرلث"
 
 #: cms/templates/settings_graders.html
-msgid "Your overall grading scale for student final grades"
+msgid "Your overall grading scale for learner final grades"
 msgstr "غخعق خدثقشمم لقشيهرل سذشمث بخق سفعيثرف بهرشم لقشيثس"
 
 #: cms/templates/settings_graders.html
@@ -24791,7 +24791,7 @@ msgid "Grading Rules &amp; Policies"
 msgstr "لقشيهرل قعمثس &amp; حخمهذهثس"
 
 #: cms/templates/settings_graders.html
-msgid "Deadlines, requirements, and logistics around grading student work"
+msgid "Deadlines, requirements, and logistics around grading learner work"
 msgstr "يثشيمهرثس, قثضعهقثوثرفس, شري مخلهسفهذس شقخعري لقشيهرل سفعيثرف صخقن"
 
 #: cms/templates/settings_graders.html
@@ -24830,7 +24830,7 @@ msgstr ""
 
 #: cms/templates/settings_graders.html
 msgid ""
-"You can specify whether your course offers students a grace period for late "
+"You can specify whether your course offers learners a grace period for late "
 "assignments."
 msgstr ""
 "غخع ذشر سحثذهبغ صاثفاثق غخعق ذخعقسث خببثقس سفعيثرفس ش لقشذث حثقهخي بخق مشفث "
@@ -24839,7 +24839,7 @@ msgstr ""
 #: cms/templates/settings_graders.html
 msgid ""
 "You can also create assignment types, such as homework, labs, quizzes, and "
-"exams, and specify how much of a student's grade each assignment type is "
+"exams, and specify how much of a learner's grade each assignment type is "
 "worth."
 msgstr ""
 "غخع ذشر شمسخ ذقثشفث شسسهلروثرف فغحثس, سعذا شس اخوثصخقن, مشزس, ضعهظظثس, شري "
@@ -24873,8 +24873,8 @@ msgstr "صاغ ساخعمي ه زقثشن وغ فثطفزخخن هرفخ ذاش�
 #: cms/templates/textbooks.html
 msgid ""
 "Breaking your textbook into multiple chapters reduces loading times for "
-"students, especially those with slow Internet connections. Breaking up "
-"textbooks into chapters can also help students more easily find topic-based "
+"learners, especially those with slow Internet connections. Breaking up "
+"textbooks into chapters can also help learners more easily find topic-based "
 "information."
 msgstr ""
 "زقثشنهرل غخعق فثطفزخخن هرفخ وعمفهحمث ذاشحفثقس قثيعذثس مخشيهرل فهوثس بخق "

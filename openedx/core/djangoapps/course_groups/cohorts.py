@@ -538,7 +538,7 @@ def set_assignment_type(user_group, assignment_type):
     course_cohort = user_group.cohort
 
     if is_last_random_cohort(user_group) and course_cohort.assignment_type != assignment_type:
-        raise ValueError(_("There must be one cohort to which students can automatically be assigned."))
+        raise ValueError(_("There must be one cohort to which learners can automatically be assigned."))
 
     course_cohort.assignment_type = assignment_type
     course_cohort.save()

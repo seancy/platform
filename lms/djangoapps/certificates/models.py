@@ -895,7 +895,7 @@ class CertificateGenerationCourseSetting(TimeStampedModel):
     self_generation_enabled = models.BooleanField(
         default=False,
         help_text=(
-            u"Allow students to generate their own certificates for the course. "
+            u"Allow learners to generate their own certificates for the course. "
             u"Enabling this does NOT affect usage of the management command used "
             u"for batch certificate generation."
         )

@@ -351,11 +351,11 @@ edx_d3CreateStackedBarGraph = function(parameters, svg, divTooltip) {
 
         // Construct the tooltip
         if (d.tooltip['type'] == 'subsection') {
-	   stud_str = ngettext('%(num_students)s student opened Subsection', '%(num_students)s students opened Subsection', d.tooltip['num_students']);
+	   stud_str = ngettext('%(num_students)s learner opened Subsection', '%(num_students)s learners opened Subsection', d.tooltip['num_students']);
 	   stud_str = interpolate(stud_str, {'num_students': d.tooltip['num_students']}, true);
           tooltip_str = stud_str +  ' '  + d.tooltip['subsection_num'] + ': ' + d.tooltip['subsection_name'];
         }else if (d.tooltip['type'] == 'problem') {
-	   stud_str = ngettext('%(num_students)s student', '%(num_students)s students', d.tooltip['count_grade']);
+	   stud_str = ngettext('%(num_students)s learner', '%(num_students)s learners', d.tooltip['count_grade']);
 	   stud_str = interpolate(stud_str, {'num_students': d.tooltip['count_grade']}, true);
 	   q_str = ngettext('%(num_questions)s question', '%(num_questions)s questions', d.tooltip['max_grade']);
 	   q_str = interpolate(q_str, {'num_questions': d.tooltip['max_grade']}, true);
@@ -438,7 +438,7 @@ edx_d3CreateStackedBarGraph = function(parameters, svg, divTooltip) {
       .attr("dy","1em")
       .attr("transform","rotate(-90)")
       .style("text-anchor","end")
-      .text(gettext("Number of Students"));
+      .text(gettext("Number of Learners"));
   };
 
   return graph;

@@ -235,7 +235,7 @@ msgid "ID verification pending"
 msgstr "ממתין לאימות מזהה"
 
 #: common/djangoapps/course_modes/helpers.py
-msgid "You're enrolled as a verified student"
+msgid "You're enrolled as a verified leaner"
 msgstr "הינך רשום כסטודנט מאומת"
 
 #: common/djangoapps/course_modes/helpers.py
@@ -248,7 +248,7 @@ msgid "ID Verified Ribbon/Badge"
 msgstr "תג או סרט למזהה מאומת"
 
 #: common/djangoapps/course_modes/helpers.py
-msgid "You're enrolled as an honor code student"
+msgid "You're enrolled as an honor code learner"
 msgstr "אתה רשום במסלול קוד אתי"
 
 #: common/djangoapps/course_modes/helpers.py lms/djangoapps/branding/api.py
@@ -260,7 +260,7 @@ msgid "Honor Code"
 msgstr "קוד אתי"
 
 #: common/djangoapps/course_modes/helpers.py
-msgid "You're enrolled as a professional education student"
+msgid "You're enrolled as a professional education learner"
 msgstr "אתה רשום כסטודנט בהכשרה מקצועית"
 
 #: common/djangoapps/course_modes/helpers.py
@@ -401,7 +401,7 @@ msgstr "עוזר הוראה קהילתי"
 
 #: common/djangoapps/django_comment_common/models.py
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py
-msgid "Student"
+msgid "Learner"
 msgstr "סטודנט"
 
 #: common/djangoapps/student/admin.py
@@ -621,7 +621,7 @@ msgstr "זכר"
 msgid "Female"
 msgstr "נקבה"
 
-#. Translators: 'Other' refers to the student's gender
+#. Translators: 'Other' refers to the learner's gender
 #: common/djangoapps/student/models.py
 msgid "Other/Prefer Not to Say"
 msgstr "אחר/לא רוצה לשתף"
@@ -654,12 +654,12 @@ msgstr "חטיבת ביניים"
 msgid "Elementary/primary school"
 msgstr "בית ספר יסודי"
 
-#. Translators: 'None' refers to the student's level of education
+#. Translators: 'None' refers to the learner's level of education
 #: common/djangoapps/student/models.py
 msgid "No formal education"
 msgstr "אין השכלה רשמית"
 
-#. Translators: 'Other' refers to the student's level of education
+#. Translators: 'Other' refers to the learner's level of education
 #: common/djangoapps/student/models.py
 msgid "Other education"
 msgstr "השכלה מסוג אחר"
@@ -2053,7 +2053,7 @@ msgstr "מלל הערכה מותאם אישית "
 
 #: common/lib/capa/capa/responsetypes.py
 #, python-brace-format
-msgid "error getting student answer from {student_answers}"
+msgid "error getting learner answer from {student_answers}"
 msgstr "שגיאה בקבלת תשובת סטודנט מ-{student_answers}"
 
 #: common/lib/capa/capa/responsetypes.py
@@ -2213,7 +2213,7 @@ msgid "Blank Advanced Problem"
 msgstr "בעיה מתקדמת ריקה"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Number of attempts taken by the student on this problem"
+msgid "Number of attempts taken by the learner on this problem"
 msgstr "מספר ניסיונות שניצל הסטודנט בבעיה זו "
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2223,7 +2223,7 @@ msgstr "מספר ניסיונות מרבי"
 
 #: common/lib/xmodule/xmodule/capa_base.py
 msgid ""
-"Defines the number of times a student can try to answer this problem. If the"
+"Defines the number of times a learner can try to answer this problem. If the"
 " value is not set, infinite attempts are allowed."
 msgstr ""
 "מגדיר את מספר הפעמים בהן סטודנט יכול לנסות לענות על בעיה זו. אם הערך אינו "
@@ -2328,7 +2328,7 @@ msgid "On Reset"
 msgstr "באתחול"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Per Student"
+msgid "Per Learner"
 msgstr "לסטודנט"
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2336,7 +2336,7 @@ msgid "XML data for the problem"
 msgstr "מידע XML עבור בעיה"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Dictionary with the correctness of current student answers"
+msgid "Dictionary with the correctness of current learner answers"
 msgstr "מילון עם התשובות התקינות הנוכחיות של הסטודנטים."
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2344,11 +2344,11 @@ msgid "Dictionary for maintaining the state of inputtypes"
 msgstr "מילון עבור שמירה על מצב סוגי קלט."
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Dictionary with the current student responses"
+msgid "Dictionary with the current learner responses"
 msgstr "מילון עם התשובות הנוכחיות של הסטודנט"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Dictionary with the current student score"
+msgid "Dictionary with the current learner score"
 msgstr ""
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2356,11 +2356,11 @@ msgid "Whether or not the answers have been saved since last submit"
 msgstr "בין אם התשובות נשמרו או לא נשמרו מאז ההגשה האחרונה"
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Whether the student has answered the problem"
+msgid "Whether the learner has answered the problem"
 msgstr "האם הסטודנט ענה על הבעיה."
 
 #: common/lib/xmodule/xmodule/capa_base.py
-msgid "Random seed for this student"
+msgid "Random seed for this learner"
 msgstr "מקור אקראי עבור סטודנט זה"
 
 #: common/lib/xmodule/xmodule/capa_base.py
@@ -2373,7 +2373,7 @@ msgstr "זמן בין ניסיונות"
 
 #: common/lib/xmodule/xmodule/capa_base.py
 msgid ""
-"Seconds a student must wait between submissions for a problem with multiple "
+"Seconds a learner must wait between submissions for a problem with multiple "
 "attempts."
 msgstr ""
 "מספר השניות שעל סטודנט להמתין בין מועדי הגשה עבור בעיה עם ניסיונות הגשה "
@@ -2593,7 +2593,7 @@ msgstr "לא ניתן לבחור 'אתחול' לבעיה סגורה."
 msgid "You must submit an answer before you can select Reset."
 msgstr "עליך לשלוח תשובה בטרם תוכל לבחור 'אתחול'."
 
-#. Translators: 'rescoring' refers to the act of re-submitting a student's
+#. Translators: 'rescoring' refers to the act of re-submitting a learner's
 #. solution so it can get a new score.
 #: common/lib/xmodule/xmodule/capa_base.py
 msgid "Problem's definition does not support rescoring."
@@ -2748,7 +2748,7 @@ msgstr "מחיר קורס לתצוגה"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"The cost displayed to students for enrolling in the course. If a paid course"
+"The cost displayed to learner for enrolling in the course. If a paid course"
 " registration price is set by an administrator in the database, that price "
 "will be displayed instead of this one."
 msgstr ""
@@ -2786,7 +2786,7 @@ msgstr "הראה מחשבון"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter true or false. When true, students can see the calculator in the "
+"Enter true or false. When true, learners can see the calculator in the "
 "course."
 msgstr "הזן כן או לא. כאשר כן, סטודנטים יכולים לראות את המחשבון בקורס."
 
@@ -2826,7 +2826,7 @@ msgstr "תאריכי האפלה עבור דיון"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter pairs of dates between which students cannot post to discussion "
+"Enter pairs of dates between which learners cannot post to discussion "
 "forums. Inside the provided brackets, enter an additional set of square "
 "brackets surrounding each pair of dates you add. Format each pair of dates "
 "as [\"YYYY-MM-DD\", \"YYYY-MM-DD\"]. To specify times as well as dates, "
@@ -2897,7 +2897,7 @@ msgstr "הגדרת קבוצת לימוד "
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Enter policy keys and values to enable the cohort feature, define automated "
-"student assignment to groups, or identify any course-wide discussion topics "
+"learners assignment to groups, or identify any course-wide discussion topics "
 "as private to cohort members."
 msgstr ""
 "הזן מפתחות מדיניות וערכים על מנת לאפשר את תכונת קבוצת הלימוד, הגדר הקצאה "
@@ -2948,7 +2948,7 @@ msgid "Disable Progress Graph"
 msgstr "השבֵּת גרף התקדמות"
 
 #: common/lib/xmodule/xmodule/course_module.py
-msgid "Enter true or false. If true, students cannot view the progress graph."
+msgid "Enter true or false. If true, learners cannot view the progress graph."
 msgstr "הזן כן או לא. אם כן, סטודנטים אינם יכולים לראות את גרף ההתקדמות. "
 
 #: common/lib/xmodule/xmodule/course_module.py
@@ -3028,7 +3028,7 @@ msgstr "אפשר פוסטים אנונימיים בדיון"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter true or false. If true, students can create discussion posts that are "
+"Enter true or false. If true, learners can create discussion posts that are "
 "anonymous to all users."
 msgstr ""
 "הזן כן או לא. אם כן, סטודנטים יכולים ליצור פוסטים אנונימיים בדיון לכל "
@@ -3040,8 +3040,8 @@ msgstr "אפשר פוסטים אנונימים בדיון לעמיתים"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter true or false. If true, students can create discussion posts that are "
-"anonymous to other students. This setting does not make posts anonymous to "
+"Enter true or false. If true, learners can create discussion posts that are "
+"anonymous to other learners. This setting does not make posts anonymous to "
 "course staff."
 msgstr ""
 "הזן כן או לא. אם לא, יכולים הסטודנטים ליצור פוסטים אנונימיים לסטודנטים "
@@ -3062,7 +3062,7 @@ msgstr "שם סרגל הצד של עמוד הבית של הקורס"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter the heading that you want students to see above your course handouts "
+"Enter the heading that you want learners to see above your course handouts "
 "on the Course Home page. Your course handouts appear in the right panel of "
 "the page."
 msgstr ""
@@ -3102,7 +3102,7 @@ msgid "External Login Domain"
 msgstr "דומיין התחברות חיצוני"
 
 #: common/lib/xmodule/xmodule/course_module.py
-msgid "Enter the external login method students can use for the course."
+msgid "Enter the external login method learners can use for the course."
 msgstr "הזן שיטת התחברות חיצונית שסטודנטים יכולים להשתמש בה עבור הקורס."
 
 #: common/lib/xmodule/xmodule/course_module.py
@@ -3111,7 +3111,7 @@ msgstr "ניתן להוריד תעודות סיום לפני מועד הסיום
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter true or false. If true, students can download certificates before the "
+"Enter true or false. If true, learners can download certificates before the "
 "course ends, if they've met certificate requirements."
 msgstr ""
 "הזן כן או לא. אם כן, סטודנטים יכולים להוריד את התעודות בטרם הסתיים הקורס "
@@ -3124,12 +3124,12 @@ msgstr "תעודות המציגות התנהגות"
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Enter end, early_with_info, or early_no_info. After certificate generation, "
-"students who passed see a link to their certificates on the dashboard and "
-"students who did not pass see information about the grading configuration. "
+"learners who passed see a link to their certificates on the dashboard and "
+"learners who did not pass see information about the grading configuration. "
 "The default is end, which displays this certificate information to all "
-"students after the course end date. To display this certificate information "
-"to all students as soon as certificates are generated, enter "
-"early_with_info. To display only the links to passing students as soon as "
+"learners after the course end date. To display this certificate information "
+"to all learners as soon as certificates are generated, enter "
+"early_with_info. To display only the links to passing learners as soon as "
 "certificates are generated, enter early_no_info."
 msgstr ""
 "הזן סיום, early_with_info או early_no_info. לאחר יצירת תעודה, רואים "
@@ -3189,7 +3189,7 @@ msgstr "תגים פתוחים לבעיה עבור קורס זה. התגים נו
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Use this setting only when generating PDF certificates. Between quotation "
-"marks, enter the short name of the type of certificate that students receive"
+"marks, enter the short name of the type of certificate that learners receive"
 " when they complete the course. For instance, \"Certificate\"."
 msgstr ""
 "השתמש בהגדרה זו בעת יצירת תעודות PDF. בין מרכאות, הזן את השם הקצר של סוג "
@@ -3202,7 +3202,7 @@ msgstr "שם תעודה (קצר)"
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
 "Use this setting only when generating PDF certificates. Between quotation "
-"marks, enter the long name of the type of certificate that students receive "
+"marks, enter the long name of the type of certificate that learners receive "
 "when they complete the course. For instance, \"Certificate of Achievement\"."
 msgstr ""
 "השתמש בהגדרה זו בעת יצירת תעודות PDF. בין מרכאות, הזן את השם הארוך של סוג "
@@ -3303,13 +3303,13 @@ msgstr ""
 " בעת יצירת הקורס. כדי להשתמש במספר הקורס שהזנת בעת יצירת הקורס, הזן ביטול."
 
 #: common/lib/xmodule/xmodule/course_module.py
-msgid "Course Maximum Student Enrollment"
+msgid "Course Maximum Learner Enrollment"
 msgstr "מספר מרבי של סטודנטים רשומים"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Enter the maximum number of students that can enroll in the course. To allow"
-" an unlimited number of students, enter null."
+"Enter the maximum number of learners that can enroll in the course. To allow"
+" an unlimited number of learners, enter null."
 msgstr ""
 "הזן את המספר המרבי של סטודנטים היכולים להירשם לקורס. השאר ריק על מנת לאפשר "
 "מספר בלתי מוגבל. "
@@ -3348,7 +3348,7 @@ msgstr "דרוש סקר טרום קורס"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Specify whether students must complete a survey before they can view your "
+"Specify whether learners must complete a survey before they can view your "
 "course content. If you set this value to true, you must add a name for the "
 "survey to the Course Survey Name setting above."
 msgstr ""
@@ -3392,7 +3392,7 @@ msgstr "מבחן כניסה מופעל "
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Specify whether students must complete an entrance exam before they can view"
+"Specify whether learners must complete an entrance exam before they can view"
 " your course content. Note, you must enable Entrance Exams for this course "
 "setting to take effect."
 msgstr ""
@@ -3405,7 +3405,7 @@ msgstr "ציון מינימלי למבחן כניסה (%)"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Specify a minimum percentage score for an entrance exam before students can "
+"Specify a minimum percentage score for an entrance exam before learners can "
 "view your course content. Note, you must enable Entrance Exams for this "
 "course setting to take effect."
 msgstr ""
@@ -3540,7 +3540,7 @@ msgstr "קצב אישי"
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
 "Set this to \"true\" to mark this course as self-paced. Self-paced courses "
-"do not have due dates for assignments, and students can progress through the"
+"do not have due dates for assignments, and learners can progress through the"
 " course at any rate before the course ends."
 msgstr ""
 "הגדר זאת ל\"כן\" כדי לסמן את הקורס כקצב אישי. בקורסים בקצב אישי אין תאריכי "
@@ -3552,7 +3552,7 @@ msgstr "עקוף את עמוד הבית של הקורס"
 
 #: common/lib/xmodule/xmodule/course_module.py
 msgid ""
-"Bypass the course home tab when students arrive from the dashboard, sending "
+"Bypass the course home tab when learners arrive from the dashboard, sending "
 "them directly to course content."
 msgstr ""
 "עקוף את כרטיסיית עמוד הבית של הקורס כאשר הסטודנטים מגיעים מלוח הבקרה ושלח "
@@ -3575,7 +3575,7 @@ msgid "Course Learning Information"
 msgstr "מידע על הלמידה בקורס"
 
 #: common/lib/xmodule/xmodule/course_module.py
-msgid "Specify what student can learn from the course."
+msgid "Specify what learner can learn from the course."
 msgstr "ציין איזה סטודנט יכול ללמוד מהקורס."
 
 #: common/lib/xmodule/xmodule/course_module.py
@@ -3825,7 +3825,7 @@ msgid "Count"
 msgstr "ספירה"
 
 #: common/lib/xmodule/xmodule/library_content_module.py
-msgid "Enter the number of components to display to each student."
+msgid "Enter the number of components to display to each learner."
 msgstr "ערוך את מספר המרכיבים להצגה לכל סטודנט."
 
 #: common/lib/xmodule/xmodule/library_content_module.py
@@ -3978,7 +3978,7 @@ msgstr "פתח בעמוד חדש"
 
 #: common/lib/xmodule/xmodule/lti_module.py
 msgid ""
-"Select True if you want students to click a link that opens the LTI tool in "
+"Select True if you want learners to click a link that opens the LTI tool in "
 "a new window. Select False if you want the LTI content to open in an IFrame "
 "in the current page. This setting is only used when Hide External Tool is "
 "set to False.  "
@@ -4231,8 +4231,8 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Enter the maximum number of times a student can try to answer problems. By "
-"default, Maximum Attempts is set to null, meaning that students have an "
+"Enter the maximum number of times a learner can try to answer problems. By "
+"default, Maximum Attempts is set to null, meaning that learners have an "
 "unlimited number of attempts for problems. You can override this course-wide"
 " setting for individual problems. However, if the course-wide setting is a "
 "specific number, you cannot set the Maximum Attempts for individual problems"
@@ -4268,7 +4268,7 @@ msgstr "הגדרות קבוצה"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Enter the configurations that govern how students are grouped together."
+"Enter the configurations that govern how learners are grouped together."
 msgstr "הזן את ההגדרות ששולטות בדרך בה סטודנטים מקובצים יחד."
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
@@ -4287,7 +4287,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Specify whether to show an auto-advance button in videos. If the student "
+"Specify whether to show an auto-advance button in videos. If the learner "
 "clicks it, when the last video in a unit finishes it will automatically move"
 " to the next unit and autoplay the first video."
 msgstr ""
@@ -4324,17 +4324,17 @@ msgstr ""
 "משתנה הגדרה כלל קורסית זו."
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
-msgid "Enable Student Notes"
+msgid "Enable Learner Notes"
 msgstr "אפשר רשימות סטודנט"
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Enter true or false. If true, students can use the Student Notes feature."
+"Enter true or false. If true, learners can use the Learner Notes feature."
 msgstr "הזן כן או לא. אם כן, הסטודנטים יכולים להשתמש בתכונת רשימות הסטודנטים."
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py
 msgid ""
-"Indicates whether Student Notes are visible in the course. Students can also"
+"Indicates whether Learner Notes are visible in the course. Learners can also"
 " show or hide their notes in the courseware."
 msgstr ""
 "מציין אם רשימות הסטודנטים גלויים בקורס. הסטודנטים יכולים להציג או להסתיר את "
@@ -4362,15 +4362,15 @@ msgid "Partition for segmenting users by enrollment track"
 msgstr "חלוקה לקבוצות משתמשים לפי מסלול הרשמה"
 
 #: common/lib/xmodule/xmodule/poll_module.py
-msgid "Whether this student has voted on the poll"
+msgid "Whether this learner has voted on the poll"
 msgstr "האם סטודנט זה השתתף בסקר"
 
 #: common/lib/xmodule/xmodule/poll_module.py
-msgid "Student answer"
+msgid "Learner answer"
 msgstr "תשובת הסטודנט"
 
 #: common/lib/xmodule/xmodule/poll_module.py
-msgid "Poll answers from all students"
+msgid "Poll answers from all learners"
 msgstr "תשובות כל הסטודנטים על הסקר"
 
 #: common/lib/xmodule/xmodule/poll_module.py
@@ -4414,7 +4414,7 @@ msgstr "מוגבל בזמן"
 
 #: common/lib/xmodule/xmodule/seq_module.py
 msgid ""
-"This setting indicates whether students have a limited time to view or "
+"This setting indicates whether learners have a limited time to view or "
 "interact with this courseware component."
 msgstr ""
 "הגדרה זו מציינת אם לסטודנטים יש זמן מוגבל לצפייה או ליצירת אינטרקציה עם רכיב"
@@ -4426,7 +4426,7 @@ msgstr "הגבלת זמן בדקות"
 
 #: common/lib/xmodule/xmodule/seq_module.py
 msgid ""
-"The number of minutes available to students for viewing or interacting with "
+"The number of minutes available to learners for viewing or interacting with "
 "this courseware component."
 msgstr ""
 "מספר הדקות הזמין לסטודנטים לצפייה או ליצירת אינטרקציה עם רכיב זה של תוכנת "
@@ -4492,7 +4492,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/seq_module.py
 msgid ""
-"A list summarizing what students should look forward to in this section."
+"A list summarizing what learners should look forward to in this section."
 msgstr ""
 
 #: common/lib/xmodule/xmodule/split_test_module.py
@@ -4515,14 +4515,14 @@ msgstr "ניסוי תוכן"
 #: common/lib/xmodule/xmodule/split_test_module.py
 #: lms/djangoapps/lms_xblock/mixin.py
 msgid ""
-"The list of group configurations for partitioning students in content "
+"The list of group configurations for partitioning learners in content "
 "experiments."
 msgstr "רשימת הגדרות קבוצה לחלוקת סטודנטים לקבוצות תוכן."
 
 #: common/lib/xmodule/xmodule/split_test_module.py
 msgid ""
 "The configuration defines how users are grouped for this content experiment."
-" Caution: Changing the group configuration of a student-visible experiment "
+" Caution: Changing the group configuration of a learner-visible experiment "
 "will impact the experiment data."
 msgstr ""
 "הגדרה זו מגדירה את הדרך בה משתמשים מקובצים עבור ניסוי תוכן זה. זהירות: שינוי"
@@ -4533,7 +4533,7 @@ msgid "Group Configuration"
 msgstr "הגדרת קבוצה"
 
 #: common/lib/xmodule/xmodule/split_test_module.py
-msgid "Which child module students in a particular group_id should see"
+msgid "Which child module learners in a particular group_id should see"
 msgstr "איזה מודול מִשנֶה צריכים לראות הסטודנטים ב-group_id מסוים "
 
 #: common/lib/xmodule/xmodule/split_test_module.py
@@ -4778,7 +4778,7 @@ msgstr "הורד סרטון וידאו"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
 msgid ""
-"Allow students to download versions of this video in different formats if "
+"Allow learners to download versions of this video in different formats if "
 "they cannot use the edX video player or do not have access to YouTube. You "
 "must add at least one non-YouTube URL in the Video File URLs field."
 msgstr ""
@@ -4795,8 +4795,8 @@ msgid ""
 "The URL or URLs where you've posted non-YouTube versions of the video. Each "
 "URL must end in .mpeg, .mp4, .ogg, or .webm and cannot be a YouTube URL. "
 "(For browser compatibility, we strongly recommend .mp4 and .webm format.) "
-"Students will be able to view the first listed video that's compatible with "
-"the student's computer. To allow students to download these videos, set "
+"Learners will be able to view the first listed video that's compatible with "
+"the learner's computer. To allow learners to download these videos, set "
 "Video Download Allowed to True."
 msgstr ""
 "כתובת ה-URL או כתובות האתרים שבהם פרסמת גרסאות של סרטון הווידאו שאינן "
@@ -4812,12 +4812,12 @@ msgstr "כתובות URL לקבצי וידאו "
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
 msgid ""
-"By default, students can download an .srt or .txt transcript when you set "
+"By default, learners can download an .srt or .txt transcript when you set "
 "Download Transcript Allowed to True. If you want to provide a downloadable "
 "transcript in a different format, we recommend that you upload a handout by "
 "using the Upload a Handout field. If this isn't possible, you can post a "
 "transcript file on the Files & Uploads page or on the Internet, and then add"
-" the URL for the transcript here. Students see a link to download that "
+" the URL for the transcript here. Learners see a link to download that "
 "transcript below the video."
 msgstr ""
 "כברירת מחדל, כאשר בחירה 'אפשר הורדת תמליל' מופעלת, יכולים סטודנטים להוריד "
@@ -4833,7 +4833,7 @@ msgstr "כתובת URL תמליל הניתן להורדה"
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
 msgid ""
-"Allow students to download the timed transcript. A link to download the file"
+"Allow learners to download the timed transcript. A link to download the file"
 " appears below the video. By default, the transcript is an .srt or .txt "
 "file. If you want to provide the transcript for download in a different "
 "format, upload a file by using the Upload Handout field."
@@ -4921,7 +4921,7 @@ msgstr "ציין אם יוטיוב זמין למשתמש."
 
 #: common/lib/xmodule/xmodule/video_module/video_xfields.py
 msgid ""
-"Upload a handout to accompany this video. Students can download the handout "
+"Upload a handout to accompany this video. Learners can download the handout "
 "by clicking Download Handout under the video."
 msgstr ""
 "העלה דף מידע המלווה סרטון זה. סטודנטים יכולים להוריד את דף המידע באמצעות "
@@ -5030,7 +5030,7 @@ msgid "Whether this learner has posted words to the cloud."
 msgstr "האם העלה לומד זה מילים לענן."
 
 #: common/lib/xmodule/xmodule/word_cloud_module.py
-msgid "Student answer."
+msgid "Learner answer."
 msgstr "תשובת הסטודנט."
 
 #: common/lib/xmodule/xmodule/word_cloud_module.py
@@ -5543,7 +5543,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "An {cert_type} certificate demonstrates a high level of achievement in a "
-"program of study, and includes verification of the student's identity."
+"program of study, and includes verification of the learner's identity."
 msgstr ""
 "תעודת {cert_type} מדגימה רמת הישגים גבוהה בתכנית הלימודים וכוללת אימות זהות "
 "הסטודנט."
@@ -5570,7 +5570,7 @@ msgstr ""
 msgid "{partner_short_name} {course_number} Certificate | {platform_name}"
 msgstr "{partner_short_name} {course_number} תעודה {platform_name}"
 
-#. Translators:  This text fragment appears after the student's name
+#. Translators:  This text fragment appears after the learner's name
 #. (displayed in a large font) on the certificate
 #. screen.  The text describes the accomplishment represented by the
 #. certificate information displayed to the user
@@ -5589,7 +5589,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "{platform_name} acknowledges achievements through certificates, which are "
-"awarded for course activities that {platform_name} students complete."
+"awarded for course activities that {platform_name} learners complete."
 msgstr ""
 "{platform_name} מכירה בהישגים באמצעות תעודות, המוענקות לפעילויות הקורס "
 "שהשלימו הסטודנטים של {platform_name}."
@@ -5642,7 +5642,7 @@ msgstr "אודות תעודות של {platform_name}"
 
 #: lms/djangoapps/certificates/views/webview.py
 #, python-brace-format
-msgid "How {platform_name} Validates Student Certificates"
+msgid "How {platform_name} Validates Learner Certificates"
 msgstr "כיצד {platform_name} מאמתת את תעודות הסטודנטים"
 
 #. Translators:  This text describes the validation mechanism for a
@@ -5699,7 +5699,7 @@ msgstr "צור קשר עם {platform_name}"
 #. describes the guarantee provided by edX
 #: lms/djangoapps/certificates/views/webview.py
 #, python-brace-format
-msgid "{platform_name} acknowledges the following student accomplishment"
+msgid "{platform_name} acknowledges the following learner accomplishment"
 msgstr "{platform_name} מכירה בהישגים של הסטודנט שלהלן "
 
 #. Translators:  This text represents the description of course
@@ -5781,7 +5781,7 @@ msgid "Percent"
 msgstr "אחוז"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
-msgid "Opened by this number of students"
+msgid "Opened by this number of learners"
 msgstr "נפתח על ידי מספר זה של סטודנטים"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
@@ -5789,11 +5789,11 @@ msgid "subsections"
 msgstr "תתי פרקים"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
-msgid "Count of Students"
+msgid "Count of Learners"
 msgstr "ספירה של סטודנטים"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
-msgid "Percent of Students"
+msgid "Percent of Learners"
 msgstr "אחוז מהסטודנטים"
 
 #: lms/djangoapps/class_dashboard/dashboard_data.py
@@ -6155,7 +6155,7 @@ msgstr ""
 #: lms/djangoapps/courseware/masquerade.py
 msgid ""
 "This type of component cannot be shown while viewing the course as a "
-"specific student."
+"specific learner."
 msgstr "לא ניתן להציג סוג זה של רכיב בעת צפייה בקורס כסטודנט ספציפי."
 
 #: lms/djangoapps/courseware/models.py
@@ -6897,7 +6897,7 @@ msgstr "שם משתמש {user} קיים כבר."
 #, python-brace-format
 msgid ""
 "Error '{error}' while sending email to new user (user email={email}). "
-"Without the email student would not be able to login. Please contact support"
+"Without the email learner would not be able to login. Please contact support"
 " for further information."
 msgstr ""
 "שגיאת '{error}' בעת שליחת דואר אלקטרוני למשתמש חדש (הדואר האלקטרוני של "
@@ -7178,7 +7178,7 @@ msgid "Course has no valid entrance exam section."
 msgstr "אין לקורס פרק תקף למבחן כניסה.  "
 
 #: lms/djangoapps/instructor/views/api.py
-msgid "All Students"
+msgid "All Learners"
 msgstr "כל הסטודנטים"
 
 #: lms/djangoapps/instructor/views/api.py
@@ -7202,7 +7202,7 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
-msgid "Successfully changed due date for student {0} for {1} to {2}"
+msgid "Successfully changed due date for learner {0} for {1} to {2}"
 msgstr "תאריך יעד שונה בהצלחה עבור סטודנט {0} מ {1} ל{2}"
 
 #: lms/djangoapps/instructor/views/api.py
@@ -7212,22 +7212,22 @@ msgstr "הוסרה בהצלחה הארכה לא חוקית לתאריך היעד
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
-msgid "Successfully reset due date for student {0} for {1} to {2}"
+msgid "Successfully reset due date for learner {0} for {1} to {2}"
 msgstr "תאריך יעד עבור סטודנט {0} אותחל בהצלחה מ{1} ל{2}"
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-format
-msgid "This student (%s) will skip the entrance exam."
+msgid "This learner (%s) will skip the entrance exam."
 msgstr "סטודנט זה  (%s) ידלג על מבחן הכניסה."
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-format
-msgid "This student (%s) is already allowed to skip the entrance exam."
+msgid "This learner (%s) is already allowed to skip the entrance exam."
 msgstr "סטודנט זה (%s) מורשה כבר לדלג על מבחן הכניסה."
 
 #: lms/djangoapps/instructor/views/api.py
 msgid ""
-"Certificate generation task for all students of this course has been "
+"Certificate generation task for all learners of this course has been "
 "started. You can view the status of the generation task in the \"Pending "
 "Tasks\" section."
 msgstr ""
@@ -7254,7 +7254,7 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
-msgid "Student (username/email={user}) already in certificate exception list."
+msgid "Learner (username/email={user}) already in certificate exception list."
 msgstr ""
 "סטודנט (שם משתמש/דואר אלקטרוני={user}) נמצא כבר ברשימת החריגים לתעודה."
 
@@ -7269,7 +7269,7 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Add to Exception List\" button."
 msgstr ""
 "שדה שם המשתמש/דואר אלקטרוני של הסטודנט הוא שדה חובה ולא ניתן להשאירו ריק. "
@@ -7300,7 +7300,7 @@ msgid "Invalid data, generate_for must be \"new\" or \"all\"."
 msgstr "מידע לא חוקי, generate_for חייב להיות \"new\" או \"all\"."
 
 #: lms/djangoapps/instructor/views/api.py
-msgid "Certificate generation started for white listed students."
+msgid "Certificate generation started for white listed learners."
 msgstr "יצירת התעודה החלה לסטודנטים שברשימה הלבנה."
 
 #: lms/djangoapps/instructor/views/api.py
@@ -7323,8 +7323,8 @@ msgstr "התעודה של {user} נפסלה כבר. בדוק את האיות ו�
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
 msgid ""
-"Certificate for student {user} is already invalid, kindly verify that "
-"certificate was generated for this student and then proceed."
+"Certificate for learner {user} is already invalid, kindly verify that "
+"certificate was generated for this learner and then proceed."
 msgstr ""
 "תעודת הסטודנט {user} אינה חוקית יותר, אנא אמת כי נוצרה התעודה עבור סטודנט זה"
 " ולאחר מכן המשך."
@@ -7337,7 +7337,7 @@ msgstr "פסילת התעודה אינה קיימת, רענן את הדף ונס
 
 #: lms/djangoapps/instructor/views/api.py
 msgid ""
-"Student username/email field is required and can not be empty. Kindly fill "
+"Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Invalidate Certificate\" button."
 msgstr ""
 "שדה שם המשתמש/דואר אלקטרוני של הסטודנט הוא שדה חובה ולא ניתן להשאירו ריק. "
@@ -7346,8 +7346,8 @@ msgstr ""
 #: lms/djangoapps/instructor/views/api.py
 #, python-brace-format
 msgid ""
-"The student {student} does not have certificate for the course {course}. "
-"Kindly verify student username/email and the selected course are correct and"
+"The learner {student} does not have certificate for the course {course}. "
+"Kindly verify learner username/email and the selected course are correct and"
 " try again."
 msgstr ""
 "לסטודנט {student} אין תעודה עבור הקורס {course}. אנא אמת ששם המשתמש/דואר "
@@ -7417,7 +7417,7 @@ msgstr "מדריך"
 #: lms/djangoapps/instructor/views/instructor_dashboard.py
 #, python-brace-format
 msgid ""
-"To gain insights into student enrollment and participation {link_start}visit"
+"To gain insights into learner enrollment and participation {link_start}visit"
 " {analytics_dashboard_name}, our new course analytics product{link_end}."
 msgstr ""
 "על מנת לקבל תובנות אודות רישום והשתתפות סטודנטים {link_start}בקר "
@@ -7474,7 +7474,7 @@ msgstr "דיונים"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py
 #: lms/templates/ccx/coach_dashboard.html
-msgid "Student Admin"
+msgid "Learner Admin"
 msgstr "ניהול סטודנטים"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py
@@ -7553,7 +7553,7 @@ msgstr "המימוש אינו קיים אל מול קוד ההרשמה ({code}).
 
 #: lms/djangoapps/instructor/views/tools.py
 #, python-brace-format
-msgid "Could not find student matching identifier: {student_identifier}"
+msgid "Could not find learner matching identifier: {student_identifier}"
 msgstr "לא ניתן לאתר סטודנט התואם למזהה: {student_identifier}"
 
 #: lms/djangoapps/instructor/views/tools.py
@@ -7575,7 +7575,7 @@ msgid "An extended due date must be later than the original due date."
 msgstr "הארכת תאריך היעד חייבת להיות מאוחרת יותר מתאריך היעד המקורי."
 
 #: lms/djangoapps/instructor/views/tools.py
-msgid "No due date extension is set for that student and unit."
+msgid "No due date extension is set for that learner and unit."
 msgstr "לא נקבעה הארכה לתאריך היעד להגשה עבור סטודנט ויחידה זו"
 
 #. #-#-#-#-#  django-partial.po (edx-platform)  #-#-#-#-#
@@ -7834,21 +7834,21 @@ msgstr "התקדמות: {action} {succeeded} מתוך {attempted} עד כה."
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Unable to find submission to be {action} for student '{student}'"
+msgid "Unable to find submission to be {action} for learner '{student}'"
 msgstr "לא ניתן למצוא הגשה ש{action} עבור הסטודנט '{student}'"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem failed to be {action} for student '{student}'"
+msgid "Problem failed to be {action} for learner '{student}'"
 msgstr "{action} הבעיה נכשלה עבור הסטודנט '{student}'"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem successfully {action} for student '{student}'"
+msgid "Problem successfully {action} for learner '{student}'"
 msgstr "{action} הבעיה הצליחה עבור הסטודנט '{student}'"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
@@ -7856,7 +7856,7 @@ msgstr "{action} הבעיה הצליחה עבור הסטודנט '{student}'"
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
 msgid ""
-"Unable to find entrance exam submission to be {action} for student "
+"Unable to find entrance exam submission to be {action} for learner "
 "'{student}'"
 msgstr "לא ניתן למצוא הגשת מבחן כניסה ש{action} עבור הסטודנט '{student}'"
 
@@ -7864,34 +7864,34 @@ msgstr "לא ניתן למצוא הגשת מבחן כניסה ש{action} עבו�
 #. {student} is a student identifier.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Entrance exam successfully {action} for student '{student}'"
+msgid "Entrance exam successfully {action} for learner '{student}'"
 msgstr "{action} מבחן הכניסה בהצלחה עבור הסטודנט '{student}'"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Unable to find any students with submissions to be {action}"
+msgid "Unable to find any learners with submissions to be {action}"
 msgstr "לא ניתן למצוא סטודנט עם הגשות ש{action}"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {attempted} is a count.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem failed to be {action} for any of {attempted} students"
+msgid "Problem failed to be {action} for any of {attempted} learners"
 msgstr "{action} הבעיה נכשלה עבור כל הסטודנטים {attempted}"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {attempted} is a count.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem successfully {action} for {attempted} students"
+msgid "Problem successfully {action} for {attempted} learners"
 msgstr "{action} הבעיה הצליחה עבור הסטודנטים {attempted}"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
 #. {succeeded} and {attempted} are counts.
 #: lms/djangoapps/instructor_task/views.py
 #, python-brace-format
-msgid "Problem {action} for {succeeded} of {attempted} students"
+msgid "Problem {action} for {succeeded} of {attempted} learners"
 msgstr "{action} הבעיה {succeeded} עבור הסטודנטים {attempted}"
 
 #. Translators: {action} is a past-tense verb that is localized separately.
@@ -9076,7 +9076,7 @@ msgid "Gross Revenue over the Minimum"
 msgstr "הכנסות ברוטו מעל המינימום"
 
 #: lms/djangoapps/shoppingcart/reports.py
-msgid "Number of Verified Students Contributing More than the Minimum"
+msgid "Number of Verified Learners Contributing More than the Minimum"
 msgstr "מספר הסטודנטים המאומתים התורמים מעל המינימום"
 
 #: lms/djangoapps/shoppingcart/reports.py
@@ -10394,7 +10394,7 @@ msgstr "אין אפשרות ליצור שתי קבוצות למידה בעלות
 
 #: openedx/core/djangoapps/course_groups/cohorts.py
 msgid ""
-"There must be one cohort to which students can automatically be assigned."
+"There must be one cohort to which learners can automatically be assigned."
 msgstr "חייבת להיות קבוצת לימוד אחת שאליה ניתן לשייך סטודנטים באופן אוטומטי."
 
 #: openedx/core/djangoapps/course_groups/views.py
@@ -10503,7 +10503,7 @@ msgstr ""
 #: openedx/core/djangoapps/credit/models.py
 msgid ""
 "URL from the credit provider where the user can check the status of his or "
-"her request for credit.  This is displayed to students *after* they have "
+"her request for credit.  This is displayed to learners *after* they have "
 "requested credit."
 msgstr ""
 "כתובת URL מספק נקודות הזכות שבה המשתמש יכול לבדוק את סטטוס בקשתו לנקודות "
@@ -11895,7 +11895,7 @@ msgstr "העתקה של '{0}'"
 #: cms/djangoapps/contentstore/views/item.py
 #, python-brace-format
 msgid ""
-"Students must score {score}{pct_sign} or higher to access course materials."
+"Learners must score {score}{pct_sign} or higher to access course materials."
 msgstr ""
 "סטודנטים חייבים לקבל ציון {score}{pct_sign} או יותר על מנת לגשת לחומרי "
 "הקורס."
@@ -12786,7 +12786,7 @@ msgid "Don't enroll"
 msgstr "אל תירשם"
 
 #: lms/templates/enroll_students.html
-msgid "Student Enrollment Form"
+msgid "Learner Enrollment Form"
 msgstr "טופס רישום סטודנט"
 
 #: lms/templates/enroll_students.html
@@ -12794,19 +12794,19 @@ msgid "Course: "
 msgstr "קורס:"
 
 #: lms/templates/enroll_students.html
-msgid "Add new students"
+msgid "Add new learners"
 msgstr "הוסף סטודנטים חדשים"
 
 #: lms/templates/enroll_students.html
-msgid "Existing students:"
+msgid "Existing learners:"
 msgstr "סטודנטים קיימים:"
 
 #: lms/templates/enroll_students.html
-msgid "New students added: "
+msgid "New learners added: "
 msgstr "סטודנטים חדשים הוספו:"
 
 #: lms/templates/enroll_students.html
-msgid "Students rejected: "
+msgid "Learners rejected: "
 msgstr "סטודנטים נדחו:"
 
 #: lms/templates/enroll_students.html
@@ -13066,11 +13066,11 @@ msgstr "המפתחות תקפים לפרק זמן מוגבל. האם פג תוק
 #: lms/templates/library-block-author-preview-header.html
 msgid ""
 "Showing all matching content eligible to be added into {display_name}. Each "
-"student will be assigned {max_count} component drawn randomly from this "
+"learner will be assigned {max_count} component drawn randomly from this "
 "list."
 msgid_plural ""
 "Showing all matching content eligible to be added into {display_name}. Each "
-"student will be assigned {max_count} components drawn randomly from this "
+"learner will be assigned {max_count} components drawn randomly from this "
 "list."
 msgstr[0] ""
 "מציג את כל התוכן התואם ושניתן להוסיף ל-{display_name}. לכל סטודנט יוקצה רכיב"
@@ -13188,7 +13188,7 @@ msgstr "התחבר באמצעות {provider_name}"
 msgid "External resource"
 msgstr "משאבים חיצוניים"
 
-#. Translators: "points" is the student's achieved score on this LTI unit, and
+#. Translators: "points" is the learner's achieved score on this LTI unit, and
 #. "total_points" is the maximum number of points achievable.
 #: lms/templates/lti.html
 msgid "{points} / {total_points} points"
@@ -13218,7 +13218,7 @@ msgid "Press to Launch"
 msgstr "לחץ על מנת להפעיל "
 
 #: lms/templates/manage_user_standing.html
-msgid "Manage student accounts"
+msgid "Manage learner accounts"
 msgstr "נהל חשבונות סטודנט"
 
 #: lms/templates/manage_user_standing.html
@@ -13258,7 +13258,7 @@ msgid "Remove Profile Image"
 msgstr "הסר תמונת פרופיל"
 
 #: lms/templates/manage_user_standing.html
-msgid "Students whose accounts have been disabled"
+msgid "Learners whose accounts have been disabled"
 msgstr "סטודנטים שחשבונם בוטל"
 
 #: lms/templates/manage_user_standing.html
@@ -14618,7 +14618,7 @@ msgid ""
 "To the maximum extent permitted by applicable law, you agree to defend, hold"
 " harmless and indemnify {platform_name} and the {platform_name} "
 "Participants, and their respective subsidiaries, affiliates, officers, "
-"faculty, students, fellows, governing board members, agents and employees "
+"faculty, learners, fellows, governing board members, agents and employees "
 "from and against any third-party claims, actions or demands arising out of, "
 "resulting from or in any way related to your use of the APIs and any API "
 "Content, including any liability or expense arising from any and all claims,"
@@ -14783,7 +14783,7 @@ msgstr ""
 msgid ""
 "For detailed information, see {math_link_start}Entering Mathematical and "
 "Scientific Expressions{math_link_end} in the {guide_link_start}edX Guide for"
-" Students{guide_link_end}."
+" Learners{guide_link_end}."
 msgstr ""
 "למידע מפורט, ראה  {math_link_start}הזנת ביטויים מתמטיים או "
 "מדעיים{math_link_end} בתוך ה{guide_link_start} מדריך EdX "
@@ -14948,7 +14948,7 @@ msgid "Batch Enrollment"
 msgstr "רישום קבוצתי"
 
 #: lms/templates/ccx/coach_dashboard.html lms/templates/ccx/student_admin.html
-msgid "Student Grades"
+msgid "Learner Grades"
 msgstr "ציוני סטודנט"
 
 #: lms/templates/ccx/coach_dashboard.html
@@ -15021,11 +15021,11 @@ msgid "Enroll"
 msgstr "רשום"
 
 #: lms/templates/ccx/enrollment.html
-msgid "Student List Management"
+msgid "Learner List Management"
 msgstr "ניהול רשימת הסטודנטים"
 
 #: lms/templates/ccx/enrollment.html
-msgid "CCX student list management response message"
+msgid "CCX learner list management response message"
 msgstr "הודעת תשובה לניהול רשימת הסטודנטים ב-CCX"
 
 #: lms/templates/ccx/enrollment.html
@@ -15139,7 +15139,7 @@ msgid "View gradebook"
 msgstr "הצג ספר הציונים"
 
 #: lms/templates/ccx/student_admin.html
-msgid "Download student grades"
+msgid "Download learner grades"
 msgstr "הורד ציוני הסטודנט"
 
 #: lms/templates/certificates/_accomplishment-banner.html
@@ -15627,7 +15627,7 @@ msgid "Gradebook"
 msgstr "יומן הציונים"
 
 #: lms/templates/courseware/gradebook.html
-msgid "Search students"
+msgid "Search learners"
 msgstr "חפש סטודנטים"
 
 #: lms/templates/courseware/gradebook.html
@@ -15816,7 +15816,7 @@ msgid "View Grading in studio"
 msgstr "צפה בתהליך מתן הציונים בסטודיו"
 
 #: lms/templates/courseware/progress.html
-msgid "Course Progress for Student '{username}' ({email})"
+msgid "Course Progress for Learner '{username}' ({email})"
 msgstr "התקדמות בקורס לסטודנט {username} ({email})&lrm;"
 
 #: lms/templates/courseware/progress.html
@@ -16667,7 +16667,7 @@ msgid "by most votes"
 msgstr "לפי הצבעות מרובות"
 
 #: lms/templates/edxnotes/edxnotes.html
-msgid "Student Notes"
+msgid "Learner Notes"
 msgstr "סיכומי הסטודנט"
 
 #: lms/templates/edxnotes/edxnotes.html
@@ -16688,7 +16688,7 @@ msgstr "צפה בסיכומי שיעור של:"
 
 #: lms/templates/edxnotes/edxnotes.html
 msgid ""
-"You have not made any notes in this course yet. Other students in this "
+"You have not made any notes in this course yet. Other learners in this "
 "course are using notes to:"
 msgstr ""
 "לא יצרת עדיין סיכומי שיעור לקורס זה. סטודנטים אחרים בקורס זה משתמשים בסיכומי"
@@ -16902,7 +16902,7 @@ msgstr "מספר הזמנה: {order_number}"
 #: lms/templates/emails/business_order_confirmation_email.txt
 msgid ""
 "A CSV file of your registration URLs is attached. Please distribute "
-"registration URLs to each student planning to enroll using the email "
+"registration URLs to each learner planning to enroll using the email "
 "template below."
 msgstr ""
 "מצורף קובץ CSV של כתובות URL לרישום. נא הפץ את כתובות ה-URL לכל סטודנט "
@@ -16962,7 +16962,7 @@ msgstr ""
 #: lms/templates/emails/business_order_confirmation_email.txt
 msgid ""
 "(4) You should be able to click on 'view course' button or see your course "
-"on your student dashboard at {url}"
+"on your learner dashboard at {url}"
 msgstr ""
 "(4) אתה אמור ללחוץ על 'צפה בקורס' או לראות את הקורס בלוח הבקרה שלך ב-{url}"
 
@@ -17022,7 +17022,7 @@ msgid "Request to change {platform_name} account e-mail"
 msgstr "בקש לשנות את כתובת הדואר האקטרוני המקושרת לחשבון  {platform_name} "
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt
-msgid "Dear student,"
+msgid "Dear learner,"
 msgstr "סטודנט יקר,"
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt
@@ -17142,8 +17142,8 @@ msgstr ""
 #: lms/templates/emails/registration_codes_sale_email.txt
 msgid ""
 "A .csv file that lists your enrollment codes is attached. You can use the "
-"email template below to distribute enrollment codes to your students. Each "
-"student must use a separate enrollment code."
+"email template below to distribute enrollment codes to your learners. Each "
+"learner must use a separate enrollment code."
 msgstr ""
 "מצורף קובץ ‎csv המפרט את קודי הרישום. באפשרותך להשתמש בתבנית הדואר האלקטרוני"
 " שלהלן על מנת להפיץ את קודי הרישום לסטודנטים שלך. כל סטודנט חייב להשתמש בקוד"
@@ -17182,7 +17182,7 @@ msgstr "קישור HTML מתוך קובץ ה-CVS.  "
 
 #: lms/templates/emails/registration_codes_sale_email.txt
 msgid ""
-"After you enroll, you can see the course on your student dashboard. You can "
+"After you enroll, you can see the course on your learner dashboard. You can "
 "see course materials after the course start date."
 msgstr ""
 "לאחר שתירשם, תוכל לראות את הקורס על לוח הבקרה שלך. כמובן שתוכל לראות חומרי "
@@ -17333,7 +17333,7 @@ msgstr "כדי לעבור לתוכנת המחשב של הקורס, בחר בקי
 
 #: lms/templates/emails/reverification_processed.txt
 msgid ""
-"If you have any questions, you can contact student support at "
+"If you have any questions, you can contact learner support at "
 "{support_link}."
 msgstr ""
 "אם יש לך שאלות, תוכל ליצור קשר עם תמיכת הסטודנטים בכתובת {support_link}."
@@ -17343,7 +17343,7 @@ msgid "Thanks,"
 msgstr "תודה,"
 
 #: lms/templates/emails/unenroll_email_allowedmessage.txt
-msgid "Dear Student,"
+msgid "Dear Learner,"
 msgstr "סטודנט יקר,"
 
 #: lms/templates/emails/unenroll_email_allowedmessage.txt
@@ -17488,7 +17488,7 @@ msgid "Sincerely, Anant"
 msgstr "בברכה, Anant"
 
 #: lms/templates/financial-assistance/financial-assistance.html
-msgid "Back to Student FAQs"
+msgid "Back to Learner FAQs"
 msgstr "חזרה לשאלות הנפוצות של סטודנטים"
 
 #: lms/templates/financial-assistance/financial-assistance.html
@@ -17618,21 +17618,21 @@ msgid "Refresh Status"
 msgstr "רענן סטטוס"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html
-msgid "Student-Generated Certificates"
+msgid "Learner-Generated Certificates"
 msgstr "תעודות שנוצרו בידי הסטודנט"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html
-msgid "Disable Student-Generated Certificates"
+msgid "Disable Learner-Generated Certificates"
 msgstr "בטל תעודות שנוצרו בידי הסטודנט"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html
-msgid "Enable Student-Generated Certificates"
+msgid "Enable Learner-Generated Certificates"
 msgstr "אפשר תעודות שנוצרו בידי הסטודנט"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html
 msgid ""
 "You must successfully generate example certificates before you enable "
-"student-generated certificates."
+"learner-generated certificates."
 msgstr ""
 "עליך ליצור בהצלחה תעודות לדוגמה בטרם תוכל לאפשר יצירת תעודות על ידי "
 "הסטודנטים. "
@@ -17742,7 +17742,7 @@ msgid "Enrollment Information"
 msgstr "מידע על רישום"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
-msgid "Number of enrollees (admins, staff, and students) by track"
+msgid "Number of enrollees (admins, staff, and learners) by track"
 msgstr "מספר הנרשמים (מנהלים, צוות וסטודנטים) לפי מסלול"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
@@ -17821,11 +17821,11 @@ msgid "Grading Configuration"
 msgstr "חישוב הציון"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
-msgid "Click to download a CSV of anonymized student IDs:"
+msgid "Click to download a CSV of anonymized learner IDs:"
 msgstr "לחץ על מנת להוריד CSV של מזהי סטודנטים אנונימיים:"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
-msgid "Get Student Anonymized IDs CSV"
+msgid "Get Learner Anonymized IDs CSV"
 msgstr "קבל מזהי סטודנטים אנונימיים מ-CSV"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
@@ -17855,7 +17855,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"Click to generate a CSV file of all students enrolled in this course, along "
+"Click to generate a CSV file of all learners enrolled in this course, along "
 "with profile information such as email address and username:"
 msgstr ""
 "לחץ על מנת ליצור קובץ CSV של כל הסטודנטים הרשומים בקורס יחד עם מידע על "
@@ -17895,7 +17895,7 @@ msgstr "צור דוח תוצאות סקר"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"To generate a CSV file that lists all student answers to a given problem, "
+"To generate a CSV file that lists all learner answers to a given problem, "
 "enter the location of the problem (from its Staff Debug Info)."
 msgstr ""
 "על מנת ליצור קובץ CSV המציין את כל תשובות הסטודנט לבעיה נתונה, הזן את מיקום "
@@ -17923,19 +17923,19 @@ msgstr "הורד קובץ CSV של תעודות שהונפקו"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"For smaller courses, click to list profile information for enrolled students"
+"For smaller courses, click to list profile information for enrolled learners"
 " directly on this page:"
 msgstr ""
 "לקורסים קטנים יותר, לחץ על מנת לראות מידע על פרופילי הלומדים הרשומים ישירות "
 "בעמוד זה:"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
-msgid "List enrolled students' profile information"
+msgid "List enrolled learners' profile information"
 msgstr "צור רשימת פרטי הפרופיל של סטודנטים שנרשמו"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"Click to generate a CSV grade report for all currently enrolled students."
+"Click to generate a CSV grade report for all currently enrolled learners."
 msgstr "לחץ על מנת לייצר דוח ציונים ב-CSV של כל הסטודנטים הרשומים כעת."
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
@@ -17978,7 +17978,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html
 msgid ""
-"{strong_start}Note{strong_end}: To keep student data secure, you cannot save"
+"{strong_start}Note{strong_end}: To keep learner data secure, you cannot save"
 " or email these links for direct access. Copies of links expire within 5 "
 "minutes."
 msgstr ""
@@ -17992,7 +17992,7 @@ msgstr "קודי הרשמה"
 
 #: lms/templates/instructor/instructor_dashboard_2/e-commerce.html
 msgid ""
-"Create one or more pre-paid course enrollment codes. Students can use these "
+"Create one or more pre-paid course enrollment codes. Learners can use these "
 "codes to enroll in the course."
 msgstr ""
 "צור קוד הרשמה משולם מראש אחד או יותר. סטודנטים יכולים לעשות שימוש בקודים אלו"
@@ -18366,9 +18366,9 @@ msgstr "הארכת תאריך פרטנית"
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
 "In this section, you have the ability to grant extensions on specific units "
-"to individual students. Please note that the latest date is always taken; "
+"to individual learners. Please note that the latest date is always taken; "
 "you cannot use this tool to make an assignment due earlier for a particular "
-"student."
+"learner."
 msgstr ""
 "בחלק זה, יש באפשרותך להעניק הארכות ביחידות ספציפיות לסטודנטים בודדים. יש "
 "לשים לב כי התאריך המאוחר יותר הוא הקובע; אינך יכול להשתמש בכלי זה על מנת "
@@ -18376,12 +18376,12 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
-"Specify the {platform_name} email address or username of a student here:"
+"Specify the {platform_name} email address or username of a learner here:"
 msgstr ""
 "פרט את כתובת הדואר האלקטרוני או את שם משתמש {platform_name} של הסטודנט כאן:"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "Student Email or Username"
+msgid "Learner Email or Username"
 msgstr "כתובת דואר אלקטרוני או שם משתמש של הסטודנט"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
@@ -18397,7 +18397,7 @@ msgid ""
 msgstr "ציין את תאריך ושעת היעד של ההארכה (ב-UTC; נא ציין {format_string})."
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "Change due date for student"
+msgid "Change due date for learner"
 msgstr "שנה תאריך יעד עבור סטודנט"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
@@ -18407,27 +18407,27 @@ msgstr "צפה בהארכות שניתנו"
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
 "Here you can see what extensions have been granted on particular units or "
-"for a particular student."
+"for a particular learner."
 msgstr "כאן תוכל לצפות בהארכות שניתנו ליחידות מסוימות עבור סטודנט מסוים."
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
-"Choose a graded unit and click the button to obtain a list of all students "
+"Choose a graded unit and click the button to obtain a list of all learners "
 "who have extensions for the given unit."
 msgstr ""
 "בחר יחידה מדורגת ולחץ על המקש על מנת לקבל רשימה של כלל הסטודנטים שניתנה להם "
 "הארכה ליחידה זו.  "
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "List all students with due date extensions"
+msgid "List all learners with due date extensions"
 msgstr "הכן רשימה של כל הסטודנטים בעלי הארכות לתאריכי יעד"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "Specify a student to see all of that student's extensions."
+msgid "Specify a learner to see all of that learner's extensions."
 msgstr "ציין סטודנט על מנת לראות את כל ההארכות שקיבל"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "List date extensions for student"
+msgid "List date extensions for learner"
 msgstr "הכן רשימה של כל ההארכות עבור סטודנט"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
@@ -18436,15 +18436,15 @@ msgstr "קבע מחדש הארכות"
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
 msgid ""
-"Resetting a problem's due date rescinds a due date extension for a student "
-"on a particular unit. This will revert the due date for the student back to "
+"Resetting a problem's due date rescinds a due date extension for a learner "
+"on a particular unit. This will revert the due date for the learner back to "
 "the problem's original due date."
 msgstr ""
 "איפוס תאריך היעד של בעיה יבטל הארכת תאריך יעד לסטודנט ביחידה מסוימת. פעולה "
 "זו תשיב את תאריך היעד של הסטודנט לתאריך היעד המקורי של הבעיה."
 
 #: lms/templates/instructor/instructor_dashboard_2/extensions.html
-msgid "Reset due date for student"
+msgid "Reset due date for learner"
 msgstr "קבע מחדש תאריך יעד עבור סטודנט"
 
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html
@@ -18593,7 +18593,7 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
 msgid ""
-"Enter the reason why the students are to be manually enrolled or unenrolled."
+"Enter the reason why the learners are to be manually enrolled or unenrolled."
 msgstr "הזן את הסיבה שבגללה נרשמו הסטודנטים ידנית או לא נרשמו כלל."
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
@@ -18611,14 +18611,14 @@ msgid "Reason"
 msgstr "סיבה"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
-msgid "Register/Enroll Students"
+msgid "Register/Enroll Learners"
 msgstr "רשום סטודנטים"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html
 msgid ""
 "To register and enroll a list of users in this course, choose a CSV file "
 "that contains the following columns in this exact order: email, username, "
-"name, and country. Please include one student per row and do not include any"
+"name, and country. Please include one learner per row and do not include any"
 " headers, footers, or blank lines."
 msgstr ""
 "על מנת לרשום רשימת סטודנטים לקורס זה, בחר קובץ CSV המכיל את הטורים הבאים "
@@ -18818,7 +18818,7 @@ msgstr "מאמני CCX"
 msgid ""
 "CCX Coaches are able to create their own Custom Courses based on this "
 "course, which they can use to provide personalized instruction to their own "
-"students based in this course material."
+"learners based in this course material."
 msgstr ""
 "מאמני CCX מסוגלים ליצור את הקורסים המותאמים שלהם בהתבסס על קורס זה, שבו הם "
 "יכולים להשתמש כדי לספק הוראה מותאמת אישית לסטודנטים שלהם בהתבסס על חומר קורס"
@@ -18845,12 +18845,12 @@ msgid "Subsection Data"
 msgstr "נתוני תת פרק"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
-msgid "Each bar shows the number of students that opened the subsection."
+msgid "Each bar shows the number of learners that opened the subsection."
 msgstr "כל טור מציג את מספר הסטודנטים שפתחו את תת הפרק"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
 msgid ""
-"You can click on any of the bars to list the students that opened the "
+"You can click on any of the bars to list the learners that opened the "
 "subsection."
 msgstr ""
 "יש באפשרותך ללחוץ על כל אחד מהטורים על מנת לקבל רשימה של סטודנטים שפתחו את "
@@ -18874,7 +18874,7 @@ msgstr "כל טור מראה את התפלגות הציונים עבור הבע�
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
 msgid ""
-"You can click on any of the bars to list the students that attempted the "
+"You can click on any of the bars to list the learners that attempted the "
 "problem, along with the grades they received."
 msgstr ""
 "יש באפשרותך ללחוץ על כל אחד מהטורים על מנת לקבל רשימת סטודנטים שניסו לפתור "
@@ -18889,15 +18889,15 @@ msgid "Grade Distribution per Problem"
 msgstr "חלוקת ציון לפי בעיה"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
-msgid "Download Student Opened as a CSV"
+msgid "Download Learner Opened as a CSV"
 msgstr "הורד פתיחת סטודנטים כקובץ CSV"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
-msgid "Download Student Grades as a CSV"
+msgid "Download Learner Grades as a CSV"
 msgstr "הורד את ציוני הסטודנטים כקובץ CSV"
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
-msgid "This is a partial list, to view all students download as a csv."
+msgid "This is a partial list, to view all learners download as a csv."
 msgstr "זוהי רשימה חלקית, לצפייה בכל הסטודנטים, הורד כקובץ CSV."
 
 #: lms/templates/instructor/instructor_dashboard_2/metrics.html
@@ -19023,7 +19023,7 @@ msgid "Allowance Section"
 msgstr "פרק המענק"
 
 #: lms/templates/instructor/instructor_dashboard_2/special_exams.html
-msgid "Student Special Exam Attempts"
+msgid "Learner Special Exam Attempts"
 msgstr "נסיונות לקבלת מבחן מיוחד לסטודנט"
 
 #: lms/templates/instructor/instructor_dashboard_2/student_admin.html
@@ -19353,7 +19353,7 @@ msgid "Hide Question"
 msgstr "הסתר שאלה"
 
 #: lms/templates/peer_grading/peer_grading_problem.html
-msgid "Student Response"
+msgid "Learner Response"
 msgstr "תגובת הסטודנט"
 
 #: lms/templates/peer_grading/peer_grading_problem.html
@@ -19742,7 +19742,7 @@ msgstr "רישום עבור:"
 
 #: lms/templates/shoppingcart/receipt.html
 #: lms/templates/shoppingcart/shopping_cart.html
-msgid "Price per student:"
+msgid "Price per learner:"
 msgstr "מחיר לסטודנט"
 
 #: lms/templates/shoppingcart/receipt.html
@@ -19751,7 +19751,7 @@ msgid "Discount Applied:"
 msgstr "הנחות שניתנו:"
 
 #: lms/templates/shoppingcart/receipt.html
-msgid "Students"
+msgid "Learners"
 msgstr "סטודנטים"
 
 #. Translators: Please keep the "<del>" and "</del>" tags around your
@@ -19854,7 +19854,7 @@ msgid "Cover Image"
 msgstr "תמונת נושא"
 
 #: lms/templates/shoppingcart/shopping_cart.html
-msgid "Students:"
+msgid "Learners:"
 msgstr "סטודנטים:"
 
 #: lms/templates/shoppingcart/shopping_cart.html
@@ -19906,7 +19906,7 @@ msgstr "{currency_symbol}{price} {currency_abbr}"
 #: lms/templates/shoppingcart/shopping_cart.html
 msgid ""
 "After this purchase is complete, a receipt is generated with relative "
-"billing details and registration codes for students."
+"billing details and registration codes for learners."
 msgstr ""
 "לאחר שרכישה זו תושלם, תופק עם פרטים ביחס לחיוב ולקודי הרשמה לסטודנטים. "
 
@@ -20025,11 +20025,11 @@ msgid "Sign in or Register"
 msgstr "היכנס או הירשם"
 
 #: lms/templates/support/certificates.html lms/templates/support/index.html
-msgid "Student Support"
+msgid "Learner Support"
 msgstr "תמיכה בסטודנט"
 
 #: lms/templates/support/certificates.html
-msgid "Student Support: Certificates"
+msgid "Learner Support: Certificates"
 msgstr "תמיכת סטודנט: תעודות"
 
 #: lms/templates/support/contact_us.html
@@ -20037,11 +20037,11 @@ msgid "Contact {platform_name} Support"
 msgstr ""
 
 #: lms/templates/support/enrollment.html
-msgid "Student Support: Enrollment"
+msgid "Learner Support: Enrollment"
 msgstr "תמיכת סטודנט: הרשמה"
 
 #: lms/templates/support/manage_user.html
-msgid "Student Support: Manage User"
+msgid "Learner Support: Manage User"
 msgstr ""
 
 #: lms/templates/support/refund.html
@@ -20118,7 +20118,7 @@ msgstr "מדוע עלי להשלים מידע זה?"
 #: lms/templates/survey/survey.html
 msgid ""
 "We use the information you provide to improve our course for both current "
-"and future students. The more we know about your specific needs, the better "
+"and future learners. The more we know about your specific needs, the better "
 "we can make your course experience."
 msgstr ""
 "אנו משתמשים במידע שאתה מספק על מנת לשפר את הקורס שלנו לתלמידים בהווה "
@@ -21218,8 +21218,8 @@ msgstr "מה אינו עובר מהקורס המקורי?"
 
 #: cms/templates/course-create-rerun.html
 msgid ""
-"You are the only member of the new course's staff. No students are enrolled "
-"in the course, and there is no student data. There is no content in the "
+"You are the only member of the new course's staff. No learners are enrolled "
+"in the course, and there is no learner data. There is no content in the "
 "discussion topics or wiki."
 msgstr ""
 "אתה החבר היחיד בצוות הקורס החדש. אין סטודנטים הרשומים לקורס ואין מידע אודות "
@@ -21239,9 +21239,9 @@ msgstr "עדכון חדש"
 
 #: cms/templates/course_info.html
 msgid ""
-"Use course updates to notify students of important dates or exams, highlight"
+"Use course updates to notify learners of important dates or exams, highlight"
 " particular discussions in the forums, announce schedule changes, and "
-"respond to student questions. You add or edit updates in HTML."
+"respond to learner questions. You add or edit updates in HTML."
 msgstr ""
 "השתמש בעדכונים על מנת להודיע לסטודנטים על תאריכים חשובים של בחינות, דיונים "
 "מסוימים בפורומים, להכריז על שינויים בלוח הזמנים ועל מנת להגיב לשאלות "
@@ -21488,7 +21488,7 @@ msgstr "עמודים מותאמים אישית"
 
 #: cms/templates/edit-tabs.html
 msgid ""
-"You can create and edit custom pages to provide students with additional "
+"You can create and edit custom pages to provide learners with additional "
 "course content. For example, you can create pages for the grading policy, "
 "course slides, and a course calendar. "
 msgstr ""
@@ -21497,12 +21497,12 @@ msgstr ""
 " קורס."
 
 #: cms/templates/edit-tabs.html
-msgid "How do pages look to students in my course?"
+msgid "How do pages look to learners in my course?"
 msgstr "כיצד מוצגים העמודים לסטודנטים בקורס שלי?"
 
 #: cms/templates/edit-tabs.html
 msgid ""
-"Students see the default and custom pages at the top of your course and use "
+"Learners see the default and custom pages at the top of your course and use "
 "these links to navigate."
 msgstr ""
 "הסטודנטים רואים את עמודי ברירת המחדל ואת העמודים המותאמים אישית בחלק העליון "
@@ -21866,7 +21866,7 @@ msgstr "השתמש באפשרות זו על מנת לייצא את הקורס ל
 #: cms/templates/export_git.html
 msgid ""
 "This will then trigger an automatic update of the main LMS site and update "
-"the contents of your course visible there to students if automatic git "
+"the contents of your course visible there to learners if automatic git "
 "imports are configured."
 msgstr ""
 "אפשרות זו תפעיל עדכון אוטומטי של אתר ה-LMS העיקרי ותעדכן את תצוגת תכני הקורס"
@@ -22020,7 +22020,7 @@ msgstr "שמירה על ארגון הקורס שלך "
 msgid ""
 "The backbone of your course is how it is organized. {studio_name} offers an "
 "{strong_start}Outline{strong_end} editor, providing a simple hierarchy and "
-"easy drag and drop to help you and your students stay organized."
+"easy drag and drop to help you and your learners stay organized."
 msgstr ""
 "הבסיס של הקורס הוא הארגון שלו. {studio_name} מציע עורך "
 "{strong_start}מתווה{strong_end} המספק היררכיה פשוטה וממשק גרירה ושחרור פשוט "
@@ -22056,7 +22056,7 @@ msgstr "התקדם כל שבוע או סמסטר"
 
 #: cms/templates/howitworks.html
 msgid ""
-"Build and release {strong_start}sections{strong_end} to your students "
+"Build and release {strong_start}sections{strong_end} to your learners "
 "incrementally. You don't have to have it all done at once."
 msgstr ""
 "צור ושחרר {strong_start}קטעים{strong_end} לסטודנטים שלך באופן הדרגתי. אין "
@@ -22081,7 +22081,7 @@ msgstr "צור שבילי ידע"
 
 #: cms/templates/howitworks.html
 msgid ""
-"Help your students understand one concept at a time with multimedia, HTML, "
+"Help your learners understand one concept at a time with multimedia, HTML, "
 "and exercises."
 msgstr "עזור לסטודנטיך להבין מונח אחד כל פעם בעזרת מולטימדיה, HTML ותרגילים."
 
@@ -22091,7 +22091,7 @@ msgstr "עבוד חזותית, ארגן במהירות"
 
 #: cms/templates/howitworks.html
 msgid ""
-"Work visually and see exactly what your students will see. Reorganize all "
+"Work visually and see exactly what your learners will see. Reorganize all "
 "your content with drag and drop."
 msgstr ""
 "עבוד באופן חזותי וראה בדיוק מה שהסטודנטים שלך יראו. ארגן מחדש את כל התוכן "
@@ -22209,7 +22209,7 @@ msgstr "מפורסם בתאריך"
 #: cms/templates/howitworks.html
 msgid ""
 "Simply set the date of a section or subsection, and {studio_name} will "
-"publish it to your students for you."
+"publish it to your learners for you."
 msgstr ""
 "קבע את תאריך פרק או תת-פרק ו-{studio_name} יפרסם אותו עבור הסטודנטים שלך."
 
@@ -22219,7 +22219,7 @@ msgstr "נתקלנו בבעיה בעת ביצוע הרכיב"
 
 #: cms/templates/html_error.html
 msgid ""
-"Students will not be able to access this component. Re-edit your component "
+"Learners will not be able to access this component. Re-edit your component "
 "to fix the error."
 msgstr "סטודנטים לא יוכלו לגשת לרכיב זה. ערוך מחדש את הרכיב ותקן את השגיאה."
 
@@ -22458,9 +22458,9 @@ msgstr "אזהרה: יבוא בזמן שקורס עדיין מועבר"
 #: cms/templates/import.html
 msgid ""
 "If you perform an import while your course is running, and you change the "
-"URL names (or url_name nodes) of any Problem components, the student data "
+"URL names (or url_name nodes) of any Problem components, the learner data "
 "associated with those Problem components may be lost. This data includes "
-"students' problem scores."
+"learners' problem scores."
 msgstr ""
 "במידה ותבצע יבוא בזמן שהקורס רץ עדיין ותשנה את שם כתובות ה-URL\n"
 "(or url_name nodes) של רכיבי בעיה כלשהם, יתכן ותאבד את המידע של הסטודנטים המקושר לרכיבי בעיה אלו. מידע זה כולל את ציוני הבעיה של סטודנטים אלו.  "
@@ -22892,7 +22892,7 @@ msgid ""
 "the course's Advanced Settings, then adding a Randomized Content Block to "
 "your courseware. In the settings for each Randomized Content Block, select "
 "this library as the source library, and specify the number of problems to be"
-" randomly selected and displayed to each student."
+" randomly selected and displayed to each learner."
 msgstr ""
 "השתמש בתוכן הספריה בקורסים באמצעות הוספת מפתח מדיניות "
 "{em_start}library_content{em_end} לרשימת המודול המתקדמת בהגדרות המתקדמות של "
@@ -23178,7 +23178,7 @@ msgid "Course Summary Page"
 msgstr "עמוד סיכום הקורס"
 
 #: cms/templates/settings.html
-msgid "(for student enrollment and access)"
+msgid "(for learner enrollment and access)"
 msgstr "(עבור רישום וגישה של סטודנטים)"
 
 #: cms/templates/settings.html
@@ -23195,11 +23195,11 @@ msgstr ""
 "לקורס זה בכתובת {link_for_about_page} על מנת להירשם."
 
 #: cms/templates/settings.html
-msgid "Send a note to students via email"
+msgid "Send a note to learners via email"
 msgstr "שלח הערה לסטודנטים באמצעות הדואר האלקטרוני"
 
 #: cms/templates/settings.html
-msgid "Invite your students"
+msgid "Invite your learners"
 msgstr "הזמן את הסטודנטים שלך"
 
 #: cms/templates/settings.html
@@ -23307,7 +23307,7 @@ msgid "Enrollment Start Date"
 msgstr "תאריך תחילת ההרשמה"
 
 #: cms/templates/settings.html
-msgid "First day students can enroll"
+msgid "First day learners can enroll"
 msgstr "היום הראשון בו סטודנטים יכולים להירשם"
 
 #: cms/templates/settings.html
@@ -23319,7 +23319,7 @@ msgid "Enrollment End Date"
 msgstr "תאריך סיום ההרשמה"
 
 #: cms/templates/settings.html
-msgid "Last day students can enroll."
+msgid "Last day learners can enroll."
 msgstr "היום האחרון שבו הסטודנטים יכולים להירשם."
 
 #: cms/templates/settings.html
@@ -23350,7 +23350,7 @@ msgid "Introducing Your Course"
 msgstr "הצגת הקורס שלך"
 
 #: cms/templates/settings.html
-msgid "Information for prospective students"
+msgid "Information for prospective learners"
 msgstr "מידע עבור סטודנטים לעתיד"
 
 #: cms/templates/settings.html
@@ -23392,7 +23392,7 @@ msgstr "תיאור קצר של הקורס"
 
 #: cms/templates/settings.html
 msgid ""
-"Appears on the course catalog page when students roll over the course name. "
+"Appears on the course catalog page when learners roll over the course name. "
 "Limit to ~150 characters"
 msgstr ""
 "מופיע בעמוד קטלוג הקורסים כאשר סטודנטים מרחפים מעל שם הקורס. הגבל ל~150 "
@@ -23558,7 +23558,7 @@ msgid "Add Instructor"
 msgstr "הוסף מדריך"
 
 #: cms/templates/settings.html
-msgid "Expectations of the students taking this course"
+msgid "Expectations of the learners taking this course"
 msgstr "ציפיות מהסטודנטים הלומדים את הקורס"
 
 #: cms/templates/settings.html
@@ -23574,7 +23574,7 @@ msgid "Prerequisite Course"
 msgstr "קורס שמהווה דרישת קדם"
 
 #: cms/templates/settings.html
-msgid "Course that students must complete before beginning this course"
+msgid "Course that learners must complete before beginning this course"
 msgstr "קורס שסטודנטים חייבים להשלים בטרם יחלו את לימודיהם בקורס זה."
 
 #: cms/templates/settings.html
@@ -23582,7 +23582,7 @@ msgid "set pre-requisite course"
 msgstr "קבע קורס כדרישה מקדימה"
 
 #: cms/templates/settings.html
-msgid "Require students to pass an exam before beginning the course."
+msgid "Require learners to pass an exam before beginning the course."
 msgstr "בקש מסטודנטים לעבור בחינה בטרם יחלו את הקורס"
 
 #: cms/templates/settings.html
@@ -23603,7 +23603,7 @@ msgstr "%"
 
 #: cms/templates/settings.html
 msgid ""
-"The score student must meet in order to successfully complete the entrance "
+"The score learner must meet in order to successfully complete the entrance "
 "exam. "
 msgstr "הציון שעל הסטודנט להגיע אליו על מנת להשלים בהצלחה את מבחן הכניסה. "
 
@@ -23627,7 +23627,7 @@ msgstr "כיצד משתמשים בהגדרות אלו?"
 
 #: cms/templates/settings.html
 msgid ""
-"Your course's schedule determines when students can enroll in and begin a "
+"Your course's schedule determines when learners can enroll in and begin a "
 "course."
 msgstr ""
 "לוח הזמנים של הקורס שלך קובע מתי סטודנטים יכולים להירשם ומתי הקורס מתחיל."
@@ -23636,7 +23636,7 @@ msgstr ""
 msgid ""
 "Other information from this page appears on the About page for your course. "
 "This information includes the course overview, course image, introduction "
-"video, and estimated time requirements. Students use About pages to choose "
+"video, and estimated time requirements. Learners use About pages to choose "
 "new courses to take."
 msgstr ""
 "מידע נוסף מעמוד זה מופיע בעמוד ה'אודות' של הקורס שלך. המידע הזה כולל את "
@@ -23710,7 +23710,7 @@ msgid "Overall Grade Range"
 msgstr "טווח ציון כללי"
 
 #: cms/templates/settings_graders.html
-msgid "Your overall grading scale for student final grades"
+msgid "Your overall grading scale for learner final grades"
 msgstr "קנה מידה כללי לציונים הסופיים של סטודנטים"
 
 #: cms/templates/settings_graders.html
@@ -23738,7 +23738,7 @@ msgid "Grading Rules &amp; Policies"
 msgstr "כללי מתן ציונים ותקנון ציונים"
 
 #: cms/templates/settings_graders.html
-msgid "Deadlines, requirements, and logistics around grading student work"
+msgid "Deadlines, requirements, and logistics around grading learner work"
 msgstr "תאריכי יעד, דרישות ולוגיסטיקה של עבודת הסטודנט"
 
 #: cms/templates/settings_graders.html
@@ -23776,14 +23776,14 @@ msgstr ""
 
 #: cms/templates/settings_graders.html
 msgid ""
-"You can specify whether your course offers students a grace period for late "
+"You can specify whether your course offers learners a grace period for late "
 "assignments."
 msgstr "ניתן להגדיר אם הקורס מציע לסטודנטים תקופת חסד בהגשה מאוחרת של מטלות."
 
 #: cms/templates/settings_graders.html
 msgid ""
 "You can also create assignment types, such as homework, labs, quizzes, and "
-"exams, and specify how much of a student's grade each assignment type is "
+"exams, and specify how much of a learner's grade each assignment type is "
 "worth."
 msgstr ""
 "יש באפשרותך ליצור סוגי מטלות כגון: שיעורי בית, מעבדות, בחנים ומבחנים ולפרט "
@@ -23816,8 +23816,8 @@ msgstr "מדוע עלי לחלק את ספר הקורס לפרקים?"
 #: cms/templates/textbooks.html
 msgid ""
 "Breaking your textbook into multiple chapters reduces loading times for "
-"students, especially those with slow Internet connections. Breaking up "
-"textbooks into chapters can also help students more easily find topic-based "
+"learners, especially those with slow Internet connections. Breaking up "
+"textbooks into chapters can also help learners more easily find topic-based "
 "information."
 msgstr ""
 "חלוקת ספר הלימוד לפרקים מפחיתה את זמני הטעינה לסטודנטים, במיוחד לאלו עם "

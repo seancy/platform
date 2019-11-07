@@ -1,5 +1,5 @@
 """
-Unit tests for checking default forum role "Student" of a user when he creates a course or
+Unit tests for checking default forum role "Learner" of a user when he creates a course or
 after deleting it creates same course again
 """
 from contentstore.tests.utils import AjaxEnabledTestClient
@@ -11,7 +11,7 @@ from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 
 class TestUsersDefaultRole(ModuleStoreTestCase):
     """
-    Unit tests for checking enrollment and default forum role "Student" of a logged in user
+    Unit tests for checking enrollment and default forum role "Learner" of a logged in user
     """
     def setUp(self):
         """
@@ -51,14 +51,14 @@ class TestUsersDefaultRole(ModuleStoreTestCase):
 
     def test_user_forum_default_role_on_course_deletion(self):
         """
-        Test that a user enrolls and gets "Student" forum role for that course which he creates and remains
-        enrolled even the course is deleted and keeps its "Student" forum role for that course
+        Test that a user enrolls and gets "Learner" forum role for that course which he creates and remains
+        enrolled even the course is deleted and keeps its "Learner" forum role for that course
         """
         # check that user has enrollment for this course
         self.assertTrue(CourseEnrollment.is_enrolled(self.user, self.course_key))
 
-        # check that user has his default "Student" forum role for this course
-        self.assertTrue(self.user.roles.filter(name="Student", course_id=self.course_key))
+        # check that user has his default "Learner" forum role for this course
+        self.assertTrue(self.user.roles.filter(name="Learner", course_id=self.course_key))
 
         delete_course(self.course_key, self.user.id)
 
@@ -66,16 +66,16 @@ class TestUsersDefaultRole(ModuleStoreTestCase):
         self.assertTrue(CourseEnrollment.is_enrolled(self.user, self.course_key))
 
         # check that user has forum role for this course even after deleting it
-        self.assertTrue(self.user.roles.filter(name="Student", course_id=self.course_key))
+        self.assertTrue(self.user.roles.filter(name="Learner", course_id=self.course_key))
 
     def test_user_role_on_course_recreate(self):
         """
         Test that creating same course again after deleting it gives user his default
-        forum role "Student" for that course
+        forum role "Learner" for that course
         """
-        # check that user has enrollment and his default "Student" forum role for this course
+        # check that user has enrollment and his default "Learner" forum role for this course
         self.assertTrue(CourseEnrollment.is_enrolled(self.user, self.course_key))
-        self.assertTrue(self.user.roles.filter(name="Student", course_id=self.course_key))
+        self.assertTrue(self.user.roles.filter(name="Learner", course_id=self.course_key))
 
         # delete this course and recreate this course with same user
         delete_course(self.course_key, self.user.id)
@@ -85,15 +85,15 @@ class TestUsersDefaultRole(ModuleStoreTestCase):
         # check that user has his enrollment for this course
         self.assertTrue(CourseEnrollment.is_enrolled(self.user, self.course_key))
 
-        # check that user has his default "Student" forum role for this course
-        self.assertTrue(self.user.roles.filter(name="Student", course_id=self.course_key))
+        # check that user has his default "Learner" forum role for this course
+        self.assertTrue(self.user.roles.filter(name="Learner", course_id=self.course_key))
 
     def test_user_role_on_course_recreate_with_change_name_case(self):
         """
         Test that creating same course again with different name case after deleting it gives user
-        his default forum role "Student" for that course
+        his default forum role "Learner" for that course
         """
-        # check that user has enrollment and his default "Student" forum role for this course
+        # check that user has enrollment and his default "Learner" forum role for this course
         self.assertTrue(CourseEnrollment.is_enrolled(self.user, self.course_key))
         # delete this course and recreate this course with same user
         delete_course(self.course_key, self.user.id)
@@ -103,12 +103,12 @@ class TestUsersDefaultRole(ModuleStoreTestCase):
         resp = self._create_course_with_given_location(new_course_key)
         self.assertEqual(resp.status_code, 200)
 
-        # check that user has his default "Student" forum role again for this course (with changed name case)
+        # check that user has his default "Learner" forum role again for this course (with changed name case)
         self.assertTrue(
-            self.user.roles.filter(name="Student", course_id=new_course_key)
+            self.user.roles.filter(name="Learner", course_id=new_course_key)
         )
 
         # Disabled due to case-sensitive test db (sqlite3)
-        # # check that there user has only one "Student" forum role (with new updated course_id)
-        # self.assertEqual(self.user.roles.filter(name='Student').count(), 1)
-        # self.assertEqual(self.user.roles.filter(name='Student')[0].course_id, new_course_location.course_key)
+        # # check that there user has only one "Learner" forum role (with new updated course_id)
+        # self.assertEqual(self.user.roles.filter(name='Learner').count(), 1)
+        # self.assertEqual(self.user.roles.filter(name='Learner')[0].course_id, new_course_location.course_key)

@@ -55,7 +55,7 @@
                             {
                                 success: function() {
                                     self.escapeAndShowMessage(
-                                        gettext('Student Removed from certificate white list successfully.')
+                                        gettext('Learner Removed from certificate white list successfully.')
                                     );
                                 },
                                 error: this.showError(this),

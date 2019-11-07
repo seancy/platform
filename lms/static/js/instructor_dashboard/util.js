@@ -482,7 +482,7 @@
                     id: 'link',
                     field: 'link',
                     name: gettext('File Name'),
-                    toolTip: gettext('Links are generated on demand and expire within 5 minutes due to the sensitive nature of student information.'), //  eslint-disable-line max-len
+                    toolTip: gettext('Links are generated on demand and expire within 5 minutes due to the sensitive nature of learner information.'), //  eslint-disable-line max-len
                     sortable: false,
                     minWidth: 150,
                     cssClass: 'file-download-link',

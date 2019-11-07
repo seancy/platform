@@ -147,7 +147,7 @@ class InheritanceMixin(XBlockMixin):
     )
     max_attempts = Integer(
         display_name=_("Maximum Attempts"),
-        help=_("Enter the maximum number of times a student can try to answer problems. By default, Maximum Attempts is set to null, meaning that students have an unlimited number of attempts for problems. You can override this course-wide setting for individual problems. However, if the course-wide setting is a specific number, you cannot set the Maximum Attempts for individual problems to unlimited."),
+        help=_("Enter the maximum number of times a learner can try to answer problems. By default, Maximum Attempts is set to null, meaning that learners have an unlimited number of attempts for problems. You can override this course-wide setting for individual problems. However, if the course-wide setting is a specific number, you cannot set the Maximum Attempts for individual problems to unlimited."),
         values={"min": 0}, scope=Scope.settings
     )
     matlab_api_key = String(
@@ -163,7 +163,7 @@ class InheritanceMixin(XBlockMixin):
     # file, it is currently scoped to settings.
     user_partitions = UserPartitionList(
         display_name=_("Group Configurations"),
-        help=_("Enter the configurations that govern how students are grouped together."),
+        help=_("Enter the configurations that govern how learners are grouped together."),
         default=[],
         scope=Scope.settings
     )
@@ -176,7 +176,7 @@ class InheritanceMixin(XBlockMixin):
     video_auto_advance = Boolean(
         display_name=_("Enable video auto-advance"),
         help=_(
-            "Specify whether to show an auto-advance button in videos. If the student clicks it, when the last video in a unit finishes it will automatically move to the next unit and autoplay the first video."
+            "Specify whether to show an auto-advance button in videos. If the learner clicks it, when the last video in a unit finishes it will automatically move to the next unit and autoplay the first video."
         ),
         scope=Scope.settings,
         default=False
@@ -213,15 +213,15 @@ class InheritanceMixin(XBlockMixin):
         default=default_reset_button
     )
     edxnotes = Boolean(
-        display_name=_("Enable Student Notes"),
-        help=_("Enter true or false. If true, students can use the Student Notes feature."),
+        display_name=_("Enable Learner Notes"),
+        help=_("Enter true or false. If true, learners can use the Learner Notes feature."),
         default=False,
         scope=Scope.settings
     )
     edxnotes_visibility = Boolean(
-        display_name="Student Notes Visibility",
-        help=_("Indicates whether Student Notes are visible in the course. "
-               "Students can also show or hide their notes in the courseware."),
+        display_name="Learner Notes Visibility",
+        help=_("Indicates whether Learner Notes are visible in the course. "
+               "Learners can also show or hide their notes in the courseware."),
         default=True,
         scope=Scope.user_info
     )
@@ -238,7 +238,7 @@ class InheritanceMixin(XBlockMixin):
         display_name=_('Self Paced'),
         help=_(
             'Set this to "true" to mark this course as self-paced. Self-paced courses do not have '
-            'due dates for assignments, and students can progress through the course at any rate before '
+            'due dates for assignments, and learners can progress through the course at any rate before '
             'the course ends.'
         ),
         default=False,

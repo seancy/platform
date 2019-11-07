@@ -86,7 +86,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
 
           % if about_page_editable:
           <div class="note note-promotion note-promotion-courseURL has-actions">
-            <h3 class="title">${_("Course Summary Page")} <span class="tip">${_("(for student enrollment and access)")}</span></h3>
+            <h3 class="title">${_("Course Summary Page")} <span class="tip">${_("(for learner enrollment and access)")}</span></h3>
             <div class="copy">
               <%
                 link_for_about_page = lms_link_for_about_page
@@ -106,9 +106,9 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                       link_for_about_page = link_for_about_page
                   ).encode("utf-8"))
                 %>
-                <a title="${_('Send a note to students via email')}"
+                <a title="${_('Send a note to learners via email')}"
                     href="mailto:someone@domain.com?Subject=${email_subject}&body=${email_body}" class="action action-primary">
-                    <span class="icon fa fa-envelope-o icon-inline" aria-hidden="true"></span>${_("Invite your students")}</a>
+                    <span class="icon fa fa-envelope-o icon-inline" aria-hidden="true"></span>${_("Invite your learners")}</a>
               </li>
             </ul>
           </div>
@@ -259,7 +259,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
               <div class="field date" id="field-enrollment-start-date">
                 <label for="course-enrollment-start-date">${_("Enrollment Start Date")}</label>
                 <input type="text" class="start-date date start" id="course-enrollment-start-date" placeholder="MM/DD/YYYY" autocomplete="off" />
-                <span class="tip tip-stacked">${_("First day students can enroll")}</span>
+                <span class="tip tip-stacked">${_("First day learners can enroll")}</span>
               </div>
 
               <div class="field time" id="field-enrollment-start-time">
@@ -277,7 +277,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <label for="course-enrollment-end-date">${_("Enrollment End Date")}</label>
                 <input type="text" class="end-date date end" id="course-enrollment-end-date" placeholder="MM/DD/YYYY" autocomplete="off" ${enrollment_end_readonly} />
                 <span class="tip tip-stacked">
-                  ${_("Last day students can enroll.")}
+                  ${_("Last day learners can enroll.")}
                 % if not enrollment_end_editable:
                   ${_("Contact your edX partner manager to update these settings.")}
                 % endif
@@ -296,7 +296,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
         <div class="group-settings course-reminders">
           <header>
             <h2 class="title-2">${_('Course Reminders')}</h2>
-            <span class="tip">${_('Configure reminders to students who enroll in this course')}</span>
+            <span class="tip">${_('Configure reminders to learners who enroll in this course')}</span>
           </header>
 
           <ol class="list-input">
@@ -395,7 +395,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             <div class="group-settings marketing">
               <header>
                 <h2 class="title-2">${_("Introducing Your Course")}</h2>
-                <span class="tip">${_("Information for prospective students")}</span>
+                <span class="tip">${_("Information for prospective learners")}</span>
               </header>
               <ol class="list-input">
 
@@ -430,7 +430,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <li class="field text" id="field-course-short-description">
                   <label for="course-short-description">${_("Course Short Description")}</label>
                   <textarea class="text" id="course-short-description"></textarea>
-                  <span class="tip tip-stacked">${_("Appears on the course catalog page when students roll over the course name. Limit to ~150 characters")}</span>
+                  <span class="tip tip-stacked">${_("Appears on the course catalog page when learners roll over the course name. Limit to ~150 characters")}</span>
                 </li>
                 % endif
 
@@ -631,7 +631,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             <div class="group-settings requirements">
               <header>
                 <h2 class="title-2">${_("Requirements")}</h2>
-                <span class="tip">${_("Expectations of the students taking this course")}</span>
+                <span class="tip">${_("Expectations of the learners taking this course")}</span>
               </header>
 
               <ol class="list-input">
@@ -651,7 +651,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                         <option value="${course_info['course_key']}">${course_info['display_name']}</option>
                         % endfor
                     </select>
-                    <span class="tip tip-inline">${_("Course that students must complete before beginning this course")}</span>
+                    <span class="tip tip-inline">${_("Course that learners must complete before beginning this course")}</span>
                     <button type="submit" class="sr" name="submit" value="submit">${_("set pre-requisite course")}</button>
                 </li>
                 % endif
@@ -662,7 +662,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                     <div class="show-data">
                         <div class="heading">
                             <input type="checkbox" id="entrance-exam-enabled" />
-                            <label for="entrance-exam-enabled">${_("Require students to pass an exam before beginning the course.")}</label>
+                            <label for="entrance-exam-enabled">${_("Require learners to pass an exam before beginning the course.")}</label>
                         </div>
                          <div class="div-grade-requirements" hidden="hidden">
                           <p><span class="tip tip-inline">
@@ -672,7 +672,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                             )}</span></p>
                           <p><h3>${_("Grade Requirements")}</h3></p>
                           <p><div><input type="text" id="entrance-exam-minimum-score-pct" aria-describedby="min-score-format"><span id="min-score-format" class="tip tip-inline">${_(" %")}</span></div></p>
-                          <p><span class="tip tip-inline">${_("The score student must meet in order to successfully complete the entrance exam. ")}</span></p>
+                          <p><span class="tip tip-inline">${_("The score learner must meet in order to successfully complete the entrance exam. ")}</span></p>
                         </div>
                     </div>
                 </li>
@@ -705,9 +705,9 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
     <div class="content-supplementary" role="complementary">
      <div class="bit">
         <h3 class="title-3">${_("How are these settings used?")}</h3>
-        <p>${_("Your course's schedule determines when students can enroll in and begin a course.")}</p>
+        <p>${_("Your course's schedule determines when learners can enroll in and begin a course.")}</p>
 
-        <p>${_("Other information from this page appears on the About page for your course. This information includes the course overview, course image, introduction video, and estimated time requirements. Students use About pages to choose new courses to take.")}</p>
+        <p>${_("Other information from this page appears on the About page for your course. This information includes the course overview, course image, introduction video, and estimated time requirements. Learners use About pages to choose new courses to take.")}</p>
      </div>
 
      <div class="bit">

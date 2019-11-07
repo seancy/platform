@@ -87,8 +87,8 @@ var StaffDebug = (function() {
             locationName: locname,
             location: location,
             method: 'reset_student_attempts',
-            success_msg: gettext('Successfully deleted student state for user {user}'),
-            error_msg: gettext('Failed to delete student state for user.'),
+            success_msg: gettext('Successfully deleted learner state for user {user}'),
+            error_msg: gettext('Failed to delete learner state for user.'),
             delete_module: true
         });
     };

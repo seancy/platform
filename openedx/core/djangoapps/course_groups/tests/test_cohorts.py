@@ -223,7 +223,7 @@ class TestCohorts(ModuleStoreTestCase):
 
         self.assertEqual(cohorts.get_assignment_type(cohort), CourseCohort.RANDOM)
 
-        exception_msg = "There must be one cohort to which students can automatically be assigned."
+        exception_msg = "There must be one cohort to which learners can automatically be assigned."
         with self.assertRaises(ValueError) as context_manager:
             cohorts.set_assignment_type(cohort, CourseCohort.MANUAL)
 
@@ -489,7 +489,7 @@ class TestCohorts(ModuleStoreTestCase):
             cohorts.get_cohort(user, course.id)
 
         # Now make sure that the assignment was at least vaguely random:
-        # each cohort should have at least 1, and fewer than 50 students.
+        # each cohort should have at least 1, and fewer than 50 learners.
         # (with 5 groups, probability of 0 users in any group is about
         # .8**100= 2.0e-10)
         for cohort_name in groups:

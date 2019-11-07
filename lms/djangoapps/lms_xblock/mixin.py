@@ -141,7 +141,7 @@ class LmsBlockMixin(XBlockMixin):
 
     # Specified here so we can see what the value set at the course-level is.
     user_partitions = UserPartitionList(
-        help=_("The list of group configurations for partitioning students in content experiments."),
+        help=_("The list of group configurations for partitioning learners in content experiments."),
         default=[],
         scope=Scope.settings
     )

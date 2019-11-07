@@ -230,20 +230,20 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
 
                 this.checkStaffLock(enableStaffLock);
                 if (enableStaffLock && !hasInheritedStaffLock) {
-                    ViewUtils.runOperationShowingMessage(gettext('Hiding from Students'),
+                    ViewUtils.runOperationShowingMessage(gettext('Hiding from Learners'),
                         _.bind(saveAndPublishStaffLock, self));
                 } else if (enableStaffLock && hasInheritedStaffLock) {
-                    ViewUtils.runOperationShowingMessage(gettext('Explicitly Hiding from Students'),
+                    ViewUtils.runOperationShowingMessage(gettext('Explicitly Hiding from Learners'),
                         _.bind(saveAndPublishStaffLock, self));
                 } else if (!enableStaffLock && hasInheritedStaffLock) {
-                    ViewUtils.runOperationShowingMessage(gettext('Inheriting Student Visibility'),
+                    ViewUtils.runOperationShowingMessage(gettext('Inheriting Learner Visibility'),
                         _.bind(saveAndPublishStaffLock, self));
                 } else {
-                    ViewUtils.confirmThenRunOperation(gettext('Make Visible to Students'),
-                        gettext('If the unit was previously published and released to students, any changes you made to the unit when it was hidden will now be visible to students. Do you want to proceed?'),
-                        gettext('Make Visible to Students'),
+                    ViewUtils.confirmThenRunOperation(gettext('Make Visible to Learners'),
+                        gettext('If the unit was previously published and released to learners, any changes you made to the unit when it was hidden will now be visible to learners. Do you want to proceed?'),
+                        gettext('Make Visible to Learners'),
                         function() {
-                            ViewUtils.runOperationShowingMessage(gettext('Making Visible to Students'),
+                            ViewUtils.runOperationShowingMessage(gettext('Making Visible to Learners'),
                                 _.bind(saveAndPublishStaffLock, self));
                         },
                         function() {

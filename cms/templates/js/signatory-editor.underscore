@@ -20,7 +20,7 @@
             <div class="input-wrap field text add-signatory-title <% if(error && error.title) { print('error'); } %>">
                 <label for="signatory-title-<%- signatory_number %>"><%- gettext("Title ") %></label>
                 <textarea id="signatory-title-<%- signatory_number %>" class="collection-name-input text input-text signatory-title-input" name="signatory-title" placeholder="<%- gettext("Title of the signatory") %>"  aria-describedby="signatory-title-<%- signatory_number %>-tip" ><%- title %></textarea>
-                <span id="signatory-title-<%- signatory_number %>-tip" class="tip tip-stacked"><%- gettext("Titles more than 100 characters may prevent students from printing their certificate on a single page.") %></span>
+                <span id="signatory-title-<%- signatory_number %>-tip" class="tip tip-stacked"><%- gettext("Titles more than 100 characters may prevent learners from printing their certificate on a single page.") %></span>
                 <% if(error && error.title) { %>
                   <span class="message-error"><%- error.title %></span>
                 <% } %>

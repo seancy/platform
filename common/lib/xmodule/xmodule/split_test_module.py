@@ -66,13 +66,13 @@ class SplitTestFields(object):
 
     # Specified here so we can see what the value set at the course-level is.
     user_partitions = UserPartitionList(
-        help=_("The list of group configurations for partitioning students in content experiments."),
+        help=_("The list of group configurations for partitioning learners in content experiments."),
         default=[],
         scope=Scope.settings
     )
 
     user_partition_id = Integer(
-        help=_("The configuration defines how users are grouped for this content experiment. Caution: Changing the group configuration of a student-visible experiment will impact the experiment data."),
+        help=_("The configuration defines how users are grouped for this content experiment. Caution: Changing the group configuration of a learner-visible experiment will impact the experiment data."),
         scope=Scope.content,
         display_name=_("Group Configuration"),
         default=no_partition_selected["value"],
@@ -85,7 +85,7 @@ class SplitTestFields(object):
     # Block.  (expected invariant that we'll need to test, and handle
     # authoring tools that mess this up)
     group_id_to_child = ReferenceValueDict(
-        help=_("Which child module students in a particular group_id should see"),
+        help=_("Which child module learners in a particular group_id should see"),
         scope=Scope.content
     )
 

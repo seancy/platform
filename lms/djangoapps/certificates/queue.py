@@ -682,7 +682,7 @@ class XQueueCertInterface(object):
 
         Keyword Arguments:
             callback_url_path (str): The path of the callback URL.
-                If not provided, use the default end-point for student-generated
+                If not provided, use the default end-point for learner-generated
                 certificates.
 
         """

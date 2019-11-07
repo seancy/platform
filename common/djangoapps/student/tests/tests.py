@@ -330,12 +330,12 @@ class DashboardTest(ModuleStoreTestCase):
         """
         self.client.login(username="jack", password="test")
         # self._check_verification_status_on('verified', 'You&#39;re enrolled as a verified student')
-        self._check_verification_status_on('honor', 'You&#39;re enrolled as an honor code student')
+        self._check_verification_status_on('honor', 'You&#39;re enrolled as an honor code learner')
         self._check_verification_status_off('audit', '')
-        self._check_verification_status_on('professional', 'You&#39;re enrolled as a professional education student')
+        self._check_verification_status_on('professional', 'You&#39;re enrolled as a professional education learner')
         self._check_verification_status_on(
             'no-id-professional',
-            'You&#39;re enrolled as a professional education student',
+            'You&#39;re enrolled as a professional education learner',
         )
 
     @unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
@@ -370,7 +370,7 @@ class DashboardTest(ModuleStoreTestCase):
         """
         self.client.login(username="jack", password="test")
         # self._check_verification_status_off('verified', 'You\'re enrolled as a verified student')
-        self._check_verification_status_off('honor', 'You\'re enrolled as an honor code student')
+        self._check_verification_status_off('honor', 'You\'re enrolled as an honor code learner')
         self._check_verification_status_off('audit', '')
 
     def test_course_mode_info(self):
@@ -548,10 +548,10 @@ class DashboardTest(ModuleStoreTestCase):
     @ddt.data(ModuleStoreEnum.Type.mongo, ModuleStoreEnum.Type.split)
     def test_dashboard_metadata_caching(self, modulestore_type):
         """
-        Check that the student dashboard makes use of course metadata caching.
+        Check that the learner dashboard makes use of course metadata caching.
 
         After creating a course, that course's metadata should be cached as a
-        CourseOverview. The student dashboard should never have to make calls to
+        CourseOverview. The learner dashboard should never have to make calls to
         the modulestore.
 
         Arguments:
@@ -945,7 +945,7 @@ class ChangeEnrollmentViewTest(ModuleStoreTestCase):
         self.url = reverse('change_enrollment')
 
     def _enroll_through_view(self, course):
-        """ Enroll a student in a course. """
+        """ Enroll a learner in a course. """
         response = self.client.post(
             reverse('change_enrollment'), {
                 'course_id': text_type(course.id),
@@ -955,7 +955,7 @@ class ChangeEnrollmentViewTest(ModuleStoreTestCase):
         return response
 
     def test_enroll_as_default(self):
-        """Tests that a student can successfully enroll through this view"""
+        """Tests that a learner can successfully enroll through this view"""
         response = self._enroll_through_view(self.course)
         self.assertEqual(response.status_code, 200)
         enrollment_mode, is_active = CourseEnrollment.enrollment_mode_for_user(
@@ -966,7 +966,7 @@ class ChangeEnrollmentViewTest(ModuleStoreTestCase):
 
     def test_cannot_enroll_if_already_enrolled(self):
         """
-        Tests that a student will not be able to enroll through this view if
+        Tests that a learner will not be able to enroll through this view if
         they are already enrolled in the course
         """
         CourseEnrollment.enroll(self.user, self.course.id)
@@ -977,7 +977,7 @@ class ChangeEnrollmentViewTest(ModuleStoreTestCase):
 
     def test_change_to_default_if_verified(self):
         """
-        Tests that a student that is a currently enrolled verified student cannot
+        Tests that a learner that is a currently enrolled verified learner cannot
         accidentally change their enrollment mode
         """
         CourseEnrollment.enroll(self.user, self.course.id, mode=u'verified')

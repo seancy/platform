@@ -104,13 +104,13 @@ class CapaFields(object):
         default=_("Blank Advanced Problem")
     )
     attempts = Integer(
-        help=_("Number of attempts taken by the student on this problem"),
+        help=_("Number of attempts taken by the learner on this problem"),
         default=0,
         scope=Scope.user_state
     )
     max_attempts = Integer(
         display_name=_("Maximum Attempts"),
-        help=_("Defines the number of times a student can try to answer this problem. "
+        help=_("Defines the number of times a learner can try to answer this problem. "
                "If the value is not set, infinite attempts are allowed."),
         values={"min": 0}, scope=Scope.settings
     )
@@ -173,7 +173,7 @@ class CapaFields(object):
             {"display_name": _("Always"), "value": RANDOMIZATION.ALWAYS},
             {"display_name": _("On Reset"), "value": RANDOMIZATION.ONRESET},
             {"display_name": _("Never"), "value": RANDOMIZATION.NEVER},
-            {"display_name": _("Per Student"), "value": RANDOMIZATION.PER_STUDENT}
+            {"display_name": _("Per Learner"), "value": RANDOMIZATION.PER_STUDENT}
         ]
     )
     data = XMLString(
@@ -182,21 +182,21 @@ class CapaFields(object):
         enforce_type=FEATURES.get('ENABLE_XBLOCK_XML_VALIDATION', True),
         default="<problem></problem>"
     )
-    correct_map = Dict(help=_("Dictionary with the correctness of current student answers"),
+    correct_map = Dict(help=_("Dictionary with the correctness of current learner answers"),
                        scope=Scope.user_state, default={})
     input_state = Dict(help=_("Dictionary for maintaining the state of inputtypes"), scope=Scope.user_state)
-    student_answers = Dict(help=_("Dictionary with the current student responses"), scope=Scope.user_state)
+    student_answers = Dict(help=_("Dictionary with the current learner responses"), scope=Scope.user_state)
 
     # enforce_type is set to False here because this field is saved as a dict in the database.
-    score = ScoreField(help=_("Dictionary with the current student score"), scope=Scope.user_state, enforce_type=False)
+    score = ScoreField(help=_("Dictionary with the current learner score"), scope=Scope.user_state, enforce_type=False)
     has_saved_answers = Boolean(help=_("Whether or not the answers have been saved since last submit"),
                                 scope=Scope.user_state, default=False)
-    done = Boolean(help=_("Whether the student has answered the problem"), scope=Scope.user_state, default=False)
-    seed = Integer(help=_("Random seed for this student"), scope=Scope.user_state)
+    done = Boolean(help=_("Whether the learner has answered the problem"), scope=Scope.user_state, default=False)
+    seed = Integer(help=_("Random seed for this learner"), scope=Scope.user_state)
     last_submission_time = Date(help=_("Last submission time"), scope=Scope.user_state)
     submission_wait_seconds = Integer(
         display_name=_("Timer Between Attempts"),
-        help=_("Seconds a student must wait between submissions for a problem with multiple attempts."),
+        help=_("Seconds a learner must wait between submissions for a problem with multiple attempts."),
         scope=Scope.settings,
         default=0)
     weight = Float(

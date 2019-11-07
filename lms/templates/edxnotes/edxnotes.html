@@ -10,7 +10,7 @@ from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_str
 %>
 
 <%block name="bodyclass">view-student-notes is-in-course course</%block>
-<%block name="pagetitle">${_("Student Notes")}</%block>
+<%block name="pagetitle">${_("Learner Notes")}</%block>
 <%block name="headextra">
 <%static:css group='style-course'/>
 </%block>
@@ -68,7 +68,7 @@ from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_str
         % else:
         <section class="placeholder is-empty">
           <article>
-            <h2 class="placeholder-title">${_('You have not made any notes in this course yet. Other students in this course are using notes to:')}</h2>
+            <h2 class="placeholder-title">${_('You have not made any notes in this course yet. Other learners in this course are using notes to:')}</h2>
 
             <div class="placeholder-copy">
               <ul>

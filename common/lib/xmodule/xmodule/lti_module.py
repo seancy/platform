@@ -159,7 +159,7 @@ class LTIFields(object):
     open_in_a_new_page = Boolean(
         display_name=_("Open in New Page"),
         help=_(
-            "Select True if you want students to click a link that opens the LTI tool in a new window. "
+            "Select True if you want learners to click a link that opens the LTI tool in a new window. "
             "Select False if you want the LTI content to open in an IFrame in the current page. "
             "This setting is only used when Hide External Tool is set to False.  "
         ),

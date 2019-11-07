@@ -21,7 +21,7 @@ FORUM_ROLE_ADMINISTRATOR = ugettext_noop('Administrator')
 FORUM_ROLE_MODERATOR = ugettext_noop('Moderator')
 FORUM_ROLE_GROUP_MODERATOR = ugettext_noop('Group Moderator')
 FORUM_ROLE_COMMUNITY_TA = ugettext_noop('Community TA')
-FORUM_ROLE_STUDENT = ugettext_noop('Student')
+FORUM_ROLE_STUDENT = ugettext_noop('Learner')
 
 
 @receiver(post_save, sender=CourseEnrollment)

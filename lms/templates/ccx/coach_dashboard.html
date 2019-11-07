@@ -62,7 +62,7 @@ from openedx.core.djangolib.js_utils import (
               <button type="button" class="btn-link" data-section="schedule">${_("Schedule")}</button>
             </li>
             <li class="nav-item">
-              <button type="button" class="btn-link" data-section="student_admin">${_("Student Admin")}</button>
+              <button type="button" class="btn-link" data-section="student_admin">${_("Learner Admin")}</button>
             </li>
             <li class="nav-item">
               <button type="button" class="btn-link" data-section="grading_policy">${_("Grading Policy")}</button>
@@ -74,7 +74,7 @@ from openedx.core.djangolib.js_utils import (
           <section id="schedule" class="idash-section" aria-label="${_('Schedule')}">
             <%include file="schedule.html" args="" />
           </section>
-          <section id="student_admin" class="idash-section" aria-label="${_('Student Grades')}">
+          <section id="student_admin" class="idash-section" aria-label="${_('Learner Grades')}">
             <%include file="student_admin.html" args="" />
           </section>
           <section id="grading_policy" class="idash-section" aria-label="${_('Grading Policy')}">

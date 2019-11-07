@@ -1768,7 +1768,7 @@ class ForumEventTestCase(ForumsEnableMixin, SharedModuleStoreTestCase, MockReque
 
         cls.student = UserFactory.create()
         CourseEnrollmentFactory(user=cls.student, course_id=cls.course.id)
-        cls.student.roles.add(Role.objects.get(name="Student", course_id=cls.course.id))
+        cls.student.roles.add(Role.objects.get(name="Learner", course_id=cls.course.id))
         CourseAccessRoleFactory(course_id=cls.course.id, user=cls.student, role='Wizard')
 
     @patch('eventtracking.tracker.emit')
@@ -1792,7 +1792,7 @@ class ForumEventTestCase(ForumsEnableMixin, SharedModuleStoreTestCase, MockReque
         self.assertEqual(event['body'], 'Test text')
         self.assertEqual(event['title'], 'Test')
         self.assertEqual(event['commentable_id'], 'test_commentable')
-        self.assertEqual(event['user_forums_roles'], ['Student'])
+        self.assertEqual(event['user_forums_roles'], ['Learner'])
         self.assertEqual(event['options']['followed'], True)
         self.assertEqual(event['user_course_roles'], ['Wizard'])
         self.assertEqual(event['anonymous'], False)
@@ -1821,7 +1821,7 @@ class ForumEventTestCase(ForumsEnableMixin, SharedModuleStoreTestCase, MockReque
         self.assertEqual(event_name, 'edx.forum.response.created')
         self.assertEqual(event['body'], "Test comment")
         self.assertEqual(event['commentable_id'], 'test_commentable_id')
-        self.assertEqual(event['user_forums_roles'], ['Student'])
+        self.assertEqual(event['user_forums_roles'], ['Learner'])
         self.assertEqual(event['user_course_roles'], ['Wizard'])
         self.assertEqual(event['discussion']['id'], 'test_thread_id')
         self.assertEqual(event['options']['followed'], True)
@@ -1849,7 +1849,7 @@ class ForumEventTestCase(ForumsEnableMixin, SharedModuleStoreTestCase, MockReque
         self.assertEqual(event['body'], 'Another comment')
         self.assertEqual(event['discussion']['id'], 'test_thread_id')
         self.assertEqual(event['response']['id'], 'test_response_id')
-        self.assertEqual(event['user_forums_roles'], ['Student'])
+        self.assertEqual(event['user_forums_roles'], ['Learner'])
         self.assertEqual(event['user_course_roles'], ['Wizard'])
         self.assertEqual(event['options']['followed'], False)
 

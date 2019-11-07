@@ -65,7 +65,7 @@ ${order.bill_to_country.upper()}
 </p>
 <p>${_("Order Number: {order_number}").format(order_number=order.id)}</p>
 
-<p><b>${_("A CSV file of your registration URLs is attached. Please distribute registration URLs to each student planning to enroll using the email template below.")}</b></p>
+<p><b>${_("A CSV file of your registration URLs is attached. Please distribute registration URLs to each learner planning to enroll using the email template below.")}</b></p>
 
 % if payment_email_signature:
 ## Translators: This is followed by the instructor or course team name (so could be singular or plural)
@@ -93,7 +93,7 @@ ${payment_email_signature}
 <p>${_("(1) Register for an account at {site_name}").format(site_name=u"<a href='https://{sn}'>https://{sn}</a>".format(sn=site_name))}<br>
 ${_("(2) Once registered, copy the redeem URL and paste it in your web browser.")}<br>
 ${_("(3) On the enrollment confirmation page, Click the 'Activate Enrollment Code' button. This will show the enrollment confirmation.")}<br>
-${_("(4) You should be able to click on 'view course' button or see your course on your student dashboard at {url}").format(
+${_("(4) You should be able to click on 'view course' button or see your course on your learner dashboard at {url}").format(
 	 url=u"<a href='https://{dashboard_url}'>https://{dashboard_url}</a>".format(dashboard_url=dashboard_url)
 )}<br>
 ${_("(5) Course materials will not be available until the course start date.")}</p>

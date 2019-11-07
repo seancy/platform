@@ -46,7 +46,7 @@
 
         <div class="copy">
           <h3>${_("Keeping Your Course Organized")}</h3>
-          <p>${Text(_("The backbone of your course is how it is organized. {studio_name} offers an {strong_start}Outline{strong_end} editor, providing a simple hierarchy and easy drag and drop to help you and your students stay organized.")).format(
+          <p>${Text(_("The backbone of your course is how it is organized. {studio_name} offers an {strong_start}Outline{strong_end} editor, providing a simple hierarchy and easy drag and drop to help you and your learners stay organized.")).format(
                   studio_name=settings.STUDIO_SHORT_NAME,
                   strong_start=HTML('<strong>'),
                   strong_end=HTML('</strong>')
@@ -69,7 +69,7 @@
 
             <li class="proofpoint">
               <h4 class="title">${_("Go A Week Or A Semester At A Time")}</h4>
-              <p>${Text(_("Build and release {strong_start}sections{strong_end} to your students incrementally. You don't have to have it all done at once.")).format(
+              <p>${Text(_("Build and release {strong_start}sections{strong_end} to your learners incrementally. You don't have to have it all done at once.")).format(
                     strong_start=HTML('<strong>'),
                     strong_end=HTML('</strong>')
                   )}</p>
@@ -96,12 +96,12 @@
           <ul class="list-proofpoints">
             <li class="proofpoint">
               <h4 class="title">${_("Create Learning Pathways")}</h4>
-              <p>${_("Help your students understand one concept at a time with multimedia, HTML, and exercises.")}</p>
+              <p>${_("Help your learners understand one concept at a time with multimedia, HTML, and exercises.")}</p>
             </li>
 
             <li class="proofpoint">
               <h4 class="title">${_("Work Visually, Organize Quickly")}</h4>
-              <p>${_("Work visually and see exactly what your students will see. Reorganize all your content with drag and drop.")}</p>
+              <p>${_("Work visually and see exactly what your learners will see. Reorganize all your content with drag and drop.")}</p>
             </li>
 
             <li class="proofpoint">
@@ -200,7 +200,7 @@
   <h3 class="title">${_("Publishing on Date")}</h3>
   <figure>
     <img src="${static.url("images/hiw-feature3.png")}" alt="" />
-    <figcaption class="description">${_("Simply set the date of a section or subsection, and {studio_name} will publish it to your students for you.").format(studio_name=settings.STUDIO_SHORT_NAME)}</figcaption>
+    <figcaption class="description">${_("Simply set the date of a section or subsection, and {studio_name} will publish it to your learners for you.").format(studio_name=settings.STUDIO_SHORT_NAME)}</figcaption>
   </figure>
 
   <a href="" rel="view" class="action action-modal-close">
