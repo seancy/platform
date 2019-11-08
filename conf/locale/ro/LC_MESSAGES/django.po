@@ -354,6 +354,7 @@ msgstr ""
 
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
+#: lms/templates/preview_menu.html:36
 msgid "Learner"
 msgstr ""
 
@@ -7092,6 +7093,7 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py:2604
 #: lms/djangoapps/instructor/views/api.py:2790
+#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
 msgid "All Learners"
 msgstr ""
 
@@ -13458,10 +13460,6 @@ msgstr ""
 msgid "View this course as:"
 msgstr ""
 
-#: lms/templates/preview_menu.html:36
-msgid "Learner"
-msgstr ""
-
 #: lms/templates/preview_menu.html:37
 msgid "Specific learner"
 msgstr ""
@@ -19375,10 +19373,6 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:23
 msgid "Staff and Administrators"
-msgstr ""
-
-#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
-msgid "All Learners"
 msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:36

@@ -675,11 +675,6 @@ msgstr "群组版主"
 msgid "Community TA"
 msgstr "社区助教"
 
-#: common/djangoapps/django_comment_common/models.py:24
-#: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
-msgid "Learner"
-msgstr "学员"
-
 #: common/djangoapps/student/admin.py:224
 msgid "User profile"
 msgstr "用户资料"
@@ -7745,6 +7740,7 @@ msgstr "课程无有效的入学测试部分。"
 
 #: lms/djangoapps/instructor/views/api.py:2604
 #: lms/djangoapps/instructor/views/api.py:2790
+#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
 msgid "All Learners"
 msgstr "所有学员"
 
@@ -14436,6 +14432,8 @@ msgstr "查看课程的身份："
 
 #: lms/templates/preview_menu.html:36
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:22
+#: common/djangoapps/django_comment_common/models.py:24
+#: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
 msgid "Learner"
 msgstr "学员"
 
@@ -20802,10 +20800,6 @@ msgstr "我自己"
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:23
 msgid "Staff and Administrators"
 msgstr "工作人员和管理员"
-
-#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
-msgid "All Learners"
-msgstr "所有学习者"
 
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:36
 msgid "Cohort: "

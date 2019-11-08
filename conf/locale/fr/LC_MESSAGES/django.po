@@ -452,6 +452,7 @@ msgstr "Assistant"
 
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
+#: lms/templates/preview_menu.html:36
 msgid "Learner"
 msgstr "Apprenant"
 
@@ -8138,6 +8139,7 @@ msgstr "Le cours n'a pas de section d'examen d'entrée valide."
 
 #: lms/djangoapps/instructor/views/api.py:2604
 #: lms/djangoapps/instructor/views/api.py:2790
+#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
 msgid "All Learners"
 msgstr "Tous les apprenants"
 
@@ -15286,10 +15288,6 @@ msgstr "Vue du cours"
 msgid "View this course as:"
 msgstr "Voir ce cours en tant que :"
 
-#: lms/templates/preview_menu.html:36
-msgid "Learner"
-msgstr "Apprenant"
-
 #: lms/templates/preview_menu.html:37
 msgid "Specific learner"
 msgstr "Apprenant spécifique"
@@ -22275,10 +22273,6 @@ msgstr "Moi-même"
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:23
 msgid "Staff and Administrators"
 msgstr "L'équipe et les administrateurs"
-
-#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
-msgid "All Learners"
-msgstr "Tous les apprenants"
 
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:36
 msgid "Cohort: "

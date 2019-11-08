@@ -599,6 +599,8 @@ msgstr "Assistente de Ensino da Comunidade"
 
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
+#: lms/templates/preview_menu.html:36
+#: lms/templates/courseware/ilt_attendance_sheet.html:57
 msgid "Learner"
 msgstr "Aluno"
 
@@ -1321,7 +1323,7 @@ msgid ""
 "provider as an option to authenticate with on the login screen, but manual "
 "authentication using the correct link is still possible."
 msgstr ""
-"Se esta opção não for selecionada, os usuários não serão apresentados ao " 
+"Se esta opção não for selecionada, os usuários não serão apresentados ao "
 "provedor como uma opção para autenticação na tela de login, mas "
 "a autenticação manual usando o link correto ainda é possível."
 
@@ -1333,7 +1335,7 @@ msgid ""
 "blank, the Django platform session default length will be used."
 msgstr ""
 "Se esta opção estiver configurada, os usuários que fizerem login usando esse "
-"provedor de SSO terão sua duração da sessão limitada a não mais que esse " 
+"provedor de SSO terão sua duração da sessão limitada a não mais que esse "
 "valor.  Se configurada como 0 (zero), a sessão expirará quando o usuário "
 "fechar o navegador. Se deixado em branco, a duração padrão da sessão "
 "da plataforma  Django será usada. "
@@ -1345,7 +1347,7 @@ msgid ""
 "page."
 msgstr ""
 "Se esta opção for selecionada, os usuários serão direcionados para a página "
-"de registro imediatamente após a autenticação com terceiros, em vez da " 
+"de registro imediatamente após a autenticação com terceiros, em vez da "
 "página de login. "
 
 #: common/djangoapps/third_party_auth/models.py:195
@@ -1355,8 +1357,8 @@ msgid ""
 "address associated with their account is changed as a part of this "
 "synchronization."
 msgstr ""
-"Sincronize os dados do perfil do usuário recebidos do provedor de identidade " 
-"com a conta do usuário edX em cada login do SSO. O usuário será notificado se " 
+"Sincronize os dados do perfil do usuário recebidos do provedor de identidade "
+"com a conta do usuário edX em cada login do SSO. O usuário será notificado se "
 "o endereço de email associado à conta for alterado como parte "
 "dessa sincronização."
 #: common/djangoapps/third_party_auth/models.py:392
@@ -2751,7 +2753,7 @@ msgstr "Sugestão ({hint_num} de {hints_count}):"
 msgid ""
 "Your answers were previously saved. Click '{button_name}' to grade them."
 msgstr ""
-"Suas respostas foram salvas anteriormente. Clique em '{button_name}' " 
+"Suas respostas foram salvas anteriormente. Clique em '{button_name}' "
 "para classificá-los."
 
 #: common/lib/xmodule/xmodule/capa_base.py:799
@@ -2928,7 +2930,7 @@ msgid ""
 "The attribute of the source components that determines whether a learner is "
 "shown the content of this conditional module."
 msgstr ""
-"O atributo dos componentes de origem que determina se um aluno " 
+"O atributo dos componentes de origem que determina se um aluno "
 "recebe o conteúdo deste módulo condicional."
 
 #: common/lib/xmodule/xmodule/conditional_module.py:62
@@ -3873,7 +3875,7 @@ msgid ""
 "Enter true or false. If this value is true, a Zendesk ticket will be created "
 "for suspicious attempts."
 msgstr ""
-"Digite verdadeiro ou falso. Se esse valor for verdadeiro, um ticket do Zendesk" 
+"Digite verdadeiro ou falso. Se esse valor for verdadeiro, um ticket do Zendesk"
 "será criado por tentativas suspeitas."
 #: common/lib/xmodule/xmodule/course_module.py:784
 msgid "Enable Timed Exams"
@@ -5714,7 +5716,7 @@ msgid ""
 "comma, and the slug of a badge class you have created that has the issuing "
 "component 'openedx__course'. For example: 3,enrolled_3_courses"
 msgstr ""
-"Em cada linha, coloque o número de cursos concluídos para atribuir um crachá, " 
+"Em cada linha, coloque o número de cursos concluídos para atribuir um crachá, "
 "uma vírgula e o slug de uma classe de medalha que você criou que possui o "
 "componente emissor 'openx__course'. Por exemplo: 3,enrolled_3_courses"
 
@@ -5724,7 +5726,7 @@ msgid ""
 "comma, and the slug of a badge class you have created that has the issuing "
 "component 'openedx__course'. For example: 3,enrolled_3_courses"
 msgstr ""
-"Em cada linha, coloque o número de cursos concluídos para atribuir um crachá, " 
+"Em cada linha, coloque o número de cursos concluídos para atribuir um crachá, "
 "uma vírgula e o slug de uma classe de medalha que você criou que possui o "
 "componente emissor 'openx__course'. Por exemplo: 3,enrolled_3_courses"
 
@@ -7614,7 +7616,7 @@ msgstr ""
 #: lms/djangoapps/instructor/views/api.py:337
 #, python-brace-format
 msgid "Row #{row_num}: A first name is required."
-msgstr "Fileira #{row_num}: Um primeiro nome é requerido." 
+msgstr "Fileira #{row_num}: Um primeiro nome é requerido."
 
 #: lms/djangoapps/instructor/views/api.py:340
 #, python-brace-format
@@ -7678,7 +7680,7 @@ msgid ""
 "Row #{row_num}: Invalid language, a language code is expected (e.g. en, fr, "
 "zh, pt)."
 msgstr ""
-"Row #{row_num}: Idioma inválido, um código de idioma é necessário (por exemplo, " 
+"Row #{row_num}: Idioma inválido, um código de idioma é necessário (por exemplo, "
 "en, fr, zh, pt)."
 
 #: lms/djangoapps/instructor/views/api.py:398
@@ -7696,7 +7698,7 @@ msgid ""
 "Row #{row_num}: Invalid country, a 2-character country code is expected (e."
 "g. FR, CN, US, BR)."
 msgstr ""
-"Row #{row_num}: País inválido, um código de país de duas letras é esperado (por " 
+"Row #{row_num}: País inválido, um código de país de duas letras é esperado (por "
 " exemplo FR, CN, US, BR)."
 #: lms/djangoapps/instructor/views/api.py:409
 #, fuzzy, python-brace-format
@@ -8199,6 +8201,7 @@ msgstr "O curso não possui uma seção válida para o exame de admissão."
 
 #: lms/djangoapps/instructor/views/api.py:2658
 #: lms/djangoapps/instructor/views/api.py:2844
+#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
 msgid "All Learners"
 msgstr "Todos os Alunos"
 
@@ -12575,7 +12578,7 @@ msgid ""
 "is learning."
 msgstr ""
 "Se lembra quando você se inscreveu no %(course_name)s plataforma %(platform_name)s? "
-"Nós nos lembramos, e estamos felizes de ter você!" 
+"Nós nos lembramos, e estamos felizes de ter você!"
 "Venha ver o que as pessoas estão aprendendo!"
 
 #: openedx/core/djangoapps/schedules/templates/schedules/edx_ace/recurringnudge_day3/email/body.html:38
@@ -15957,7 +15960,7 @@ msgid ""
 "changed, but you can set a different display name in Advanced Settings later."
 msgstr ""
 "O nome da organização que patrocina o curso. {Strong_start} Nota: O nome da "
-"organização faz parte do URL do curso. {Strong_end} Isso não pode ser alterado, " 
+"organização faz parte do URL do curso. {Strong_end} Isso não pode ser alterado, "
 "mas você pode definir um nome de exibição diferente nas Configurações avançadas "
 "posteriormente."
 
@@ -19068,11 +19071,6 @@ msgstr "Visualização do Curso"
 msgid "View this course as:"
 msgstr "Visualizar o curso como:"
 
-#: lms/templates/preview_menu.html:36
-#: lms/templates/courseware/ilt_attendance_sheet.html:57
-msgid "Learner"
-msgstr "Aluno"
-
 #: lms/templates/preview_menu.html:37
 msgid "Specific learner"
 msgstr "Aluno específico"
@@ -20555,7 +20553,7 @@ msgid ""
 msgstr ""
 "As APIs e o Conteúdo da API podem incluir hiperlinks para sites mantidos "
 "ou controlados por terceiros e não afiliados ou sob o controle de {platform_name}. "
-"{Platform_name_capitalized} e os participantes da {platform_name} não são " 
+"{Platform_name_capitalized} e os participantes da {platform_name} não são "
 "responsáveis por, e não examinam, aprovam, revise ou avalie o conteúdo ou o uso "
 "de qualquer um dos produtos ou serviços oferecidos nesses sites de terceiros. "
 "Se você decidir acessar sites de terceiros vinculados, é por sua conta e risco. "
@@ -20702,7 +20700,7 @@ msgstr ""
 "qualquer motivo, o seu direito de usar qualquer API e o Conteúdo da API cessará "
 "imediatamente. Você interromperá imediatamente o uso das APIs e excluirá o "
 "Conteúdo da API armazenado em cache ou armazenado do Aplicativo. e suas redes, "
-"sistemas e servidores o mais rápido possível.Todas as disposições dos Termos que, " 
+"sistemas e servidores o mais rápido possível.Todas as disposições dos Termos que, "
 "por sua natureza, devem sobreviver à rescisão deverão sobreviver à rescisão, "
 "incluindo, sem limitação, disposições de propriedade, isenções de garantia e "
 "limitações de responsabilidade. e o uso das APIs e do Conteúdo da API não "
@@ -21907,7 +21905,7 @@ msgstr ""
 
 #: lms/templates/courseware/info.html:63
 msgid "Welcome to {org}'s {course_title}!"
-msgstr "Bem-vindo ao {course_title} de {org}" 
+msgstr "Bem-vindo ao {course_title} de {org}"
 
 #: lms/templates/courseware/info.html:65
 msgid "Welcome to {course_title}!"
@@ -26030,10 +26028,6 @@ msgstr "eu mesmo"
 msgid "Staff and Administrators"
 msgstr "Equipe e Administradores"
 
-#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
-msgid "All Learners"
-msgstr "Todos os alunos"
-
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:36
 msgid "Cohort: "
 msgstr "Grupo:"
@@ -29092,11 +29086,11 @@ msgid ""
 msgstr ""
 "Após o upload de uma imagem, ela é anexada a esse artigo específico e pode "
 "ser usada apenas aqui. Outros usuários podem substituir a imagem, mas versões "
-"mais antigas são mantidas. Você provavelmente deseja mostrar a imagem com uma" 
+"mais antigas são mantidas. Você provavelmente deseja mostrar a imagem com uma"
 "legenda legal. Para conseguir isso, pressione o botão Inserir e preencha os "
 "campos da legenda e, possivelmente, opte por flutuar a imagem à direita ou "
-"à esquerda do conteúdo. Você pode usar o Markdown na legenda. A sintaxe do" 
-"código de remarcação das imagens se parece com isso, os valores possíveis" 
+"à esquerda do conteúdo. Você pode usar o Markdown na legenda. A sintaxe do"
+"código de remarcação das imagens se parece com isso, os valores possíveis"
 "para alinhar são esquerda / centro /direito:"
 
 #: wiki/plugins/links/wiki_plugin.py:21
