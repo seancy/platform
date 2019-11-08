@@ -56,6 +56,8 @@ module.exports = Merge.smart({
         StudentAccountDeletion: ['babel-polyfill','./lms/static/js/student_account/components/StudentAccountDeletion.jsx'],
         StudentAccountDeletionInitializer: ['babel-polyfill','./lms/static/js/student_account/StudentAccountDeletionInitializer.js'],
 
+        Dialog: ['babel-polyfill','./lms/static/js/dialog.js'],
+
         // Learner Dashboard
         EntitlementFactory: ['babel-polyfill','./lms/static/js/learner_dashboard/course_entitlement_factory.js'],
         EntitlementUnenrollmentFactory: ['babel-polyfill','./lms/static/js/learner_dashboard/entitlement_unenrollment_factory.js'],

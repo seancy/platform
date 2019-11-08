@@ -11075,6 +11075,7 @@ msgstr ""
 #: cms/templates/manage_users_lib.html:67
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:79
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:183
+#: lms/templates/components/confirmation.html:9
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -18123,6 +18124,7 @@ msgstr "Région / Zone"
 #: lms/templates/emails/ilt_confirmed_email_message.txt:26
 #: lms/templates/emails/ilt_enrolled_email_message.txt:26
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:30
+#: lms/templates/triboo_analytics/table.html
 msgid "Zip Code"
 msgstr "Code postal"
 
@@ -21807,6 +21809,7 @@ msgid "undo"
 msgstr "annuler"
 
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:182
+#: lms/templates/components/confirmation.html:8
 msgid "Confirm"
 msgstr "Confirmer"
 
@@ -30262,7 +30265,3 @@ msgstr "Feuille de présence"
 #: lms/templates/triboo_analytics/table.html
 msgid "Location name"
 msgstr "Nom du lieu"
-
-#: lms/templates/triboo_analytics/table.html
-msgid "Zip code"
-msgstr "Code postal"

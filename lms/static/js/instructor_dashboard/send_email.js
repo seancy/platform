@@ -64,19 +64,22 @@
                     return targets.push(this.value);
                 });
                 if (subject === '') {
-                    return alert(gettext('Your message must have a subject.'));  // eslint-disable-line no-alert
+                    LearningTribes.dialog.show(gettext('Your message must have a subject.'));
+                    return;
                 } else if (body === '') {
-                    return alert(gettext('Your message cannot be blank.'));  // eslint-disable-line no-alert
+                    LearningTribes.dialog.show(gettext('Your message cannot be blank.'))
+                    return;  // eslint-disable-line no-alert
                 } else if (targets.length === 0) {
-                    return alert(gettext( // eslint-disable-line no-alert
-                        'Your message must have at least one target.'));
+                    LearningTribes.dialog.show(gettext( // eslint-disable-line no-alert
+                        'Your message must have at least one target.'))
+                    return;
                 } else {
                     validation = KeywordValidator().validate_string(body);
                     if (!validation.isValid) {
                         message = gettext(
                             'There are invalid keywords in your email. Check the following keywords and try again.');
                         message += '\n' + validation.invalidKeywords.join('\n');
-                        alert(message);  // eslint-disable-line no-alert
+                        LearningTribes.dialog.show(message)
                         return false;
                     }
                     displayTarget = function(value) {
@@ -103,7 +106,7 @@
                     }
                     confirmMessage += '\n\n' + gettext('Is this OK?');
                     fullConfirmMessage = confirmMessage.replace('{subject}', subject);
-                    if (confirm(fullConfirmMessage)) {  // eslint-disable-line no-alert
+                    LearningTribes.confirmation.show(fullConfirmMessage, function () {
                         sendData = {
                             action: 'send',
                             send_to: JSON.stringify(targets),
@@ -116,16 +119,16 @@
                             url: sendemail.$btn_send.data('endpoint'),
                             data: sendData,
                             success: function() {
-                                return sendemail.display_response(successMessage);
+                                LearningTribes.dialog.show(successMessage);
                             },
                             error: statusAjaxError(function() {
-                                return sendemail.fail_with_error(gettext('Error sending email.'));
+                                LearningTribes.dialog.show(gettext('Error sending email.'));
                             })
                         });
-                    } else {
-                        sendemail.task_response.empty();
-                        return sendemail.$request_response_error.empty();
-                    }
+                    }, function () {
+                        sendemail.task_response && sendemail.task_response.empty();
+                        sendemail.$request_response_error && sendemail.$request_response_error.empty();
+                    })
                 }
             });
             this.$btn_task_history_email.click(function() {

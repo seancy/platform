@@ -160,7 +160,7 @@
             e.preventDefault();
             $.ajax(e.currentTarget.href, {
                 success: function (data) {
-                    alert(data.message);
+                    LearningTribes.dialog.show(data.message)
                 },
                 error: function (data) {
                     $('#export-error').text(data.message);

@@ -5992,28 +5992,28 @@ msgstr ""
 "'{student_id}'. Assurez-vous que l'identifiant apprenant est correct."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:399
-msgid "Reset attempts for all learners on problem '<%- problem_id %>'?"
+msgid "Reset attempts for all learners on problem <code>'<%- problem_id %>'</code>?"
 msgstr ""
-"Réinitialiser les essais de tous les apprenants pour l'exercice '<%= "
-"problem_id %>'?"
+"Réinitialiser les essais de tous les apprenants pour l'exercice <code>'<%= "
+"problem_id %>'</code>?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:408
 msgid ""
-"Successfully started task to reset attempts for problem '<%- problem_id %>'. "
+"Successfully started task to reset attempts for problem <code>'<%- problem_id %>'</code>. "
 "Click the 'Show Task Status' button to see the status of the task."
 msgstr ""
-"La tâche de réinitialisation de tentatives pour le problème '<%- problem_id "
-"%>' a démarré avec succès. Cliquez sur le bouton « Afficher l’état des "
+"La tâche de réinitialisation de tentatives pour le problème <code>'<%- problem_id "
+"%>'</code> a démarré avec succès. Cliquez sur le bouton « Afficher l’état des "
 "tâches » pour voir l'état de la tâche."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:412
 msgid ""
-"Error starting a task to reset attempts for all learners on problem '<%- "
-"problem_id %>'. Make sure that the problem identifier is complete and "
+"Error starting a task to reset attempts for all learners on problem <code>'<%- "
+"problem_id %>'</code>. Make sure that the problem identifier is complete and "
 "correct."
 msgstr ""
 "Erreur dans la réinitialisation des essais de tous les apprenants pour le "
-"problème '<%- problem_id %>'. Vérifiez que l'identifiant du problème est "
+"problème <code>'<%- problem_id %>'</code>. Vérifiez que l'identifiant du problème est "
 "complet et correct. "
 
 #: lms/static/js/instructor_dashboard/student_admin.js:463
@@ -6086,25 +6086,25 @@ msgstr ""
 "comporte des exercices et que l'identifiant de l'apprenant est correct."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:633
-msgid "Rescore problem '<%- problem_id %>' for all learners?"
+msgid "Rescore problem <code>'<%- problem_id %>'</code> for all learners?"
 msgstr ""
-"Recalculer le score du problème '<%- problem_id %>' pour tous les apprenants ?"
+"Recalculer le score du problème <code>'<%- problem_id %>'</code> pour tous les apprenants ?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:643
 msgid ""
-"Successfully started task to rescore problem '<%- problem_id %>' for all "
+"Successfully started task to rescore problem <code>'<%- problem_id %>'</code> for all "
 "learners. Click the 'Show Task Status' button to see the status of the task."
 msgstr ""
-"Démarrage de la tâche consistant à recalculer la note du problème'<%- "
-"problem_id %>' pour tous les apprenants effectué avec succès. Cliquez sur le "
+"Démarrage de la tâche consistant à recalculer la note du problème<code>'<%- "
+"problem_id %>'</code> pour tous les apprenants effectué avec succès. Cliquez sur le "
 "bouton «Afficher l’état des tâches» pour voir l'état de la tâche."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:647
 msgid ""
-"Error starting a task to rescore problem '<%- problem_id %>'. Make sure that "
+"Error starting a task to rescore problem <code>'<%- problem_id %>'</code>. Make sure that "
 "the problem identifier is complete and correct."
 msgstr ""
-"Erreur dans le recalcul des scores du problème '<%- problem_id %>'. Vérifiez "
+"Erreur dans le recalcul des scores du problème <code>'<%- problem_id %>'</code>. Vérifiez "
 "que l'identifiant du problème est complet et correct. "
 
 #. Translators: a "Task" is a background process such as grading students or

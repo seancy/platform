@@ -5779,24 +5779,24 @@ msgid ""
 msgstr "获取学员'{student_id}'的入学考试任务历史时出错了，请确认学员编号无误。"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:399
-msgid "Reset attempts for all learners on problem '<%- problem_id %>'?"
-msgstr "重置所有学员对问题'<%- problem_id %>'的尝试？"
+msgid "Reset attempts for all learners on problem <code>'<%- problem_id %>'</code>?"
+msgstr "重置所有学员对问题<code>'<%- problem_id %>'</code>的尝试？"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:408
 msgid ""
-"Successfully started task to reset attempts for problem '<%- problem_id %>'. "
+"Successfully started task to reset attempts for problem <code>'<%- problem_id %>'</code>. "
 "Click the 'Show Task Status' button to see the status of the task."
 msgstr ""
-"已成功启动任务以重置问题'<%- problem_id %>'的尝试。单击\"显示任务状态\"按钮以"
+"已成功启动任务以重置问题<code>'<%- problem_id %>'</code>的尝试。单击\"显示任务状态\"按钮以"
 "查看任务的状态。"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:412
 msgid ""
-"Error starting a task to reset attempts for all learners on problem '<%- "
-"problem_id %>'. Make sure that the problem identifier is complete and "
+"Error starting a task to reset attempts for all learners on problem <code>'<%- "
+"problem_id %>'</code>. Make sure that the problem identifier is complete and "
 "correct."
 msgstr ""
-"启动任务以重置问题'<%- problem_id %>'上所有学员的尝试时出错。确保问题标识符完"
+"启动任务以重置问题<code>'<%- problem_id %>'</code>上所有学员的尝试时出错。确保问题标识符完"
 "整且正确。"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:463
@@ -5861,23 +5861,23 @@ msgstr ""
 "考试中有题目并且学员编号无误。"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:633
-msgid "Rescore problem '<%- problem_id %>' for all learners?"
-msgstr "对所有学员重新评分问题 '<%- problem_id %>'？"
+msgid "Rescore problem <code>'<%- problem_id %>'</code> for all learners?"
+msgstr "对所有学员重新评分问题 <code>'<%- problem_id %>'</code>？"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:643
 msgid ""
-"Successfully started task to rescore problem '<%- problem_id %>' for all "
+"Successfully started task to rescore problem <code>'<%- problem_id %>'</code> for all "
 "learners. Click the 'Show Task Status' button to see the status of the task."
 msgstr ""
-"成功启动任务，为所有学员重新评分问题'<%- problem_id %>' 。单击\"显示任务状态"
+"成功启动任务，为所有学员重新评分问题<code>'<%- problem_id %>'</code> 。单击\"显示任务状态"
 "\"按钮以查看任务的状态。"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:647
 msgid ""
-"Error starting a task to rescore problem '<%- problem_id %>'. Make sure that "
+"Error starting a task to rescore problem <code>'<%- problem_id %>'</code>. Make sure that "
 "the problem identifier is complete and correct."
 msgstr ""
-"启动任务以重新评分问题'<%- problem_id %>时出错。确保问题标识符完整且正确。"
+"启动任务以重新评分问题<code>'<%- problem_id %>'</code>时出错。确保问题标识符完整且正确。"
 
 #. Translators: a "Task" is a background process such as grading students or
 #. sending email

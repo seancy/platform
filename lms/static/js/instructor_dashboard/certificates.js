@@ -115,38 +115,35 @@ var onCertificatesReady = null;
          * Start regenerating certificates for students.
          */
         $section.on('click', '#btn-start-regenerating-certificates', function(event) {
-            if (!confirm(gettext('Start regenerating certificates for learners in this course?'))) {
-                event.preventDefault();
-                return;
-            }
-
-            var $btn_regenerating_certs = $(this),
+            LearningTribes.confirmation.show(gettext('Start regenerating certificates for learners in this course?'), function () {
+                var $btn_regenerating_certs = $(this),
                 $certificate_regeneration_status = $('.certificate-regeneration-status'),
                 url = $btn_regenerating_certs.data('endpoint');
 
-            $.ajax({
-                type: 'POST',
-                data: $('#certificate-regenerating-form').serializeArray(),
-                url: url,
-                success: function(data) {
-                    $btn_regenerating_certs.attr('disabled', 'disabled');
-                    if (data.success) {
-                        $certificate_regeneration_status.text(data.message).addClass('message');
-                    } else {
-                        $certificate_regeneration_status.text(data.message).addClass('message');
+                $.ajax({
+                    type: 'POST',
+                    data: $('#certificate-regenerating-form').serializeArray(),
+                    url: url,
+                    success: function(data) {
+                        $btn_regenerating_certs.attr('disabled', 'disabled');
+                        if (data.success) {
+                            $certificate_regeneration_status.text(data.message).addClass('message');
+                        } else {
+                            $certificate_regeneration_status.text(data.message).addClass('message');
+                        }
+                    },
+                    error: function(jqXHR) {
+                        try {
+                            var response = JSON.parse(jqXHR.responseText);
+                            $certificate_regeneration_status.text(gettext(response.message)).addClass('message');
+                        } catch (error) {
+                            $certificate_regeneration_status.
+                                text(gettext('Error while regenerating certificates. Please try again.')).
+                                addClass('message');
+                        }
                     }
-                },
-                error: function(jqXHR) {
-                    try {
-                        var response = JSON.parse(jqXHR.responseText);
-                        $certificate_regeneration_status.text(gettext(response.message)).addClass('message');
-                    } catch (error) {
-                        $certificate_regeneration_status.
-                            text(gettext('Error while regenerating certificates. Please try again.')).
-                            addClass('message');
-                    }
-                }
-            });
+                });
+            })
         });
     };
 

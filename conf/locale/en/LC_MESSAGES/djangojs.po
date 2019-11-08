@@ -5582,19 +5582,19 @@ msgid ""
 msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js:399
-msgid "Reset attempts for all learners on problem '<%- problem_id %>'?"
+msgid "Reset attempts for all learners on problem <code>'<%- problem_id %>'</code>?"
 msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js:408
 msgid ""
-"Successfully started task to reset attempts for problem '<%- problem_id %>'. "
+"Successfully started task to reset attempts for problem <code>'<%- problem_id %>'</code>. "
 "Click the 'Show Task Status' button to see the status of the task."
 msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js:412
 msgid ""
-"Error starting a task to reset attempts for all learners on problem '<%- "
-"problem_id %>'. Make sure that the problem identifier is complete and "
+"Error starting a task to reset attempts for all learners on problem <code>'<%- "
+"problem_id %>'</code>. Make sure that the problem identifier is complete and "
 "correct."
 msgstr ""
 
@@ -5648,18 +5648,18 @@ msgid ""
 msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js:633
-msgid "Rescore problem '<%- problem_id %>' for all learners?"
+msgid "Rescore problem <code>'<%- problem_id %>'</code> for all learners?"
 msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js:643
 msgid ""
-"Successfully started task to rescore problem '<%- problem_id %>' for all "
+"Successfully started task to rescore problem <code>'<%- problem_id %>'</code> for all "
 "learners. Click the 'Show Task Status' button to see the status of the task."
 msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js:647
 msgid ""
-"Error starting a task to rescore problem '<%- problem_id %>'. Make sure that "
+"Error starting a task to rescore problem <code>'<%- problem_id %>'</code>. Make sure that "
 "the problem identifier is complete and correct."
 msgstr ""
 

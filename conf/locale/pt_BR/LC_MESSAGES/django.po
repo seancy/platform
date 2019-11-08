@@ -11154,6 +11154,7 @@ msgstr "Por favor clique no botão 'Permitir' para conceder permissão para"
 #: cms/templates/manage_users_lib.html:67
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:79
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:183
+#: lms/templates/components/confirmation.html:9
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -25561,6 +25562,7 @@ msgstr "desfazer"
 
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:182
 #, fuzzy
+#: lms/templates/components/confirmation.html:8
 msgid "Confirm"
 msgstr "Confirmação"
 

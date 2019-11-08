@@ -396,20 +396,21 @@
                     );
                     return studentadmin.$request_response_error_all.css({display: 'block'});
                 }
-                confirmMessage = gettext("Reset attempts for all learners on problem '<%- problem_id %>'?");
+                confirmMessage = gettext("Reset attempts for all learners on problem <code>'<%- problem_id %>'</code>?");
                 fullConfirmMessage = _.template(confirmMessage)({
                     problem_id: problemToReset
                 });
-                if (window.confirm(fullConfirmMessage)) { // eslint-disable-line no-alert
+
+                LearningTribes.confirmation.show(fullConfirmMessage, function () {
                     sendData = {
                         all_students: true,
                         problem_to_reset: problemToReset
                     };
-                    successMessage = gettext("Successfully started task to reset attempts for problem '<%- problem_id %>'. Click the 'Show Task Status' button to see the status of the task.");  // eslint-disable-line max-len
+                    successMessage = gettext("Successfully started task to reset attempts for problem <code>'<%- problem_id %>'</code>. Click the 'Show Task Status' button to see the status of the task.");  // eslint-disable-line max-len
                     fullSuccessMessage = _.template(successMessage)({
                         problem_id: problemToReset
                     });
-                    errorMessage = gettext("Error starting a task to reset attempts for all learners on problem '<%- problem_id %>'. Make sure that the problem identifier is complete and correct.");  // eslint-disable-line max-len
+                    errorMessage = gettext("Error starting a task to reset attempts for all learners on problem <code>'<%- problem_id %>'</code>. Make sure that the problem identifier is complete and correct.");  // eslint-disable-line max-len
                     fullErrorMessage = _.template(errorMessage)({
                         problem_id: problemToReset
                     });
@@ -419,16 +420,16 @@
                         url: studentadmin.$btn_reset_attempts_all.data('endpoint'),
                         data: sendData,
                         success: studentadmin.clear_errors_then(function() {
-                            return alert(fullSuccessMessage);  // eslint-disable-line no-alert
+                            LearningTribes.dialog.show(fullSuccessMessage)
                         }),
                         error: statusAjaxError(function() {
                             studentadmin.$request_response_error_all.text(fullErrorMessage);
                             return studentadmin.$request_response_error_all.css({display: 'block'});
                         })
                     });
-                } else {
-                    return studentadmin.clear_errors();
-                }
+                }, function () {
+                    studentadmin.clear_errors();
+                });
             });
             this.$btn_rescore_problem_all.click(function() {
                 return studentadmin.rescore_problem_all(false);
@@ -630,31 +631,31 @@
                 );
                 return studentadmin.$request_response_error_all.css({display: 'block'});
             }
-            confirmMessage = gettext("Rescore problem '<%- problem_id %>' for all learners?");
+            confirmMessage = gettext("Rescore problem <code>'<%- problem_id %>'</code> for all learners?");
             fullConfirmMessage = _.template(confirmMessage)({
                 problem_id: problemToReset
             });
-            if (window.confirm(fullConfirmMessage)) {  // eslint-disable-line no-alert
+            LearningTribes.confirmation.show(fullConfirmMessage, function () {
                 sendData = {
                     all_students: true,
                     problem_to_reset: problemToReset,
                     only_if_higher: onlyIfHigher
                 };
-                successMessage = gettext("Successfully started task to rescore problem '<%- problem_id %>' for all learners. Click the 'Show Task Status' button to see the status of the task.");  // eslint-disable-line max-len
+                successMessage = gettext("Successfully started task to rescore problem <code>'<%- problem_id %>'</code> for all learners. Click the 'Show Task Status' button to see the status of the task.");  // eslint-disable-line max-len
                 fullSuccessMessage = _.template(successMessage)({
                     problem_id: problemToReset
                 });
-                defaultErrorMessage = gettext("Error starting a task to rescore problem '<%- problem_id %>'. Make sure that the problem identifier is complete and correct.");  // eslint-disable-line max-len
+                defaultErrorMessage = gettext("Error starting a task to rescore problem <code>'<%- problem_id %>'</code>. Make sure that the problem identifier is complete and correct.");  // eslint-disable-line max-len
                 fullDefaultErrorMessage = _.template(defaultErrorMessage)({
                     problem_id: problemToReset
                 });
                 return $.ajax({
                     type: 'POST',
                     dataType: 'json',
-                    url: this.$btn_rescore_problem_all.data('endpoint'),
+                    url: that.$btn_rescore_problem_all.data('endpoint'),
                     data: sendData,
-                    success: this.clear_errors_then(function() {
-                        return alert(fullSuccessMessage);  // eslint-disable-line no-alert
+                    success: that.clear_errors_then(function() {
+                        LearningTribes.dialog.show(fullSuccessMessage)
                     }),
                     error: statusAjaxError(function(response) {
                         if (response.responseText) {
@@ -665,9 +666,9 @@
                         return that.$request_response_error_all.css({display: 'block'});
                     })
                 });
-            } else {
-                return this.clear_errors();
-            }
+            }, function () {
+                that.clear_errors();
+            });
         };
 
         StudentAdmin.prototype.clear_errors_then = function(cb) {
