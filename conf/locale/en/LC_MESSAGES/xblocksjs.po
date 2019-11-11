@@ -26,6 +26,38 @@ msgstr ""
 msgid "Future"
 msgstr ""
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "English"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "French"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Chinese"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Portuguese"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "German"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romanian"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Polish"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Spanish"
+msgstr ""
+
 #: lms/templates/discovery/facet.underscore
 msgid "Label"
 msgstr ""

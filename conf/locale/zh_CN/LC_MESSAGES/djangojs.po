@@ -11639,6 +11639,38 @@ msgstr "实时活动记录"
 msgid "Future"
 msgstr "即将开始"
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "English"
+msgstr "英语"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "French"
+msgstr "法语"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Chinese"
+msgstr "汉语"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Portuguese"
+msgstr "葡萄牙语"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "German"
+msgstr "德语"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romanian"
+msgstr "罗马尼亚语"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Polish"
+msgstr "波兰语"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Spanish"
+msgstr "西班牙语"
+
 #: lms/templates/discovery/facet.underscore
 msgid "Label"
 msgstr "标签"

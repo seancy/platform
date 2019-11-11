@@ -58,7 +58,7 @@ from six import string_types
           <li class="language">
               <i class="far fa-globe" aria-hidden="true"></i>
               <span class="sr">${_("Language")}</span>
-              <span>${dict(settings.ALL_LANGUAGES).get(course.language, course.language)}</span>
+              <span>${_(dict(settings.ALL_LANGUAGES).get(course.language, course.language))}</span>
           </li>
         % endif
         % if course.course_category:

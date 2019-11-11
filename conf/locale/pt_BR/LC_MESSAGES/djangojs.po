@@ -410,7 +410,7 @@ msgstr "Sua importação falhou."
 #: cms/static/js/features/import/views/import.js:66
 #: common/static/bundles/Import.js:226
 msgid "Your import is in progress; navigating away will abort it."
-msgstr"" 
+msgstr ""
 "Sua importação está em andamento; fique nessa página para não cancelar "
 "a importação."
 
@@ -2799,7 +2799,7 @@ msgstr "Url"
 #: common/lib/xmodule/xmodule/js/src/html/edit.js:1151
 #: common/static/bundles/commons.js:29696
 msgid "V Align"
-msgstr"V Align"
+msgstr "V Align"
 
 #. Translators: this is a message from the raw HTML editor displayed in the
 #. browser when a user needs to edit HTML
@@ -3165,7 +3165,7 @@ msgid ""
 "navigate the different speeds, then press ENTER to change to the selected "
 "speed."
 msgstr ""
-"Pressione a tecla seta para cima para entrar no menu de velocidade, e use as teclas " 
+"Pressione a tecla seta para cima para entrar no menu de velocidade, e use as teclas "
 "de seta para navegar em velocidades diferentes, e pressione ENTER para selecionar "
  "a velocidade escolhida."
 
@@ -3234,7 +3234,7 @@ msgid ""
 "keys to navigate language options. Press ENTER to change to the selected "
 "language."
 msgstr ""
-"Pressione a tecla seta para cima para entrar no menu de idiomas, e use as " 
+"Pressione a tecla seta para cima para entrar no menu de idiomas, e use as "
 "setas para cima e para baixo para navegar pelas opções. Pressione ENTER para mudar "
 "o idioma escolhido."
 
@@ -3494,7 +3494,7 @@ msgstr "Os arquivos que você deseja carregar, devem ter menos de 5MB."
 msgid ""
 "Files that you upload must be PDFs or image files in .gif, .jpg, .jpeg, or ."
 "png format."
-msgstr 
+msgstr
 "Os arquivos que você carrega devem estar no formato de PDF ou arquivos de imagem "
 "gif, .jpg, .jpeg, ou png."
 
@@ -3657,7 +3657,7 @@ msgstr ""
 "Você também pode perder o acesso aos certificados verificados. Se você quiser "
 "fazer uma cópia para os seus registros antes de continuar com a exclusão, siga as "
 "instruções para {htmlStart} impressão ou download de um certificado {htmlEnd}."
- 
+
 #: common/static/bundles/StudentAccountDeletion.js:128
 #: common/static/bundles/StudentAccountDeletionInitializer.js:275
 #: lms/static/js/student_account/components/StudentAccountDeletion.jsx:52
@@ -3767,7 +3767,7 @@ msgstr ""
 msgid ""
 "If you still wish to continue and delete your account, please enter your "
 "account password:"
-msgstr""
+msgstr ""
 "Se você ainda deseja continuar e excluir sua conta, por favor digite sua "
 "senha:"
 
@@ -6431,7 +6431,7 @@ msgid ""
 "You can upload an image that you want to associate with your username. Your "
 "image must be a .gif, .jpg or .png file. We recommend to use the format "
 "200x200 pixels. The size of the image must be below 1Mb."
-msgstr "" 
+msgstr ""
 "Você pode carregar uma imagem que você queira para associar ao seu"
 "usuário. Sua imagem deve ser um arquivo .gif,.jpg or .png ."
 "Nós recomendamos usar o formato 200x200 pixels. O tamanho da imagem"
@@ -6607,7 +6607,7 @@ msgid ""
 "the message to update your email address."
 msgstr ""
 "Nós enviamos uma mensagem de confirmação para {new_email_address}."
-"Clique no link da mensagem para atualizar seu endereço de e-mail." 
+"Clique no link da mensagem para atualizar seu endereço de e-mail."
 
 #: lms/static/js/student_account/views/account_settings_fields.js:193
 msgid ""
@@ -6643,7 +6643,7 @@ msgstr ""
 
 #: lms/static/js/student_account/views/account_settings_fields.js:464
 msgid "Unlink your {accountName} account"
-msgstr "Desvincule sua conta {accountName}" 
+msgstr "Desvincule sua conta {accountName}"
 
 #: lms/static/js/student_account/views/account_settings_fields.js:468
 msgid "Link Your Account"
@@ -7926,7 +7926,7 @@ msgstr ""
 #: cms/static/js/views/video_transcripts.js:227
 #: cms/templates/js/video-transcripts.underscore:21
 msgid "{transcriptClientTitle}_{transcriptLanguageCode}.{fileExtension}"
-msgstr "" 
+msgstr ""
 "{transcriptClientTitle}_{transcriptLanguageCode}."
 "{fileExtension}"
 
@@ -7989,7 +7989,7 @@ msgstr "Diminuir a tela"
 #: common/static/common/templates/components/paging-footer.underscore:6
 #, python-format
 msgid "Page number out of %(total_pages)s"
-msgstr "Número da página fora de %(total_pages)s" 
+msgstr "Número da página fora de %(total_pages)s"
 
 #: common/static/common/templates/components/paging-footer.underscore:11
 msgid "Enter the page number you'd like to quickly navigate to."
@@ -9254,7 +9254,7 @@ msgstr "Sempre dividir tópicos de discussão de conteúdo específico"
 
 #: lms/templates/instructor/instructor_dashboard_2/divided-discussions-inline.underscore:19
 msgid "Divide the selected content-specific discussion topics"
-msgstr "Dividir os tópicos de discussão de conteúdo específico" 
+msgstr "Dividir os tópicos de discussão de conteúdo específico"
 
 #: lms/templates/instructor/instructor_dashboard_2/divided-discussions-inline.underscore:27
 msgid "No content-specific discussion topics exist."
@@ -11062,7 +11062,7 @@ msgid ""
 "next to assignments on a learner's Progress page."
 msgstr ""
 "Este pequeno nome para o tipo de tarefa (por exemplo, HW ou Intermediário)"
-"aparece próximo às tarefas na página de Progresso dos alunos." 
+"aparece próximo às tarefas na página de Progresso dos alunos."
 
 #: cms/templates/js/course_grade_policy.underscore:15
 msgid "Threshold"
@@ -12233,6 +12233,38 @@ msgstr "Signatário"
 #, fuzzy
 msgid "Saved Successfully"
 msgstr "Foto capturada com sucesso."
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "English"
+msgstr "Engleza"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "French"
+msgstr "Franceza"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Chinese"
+msgstr "Chineza"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Portuguese"
+msgstr "Portugheză"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "German"
+msgstr "Germana"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romanian"
+msgstr "Românește"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Polish"
+msgstr "Poloneză"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Spanish"
+msgstr "Spaniola"
 
 #~ msgid "or sign in with"
 #~ msgstr "ou entrar com"

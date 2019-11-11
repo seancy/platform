@@ -386,6 +386,38 @@ msgstr ""
 msgid "Blended learning"
 msgstr ""
 
+#: lms/templates/courseware/course_banner.html:30
+msgid "English"
+msgstr ""
+
+#: lms/templates/courseware/course_banner.html:30
+msgid "French"
+msgstr ""
+
+#: lms/templates/courseware/course_banner.html:30
+msgid "Chinese"
+msgstr ""
+
+#: lms/templates/courseware/course_banner.html:30
+msgid "Portuguese"
+msgstr ""
+
+#: lms/templates/courseware/course_banner.html:30
+msgid "German"
+msgstr ""
+
+#: lms/templates/courseware/course_banner.html:30
+msgid "Romanian"
+msgstr ""
+
+#: lms/templates/courseware/course_banner.html:30
+msgid "Polish"
+msgstr ""
+
+#: lms/templates/courseware/course_banner.html:30
+msgid "Spanish"
+msgstr ""
+
 # edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "points"
 msgstr ""

@@ -12308,3 +12308,35 @@ msgstr "Obligatoire"
 #: xblock-ilt/ilt/static/js/src/ilt.js:435
 msgid "Saved Successfully"
 msgstr "Enregistré avec succès"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "English"
+msgstr "Anglais"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "French"
+msgstr "Français"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Chinese"
+msgstr "Chinois"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Portuguese"
+msgstr "Portugais"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "German"
+msgstr "Allemand"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romanian"
+msgstr "Roumain"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Polish"
+msgstr "Polonais"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Spanish"
+msgstr "Espagnol"

@@ -21611,6 +21611,38 @@ msgid_plural "{num} hours"
 msgstr[0] "{num_hour} hora"
 msgstr[1] "{num_hour} horas"
 
+#: lms/templates/courseware/course_banner.html:61
+msgid "English"
+msgstr "Engleza"
+
+#: lms/templates/courseware/course_banner.html:61
+msgid "French"
+msgstr "Franceza"
+
+#: lms/templates/courseware/course_banner.html:61
+msgid "Chinese"
+msgstr "Chineza"
+
+#: lms/templates/courseware/course_banner.html:61
+msgid "Portuguese"
+msgstr "Portugheză"
+
+#: lms/templates/courseware/course_banner.html:61
+msgid "German"
+msgstr "Germana"
+
+#: lms/templates/courseware/course_banner.html:61
+msgid "Romanian"
+msgstr "Românește"
+
+#: lms/templates/courseware/course_banner.html:61
+msgid "Polish"
+msgstr "Poloneză"
+
+#: lms/templates/courseware/course_banner.html:61
+msgid "Spanish"
+msgstr "Spaniola"
+
 #: lms/templates/courseware/course_banner.html:82
 msgid "Estimated Effort"
 msgstr "Dedicação estimada"
