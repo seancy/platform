@@ -3,21 +3,17 @@
     from openedx.core.djangolib.markup import HTML, Text
 %>
 <div id="report-downloads">
-    <h3>${_("Reports Available for Download")}</h3>
-    <p>${_("The reports listed below are available for download. A link to every report remains available on this page, identified by the UTC date and time of generation. Reports are not deleted, so you will always be able to access previously generated reports from this page.")}</p>
-    <p>
-        ${Text(_("{strong_start}Note{strong_end}: To keep learner data secure, you cannot save or email these links for direct access. Copies of links expire within 5 minutes.")).format(
-            strong_start=HTML("<strong>"),
-            strong_end=HTML("</strong>"),
-        )}
-    </p>
-
-    <ul id="report-file-list" data-endpoint="${ list_table_downloads_url }">
-
-    </ul>
-
-
+    <div class="table-download">
+        <div class="download-item hidden-mobile">
+            <a href="#" id="toggle-report-file-list">${_("Download")} <i class="fa fa-angle-double-down"></i></a>
+        </div>
+        <div id="report-file-list" class="dropdown-download-menu hidden" data-endpoint="${ list_table_downloads_url }">
+        </div>
+        <p id="download-notification"></p>
+        <p id="download-error"></p>
+    </div>
 </div>
+
 <script type="text/javascript">
     $(document).ready(function () {
         function listDownloads() {
@@ -28,9 +24,9 @@
                         var icon = $('<i></i>', {class: 'fa fa-download'});
                         var link = $('<a></a>', {href: f[1], text: f[0]});
                         link.prepend(icon)
-                        var li = $('<li></li>');
-                        li.html(link);
-                        return li;
+                        var div = $('<div></div>', {class: 'dropdown-download-item'});
+                        div.html(link);
+                        return div;
                     });
                     elem.html(links);
                 }

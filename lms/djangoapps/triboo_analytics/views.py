@@ -73,7 +73,7 @@ from models import (
     IltSession,
     IltLearnerReport
 )
-from tasks import generate_export_table as generate_export_table_task, links_for, \
+from tasks import generate_export_table as generate_export_table_task, links_for_all, \
     send_waiver_request_email
 from tables import (
     get_progress_table_class,
@@ -498,7 +498,7 @@ def create_override(request_user, subsection_grade_model, **override_data):
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def list_table_downloads(_request, report='', course_id=None):
     report_store = ReportStore.from_config(config_name='TRIBOO_ANALYTICS_REPORTS')
-    links = links_for(report_store.storage, course_id, _request.user, report)
+    links = links_for_all(report_store.storage, _request.user)
     response_payload = {'download': links}
     return JsonResponse(response_payload)
 
@@ -919,7 +919,10 @@ def course_view(request):
     if not course_id:
         return render_to_response(
                 'triboo_analytics/course.html',
-                {'courses': courses_list}
+                {
+                    'courses': courses_list,
+                    'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'course'}),
+                }
             )
 
 
@@ -999,8 +1002,7 @@ def course_view(request):
                 'filter_form': filter_form,
                 'user_properties_form': user_properties_form,
                 'row_count': row_count,
-                'list_table_downloads_url': reverse('list_table_downloads',
-                                                    kwargs={'report': 'course', 'course_id': unicode(course_id)}),
+                'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'course'}),
             }
         )
     else:
@@ -1100,6 +1102,7 @@ def microsite_view(request):
                     'microsite_report': microsite_report,
                     'unique_visitors_csv_data': unique_visitors_csv_data,
                     'users_by_country_csv_data': users_by_country_csv_data,
+                    'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'global'}),
                 }
             )
 
@@ -1110,6 +1113,7 @@ def microsite_view(request):
             'microsite_report': None,
             'unique_visitors_csv_data': "",
             'users_by_country_csv_data': "",
+            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'global'}),
         }
     )
 

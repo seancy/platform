@@ -23,6 +23,10 @@ from student.models import CourseEnrollment
 from util.file import course_filename_prefix_generator
 import models
 import tables
+from django.http import HttpResponseNotFound
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+
 
 @task(routing_key=settings.HIGH_PRIORITY_QUEUE)
 def send_waiver_request_email(users, kwargs):
@@ -57,18 +61,33 @@ def path_to(course_key, user_id, filename=''):
     return os.path.join(prefix, filename)
 
 
-def links_for(storage, course_id, user, report):
-    report_dir = path_to(course_id, user.id)
+def links_for_all(storage, user):
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+    course_overviews = CourseOverview.objects.none()
+
+    for org in orgs:
+        org_course_overviews = CourseOverview.objects.filter(org=org, start__lte=timezone.now())
+        course_overviews = course_overviews | org_course_overviews
+
+    course_ids = [o.id for o in course_overviews]
+    files = []
+    for course_id in course_ids:
+        report_dir = path_to(course_id, user.id)
+        try:
+            _, filenames = storage.listdir(report_dir)
+        except OSError:
+            filenames = []
+        if filenames:
+            files.extend([(filename, os.path.join(report_dir, filename)) for filename in filenames])
+
+    report_dir = path_to(None, user.id)
     try:
         _, filenames = storage.listdir(report_dir)
     except OSError:
-        # Django's FileSystemStorage fails with an OSError if the course
-        # dir does not exist; other storage types return an empty list.
-        return []
-    if course_id:
-        files = [(filename, os.path.join(report_dir, filename)) for filename in filenames]
-    else:
-        files = []
+        filenames = []
+    for report in ['learner', 'ilt', 'my_transcript']:
         filename_start = report
         if report == "my_transcript":
             filename_start = "transcript_%s" % user.username
