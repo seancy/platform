@@ -1,7 +1,7 @@
 /**
  * Credit-related utilities
  */
-var edx = edx || {};
+window.edx = edx || {};
 
 (function($, _) {
     'use strict';

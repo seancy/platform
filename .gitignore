@@ -10,6 +10,9 @@ requirements/private.txt
 lms/envs/private.py
 cms/envs/private.py
 # end-noclean
+webpack.dev.config.private.js
+SassTemperary.js
+theme-sass
 
 ### Python artifacts
 *.pyc

@@ -8,7 +8,7 @@
 
  /* globals Logger, accessible_modal, interpolate */
 
- var edx = edx || {};
+ window.edx = edx || {};
 
  (function($, gettext, Logger, accessibleModal, interpolate) {
      'use strict';
