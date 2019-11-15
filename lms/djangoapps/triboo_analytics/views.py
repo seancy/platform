@@ -310,15 +310,15 @@ def waiver_request_view(request):
         send_waiver_request_email.delay(users, param_dict)
     except PendingRequestExitsError:
         message = _("There can only be one exiting pending task!")
-        return JsonResponse(status=409, data={"message": message})
+        return JsonResponse({"message": message}, status=409)
     except RequestAlreadyApprovedError:
         message = _("The request is already approved by the instructor!")
-        return JsonResponse(status=409, data={"message": message})
+        return JsonResponse({"message": message}, status=409)
     except Exception:
         message = _("Unknown error. Please contact the support!")
-        return JsonResponse(status=400, data={"message": message})
+        return JsonResponse({"message": message}, status=400)
 
-    return JsonResponse(status=201, data={"message": _("Request sent successfully!")})
+    return JsonResponse({"message": _("Request sent successfully!")}, status=201)
 
 
 @require_GET
