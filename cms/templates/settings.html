@@ -17,7 +17,7 @@
 %>
 
 <%block name="header_extras">
-% for template_name in ["basic-modal", "modal-button", "upload-dialog", "license-selector", "course-settings-learning-fields", "course-instructor-details", "course-reminder-details-fields"]:
+% for template_name in ["basic-modal", "modal-button", "upload-dialog", "license-selector", "course-settings-learning-fields", "course-instructor-details", "course-reminder-details-fields", "course-settings-tags-fields"]:
   <script type="text/template" id="${template_name}-tpl">
     <%static:include path="js/${template_name}.underscore" />
   </script>
@@ -376,9 +376,11 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <span class="tip tip-stacked">${_("Sort the courses to display on dashboard in ascending order. The order is from 0 to 99.")}</span>
             </li>
             <li class="field" id="field-course-vendor">
-              <label for="course-vendor">${_("Course Label")}</label>
-                <input type="text" id="course-vendor">
-              <span class="tip tip-stacked">${_("Identify the course label here.")}</span>
+              <label for="course-vendor">${_("Course Tag")}</label>
+              <input type="text" id="course-vendor">
+              <button type="button" class="action action-primary add-course-tags">${_("Add")}</button>
+              <div class="course-tags"></div>
+              <span class="tip tip-stacked">${_("Identify the course tag here.")}</span>
             </li>
             <li class="field" id="field-course-mandatory">
                 <label for="course-mandatory">${_("Course Mandatory Flag")}</label>

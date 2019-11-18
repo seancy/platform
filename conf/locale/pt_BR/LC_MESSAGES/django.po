@@ -16906,11 +16906,11 @@ msgstr ""
 
 #: cms/templates/settings.html:379
 #, fuzzy
-msgid "Course Label"
+msgid "Course Tag"
 msgstr "Nome do Curso"
 
 #: cms/templates/settings.html:381
-msgid "Identify the course label here."
+msgid "Identify the course tag here."
 msgstr "Identificar o rótulo do curso aqui"
 
 #: cms/templates/settings.html:384

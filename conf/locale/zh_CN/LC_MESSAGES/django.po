@@ -25529,11 +25529,11 @@ msgid ""
 msgstr "对课程进行排序以按升序显示在仪表板上。序号从0到99。"
 
 #: cms/templates/settings.html:370
-msgid "Course Label"
+msgid "Course Tag"
 msgstr "课程标签"
 
 #: cms/templates/settings.html:372
-msgid "Identify the course label here."
+msgid "Identify the course tag here."
 msgstr "在此设置课程标签。"
 
 #: cms/templates/settings.html:381

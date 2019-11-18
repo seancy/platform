@@ -12215,7 +12215,7 @@ msgid "Future"
 msgstr "Futuro"
 
 #: lms/templates/discovery/facet.underscore
-msgid "Label"
+msgid "Tag"
 msgstr "Etiqueta"
 
 #: lms/templates/discovery/facet.underscore

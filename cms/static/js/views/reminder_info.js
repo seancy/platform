@@ -17,7 +17,7 @@ function ($, _, Backbone, gettext, TemplateUtils) {
 
         initialize: function() {
             // Set up the initial state of the attributes set for this model instance
-             _.bindAll(this, 'render');
+            _.bindAll(this, 'render');
             this.template = this.loadTemplate('course-reminder-details-fields');
             this.listenTo(this.model, 'change:reminder_info', this.render);
         },

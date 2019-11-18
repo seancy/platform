@@ -45,7 +45,7 @@ class CourseDetails(object):
         self.language = None
         self.course_category = None
         self.course_country = "All countries"
-        self.vendor = None
+        self.vendor = []
         self.start_date = None  # 'start'
         self.end_date = None  # 'end'
         self.enrollment_start = None

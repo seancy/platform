@@ -27377,11 +27377,11 @@ msgstr "Trier les cours pour les afficher dans l'ordre ascendant sur la page de 
 "est de 0 à 99."
 
 #: cms/templates/settings.html:370
-msgid "Course Label"
+msgid "Course Tag"
 msgstr "Tag(s)"
 
 #: cms/templates/settings.html:372
-msgid "Identify the course label here."
+msgid "Identify the course tag here."
 msgstr "Choisissez les tags du cours ici."
 
 #: cms/templates/settings.html:381

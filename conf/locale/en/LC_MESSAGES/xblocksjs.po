@@ -59,7 +59,7 @@ msgid "Spanish"
 msgstr ""
 
 #: lms/templates/discovery/facet.underscore
-msgid "Label"
+msgid "Tag"
 msgstr ""
 
 #: lms/templates/discovery/facet.underscore

@@ -12292,8 +12292,8 @@ msgid "Future"
 msgstr "À venir"
 
 #: lms/templates/discovery/facet.underscore
-msgid "Label"
-msgstr "Label"
+msgid "Tag"
+msgstr "Étiquette"
 
 #: lms/templates/discovery/facet.underscore
 msgid "Category"

@@ -1,5 +1,6 @@
 define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js/utils/date_utils'],
     function(Backbone, _, gettext, ValidationHelpers, DateUtils) {
+        'use strict';
         var CourseDetails = Backbone.Model.extend({
             defaults: {
                 org: '',
@@ -10,7 +11,7 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
                 end_date: null,		// maps to 'end'
                 course_category: '',
                 course_country: 'All countries',
-                vendor: '',
+                vendor: [],
                 certificate_available_date: null,
                 enrollment_start: null,
                 enrollment_end: null,
@@ -120,20 +121,16 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
                         type: 'GET',
                         url: '/get_encoded_video_url/' + course_id + '/' + this.get('intro_video'),
                         async: false,
-                        success: function (data) {
-
+                        success: function(data) {
                             if (data['url'] !== null) {
                                 sample = data['url'];
-                            }
-                            else {
-                                sample = '//www.youtube.com/embed/' + intro_video
+                            } else {
+                                sample = '//www.youtube.com/embed/' + intro_video;
                             }
                         }
                     });
-                    return sample
-                }
-
-                else {
+                    return sample;
+                } else {
                     return null;
                 }
             },

@@ -11672,7 +11672,7 @@ msgid "Spanish"
 msgstr "西班牙语"
 
 #: lms/templates/discovery/facet.underscore
-msgid "Label"
+msgid "Tag"
 msgstr "标签"
 
 #: lms/templates/discovery/facet.underscore
