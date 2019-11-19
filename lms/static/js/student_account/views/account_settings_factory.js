@@ -34,6 +34,7 @@
             enterpriseReadonlyAccountFields,
             edxSupportUrl,
             extendedProfileFields,
+            displaySocialMedia,
             displayAccountDeletion
         ) {
             var $accountSettingsElement, userAccountModel, userPreferencesModel, aboutSectionsData,
@@ -355,8 +356,10 @@
                     }
                 );
             }
-            aboutSectionsData.push(socialFields);
-
+            //display social media or not base on site configuration
+            if (displaySocialMedia) {
+                aboutSectionsData.push(socialFields);
+            }
             // Add account deletion fields
             if (displayAccountDeletion) {
                 accountDeletionFields = {

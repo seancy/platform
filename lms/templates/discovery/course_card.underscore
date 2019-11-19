@@ -30,7 +30,7 @@
         <section class="sub-info">
             <div class="badge">
                 <i class="far fa-trophy"></i>
-                <span><%- badges %> <%- gettext("badges") %></span>
+                <span><%- badges %> <%- ngettext("badge", "badges", badges) %></span>
             </div>
             <div class="spliter"></div>
             <% if (content.duration) { %>

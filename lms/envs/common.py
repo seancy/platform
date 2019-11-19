@@ -403,6 +403,9 @@ FEATURES = {
     # Set this to true to make API docs available at /api-docs/.
     'ENABLE_API_DOCS': False,
 
+    # Set this to true to enable social media section in Account Setting.
+    'ENABLE_SOCIAL_MEDIA': True,
+
     # Whether to display the account deletion section the account settings page
     'ENABLE_ACCOUNT_DELETION': True,
     # Enable faq link at bottom of the footer.
