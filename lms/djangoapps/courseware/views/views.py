@@ -2089,9 +2089,9 @@ def group_courses_by_admin():
             remind_session_list = []
             for session_id, users in enrolled_user_info.items():
                 for v in users.values():
-                    expired = datetime.now() - decode_datetime(v['start_at']) > timedelta(days=1)
+                    info = sessions_info[session_id]
+                    expired = datetime.now() - decode_datetime(info['start_at']) > timedelta(days=1)
                     if v.get('accommodation') == 'yes' and v.get('status') == 'accepted' and not expired:
-                        info = sessions_info[session_id]
                         remind_session_list.append(session_to_str(info, session_id))
                         break
             if not remind_session_list:

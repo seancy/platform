@@ -11696,3 +11696,18 @@ msgstr "欢迎来到均胜网络课堂，请登录，让我们一起来探索未
 #: xblock-ilt/ilt/static/js/src/ilt.js:435
 msgid "Saved Successfully"
 msgstr "保存成功"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:403
+msgid "This session is full"
+msgstr "该课程已满"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:408
+msgid "Enrollment is closed"
+msgstr "注册已经结束"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:562
+msgid "Please choose the accommodation need"
+msgstr "请选择住宿需求"

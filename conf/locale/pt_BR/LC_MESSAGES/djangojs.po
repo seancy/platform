@@ -12234,6 +12234,16 @@ msgstr "Signatário"
 msgid "Saved Successfully"
 msgstr "Foto capturada com sucesso."
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:403
+msgid "This session is full"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:408
+msgid "Enrollment is closed"
+msgstr ""
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "English"
 msgstr "Engleza"

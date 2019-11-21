@@ -12309,6 +12309,21 @@ msgstr "Obligatoire"
 msgid "Saved Successfully"
 msgstr "Enregistré avec succès"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:403
+msgid "This session is full"
+msgstr "Cette session est pleine"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:408
+msgid "Enrollment is closed"
+msgstr "Les inscriptions à cette session sont closes"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:562
+msgid "Please choose the accommodation need"
+msgstr "Veuillez choisir la demande de réservation d’hôtel"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "English"
 msgstr "Anglais"
