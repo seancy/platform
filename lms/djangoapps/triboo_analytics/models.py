@@ -489,7 +489,11 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                     return
 
                 if progress['progress'] == 100:
-                    status = CourseStatus.finished if progress['is_course_passed'] else CourseStatus.failed
+                    status = CourseStatus.failed
+
+                    if progress['nb_trophies_possible'] == 0 or progress['is_course_passed']:
+                        status = CourseStatus.finished
+
                 else:
                     # by gradebook edit a user could have a progress > 0 while total_time_spent = 0
                     if total_time_spent > 0 or progress['progress'] > 0:

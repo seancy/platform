@@ -540,6 +540,9 @@ class IltBaseTable(tables.Table):
                 return "BK"
         return "-"
 
+    def render_course_tags(self, value):
+        return ", ".join(value)
+
     def order_session_id(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'ilt_module__course_country')
         return queryset, True
