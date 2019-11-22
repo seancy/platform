@@ -1007,7 +1007,7 @@ class IltSession(TimeStampedModel):
                             'course_id': overview.id,
                             'course_display_name': overview.display_name,
                             'course_country': course_details.course_country,
-                            'course_tags': course_details.vendor
+                            'course_tags': ", ".join(course_details.vendor)
                         }
                     for child in block['children']:
                         outline[child]['parent'] = block_id
