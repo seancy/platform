@@ -1960,6 +1960,16 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
                 if k in request.POST:
                     registration_info[k] = request.POST.get(k)
 
+            number_of_one_way = registration_info['number_of_one_way']
+            number_of_return = registration_info['number_of_return']
+            try:
+                registration_info['number_of_one_way'] = int(number_of_one_way)
+            except Exception as e:
+                registration_info['number_of_one_way'] = 0
+            try:
+                registration_info['number_of_return'] = int(number_of_return)
+            except Exception as e:
+                registration_info['number_of_return'] = 0
             accommodation = configuration_helpers.get_value("ILT_ACCOMMODATION_ENABLED", False)
             if accommodation and registration_info['accommodation'] == 'yes':
                 registration_info['status'] = 'accepted'

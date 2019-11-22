@@ -46,11 +46,11 @@
         <div class="ilt-info">
             <select>
                 % for idx, val in enumerate(dropdown_list):
-                <option value="${idx}"
+                <option value="${idx}" class="${val[1]}"
                         % if idx == selected_index:
                             selected="selected"
                         % endif
-                >${val}</option>
+                >${val[0]}</option>
                 % endfor
             </select>
 

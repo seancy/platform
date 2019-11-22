@@ -27825,6 +27825,16 @@ msgstr "该课程已满"
 msgid "Total seats number cannot be lower than {enrolled}"
 msgstr "总座位数不能低于 {enrolled}"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "The enroll button will be disabled for sessions that start in less than X days."
+msgstr "距离开课时间少于5天，将无法注册"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "The registration deadline cannot be empty"
+msgstr "注册截止日期不能为空"
+
 #: cms/templates/login.html
 msgid "Welcome to Joyson Open Online Courses, log in to explore more!"
 msgstr "欢迎来到均胜网络课堂，请登录，让我们一起来探索未知!"

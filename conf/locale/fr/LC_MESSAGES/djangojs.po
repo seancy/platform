@@ -12315,9 +12315,9 @@ msgid "This session is full"
 msgstr "Cette session est pleine"
 
 #: XBlock: xblock-ilt
-#: xblock-ilt/ilt/static/js/src/ilt.js:408
-msgid "Enrollment is closed"
-msgstr "Les inscriptions à cette session sont closes"
+#: xblock-ilt/ilt/static/js/src/ilt.js:407
+msgid "This session is no longer open to registration. Please choose another session."
+msgstr "Les inscriptions à cette session sont maintenant clôturées. Veuillez choisir une autre session."
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/js/src/ilt.js:562

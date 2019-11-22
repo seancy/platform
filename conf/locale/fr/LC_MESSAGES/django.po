@@ -29847,6 +29847,16 @@ msgstr "Cette session est pleine"
 msgid "Total seats number cannot be lower than {enrolled}"
 msgstr "Le nombre total de places disponibles ne peut être inférieur à {enrolled}"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "The enroll button will be disabled for sessions that start in less than X days."
+msgstr "Les inscriptions seront fermées pour les sessions ayant une date qui se situe dans les X jours à venir."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "The registration deadline cannot be empty"
+msgstr "La limite des inscriptions ne peut être vide"
+
 #: lms/templates/courseware/courses.html
 msgid "Availability"
 msgstr "Disponibilité"

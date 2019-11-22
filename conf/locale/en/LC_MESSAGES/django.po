@@ -26209,6 +26209,16 @@ msgstr ""
 msgid "Acknowledge reception of the attendance sheet"
 msgstr ""
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "The enroll button will be disabled for sessions that start in less than X days."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "The registration deadline cannot be empty"
+msgstr ""
+
 #: lms/templates/courseware/courses.html
 msgid "Availability"
 msgstr ""
