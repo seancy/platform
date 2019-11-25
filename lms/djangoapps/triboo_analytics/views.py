@@ -82,7 +82,8 @@ from tables import (
     LearnerDailyTable,
     CourseTable,
     IltTable,
-    IltLearnerTable
+    IltLearnerTable,
+    UserBaseTable
 )
 
 logger = logging.getLogger('triboo_analytics')
@@ -793,10 +794,12 @@ def learner_export_table(request):
 
 
 def get_course_progress_table(course_key, enrollments, filter_kwargs, exclude):
+    if filter_kwargs.pop('invalid', False):
+        return get_progress_table_class([]), 0
+
     progress_dataset = []
     trophies = {}
     trophies_order = []
-
     for enrollment in enrollments:
         course_descriptor = modulestore().get_course(course_key)
         if course_descriptor:
@@ -815,7 +818,6 @@ def get_course_progress_table(course_key, enrollments, filter_kwargs, exclude):
                         'threshold': trophy['threshold']
                     }
             progress_dataset.append(progress_row)
-
 
     ordered_trophies = []
     for trophy_column in trophies_order:
@@ -858,7 +860,10 @@ def get_course_time_spent_table(course_key, filter_kwargs, exclude):
     user_times_spent = {}
     time_spent_dataset = []
     sections = {}
-    reports = LearnerSectionReport.objects.filter(course_id=course_key, **filter_kwargs).prefetch_related('user')
+    if filter_kwargs.pop('invalid', False):
+        reports = CourseEnrollment.objects.none()
+    else:
+        reports = LearnerSectionReport.objects.filter(course_id=course_key, **filter_kwargs).prefetch_related('user')
     for report in reports:
         if report.user.id not in user_times_spent.keys():
             user_times_spent[report.user.id] = {'user': report.user}
@@ -958,10 +963,13 @@ def course_view(request):
                     'exclude': exclude
                 }
                 if report == "progress":
-                    enrollments = CourseEnrollment.objects.filter(is_active=True,
-                                                                  course_id=course_key,
-                                                                  user__is_active=True,
-                                                                  **filter_kwargs).prefetch_related('user')
+                    if filter_kwargs.pop('invalid', False):
+                        enrollments = CourseEnrollment.objects.none()
+                    else:
+                        enrollments = CourseEnrollment.objects.filter(is_active=True,
+                                                                      course_id=course_key,
+                                                                      user__is_active=True,
+                                                                      **filter_kwargs).prefetch_related('user')
                     nb_enrollments = len(enrollments)
                     if nb_enrollments >= 10000:
                         enrollments = CourseEnrollment.objects.none()
@@ -972,7 +980,6 @@ def course_view(request):
 
                     if nb_enrollments >= 10000:
                         row_count = -1
-
 
                 elif report == "time_spent":
                     time_spent_table, row_count = get_course_time_spent_table(course_key, filter_kwargs, exclude)
@@ -1125,6 +1132,9 @@ def get_ilt_report_table(orgs):
 
 
 def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
+    if filter_kwargs.pop('invalid', False):
+        return IltLearnerTable([]), 0
+
     ilt_reports = IltSession.objects.none()
     for org in orgs:
         org_ilt_reports = IltSession.objects.filter(org=org)
@@ -1159,22 +1169,36 @@ def ilt_view(request):
         ilt_report_table, row_count = get_ilt_report_table(orgs)
         config_tables(request, ilt_report_table)
 
+        return render_to_response(
+            "triboo_analytics/ilt.html",
+            {
+                'ilt_report_table': ilt_report_table,
+                'filter_form': filter_form,
+                'user_properties_form': user_properties_form,
+                'row_count': row_count,
+                'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
+            }
+        )
+
     elif report == "learner":
         filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
         ilt_learner_report_table, row_count = get_ilt_learner_report_table(orgs, filter_kwargs, exclude)
         config_tables(request, ilt_learner_report_table)
+        query_dict = query_dict
+        query_triples = get_query_triples(query_dict)
 
-    return render_to_response(
-        "triboo_analytics/ilt.html",
-        {
-            'ilt_report_table': ilt_report_table,
-            'ilt_learner_report_table': ilt_learner_report_table,
-            'filter_form': filter_form,
-            'user_properties_form': user_properties_form,
-            'row_count': row_count,
-            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
-        }
-    )
+        return render_to_response(
+            "triboo_analytics/ilt.html",
+            {
+                'ilt_learner_report_table': ilt_learner_report_table,
+                'filter_form': filter_form,
+                'query_dict': query_dict,
+                'query_triples': query_triples,
+                'user_properties_form': user_properties_form,
+                'row_count': row_count,
+                'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
+            }
+        )
 
 
 @transaction.non_atomic_requests
