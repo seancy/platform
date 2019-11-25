@@ -121,6 +121,9 @@ urlpatterns = [
     # DOT API endpoints
     url(r'^api/dot/', include('openedx.core.djangoapps.oauth_dispatch.api.urls')),
 
+    # LT license API
+    url(r'^api/lt_license/', include('openedx.core.djangoapps.lt_license.urls')),
+
     # Profile Images API endpoints
     url(r'^api/profile_images/', include('openedx.core.djangoapps.profile_images.urls')),
 
