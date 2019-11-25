@@ -68,7 +68,7 @@ define(['edx-ui-toolkit/js/utils/html-utils',
                 this.clearValidationErrors();
                 var field = this.selectorToField[event.currentTarget.id];
                 var newVal = '';
-                if (event.currentTarget.type == 'checkbox') {
+                if (event.currentTarget.type === 'checkbox') {
                     newVal = $(event.currentTarget).is(':checked').toString();
                 } else {
                     newVal = $(event.currentTarget).val();
