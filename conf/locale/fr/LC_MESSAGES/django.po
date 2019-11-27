@@ -18182,6 +18182,10 @@ msgstr "Accepter la demander"
 msgid "Refuse the demand"
 msgstr "Refuser la demande"
 
+#: lms/templates/courseware/ilt_validation.html:147
+msgid "This session is no longer open to registration. Please choose another session."
+msgstr "Les inscriptions à cette session sont maintenant clôturées. Veuillez choisir une autre session."
+
 #: lms/templates/courseware/info.html:17
 msgid "{course_number} Course Info"
 msgstr "Infos du cours {course_number}"

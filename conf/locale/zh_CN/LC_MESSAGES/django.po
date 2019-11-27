@@ -16973,7 +16973,7 @@ msgstr "ILT 审核确认"
 
 #: lms/templates/courseware/ilt_validation.html:23
 msgid "Validation of the registration to an face-to-face session"
-msgstr "对面对面会话的注册验证"
+msgstr "面对面会话的注册验证"
 
 #: lms/templates/courseware/ilt_validation.html:25
 msgid "Requester"
@@ -17042,6 +17042,10 @@ msgstr "接受需求"
 #: lms/templates/courseware/ilt_validation.html:130
 msgid "Refuse the demand"
 msgstr "拒绝需求"
+
+#: lms/templates/courseware/ilt_validation.html:147
+msgid "This session is no longer open to registration. Please choose another session."
+msgstr "该课程的注册已关闭。请选择其他课程。"
 
 #: lms/templates/courseware/info.html:17
 msgid "{course_number} Course Info"

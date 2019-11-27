@@ -19230,6 +19230,10 @@ msgid "Accept the demand"
 msgstr ""
 
 #: lms/templates/courseware/ilt_validation.html:147
+msgid "This session is no longer open to registration. Please choose another session."
+msgstr ""
+
+#: lms/templates/courseware/ilt_validation.html:157
 msgid "Refuse the demand"
 msgstr ""
 
