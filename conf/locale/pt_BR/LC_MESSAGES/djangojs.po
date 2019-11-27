@@ -3404,7 +3404,6 @@ msgstr ""
 
 #: common/static/bundles/PasswordCreateConfirmation.js:188
 #: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:92
-#, fuzzy
 msgid "Create Your Password"
 msgstr "Redefinir senha"
 
@@ -3419,7 +3418,6 @@ msgstr "Entre e confirme sua nova senha."
 #: common/static/bundles/PasswordResetConfirmation.js:196
 #: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:103
 #: lms/static/js/student_account/components/PasswordResetConfirmation.jsx:102
-#, fuzzy
 msgid "New Password *"
 msgstr "Senha"
 
@@ -3427,7 +3425,6 @@ msgstr "Senha"
 #: common/static/bundles/PasswordResetConfirmation.js:204
 #: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:112
 #: lms/static/js/student_account/components/PasswordResetConfirmation.jsx:111
-#, fuzzy
 msgid "Confirm Password *"
 msgstr "Senha"
 
@@ -3440,7 +3437,6 @@ msgstr "As senhas não são iguais."
 
 #: common/static/bundles/PasswordCreateConfirmation.js:221
 #: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:128
-#, fuzzy
 msgid "Create My Password"
 msgstr "Redefinir senha"
 
@@ -5136,7 +5132,6 @@ msgid ""
 msgstr "O prazo de reembolso deste curso expirou, portanto você não reberá um reembolso."
 
 #: lms/static/js/discovery/views/search_form.js:47
-#, fuzzy, javascript-format
 msgid "%s course found"
 msgid_plural "%s courses found"
 msgstr[0] "% curso encontrado"
@@ -5606,7 +5601,6 @@ msgid "Group"
 msgstr "Grupo"
 
 #: lms/static/js/instructor_dashboard/membership.js:123
-#, fuzzy
 msgid "Add new team member"
 msgstr "Já é um membro do grupo"
 
@@ -5663,7 +5657,6 @@ msgid "Users successfully created and enrolled:"
 msgstr "Usuários criados e inscritos com sucesso:"
 
 #: lms/static/js/instructor_dashboard/membership.js:447
-#, fuzzy
 msgid "Registered users now enrolled in this course:"
 msgstr "Os seguintes usuários não estão mais inscritos no curso:"
 
@@ -5672,7 +5665,6 @@ msgid "Registered users who were already enrolled (no changes):"
 msgstr "Usuários registrados que já estavam inscritos (sem alterações):"
 
 #: lms/static/js/instructor_dashboard/membership.js:612
-#, fuzzy
 msgid "User accounts successfully updated:"
 msgstr "Contas de usuário atualizadas com sucesso:"
 
@@ -5797,12 +5789,10 @@ msgstr ""
 "puderam ser excluídos:"
 
 #: lms/static/js/instructor_dashboard/membership.js:1128
-#, fuzzy
 msgid "The following email addresses are invalid:"
 msgstr "Os seguintes endereços de email e/ou nomes de usuário são inválidos:"
 
 #: lms/static/js/instructor_dashboard/membership.js:1133
-#, fuzzy
 msgid "Successfully sent welcoming emails to the following addresses:"
 msgstr ""
 "Os seguintes usuários foram inscritos com sucesso e um e-mail foi enviado "
@@ -6455,7 +6445,6 @@ msgstr ""
 "nome de usuário."
 
 #: lms/static/js/student_account/views/account_settings_factory.js:184
-#, fuzzy
 msgid "Phone Number"
 msgstr "Número do curso"
 
@@ -8149,7 +8138,6 @@ msgstr "Relatado"
 
 #: common/static/common/templates/discussion/response-comment-show.underscore:17
 #: common/static/common/templates/discussion/thread-show.underscore:81
-#, fuzzy, python-format
 msgid "%(author)s %(time_ago)s"
 msgstr "aprovado %(time_ago)s"
 
@@ -8251,12 +8239,10 @@ msgid "Related to: %(courseware_title_linked)s"
 msgstr "Relacionado a: %(courseware_title_linked)s"
 
 #: common/static/common/templates/discussion/thread-show.underscore:60
-#, fuzzy, python-format
 msgid "Visible only to %(group_name)s"
 msgstr "Este post é visível apenas para %(group_name)s."
 
 #: common/static/common/templates/discussion/thread-show.underscore:66
-#, fuzzy
 msgid "Visible to everyone"
 msgstr "Este post está visível para todos."
 
@@ -8282,7 +8268,6 @@ msgstr ""
 
 #: common/static/common/templates/discussion/thread.underscore:13
 #: common/static/common/templates/discussion/thread.underscore:15
-#, fuzzy
 msgid "Add a response"
 msgstr "Adicionar resposta"
 
@@ -8301,7 +8286,6 @@ msgid "Discussion Home"
 msgstr "Página Inicial de discussão"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:11
-#, fuzzy
 msgid "How to use discussions"
 msgstr "Como usar  as discussões de %(platform_name)s"
 
@@ -8785,14 +8769,12 @@ msgid "badges"
 msgstr "distintivos"
 
 #: lms/templates/discovery/course_card.underscore:43
-#, fuzzy, python-format
 msgid "%(num)s minute"
 msgid_plural "%(num)s minutes"
 msgstr[0] "%(value)s minuto"
 msgstr[1] "%(value)s minutos"
 
 #: lms/templates/discovery/course_card.underscore:46
-#, fuzzy, python-format
 msgid "%(num)s hour"
 msgid_plural "%(num)s hours"
 msgstr[0] "%(value)s hora"
@@ -9165,7 +9147,6 @@ msgid "Create a content group"
 msgstr "Criar um grupo de conteúdo"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-group-header.underscore:5
-#, fuzzy, python-format
 msgid "%(student_count)s learners"
 msgid_plural "(contains %(student_count)s learners)"
 msgstr[0] "(contém %(student_count)s aluno)"
@@ -9619,7 +9600,6 @@ msgid "Sign in using SSO"
 msgstr "Entrar usando SSO"
 
 #: lms/templates/student_account/login.underscore:77
-#, fuzzy
 msgid "Sign in using email"
 msgstr "Entrar usando %(providerName)s"
 
@@ -9648,12 +9628,10 @@ msgid "Reset my password"
 msgstr "Redefinir senha"
 
 #: lms/templates/student_account/password_reset.underscore:26
-#, fuzzy
 msgid "Some text would be here?"
 msgstr "insira o código aqui"
 
 #: lms/templates/student_account/password_reset.underscore:27
-#, fuzzy
 msgid "Back to login."
 msgstr "Voltar para entrar"
 
@@ -10267,7 +10245,6 @@ msgid "Take Photo"
 msgstr "Tirar foto"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
-#, fuzzy
 msgid "My Bookmarks"
 msgstr "Adicionado a favoritos"
 
@@ -10952,7 +10929,6 @@ msgid "Days"
 msgstr "Dias"
 
 #: cms/templates/js/course-reminder-details-fields.underscore:5
-#, fuzzy
 msgid "day(s) after enrollment"
 msgstr "Restaurar código de matrícula"
 
@@ -11445,7 +11421,6 @@ msgid "Transcripts"
 msgstr "Transcrições"
 
 #: cms/templates/js/previous-video-upload-list.underscore:18
-#, fuzzy
 msgid "Video Status"
 msgstr "Status verificado"
 
@@ -12189,7 +12164,6 @@ msgid "Availability"
 msgstr "Disponibilidade"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "Current"
 msgstr "Aba atual"
 
@@ -12198,7 +12172,6 @@ msgid "New"
 msgstr "Novo"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "Starts soon"
 msgstr "Iniciar"
 
@@ -12223,14 +12196,12 @@ msgid "Category"
 msgstr "Categoria"
 
 #: lms/templates/discovery/facet.underscore
-#, fuzzy
 msgid "Mandatory"
 msgstr "Signatário"
 
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435
-#, fuzzy
 msgid "Saved Successfully"
 msgstr "Foto capturada com sucesso."
 

@@ -625,7 +625,6 @@ msgstr ""
 "senha."
 
 #: common/djangoapps/student/forms.py:95
-#, fuzzy
 msgid "That e-mail address doesn't have an associated user account."
 msgstr ""
 "Esse e-mail não tem uma conta de usuário associada. Tem certeza que você se "
@@ -1089,7 +1088,6 @@ msgid "Unable to send reactivation email"
 msgstr "Não foi possível enviar o e-mail de reativação"
 
 #: common/djangoapps/student/views/login.py:500
-#, fuzzy
 msgid "You are not allowed to login to studio!"
 msgstr "Você não está inscrito neste curso"
 
@@ -1224,12 +1222,10 @@ msgid "Error in resetting your password. Please try again."
 msgstr "Erro ao resetar sua senha. Por favor tente novamente"
 
 #: common/djangoapps/student/views/management.py:1279
-#, fuzzy
 msgid "Password create unsuccessful"
 msgstr "A redefinição de senha não foi realizada"
 
 #: common/djangoapps/student/views/management.py:1306
-#, fuzzy
 msgid "Error in creating your password. Please try again."
 msgstr "Ocorreu um erro. Tente novamente."
 
@@ -2893,7 +2889,6 @@ msgid "Question"
 msgstr "Pergunta"
 
 #: common/lib/xmodule/xmodule/capa_module.py:405
-#, fuzzy
 msgid "Correct Answer"
 msgstr "Correto"
 
@@ -3781,23 +3776,19 @@ msgstr "Defina o idioma do seu curso."
 
 #: common/lib/xmodule/xmodule/course_module.py:710
 #: cms/templates/settings.html:344
-#, fuzzy
 msgid "Course Country"
 msgstr "Versão do Curso"
 
 #: common/lib/xmodule/xmodule/course_module.py:711
-#, fuzzy
 msgid "Specify the country of your course."
 msgstr "Defina o idioma do seu curso."
 
 #: common/lib/xmodule/xmodule/course_module.py:717
 #: cms/templates/settings.html:363
-#, fuzzy
 msgid "Course Category"
 msgstr "Material do Curso"
 
 #: common/lib/xmodule/xmodule/course_module.py:718
-#, fuzzy
 msgid "Specify the category of your course."
 msgstr "Defina o idioma do seu curso."
 
@@ -3806,7 +3797,6 @@ msgid "Vendor"
 msgstr "Vendedor"
 
 #: common/lib/xmodule/xmodule/course_module.py:725
-#, fuzzy
 msgid "Specify the vendor of your course."
 msgstr "Defina o idioma do seu curso."
 
@@ -3992,18 +3982,15 @@ msgstr ""
 "conteúdo no curso será enviado para os alunos no horário programado. "
 
 #: common/lib/xmodule/xmodule/course_module.py:883
-#, fuzzy
 msgid "Course Reminder Information"
 msgstr "Informações básicas sobre o curso"
 
 #: common/lib/xmodule/xmodule/course_module.py:884
 #: cms/templates/settings.html:299
-#, fuzzy
 msgid "Configure reminders to learners who enroll in this course"
 msgstr "Você não está inscrito neste curso"
 
 #: common/lib/xmodule/xmodule/course_module.py:890
-#, fuzzy
 msgid "Course Finish Days"
 msgstr "Data de término do curso"
 
@@ -4012,12 +3999,10 @@ msgid "Learners have to finish the course within the required days above"
 msgstr "Os alunos devem concluir o curso dentro dos dias exigidos acima"
 
 #: common/lib/xmodule/xmodule/course_module.py:897
-#, fuzzy
 msgid "Course Re-enroll Time"
 msgstr "Horário do término do curso"
 
 #: common/lib/xmodule/xmodule/course_module.py:904
-#, fuzzy
 msgid "Course Re-enroll Time Unit"
 msgstr "Horário do término do curso"
 
@@ -4030,7 +4015,6 @@ msgstr ""
 "especificado tempo acima após a conclusão"
 
 #: common/lib/xmodule/xmodule/course_module.py:911
-#, fuzzy
 msgid "Periodic Reminder Enabled"
 msgstr "A Supervisão Está Ativada?"
 
@@ -4044,7 +4028,6 @@ msgstr "Dia do lembrete periódico"
 
 #: common/lib/xmodule/xmodule/course_module.py:926
 #: cms/templates/settings.html:372
-#, fuzzy
 msgid "Course Order"
 msgstr "Id do Curso"
 
@@ -4053,7 +4036,6 @@ msgid "Sort the courses to display on dashboard in ascending order."
 msgstr "Classifique os cursos a serem exibidos no painel em ordem crescente"
 
 #: common/lib/xmodule/xmodule/course_module.py:933
-#, fuzzy
 msgid "Course Mandatory Enabled"
 msgstr "Material do Curso"
 
@@ -5575,19 +5557,16 @@ msgstr "O máximo de palavras num_max_palavras para uma nuvem de palavras."
 #: common/templates/student/edx_ace/passwordcreate/email/body.html:10
 #: common/templates/student/edx_ace/passwordcreate/email/body.txt:2
 #: common/templates/student/edx_ace/passwordcreate/email/subject.txt:3
-#, fuzzy, python-format
 msgid "Welcome to %(platform_name)s."
 msgstr "Bem-vindo a {platform_name}"
 
 #: common/templates/student/edx_ace/passwordcreate/email/body.html:14
 #: common/templates/student/edx_ace/passwordcreate/email/body.txt:4
-#, fuzzy, python-format
 msgid "You can login with your email address: %(user_email)s"
 msgstr "Não foi possível encontrar o usuário através do e-mail '{email}'."
 
 #: common/templates/student/edx_ace/passwordcreate/email/body.html:19
 #: common/templates/student/edx_ace/passwordcreate/email/body.txt:7
-#, fuzzy
 msgid "Please go to the following page to create your password:"
 msgstr "Por favor, acesse a próxima página e defina uma nova senha:"
 
@@ -6844,7 +6823,6 @@ msgstr "Livros didáticos"
 
 #: lms/djangoapps/courseware/tabs.py:331
 #: lms/templates/courseware/course_about.html:125
-#, fuzzy
 msgid "Overview"
 msgstr "Revisar"
 
@@ -7071,7 +7049,6 @@ msgstr ""
 
 #: lms/djangoapps/courseware/views/views.py:1897
 #: lms/djangoapps/courseware/views/views.py:1985
-#, fuzzy
 msgid "Enrollment refused"
 msgstr "Códigos de matrícula"
 
@@ -7635,23 +7612,19 @@ msgid "Row #{row_num}: {error_msg}"
 msgstr "Row #{row_num}: {error_msg}"
 
 #: lms/djangoapps/instructor/views/api.py:357
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: A username is required."
 msgstr "Row #{row_num}: O Nome de usuário é obrigatório."
 
 #: lms/djangoapps/instructor/views/api.py:364
 #: lms/djangoapps/instructor/views/api.py:656
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: Invalid email address."
 msgstr "Insira um endereço de e-mail válido."
 
 #: lms/djangoapps/instructor/views/api.py:368
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: An email address is required."
 msgstr "É obrigatório informar o seu endereço"
 
 #: lms/djangoapps/instructor/views/api.py:371
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: A password is required."
 msgstr "É necessária uma senha válida"
 
@@ -7701,7 +7674,6 @@ msgstr ""
 "Row #{row_num}: País inválido, um código de país de duas letras é esperado (por "
 " exemplo FR, CN, US, BR)."
 #: lms/djangoapps/instructor/views/api.py:409
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: A company is required."
 msgstr "É obrigatório informar país"
 
@@ -7712,7 +7684,6 @@ msgstr "Row #{row_num}: Data de admissão inválida (formato esperado: AAAA-MM-D
 
 #: lms/djangoapps/instructor/views/api.py:455
 #: lms/djangoapps/instructor/views/api.py:745
-#, fuzzy
 msgid "Make sure that the file you upload is in CSV format."
 msgstr ""
 "Tenha certeza que o arquivo que você enviar está no formato CSV sem linhas "
@@ -7741,7 +7712,6 @@ msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py:499
 #: lms/djangoapps/instructor/views/api.py:666
-#, fuzzy, python-brace-format
 msgid ""
 "Row #{row_num}: An account with username {username} exists but the provided "
 "email {email} is different."
@@ -7752,7 +7722,6 @@ msgstr ""
 #: lms/djangoapps/instructor/views/api.py:505
 #: lms/djangoapps/instructor/views/api.py:626
 #: lms/djangoapps/instructor/views/api.py:828
-#, fuzzy, python-brace-format
 msgid ""
 "Row #{row_num}: An account with email {email} exists but the provided "
 "username {username} is different."
@@ -7777,7 +7746,6 @@ msgstr ""
 "ou caracteres extras."
 
 #: lms/djangoapps/instructor/views/api.py:639
-#, fuzzy, python-brace-format
 msgid ""
 "Row #{row_num}: User with username {username} is now enrolled in this course."
 msgstr ""
@@ -7816,17 +7784,14 @@ msgstr ""
 "gender, year of birth, language, country, city, location, company, employee "
 "id, hire date, job code, department, supervisor, learning group, comments)."
 #: lms/djangoapps/instructor/views/api.py:783
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: An old username is required."
 msgstr "Nome de usuário é obrigatório."
 
 #: lms/djangoapps/instructor/views/api.py:787
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: An old email address is required."
 msgstr "É obrigatório informar o seu endereço"
 
 #: lms/djangoapps/instructor/views/api.py:792
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: Invalid old email address."
 msgstr "Email inválido {email_address}."
 
@@ -7836,17 +7801,14 @@ msgid "Row #{row_num}: Invalid old username."
 msgstr "Linha #{row_num}: Nome de usuário inválido."
 
 #: lms/djangoapps/instructor/views/api.py:835
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: An other account with email {email} already exists."
 msgstr "Linha #{row_num}: Já existe uma conta com o e-mail '{email}'."
 
 #: lms/djangoapps/instructor/views/api.py:840
-#, fuzzy, python-brace-format
 msgid "Row #{row_num}: Invalid new email address."
 msgstr "Email inválido {email_address}."
 
 #: lms/djangoapps/instructor/views/api.py:845
-#, fuzzy, python-brace-format
 msgid ""
 "Row #{row_num}: An other account with username {username} already exists."
 msgstr "Linha #{row_num}: Já existe uma conta com o nome de usuário público '{username}'."
@@ -7867,7 +7829,6 @@ msgid "Row #{row_num}: user {old} successfully updated."
 msgstr "Linha #{row_num}: usuário {old} atualizado com sucesso"
 
 #: lms/djangoapps/instructor/views/api.py:901
-#, fuzzy, python-brace-format
 msgid ""
 "Row #{row_num}: An account with username {username} exits but the provided "
 "email {email} is different."
@@ -7983,7 +7944,6 @@ msgstr "Idioma"
 
 #: lms/djangoapps/instructor/views/api.py:1873
 #: lms/djangoapps/triboo_analytics/forms.py:18
-#, fuzzy
 msgctxt "user.profile"
 msgid "Location"
 msgstr "Localização"
@@ -8773,7 +8733,6 @@ msgid "certificates generated"
 msgstr "Certificados gerados."
 
 #: lms/djangoapps/instructor_task/tasks.py:300
-#, fuzzy
 msgid "certificates zip file generated"
 msgstr "Certificados gerados."
 
@@ -10639,17 +10598,14 @@ msgstr ""
 "O usuário {username} não está inscrito no curso relacionado com esta equipe."
 
 #: lms/djangoapps/triboo_analytics/forms.py:12
-#, fuzzy
 msgid "Date Joined"
 msgstr "Data de Envio"
 
 #: lms/djangoapps/triboo_analytics/forms.py:13
-#, fuzzy
 msgid "Education"
 msgstr "Localização"
 
 #: lms/djangoapps/triboo_analytics/forms.py:15
-#, fuzzy
 msgid "Commercial Zone"
 msgstr "E-Commerce"
 
@@ -10658,7 +10614,6 @@ msgid "Commercial Region"
 msgstr "Região COmercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:19
-#, fuzzy
 msgctxt "user.profile"
 msgid "Address"
 msgstr "Endereço 1"
@@ -10669,7 +10624,6 @@ msgid "Address 2"
 msgstr "Endereço 2"
 
 #: lms/djangoapps/triboo_analytics/forms.py:21
-#, fuzzy
 msgid "Phone Number"
 msgstr "Número do curso"
 
@@ -10683,7 +10637,6 @@ msgid "Employee ID"
 msgstr "ID do Empregado"
 
 #: lms/djangoapps/triboo_analytics/forms.py:25
-#, fuzzy
 msgid "Hire Date"
 msgstr "Data de Admissão"
 
@@ -10693,19 +10646,16 @@ msgstr "Nível"
 
 #: lms/djangoapps/triboo_analytics/forms.py:27
 #: openedx/core/djangoapps/user_api/api.py:948
-#, fuzzy
 msgid "Job Code"
 msgstr "Código do Trabalho"
 
 #: lms/djangoapps/triboo_analytics/forms.py:28
 #: openedx/core/djangoapps/user_api/api.py:955
-#, fuzzy
 msgid "Job Description"
 msgstr "Descrição"
 
 #: lms/djangoapps/triboo_analytics/forms.py:29
 #: openedx/core/djangoapps/user_api/api.py:962
-#, fuzzy
 msgid "Department"
 msgstr "Pagar"
 
@@ -10719,12 +10669,10 @@ msgstr "Supervisor de ILT"
 
 #: lms/djangoapps/triboo_analytics/forms.py:32
 #: openedx/core/djangoapps/user_api/api.py:969
-#, fuzzy
 msgid "Learning Group"
 msgstr "Aprendendo a avaliar"
 
 #: lms/djangoapps/triboo_analytics/forms.py:33
-#, fuzzy
 msgid "Exempt Status"
 msgstr "Status do Pagamento"
 
@@ -10740,17 +10688,14 @@ msgstr "àrea"
 #: lms/templates/triboo_analytics/course.html:147
 #: lms/templates/triboo_analytics/ilt.html:57
 #: lms/templates/triboo_analytics/learner.html:43
-#, fuzzy
 msgid "Select the user properties you want to display"
 msgstr "Selecione a biblioteca da qual você deseja extrair o conteúdo."
 
 #: lms/djangoapps/triboo_analytics/models.py:1138
-#, fuzzy
 msgid "Accepted"
 msgstr "Após tentativa"
 
 #: lms/djangoapps/triboo_analytics/models.py:1139
-#, fuzzy
 msgid "Confirmed"
 msgstr "Confirmação"
 
@@ -10760,12 +10705,10 @@ msgstr "Recusado"
 
 #: lms/djangoapps/triboo_analytics/views.py:240
 #: lms/djangoapps/triboo_analytics/views.py:571
-#, fuzzy
 msgid "Invalid User ID"
 msgstr "Identificação de curso inválida."
 
 #: lms/djangoapps/triboo_analytics/views.py:311
-#, fuzzy
 msgid "There can only be one exiting pending task!"
 msgstr "Pode haver apenas uma imagem padrão."
 
@@ -10774,24 +10717,20 @@ msgid "The request is already approved by the instructor!"
 msgstr "A solicitação já foi aprovada pelo instrutor!"
 
 #: lms/djangoapps/triboo_analytics/views.py:317
-#, fuzzy
 msgid "Unknown error. Please contact the support!"
 msgstr ""
 "A resposta do avaliador é inválida. Por favor, entre em contato com a equipe "
 "do curso."
 
 #: lms/djangoapps/triboo_analytics/views.py:320
-#, fuzzy
 msgid "Request sent successfully!"
 msgstr "Usuário {user} criado com sucesso!"
 
 #: lms/djangoapps/triboo_analytics/views.py:407
-#, fuzzy
 msgid "The waiver request has been accepted!"
 msgstr "Esta revisão foi excluída."
 
 #: lms/djangoapps/triboo_analytics/views.py:422
-#, fuzzy
 msgid "The waiver request has been denied!"
 msgstr "Esta revisão foi excluída."
 
@@ -10806,7 +10745,6 @@ msgid "The waiver request is already denied by {name}"
 msgstr "A solitação de dispensa já foi negada por {name}"
 
 #: lms/djangoapps/triboo_analytics/views.py:523
-#, fuzzy
 msgid "Invalid export format."
 msgstr "Certificado inválido"
 
@@ -10827,12 +10765,10 @@ msgid "No report to export."
 msgstr "Sem relatório para exportar."
 
 #: lms/djangoapps/triboo_analytics/views.py:920
-#, fuzzy
 msgid "Invalid Course ID"
 msgstr "Identificação de curso inválida."
 
 #: lms/djangoapps/triboo_analytics/views.py:939
-#, fuzzy
 msgid "Invalid course id."
 msgstr "Identificação de curso inválida."
 
@@ -10948,22 +10884,18 @@ msgid "Your Platform Description Here"
 msgstr "A Descrição da sua Plataforma aqui"
 
 #: lms/envs/common.py:512
-#, fuzzy
 msgid "Read access"
 msgstr "Ler acesso"
 
 #: lms/envs/common.py:513
-#, fuzzy
 msgid "Write access"
 msgstr "Permissão de escrita"
 
 #: lms/envs/common.py:514
-#, fuzzy
 msgid "Know your email address"
 msgstr "O seu e-mail"
 
 #: lms/envs/common.py:515
-#, fuzzy
 msgid "Know your name and username"
 msgstr "Saiba o seu nome e nome de usuário"
 
@@ -10972,7 +10904,6 @@ msgid "Retrieve your grades for your enrolled courses"
 msgstr "Recuperar suas notas dos cursos em que está inscrito"
 
 #: lms/envs/common.py:524
-#, fuzzy
 msgid "Retrieve your course certificates"
 msgstr "Saiba mais sobre os certificados"
 
@@ -11800,7 +11731,6 @@ msgid "Our mailing address is"
 msgstr "Nosso serviço de mailing é"
 
 #: openedx/core/djangoapps/ace_common/templates/ace_common/edx_ace/common/base_head.html:7
-#, fuzzy, python-format
 msgid "%(platform_name)s Email"
 msgstr "Wiki de %(platform_name)s"
 
@@ -12973,7 +12903,6 @@ msgstr ""
 "{tos_link_end}"
 
 #: openedx/core/djangoapps/user_api/api.py:924
-#, fuzzy
 msgid "Phone number"
 msgstr "Número de telefone"
 
@@ -14082,7 +14011,6 @@ msgid "Forbidden"
 msgstr "Proíbido"
 
 #: cms/templates/403.html:24
-#, fuzzy
 msgid "You must be Course Admin to access this view."
 msgstr "Você deve ser um Técnico CCX para acessar esta visualização."
 
@@ -14099,7 +14027,6 @@ msgstr ""
 "qualquer página que possa ter sido movida."
 
 #: cms/templates/500.html:8
-#, fuzzy
 msgid "Server Error"
 msgstr "Erro interno do servidor"
 
@@ -16384,7 +16311,6 @@ msgstr ""
 "seu espaço de treinamento."
 
 #: cms/templates/login.html:61
-#, fuzzy
 msgid "Login in SSO"
 msgstr "Entrar com OpenID"
 
@@ -16832,12 +16758,10 @@ msgid "Enrollment End Time"
 msgstr "Horário do término da matrícula"
 
 #: cms/templates/settings.html:298
-#, fuzzy
 msgid "Course Reminders"
 msgstr "Configurações do curso"
 
 #: cms/templates/settings.html:304
-#, fuzzy
 msgid "The course must be finished within"
 msgstr "ID do curso deve ser fornecido"
 
@@ -16846,7 +16770,6 @@ msgid "day(s)"
 msgstr "dia(s)"
 
 #: cms/templates/settings.html:309
-#, fuzzy
 msgid "Learners will be automatically re-enrolled in this course after"
 msgstr "Envie e-mail para alguém dizendo que se inscreveu neste curso."
 
@@ -16863,7 +16786,6 @@ msgid "after completion"
 msgstr "após a conclusão"
 
 #: cms/templates/settings.html:319
-#, fuzzy
 msgid "Send a reminder email every"
 msgstr "Enviar um e-mail para {email}"
 
@@ -16905,7 +16827,6 @@ msgstr ""
 "é de 0 a 99"
 
 #: cms/templates/settings.html:379
-#, fuzzy
 msgid "Course Tag"
 msgstr "Nome do Curso"
 
@@ -16914,7 +16835,6 @@ msgid "Identify the course tag here."
 msgstr "Identificar o rótulo do curso aqui"
 
 #: cms/templates/settings.html:384
-#, fuzzy
 msgid "Course Mandatory Flag"
 msgstr "Material do Curso"
 
@@ -17036,7 +16956,6 @@ msgid "Your course image URL"
 msgstr "A sua URL da imagem de curso"
 
 #: cms/templates/settings.html:491
-#, fuzzy
 msgid ""
 "Please provide a valid path and name to your course image (Note: the ideal "
 "image is 400px wide by 310px tall, in JPEG format)"
@@ -17049,7 +16968,6 @@ msgid "Upload Course Card Image"
 msgstr "Fazer o upload de Imagem de Capa do Curso"
 
 #: cms/templates/settings.html:517
-#, fuzzy
 msgid ""
 "Your course currently does not have an image. Please upload one (JPEG or PNG "
 "format, and minimum suggested dimensions are 1000px wide by 600px tall)"
@@ -17065,7 +16983,6 @@ msgid "Your banner image URL"
 msgstr "A URL da sua imagem de banner"
 
 #: cms/templates/settings.html:525
-#, fuzzy
 msgid ""
 "Please provide a valid path and name to your banner image (Note: the ideal "
 "image is 1000px wide by 600px tall, in JPEG format)"
@@ -17971,7 +17888,6 @@ msgstr "Data de término do curso"
 
 #: cms/templates/settings.html:417
 #: lms/templates/courseware/ilt_attendance_sheet.html:42
-#, fuzzy
 msgid "hours"
 msgstr "Curso"
 
@@ -18033,7 +17949,6 @@ msgid "Legal"
 msgstr "Legal"
 
 #: cms/templates/widgets/footer.html:27 lms/templates/footer.html:171
-#, fuzzy
 msgid "All rights reserved."
 msgstr "Todos os direitos reservados"
 
@@ -18126,7 +18041,6 @@ msgstr "No momento logado como:"
 #: cms/templates/widgets/user_dropdown.html:28
 #: cms/templates/widgets/user_dropdown.html:42
 #: lms/djangoapps/discussion/templates/discussion/discussion_profile_page.html:60
-#, fuzzy
 msgid "Profile image for {username}"
 msgstr "Usuário {username} apagado"
 
@@ -18336,14 +18250,12 @@ msgid "Hello"
 msgstr "Olá"
 
 #: lms/templates/dashboard.html:143
-#, fuzzy
 msgid "Welcome to your dashboard"
-msgstr "Retornar ao painel de controle"
+msgstr "Bem-vindo ao seu painel de controle"
 
 #: lms/templates/dashboard.html:150
-#, fuzzy
 msgid "completed courses"
-msgstr "Excluir curso do site"
+msgstr "Cursos finalizados"
 
 #: lms/templates/dashboard.html:156
 msgid "badges obtained"
@@ -18355,7 +18267,6 @@ msgid "posts"
 msgstr "postagens"
 
 #: lms/templates/dashboard.html:164
-#, fuzzy
 msgid "View my learning transcript"
 msgstr "Baixar transcrição"
 
@@ -18517,7 +18428,6 @@ msgid ""
 msgstr ""
 
 #: lms/templates/footer.html:90
-#, fuzzy
 msgid "Navigation"
 msgstr "Navegação do curso"
 
@@ -18540,7 +18450,6 @@ msgid "My Courses"
 msgstr "Meus Cursos"
 
 #: lms/templates/footer.html:106
-#, fuzzy
 msgid "My Account"
 msgstr "Conta"
 
@@ -18551,7 +18460,6 @@ msgid "FAQ"
 msgstr "Perguntas frequentes"
 
 #: lms/templates/footer.html:121
-#, fuzzy
 msgid "Admin Space"
 msgstr "Administrador"
 
@@ -19043,17 +18951,14 @@ msgid "Raw data:"
 msgstr "Dados brutos:"
 
 #: lms/templates/my_courses.html:138
-#, fuzzy
 msgid "All courses"
 msgstr "Cursos"
 
 #: lms/templates/my_courses.html:139
-#, fuzzy
 msgid "Not started"
 msgstr "Não selecionado"
 
 #: lms/templates/my_courses.html:140
-#, fuzzy
 msgid "Started"
 msgstr "Inicia"
 
@@ -21517,7 +21422,6 @@ msgstr ""
 
 #: lms/templates/courseware/course_about.html:130
 #: lms/templates/courseware/course_navigation.html:86
-#, fuzzy
 msgid "View Instructor Page"
 msgstr "Ritmo definido pelo instrutor"
 
@@ -21528,7 +21432,6 @@ msgstr "Visualizar a página Sobre no Studio"
 
 #: lms/templates/courseware/course_about.html:146
 #: lms/templates/courseware/course_navigation.html:103
-#, fuzzy
 msgid "View Course Report Page"
 msgstr "Visualizar curso "
 
@@ -21547,7 +21450,6 @@ msgstr ""
 "começar este curso."
 
 #: lms/templates/courseware/course_about.html:197
-#, fuzzy
 msgid "No prerequisite required for this course"
 msgstr "Critérios obrigatórios para passar por este curso:"
 
@@ -21597,7 +21499,6 @@ msgstr "Envie e-mail para alguém dizendo que se inscreveu neste curso."
 
 #: lms/templates/courseware/course_banner.html:37
 #: lms/templates/dashboard/_dashboard_course_listing.html:233
-#, fuzzy
 msgid "{num} minute"
 msgid_plural "{num} minutes"
 msgstr[0] "{num_minute} minuto"
@@ -21605,7 +21506,6 @@ msgstr[1] "{num_minute} minutos"
 
 #: lms/templates/courseware/course_banner.html:39
 #: lms/templates/dashboard/_dashboard_course_listing.html:235
-#, fuzzy
 msgid "{num} hour"
 msgid_plural "{num} hours"
 msgstr[0] "{num_hour} hora"
@@ -21648,7 +21548,6 @@ msgid "Estimated Effort"
 msgstr "Dedicação estimada"
 
 #: lms/templates/courseware/course_banner.html:118
-#, fuzzy
 msgid "Completed"
 msgstr "Concluída"
 
@@ -21663,13 +21562,11 @@ msgstr "Continuar Curso"
 
 #: lms/templates/courseware/course_banner.html:148
 #: lms/templates/courseware/course_banner.html:156
-#, fuzzy
 msgid "This course is in your cart."
 msgstr "O curso {course_id} já está no seu carrinho."
 
 #: lms/templates/courseware/course_banner.html:149
 #: lms/templates/courseware/course_banner.html:157
-#, fuzzy
 msgid "View Cart"
 msgstr "Visualizar crédito"
 
@@ -21700,7 +21597,6 @@ msgid "Enrollment is Closed"
 msgstr "Matrículas encerradas"
 
 #: lms/templates/courseware/course_banner.html:188
-#, fuzzy
 msgid "Add to Cart <span>({price} USD)</span>"
 msgstr "Adicione {course_name} ao Carrinho <span>({price} USD)</span>"
 
@@ -21783,22 +21679,18 @@ msgid "Print"
 msgstr "Imprimir"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:27
-#, fuzzy
 msgid "Attendance Sheet"
 msgstr "Configurações avançadas"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:31
-#, fuzzy
 msgid "Instructor's Signature"
 msgstr "Ritmo definido pelo instrutor"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:39
-#, fuzzy
 msgid "Session"
 msgstr "Permissões"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:42
-#, fuzzy
 msgid "Date and Time"
 msgstr "Horário do término do curso"
 
@@ -21807,13 +21699,11 @@ msgstr "Horário do término do curso"
 #: lms/templates/emails/ilt_confirmed_email_message.txt:22
 #: lms/templates/emails/ilt_enrolled_email_message.txt:22
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:26
-#, fuzzy
 msgctxt "xblock-ilt"
 msgid "Location"
 msgstr "Localização"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:59
-#, fuzzy
 msgid "Store"
 msgstr "Restaurar"
 
@@ -21826,7 +21716,6 @@ msgid "Signature (afternoon)"
 msgstr "Assinatura (tarde)"
 
 #: lms/templates/courseware/ilt_validation.html:14
-#, fuzzy
 msgid "ILT Validation"
 msgstr "Localização inválida."
 
@@ -21835,12 +21724,10 @@ msgid "Validation of the registration to an face-to-face session"
 msgstr "Validação do registro da sessão presencial"
 
 #: lms/templates/courseware/ilt_validation.html:42
-#, fuzzy
 msgid "Requester"
 msgstr "Registre-se"
 
 #: lms/templates/courseware/ilt_validation.html:44
-#, fuzzy
 msgid "Session Name"
 msgstr "Nome do destinatário"
 
@@ -21862,7 +21749,6 @@ msgstr "Para"
 #: lms/templates/emails/ilt_confirmed_email_message.txt:20
 #: lms/templates/emails/ilt_enrolled_email_message.txt:20
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:24
-#, fuzzy
 msgid "Timezone"
 msgstr "Tempo"
 
@@ -21877,7 +21763,6 @@ msgstr "Área/Região"
 #: lms/templates/emails/ilt_confirmed_email_message.txt:24
 #: lms/templates/emails/ilt_enrolled_email_message.txt:24
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:28
-#, fuzzy
 msgctxt "xblock-ilt"
 msgid "Address"
 msgstr "Endereço 1"
@@ -21886,13 +21771,11 @@ msgstr "Endereço 1"
 #: lms/templates/emails/ilt_confirmed_email_message.txt:27
 #: lms/templates/emails/ilt_enrolled_email_message.txt:27
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:31
-#, fuzzy
 msgid "Zip Code"
 msgstr "Código"
 
 #: lms/templates/courseware/ilt_validation.html:89 XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Available seats"
 msgstr "Relatórios Disponíveis"
 
@@ -21901,12 +21784,10 @@ msgid "Accommodation Need"
 msgstr "Necessidades de Acomodação"
 
 #: lms/templates/courseware/ilt_validation.html:125
-#, fuzzy
 msgid "Number of one way"
 msgstr "Número de Lugares"
 
 #: lms/templates/courseware/ilt_validation.html:132
-#, fuzzy
 msgid "Number of return"
 msgstr "Número de reembolsos"
 
@@ -21915,7 +21796,6 @@ msgid "Accept the demand"
 msgstr "Aceitar a demanda"
 
 #: lms/templates/courseware/ilt_validation.html:147
-#, fuzzy
 msgid "Refuse the demand"
 msgstr "Descreva os detalhes"
 
@@ -22227,7 +22107,6 @@ msgid "badge"
 msgstr "medalha"
 
 #: lms/templates/courseware/progress_badges.html:114
-#, fuzzy
 msgid "Badges not obtained"
 msgstr "Página não encontrada"
 
@@ -22262,7 +22141,6 @@ msgstr ""
 #: lms/templates/emails/business_order_confirmation_email.txt:3
 #: lms/templates/emails/order_confirmation_email.txt:2
 #: lms/templates/emails/photo_submission_confirmation.txt:3
-#, fuzzy
 msgid "Hi"
 msgstr "Olá,"
 
@@ -22470,7 +22348,6 @@ msgstr ""
 "lugar."
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:84
-#, fuzzy
 msgid ""
 "You must successfully complete {link_start}\"{prc_display}\"{link_end} "
 "before you begin this course."
@@ -22520,7 +22397,6 @@ msgid "Change or Leave Session"
 msgstr "Alterar ou sair da sessão"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:197
-#, fuzzy
 msgid "Download Certificate"
 msgstr "Baixe seu Certificado "
 
@@ -23461,7 +23337,6 @@ msgstr ""
 #: lms/templates/emails/waiver_request_accepted_message.txt:26
 #: lms/templates/emails/waiver_request_denied_message.txt:23
 #: lms/templates/emails/waiver_request_message.txt:32
-#, fuzzy
 msgid "Best regards"
 msgstr "Atenciosamente,"
 
@@ -23482,12 +23357,10 @@ msgstr "Atenciosamente,"
 #: lms/templates/emails/waiver_request_accepted_message.txt:27
 #: lms/templates/emails/waiver_request_denied_message.txt:24
 #: lms/templates/emails/waiver_request_message.txt:34
-#, fuzzy
 msgid "{platform_name} Team"
 msgstr "Equipe {platform_name}"
 
 #: lms/templates/emails/course_re_enroll_email_subject.txt:2
-#, fuzzy
 msgid "You have been automatically re-enrolled in the course {course_name}"
 msgstr "Você foi inscrito no curso {course_name}"
 
@@ -23520,7 +23393,6 @@ msgstr ""
 "{nome do site}"
 
 #: lms/templates/emails/course_reminder_email_message.txt:29
-#, fuzzy
 msgid "You have {days_left} day left to complete the course."
 msgid_plural "You have {days_left} days left to complete the course."
 msgstr[0] ""
@@ -23531,12 +23403,10 @@ msgstr[1] ""
 "curso."
 
 #: lms/templates/emails/course_reminder_email_subject.txt:3
-#, fuzzy
 msgid "The course {course_name} is overdue"
 msgstr "O curso {course_key} não existe"
 
 #: lms/templates/emails/course_reminder_email_subject.txt:7
-#, fuzzy
 msgid "{course_name} Reminders"
 msgstr "{course_name}"
 
@@ -23658,12 +23528,10 @@ msgstr ""
 #: lms/templates/emails/ilt_hotel_cancel_email_message.txt:24
 #: lms/templates/emails/ilt_refused_email_message.txt:13
 #: lms/templates/emails/ilt_unenrolled_email_message.txt:14
-#, fuzzy
 msgid "Best regards,"
 msgstr "Atenciosamente,"
 
 #: lms/templates/emails/ilt_batch_unenroll_email_subject.txt:2
-#, fuzzy
 msgid "ILT batch unenrollment notification"
 msgstr "Confirmação de matrícula"
 
@@ -23676,20 +23544,17 @@ msgstr ""
 "{course_name} na plataforma {platform_name}."
 
 #: lms/templates/emails/ilt_confirmed_email_message.txt:41
-#, fuzzy
 msgid "Here are the information about your hotel reservation"
 msgstr "Fornece informações úteis sobre o seu curso."
 
 #: lms/templates/emails/ilt_confirmed_email_message.txt:44
 #: lms/templates/emails/ilt_hotel_cancel_email_message.txt:21
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:44
-#, fuzzy
 msgid "For more information about the session, please click on the link below:"
 msgstr "Insira abaixo as informações sobre o código do cupom."
 
 #: lms/templates/emails/ilt_confirmed_email_subject.txt:2
 #: lms/templates/emails/ilt_enrolled_email_subject.txt:2
-#, fuzzy
 msgid "ILT course enrollment notification"
 msgstr "Confirmação de matrícula"
 
@@ -23760,7 +23625,6 @@ msgstr ""
 "{course_name} na plataforma {platform_name} foram atualizadas."
 
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:14
-#, fuzzy
 msgid "Here are your new hotel information"
 msgstr "Processando a informação da sua conta"
 
@@ -23780,7 +23644,6 @@ msgstr ""
 
 
 #: lms/templates/emails/ilt_refused_email_subject.txt:2
-#, fuzzy
 msgid "Your ILT request has been refused"
 msgstr "As suas respostas foram salvas."
 
@@ -23801,7 +23664,6 @@ msgstr ""
 
 #: lms/templates/emails/ilt_self_unenroll_email_subject.txt:2
 #: lms/templates/emails/ilt_unenrolled_email_subject.txt:2
-#, fuzzy
 msgid "ILT course unenrollment notification"
 msgstr "Confirmação de matrícula"
 
@@ -23890,7 +23752,6 @@ msgstr ""
 "conclusão, entre em contato com a equipe {platform_name}."
 
 #: lms/templates/emails/manually_change_grade_email_subject.txt:3
-#, fuzzy
 msgid ""
 "Your score of the course {course_name} on {platform_name} has been overridden"
 msgstr "Eu concluí o curso {course_title} no {platform_name}."
@@ -24201,7 +24062,6 @@ msgstr ""
 
 
 #: lms/templates/emails/waiver_request_accepted_subject.txt:2
-#, fuzzy
 msgid "Your waiver request has been approved"
 msgstr "Sua solicitação para dispensa do curso foi aprovada."
 
@@ -24216,7 +24076,6 @@ msgstr ""
 "Sua solicitação de dispensa para todo o curso {course_name} foi negada."
 
 #: lms/templates/emails/waiver_request_denied_subject.txt:2
-#, fuzzy
 msgid "Your waiver request has been denied"
 msgstr "As suas respostas foram salvas."
 
@@ -24228,7 +24087,6 @@ msgstr ""
 "Um aluno solicitou uma dispensa para as seções na plataforma {platform_name}"
 
 #: lms/templates/emails/waiver_request_message.txt:10
-#, fuzzy
 msgid ""
 "A learner has requested a waiver for an entire course on {platform_name} "
 "platform."
@@ -24241,7 +24099,6 @@ msgid "Here is the waiver request information:"
 msgstr "Aqui estão as informações de solicitação de isenção:"
 
 #: lms/templates/emails/waiver_request_message.txt:17
-#, fuzzy
 msgid "Learner's Name:"
 msgstr "Nome do Aluno"
 
@@ -24251,22 +24108,18 @@ msgid "Course Name:"
 msgstr "Nome do curso:"
 
 #: lms/templates/emails/waiver_request_message.txt:20
-#, fuzzy
 msgid "Sections:"
 msgstr "Seção"
 
 #: lms/templates/emails/waiver_request_message.txt:22
-#, fuzzy
 msgid "Reason:"
 msgstr "Razão"
 
 #: lms/templates/emails/waiver_request_message.txt:25
-#, fuzzy
 msgid "If you accept this request, please click the following link:"
 msgstr "Para ir para o conteúdo do curso, selecione o seguinte link:"
 
 #: lms/templates/emails/waiver_request_message.txt:28
-#, fuzzy
 msgid "Otherwise please click the following link to deny:"
 msgstr "De outra forma, por favor clique no link a seguir para negar:"
 
@@ -24559,7 +24412,6 @@ msgid "The status for any active tasks appears in a table below."
 msgstr "O status para todas as tarefas ativas aparecem na tabela abaixo. "
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:112
-#, fuzzy
 msgid "Certificates Export"
 msgstr "Exportar Certificados"
 
@@ -24573,17 +24425,14 @@ msgstr ""
 "linhas ou vírgulas."
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:122
-#, fuzzy
 msgid "The following users didn't get certificates:"
 msgstr "Os usuários a seguir não ganharam certificados"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:126
-#, fuzzy
 msgid "Certificates Available for Download"
 msgstr "Relatórios disponíveis para download"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:127
-#, fuzzy
 msgid ""
 "The zip files listed below are available for download. A link to every zip "
 "file remains available on this page, identified by the UTC date and time of "
@@ -24596,7 +24445,6 @@ msgstr ""
 "acessar os relatórios gerados anteriormente desta página."
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:129
-#, fuzzy
 msgid "File Name"
 msgstr "Nome completo"
 
@@ -24723,7 +24571,6 @@ msgid "Enrollment Information"
 msgstr "Informações sobre a inscrição"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:108
-#, fuzzy
 msgid "Total of enrollees (admins, staff, and learners)"
 msgstr ""
 "Número de inscritos (administradores, funcionários e estudantes) por curso"
@@ -24826,7 +24673,6 @@ msgid "Download a CSV of learners who can enroll"
 msgstr "Baixar um CSV dos alunos que podem se inscrever."
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:51
-#, fuzzy
 msgid "Proctored Exams"
 msgstr "Habilitar Exames Supervisionados"
 
@@ -24842,7 +24688,6 @@ msgid "Generate Proctored Exam Results Report"
 msgstr "Gerar relatório de resultados dos exames supervisionados"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:58
-#, fuzzy
 msgid "Problem Answers"
 msgstr "Tipo de Problema"
 
@@ -24864,7 +24709,6 @@ msgid "Download a CSV of problem responses"
 msgstr "Baixar CSV das respostas das avaliações"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:71
-#, fuzzy
 msgid "Surveys"
 msgstr "Enquete de Usuários"
 
@@ -24878,7 +24722,6 @@ msgid "Generate Survey Results Report"
 msgstr "Gerar Relatório de resultado das pesquisas"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:80
-#, fuzzy
 msgid "Grade Reports"
 msgstr "Requisitos de nota"
 
@@ -25591,7 +25434,6 @@ msgid "undo"
 msgstr "desfazer"
 
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:182
-#, fuzzy
 #: lms/templates/components/confirmation.html:8
 msgid "Confirm"
 msgstr "Confirmação"
@@ -25701,12 +25543,10 @@ msgid "Browse"
 msgstr "Procurar"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:102
-#, fuzzy
 msgid "Test CSV file"
 msgstr "Arquivo de texto (.csv)"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:103
-#, fuzzy
 msgid "Register/Enroll"
 msgstr "Inscrição de alunos"
 
@@ -25718,7 +25558,6 @@ msgstr ""
 "Para atualizar uma lista de contas de usuário, escolha um arquivo CSV com base nos "
 "seguintes modelos:"
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:114
-#, fuzzy
 msgid ""
 "Note that users must have an activated {platform_name} account prior to this "
 "update."
@@ -25727,12 +25566,10 @@ msgstr ""
 "possam ser inscritos como testadores beta."
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:132
-#, fuzzy
 msgid "Update user accounts"
 msgstr "Atualizar a minha conta"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:140
-#, fuzzy
 msgid "Welcoming Email"
 msgstr "E-mail do destinatário"
 
@@ -25745,12 +25582,10 @@ msgstr ""
 "endereços de email separados por novas linhas ou vírgulas."
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:143
-#, fuzzy
 msgid "Email Addresses"
 msgstr "Endereço de e-mail"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:146
-#, fuzzy
 msgid "Send Emails"
 msgstr "Enviar e-mail"
 
@@ -26692,7 +26527,6 @@ msgid "Account Activation Info"
 msgstr "Informação de Ativação de Conta"
 
 #: lms/templates/registration/password_create_complete.html:14
-#, fuzzy
 msgid "Your Password Creation is Complete"
 msgstr "A ativação da sua conta está completa! "
 
@@ -26700,12 +26534,10 @@ msgstr "A ativação da sua conta está completa! "
 #: lms/templates/registration/password_create_confirm.html:45
 #: lms/templates/registration/password_reset_complete.html:41
 #: lms/templates/registration/password_reset_confirm.html:45
-#, fuzzy
 msgid "Password assistance"
 msgstr "Redefinir senha"
 
 #: lms/templates/registration/password_create_complete.html:43
-#, fuzzy
 msgid "Password Creation Complete"
 msgstr "Data de Criação do Relatório"
 
@@ -26716,12 +26548,10 @@ msgid ""
 msgstr ""
 
 #: lms/templates/registration/password_create_confirm.html:14
-#, fuzzy
 msgid "Create Your {platform_name} Password"
 msgstr "Criar a conta do {platform_name}"
 
 #: lms/templates/registration/password_create_confirm.html:47
-#, fuzzy
 msgid "Invalid Password Create Link"
 msgstr "É necessária uma senha válida"
 
@@ -27268,7 +27098,6 @@ msgstr ""
 #: lms/templates/static_templates/server-down.html:43
 #: lms/templates/static_templates/server-error.html:47
 #: lms/templates/static_templates/server-overloaded.html:44
-#, fuzzy
 msgid "Reload Page"
 msgstr "Recarregar gráficos"
 
@@ -27425,7 +27254,6 @@ msgstr "Vamos dar uma olhada nos seus dados de aprendizado"
 #: lms/templates/triboo_analytics/learner.html:23
 #: lms/templates/triboo_analytics/microsite.html:29
 #: lms/templates/triboo_analytics/transcript.html:23
-#, fuzzy
 msgid "Global Report"
 msgstr "Relatórios Disponíveis"
 
@@ -27434,7 +27262,6 @@ msgstr "Relatórios Disponíveis"
 #: lms/templates/triboo_analytics/learner.html:24
 #: lms/templates/triboo_analytics/microsite.html:30
 #: lms/templates/triboo_analytics/transcript.html:24
-#, fuzzy
 msgid "Course Report"
 msgstr "Exportação de curso"
 
@@ -27443,7 +27270,6 @@ msgstr "Exportação de curso"
 #: lms/templates/triboo_analytics/learner.html:26
 #: lms/templates/triboo_analytics/microsite.html:32
 #: lms/templates/triboo_analytics/transcript.html:26
-#, fuzzy
 msgid "Learner Report"
 msgstr "Saiba mais"
 
@@ -27452,12 +27278,10 @@ msgstr "Saiba mais"
 #: lms/templates/triboo_analytics/learner.html:28
 #: lms/templates/triboo_analytics/microsite.html:34
 #: lms/templates/triboo_analytics/transcript.html:28
-#, fuzzy
 msgid "ILT Report"
 msgstr "Relatórios"
 
 #: lms/templates/triboo_analytics/course.html:37
-#, fuzzy
 msgid "Please select a course to see your report:"
 msgstr "Selecione um curso para ver o relatório:"
 
@@ -27465,12 +27289,10 @@ msgstr "Selecione um curso para ver o relatório:"
 #: lms/templates/triboo_analytics/course.html:150
 #: lms/templates/triboo_analytics/ilt.html:60
 #: lms/templates/triboo_analytics/learner.html:46
-#, fuzzy
 msgid "Go"
 msgstr "Ir"
 
 #: lms/templates/triboo_analytics/course.html:70
-#, fuzzy
 msgid "Average time to complete the course"
 msgstr "Tempo médio para passar por este curso:"
 
@@ -27507,7 +27329,6 @@ msgstr "Índice"
 #: lms/templates/triboo_analytics/course.html:126
 #: lms/templates/triboo_analytics/course.html:132
 #: lms/templates/triboo_analytics/course.html:138
-#, fuzzy
 msgid "Time Spent"
 msgstr "Quantas Vezes Utilizado"
 
@@ -27530,19 +27351,16 @@ msgid "Analytics - Learner Report"
 msgstr "Analytics - Relatório do Aluno"
 
 #: lms/templates/triboo_analytics/microsite.html:16
-#, fuzzy
 msgid "Analytics - Global Report"
 msgstr "Relatórios Disponíveis"
 
 #: lms/templates/triboo_analytics/microsite.html:47
-#, fuzzy
 msgid "Active Learner"
 msgid_plural "Active Learners"
 msgstr[0] "Uma nota para os alunos"
 msgstr[1] "Uma nota para os alunos"
 
 #: lms/templates/triboo_analytics/microsite.html:51
-#, fuzzy
 msgid "Certificate Delivered"
 msgid_plural "Certificates Delivered"
 msgstr[0] "Certificados gerados."
@@ -27553,12 +27371,10 @@ msgid "Average Time Spent Per Active Learner"
 msgstr "Tempo médio gasto por aluno ativo"
 
 #: lms/templates/triboo_analytics/microsite.html:61
-#, fuzzy
 msgid "Number of Unique Visitors"
 msgstr "Número de Lugares"
 
 #: lms/templates/triboo_analytics/microsite.html:74
-#, fuzzy
 msgid "Device Use"
 msgstr "Quantas Vezes Utilizado"
 
@@ -27575,7 +27391,6 @@ msgid "Active Learners Location"
 msgstr "Localização dos Alunos Ativos"
 
 #: lms/templates/triboo_analytics/my_transcript.html:32
-#, fuzzy
 msgid "Please select a course!"
 msgstr "Por favor, adicione um nome de usuário"
 
@@ -27589,7 +27404,6 @@ msgstr "Analytics - Transcrição da aprendizagem"
 
 #: lms/templates/triboo_analytics/my_transcript.html:213
 #: lms/templates/triboo_analytics/transcript.html:35
-#, fuzzy
 msgid "Learning Transcript"
 msgstr "Transcrição Sincronizada Padrão"
 
@@ -27598,7 +27412,6 @@ msgid "Let's have a look at your learning experience!"
 msgstr "Vamos dar uma olhada na sua experiência de aprendizado!"
 
 #: lms/templates/triboo_analytics/my_transcript.html:221
-#, fuzzy
 msgid "Request a waiver"
 msgstr "Requerer o endereço de e-mail do usuário"
 
@@ -27619,12 +27432,10 @@ msgstr ""
 "da seção em branco."
 
 #: lms/templates/triboo_analytics/my_transcript.html:236
-#, fuzzy
 msgid "Select a course"
 msgstr "Selecione uma moeda."
 
 #: lms/templates/triboo_analytics/my_transcript.html:242
-#, fuzzy
 msgid "Select the section(s)"
 msgstr "Selecionar uma opção"
 
@@ -27641,13 +27452,11 @@ msgstr ""
 "receber uma resposta por email."
 
 #: lms/templates/triboo_analytics/my_transcript.html:248
-#, fuzzy
 msgid "Send"
 msgstr "Enviar para:"
 
 #: lms/templates/triboo_analytics/my_transcript.html:262
 #: lms/templates/triboo_analytics/transcript.html:54
-#, fuzzy
 msgid "Time spent on the platform"
 msgstr "Tempo usado para as tarefas de todo o curso"
 
@@ -27664,7 +27473,6 @@ msgid "Analytics - Learner Transcript"
 msgstr "Analytics - Transcrição do aluno"
 
 #: lms/templates/triboo_analytics/transcript.html:40
-#, fuzzy
 msgid "Learning Transcript of"
 msgstr "Transcrição Sincronizada Padrão"
 
@@ -29509,7 +29317,6 @@ msgstr "Você pode fazer o download do seu {title} clicando no botão abaixo"
 
 #: XBlock: xblock-certificate lms/templates/lt_analytics/table.html
 #: icxblock.html
-#, fuzzy
 msgid "{title} is unavailable."
 msgstr "Curso disponível em Dispositivo Móvel"
 
@@ -29518,12 +29325,10 @@ msgid "Your score {score}% is not enough to get the {type} badge."
 msgstr "Sua pontuação {score}% não é suficiente para obter o emblema {type}."
 
 #: XBlock: xblock-certificate icxblock.html
-#, fuzzy
 msgid "Preview Certificate"
 msgstr "Visualizar Certificado"
 
 #: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
-#, fuzzy
 msgid "View results"
 msgstr "Visualizar crédito"
 
@@ -29536,7 +29341,6 @@ msgid "INSTRUCTOR LED TRAINING"
 msgstr "TREINAMENTO LIDERADO POR INSTRUTOR"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Add to calendar"
 msgstr "Adicionar artigo"
 
@@ -29573,7 +29377,6 @@ msgid "ACCOMMODATION MANAGEMENT"
 msgstr "GESTÃO DE ALOJAMENTO"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Choose a session"
 msgstr "Escolha uma ação:"
 
@@ -29596,12 +29399,10 @@ msgstr ""
 "de volta para validar a conclusão do módulo na plataforma."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Validate"
 msgstr "Dados inválidos"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Bulk Enrollment"
 msgstr "Matrícula"
 
@@ -29668,17 +29469,14 @@ msgid "Hotel Booked"
 msgstr "Hotel Agendado"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Your request is being validated"
 msgstr "O ID da solicitação é inválido."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Your request has been validated"
 msgstr "o código foi aplicado"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Your request has been confirmed"
 msgstr "As suas respostas foram salvas."
 
@@ -29691,7 +29489,6 @@ msgid "accommodation, preferences, specific diet ..."
 msgstr "acomodação, preferências, dieta específica"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Enroll"
 msgstr "Matrícula"
 
@@ -29716,12 +29513,10 @@ msgid "Hotel booked"
 msgstr "Hotel Agendado"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Create a Session"
 msgstr "Fazer uma sugestão"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "Are you sure to delete this session?"
 msgstr "Tem certeza que deseja marcar este envio?"
 
@@ -29734,22 +29529,18 @@ msgid "Acknowledge reception of the attendance sheet"
 msgstr "Reconhecer recebemindo da lista de chamada"
 
 #: lms/templates/courseware/courses.html
-#, fuzzy
 msgid "Availability"
 msgstr "Disponível"
 
 #: lms/templates/courseware/courses.html
-#, fuzzy
 msgid "Current"
 msgstr "Moeda atual"
 
 #: lms/templates/courseware/courses.html
-#, fuzzy
 msgid "New"
 msgstr "Notícias"
 
 #: lms/templates/courseware/courses.html
-#, fuzzy
 msgid "Starts soon"
 msgstr "Inicia"
 
@@ -29759,7 +29550,6 @@ msgstr "Futuro"
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
-#, fuzzy
 msgid "Online"
 msgstr "Online"
 
@@ -29778,19 +29568,15 @@ msgstr "Sala de Aula Virtual"
 msgid "Blended learning"
 msgstr "Blended Learning"
 
-#, fuzzy
 msgid "points"
 msgstr "pontos"
 
-#, fuzzy
 msgid "completed"
 msgstr "completo"
 
-#, fuzzy
 msgid "unknown"
 msgstr "Desconhecido"
 
-#, fuzzy
 msgid "not started"
 msgstr "O curso não começou"
 
@@ -29798,7 +29584,6 @@ msgstr "O curso não começou"
 msgid "passed"
 msgstr "Passou"
 
-#, fuzzy
 msgid "failed"
 msgstr "Falhou"
 
