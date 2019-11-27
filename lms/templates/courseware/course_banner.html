@@ -161,7 +161,7 @@ from six import string_types
         % if user.is_authenticated and (registered or staff_access):
           % if registered:
             <span class="sr">${_("You are enrolled in this course")}</span>
-            <a href="${ resume_course_url if resume_course_url else course_target }" class="action-resume-course">${_("Resume Course")}</a>
+            <a href="${ resume_course_url if resume_course_url else course_target }" class="action-resume-course" title="${_('Resume Course')}">${_("Resume Course")}</a>
           % else:
             % if in_cart:
               <span class="sr">${_('This course is in your cart.')}</span>

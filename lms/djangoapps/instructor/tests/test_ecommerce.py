@@ -30,7 +30,7 @@ class TestECommerceDashboardViews(SiteMixin, SharedModuleStoreTestCase):
 
         # URL for instructor dash
         cls.url = reverse('instructor_dashboard', kwargs={'course_id': text_type(cls.course.id)})
-        cls.ecommerce_link = '<button type="button" class="btn-link e-commerce" data-section="e-commerce">E-Commerce</button>'
+        cls.ecommerce_link = '<button type="button" class="btn-link e-commerce" data-section="e-commerce" title="">E-Commerce</button>'
 
     def setUp(self):
         super(TestECommerceDashboardViews, self).setUp()

@@ -136,13 +136,13 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
       <div class="details">
         <div class="user-summary">
           <div class="discussions">
-            <a href="${discussion_url}">
+            <a href="${discussion_url}" title="${_('Access to the discussion')}">
               <i class="far fa-comment-alt"></i>
               ${nb_talks} ${_("posts")}
             </a>
           </div>
           <div class="trophies">
-            <a href="${progress_url}">
+            <a href="${progress_url}" title="${_('Access to the badge')}">
               <i class="far fa-trophy"></i>
               ${nb_trophies_earned} / ${nb_trophies_possible}
             </a>
@@ -177,8 +177,8 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
               <p class="subtitle">${CourseDetails.fetch(course.id).subtitle}</p>
               <div class="description">${HTML(CourseDetails.fetch(course.id).description)}</div>
             </div>
-            <div class="extend-link readmore">${_('Read more')}</div>
-            <div class="extend-link readless">${_('Read less')}</div>
+            <div class="extend-link readmore" title="${_('Read more')}">${_('Read more')}</div>
+            <div class="extend-link readless" title="${_('Read less')}">${_('Read less')}</div>
           </div>
         </div>
 

@@ -30,7 +30,7 @@ class TestNewInstructorDashboardEmailViewMongoBacked(SharedModuleStoreTestCase):
         # URL for instructor dash
         cls.url = reverse('instructor_dashboard', kwargs={'course_id': text_type(cls.course.id)})
         # URL for email view
-        cls.email_link = '<button type="button" class="btn-link send_email" data-section="send_email">Email</button>'
+        cls.email_link = '<button type="button" class="btn-link send_email" data-section="send_email" title="Email sending">Email</button>'
 
     def setUp(self):
         super(TestNewInstructorDashboardEmailViewMongoBacked, self).setUp()

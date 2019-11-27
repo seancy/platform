@@ -1358,7 +1358,6 @@ from openedx.core.lib.rooted_paths import rooted_glob
 
 courseware_js = [
     'js/ajax-error.js',
-    'js/courseware.js',
     'js/histogram.js',
     'js/navigation.js',
     'js/modules/tab.js',

@@ -8,7 +8,7 @@ import waffle
 from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-
+from openedx.core.djangolib.js_utils import dump_js_escaped_json
 from edxnotes.helpers import is_feature_enabled as is_edxnotes_enabled
 from openedx.core.djangolib.js_utils import js_escaped_string
 from openedx.core.djangolib.markup import HTML
@@ -67,6 +67,17 @@ from openedx.features.course_experience import course_home_page_title, COURSE_OU
   <script type="text/javascript" src="${static.url('js/vendor/flot/jquery.flot.js')}"></script>
 
   <%static:js group='courseware'/>
+  <%static:webpack entry="Courseware">
+    <%
+        keyValuePair = {
+            'textExtend':_('Course menu expand'),
+            'textCollapse':_('Course menu collapse')
+        }
+    %>
+    $(function() {
+        this.Courseware = new Courseware(${keyValuePair | n, dump_js_escaped_json});
+    })
+  </%static:webpack>
   <%include file="/mathjax_include.html" args="disable_fast_preview=True"/>
 
   % if settings.FEATURES.get('ENABLE_COURSEWARE_SEARCH'):
@@ -151,7 +162,7 @@ ${HTML(fragment.foot_html())}
               <form class="search-form">
                 <label for="course-search-input" class="sr">${_('Course Search')}</label>
                 <div class="search-field-wrapper">
-                  <input id="course-search-input" type="text" class="search-field"/>
+                  <input id="course-search-input" type="text" class="search-field" title="${_('Content research')}"/>
                   ##<button type="submit" class="search-button">${_('Search')}</button>
                   <button type="button" class="cancel-button" title="${_('Clear search')}">
                     <span class="icon fal fa-times" aria-hidden="true"></span>

@@ -12,8 +12,14 @@ def url_class(is_active):
   if is_active:
     return "active"
   return ""
-%>
 
+keyValuePair = {
+    'info':_('Course overview'),
+    'discussion':_('Course discussions'),
+    'wiki':_('Course wiki'),
+    'progress':_('Course progression'),
+}
+%>
 % for tab in tab_list:
     <%
       tab_is_active = tab.tab_id in (active_page, default_tab)
@@ -22,7 +28,7 @@ def url_class(is_active):
       tab_class = url_class(tab_is_active)
     %>
     <li class="tab course-tab">
-        <a href="${tab.link_func(course, reverse)}" class="${tab_class}">
+        <a href="${tab.link_func(course, reverse)}" class="${tab_class}" title="${keyValuePair.get(tab.tab_id,'')}">
               ${_(tab.name)}
           % if tab_is_active:
               <span class="sr">, current location</span>

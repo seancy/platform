@@ -20,6 +20,7 @@
 
             initialize: function (options) {
                 this.meanings = options.meanings || {};
+                this.titleMeanings = options.titleMeanings || {};
                 this.$container = this.$el.find('.search-facets-lists');
                 this.facetTpl = HtmlUtils.template($('#facet-tpl').html());
                 this.facetOptionTpl = HtmlUtils.template($('#facet_option-tpl').html());
@@ -53,6 +54,10 @@
                 return this.meanings[key] && this.meanings[key].name || key;
             },
 
+            title:function(key){
+                return this.titleMeanings[key];
+            },
+
             termName: function (facetKey, termKey) {
                 return this.meanings[facetKey] &&
                     this.meanings[facetKey].terms &&
@@ -68,9 +73,11 @@
             },
 
             renderFacet: function (facetKey, options) {
+                var displayName = this.facetName(facetKey)
                 return this.facetTpl({
                     name: facetKey,
-                    displayName: this.facetName(facetKey),
+                    displayName: displayName,
+                    title: this.title(displayName),
                     optionsHtml: this.renderOptions(options)
                 });
             },

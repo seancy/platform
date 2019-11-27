@@ -19,9 +19,18 @@
   </script>
   % endfor
 
+  <%
+    keyValuePair = {
+      'Availability':_('Availability filtering'),
+      'Label':_('Key words filtering'),
+      'Category': _('Category filtering'),
+      'Language': _('Language filtering')
+    }
+  %>
   <%static:require_module module_name="js/discovery/discovery_factory" class_name="DiscoveryFactory">
     DiscoveryFactory(
       ${course_discovery_meanings | n, dump_js_escaped_json},
+      ${keyValuePair | n, dump_js_escaped_json},
       getParameterByName('search_query'),
       "${user_language}",
       "${user_timezone}"
@@ -51,7 +60,7 @@
           <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
             <form class="wrapper-search-input">
               <label for="discovery-input" class="sr">${_('Search for a course')}</label>
-              <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text"/>
+              <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text" title="${_('Course research')}"/>
               <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
                 <span class="icon fa fa-search" aria-hidden="true"></span>
 
@@ -67,7 +76,7 @@
 
           <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
             <section class="search-facets-lists"></section>
-            <button id="clear-all-filters" class="clear-filters flt-right discovery-button"><i class="fa fa-refresh icon"></i>${_('Reset')}</button>
+            <button id="clear-all-filters" class="clear-filters flt-right discovery-button" title="${_('Reset filters')}"><i class="fa fa-refresh icon"></i>${_('Reset')}</button>
           </aside>
 
           <div id="filter-bar" class="filters hide-phone is-collapsed"></div>
@@ -89,3 +98,5 @@
       </section>
     </section>
 </main>
+
+<!--${_('Mandatory Course')} it needs to take a place first, please don't remove.-->

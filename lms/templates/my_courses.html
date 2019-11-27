@@ -137,10 +137,10 @@ from xmodule.modulestore.django import modulestore
             </section>
             <div class="my-courses" id="my-courses">
               <ul class="my-courses-nav">
-                <li class="nav-item" id="all-courses"><button class="btn-link active-section">${_("All courses")}</button></li>
-                <li class="nav-item" id="not-started"><button class="btn-link">${_("Not started")}</button></li>
-                <li class="nav-item" id="started"><button class="btn-link">${_("Started")}</button></li>
-                <li class="nav-item" id="finished"><button class="btn-link">${_("Finished")}</button></li>
+                <li class="nav-item" id="all-courses"><button class="btn-link active-section" title="${_('All my courses')}">${_("All courses")}</button></li>
+                <li class="nav-item" id="not-started"><button class="btn-link" title="${_('My courses not started')}">${_("Not started")}</button></li>
+                <li class="nav-item" id="started"><button class="btn-link" title="${_('My courses started')}">${_("Started")}</button></li>
+                <li class="nav-item" id="finished"><button class="btn-link" title="${_('My courses finished')}">${_("Finished")}</button></li>
               </ul>
               % if len(course_entitlements + course_enrollments) > 0:
                 <ul class="listing-courses">

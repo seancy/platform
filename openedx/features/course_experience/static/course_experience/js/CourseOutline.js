@@ -4,8 +4,9 @@ import { keys } from 'edx-ui-toolkit/js/utils/constants';
 
 // @TODO: Figure out how to make webpack handle default exports when libraryTarget: 'window'
 export class CourseOutline {  // eslint-disable-line import/prefer-default-export
-  constructor() {
+  constructor(options) {
     const focusable = [...document.querySelectorAll('.outline-item.focusable')];
+    this.options = options
 
     focusable.forEach(el => el.addEventListener('keydown', (event) => {
       const index = focusable.indexOf(event.target);
@@ -82,12 +83,14 @@ export class CourseOutline {  // eslint-disable-line import/prefer-default-expor
         toggleAllButton.setAttribute('aria-expanded', 'false');
         sectionAction = collapseSection;
         toggleAllSpan.classList.add(extraPaddingClass);
-        toggleAllSpan.innerText = 'Expand All';
+        toggleAllSpan.innerText = this.options.textExtend;
+        toggleAllSpan.setAttribute('title',this.options.textExtend);
       } else {
         toggleAllButton.setAttribute('aria-expanded', 'true');
         sectionAction = expandSection;
         toggleAllSpan.classList.remove(extraPaddingClass);
-        toggleAllSpan.innerText = 'Collapse All';
+        toggleAllSpan.innerText = this.options.textCollapse;
+        toggleAllSpan.setAttribute('title', this.options.textCollapse);
       }
       const sections = Array.prototype.slice.call(document.querySelectorAll('.accordion-trigger'));
       sections.forEach((sectionToggleButton) => {

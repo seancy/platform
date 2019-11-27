@@ -83,7 +83,7 @@ if course is not None:
                             instructor_link_class += " active"
                     %>
                     <li>
-                      <a class="${instructor_link_class}" href="${reverse('instructor_dashboard', kwargs={'course_id': unicode(course.id)})}" alt="${_('View Instructor Page')}">
+                      <a class="${instructor_link_class}" href="${reverse('instructor_dashboard', kwargs={'course_id': unicode(course.id)})}" alt="${_('Admin Space')}" title="${_('Admin Space')}">
                         <i class="far fa-cog"></i>
                       </a>
                     </li>
@@ -91,7 +91,7 @@ if course is not None:
 
                   % if studio_access_role(request.user) and studio_url is not None:
                     <li>
-                      <a class="instructor-info-action" href="${studio_url}" target="_blank">
+                      <a class="instructor-info-action" href="${studio_url}" target="_blank" title="${_('Edit the Course')}">
                         <i class="far fa-pen"></i><span class="sr">${_('View About Page in studio')}</span>
                       </a>
                     </li>
@@ -100,7 +100,7 @@ if course is not None:
                   and (ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()] \
                   or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in request.user.groups.all()])):
                     <li>
-                      <a class="instructor-info-action" href="${"%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course.id}))}" alt="${_('View Course Report Page')}">
+                      <a class="instructor-info-action" href="${"%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course.id}))}" title="${_('Course Report')}">
                         <i class="far fa-analytics"></i>
                       </a>
                     </li>

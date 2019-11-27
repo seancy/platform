@@ -440,7 +440,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
 
         self.complete_sequential(self.course, vertical1)
         # Test for 'resume' link
-        response = self.visit_course_home(course, resume_count=1)
+        response = self.visit_course_home(course, resume_count=2)
 
         # Test for 'resume' link URL - should be vertical 1
         content = pq(response.content)
@@ -448,7 +448,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
 
         self.complete_sequential(self.course, vertical2)
         # Test for 'resume' link
-        response = self.visit_course_home(course, resume_count=1)
+        response = self.visit_course_home(course, resume_count=2)
 
         # Test for 'resume' link URL - should be vertical 2
         content = pq(response.content)
@@ -459,12 +459,12 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
         self.visit_sequential(course, course.children[0], course.children[0].children[0])
 
         # Test for 'resume' link URL - should be vertical 2 (last completed block, NOT last visited)
-        response = self.visit_course_home(course, resume_count=1)
+        response = self.visit_course_home(course, resume_count=2)
         content = pq(response.content)
         self.assertTrue(content('.action-resume-course').attr('href').endswith('/vertical/' + vertical2.url_name))
 
     def test_resume_course_deleted_sequential(self):
-        """
+        """self.visit_course_home(course, start_count=0, resume_count=1)
         Tests resume course when the last completed sequential is deleted and
         there is another sequential in the vertical.
 
@@ -484,7 +484,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
             self.store.delete_item(sequential.location, self.user.id)
 
         # check resume course buttons
-        response = self.visit_course_home(course, resume_count=1)
+        response = self.visit_course_home(course, resume_count=2)
 
         content = pq(response.content)
         self.assertTrue(content('.action-resume-course').attr('href').endswith('/sequential/' + sequential2.url_name))
@@ -510,7 +510,7 @@ class TestCourseOutlineResumeCourse(SharedModuleStoreTestCase, CompletionWaffleT
                 self.store.delete_item(sequential.location, self.user.id)
 
         # check resume course buttons
-        self.visit_course_home(course, start_count=0, resume_count=1)
+        self.visit_course_home(course, start_count=0, resume_count=2)
 
     def test_course_home_for_global_staff(self):
         """

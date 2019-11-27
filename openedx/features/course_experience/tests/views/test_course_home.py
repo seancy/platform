@@ -245,7 +245,7 @@ class TestCourseHomePageAccess(CourseHomePageTestCase):
         is_unenrolled_staff = user_type is CourseUserType.UNENROLLED_STAFF
         self.assertContains(response, TEST_CHAPTER_NAME, count=(1 if is_enrolled or is_unenrolled_staff else 0))
         self.assertContains(response, 'Start Course', count=(0 if is_enrolled or is_unenrolled_staff else 1))
-        self.assertContains(response, 'Resume Course', count=(1 if is_enrolled else 0))
+        self.assertContains(response, 'Resume Course', count=(2 if is_enrolled else 0))
         self.assertContains(response, 'View Course', count=(1 if is_unenrolled_staff else 0))
         # self.assertContains(response, 'Learn About Verified Certificate', count=(1 if is_enrolled else 0))
         # self.assertContains(response, TEST_WELCOME_MESSAGE, count=(1 if is_enrolled or is_unenrolled_staff else 0))
@@ -287,7 +287,7 @@ class TestCourseHomePageAccess(CourseHomePageTestCase):
         is_unenrolled_staff = user_type is CourseUserType.UNENROLLED_STAFF
         self.assertContains(response, TEST_CHAPTER_NAME, count=(1 if is_enrolled or is_unenrolled_staff else 0))
         self.assertContains(response, 'Start Course', count=(0 if is_enrolled or is_unenrolled_staff else 1))
-        self.assertContains(response, 'Resume Course', count=(1 if is_enrolled else 0))
+        self.assertContains(response, 'Resume Course', count=(2 if is_enrolled else 0))
         self.assertContains(response, 'View Course', count=(1 if is_unenrolled_staff else 0))
         # self.assertContains(response, 'Learn About Verified Certificate', count=(1 if is_enrolled else 0))
 

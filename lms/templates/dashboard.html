@@ -159,7 +159,7 @@ from xmodule.modulestore.django import modulestore
               <p>${_("posts")}</p>
             </div>
 
-            <a class="flat-button view-transcript" href="${reverse('analytics_my_transcript')}"><i class="far fa-analytics"></i>${_("View my learning transcript")}</a>
+            <a class="flat-button view-transcript" href="${reverse('analytics_my_transcript')}" title="${_('Access to my learning experience')}"><i class="far fa-analytics"></i>${_("View my learning transcript")}</a>
           </section>
         </section>
 
@@ -447,3 +447,4 @@ from xmodule.modulestore.django import modulestore
 </div>
 
 <%include file="dashboard/_dashboard_entitlement_unenrollment_modal.html"/>
+<!--test info.-->

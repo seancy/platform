@@ -7498,10 +7498,6 @@ msgstr ""
 msgid "Extensions"
 msgstr ""
 
-#: lms/djangoapps/instructor/views/instructor_dashboard.py:725
-msgid "Data Download"
-msgstr ""
-
 #: lms/djangoapps/instructor/views/instructor_dashboard.py:822
 #: lms/templates/footer.html:127
 #: lms/templates/header/navbar-authenticated.html:79
@@ -14908,9 +14904,6 @@ msgid ""
 "Limit to ~150 characters"
 msgstr ""
 
-#: cms/templates/settings.html:439
-msgid "Course Overview"
-msgstr ""
 
 #: cms/templates/settings.html:442
 msgid "HTML Code Editor"
@@ -15378,13 +15371,13 @@ msgstr ""
 msgid "Access is restricted to:"
 msgstr ""
 
-#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:185
-msgid "Read more"
-msgstr ""
-
-#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:186
-msgid "Read less"
-msgstr ""
+##: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:185
+#msgid "Read more"
+#msgstr ""
+#
+##: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:186
+#msgid "Read less"
+#msgstr ""
 
 #: lms/templates/courseware/course_about.html:259
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:246
@@ -16176,10 +16169,6 @@ msgstr ""
 msgid "posts"
 msgstr ""
 
-#: lms/templates/dashboard.html:164
-msgid "View my learning transcript"
-msgstr ""
-
 #: lms/templates/dashboard.html:255 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
 msgid "You are not enrolled in any courses yet."
@@ -16366,10 +16355,6 @@ msgstr ""
 #: lms/templates/static_templates/faq.html:10
 #: themes/red-theme/lms/templates/footer.html:41
 msgid "FAQ"
-msgstr ""
-
-#: lms/templates/footer.html:121
-msgid "Admin Space"
 msgstr ""
 
 #: lms/templates/forgot_password_modal.html:24
@@ -18903,11 +18888,6 @@ msgstr ""
 msgid "View About Page in studio"
 msgstr ""
 
-#: lms/templates/courseware/course_about.html:146
-#: lms/templates/courseware/course_navigation.html:103
-msgid "View Course Report Page"
-msgstr ""
-
 #: lms/templates/courseware/course_about.html:183
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:175
 msgid "Prerequisites"
@@ -18990,11 +18970,6 @@ msgstr ""
 
 #: lms/templates/courseware/course_banner.html:144
 msgid "You are enrolled in this course"
-msgstr ""
-
-#: lms/templates/courseware/course_banner.html:145
-#: lms/templates/courseware/info.html:75
-msgid "Resume Course"
 msgstr ""
 
 #: lms/templates/courseware/course_banner.html:148
@@ -24118,14 +24093,6 @@ msgstr ""
 msgid "Global Report"
 msgstr ""
 
-#: lms/templates/triboo_analytics/course.html:25
-#: lms/templates/triboo_analytics/ilt.html:25
-#: lms/templates/triboo_analytics/learner.html:24
-#: lms/templates/triboo_analytics/microsite.html:30
-#: lms/templates/triboo_analytics/transcript.html:24
-msgid "Course Report"
-msgstr ""
-
 #: lms/templates/triboo_analytics/course.html:27
 #: lms/templates/triboo_analytics/ilt.html:27
 #: lms/templates/triboo_analytics/learner.html:26
@@ -24509,10 +24476,6 @@ msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-dates-fragment.html:10
 msgid "Important Course Dates"
-msgstr ""
-
-#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27
-msgid "Expand All"
 msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:69
@@ -26288,4 +26251,254 @@ msgstr ""
 
 # edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "failed"
+msgstr ""
+
+
+## for ALT-text
+#global
+#: lms/templates/header/navbar-authenticated.html:37
+msgid "My Dashboard"
+msgstr ""
+
+#: lms/templates/header/navbar-authenticated.html:46
+msgid "Customized course catalog"
+msgstr ""
+
+#: lms/templates/header/navbar-authenticated.html:58
+msgid "External content catalog"
+msgstr ""
+
+#: lms/templates/header/navbar-authenticated.html:67
+msgid "Courses I am enrolled in"
+msgstr ""
+
+#: lms/templates/header/navbar-authenticated.html:77
+msgid "Tracking learners and courses analytics"
+msgstr ""
+
+#: lms/templates/header/navbar-authenticated.html:86
+msgid "Built-in authoring tool"
+msgstr ""
+
+#: lms/templates/header/user_dropdown.html:42
+msgid "Account setting"
+msgstr ""
+
+#: lms/templates/header/user_dropdown.html:43
+msgid "Sign out"
+msgstr ""
+
+#Dashboard
+#: lms/templates/dashboard.html:166
+msgid "Access to my learning experience"
+msgstr ""
+
+#Explore
+#: lms/templates/courseware/courses.html:56
+msgid "Course research"
+msgstr ""
+
+#: lms/templates/courseware/courses.html:24
+msgid "Availability filtering"
+msgstr ""
+
+#: lms/templates/courseware/courses.html:25
+msgid "Key words filtering"
+msgstr ""
+
+#: lms/templates/courseware/courses.html:26
+msgid "Category filtering"
+msgstr ""
+
+#: lms/templates/courseware/courses.html:27
+msgid "Language filtering"
+msgstr ""
+
+#: lms/templates/courseware/courses.html:136
+msgid "Mandatory Course"
+msgstr ""
+
+#: lms/templates/courseware/courses.html:74
+msgid "Reset filters"
+msgstr ""
+
+#My courses
+#: lms/templates/my_courses.html:140
+msgid "All my courses"
+msgstr ""
+
+#: lms/templates/my_courses.html:141
+msgid "My courses not started"
+msgstr ""
+
+#: lms/templates/my_courses.html:142
+msgid "My courses started"
+msgstr ""
+
+#: lms/templates/my_courses.html:143
+msgid "My courses finished"
+msgstr ""
+
+#Course about - overview
+#: lms/templates/courseware/tabs.html:17
+msgid "Course overview"
+msgstr ""
+
+#: lms/templates/courseware/tabs.html:18
+msgid "Course discussions"
+msgstr ""
+
+#: lms/templates/courseware/tabs.html:19
+msgid "Course progression"
+msgstr ""
+
+#: lms/templates/courseware/tabs.html:20
+msgid "Course wiki"
+msgstr ""
+
+#: lms/templates/courseware/course_banner.html:159
+#: lms/templates/courseware/info.html:75    remove the duplicated one
+msgid "Resume Course"
+msgstr ""
+
+#: lms/templates/footer.html:121      remove the duplicated one
+#: lms/templates/courseware/course_navigation.html:86
+msgid "Admin Space"
+msgstr ""
+
+#: lms/templates/courseware/course_navigation.html:94
+msgid "Edit the Course"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:25
+#: lms/templates/triboo_analytics/ilt.html:25
+#: lms/templates/triboo_analytics/learner.html:24
+#: lms/templates/triboo_analytics/microsite.html:30
+#: lms/templates/triboo_analytics/transcript.html:24
+#: lms/templates/courseware/course_about.html:146
+#: lms/templates/courseware/course_navigation.html:103
+msgid "Course Report"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:190  remove the duplicated one
+msgid "Expand All"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:191
+msgid "Collapse All"
+msgstr ""
+
+#: lms/templates/courseware/course_about.html:186
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:180   remove the duplicated one
+msgid "Read more"
+msgstr ""
+
+#: lms/templates/courseware/course_about.html:187
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:181   remove the duplicated one
+msgid "Read less"
+msgstr ""
+
+## Instructor dashboard
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:104
+msgid "Course dashboard"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:105
+msgid "Course registration"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:106
+msgid "Course cohort administration"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:107
+msgid "Discussion administration"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:108
+msgid "Quiz administration"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:109   remove the duplicated one
+msgid "Data download"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:110
+msgid "Email sending"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:111
+msgid "Certificates administration"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:112
+msgid "Open response administration"
+msgstr ""
+
+## Course About - Discussion
+#: lms/djangoapps/discussion/templates/discussion/discussion_board_fragment.html:34
+msgid "Create a post"
+msgstr ""
+
+#: lms/djangoapps/discussion/templates/discussion/discussion_board_fragment.html:35
+msgid "View all discussions"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:145
+msgid "Access to the badge"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:139
+msgid "Access to the discussion"
+msgstr ""
+
+## Course
+#: lms/templates/courseware/courseware.html:154
+msgid "Content research"
+msgstr ""
+
+#: lms/templates/courseware/courseware.html:73
+msgid "Course menu expand"
+msgstr ""
+
+#: lms/templates/courseware/courseware.html:74
+msgid "Course menu collapse"
+msgstr ""
+
+#: lms/templates/edit_unit_link.html:5
+msgid "Content edition"
+msgstr ""
+
+#: lms/templates/ux/reference/fragments/unit-fragment.html:500
+msgid "Bookmark a course content"
+msgstr ""
+
+#: lms/templates/seq_module.html:85
+msgid "Go back on the previous page"
+msgstr ""
+
+#: lms/templates/seq_module.html:89
+msgid "Move forward to the next page"
+msgstr ""
+
+## studio
+#: cms/templates/index.html:321
+msgid "See the courses"
+msgstr ""
+
+#: cms/templates/index.html:323
+msgid "See the archived courses"
+msgstr ""
+
+#: cms/templates/index.html:326
+msgid "See my libraries"
+msgstr ""
+
+#: cms/templates/index.html:35
+msgid "Create a new coures"
+msgstr ""
+
+#: cms/templates/index.html:41
+msgid "Create a new library"
 msgstr ""
