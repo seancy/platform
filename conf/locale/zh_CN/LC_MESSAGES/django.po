@@ -13755,6 +13755,10 @@ msgstr "发布的帖子"
 msgid "View my learning transcript"
 msgstr "查看我的学习报告"
 
+#: lms/templates/dashboard.html:168
+msgid "Continue Learning..."
+msgstr "继续学习..."
+
 #: lms/templates/dashboard.html:253 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
 msgid "You are not enrolled in any courses yet."

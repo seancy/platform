@@ -410,6 +410,9 @@ FEATURES = {
     'ENABLE_ACCOUNT_DELETION': True,
     # Enable faq link at bottom of the footer.
     'ENABLE_FAQ_LINK': False,
+
+    # Set the display number for last activity courses in dashboard.
+    'LAST_ACTIVITY_COURSES_NUM': 3,
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews

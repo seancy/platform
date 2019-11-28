@@ -14574,6 +14574,10 @@ msgstr "discussions(s)"
 msgid "View my learning transcript"
 msgstr "Afficher mon rapport d'activité"
 
+#: lms/templates/dashboard.html:168
+msgid "Continue Learning..."
+msgstr "Continuer à apprendre..."
+
 #: lms/templates/dashboard.html:253 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
 msgid "You are not enrolled in any courses yet."

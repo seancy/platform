@@ -163,6 +163,19 @@ from xmodule.modulestore.django import modulestore
           </section>
         </section>
 
+        % if last_activity_enrollments:
+          <div class="last-activity">
+            <header class="wrapper-header-last-activity">
+              <h2 class="header-last-activity">${_("Continue Learning...")}</h2>
+            </header>
+            <ul class="listing-last-activity">
+              % for course in last_activity_enrollments:
+                <%include file='dashboard/_dashboard_last_activity.html'
+                args='course=course, progress_summaries=progress_summaries'/>
+              % endfor
+            </ul>
+          </div>
+        % endif
 
         <div class="my-courses swiper-container" id="my-courses">
           % if display_dashboard_courses:

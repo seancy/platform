@@ -16169,6 +16169,10 @@ msgstr ""
 msgid "posts"
 msgstr ""
 
+#: lms/templates/dashboard.html:168
+msgid "Continue Learning..."
+msgstr ""
+
 #: lms/templates/dashboard.html:255 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
 msgid "You are not enrolled in any courses yet."

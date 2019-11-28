@@ -27,6 +27,7 @@ import track.views
 from bulk_email.models import BulkEmailFlag, Optout  # pylint: disable=import-error
 from course_modes.models import CourseMode
 from courseware.access import has_access
+from courseware.courses import sort_by_last_block_completed
 from courseware.models import StudentModule, XModuleUserStateSummaryField
 from edxmako.shortcuts import render_to_response, render_to_string
 from entitlements.models import CourseEntitlement
@@ -870,6 +871,11 @@ def student_dashboard(request):
             enr for enr in course_enrollments if entitlement.enrollment_course_run.course_id != enr.course_id
         ]
 
+    last_activity_enrollments = sort_by_last_block_completed(user, course_enrollments)
+    max_latest_display = settings.FEATURES.get('LAST_ACTIVITY_COURSES_NUM', 3)
+    if len(last_activity_enrollments) > max_latest_display:
+        last_activity_enrollments = last_activity_enrollments[:max_latest_display]
+
     context = {
         'urls': urls,
         'programs_data': programs_data,
@@ -921,6 +927,7 @@ def student_dashboard(request):
         'nb_badges_obtained': nb_badges_obtained,
         'nb_posts': nb_posts,
         'progress_summaries': progress_summaries,
+        'last_activity_enrollments': last_activity_enrollments,
     }
 
     if ecommerce_service.is_enabled(request.user):

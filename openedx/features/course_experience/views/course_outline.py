@@ -39,7 +39,7 @@ class CourseOutlineFragmentView(EdxFragmentView):
         if check_access:
             course_overview = get_course_overview_with_access(request.user, 'load', course_key, check_if_enrolled=True)
         else:
-            course_overview = course_overview = CourseOverview.get_from_id(course_key)
+            course_overview = CourseOverview.get_from_id(course_key)
         course = modulestore().get_course(course_key)
 
         course_block_tree = get_course_outline_block_tree(request, course_id)

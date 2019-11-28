@@ -106,11 +106,13 @@ from six import string_types
           </li>
         % endif
       </ul>
+      % if course.vendor:
       <ul class="course-tags-list">
         % for course_tag in course.vendor:
           <li>${_(course_tag)}</li>
         % endfor
       </ul>
+      % endif
     </section>
 
     <section class="course-control">
