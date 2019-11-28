@@ -633,12 +633,7 @@ def student_dashboard(request):
     # get progress summary of each courses
     progress_summaries = {}
     nb_badges_obtained = 0
-    try:
-        cc_user = cc.User.from_django_user(user)
-        cc_info = cc_user.to_dict()
-        nb_posts = len(cc_info['subscribed_thread_ids'])
-    except:
-        nb_posts = 0
+    nb_posts = 0
     for c in course_enrollments:
         course_descriptor = modulestore().get_course(c.course_id)
         if course_descriptor:
@@ -666,6 +661,8 @@ def student_dashboard(request):
         }
         progress_summaries.update({c.course_id: summary})
         nb_badges_obtained += nb_trophies_earned
+        cc_user = cc.User(id=user.id, course_id=c.course_id).to_dict()
+        nb_posts += cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
 
     # filter completed courses and not completed
     completed_courses = [c for c in course_enrollments if c.completed]
