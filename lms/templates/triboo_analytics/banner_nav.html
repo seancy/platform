@@ -39,6 +39,11 @@ from triboo_analytics.models import ANALYTICS_LIMITED_ACCESS_GROUP
         % else:
         <li class="tab"><a href="${reverse('analytics_ilt')}">${_("ILT Report")}</a></li>
         % endif
+        % if active_page == "customized":
+        <li class="tab"><a href="${reverse('analytics_customized')}" class="active">${_("Customized Report")}</a></li>
+        % else:
+        <li class="tab"><a href="${reverse('analytics_customized')}">${_("Customized Report")}</a></li>
+        % endif
         <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
     </ol>
 </nav>

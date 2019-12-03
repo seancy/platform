@@ -57,7 +57,12 @@ from util.json_request import JsonResponse, JsonResponseBadRequest
 from util.date_utils import to_timestamp
 from opaque_keys.edx.django.models import CourseKeyField
 from xmodule.modulestore.django import modulestore
-from forms import UserPropertiesHelper, TableFilterForm, UserPropertiesForm
+from forms import (
+    UserPropertiesHelper,
+    TableFilterForm,
+    UserPropertiesForm,
+    UserCoursesForm,
+)
 from models import (
     ANALYTICS_ACCESS_GROUP,
     ANALYTICS_LIMITED_ACCESS_GROUP,
@@ -84,6 +89,8 @@ from tables import (
     IltTable,
     IltLearnerTable
 )
+from django.db.models import Q
+
 
 logger = logging.getLogger('triboo_analytics')
 
@@ -711,6 +718,17 @@ def get_course_summary_table_filters(request, course_key, last_update, as_string
     return filter_form, user_properties_form, filter_kwargs, exclude, query_dict
 
 
+def get_customized_course_summary_table_filters(request, course_keys, last_update, as_string=False):
+    filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+    date_time = day2str(last_update) if as_string else last_update
+    day = date_time.date() if date_time else timezone.now().date()
+    course_filter = Q()
+    for course_key in course_keys:
+        course_filter |= Q(**{'course_id': "%s" % course_key if as_string else course_key})
+    all_filters = Q(**{'created': day}) & Q(**filter_kwargs) & course_filter
+    return filter_form, user_properties_form, all_filters, filter_kwargs, exclude, query_dict
+
+
 def get_table(report_cls, filter_kwargs, table_cls, exclude):
     if filter_kwargs.pop('invalid', False):
         return table_cls([]), 0
@@ -733,6 +751,30 @@ def get_query_triples(query_dict):
             field_name = field_name.capitalize()
             query_triples.append((value, field_name, query_dict[query_field_key]))
     return query_triples
+
+
+def get_all_courses(request, orgs):
+    course_overviews = CourseOverview.objects.none()
+
+    for org in orgs:
+        org_course_overviews = CourseOverview.objects.filter(org=org, start__lte=timezone.now())
+        course_overviews = course_overviews | org_course_overviews
+
+    overviews = []
+    if ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in request.user.groups.all()]:
+        for overview in course_overviews:
+            instructors = set(CourseInstructorRole(overview.id).users_with_role())
+            # staff should be a superset of instructors. Do a union to ensure.
+            staff = set(CourseStaffRole(overview.id).users_with_role()).union(instructors)
+            if request.user in staff:
+                overviews.append(overview)
+    else:
+        overviews = course_overviews
+
+    courses = {"%s" % overview.id: overview.display_name_with_default for overview in overviews}
+    courses_list = sorted(courses.items(), key=operator.itemgetter(1))
+
+    return courses, courses_list
 
 
 @login_required
@@ -1209,3 +1251,141 @@ def ilt_export_table(request):
     return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
 
 
+@login_required
+@analytics_on
+@analytics_full_member_required
+@ensure_csrf_cookie
+def customized_view(request):
+
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+
+    report_type = request.GET.get('report_type', '')
+    courses_selected = request.GET.get('course_selected', '')
+    report_types = [
+        ('course_summary', 'Course Summary'),
+        ('course_process', 'Course Process'),
+        ('course_time_spent', 'Course Time Spent'),
+        ('learner', 'Learner'),
+        ('ilt_global', 'ILT Global'),
+        ('ilt_learner', 'ILT Learner'),
+    ]
+    export_formats = ['csv', 'xls', 'json']
+    courses, courses_list = get_all_courses(request, orgs)
+    last_reportlog = ReportLog.get_latest()
+
+    analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                                settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+    user_properties_helper = UserPropertiesHelper(analytics_user_properties)
+
+    request_copy = request.GET.copy()
+    request_copy = new_request_copy(request_copy)
+    filter_form = TableFilterForm(request_copy, user_properties_helper.get_possible_choices())
+    user_properties_form = UserPropertiesForm(request_copy,
+                                              user_properties_helper.get_possible_choices(False),
+                                              user_properties_helper.get_initial_choices())
+    query_dict = get_query_dict(request)
+
+    return render_to_response(
+        "triboo_analytics/customized.html",
+        {
+            'report_types': report_types,
+            'report_type': report_type,
+            'courses': courses_list,
+            'courses_selected': courses_selected,
+            'query_dict': query_dict,
+            'filter_form': filter_form,
+            'user_properties_form': user_properties_form,
+            'export_formats': export_formats,
+            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'course'}),
+        }
+    )
+
+
+@transaction.non_atomic_requests
+@analytics_on
+@analytics_member_required
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def customized_export_table(request):
+
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+
+    report_type = request.GET.get('report_type', None)
+
+    if report_type == 'course':
+        course_report_type = request.GET.get('course_report_type')
+        last_reportlog = ReportLog.get_latest()
+        if last_reportlog:
+            last_update = last_reportlog.created
+
+            if course_report_type == "summary":
+                courses, courses_list = get_all_courses(request, orgs)
+                user_courses_form = UserCoursesForm(request.GET.copy(), courses_list)
+                course_ids_selected = []
+                if user_courses_form.is_valid():
+                    course_ids_selected = user_courses_form.cleaned_data['selected_courses']
+                course_keys_selected = [CourseKey.from_string(id) for id in course_ids_selected]
+                filter_form, user_properties_form, all_filters, \
+                filter_kwargs, exclude, query_dict = get_customized_course_summary_table_filters(
+                                                            request,
+                                                            course_keys_selected,
+                                                            last_update,
+                                                            as_string=True)
+                report_args = {
+                    'report_cls': LearnerCourseDailyReport.__name__,
+                    'filter_kwargs': filter_kwargs,
+                    'all_filters': all_filters,
+                    'table_cls': CourseTable.__name__,
+                    'exclude': list(exclude)
+                }
+                return _export_table(request, CourseKeyField.Empty, 'summary_report', report_args)
+
+            else:
+                try:
+                    course_key = CourseKey.from_string(request.GET.get('course_id', None))
+                except InvalidKeyError:
+                    return JsonResponseBadRequest({"message": _("Invalid course id.")})
+                unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
+                                                                                            request)
+                report_args = {
+                    'filter_kwargs': filter_kwargs,
+                    'exclude': list(exclude)
+                }
+                if course_report_type == "progress":
+                    return _export_table(request, course_key, 'progress_report', report_args)
+                elif course_report_type == "time_spent":
+                    return _export_table(request, course_key, 'time_spent_report', report_args)
+        return None
+
+    elif report_type == 'learner':
+        unused_filter_form, unused_prop_form, filter_kwargs, exclude, unused_update, query_dict = get_learner_table_filters(
+                                                                                                    request,
+                                                                                                    orgs,
+                                                                                                    as_string=True)
+        report_args = {
+            'report_cls': LearnerDailyReport.__name__,
+            'filter_kwargs': filter_kwargs,
+            'table_cls': LearnerDailyTable.__name__,
+            'exclude': list(exclude)
+        }
+        return _export_table(request, CourseKeyField.Empty, 'learner_report', report_args)
+
+    elif report_type == 'ilt':
+        ilt_report_type = request.GET.get('report', "global")
+
+        if ilt_report_type == "global":
+            report_args = {'orgs': orgs}
+            return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
+
+        # ilt_report_type == "learner"
+        unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+        report_args = {
+            'orgs': orgs,
+            'filter_kwargs': filter_kwargs,
+            'exclude': list(exclude)
+        }
+        return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)

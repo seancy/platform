@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^learner/$', views.learner_view, name='analytics_learner'),
     url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),
 
-    url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt|global)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
+    url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt|global|customized)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
         views.list_table_downloads, name='list_table_downloads'),
     url(r'^transcript/export/$', views.my_transcript_export_table, name='analytics_my_transcript_export'),
     url(r'^learner_transcript/(?P<user_id>\w+)/export/$', views.transcript_export_table, name='analytics_transcript_export'),
@@ -29,4 +29,6 @@ urlpatterns = [
 
     url(r'^ilt/$', views.ilt_view, name='analytics_ilt'),
     url(r'^ilt/export/$', views.ilt_export_table, name='analytics_ilt_export'),
+
+    url(r'^customized/$', views.customized_view, name='analytics_customized'),
 ]
