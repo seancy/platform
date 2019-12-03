@@ -1,11 +1,10 @@
 (function(define) {
     'use strict';
-
-    define(['backbone', 'js/discovery/models/search_state', 'js/discovery/collections/filters',
+    define(['backbone', 'underscore', 'js/discovery/models/search_state', 'js/discovery/collections/filters',
         'js/discovery/views/search_form', 'js/discovery/views/courses_listing',
         'js/discovery/views/filter_bar', 'js/discovery/views/refine_sidebar'],
-        function(Backbone, SearchState, Filters, SearchForm, CoursesListing, FilterBar, RefineSidebar) {
-            return function(meanings, searchQuery, userLanguage, userTimezone) {
+        function(Backbone, _, SearchState, Filters, SearchForm, CoursesListing, FilterBar, RefineSidebar) {
+            return function(meanings, titleMeanings, searchQuery, userLanguage, userTimezone) {
                 var dispatcher = _.extend({}, Backbone.Events);
                 var search = new SearchState();
                 var filters = new Filters();
@@ -13,7 +12,8 @@
                 var filterBar = new FilterBar({collection: filters});
                 var refineSidebar = new RefineSidebar({
                     collection: search.discovery.facetOptions,
-                    meanings: meanings
+                    meanings: meanings,
+                    titleMeanings: titleMeanings
                 });
                 var listing;
                 var courseListingModel = search.discovery;

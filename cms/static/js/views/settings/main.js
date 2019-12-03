@@ -1,10 +1,12 @@
 define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui', 'js/utils/date_utils',
     'js/models/uploads', 'js/views/uploads', 'js/views/license', 'js/models/license',
     'common/js/components/views/feedback_notification', 'jquery.timepicker', 'date', 'gettext',
-    'js/views/learning_info', 'js/views/instructor_info', "js/views/reminder_info", 'edx-ui-toolkit/js/utils/string-utils'],
+    'js/views/learning_info', 'js/views/instructor_info', 'js/views/reminder_info', 'js/views/course_tags_info',
+    'edx-ui-toolkit/js/utils/string-utils'],
        function(ValidatingView, CodeMirror, _, $, ui, DateUtils, FileUploadModel,
                 FileUploadDialog, LicenseView, LicenseModel, NotificationView,
-                timepicker, date, gettext, LearningInfoView, InstructorInfoView, ReminderInfoView, StringUtils) {
+                timepicker, date, gettext, LearningInfoView, InstructorInfoView, ReminderInfoView, CourseTagsInfo, StringUtils) {
+           'use strict';
            var DetailsView = ValidatingView.extend({
     // Model class is CMS.Models.Settings.CourseDetails
                events: {
@@ -24,17 +26,17 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'click .action-upload-image': 'uploadImage',
                    'click .add-course-learning-info': 'addLearningFields',
                    'click .add-course-instructor-info': 'addInstructorFields',
-                   'click .add-course-reminder-info': "addReminderFields",
-                   'click #course-order-increase': "increaseCourseOrder",
-                   'click #course-order-decrease': "decreaseCourseOrder"
+                   'click .add-course-reminder-info': 'addReminderFields',
+                   'click #course-order-increase': 'increaseCourseOrder',
+                   'click #course-order-decrease': 'decreaseCourseOrder',
+                   'click .add-course-tags': 'addCourseTags'
                },
 
                initialize: function(options) {
                    options = options || {};
         // fill in fields
-                   this.$el.find("#course-vendor").val(this.model.get('vendor'));
-                   this.$el.find("#course-category").val(this.model.get('course_category'));
-                   this.$el.find("#course-country").val(this.model.get('course_country'));
+                   this.$el.find('#course-category').val(this.model.get('course_category'));
+                   this.$el.find('#course-country').val(this.model.get('course_country'));
                    this.$el.find('#course-language').val(this.model.get('language'));
                    this.$el.find('#course-organization').val(this.model.get('org'));
                    this.$el.find('#course-number').val(this.model.get('course_id'));
@@ -80,7 +82,12 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    });
 
                    this.reminder_info_view = new ReminderInfoView({
-                       el: $(".course-reminder-details-fields"),
+                       el: $('.course-reminder-details-fields'),
+                       model: this.model
+                   });
+
+                   this.course_tags_info_view = new CourseTagsInfo({
+                       el: $('.course-tags'),
                        model: this.model
                    });
                },
@@ -110,13 +117,12 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.$el.find('#' + this.fieldToSelectorMap.re_enroll_time_unit).val(this.model.get('re_enroll_time_unit'));
                    this.$el.find('#' + this.fieldToSelectorMap.periodic_reminder_day).val(this.model.get('periodic_reminder_day'));
                    if (this.model.get('periodic_reminder_enabled')) {
-                       this.$('#' + this.fieldToSelectorMap['periodic_reminder_enabled']).attr('checked', this.model.get('periodic_reminder_enabled'));
-                   }
-                   else {
-                       this.$('#' + this.fieldToSelectorMap['periodic_reminder_enabled']).removeAttr('checked')
+                       this.$('#' + this.fieldToSelectorMap.periodic_reminder_enabled).attr('checked', this.model.get('periodic_reminder_enabled'));
+                   } else {
+                       this.$('#' + this.fieldToSelectorMap.periodic_reminder_enabled).removeAttr('checked');
                    }
 
-                   this.$el.find("#course-order").val(this.model.get('course_order'));
+                   this.$el.find('#course-order').val(this.model.get('course_order'));
 
                    this.$el.find('#' + this.fieldToSelectorMap.subtitle).val(this.model.get('subtitle'));
                    this.$el.find('#' + this.fieldToSelectorMap.duration).val(this.model.get('duration'));
@@ -138,20 +144,18 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    var videoSample = this.model.videosourceSample();
                    if (videoSample == null) {
                        // just pass
-                   }
-                   else if (videoSample.includes("//www.youtube.com/embed/")) {
+                   } else if (videoSample.includes('//www.youtube.com/embed/')) {
                        this.$el.find('.current-course-introduction-video iframe').attr('src', videoSample).show();
-                       this.$el.find('.current-course-introduction-video video').hide()
-                   }
-                   else {
+                       this.$el.find('.current-course-introduction-video video').hide();
+                   } else {
                        this.$el.find('.current-course-introduction-video iframe').hide();
-                       this.$el.find('.current-course-introduction-video video').show().find('source').attr('src', videoSample);
+                       this.$el.find('.current-course-introduction-video video').show().find('source')
+                       .attr('src', videoSample);
                        this.$el.find('#intro-video').get(0).load();
-                       if (videoSample == '') {
-                           this.$el.find('.current-course-introduction-video .video-error').show()
-                       }
-                       else {
-                           this.$el.find('.current-course-introduction-video .video-error').hide()
+                       if (videoSample === '') {
+                           this.$el.find('.current-course-introduction-video .video-error').show();
+                       } else {
+                           this.$el.find('.current-course-introduction-video .video-error').hide();
                        }
                    }
                    this.$el.find('#' + this.fieldToSelectorMap.intro_video).val(this.model.get('intro_video') || '');
@@ -177,7 +181,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    pre_requisite_courses = pre_requisite_courses.length > 0 ? pre_requisite_courses : '';
                    this.$el.find('#' + this.fieldToSelectorMap.pre_requisite_courses).val(pre_requisite_courses);
 
-                   if (this.model.get('entrance_exam_enabled') == 'true') {
+                   if (this.model.get('entrance_exam_enabled') === 'true') {
                        this.$('#' + this.fieldToSelectorMap.entrance_exam_enabled).attr('checked', this.model.get('entrance_exam_enabled'));
                        this.$('.div-grade-requirements').show();
                    } else {
@@ -186,10 +190,9 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    }
 
                    if (this.model.get('course_mandatory_enabled')) {
-                       this.$('#' + this.fieldToSelectorMap['course_mandatory_enabled']).attr('checked', this.model.get('course_mandatory_enabled'));
-                   }
-                   else {
-                       this.$('#' + this.fieldToSelectorMap['course_mandatory_enabled']).removeAttr('checked')
+                       this.$('#' + this.fieldToSelectorMap.course_mandatory_enabled).attr('checked', this.model.get('course_mandatory_enabled'));
+                   } else {
+                       this.$('#' + this.fieldToSelectorMap.course_mandatory_enabled).removeAttr('checked');
                    }
 
                    this.$('#' + this.fieldToSelectorMap.entrance_exam_minimum_score_pct).val(this.model.get('entrance_exam_minimum_score_pct'));
@@ -212,6 +215,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.learning_info_view.render();
                    this.instructor_info_view.render();
                    this.reminder_info_view.render();
+                   this.course_tags_info_view.render();
 
                    return this;
                },
@@ -221,7 +225,6 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    end_date: 'course-end',
                    course_category: 'course-category',
                    course_country: 'course-country',
-                   vendor: 'course-vendor',
                    enrollment_start: 'enrollment-start',
                    enrollment_end: 'enrollment-end',
                    certificate_available_date: 'certificate-available',
@@ -282,56 +285,62 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                },
 
                addReminderFields: function() {
-                /*
-                * Add new course email reminder fields.
-                * */
-                    var existingInfo = _.clone(this.model.get('reminder_info'));
-                    existingInfo.push('');
-                    this.model.set('reminder_info', existingInfo);
-                },
+                   /*
+                    * Add new course email reminder fields.
+                    * */
+                   var existingInfo = _.clone(this.model.get('reminder_info'));
+                   existingInfo.push('');
+                   this.model.set('reminder_info', existingInfo);
+               },
 
                increaseCourseOrder: function() {
-                    var order = this.model.get('course_order');
-                    if (order == null) {
-                        this.$el.find('#course-order').val(10);
-                        this.model.set('course_order', 10);
-                    }
-                    else {
-                        this.$el.find('#course-order').val(parseInt(order)+10);
-                        this.model.set('course_order', parseInt(order)+10);
-                    }
-                },
+                   var order = this.model.get('course_order');
+                   if (order == null) {
+                       this.$el.find('#course-order').val(10);
+                       this.model.set('course_order', 10);
+                   } else {
+                       this.$el.find('#course-order').val(parseInt(order) + 10);
+                       this.model.set('course_order', parseInt(order) + 10);
+                   }
+               },
 
-                decreaseCourseOrder: function() {
-                    var order = this.model.get('course_order');
-                    if (order == "0") {
-
-                    }
-                    else if (order == null || parseInt(order) - 10 <= 0) {
-                        this.$el.find('#course-order').val(0);
-                        this.model.set('course_order', 0);
-                    }
-
-                    else {
-                        this.$el.find('#course-order').val(parseInt(order)-10);
-                        this.model.set('course_order', parseInt(order)-10);
-                    }
-                },
+               decreaseCourseOrder: function() {
+                   var order = this.model.get('course_order');
+                   if (order === '0') {
+                       // empty filed
+                   } else if (order == null || parseInt(order) - 10 <= 0) {
+                       this.$el.find('#course-order').val(0);
+                       this.model.set('course_order', 0);
+                   } else {
+                       this.$el.find('#course-order').val(parseInt(order) - 10);
+                       this.model.set('course_order', parseInt(order) - 10);
+                   }
+               },
 
                updateTime: function(e) {
                    var now = new Date(),
                        hours = now.getUTCHours(),
                        minutes = now.getUTCMinutes(),
                        currentTimeText = StringUtils.interpolate(
-                gettext('{hours}:{minutes} (current UTC time)'),
-                           {
+                           gettext('{hours}:{minutes} (current UTC time)'), {
                                hours: hours,
                                minutes: minutes
                            }
-            );
+                       );
 
                    $(e.currentTarget).attr('title', currentTimeText);
                },
+
+               addCourseTags: function() {
+                   var courseTags = _.clone(this.model.get('vendor'));
+                   var tagInputValue = this.$el.find('#course-vendor').val().trim();
+                   if (tagInputValue === '' || courseTags.indexOf(tagInputValue) > -1) {
+                       return;
+                   }
+                   courseTags.push(tagInputValue);
+                   this.model.set('vendor', courseTags);
+               },
+
                updateModel: function(event) {
                    var value;
                    var index = event.currentTarget.getAttribute('data-index');
@@ -393,7 +402,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        break;
                    case 'pre-requisite-course':
                        var value = $(event.currentTarget).val();
-                       value = value == '' ? [] : [value];
+                       value = value === '' ? [] : [value];
                        this.model.set('pre_requisite_courses', value);
                        break;
         // Don't make the user reload the page to check the Youtube ID.
@@ -405,21 +414,19 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        this.videoTimer = setTimeout(_.bind(function() {
                            if (previewsource == null) {
                                this.$el.find('.current-course-introduction-video iframe').attr('src', '').show();
-                               this.$el.find('.current-course-introduction-video video').hide()
-                           }
-                           else if (previewsource.includes("//www.youtube.com/embed/")) {
+                               this.$el.find('.current-course-introduction-video video').hide();
+                           } else if (previewsource.includes('//www.youtube.com/embed/')) {
                                this.$el.find('.current-course-introduction-video iframe').attr('src', previewsource).show();
-                               this.$el.find('.current-course-introduction-video video').hide()
-                           }
-                           else {
+                               this.$el.find('.current-course-introduction-video video').hide();
+                           } else {
                                this.$el.find('.current-course-introduction-video iframe').hide();
-                               this.$el.find('.current-course-introduction-video video').show().find('source').attr('src', previewsource);
+                               this.$el.find('.current-course-introduction-video video').show().find('source')
+                               .attr('src', previewsource);
                                this.$el.find('#intro-video').get(0).load();
-                               if (previewsource == '') {
-                                   this.$el.find('.current-course-introduction-video .video-error').show()
-                               }
-                               else {
-                                   this.$el.find('.current-course-introduction-video .video-error').hide()
+                               if (previewsource === '') {
+                                   this.$el.find('.current-course-introduction-video .video-error').show();
+                               } else {
+                                   this.$el.find('.current-course-introduction-video .video-error').hide();
                                }
                            }
                            if (this.model.has('intro_video')) {
@@ -464,13 +471,14 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    case 'course-language':
                    case 'course-category':
                    case 'course-country':
-                   case 'course-vendor':
                    case 'course-effort':
                    case 'course-title':
                    case 'course-subtitle':
                    case 'course-description':
                    case 'course-short-description':
                        this.setField(event);
+                       break;
+                   case 'course-vendor':
                        break;
                    default: // Everything else is handled by datepickers and CodeMirror.
                        break;

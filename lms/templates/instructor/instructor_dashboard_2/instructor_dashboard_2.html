@@ -99,6 +99,19 @@ from openedx.core.djangolib.markup import HTML
 <style type="text/css"></style>
 
 <script language="JavaScript" type="text/javascript"></script>
+<%
+  keyValuePair = {
+    'course_info':_('Course dashboard'),
+    'membership':_('Course registration'),
+    'cohort_management':_('Course cohort administration'),
+    'discussions_management':_('Discussion administration'),
+    'student_admin':_('Quiz administration'),
+    'data_download':_('Data download'),
+    'send_email':_('Email sending'),
+    'certificates':_('Certificates administration'),
+    'open_response_assessment':_('Open response administration')
+  }
+%>
 
 <div class="container">
   <div class="instructor-dashboard-wrapper-2">
@@ -114,9 +127,12 @@ from openedx.core.djangolib.markup import HTML
                 % for section_data in sections:
                   <% is_hidden = section_data.get('is_hidden', False) %>
                   ## This is necessary so we don't scrape 'section_display_name' as a string.
-                  <% dname = section_data['section_display_name'] %>
+                  <%
+                    dname = section_data['section_display_name']
+                    section_key = section_data['section_key']
+                  %>
                   % if not is_hidden:
-                    <li class="nav-item"><button type="button" class="btn-link ${ section_data['section_key'] }${' hidden' if is_hidden else ''}" data-section="${ section_data['section_key'] }">${_(dname)}</button></li>
+                    <li class="nav-item"><button type="button" class="btn-link ${ section_data['section_key'] }${' hidden' if is_hidden else ''}" data-section="${ section_key }" title="${keyValuePair.get(section_key, '')}">${_(dname)}</button></li>
                   % endif
                 % endfor
               </ul>

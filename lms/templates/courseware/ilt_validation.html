@@ -46,11 +46,11 @@
         <div class="ilt-info">
             <select>
                 % for idx, val in enumerate(dropdown_list):
-                <option value="${idx}"
+                <option value="${idx}" class="${val[1]}"
                         % if idx == selected_index:
                             selected="selected"
                         % endif
-                >${val}</option>
+                >${val[0]}</option>
                 % endfor
             </select>
 
@@ -143,8 +143,18 @@
             % if msg:
             <p class="status">${msg}</p>
             % else:
-            <button data-action="accept" class="accept">${_("Accept the demand")}</button>
-            <button data-action="refuse" class="refuse">${_("Refuse the demand")}</button>
+                <% selected = dropdown_list[selected_index] %>
+                % if "within-deadline" in selected[1]:
+                <div class="accept-button" title="${_('This session is no longer open to registration. Please choose another session.')}">
+                    <button data-action="accept" class="accept disabled">
+                % else:
+                <div class="accept-button">
+                    <button data-action="accept" class="accept">
+                % endif
+                        ${_("Accept the demand")}
+                    </button>
+                </div>
+                <div class="refuse-button"><button data-action="refuse" class="refuse">${_("Refuse the demand")}</button></div>
             % endif
         </div>
     </article>
@@ -157,7 +167,16 @@
             current_session = $("#session-"+idx),
             pre_session = $(".ilt-session-details.active");
             current_session.addClass('active');
-            pre_session.removeClass('active')
+            pre_session.removeClass('active');
+
+            if ($(this).find("option:selected").hasClass("within-deadline")) {
+                $("button.accept").addClass("disabled");
+                $(".accept-button").attr("title", "${_('This session is no longer open to registration. Please choose another session.')}")
+            }
+            else {
+                $("button.accept").removeClass("disabled");
+                $(".accept-button").removeAttr("title")
+            }
         });
 
         $(".ilt-validate-action button").click(function () {

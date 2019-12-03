@@ -59,7 +59,7 @@ msgid "Spanish"
 msgstr ""
 
 #: lms/templates/discovery/facet.underscore
-msgid "Label"
+msgid "Tag"
 msgstr ""
 
 #: lms/templates/discovery/facet.underscore
@@ -78,4 +78,19 @@ msgstr ""
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435
 msgid "Saved Successfully"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:403
+msgid "This session is full"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:407
+msgid "This session is no longer open to registration. Please choose another session."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/js/src/ilt.js:562
+msgid "Please choose the accommodation need"
 msgstr ""

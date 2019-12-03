@@ -403,10 +403,16 @@ FEATURES = {
     # Set this to true to make API docs available at /api-docs/.
     'ENABLE_API_DOCS': False,
 
+    # Set this to true to enable social media section in Account Setting.
+    'ENABLE_SOCIAL_MEDIA': True,
+
     # Whether to display the account deletion section the account settings page
     'ENABLE_ACCOUNT_DELETION': True,
     # Enable faq link at bottom of the footer.
     'ENABLE_FAQ_LINK': False,
+
+    # Set the display number for last activity courses in dashboard.
+    'LAST_ACTIVITY_COURSES_NUM': 3,
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews
@@ -1355,7 +1361,6 @@ from openedx.core.lib.rooted_paths import rooted_glob
 
 courseware_js = [
     'js/ajax-error.js',
-    'js/courseware.js',
     'js/histogram.js',
     'js/navigation.js',
     'js/modules/tab.js',

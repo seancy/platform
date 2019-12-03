@@ -4,11 +4,11 @@
 from django.utils.translation import ugettext as _
 from openedx.core.djangolib.js_utils import js_escaped_string
 %>
-% if display_name is not UNDEFINED and display_name is not None:
-    <h3 class="hd hd-2">${display_name}</h3>
-% endif
 
-<div class="video-type"><span class="far fa-video"></span>${_("Video")}</div>
+% if display_name is not UNDEFINED and display_name is not None and display_name != '':
+    <h3 class="hd hd-2">${display_name}</h3>
+    <div class="video-type"><span class="far fa-video"></span>${_("Video")}</div>
+% endif
 
 <div
     id="video_${id}"

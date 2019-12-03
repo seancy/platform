@@ -582,6 +582,9 @@ def account_settings_context(request):
         'enable_account_deletion': configuration_helpers.get_value(
             'ENABLE_ACCOUNT_DELETION', settings.FEATURES.get('ENABLE_ACCOUNT_DELETION', False)
         ),
+        'enable_social_media': configuration_helpers.get_value(
+            'ENABLE_SOCIAL_MEDIA', settings.FEATURES.get('ENABLE_SOCIAL_MEDIA', False)
+        ),
         'extended_profile_fields': _get_extended_profile_fields(),
         'image_info': {
             'profile_image_upload_url': reverse('profile_image_upload', kwargs={'username': user.username}),

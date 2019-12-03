@@ -13755,6 +13755,10 @@ msgstr "发布的帖子"
 msgid "View my learning transcript"
 msgstr "查看我的学习报告"
 
+#: lms/templates/dashboard.html:168
+msgid "Continue Learning..."
+msgstr "继续学习..."
+
 #: lms/templates/dashboard.html:253 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
 msgid "You are not enrolled in any courses yet."
@@ -16973,7 +16977,7 @@ msgstr "ILT 审核确认"
 
 #: lms/templates/courseware/ilt_validation.html:23
 msgid "Validation of the registration to an face-to-face session"
-msgstr "对面对面会话的注册验证"
+msgstr "面对面会话的注册验证"
 
 #: lms/templates/courseware/ilt_validation.html:25
 msgid "Requester"
@@ -17042,6 +17046,10 @@ msgstr "接受需求"
 #: lms/templates/courseware/ilt_validation.html:130
 msgid "Refuse the demand"
 msgstr "拒绝需求"
+
+#: lms/templates/courseware/ilt_validation.html:147
+msgid "This session is no longer open to registration. Please choose another session."
+msgstr "该课程的注册已关闭。请选择其他课程。"
 
 #: lms/templates/courseware/info.html:17
 msgid "{course_number} Course Info"
@@ -25529,11 +25537,11 @@ msgid ""
 msgstr "对课程进行排序以按升序显示在仪表板上。序号从0到99。"
 
 #: cms/templates/settings.html:370
-msgid "Course Label"
+msgid "Course Tag"
 msgstr "课程标签"
 
 #: cms/templates/settings.html:372
-msgid "Identify the course label here."
+msgid "Identify the course tag here."
 msgstr "在此设置课程标签。"
 
 #: cms/templates/settings.html:381
@@ -27824,6 +27832,16 @@ msgstr "该课程已满"
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "Total seats number cannot be lower than {enrolled}"
 msgstr "总座位数不能低于 {enrolled}"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "The enroll button will be disabled for sessions that start in less than X days."
+msgstr "距离开课时间少于5天，将无法注册"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "The registration deadline cannot be empty"
+msgstr "注册截止日期不能为空"
 
 #: cms/templates/login.html
 msgid "Welcome to Joyson Open Online Courses, log in to explore more!"

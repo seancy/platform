@@ -25,7 +25,7 @@ class TestProctoringDashboardViews(SharedModuleStoreTestCase):
     @classmethod
     def setUpClass(cls):
         super(TestProctoringDashboardViews, cls).setUpClass()
-        button = '<button type="button" class="btn-link special_exams" data-section="special_exams">Special Exams</button>'
+        button = '<button type="button" class="btn-link special_exams" data-section="special_exams" title="">Special Exams</button>'
         cls.proctoring_link = button
 
     def setUp(self):

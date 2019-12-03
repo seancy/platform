@@ -719,12 +719,12 @@ class CourseFields(object):
         scope=Scope.settings,
         default=None
     )
-    
-    vendor = String(
+
+    vendor = List(
         display_name=_("Vendor"),
         help=_("Specify the vendor of your course."),
         scope=Scope.settings,
-        default=None
+        default=[]
     )
 
     teams_configuration = Dict(

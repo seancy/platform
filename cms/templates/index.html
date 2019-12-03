@@ -32,13 +32,13 @@ from datetime import date
       <ul>
         <li class="nav-item">
           % if course_creator_status=='granted':
-          <a href="#" class="button new-button new-course-button"><span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>
+          <a href="#" class="button new-button new-course-button" title="${_('Create a new coures')}"><span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>
               ${_("New Course")}</a>
           % elif course_creator_status=='disallowed_for_this_site' and settings.FEATURES.get('STUDIO_REQUEST_EMAIL',''):
           <a href="mailto:${settings.FEATURES.get('STUDIO_REQUEST_EMAIL','')}">${_("Email staff to create course")}</a>
           % endif
           % if show_new_library_button:
-            <a href="#" class="button new-button new-library-button"><span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>
+            <a href="#" class="button new-button new-library-button" title="${_('Create a new library')}"><span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>
             ${_("New Library")}</a>
           % endif
         </li>
@@ -318,12 +318,12 @@ from datetime import date
 
       % if libraries_enabled or archived_courses:
       <ul id="course-index-tabs">
-        <li class="courses-tab active"><a>${_("Courses")}</a></li>
+        <li class="courses-tab active" title="${_('See the courses')}"><a>${_("Courses")}</a></li>
         % if archived_courses:
-        <li class="archived-courses-tab"><a>${_("Archived Courses")}</a></li>
+        <li class="archived-courses-tab" title="${_('See the archived courses')}"><a>${_("Archived Courses")}</a></li>
         % endif
         % if libraries_enabled:
-        <li class="libraries-tab"><a>${_("Libraries")}</a></li>
+        <li class="libraries-tab" title="${_('See my libraries')}"><a>${_("Libraries")}</a></li>
         % endif
       </ul>
       % endif

@@ -23740,11 +23740,11 @@ msgid ""
 msgstr ""
 
 #: cms/templates/settings.html:370
-msgid "Course Label"
+msgid "Course Tag"
 msgstr ""
 
 #: cms/templates/settings.html:372
-msgid "Identify the course label here."
+msgid "Identify the course tag here."
 msgstr ""
 
 #: cms/templates/settings.html:381

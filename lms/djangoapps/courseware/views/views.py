@@ -8,7 +8,7 @@ import logging
 import urllib
 from collections import OrderedDict, namedtuple, defaultdict
 from copy import deepcopy
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil import relativedelta
 
 import analytics
@@ -1960,6 +1960,16 @@ def ilt_registration_validation(request, course_id, usage_id, user_id):
                 if k in request.POST:
                     registration_info[k] = request.POST.get(k)
 
+            number_of_one_way = registration_info['number_of_one_way']
+            number_of_return = registration_info['number_of_return']
+            try:
+                registration_info['number_of_one_way'] = int(number_of_one_way)
+            except Exception as e:
+                registration_info['number_of_one_way'] = 0
+            try:
+                registration_info['number_of_return'] = int(number_of_return)
+            except Exception as e:
+                registration_info['number_of_return'] = 0
             accommodation = configuration_helpers.get_value("ILT_ACCOMMODATION_ENABLED", False)
             if accommodation and registration_info['accommodation'] == 'yes':
                 registration_info['status'] = 'accepted'
@@ -2089,9 +2099,9 @@ def group_courses_by_admin():
             remind_session_list = []
             for session_id, users in enrolled_user_info.items():
                 for v in users.values():
-                    if v.get('accommodation') == 'yes' and v.get('status') == 'accepted':
-                        info = sessions_info[session_id]
-
+                    info = sessions_info[session_id]
+                    expired = datetime.now() - decode_datetime(info['start_at']) > timedelta(days=1)
+                    if v.get('accommodation') == 'yes' and v.get('status') == 'accepted' and not expired:
                         remind_session_list.append(session_to_str(info, session_id))
                         break
             if not remind_session_list:
@@ -2149,11 +2159,10 @@ def process_ilt_hotel_check_email():
                 temp["modules"].append(x)
             params["course_list"].append(temp)
 
-        ilt_log.info("sending notification email to {email}, course: {course_id}, "
-                    "chapter: {chapter_id}, ilt_module: {ilt_module}".format(email=email,
-                                                                             course_id=unicode(c),
-                                                                             chapter_id=chapter_id,
-                                                                             ilt_module=module_name))
+        ilt_log.info("sending notification email to {email}, courses: {course_ids}".format(
+            email=email,
+            course_ids=params["course_list"]
+        ))
         send_mail_to_student(email, params, language=get_user_email_language(admin))
 
 

@@ -489,7 +489,11 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                     return
 
                 if progress['progress'] == 100:
-                    status = CourseStatus.finished if progress['is_course_passed'] else CourseStatus.failed
+                    status = CourseStatus.failed
+
+                    if progress['nb_trophies_possible'] == 0 or progress['is_course_passed']:
+                        status = CourseStatus.finished
+
                 else:
                     # by gradebook edit a user could have a progress > 0 while total_time_spent = 0
                     if total_time_spent > 0 or progress['progress'] > 0:
@@ -499,7 +503,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
                 posts = 0
                 try:
-                    cc_user = cc.User(id=user.id, course_id=course_key, username=user.username).to_dict()
+                    cc_user = cc.User(id=user.id, course_id=course_key).to_dict()
                     posts = cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
                 except (cc.CommentClient500Error, cc.CommentClientRequestError, ConnectionError):
                     pass
@@ -1003,7 +1007,7 @@ class IltSession(TimeStampedModel):
                             'course_id': overview.id,
                             'course_display_name': overview.display_name,
                             'course_country': course_details.course_country,
-                            'course_tags': course_details.vendor
+                            'course_tags': ", ".join(course_details.vendor)
                         }
                     for child in block['children']:
                         outline[child]['parent'] = block_id

@@ -44,14 +44,10 @@ from xmodule.modulestore.django import modulestore
 </script>
 % endfor
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
-<script src="https://cdn.bootcss.com/moment-timezone/0.5.23/moment-timezone-with-data.min.js"></script>
+<%static:webpack entry="Dashboard"></%static:webpack>
 </%block>
 
 <%block name="js_extra">
-  <script src="${static.url('js/commerce/credit.js')}"></script>
-  <script src="${static.url('js/dashboard/progress_ring.js')}"></script>
-  <%static:js group='dashboard'/>
   <script type="text/javascript">
     $(document).ready(function() {
       edx.dashboard.legacy.init({
@@ -163,10 +159,23 @@ from xmodule.modulestore.django import modulestore
               <p>${_("posts")}</p>
             </div>
 
-            <a class="flat-button view-transcript" href="${reverse('analytics_my_transcript')}">${_("View my learning transcript")}</a>
+            <a class="flat-button view-transcript" href="${reverse('analytics_my_transcript')}" title="${_('Access to my learning experience')}"><i class="far fa-analytics"></i>${_("View my learning transcript")}</a>
           </section>
         </section>
 
+        % if last_activity_enrollments:
+          <div class="last-activity">
+            <header class="wrapper-header-last-activity">
+              <h2 class="header-last-activity">${_("Continue Learning...")}</h2>
+            </header>
+            <ul class="listing-last-activity">
+              % for course in last_activity_enrollments:
+                <%include file='dashboard/_dashboard_last_activity.html'
+                args='course=course, progress_summaries=progress_summaries'/>
+              % endfor
+            </ul>
+          </div>
+        % endif
 
         <div class="my-courses swiper-container" id="my-courses">
           % if display_dashboard_courses:
@@ -451,3 +460,4 @@ from xmodule.modulestore.django import modulestore
 </div>
 
 <%include file="dashboard/_dashboard_entitlement_unenrollment_modal.html"/>
+<!--test info.-->

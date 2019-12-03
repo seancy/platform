@@ -1097,7 +1097,7 @@ COURSE_DISCOVERY_MEANINGS = {
         'terms': dict(COURSE_CATEGORIES),
     },
     'vendor': {
-        'name': 'Label'
+        'name': 'Tag'
     },
     'course_mandatory_enabled': {
         'name': 'Mandatory'

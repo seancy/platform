@@ -2,7 +2,7 @@
  * Student dashboard credit messaging.
  */
 
-var edx = edx || {};
+window.edx = edx || {};
 
 (function($, analytics) {
     'use strict';

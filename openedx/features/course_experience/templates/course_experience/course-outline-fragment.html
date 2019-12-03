@@ -8,7 +8,7 @@
 from datetime import date
 
 from django.utils.translation import ugettext as _
-
+from openedx.core.djangolib.js_utils import dump_js_escaped_json
 from openedx.core.djangolib.markup import HTML, Text
 %>
 
@@ -24,7 +24,7 @@ course_sections = blocks.get('children')
                 aria-expanded="false"
                 aria-controls="course-outline-block-tree"
                 >
-              <span class="expand-collapse-outline-all-extra-padding" id="expand-collapse-outline-all-span">${_("Expand All")}</span>
+              <span class="expand-collapse-outline-all-extra-padding" id="expand-collapse-outline-all-span" title="${_('Expand All')}">${_("Expand All")}</span>
             </button>
         </div>
         <ol class="block-tree accordion"
@@ -185,6 +185,12 @@ course_sections = blocks.get('children')
     DateUtilFactory.transform('.localized-datetime');
 </%static:require_module_async>
 
+<%
+    keyValuePair = {
+        'textExtend':_('Expand All'),
+        'textCollapse':_('Collapse All')
+    }
+%>
 <%static:webpack entry="CourseOutline">
-    new CourseOutline();
+    new CourseOutline(${keyValuePair | n, dump_js_escaped_json});
 </%static:webpack>

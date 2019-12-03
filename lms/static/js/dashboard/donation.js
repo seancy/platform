@@ -1,4 +1,4 @@
-var edx = edx || {};
+window.edx = edx || {};
 
 (function($) {
     'use strict';

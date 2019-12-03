@@ -2,7 +2,7 @@
  * Track interaction with the student dashboard..
  */
 
-var edx = edx || {};
+window.edx = edx || {};
 
 (function($) {
     'use strict';

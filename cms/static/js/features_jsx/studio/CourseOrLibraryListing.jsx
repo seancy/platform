@@ -47,6 +47,7 @@ export function CourseOrLibraryListing(props) {
                     className="button rerun-button"
                     aria-labelledby={`re-run-${idBase}-${i} title-${idBase}-${i}`}
                     id={`re-run-${idBase}-${i}`}
+                    title={gettext('Re-run Course')}
                   >{gettext('Re-run Course')}</a>
                 </li>
                 }
@@ -57,6 +58,7 @@ export function CourseOrLibraryListing(props) {
                     className="button view-button"
                     aria-labelledby={`view-live-${idBase}-${i} title-${idBase}-${i}`}
                     id={`view-live-${idBase}-${i}`}
+                    title={gettext('View Live')}
                   >{gettext('View Live')}</a>
                 </li>
               </ul>

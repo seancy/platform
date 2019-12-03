@@ -337,6 +337,10 @@ def get_progress_table_class(trophies):
     for trophy_name, trophy_verbose in trophies:
         attributes[trophy_name] = ProgressColumn(verbose_name=trophy_verbose)
 
+    def render_user_country(self, value):
+        return dict(countries)[value]
+    attributes['render_user_country'] = render_user_country
+
     return type("ProgressTable", (UserBaseTable,), attributes)
 
 
@@ -379,6 +383,10 @@ def get_time_spent_table_class(chapters, sections):
     for section in sections:
         attributes[section['key']] = CourseSectionColumn(verbose_name=section['name'],
                                                          chapter=section['chapter'])
+
+    def render_user_country(self, value):
+        return dict(countries)[value]
+    attributes['render_user_country'] = render_user_country
 
     return type("TimeSpentTable", (UserBaseTable,), attributes)
 
