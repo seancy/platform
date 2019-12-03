@@ -503,7 +503,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
                 posts = 0
                 try:
-                    cc_user = cc.User(id=user.id, course_id=course_key, username=user.username).to_dict()
+                    cc_user = cc.User(id=user.id, course_id=course_key).to_dict()
                     posts = cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
                 except (cc.CommentClient500Error, cc.CommentClientRequestError, ConnectionError):
                     pass

@@ -35,6 +35,7 @@ from lms.djangoapps.commerce.utils import EcommerceService  # pylint: disable=im
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.verify_student.services import IDVerificationService
 from lms.lib import comment_client as cc
+from lms.lib.comment_client.utils import CommentClientMaintenanceError
 from openedx.core.djangoapps import monitoring_utils
 from openedx.core.djangoapps.catalog.utils import (
     get_programs,
@@ -634,12 +635,7 @@ def student_dashboard(request):
     # get progress summary of each courses
     progress_summaries = {}
     nb_badges_obtained = 0
-    try:
-        cc_user = cc.User.from_django_user(user)
-        cc_info = cc_user.to_dict()
-        nb_posts = len(cc_info['subscribed_thread_ids'])
-    except:
-        nb_posts = 0
+    nb_posts = 0
     for c in course_enrollments:
         course_descriptor = modulestore().get_course(c.course_id)
         if course_descriptor:
@@ -667,6 +663,11 @@ def student_dashboard(request):
         }
         progress_summaries.update({c.course_id: summary})
         nb_badges_obtained += nb_trophies_earned
+        try:
+            cc_user = cc.User(id=user.id, course_id=c.course_id).to_dict()
+            nb_posts += cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
+        except CommentClientMaintenanceError:
+            pass
 
     # filter completed courses and not completed
     completed_courses = [c for c in course_enrollments if c.completed]
