@@ -43,6 +43,17 @@
 
                 <div class="analytics-basic-wrapper">
                     <div class="analytics-widget-75 analytics-linechart">
+                        <form class="controls" action="${reverse('analytics_microsite')}" method="get">
+                            <input type="text" id="lineChart-from-date" />
+                            <input type="text" id="lineChart-to-date" />
+                            <select name="lineChart-by">
+                                <option value="by-day">${_("by day")}</option>
+                                <option value="by-week">${_("by week")}</option>
+                                <option value="by-month">${_("by month")}</option>
+                            </select>
+                            <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
+                            <input type="submit" value="${_("Go")}">
+                        </form>
                         <h3>${_("Number of Unique Visitors")}</h3>
                         <div id="lineChart">
                             <svg>

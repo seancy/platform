@@ -5,6 +5,7 @@ import json
 import logging
 import operator
 import collections
+from datetime import datetime
 from six import text_type
 
 from django.conf import settings
@@ -932,7 +933,7 @@ def course_view(request):
         course_key = CourseKey.from_string(course_id)
 
         course_report = None
-        enrollments_csv_data = None
+        unique_visitors_csv_data = None
         summary_table = False
         progress_table = False
         time_spent_table = False
@@ -945,7 +946,7 @@ def course_view(request):
         if last_reportlog:
             last_update = last_reportlog.course
             course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
-            enrollments_csv_data = CourseDailyReport.get_enrollments_csv_data(course_key)
+            unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key)
 
             if report == "summary":
                 filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
@@ -997,7 +998,7 @@ def course_view(request):
                 'course_name': courses.get(course_id),
                 'last_update': last_update,
                 'course_report': course_report,
-                'enrollments_csv_data': enrollments_csv_data,
+                'unique_visitors_csv_data': unique_visitors_csv_data,
                 'query_dict': query_dict,
                 'query_triples': query_triples,
                 'learner_course_table': summary_table,
@@ -1084,7 +1085,15 @@ def microsite_view(request):
         last_update = last_reportlog.created
         microsite_report = MicrositeDailyReport.get_by_day(date_time=last_update, org=microsite_report_org)
 
-        unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(microsite_report_org)
+        from_date = request.GET.get('lineChart-from-date')
+        from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
+        to_date = request.GET.get('lineChart-to-date')
+        to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
+        print "LAETITIA --- from=%s to=%s" % (from_date, to_date)
+        unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(
+                                    microsite_report_org,
+                                    request.GET.get('lineChart-from-date'),
+                                    request.GET.get('lineChart-from-date'))
 
         users_by_country_csv_data = ""
         country_reports = CountryDailyReport.filter_by_day(date_time=last_update, org=microsite_report_org)
