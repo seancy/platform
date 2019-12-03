@@ -9773,12 +9773,12 @@ msgid "Bookmarked on"
 msgstr "标记书签"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:46
-msgid "You have not bookmarked any courseware pages yet"
-msgstr "您尚未对任何课件页面进行书签"
+msgid "You have not bookmarked any pages yet"
+msgstr "您尚未收藏任何页面"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:51
 msgid ""
-"Use bookmarks to help you easily return to courseware pages. To bookmark a "
+"Use bookmarks to help you easily return to pages. To bookmark a "
 "page, click \"Bookmark this page\" under the page title."
 msgstr ""
 "使用书签帮助您轻松返回到课件页面。要为页面添加书签，请单击页面标题下的\"为此"

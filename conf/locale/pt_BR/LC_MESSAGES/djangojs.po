@@ -10253,12 +10253,12 @@ msgid "Bookmarked on"
 msgstr "Adicionado aos favoritos em"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:46
-msgid "You have not bookmarked any courseware pages yet"
+msgid "You have not bookmarked any pages yet"
 msgstr "Você ainda não adicionou nenhuma página aos favoritos"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:51
 msgid ""
-"Use bookmarks to help you easily return to courseware pages. To bookmark a "
+"Use bookmarks to help you easily return to pages. To bookmark a "
 "page, click \"Bookmark this page\" under the page title."
 msgstr ""
 "Use marcadores para ajudá-lo a retornar facilmente às páginas dos cursos."
