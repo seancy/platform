@@ -61,7 +61,6 @@ from forms import (
     UserPropertiesHelper,
     TableFilterForm,
     UserPropertiesForm,
-    UserCoursesForm,
 )
 from models import (
     ANALYTICS_ACCESS_GROUP,

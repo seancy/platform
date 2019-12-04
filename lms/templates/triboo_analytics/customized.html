@@ -17,17 +17,17 @@
     <script type="text/javascript" src="${static.url('js/triboo_analytics/customized_report.js')}"></script>
 </%block>
 
-<%block name="header_extras">
-  % for template_name in ["filter_bar", "filter"]:
-  <script type="text/template" id="${template_name}-tpl">
-      <%static:include path="triboo_analytics/${template_name}.underscore" />
-  </script>
-  % endfor
-
-  <%static:require_module module_name="js/triboo_analytics/customized_filter_factory" class_name="FilterFactory">
-    FilterFactory(getParameterByName('search_query'));
-  </%static:require_module>
-</%block>
+##<%block name="header_extras">
+##  % for template_name in ["filter_bar", "filter"]:
+##  <script type="text/template" id="${template_name}-tpl">
+##      <%static:include path="triboo_analytics/${template_name}.underscore" />
+##  </script>
+##  % endfor
+##
+##  <%static:require_module module_name="js/triboo_analytics/customized_filter_factory" class_name="FilterFactory">
+##    FilterFactory(getParameterByName('search_query'));
+##  </%static:require_module>
+##</%block>
 
 
 <main id="main" aria-label="Content" tabindex="-1">
