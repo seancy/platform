@@ -31,4 +31,5 @@ urlpatterns = [
     url(r'^ilt/export/$', views.ilt_export_table, name='analytics_ilt_export'),
 
     url(r'^customized/$', views.customized_view, name='analytics_customized'),
+    url(r'^customized/export/$', views.customized_export_table, name='analytics_customized_export'),
 ]

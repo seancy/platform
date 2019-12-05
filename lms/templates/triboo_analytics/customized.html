@@ -35,58 +35,54 @@
         <%include file="banner_nav.html" args="active_page='customized'" />
         <section class="analytics-wrapper customized">
             <div class="report-wrapper">
-                <form action="${reverse('analytics_customized')}" method="get">
+                <form action="${reverse('analytics_customized_export')}" method="post">
                     <label for="report_type">${_("Please select a report type:")}</label>
                     <select name="report_type" id="report_type">
                     % for type, title in report_types:
                         <option value="${type}">${title}</option>
                     % endfor
                     </select>
-                    <input type="hidden" name="report_type" value="${ report_type }">
-                </form>
-                <form action="${reverse('analytics_customized')}" method="get">
                     <label for="course_selected">${_("Please select course to see your report:")}</label>
                     <select id="course_selected">
                     % for cid, course_title in courses:
                         <option value="${cid}">${course_title}</option>
                     % endfor
+                        <input type="hidden" name="course_selected" id="course_selected_return">
                     </select>
-                    <input type="hidden" name="courses_selected" value="${ courses_selected }">
-                </form>
-                <section class="search-form">
-                  <div id="filter-form" role="search" aria-label="course" class="wrapper-search-context">
-                    <form class="table-filter-form">
-                        ${filter_form}
-                        <button type="submit" class="filter-submit">${_('Filter')}</button>
-                        <button type="submit" id="clear-all-filters" class="clear-filters">
-                            <i class="fa fa-refresh icon"></i>${_("Reset")}
-                        </button>
-                    </form>
-                  </div>
-                  <div id="filter-bar" class="filters hide-phone is-collapsed"></div>
-                  <div id="filter-message" class="search-status-label"></div>
-                </section>
-                <form class="table-user-properties-form-customized" action="${reverse('analytics_customized')}" method="get">
-                    <div id="user-properties">
-                        ${user_properties_form}
-                        % for key, value in query_dict.items():
-                            <input type="hidden" value="${value}" name="${key}"/>
-                        % endfor
-                    </div>
-                    <div class="table-export-customized">
-                        <p>${_("Format")}</p>
-                        <div id="table-export-selection">
-                          % for format in export_formats:
-                              <li>
-                                  <input type="radio" name="format" id="id-${format}">
-                                  <label for="id-${format}"><code>${format}</code></label>
-                              </li>
-                          % endfor
+                    <section class="search-form">
+                      <div id="filter-form" role="search" aria-label="course" class="wrapper-search-context">
+                        <div class="table-filter-form">
+                            ${filter_form}
+                            <button id="filter-form" class="filter-submit">${_('Filter')}</button>
+                            <button id="clear-all-filters" class="clear-filters">
+                                <i class="fa fa-refresh icon"></i>${_("Reset")}
+                            </button>
                         </div>
-                        <p id="export-notification"></p>
-                        <p id="export-error"></p>
+                      </div>
+                      <div id="filter-bar" class="filters hide-phone is-collapsed"></div>
+                      <div id="filter-message" class="search-status-label"></div>
+                    </section>
+                    <div class="table-user-properties-form-customized">
+                        <div id="user-properties">
+                            ${user_properties_form}
+                        </div>
+                        <div class="table-export-customized">
+                            <p>${_("Format")}</p>
+                            <div id="table-export-selection">
+                              % for format in export_formats:
+                                  <li>
+                                      <input type="radio" name="format" id="id-${format}" value="${format}">
+                                      <label for="id-${format}"><code>${format}</code></label>
+                                  </li>
+                              % endfor
+                            </div>
+                            <p id="export-notification"></p>
+                            <p id="export-error"></p>
+                        </div>
                     </div>
-                    <input type="submit" value="${_("Go")}"/>
+                    <div id="hidden-queries"></div>
+                    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
+                    <input type="submit" value="${_("Go")}" id="submit-button"/>
                 </form>
             </div>
         </section>

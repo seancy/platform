@@ -449,6 +449,59 @@ class CourseTable(_RenderMixin, LearnerBaseTable):
                     'progress', 'current_score', 'badges', 'posts', 'total_time_spent', 'enrollment_date', 'completion_date')
 
 
+class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
+    current_score = tables.Column(footer=lambda table: "{}%".format(
+                         get_avg(None, [r.current_score for r in table.data if r.status != CourseStatus.not_started])))
+    progress = tables.Column(footer=lambda table: "{}%".format(
+                         get_avg(None, [r.progress for r in table.data])))
+    posts = SumFooterColumn()
+
+    class Meta:
+        model = LearnerCourseDailyReport
+        template = 'django_tables2/bootstrap.html'
+        fields = ('course_id',
+                  'user_name',
+                  'user_email',
+                  'user_username',
+                  'user_date_joined',
+                  'user_gender',
+                  'user_country',
+                  'user_lt_area',
+                  'user_lt_sub_area',
+                  'user_city',
+                  'user_location',
+                  'user_lt_address',
+                  'user_lt_address_2',
+                  'user_lt_phone_number',
+                  'user_lt_gdpr',
+                  'user_lt_company',
+                  'user_lt_employee_id',
+                  'user_lt_hire_date',
+                  'user_lt_level',
+                  'user_lt_job_code',
+                  'user_lt_job_description',
+                  'user_lt_department',
+                  'user_lt_supervisor',
+                  'user_lt_ilt_supervisor',
+                  'user_lt_learning_group',
+                  'user_lt_exempt_status',
+                  'user_lt_comments',
+                  'status',
+                  'progress',
+                  'current_score',
+                  'badges',
+                  'posts',
+                  'total_time_spent',
+                  'enrollment_date',
+                  'completion_date')
+        unlocalize = ('course_id', 'user_name', 'user_email', 'user_username', 'user_date_joined', 'user_country',
+                    'user_lt_area', 'user_lt_sub_area', 'user_city', 'user_location', 'user_lt_address', 'user_lt_address_2',
+                    'user_lt_phone_number', 'user_lt_gdpr', 'user_lt_company', 'user_lt_employee_id', 'user_lt_hire_date',
+                    'user_lt_level', 'user_lt_job_code', 'user_lt_job_description', 'user_lt_department', 'user_lt_supervisor',
+                    'user_lt_ilt_supervisor', 'user_lt_learning_group', 'user_lt_exempt_status', 'user_lt_comments',
+                    'progress', 'current_score', 'badges', 'posts', 'total_time_spent', 'enrollment_date', 'completion_date')
+
+
 class LearnerDailyTable(LearnerBaseTable):
     user_name = tables.LinkColumn('analytics_learner_transcript', args=[A('user.id')],
                                   verbose_name='Name', text=lambda record: record.user.profile.name)

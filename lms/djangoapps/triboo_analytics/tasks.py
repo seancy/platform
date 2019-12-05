@@ -26,6 +26,7 @@ import tables
 from django.http import HttpResponseNotFound
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from django.db.models import Q
 
 
 @task(routing_key=settings.HIGH_PRIORITY_QUEUE)
@@ -87,7 +88,7 @@ def links_for_all(storage, user):
         _, filenames = storage.listdir(report_dir)
     except OSError:
         filenames = []
-    for report in ['learner', 'ilt', 'my_transcript']:
+    for report in ['summary', 'learner', 'ilt', 'my_transcript']:
         filename_start = report
         if report == "my_transcript":
             filename_start = "transcript_%s" % user.username
@@ -129,7 +130,8 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         get_transcript_table,
         get_course_progress_table,
         get_course_time_spent_table,
-        get_table
+        get_table,
+        get_customized_table,
     )
 
     if not TableExport.is_valid_format(_task_input['export_format']):
@@ -151,22 +153,36 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
     else:
         kwargs = _task_input['report_args']['filter_kwargs']
         exclude = _task_input['report_args']['exclude']
-        if _task_input['report_name'] == "progress_report":
-            enrollments = CourseEnrollment.objects.filter(is_active=True,
-                                                          course_id=course_id,
-                                                          user__is_active=True,
-                                                          **kwargs).prefetch_related('user')
-            table, _ = get_course_progress_table(course_id, enrollments, kwargs, exclude)
-        elif _task_input['report_name'] == "time_spent_report":
-            table, _ = get_course_time_spent_table(course_id, kwargs, exclude)
-        else:
+        date_time = _task_input['report_args'].get('date_time', None)
+        # customized course summary report
+        if date_time:
+            day = datetime.strptime(date_time, "%Y-%m-%d").date()
+            courses_selected = _task_input['report_args'].get('courses_selected', None)
+            course_keys = [CourseKey.from_string(id) for id in courses_selected.split(', ')]
+            course_filter = Q()
+            for course_key in course_keys:
+                course_filter |= Q(**{'course_id': course_key})
+            filters = Q(**{'created': day}) & Q(**kwargs) & course_filter
             report_cls = getattr(models, _task_input['report_args']['report_cls'])
             table_cls = getattr(tables, _task_input['report_args']['table_cls'])
-            if 'date_time' in kwargs.keys():
-                kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
-            if 'course_id' in kwargs.keys():
-                kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
-            table, _ = get_table(report_cls, kwargs, table_cls, exclude)
+            table, _ = get_customized_table(report_cls, kwargs, filters, table_cls, exclude)
+        else:
+            if _task_input['report_name'] == "progress_report":
+                enrollments = CourseEnrollment.objects.filter(is_active=True,
+                                                              course_id=course_id,
+                                                              user__is_active=True,
+                                                              **kwargs).prefetch_related('user')
+                table, _ = get_course_progress_table(course_id, enrollments, kwargs, exclude)
+            elif _task_input['report_name'] == "time_spent_report":
+                table, _ = get_course_time_spent_table(course_id, kwargs, exclude)
+            else:
+                report_cls = getattr(models, _task_input['report_args']['report_cls'])
+                table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+                if 'date_time' in kwargs.keys():
+                    kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
+                if 'course_id' in kwargs.keys():
+                    kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
+                table, _ = get_table(report_cls, kwargs, table_cls, exclude)
 
 
     exporter = TableExport(_task_input['export_format'], table)

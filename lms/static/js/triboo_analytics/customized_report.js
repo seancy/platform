@@ -20,6 +20,21 @@ $(document).ready(function() {
     } else {
         $('#course_selected').select2()
     }
+
+    // $('#submit-button').on('click', function (e) {
+    //     e.preventDefault();
+    //     console.log('e', e)
+    //     console.log('e.currentTarget', e.currentTarget)
+    //     console.log('e.currentTarget.form.action', e.currentTarget.form.action)
+    //     $.ajax(e.currentTarget.form.action, {
+    //         success: function (data) {
+    //             LearningTribes.dialog.show(data.message)
+    //         },
+    //         error: function (data) {
+    //             $('#export-error').text(data.message);
+    //         }
+    //     });
+    // });
 });
 
 $('#course_selected').change(function() {
@@ -32,4 +47,5 @@ $('#course_selected').change(function() {
     }
     all = all.substr(0, all.length - 2);
     $("#course_selected_return").val(all);
+    log($("#course_selected_return")[0].value)
 });

@@ -61,7 +61,6 @@ from forms import (
     UserPropertiesHelper,
     TableFilterForm,
     UserPropertiesForm,
-    UserCoursesForm,
 )
 from models import (
     ANALYTICS_ACCESS_GROUP,
@@ -88,9 +87,11 @@ from tables import (
     CourseTable,
     IltTable,
     IltLearnerTable,
-    UserBaseTable
+    CustomizedCourseTable,
+    UserBaseTable,
 )
 from django.db.models import Q
+from datetime import datetime
 
 
 logger = logging.getLogger('triboo_analytics')
@@ -519,10 +520,11 @@ def _export_table(request, course_key, report_name, report_args):
     try:
         task_type = 'triboo_analytics_export_table'
         task_class = generate_export_table_task
+        format = request.POST.get('format', None) if request.method == "POST" else request.GET.get('_export', None)
         task_input = {
             'user_id': request.user.id,
             'report_name': report_name,
-            'export_format': request.GET.get('_export', None),
+            'export_format': format,
             'report_args': report_args
         }
         task_key = ""
@@ -584,16 +586,19 @@ def transcript_export_table(request, user_id):
 
 def get_query_dict(request):
     query_dict = collections.OrderedDict()
+    if request.method == 'POST':
+        data = request.POST.copy()
+        for key, value in data.items():
+            if 'queried_field_' in key or 'query_string_' in key:
+                query_dict[key] = value
+        return query_dict
     data = request.GET.copy()
-
     if data.has_key('clear'):
         return query_dict
-
     if data.has_key('queried_field'):
         for key, value in data.items():
             if 'queried_field_' in key or 'query_string_' in key:
                 query_dict[key] = value
-
         changed = 0
         # New query will not be added to old queries. One in old queries will be deleted or updated
         current_string, current_field = data['query_string'], data['queried_field']
@@ -608,7 +613,6 @@ def get_query_dict(request):
                     query_dict[corresponding_str_key] = data['query_string']
                 changed = 1
                 break
-
         # New query will be added to old queries
         if changed == 0:
             query_dict.clear()
@@ -627,7 +631,6 @@ def get_query_dict(request):
                         query_dict[key] = value
             query_dict['queried_field_1'] = data['queried_field']
             query_dict['query_string_1'] = data['query_string']
-
     return query_dict
 
 
@@ -646,9 +649,11 @@ def get_filter_kwargs_with_table_exclude(request):
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
 
     request_copy = request.GET.copy()
+    query_dict = get_query_dict(request)
+    if request.method == "POST":
+        query_dict = request.POST.copy()
     request_copy = new_request_copy(request_copy)
     filter_form = TableFilterForm(request_copy, user_properties_helper.get_possible_choices())
-    query_dict = get_query_dict(request)
     if filter_form.is_valid():
         query_tuples = []
         for key, value in query_dict.items():
@@ -719,17 +724,6 @@ def get_course_summary_table_filters(request, course_key, last_update, as_string
     return filter_form, user_properties_form, filter_kwargs, exclude, query_dict
 
 
-def get_customized_course_summary_table_filters(request, course_keys, last_update, as_string=False):
-    filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
-    date_time = day2str(last_update) if as_string else last_update
-    day = date_time.date() if date_time else timezone.now().date()
-    course_filter = Q()
-    for course_key in course_keys:
-        course_filter |= Q(**{'course_id': "%s" % course_key if as_string else course_key})
-    all_filters = Q(**{'created': day}) & Q(**filter_kwargs) & course_filter
-    return filter_form, user_properties_form, all_filters, filter_kwargs, exclude, query_dict
-
-
 def get_table(report_cls, filter_kwargs, table_cls, exclude):
     if filter_kwargs.pop('invalid', False):
         return table_cls([]), 0
@@ -737,6 +731,16 @@ def get_table(report_cls, filter_kwargs, table_cls, exclude):
     queryset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
     row_count = queryset.count()
     table = table_cls(queryset, exclude=exclude)
+    return table, row_count
+
+
+def get_customized_table(report_cls, filter_kwargs, filters, table_cls, exclude):
+    if filter_kwargs.pop('invalid', False):
+        return table_cls([]), 0
+
+    querysets = report_cls.objects.filter(filters).prefetch_related('user__profile')
+    row_count = querysets.count()
+    table = table_cls(querysets, exclude=exclude)
     return table, row_count
 
 
@@ -1285,11 +1289,11 @@ def customized_view(request):
     if not orgs:
         return HttpResponseNotFound()
 
-    report_type = request.GET.get('report_type', '')
-    courses_selected = request.GET.get('course_selected', '')
+    report_type = request.GET.get('report_type', None)
+    courses_selected = request.GET.get('course_selected', None)
     report_types = [
         ('course_summary', 'Course Summary'),
-        ('course_process', 'Course Process'),
+        ('course_progress', 'Course Progress'),
         ('course_time_spent', 'Course Time Spent'),
         ('learner', 'Learner'),
         ('ilt_global', 'ILT Global'),
@@ -1309,7 +1313,6 @@ def customized_view(request):
     user_properties_form = UserPropertiesForm(request_copy,
                                               user_properties_helper.get_possible_choices(False),
                                               user_properties_helper.get_initial_choices())
-    query_dict = get_query_dict(request)
 
     return render_to_response(
         "triboo_analytics/customized.html",
@@ -1318,7 +1321,6 @@ def customized_view(request):
             'report_type': report_type,
             'courses': courses_list,
             'courses_selected': courses_selected,
-            'query_dict': query_dict,
             'filter_form': filter_form,
             'user_properties_form': user_properties_form,
             'export_formats': export_formats,
@@ -1338,52 +1340,40 @@ def customized_export_table(request):
     if not orgs:
         return HttpResponseNotFound()
 
-    report_type = request.GET.get('report_type', None)
+    report_type = request.POST.get('report_type', None)
+    courses_selected = request.POST.get('course_selected', None)
 
-    if report_type == 'course':
-        course_report_type = request.GET.get('course_report_type')
+    if report_type == 'course_summary':
         last_reportlog = ReportLog.get_latest()
         if last_reportlog:
             last_update = last_reportlog.created
+            date_time = day2str(last_update)
+            filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+            report_args = {
+                'report_cls': LearnerCourseDailyReport.__name__,
+                'filter_kwargs': filter_kwargs,
+                'courses_selected': courses_selected,
+                'date_time': date_time,
+                'table_cls': CustomizedCourseTable.__name__,
+                'exclude': list(exclude)
+            }
+            return _export_table(request, CourseKeyField.Empty, 'summary_report', report_args)
 
-            if course_report_type == "summary":
-                courses, courses_list = get_all_courses(request, orgs)
-                user_courses_form = UserCoursesForm(request.GET.copy(), courses_list)
-                course_ids_selected = []
-                if user_courses_form.is_valid():
-                    course_ids_selected = user_courses_form.cleaned_data['selected_courses']
-                course_keys_selected = [CourseKey.from_string(id) for id in course_ids_selected]
-                filter_form, user_properties_form, all_filters, \
-                filter_kwargs, exclude, query_dict = get_customized_course_summary_table_filters(
-                                                            request,
-                                                            course_keys_selected,
-                                                            last_update,
-                                                            as_string=True)
-                report_args = {
-                    'report_cls': LearnerCourseDailyReport.__name__,
-                    'filter_kwargs': filter_kwargs,
-                    'all_filters': all_filters,
-                    'table_cls': CourseTable.__name__,
-                    'exclude': list(exclude)
-                }
-                return _export_table(request, CourseKeyField.Empty, 'summary_report', report_args)
-
-            else:
-                try:
-                    course_key = CourseKey.from_string(request.GET.get('course_id', None))
-                except InvalidKeyError:
-                    return JsonResponseBadRequest({"message": _("Invalid course id.")})
-                unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
-                                                                                            request)
-                report_args = {
-                    'filter_kwargs': filter_kwargs,
-                    'exclude': list(exclude)
-                }
-                if course_report_type == "progress":
-                    return _export_table(request, course_key, 'progress_report', report_args)
-                elif course_report_type == "time_spent":
-                    return _export_table(request, course_key, 'time_spent_report', report_args)
-        return None
+    elif report_type in ['course_progress', 'course_time_spent']:
+        try:
+            course_key = CourseKey.from_string(courses_selected)
+        except InvalidKeyError:
+            return JsonResponseBadRequest({"message": _("Invalid course id.")})
+        unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
+                                                                                    request)
+        report_args = {
+            'filter_kwargs': filter_kwargs,
+            'exclude': list(exclude)
+        }
+        if report_type == "course_progress":
+            return _export_table(request, course_key, 'progress_report', report_args)
+        elif report_type == "course_time_spent":
+            return _export_table(request, course_key, 'time_spent_report', report_args)
 
     elif report_type == 'learner':
         unused_filter_form, unused_prop_form, filter_kwargs, exclude, unused_update, query_dict = get_learner_table_filters(
@@ -1398,10 +1388,9 @@ def customized_export_table(request):
         }
         return _export_table(request, CourseKeyField.Empty, 'learner_report', report_args)
 
-    elif report_type == 'ilt':
-        ilt_report_type = request.GET.get('report', "global")
+    elif report_type in ['ilt_global', 'ilt_learner']:
 
-        if ilt_report_type == "global":
+        if report_type == "global":
             report_args = {'orgs': orgs}
             return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
 
