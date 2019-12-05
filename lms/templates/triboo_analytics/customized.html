@@ -41,64 +41,6 @@
     <div class="main-container">
         <%include file="banner_nav.html" args="active_page='customized'" />
         <section class="analytics-wrapper customized">
-            ${HTML(render_bundle('CustomizedReport'))}
-            ${HTML(render_bundle('ReactRenderer'))}
-            <script type="text/javascript">
-                setTimeout(function () {
-                    new ReactRenderer({
-                        component: CustomizedReport,
-                        selector: '.report_type_and_course_selected',
-                        componentName: 'CustomizedReport',
-                        props: {
-                            translation:{
-                                report_type:'${_("Please select a report type:")}',
-                                course:'${_("Please select course to see your report:")}'
-                            },
-                            'report_types':[{
-                                    courseReportType:'multiple',
-                                    type:"course_summary",
-                                    title:"Course Summary"
-                                }, {
-                                    courseReportType:'single',
-                                    type:"course_process",
-                                    title:"Course Process"
-                                }, {
-                                    courseReportType:'single',
-                                    type:"course_time_spent",
-                                    title:"Course Time Spent"
-                                }, {
-                                    courseReportType:'',
-                                    type:"learner",
-                                    title:"Learner"
-                                }, {
-                                    courseReportType:'',
-                                    type:"ilt_global",
-                                    title:"ILT Global"
-                                },{
-                                    courseReportType:'single',
-                                    type:"ilt_learner",
-                                    title:"ILT Learner"
-                            } ],
-                            'courses':[{
-                                    cid:"course-v1:edX+E2E-101+course",
-                                    course_title:"E2E Test Course"
-                                },{
-                                    cid:"course-v1:edX+CS3+2019_T3",
-                                    course_title:"Electric cars introduction"
-                                },{
-                                    cid:"course-v1:edX+CS301+2019_T4",
-                                    course_title:"Finance for Sitel Leaders (English)"
-                                },{
-                                    cid:"course-v1:edX+CS4+2019_T4",
-                                    course_title:"The everest"
-                                },{
-                                    cid:"course-v1:edX+DemoX+Demo_Course",
-                                    course_title:"edX Demonstration Course"
-                                }]
-                        }
-                    });
-                }, 200)
-            </script>
             <div class="report-wrapper">
                 ##<div action="${reverse('analytics_customized')}" method="get">
                 ##    <label for="report_type">${_("Please select a report type:")}</label>
@@ -118,9 +60,24 @@
                 ##    </select>
                 ##    <input type="hidden" name="courses_selected" value="${ courses_selected }">
                 ##</div>
-                <div class="report_type_and_course_selected">
-
-                </div>
+                <div class="report_type_and_course_selected"><!--Slot will be filled by CustomizedReport.js--></div>
+                ${HTML(render_bundle('CustomizedReport'))}
+                ${HTML(render_bundle('ReactRenderer'))}
+                <script type="text/javascript">
+                    new ReactRenderer({
+                        component: CustomizedReport,
+                        selector: '.report_type_and_course_selected',
+                        componentName: 'CustomizedReport',
+                        props: {
+                            translation:{
+                                report_type:'${_("Please select a report type:")}',
+                                course:'${_("Please select course to see your report:")}'
+                            },
+                            'report_types':${json.dumps([{'type': item[0], 'title':item[1], 'courseReportType':item[2]} for item in report_types]) | n},
+                            'courses':${json.dumps([{'cid': item[0], 'course_title':item[1]} for item in report_types]) | n}
+                        }
+                    });
+                </script>
                 <section class="search-form">
                   <div id="filter-form" role="search" aria-label="course" class="wrapper-search-context">
                     <form class="table-filter-form">
@@ -161,8 +118,6 @@
                 <input type="hidden" name="courses_selected" value="${ courses_selected }"/>
 
             </div>
-
-            ##${json.dumps([{'type': item[0], 'title':item[1]} for item in report_types]) | n}
 
         </section>
     </div>
