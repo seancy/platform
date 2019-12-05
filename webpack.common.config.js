@@ -55,6 +55,7 @@ module.exports = Merge.smart({
         PasswordCreateConfirmation: ['babel-polyfill','./lms/static/js/student_account/components/PasswordCreateConfirmation.jsx'],
         StudentAccountDeletion: ['babel-polyfill','./lms/static/js/student_account/components/StudentAccountDeletion.jsx'],
         StudentAccountDeletionInitializer: ['babel-polyfill','./lms/static/js/student_account/StudentAccountDeletionInitializer.js'],
+        CustomizedReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CustomizedReport.js'],
 
         Dialog: ['babel-polyfill','./lms/static/js/dialog.js'],
         Dashboard: ['babel-polyfill','./lms/static/js/dashboard.js'],

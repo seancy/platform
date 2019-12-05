@@ -13,13 +13,13 @@ $(document).ready(function() {
             selected_report_type = report_types[i].value
         }
     }
-    if (selected_report_type === 'course_summary') {
+    /*if (selected_report_type === 'course_summary') {
         $('#course_selected').select2({
             multiple: true
         });
     } else {
         $('#course_selected').select2()
-    }
+    }*/
 });
 
 $('#course_selected').change(function() {

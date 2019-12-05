@@ -6,6 +6,13 @@
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
     from triboo_analytics.models import CourseStatus, format_time_spent
+
+    from openedx.core.djangolib.js_utils import (_escape_json_for_js,dump_js_escaped_json,js_escaped_string)
+    from django.contrib.staticfiles.storage import staticfiles_storage
+    from webpack_loader.templatetags.webpack_loader import render_bundle
+    from openedx.core.djangolib.markup import HTML
+    import json
+
 %>
 
 <%block name="pagetitle">${_("Analytics - Customized Report")}</%block>
@@ -34,25 +41,86 @@
     <div class="main-container">
         <%include file="banner_nav.html" args="active_page='customized'" />
         <section class="analytics-wrapper customized">
+            ${HTML(render_bundle('CustomizedReport'))}
+            ${HTML(render_bundle('ReactRenderer'))}
+            <script type="text/javascript">
+                setTimeout(function () {
+                    new ReactRenderer({
+                        component: CustomizedReport,
+                        selector: '.report_type_and_course_selected',
+                        componentName: 'CustomizedReport',
+                        props: {
+                            translation:{
+                                report_type:'${_("Please select a report type:")}',
+                                course:'${_("Please select course to see your report:")}'
+                            },
+                            'report_types':[{
+                                    courseReportType:'multiple',
+                                    type:"course_summary",
+                                    title:"Course Summary"
+                                }, {
+                                    courseReportType:'single',
+                                    type:"course_process",
+                                    title:"Course Process"
+                                }, {
+                                    courseReportType:'single',
+                                    type:"course_time_spent",
+                                    title:"Course Time Spent"
+                                }, {
+                                    courseReportType:'',
+                                    type:"learner",
+                                    title:"Learner"
+                                }, {
+                                    courseReportType:'',
+                                    type:"ilt_global",
+                                    title:"ILT Global"
+                                },{
+                                    courseReportType:'single',
+                                    type:"ilt_learner",
+                                    title:"ILT Learner"
+                            } ],
+                            'courses':[{
+                                    cid:"course-v1:edX+E2E-101+course",
+                                    course_title:"E2E Test Course"
+                                },{
+                                    cid:"course-v1:edX+CS3+2019_T3",
+                                    course_title:"Electric cars introduction"
+                                },{
+                                    cid:"course-v1:edX+CS301+2019_T4",
+                                    course_title:"Finance for Sitel Leaders (English)"
+                                },{
+                                    cid:"course-v1:edX+CS4+2019_T4",
+                                    course_title:"The everest"
+                                },{
+                                    cid:"course-v1:edX+DemoX+Demo_Course",
+                                    course_title:"edX Demonstration Course"
+                                }]
+                        }
+                    });
+                }, 200)
+            </script>
             <div class="report-wrapper">
-                <form action="${reverse('analytics_customized')}" method="get">
-                    <label for="report_type">${_("Please select a report type:")}</label>
-                    <select name="report_type" id="report_type">
-                    % for type, title in report_types:
-                        <option value="${type}">${title}</option>
-                    % endfor
-                    </select>
-                    <input type="hidden" name="report_type" value="${ report_type }">
-                </form>
-                <form action="${reverse('analytics_customized')}" method="get">
-                    <label for="course_selected">${_("Please select course to see your report:")}</label>
-                    <select id="course_selected">
-                    % for cid, course_title in courses:
-                        <option value="${cid}">${course_title}</option>
-                    % endfor
-                    </select>
-                    <input type="hidden" name="courses_selected" value="${ courses_selected }">
-                </form>
+                ##<div action="${reverse('analytics_customized')}" method="get">
+                ##    <label for="report_type">${_("Please select a report type:")}</label>
+                ##    <select name="report_type" id="report_type">
+                ##    % for type, title in report_types:
+                ##        <option value="${type}">${title}</option>
+                ##    % endfor
+                ##    </select>
+                ##    <input type="hidden" name="report_type" value="${ report_type }">
+                ##</div>
+                ##<div action="${reverse('analytics_customized')}" method="get">
+                ##    <label for="course_selected">${_("Please select course to see your report:")}</label>
+                ##    <select id="course_selected">
+                ##    % for cid, course_title in courses:
+                ##        <option value="${cid}">${course_title}</option>
+                ##    % endfor
+                ##    </select>
+                ##    <input type="hidden" name="courses_selected" value="${ courses_selected }">
+                ##</div>
+                <div class="report_type_and_course_selected">
+
+                </div>
                 <section class="search-form">
                   <div id="filter-form" role="search" aria-label="course" class="wrapper-search-context">
                     <form class="table-filter-form">
@@ -66,7 +134,7 @@
                   <div id="filter-bar" class="filters hide-phone is-collapsed"></div>
                   <div id="filter-message" class="search-status-label"></div>
                 </section>
-                <form class="table-user-properties-form-customized" action="${reverse('analytics_customized')}" method="get">
+                <div class="table-user-properties-form-customized" action="${reverse('analytics_customized')}" method="get">
                     <div id="user-properties">
                         ${user_properties_form}
                         % for key, value in query_dict.items():
@@ -87,8 +155,15 @@
                         <p id="export-error"></p>
                     </div>
                     <input type="submit" value="${_("Go")}"/>
-                </form>
+                </div>
+
+                <input type="hidden" name="report_type" value="${ report_type }"/>
+                <input type="hidden" name="courses_selected" value="${ courses_selected }"/>
+
             </div>
+
+            ##${json.dumps([{'type': item[0], 'title':item[1]} for item in report_types]) | n}
+
         </section>
     </div>
 </main>
