@@ -35,7 +35,7 @@
     "js-cookie": "2.2.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.23",
-    "node-sass": "4.7.2",
+    "node-sass": "^4.12.0",
     "papaparse": "^4.6.3",
     "picturefill": "3.0.2",
     "popper.js": "1.12.9",
