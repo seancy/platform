@@ -11107,7 +11107,7 @@ msgstr "Télécharger"
 msgid ""
 "Due to the high volume of data, this progress report is only available for "
 "export."
-msgstr "En raison d'un volume de données important, ce rapport est uniquement"
+msgstr "En raison d'un volume de données important, ce rapport est uniquement "
 "disponible via l'export."
 
 #: lms/templates/triboo_analytics/table-double-header.html:101
