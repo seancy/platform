@@ -1290,14 +1290,14 @@ def customized_view(request):
         return HttpResponseNotFound()
 
     report_type = request.GET.get('report_type', None)
-    courses_selected = request.GET.get('course_selected', None)
+    courses_selected = request.GET.get('courses_selected', None)
     report_types = [
-        ('course_summary', 'Course Summary'),
-        ('course_progress', 'Course Progress'),
-        ('course_time_spent', 'Course Time Spent'),
-        ('learner', 'Learner'),
-        ('ilt_global', 'ILT Global'),
-        ('ilt_learner', 'ILT Learner'),
+        ('course_summary', 'Course Summary', 'multiple'),
+        ('course_progress', 'Course Progress', 'single'),
+        ('course_time_spent', 'Course Time Spent', 'single'),
+        ('learner', 'Learner', ''),
+        ('ilt_global', 'ILT Global', ''),
+        ('ilt_learner', 'ILT Learner', 'single'),
     ]
     export_formats = ['csv', 'xls', 'json']
     courses, courses_list = get_all_courses(request, orgs)
@@ -1341,7 +1341,7 @@ def customized_export_table(request):
         return HttpResponseNotFound()
 
     report_type = request.POST.get('report_type', None)
-    courses_selected = request.POST.get('course_selected', None)
+    courses_selected = request.POST.get('courses_selected', None)
 
     if report_type == 'course_summary':
         last_reportlog = ReportLog.get_latest()

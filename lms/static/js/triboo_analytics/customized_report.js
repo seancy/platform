@@ -13,28 +13,6 @@ $(document).ready(function() {
             selected_report_type = report_types[i].value
         }
     }
-    if (selected_report_type === 'course_summary') {
-        $('#course_selected').select2({
-            multiple: true
-        });
-    } else {
-        $('#course_selected').select2()
-    }
-
-    // $('#submit-button').on('click', function (e) {
-    //     e.preventDefault();
-    //     console.log('e', e)
-    //     console.log('e.currentTarget', e.currentTarget)
-    //     console.log('e.currentTarget.form.action', e.currentTarget.form.action)
-    //     $.ajax(e.currentTarget.form.action, {
-    //         success: function (data) {
-    //             LearningTribes.dialog.show(data.message)
-    //         },
-    //         error: function (data) {
-    //             $('#export-error').text(data.message);
-    //         }
-    //     });
-    // });
 });
 
 $('#course_selected').change(function() {

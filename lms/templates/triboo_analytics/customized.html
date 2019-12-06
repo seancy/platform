@@ -6,6 +6,13 @@
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
     from triboo_analytics.models import CourseStatus, format_time_spent
+
+    from openedx.core.djangolib.js_utils import (_escape_json_for_js,dump_js_escaped_json,js_escaped_string)
+    from django.contrib.staticfiles.storage import staticfiles_storage
+    from webpack_loader.templatetags.webpack_loader import render_bundle
+    from openedx.core.djangolib.markup import HTML
+    import json
+
 %>
 
 <%block name="pagetitle">${_("Analytics - Customized Report")}</%block>
@@ -36,19 +43,24 @@
         <section class="analytics-wrapper customized">
             <div class="report-wrapper">
                 <form action="${reverse('analytics_customized_export')}" method="post">
-                    <label for="report_type">${_("Please select a report type:")}</label>
-                    <select name="report_type" id="report_type">
-                    % for type, title in report_types:
-                        <option value="${type}">${title}</option>
-                    % endfor
-                    </select>
-                    <label for="course_selected">${_("Please select course to see your report:")}</label>
-                    <select id="course_selected">
-                    % for cid, course_title in courses:
-                        <option value="${cid}">${course_title}</option>
-                    % endfor
-                        <input type="hidden" name="course_selected" id="course_selected_return">
-                    </select>
+                    <div class="report_type_and_course_selected"><!--Slot will be filled by CustomizedReport.js--></div>
+                    ${HTML(render_bundle('CustomizedReport'))}
+                    ${HTML(render_bundle('ReactRenderer'))}
+                    <script type="text/javascript">
+                        new ReactRenderer({
+                            component: CustomizedReport,
+                            selector: '.report_type_and_course_selected',
+                            componentName: 'CustomizedReport',
+                            props: {
+                                translation:{
+                                    report_type:'${_("Please select a report type:")}',
+                                    course:'${_("Please select course to see your report:")}'
+                                },
+                                'report_types':${json.dumps([{'type': item[0], 'title':item[1], 'courseReportType':item[2]} for item in report_types]) | n},
+                                'courses':${json.dumps([{'cid': item[0], 'course_title':item[1]} for item in courses]) | n}
+                            }
+                        });
+                    </script>
                     <section class="search-form">
                       <div id="filter-form" role="search" aria-label="course" class="wrapper-search-context">
                         <div class="table-filter-form">
@@ -80,6 +92,7 @@
                             <p id="export-error"></p>
                         </div>
                     </div>
+                    <input type="hidden" name="courses_selected" value="${ courses_selected }" id="course_selected_return"/>
                     <div id="hidden-queries"></div>
                     <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
                     <input type="submit" value="${_("Go")}" id="submit-button"/>
