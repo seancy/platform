@@ -2,17 +2,28 @@
     from django.utils.translation import ugettext as _
     from openedx.core.djangolib.markup import HTML, Text
 %>
-<div id="report-downloads">
-    <div class="table-download">
-        <div class="download-item hidden-mobile">
-            <a href="#" id="toggle-report-file-list">${_("Download")} <i class="fa fa-angle-double-down"></i></a>
-        </div>
-        <div id="report-file-list" class="dropdown-download-menu hidden" data-endpoint="${ list_table_downloads_url }">
-        </div>
-        <p id="download-notification"></p>
-        <p id="download-error"></p>
-    </div>
-</div>
+<ul class="actions">
+    <li class="download-item-container">
+        <a class="download-item" href="#" alt="${_('Admin Space')}" title="${_('Admin Space')}">
+            <i class="far fa-download"></i>
+        </a>
+        <div id="report-file-list" class="dropdown-download-menu" data-endpoint="${ list_table_downloads_url }"></div>
+    </li>
+</ul>
+
+##<div id="report-downloads">
+##    <div class="table-download">
+##        <div class="download-item hidden-mobile">
+##            <a href="#" id="toggle-report-file-list">${_("Download")} <i class="fa fa-angle-double-down"></i></a>
+##        </div>
+##        <div id="report-file-list" class="dropdown-download-menu hidden" data-endpoint="${ list_table_downloads_url }">
+##        </div>
+##        <p id="download-notification"></p>
+##        <p id="download-error"></p>
+##    </div>
+##</div>
+
+
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -21,9 +32,9 @@
             $.ajax(elem.attr('data-endpoint'), {
                 success: function (data) {
                     var links = $.map(data.download, function (f) {
-                        var icon = $('<i></i>', {class: 'fa fa-download'});
+                        // var icon = $('<i></i>', {class: 'fa fa-download'});
                         var link = $('<a></a>', {href: f[1], text: f[0]});
-                        link.prepend(icon)
+                        // link.prepend(icon)
                         var div = $('<div></div>', {class: 'dropdown-download-item'});
                         div.html(link);
                         return div;
