@@ -649,10 +649,11 @@ def get_filter_kwargs_with_table_exclude(request):
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
 
     request_copy = request.GET.copy()
+    request_copy = new_request_copy(request_copy)
     query_dict = get_query_dict(request)
     if request.method == "POST":
-        query_dict = request.POST.copy()
-    request_copy = new_request_copy(request_copy)
+        request_copy = request.POST.copy()
+        query_dict = request_copy
     filter_form = TableFilterForm(request_copy, user_properties_helper.get_possible_choices())
     if filter_form.is_valid():
         query_tuples = []

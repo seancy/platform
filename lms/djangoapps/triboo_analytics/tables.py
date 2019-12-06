@@ -455,11 +455,14 @@ class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
     progress = tables.Column(footer=lambda table: "{}%".format(
                          get_avg(None, [r.progress for r in table.data])))
     posts = SumFooterColumn()
+    course_title = tables.LinkColumn('info', args=[A('course_id')],
+                                     verbose_name='Course Title', empty_values=('', ))
 
     class Meta:
         model = LearnerCourseDailyReport
         template = 'django_tables2/bootstrap.html'
-        fields = ('course_id',
+        fields = ('course_title',
+                  'course_id',
                   'user_name',
                   'user_email',
                   'user_username',
@@ -494,12 +497,41 @@ class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
                   'total_time_spent',
                   'enrollment_date',
                   'completion_date')
-        unlocalize = ('course_id', 'user_name', 'user_email', 'user_username', 'user_date_joined', 'user_country',
+        unlocalize = ('course_title', 'course_id', 'user_name', 'user_email', 'user_username', 'user_date_joined', 'user_country',
                     'user_lt_area', 'user_lt_sub_area', 'user_city', 'user_location', 'user_lt_address', 'user_lt_address_2',
                     'user_lt_phone_number', 'user_lt_gdpr', 'user_lt_company', 'user_lt_employee_id', 'user_lt_hire_date',
                     'user_lt_level', 'user_lt_job_code', 'user_lt_job_description', 'user_lt_department', 'user_lt_supervisor',
                     'user_lt_ilt_supervisor', 'user_lt_learning_group', 'user_lt_exempt_status', 'user_lt_comments',
                     'progress', 'current_score', 'badges', 'posts', 'total_time_spent', 'enrollment_date', 'completion_date')
+
+    def __init__(self, data=None, order_by=None, orderable=None, empty_text=None, exclude=None, attrs=None,
+                 row_attrs=None, pinned_row_attrs=None, sequence=None, prefix=None, order_by_field=None,
+                 page_field=None, per_page_field=None, template=None, default=None, request=None, show_header=None,
+                 show_footer=True, extra_columns=None):
+        super(CustomizedCourseTable, self).__init__(data, order_by, orderable, empty_text, exclude, attrs, row_attrs,
+                                              pinned_row_attrs, sequence, prefix, order_by_field, page_field,
+                                              per_page_field, template, default, request, show_header, show_footer,
+                                              extra_columns)
+
+        self.titles = {ov.id: ov.display_name for ov in CourseOverview.objects.all()}
+
+
+    def render_course_title(self, record, value, bound_column):
+        column = bound_column.column
+        return column.render_link(
+            column.compose_url(record, bound_column),
+            record=record,
+            value=self.titles[record.course_id]
+        )
+
+
+    def value_course_title(self, record):
+        return self.titles[record.course_id]
+
+
+    def order_course_title(self, queryset, is_descending):
+        queryset = queryset.order_by(('-' if is_descending else '') + 'course_id')
+        return queryset, True
 
 
 class LearnerDailyTable(LearnerBaseTable):
