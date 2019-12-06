@@ -44,8 +44,8 @@
                 <div class="analytics-basic-wrapper">
                     <div class="analytics-widget-75 analytics-linechart">
                         <form class="controls" action="${reverse('analytics_microsite')}" method="get">
-                            <input type="text" id="lineChart-from-date" />
-                            <input type="text" id="lineChart-to-date" />
+                            <input type="text" name="lineChart-from-date" />
+                            <input type="text" name="lineChart-to-date" />
                             <select name="lineChart-by">
                                 <option value="by-day">${_("by day")}</option>
                                 <option value="by-week">${_("by week")}</option>

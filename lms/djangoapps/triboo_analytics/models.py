@@ -934,6 +934,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 unique_visitors = cls.objects.filter(org=org, created__lte=to_date)
             else:
                 unique_visitors = cls.objects.filter(org=org)
+
         unique_visitors = unique_visitors.values('created', 'unique_visitors').order_by('created')
 
         for uv in unique_visitors:

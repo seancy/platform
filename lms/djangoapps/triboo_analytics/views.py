@@ -1089,11 +1089,11 @@ def microsite_view(request):
         from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
         to_date = request.GET.get('lineChart-to-date')
         to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
-        print "LAETITIA --- from=%s to=%s" % (from_date, to_date)
+
         unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(
                                     microsite_report_org,
                                     request.GET.get('lineChart-from-date'),
-                                    request.GET.get('lineChart-from-date'))
+                                    request.GET.get('lineChart-to-date'))
 
         users_by_country_csv_data = ""
         country_reports = CountryDailyReport.filter_by_day(date_time=last_update, org=microsite_report_org)
