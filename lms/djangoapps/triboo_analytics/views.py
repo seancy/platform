@@ -6,6 +6,8 @@ import logging
 import operator
 import collections
 from six import text_type
+from pytz import utc
+from datetime import datetime, timedelta
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -663,7 +665,6 @@ def get_filter_kwargs_with_table_exclude(request):
                         kwargs['user__profile__country__in'] = country_codes
                     else:
                         kwargs['invalid'] = True
-
                 elif queried_field == "user__profile__lt_gdpr":
                     queried_str = query_string.lower()
                     if queried_str == "true":
@@ -674,6 +675,14 @@ def get_filter_kwargs_with_table_exclude(request):
                         kwargs['invalid'] = True
                 else:
                     kwargs[queried_field + '__icontains'] = query_string
+
+    from_day = request_copy.get('from_day', None)
+    to_day = request_copy.get('to_day', None)
+    if from_day:
+        from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
+        to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
+        kwargs['start__range'] = (from_date, to_date)
+
     exclude = []
     user_properties_form = UserPropertiesForm(request_copy,
                                               user_properties_helper.get_possible_choices(False),
@@ -1121,8 +1130,12 @@ def microsite_view(request):
     )
 
 
-def get_ilt_report_table(orgs):
+def get_ilt_report_table(orgs, filter_kwargs):
     ilt_reports = IltSession.objects.none()
+    if filter_kwargs.has_key('start__range'):
+        time_range = filter_kwargs.pop('start__range')
+        ilt_reports = IltSession.objects.filter(start__range=time_range)
+
     for org in orgs:
         org_ilt_reports = IltSession.objects.filter(org=org)
         ilt_reports = ilt_reports | org_ilt_reports
@@ -1136,6 +1149,10 @@ def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
         return IltLearnerTable([]), 0
 
     ilt_reports = IltSession.objects.none()
+    if filter_kwargs.has_key('start__range'):
+        time_range = filter_kwargs.pop('start__range')
+        ilt_reports = IltSession.objects.filter(start__range=time_range)
+
     for org in orgs:
         org_ilt_reports = IltSession.objects.filter(org=org)
         ilt_reports = ilt_reports | org_ilt_reports
@@ -1166,7 +1183,8 @@ def ilt_view(request):
     row_count = 0
 
     if report == "global":
-        ilt_report_table, row_count = get_ilt_report_table(orgs)
+        filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+        ilt_report_table, row_count = get_ilt_report_table(orgs, filter_kwargs)
         config_tables(request, ilt_report_table)
 
         return render_to_response(
