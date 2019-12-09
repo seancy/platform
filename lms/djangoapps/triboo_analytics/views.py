@@ -1132,12 +1132,13 @@ def microsite_view(request):
 
 def get_ilt_report_table(orgs, filter_kwargs):
     ilt_reports = IltSession.objects.none()
+    time_range = None
     if filter_kwargs.has_key('start__range'):
         time_range = filter_kwargs.pop('start__range')
-        ilt_reports = IltSession.objects.filter(start__range=time_range)
 
     for org in orgs:
-        org_ilt_reports = IltSession.objects.filter(org=org)
+        org_ilt_reports = IltSession.objects.filter(org=org) if not time_range \
+                    else IltSession.objects.filter(org=org, start__range=time_range)
         ilt_reports = ilt_reports | org_ilt_reports
     row_count = ilt_reports.count()
     ilt_report_table = IltTable(ilt_reports)
