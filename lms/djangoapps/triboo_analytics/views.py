@@ -1150,12 +1150,13 @@ def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
         return IltLearnerTable([]), 0
 
     ilt_reports = IltSession.objects.none()
+    time_range = None
     if filter_kwargs.has_key('start__range'):
         time_range = filter_kwargs.pop('start__range')
-        ilt_reports = IltSession.objects.filter(start__range=time_range)
 
     for org in orgs:
-        org_ilt_reports = IltSession.objects.filter(org=org)
+        org_ilt_reports = IltSession.objects.filter(org=org) if not time_range \
+                    else IltSession.objects.filter(org=org, start__range=time_range)
         ilt_reports = ilt_reports | org_ilt_reports
     module_ids = ilt_reports.values_list('ilt_module_id', flat=True)
     ilt_learner_reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
