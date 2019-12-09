@@ -1177,9 +1177,8 @@ def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
     module_ids = ilt_reports.values_list('ilt_module_id', flat=True)
     ilt_learner_reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
     if time_range:
-        session_ids = ilt_reports.values_list('ilt_session_id', flat=True)
-        ilt_learner_reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, ilt_session_id__in=session_ids
-                                                              **filter_kwargs).prefetch_related('user__profile')
+        session_ids = [IltSession.session_id(report) for report in ilt_reports]
+        ilt_learner_reports = IltLearnerReport.objects.filter(ilt_session_id__in=session_ids, **filter_kwargs).prefetch_related('user__profile')
     row_count = ilt_learner_reports.count()
     ilt_learner_report_table = IltLearnerTable(ilt_learner_reports, exclude=exclude)
     return ilt_learner_report_table, row_count
