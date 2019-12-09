@@ -59,7 +59,12 @@ from util.json_request import JsonResponse, JsonResponseBadRequest
 from util.date_utils import to_timestamp
 from opaque_keys.edx.django.models import CourseKeyField
 from xmodule.modulestore.django import modulestore
-from forms import UserPropertiesHelper, TableFilterForm, UserPropertiesForm
+from forms import (
+    UserPropertiesHelper,
+    TableFilterForm,
+    UserPropertiesForm,
+    TimePeriodForm,
+)
 from models import (
     ANALYTICS_ACCESS_GROUP,
     ANALYTICS_LIMITED_ACCESS_GROUP,
@@ -676,9 +681,10 @@ def get_filter_kwargs_with_table_exclude(request):
                 else:
                     kwargs[queried_field + '__icontains'] = query_string
 
+    time_period_form = TimePeriodForm(request_copy, user_properties_helper.get_possible_choices())
     from_day = request_copy.get('from_day', None)
     to_day = request_copy.get('to_day', None)
-    if from_day:
+    if from_day and to_day:
         from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
         to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
         kwargs['start__range'] = (from_date, to_date)
@@ -691,7 +697,7 @@ def get_filter_kwargs_with_table_exclude(request):
         data = user_properties_form.cleaned_data
         exclude = data['excluded_properties']
 
-    return filter_form, user_properties_form, kwargs, exclude, query_dict
+    return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
 
 
 def get_learner_table_filters(request, orgs, as_string=False):
@@ -702,7 +708,7 @@ def get_learner_table_filters(request, orgs, as_string=False):
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
         last_update = last_reportlog.created
-        filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+        filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
         filter_kwargs.update({
             'org': learner_report_org,
             'date_time': day2str(last_update) if as_string else last_update
@@ -713,12 +719,23 @@ def get_learner_table_filters(request, orgs, as_string=False):
 
 
 def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
-    filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+    filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
     filter_kwargs.update({
         'date_time': day2str(last_update) if as_string else last_update,
         'course_id': "%s" % course_key if as_string else course_key
     })
     return filter_form, user_properties_form, filter_kwargs, exclude, query_dict
+
+
+def get_ilt_table_filters(request, as_string=False):
+    filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+    from_day = request.GET.get('from_day', None)
+    to_day = request.GET.get('to_day', None)
+    if as_string and from_day and to_day:
+        from_date = filter_kwargs['start__range'][0]
+        to_date = filter_kwargs['start__range'][1]
+        filter_kwargs['start__range'] = (dt2str(from_date), dt2str(to_date))
+    return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
 
 
 def get_table(report_cls, filter_kwargs, table_cls, exclude):
@@ -965,7 +982,7 @@ def course_view(request):
                 config_tables(request, summary_table)
 
             else:
-                filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
+                filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
                                                                                             request)
                 report_args = {
                     'filter_kwargs': filter_kwargs,
@@ -1061,7 +1078,7 @@ def course_export_table(request):
             return _export_table(request, course_key, 'summary_report', report_args)
 
         else:
-            unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
+            unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
                                                                                         request)
             report_args = {
                 'filter_kwargs': filter_kwargs,
@@ -1185,7 +1202,7 @@ def ilt_view(request):
     row_count = 0
 
     if report == "global":
-        filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+        filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request)
         ilt_report_table, row_count = get_ilt_report_table(orgs, filter_kwargs)
         config_tables(request, ilt_report_table)
 
@@ -1193,6 +1210,7 @@ def ilt_view(request):
             "triboo_analytics/ilt.html",
             {
                 'ilt_report_table': ilt_report_table,
+                'time_period_form': time_period_form,
                 'filter_form': filter_form,
                 'user_properties_form': user_properties_form,
                 'row_count': row_count,
@@ -1201,16 +1219,16 @@ def ilt_view(request):
         )
 
     elif report == "learner":
-        filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+        filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request)
         ilt_learner_report_table, row_count = get_ilt_learner_report_table(orgs, filter_kwargs, exclude)
         config_tables(request, ilt_learner_report_table)
-        query_dict = query_dict
         query_triples = get_query_triples(query_dict)
 
         return render_to_response(
             "triboo_analytics/ilt.html",
             {
                 'ilt_learner_report_table': ilt_learner_report_table,
+                'time_period_form': time_period_form,
                 'filter_form': filter_form,
                 'query_dict': query_dict,
                 'query_triples': query_triples,
@@ -1236,11 +1254,15 @@ def ilt_export_table(request):
         return HttpResponseNotFound()
 
     if report == "global":
-        report_args = {'orgs': orgs}
+        unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request, as_string=True)
+        report_args = {
+            'orgs': orgs,
+            'filter_kwargs': filter_kwargs
+        }
         return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
 
     # report == "learner"
-    unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+    unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request, as_string=True)
     report_args = {
         'orgs': orgs,
         'filter_kwargs': filter_kwargs,

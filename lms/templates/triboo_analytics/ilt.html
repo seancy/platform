@@ -27,8 +27,7 @@
 
                 <p>Time Period:</p>
                 <form class="table-period-form" action="${ilt_global_url}" method="get">
-                    <input type="text" name="from_day">
-                    <input type="text" name="to_day">
+                    ${time_period_form}
                     <input type="submit" value="${_("Go")}"/>
                 </form>
 
@@ -40,25 +39,24 @@
           % elif ilt_learner_report_table:
             <div class="report-wrapper ilt_learner">
                 <ul class="analytics-nav">
-                    <li class="nav-item "><a href="${ilt_learner_url}">${_("ILT Global Report")}</a></li>
+                    <li class="nav-item "><a href="${ilt_global_url}">${_("ILT Global Report")}</a></li>
                     <li class="nav-item active">${_("ILT Learner Report")}</li>
                 </ul>
 
                 <p>Time Period:</p>
-                <form class="table-period-form" action="${ilt_learner_url}" method="get">
-                    <input type="text" name="from_day">
-                    <input type="text" name="to_day">
+                <form class="table-period-form" action="${ilt_global_url}" method="get">
+                    ${time_period_form}
                     <input type="submit" value="${_("Go")}"/>
                 </form>
 
-                <form class="table-filter-form" action="${ilt_learner_url}" method="get">
+                <form class="table-filter-form" action="${ilt_global_url}" method="get">
                     ${filter_form}
                     % for key, value in query_dict.items():
                         <input type="hidden" value="${value}" name="${key}"/>
                     % endfor
                     <input type="submit" value="${_("Filter")}"/>
                 </form>
-                <form class="clear-filter-form" action="${ilt_learner_url}" method="get">
+                <form class="clear-filter-form" action="${ilt_global_url}" method="get">
                     <span style="display: none">${filter_form}</span>
                     <input type="hidden" value="1" name="clear">
                     <input type="hidden" value="" name="query_string">
@@ -69,7 +67,7 @@
                 </form>
                 <div class="filter-forms">
                 % for query_string, queried_field, queried_field_name in query_triples:
-                <form class="delete-filter-form" action="${ilt_learner_url}" method="get">
+                <form class="delete-filter-form" action="${ilt_global_url}" method="get">
                     <span style="display: none">${filter_form}</span>
                     <input type="hidden" value="1" name="delete">
                     % for key, value in query_dict.items():

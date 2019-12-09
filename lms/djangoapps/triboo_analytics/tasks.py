@@ -103,6 +103,14 @@ def upload_file_to_store(user_id, course_key, filename, export_format, content, 
     tracker.emit(REPORT_REQUESTED_EVENT_NAME, {"report_type": _filename})
 
 
+def convert_period_format(kwargs):
+    date_tuple = json.loads(kwargs['start__range'])
+    from_date = pytz.utc.localize(datetime.strptime(date_tuple[0], "%Y-%m-%d %H:%M:%S %Z"))
+    to_date = pytz.utc.localize(datetime.strptime(date_tuple[1], "%Y-%m-%d %H:%M:%S %Z"))
+    kwargs['start__range'] = (from_date, to_date)
+    return kwargs
+
+
 def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
     from .views import (
         get_ilt_report_table,
@@ -122,11 +130,18 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
                                         datetime.strptime(_task_input['report_args']['last_update'], "%Y-%m-%d"))
     
     elif _task_input['report_name'] == "ilt_global_report":
-        table, _ = get_ilt_report_table(_task_input['report_args']['orgs'])
+        kwargs = _task_input['report_args']['filter_kwargs']
+        if 'start__range' in kwargs:
+            kwargs = convert_period_format(kwargs)
+        table, _ = get_ilt_report_table(_task_input['report_args']['orgs'],
+                                        kwargs)
 
     elif _task_input['report_name'] == "ilt_learner_report":
+        kwargs = _task_input['report_args']['filter_kwargs']
+        if 'start__range' in kwargs:
+            kwargs = convert_period_format(kwargs)
         table, _ = get_ilt_learner_report_table(_task_input['report_args']['orgs'],
-                                                _task_input['report_args']['filter_kwargs'],
+                                                kwargs,
                                                 _task_input['report_args']['exclude'])
 
     else:
