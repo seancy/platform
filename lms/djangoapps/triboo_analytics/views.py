@@ -729,9 +729,7 @@ def get_course_summary_table_filters(request, course_key, last_update, as_string
 
 def get_ilt_table_filters(request, as_string=False):
     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
-    from_day = request.GET.get('from_day', None)
-    to_day = request.GET.get('to_day', None)
-    if as_string and from_day and to_day:
+    if as_string and 'start__range' in filter_kwargs:
         from_date = filter_kwargs['start__range'][0]
         to_date = filter_kwargs['start__range'][1]
         filter_kwargs['start__range'] = (dt2str(from_date), dt2str(to_date))
@@ -1175,8 +1173,13 @@ def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
         org_ilt_reports = IltSession.objects.filter(org=org) if not time_range \
                     else IltSession.objects.filter(org=org, start__range=time_range)
         ilt_reports = ilt_reports | org_ilt_reports
+
     module_ids = ilt_reports.values_list('ilt_module_id', flat=True)
     ilt_learner_reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
+    if filter_kwargs.has_key('start__range'):
+        session_ids = ilt_reports.values_list('ilt_session_id', flat=True)
+        ilt_learner_reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, ilt_session_id__in=session_ids
+                                                              **filter_kwargs).prefetch_related('user__profile')
     row_count = ilt_learner_reports.count()
     ilt_learner_report_table = IltLearnerTable(ilt_learner_reports, exclude=exclude)
     return ilt_learner_report_table, row_count
