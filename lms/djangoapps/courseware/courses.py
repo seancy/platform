@@ -505,7 +505,7 @@ def sort_by_last_block_completed(user, course_enrollments):
 
     def sort_order(course_enrollment):
         """
-        Sort func to handle
+        Sort func to handle.
         """
         last_completed_block = BlockCompletion.get_latest_block_completed(
             user, course_enrollment.course_id)
