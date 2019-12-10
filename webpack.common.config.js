@@ -56,6 +56,7 @@ module.exports = Merge.smart({
         StudentAccountDeletion: ['babel-polyfill','./lms/static/js/student_account/components/StudentAccountDeletion.jsx'],
         StudentAccountDeletionInitializer: ['babel-polyfill','./lms/static/js/student_account/StudentAccountDeletionInitializer.js'],
         CustomizedReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CustomizedReport.js'],
+        CourseReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CourseReport.js'],
 
         Dialog: ['babel-polyfill','./lms/static/js/dialog.js'],
         Dashboard: ['babel-polyfill','./lms/static/js/dashboard.js'],
@@ -199,6 +200,12 @@ module.exports = Merge.smart({
                     /paragon/
                 ],
                 use: 'babel-loader'
+            },
+            {
+                test: /\.css$/,
+                include: [
+                    /node_modules\/select2/
+                ]
             },
             {
                 test: path.resolve(__dirname, 'common/static/js/src/ajax_prefix.js'),
