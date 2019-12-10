@@ -191,6 +191,10 @@
     </div>
 </main>
 
+<%static:webpack entry="CourseReport">
+    new CourseReport();
+</%static:webpack>
+
 % if course_report:
     <!-- load the d3.js library -->
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
