@@ -732,7 +732,7 @@ def get_ilt_table_filters(request, as_string=False):
     if as_string and 'start__range' in filter_kwargs:
         from_date = filter_kwargs['start__range'][0]
         to_date = filter_kwargs['start__range'][1]
-        filter_kwargs['start__range'] = (dt2str(from_date), dt2str(to_date))
+        filter_kwargs['start__range'] = json.dumps((dt2str(from_date), dt2str(to_date)))
     return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
 
 
