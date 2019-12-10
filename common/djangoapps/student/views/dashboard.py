@@ -679,6 +679,7 @@ def student_dashboard(request):
 
     # the ordered courses on dashboard, limited to 12
     course_enrollments = started_courses + not_started_courses + completed_courses
+    last_activity_enrollments = [e for e in course_enrollments if not e.completed]
     if len(course_enrollments) > 12:
         course_enrollments = course_enrollments[:12]
 
@@ -872,10 +873,16 @@ def student_dashboard(request):
             enr for enr in course_enrollments if entitlement.enrollment_course_run.course_id != enr.course_id
         ]
 
-    last_activity_enrollments = sort_by_last_block_completed(user, course_enrollments)
-    max_latest_display = settings.FEATURES.get('LAST_ACTIVITY_COURSES_NUM', 3)
-    if len(last_activity_enrollments) > max_latest_display:
-        last_activity_enrollments = last_activity_enrollments[:max_latest_display]
+    if configuration_helpers.get_value(
+            'ENABLE_LAST_ACTIVITY',
+            settings.FEATURES.get('ENABLE_LAST_ACTIVITY', False)):
+        last_activity_enrollments = sort_by_last_block_completed(
+            user, last_activity_enrollments)
+        max_display = settings.FEATURES.get('LAST_ACTIVITY_COURSES_NUM', 3)
+        if len(last_activity_enrollments) > max_display:
+            last_activity_enrollments = last_activity_enrollments[:max_display]
+    else:
+        last_activity_enrollments = []
 
     context = {
         'urls': urls,

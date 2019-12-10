@@ -19,8 +19,6 @@
 <%block name="bodyclass">view-in-analytics</%block>
 
 <%block name="js_extra">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
     <script type="text/javascript" src="${static.url('js/triboo_analytics/customized_report.js')}"></script>
 </%block>
 
@@ -42,25 +40,18 @@
         <%include file="banner_nav.html" args="active_page='customized'" />
         <section class="analytics-wrapper customized">
             <div class="report-wrapper">
-                <form action="${reverse('analytics_customized_export')}" method="post">
+                <form id="form-customized-report" action="${reverse('analytics_customized_export')}" method="post">
                     <div class="report_type_and_course_selected"><!--Slot will be filled by CustomizedReport.js--></div>
-                    ${HTML(render_bundle('CustomizedReport'))}
-                    ${HTML(render_bundle('ReactRenderer'))}
-                    <script type="text/javascript">
-                        new ReactRenderer({
-                            component: CustomizedReport,
-                            selector: '.report_type_and_course_selected',
-                            componentName: 'CustomizedReport',
-                            props: {
-                                translation:{
-                                    report_type:'${_("Please select a report type:")}',
-                                    course:'${_("Please select course to see your report:")}'
-                                },
-                                'report_types':${json.dumps([{'type': item[0], 'title':item[1], 'courseReportType':item[2]} for item in report_types]) | n},
-                                'courses':${json.dumps([{'cid': item[0], 'course_title':item[1]} for item in courses]) | n}
-                            }
+                    <%static:webpack entry="CustomizedReport">
+                        new CustomizedReport({
+                            translation:{
+                                report_type:'${_("Please select a report type:")}',
+                                course:'${_("Please select course to see your report:")}'
+                            },
+                            'report_types':${json.dumps([{'type': item[0], 'title':item[1], 'courseReportType':item[2]} for item in report_types]) | n},
+                            'courses':${json.dumps([{'cid': item[0], 'course_title':item[1]} for item in courses]) | n}
                         });
-                    </script>
+                    </%static:webpack>
                     <section class="search-form">
                       <div id="filter-form" role="search" aria-label="course" class="wrapper-search-context">
                         <div class="table-filter-form">
