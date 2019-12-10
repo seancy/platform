@@ -14,12 +14,15 @@ export class CustomizedReport {
                 componentName: 'CustomizedReport',
                 props: props
             });
+            this.$submitButton = $('input[type=submit]');
+            this.$courseReport = $('#course_selected');
+            this.$courseReportSelect2 = this.$courseReport.select2();
             this.eventInit()
         })
     }
 
     eventInit() {
-        $('input[type=submit]').on('click', (e) => {
+        this.$submitButton.on('click', (e) => {
             e.preventDefault();
             this.synchronizeSelectedCourses();
             setTimeout(async ()=>{
@@ -28,6 +31,21 @@ export class CustomizedReport {
                 LearningTribes.dialog.show(json.message);
             },200)
         })
+        this.$courseReport.on('change',()=>{
+            if (this.checkFieldsSuccess()){
+                this.$submitButton.removeClass('disabled')
+            }else if (!this.$submitButton.hasClass('disabled')){
+                this.$submitButton.addClass('disabled')
+            }
+        })
+    }
+
+    checkFieldsSuccess(){
+        const courseReportVal = this.$courseReportSelect2.val()
+        const selectedCoursesNum = courseReportVal ? courseReportVal.length : 0;
+        if (selectedCoursesNum>0){
+            return true;
+        }
     }
 
     async submit() {
@@ -44,7 +62,7 @@ export class CustomizedReport {
     }
 
     synchronizeSelectedCourses() {
-        let courseSelectedValueStr = $('#course_selected').select2().val();
+        let courseSelectedValueStr = this.$courseReportSelect2.val();
         $('#course_selected_return').val(courseSelectedValueStr)
     }
 }
