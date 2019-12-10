@@ -202,22 +202,6 @@ module.exports = Merge.smart({
                 use: 'babel-loader'
             },
             {
-                test: /(.css)$/,
-                include: [
-                    /node_modules\/select2/
-                ],
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: true,
-                            localIdentName: '[name]__[local]'
-                        }
-                    }
-                ]
-            },
-            {
                 test: path.resolve(__dirname, 'common/static/js/src/ajax_prefix.js'),
                 use: [
                     'babel-loader',
