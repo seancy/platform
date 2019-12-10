@@ -23,8 +23,6 @@
 ##    </div>
 ##</div>
 
-
-
 <script type="text/javascript">
     $(document).ready(function () {
         function listDownloads() {
@@ -39,6 +37,9 @@
                         div.html(link);
                         return div;
                     });
+                    if (links.length <= 0){
+                        links.push('<div><h3>${_("Download list is empty.")}</h3></div>')
+                    }
                     elem.html(links);
                 }
             })
