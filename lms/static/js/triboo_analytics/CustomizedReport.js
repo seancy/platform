@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'select2'
-import '../../../../node_modules/select2/dist/css/select2.css'
+import 'select2/dist/css/select2.css'
 import {ReactRenderer} from '../../../../common/static/js/src/ReactRenderer'
 
 export class CustomizedReport {
