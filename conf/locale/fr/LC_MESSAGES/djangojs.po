@@ -8757,21 +8757,23 @@ msgid "Hide Timer"
 msgstr "Masquer le temps restant"
 
 #: lms/templates/discovery/course_card.underscore:33
-msgid "badges"
-msgstr "badges"
+msgid "badge"
+msgid_plural "badges"
+msgstr[0] "badge"
+msgstr[1] "badges"
 
 #: lms/templates/discovery/course_card.underscore:43
 msgid "%(num)s minute"
 msgid_plural "%(num)s minutes"
-msgstr[0] "%(value)s minute"
-msgstr[1] "%(value)s minutes"
+msgstr[0] "%(num)s minute"
+msgstr[1] "%(num)s minutes"
 
 #: lms/templates/discovery/course_card.underscore:46
 #, python-format
 msgid "%(num)s hour"
 msgid_plural "%(num)s hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s hour"
+msgstr[1] "%(num)s hours"
 
 #: lms/templates/discovery/course_card.underscore:55
 msgid "Learn More"

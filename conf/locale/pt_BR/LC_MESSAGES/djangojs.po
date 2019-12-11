@@ -8765,20 +8765,22 @@ msgid "Hide Timer"
 msgstr "Esconder cronômetro"
 
 #: lms/templates/discovery/course_card.underscore:33
-msgid "badges"
-msgstr "distintivos"
+msgid "badge"
+msgid_plural "badges"
+msgstr[0] "distintivos"
+msgstr[1] "distintivos"
 
 #: lms/templates/discovery/course_card.underscore:43
 msgid "%(num)s minute"
 msgid_plural "%(num)s minutes"
-msgstr[0] "%(value)s minuto"
-msgstr[1] "%(value)s minutos"
+msgstr[0] "%(num)s minuto"
+msgstr[1] "%(num)s minutos"
 
 #: lms/templates/discovery/course_card.underscore:46
 msgid "%(num)s hour"
 msgid_plural "%(num)s hours"
-msgstr[0] "%(value)s hora"
-msgstr[1] "%(value)s horas"
+msgstr[0] "%(num)s hora"
+msgstr[1] "%(num)s horas"
 
 #: lms/templates/discovery/course_card.underscore:55
 msgid "Learn More"
