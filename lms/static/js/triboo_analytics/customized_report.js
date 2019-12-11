@@ -14,16 +14,3 @@ $(document).ready(function() {
         }
     }
 });
-
-$('#course_selected').change(function() {
-    var o = $('#course_selected > option')
-    var all = "";
-    for (var i = 0; i < o.length; i++) {
-        if (o[i].selected) {
-            all += o[i].value + ", ";
-        }
-    }
-    all = all.substr(0, all.length - 2);
-    $("#course_selected_return").val(all);
-    log($("#course_selected_return")[0].value)
-});

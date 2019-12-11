@@ -88,7 +88,7 @@ def links_for_all(storage, user):
         _, filenames = storage.listdir(report_dir)
     except OSError:
         filenames = []
-    for report in ['summary', 'learner', 'ilt', 'my_transcript']:
+    for report in ['course_summary', 'learner', 'ilt', 'my_transcript']:
         filename_start = report
         if report == "my_transcript":
             filename_start = "transcript_%s" % user.username
@@ -114,6 +114,11 @@ def upload_file_to_store(user_id, course_key, filename, export_format, content, 
         if course_key:
             _filename = "{}_{}".format(course_filename_prefix_generator(course_key),
                                   _filename)
+        if not course_key and filename.startswith('summary'):
+            _filename = "{}_{}_{}.{}".format('course',
+                                             filename,
+                                             timezone.now().strftime("%Y-%m-%d-%H%M"),
+                                             export_format)
 
     path = path_to(course_key, user_id, _filename)
     report_store.store_content(
@@ -158,7 +163,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         if date_time:
             day = datetime.strptime(date_time, "%Y-%m-%d").date()
             courses_selected = _task_input['report_args'].get('courses_selected', None)
-            course_keys = [CourseKey.from_string(id) for id in courses_selected.split(', ')]
+            course_keys = [CourseKey.from_string(id) for id in courses_selected.split(',')]
             course_filter = Q()
             for course_key in course_keys:
                 course_filter |= Q(**{'course_id': course_key})
