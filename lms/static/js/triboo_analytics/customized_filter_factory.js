@@ -26,15 +26,6 @@
                         form.clearFilter();
                     }
 
-                    var fs = $('.active-filters button')
-                    var hidden_queries = $('#hidden-queries')
-                    hidden_queries.empty()
-                    var html = ''
-                    for (var i = 0; i < fs.length; i++) {
-                        html += '<input type="hidden", name="queried_field_' + (i + 1) + '", value=' + fs[i].dataset.type + '>'
-                        html += '<input type="hidden", name="query_string_' + (i + 1) + '", value=' + fs[i].dataset.value + '>'
-                    }
-                    hidden_queries.append(html)
                 });
 
                 dispatcher.listenTo(filterBar, 'clearFilter', function(type) {

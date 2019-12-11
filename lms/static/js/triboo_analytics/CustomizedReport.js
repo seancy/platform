@@ -7,6 +7,9 @@ import {ReactRenderer} from '../../../../common/static/js/src/ReactRenderer'
 
 export class CustomizedReport {
     constructor(props) {
+        //comes from beginning of customized_report.js
+        this.log = console.log.bind(console)
+
         $(() => {
             new ReactRenderer({
                 component: ReportTypeAndCourseReport,
@@ -14,20 +17,68 @@ export class CustomizedReport {
                 componentName: 'CustomizedReport',
                 props: props
             });
+            this.$submitButton = $('input[type=submit]');
+            this.$courseReport = $('#course_selected');
+            this.$courseReportSelect2 = this.$courseReport.select2();
             this.eventInit()
+            this.resetValue()
         })
     }
 
     eventInit() {
-        $('input[type=submit]').on('click', (e) => {
+        this.$submitButton.on('click', (e) => {
             e.preventDefault();
+            this.synchronizeProperties();
             this.synchronizeSelectedCourses();
             setTimeout(async ()=>{
                 const json = await this.submit()
-                console.log(json)
                 LearningTribes.dialog.show(json.message);
             },200)
         })
+        this.$courseReport.on('change',()=>{
+            this.goButtonStatusUpdate()
+        })
+        $('#table-export-selection').delegate('label', 'click',()=>{
+            this.goButtonStatusUpdate()
+        })
+        $('#id_selected_properties').delegate('li label', 'click',()=>{
+            this.goButtonStatusUpdate()
+        })
+    }
+
+    resetValue(){
+        //comes from window.onload event in customized_report.js
+        $("#id_query_string").val("");
+        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
+
+        //comes from document.ready event in customized_report.js
+        var report_types = $("#report_type > option")
+        var selected_report_type = "";
+        for (var i = 0; i < report_types.length; i++) {
+            if (report_types[i].selected) {
+                selected_report_type = report_types[i].value
+            }
+        }
+    }
+
+    goButtonStatusUpdate(){
+        setTimeout(()=>{
+            if (this.checkFieldsSuccess()){
+                this.$submitButton.removeClass('disabled')
+            }else if (!this.$submitButton.hasClass('disabled')){
+                this.$submitButton.addClass('disabled')
+            }
+        },200)
+
+    }
+
+    checkFieldsSuccess(){
+        const courseReportVal = this.$courseReportSelect2.val()
+        const selectedCoursesNum = courseReportVal ? courseReportVal.length : 0;
+        const isFormatChecked = $('#table-export-selection input[name=format]:checked').length;
+        if (selectedCoursesNum && isFormatChecked){
+            return true;
+        }
     }
 
     async submit() {
@@ -35,7 +86,6 @@ export class CustomizedReport {
         $('#form-customized-report').serializeArray().forEach(function (x) {
             data[x.name] = x.value
         })
-        ///analytics/customized/export/
         return await $.post({
             url:'export/',
             data:data
@@ -43,8 +93,19 @@ export class CustomizedReport {
         return await response.json()
     }
 
+    synchronizeProperties(){
+        var fs = $('.active-filters button')
+        var hidden_queries = $('#hidden-queries')
+        var html = ''
+        for (var i = 0; i < fs.length; i++) {
+            html += '<input type="hidden", name="queried_field_' + (i + 1) + '", value=' + fs[i].dataset.type + '>'
+            html += '<input type="hidden", name="query_string_' + (i + 1) + '", value=' + fs[i].dataset.value + '>'
+        }
+        hidden_queries.empty().append(html)
+    }
+
     synchronizeSelectedCourses() {
-        let courseSelectedValueStr = $('#course_selected').select2().val();
+        let courseSelectedValueStr = this.$courseReportSelect2.val();
         $('#course_selected_return').val(courseSelectedValueStr)
     }
 }
