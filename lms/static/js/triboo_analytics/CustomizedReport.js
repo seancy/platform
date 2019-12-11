@@ -24,26 +24,40 @@ export class CustomizedReport {
     eventInit() {
         this.$submitButton.on('click', (e) => {
             e.preventDefault();
+            this.synchronizeProperties();
             this.synchronizeSelectedCourses();
             setTimeout(async ()=>{
                 const json = await this.submit()
-                console.log(json)
                 LearningTribes.dialog.show(json.message);
             },200)
         })
         this.$courseReport.on('change',()=>{
+            this.goButtonStatusUpdate()
+        })
+        $('#table-export-selection').delegate('label', 'click',()=>{
+            this.goButtonStatusUpdate()
+        })
+        $('#id_selected_properties').delegate('li label', 'click',()=>{
+            this.goButtonStatusUpdate()
+        })
+    }
+
+    goButtonStatusUpdate(){
+        setTimeout(()=>{
             if (this.checkFieldsSuccess()){
                 this.$submitButton.removeClass('disabled')
             }else if (!this.$submitButton.hasClass('disabled')){
                 this.$submitButton.addClass('disabled')
             }
-        })
+        },200)
+
     }
 
     checkFieldsSuccess(){
         const courseReportVal = this.$courseReportSelect2.val()
         const selectedCoursesNum = courseReportVal ? courseReportVal.length : 0;
-        if (selectedCoursesNum>0){
+        const isFormatChecked = $('#table-export-selection input[name=format]:checked').length;
+        if (selectedCoursesNum && isFormatChecked){
             return true;
         }
     }
@@ -53,12 +67,22 @@ export class CustomizedReport {
         $('#form-customized-report').serializeArray().forEach(function (x) {
             data[x.name] = x.value
         })
-        ///analytics/customized/export/
         return await $.post({
             url:'export/',
             data:data
         })
         return await response.json()
+    }
+
+    synchronizeProperties(){
+        var fs = $('.active-filters button')
+        var hidden_queries = $('#hidden-queries')
+        var html = ''
+        for (var i = 0; i < fs.length; i++) {
+            html += '<input type="hidden", name="queried_field_' + (i + 1) + '", value=' + fs[i].dataset.type + '>'
+            html += '<input type="hidden", name="query_string_' + (i + 1) + '", value=' + fs[i].dataset.value + '>'
+        }
+        hidden_queries.empty().append(html)
     }
 
     synchronizeSelectedCourses() {
