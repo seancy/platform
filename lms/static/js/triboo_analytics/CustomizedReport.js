@@ -7,6 +7,9 @@ import {ReactRenderer} from '../../../../common/static/js/src/ReactRenderer'
 
 export class CustomizedReport {
     constructor(props) {
+        //comes from beginning of customized_report.js
+        this.log = console.log.bind(console)
+
         $(() => {
             new ReactRenderer({
                 component: ReportTypeAndCourseReport,
@@ -18,6 +21,7 @@ export class CustomizedReport {
             this.$courseReport = $('#course_selected');
             this.$courseReportSelect2 = this.$courseReport.select2();
             this.eventInit()
+            this.resetValue()
         })
     }
 
@@ -40,6 +44,21 @@ export class CustomizedReport {
         $('#id_selected_properties').delegate('li label', 'click',()=>{
             this.goButtonStatusUpdate()
         })
+    }
+
+    resetValue(){
+        //comes from window.onload event in customized_report.js
+        $("#id_query_string").val("");
+        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
+
+        //comes from document.ready event in customized_report.js
+        var report_types = $("#report_type > option")
+        var selected_report_type = "";
+        for (var i = 0; i < report_types.length; i++) {
+            if (report_types[i].selected) {
+                selected_report_type = report_types[i].value
+            }
+        }
     }
 
     goButtonStatusUpdate(){

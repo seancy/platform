@@ -1,21 +1,25 @@
-var log = console.log.bind(console)
+//immigrated
+//var log = console.log.bind(console)
 
 $(window).on("load", function () {
-    $("#id_query_string").val("");
-    $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
+    //immigrated
+    /*$("#id_query_string").val("");
+    $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)*/
 });
 
 $(document).ready(function() {
-    var report_types = $("#report_type > option")
+    //immigrated
+    /*var report_types = $("#report_type > option")
     var selected_report_type = "";
     for (var i = 0; i < report_types.length; i++) {
         if (report_types[i].selected) {
             selected_report_type = report_types[i].value
         }
-    }
+    }*/
 });
 
-$('#course_selected').change(function() {
+//recommend removing
+/*$('#course_selected').change(function() {
     var o = $('#course_selected > option')
     var all = "";
     for (var i = 0; i < o.length; i++) {
@@ -26,4 +30,4 @@ $('#course_selected').change(function() {
     all = all.substr(0, all.length - 2);
     $("#course_selected_return").val(all);
     log($("#course_selected_return")[0].value)
-});
+});*/
