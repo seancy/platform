@@ -30,26 +30,26 @@ export class CustomizedReport {
             e.preventDefault();
             this.synchronizeProperties();
             this.synchronizeSelectedCourses();
-            setTimeout(async ()=>{
+            setTimeout(async () => {
                 const json = await this.submit()
                 LearningTribes.dialog.show(json.message);
-            },200)
+            }, 200)
         })
-        this.$courseReport.on('change',()=>{
+        this.$courseReport.on('change', () => {
             this.goButtonStatusUpdate()
         })
-        $('#table-export-selection').delegate('label', 'click',()=>{
+        $('#table-export-selection').delegate('label', 'click', () => {
             this.goButtonStatusUpdate()
         })
-        $('#id_selected_properties').delegate('li label', 'click',()=>{
+        $('#id_selected_properties').delegate('li label', 'click', () => {
             this.goButtonStatusUpdate()
         })
     }
 
-    resetValue(){
+    resetValue() {
         //comes from window.onload event in customized_report.js
         $("#id_query_string").val("");
-        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
+        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected", true)
 
         //comes from document.ready event in customized_report.js
         var report_types = $("#report_type > option")
@@ -61,39 +61,44 @@ export class CustomizedReport {
         }
     }
 
-    goButtonStatusUpdate(){
-        setTimeout(()=>{
-            if (this.checkFieldsSuccess()){
+    goButtonStatusUpdate() {
+        setTimeout(() => {
+            if (this.checkFieldsSuccess()) {
                 this.$submitButton.removeClass('disabled')
-            }else if (!this.$submitButton.hasClass('disabled')){
+            } else if (!this.$submitButton.hasClass('disabled')) {
                 this.$submitButton.addClass('disabled')
             }
-        },200)
+        }, 200)
 
     }
 
-    checkFieldsSuccess(){
+    checkFieldsSuccess() {
         const courseReportVal = this.$courseReportSelect2.val()
         const selectedCoursesNum = courseReportVal ? courseReportVal.length : 0;
         const isFormatChecked = $('#table-export-selection input[name=format]:checked').length;
-        if (selectedCoursesNum && isFormatChecked){
+        if (selectedCoursesNum && isFormatChecked) {
             return true;
         }
     }
 
     async submit() {
-        let data = {}
-        $('#form-customized-report').serializeArray().forEach(function (x) {
-            data[x.name] = x.value
+        let data = {
+            selected_properties: []
+        }
+        $('#form-customized-report').serializeArray().forEach(function ({name, value}) {
+            if (name == 'selected_properties') {
+                data['selected_properties'].push({name: value})
+            }
+            data[name] = value
         })
         return await $.post({
-            url:'export/',
-            data:data
+            url: 'export/',
+            data: data
         })
         return await response.json()
     }
 
-    synchronizeProperties(){
+    synchronizeProperties() {
         var fs = $('.active-filters button')
         var hidden_queries = $('#hidden-queries')
         var html = ''
