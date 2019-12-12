@@ -946,7 +946,12 @@ def course_view(request):
         if last_reportlog:
             last_update = last_reportlog.course
             course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
-            unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key)
+
+            from_date = request.GET.get('lineChart-from-date')
+            from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
+            to_date = request.GET.get('lineChart-to-date')
+            to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
+            unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, from_date, to_date)
 
             if report == "summary":
                 filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
@@ -1089,11 +1094,9 @@ def microsite_view(request):
         from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
         to_date = request.GET.get('lineChart-to-date')
         to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
-
-        unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(
-                                    microsite_report_org,
-                                    request.GET.get('lineChart-from-date'),
-                                    request.GET.get('lineChart-to-date'))
+        unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(microsite_report_org,
+                                                                                     from_date,
+                                                                                     to_date)
 
         users_by_country_csv_data = ""
         country_reports = CountryDailyReport.filter_by_day(date_time=last_update, org=microsite_report_org)

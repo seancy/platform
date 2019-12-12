@@ -46,23 +46,23 @@
                         <form class="controls" action="${reverse('analytics_microsite')}" method="get">
                             <input type="text" name="lineChart-from-date" />
                             <input type="text" name="lineChart-to-date" />
-                            <select name="lineChart-by">
-                                <option value="by-day">${_("by day")}</option>
-                                <option value="by-week">${_("by week")}</option>
-                                <option value="by-month">${_("by month")}</option>
-                            </select>
                             <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
                             <input type="submit" value="${_("Go")}">
                         </form>
+                        <select id="lineChart-by" onchange="redrawLineChart()">
+                            <option value="by-day">${_("by day")}</option>
+                            <option value="by-week">${_("by week")}</option>
+                            <option value="by-month">${_("by month")}</option>
+                        </select>
                         <h3>${_("Number of Unique Visitors")}</h3>
                         <div id="lineChart">
                             <svg>
-                                <defs>
-                                    <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
-                                      <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
-                                      <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
-                                    </linearGradient>
-                                </defs>
+                                ## <defs>
+                                ##     <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
+                                ##       <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
+                                ##       <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
+                                ##     </linearGradient>
+                                ## </defs>
                             </svg>
                         </div>
                     </div>
@@ -96,8 +96,22 @@
 
 % if microsite_report and unique_visitors_csv_data:
     <script type="text/javascript">
-        var lineChartCsvData = "date,value\n" + "${unique_visitors_csv_data}";
-        drawLineChart('lineChart', lineChartCsvData);
+        var lineChartCsvData = "date,value\n" + "${unique_visitors_csv_data['per_day']}";
+        drawLineChart('lineChart', lineChartCsvData, false);
+
+        function redrawLineChart() {
+            var s = document.getElementById('lineChart-by'),
+                by = s.options[s.selectedIndex].value,
+                lineChartCsvData = "date,value\n";
+            if (by == "by-week") {
+                lineChartCsvData += "${unique_visitors_csv_data['per_week']}";
+            } else if (by == "by-month") {
+                lineChartCsvData += "${unique_visitors_csv_data['per_month']}";
+            } else {
+                lineChartCsvData += "${unique_visitors_csv_data['per_day']}";
+            }
+            drawLineChart('lineChart', lineChartCsvData, true);
+        }
     </script>
 % endif
 % if (microsite_report and (microsite_report.total_time_spent_on_desktop + microsite_report.total_time_spent_on_mobile) > 0):

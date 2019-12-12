@@ -81,6 +81,12 @@
                 </div>
               % if len(unique_visitors_csv_data) > 0:
                 <div class="analytics-widget-100 analytics-linechart">
+                    <form class="controls" action="$${reverse('analytics_course')}" method="get">
+                        <input type="text" name="lineChart-from-date" />
+                        <input type="text" name="lineChart-to-date" />
+                        <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
+                        <input type="submit" value="${_("Go")}">
+                    </form>
                     <h3>${_("Number of Unique Visitors")}</h3>
                     <div id="lineChart">
                         <svg>
@@ -229,7 +235,7 @@
 % if unique_visitors_csv_data and len(unique_visitors_csv_data) > 0:
     <script type="text/javascript">
         var lineChartCsvData = "date,value\n" + "${unique_visitors_csv_data}";
-        drawLineChart('lineChart', lineChartCsvData, 0, 0);
+        drawLineChart('lineChart', lineChartCsvData, false);
     </script>
 % endif
 <script type="text/javascript">

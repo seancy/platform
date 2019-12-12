@@ -66,7 +66,7 @@ function drawPieChart(elementId, data) {
 }
 
 
-function drawLineChart(elementId, csvData, marginLeft, marginRight) {
+function drawLineChart(elementId, csvData, redraw) {
   var containerEl = document.getElementById(elementId),
       width = containerEl.clientWidth,
       height = (containerEl.clientHeight < width / 2) ? containerEl.clientHeight : width / 2,
@@ -75,7 +75,7 @@ function drawLineChart(elementId, csvData, marginLeft, marginRight) {
             .attr('viewBox', '0 0 '+ width  +' ' + height)
             .attr('width', '100%')
             .attr('height', '100%'),
-      margin = {top: 10, right: marginRight || 0, bottom: 23, left: marginLeft || 0},
+      margin = {top: 10, right: 0, bottom: 23, left: 0},
       detailWidth  = 58,
       detailHeight = 35,
       detailMarginBottom = 10,
@@ -93,9 +93,12 @@ function drawLineChart(elementId, csvData, marginLeft, marginRight) {
           max_value = d.value;
         }
         return d;
-      }),
+      });
 
-      lineChart = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")"),
+  if (redraw === true) {
+    svg.select('g').remove();
+  }
+  var lineChart = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")"),
 
       x = d3.scaleTime().rangeRound([0, areaWidth]),
       y = d3.scaleLinear().rangeRound([areaHeight, 0]),
