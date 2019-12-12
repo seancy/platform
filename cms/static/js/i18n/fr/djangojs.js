@@ -44,8 +44,8 @@
     "%(field)s must have at least %(count)d characters.": "Les %(field)s doivent avoir au moins %(count)d caract\u00e8res.", 
     "%(new_item_message)s": "%(new_item_message)s", 
     "%(num)s hour": [
-      "%(num)s hour", 
-      "%(num)s hours"
+      "%(num)s heure", 
+      "%(num)s heures"
     ], 
     "%(num)s minute": [
       "%(num)s minute", 

@@ -2258,7 +2258,7 @@
     "answered question": "quest\u00e3o respondida", 
     "asset_path is required": "asset_path \u00e9 necess\u00e1rio", 
     "badge": [
-      "distintivos", 
+      "distintivo", 
       "distintivos"
     ], 
     "bytes": "bytes", 
