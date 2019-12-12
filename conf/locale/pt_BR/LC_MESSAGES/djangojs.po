@@ -8767,7 +8767,7 @@ msgstr "Esconder cronômetro"
 #: lms/templates/discovery/course_card.underscore:33
 msgid "badge"
 msgid_plural "badges"
-msgstr[0] "distintivos"
+msgstr[0] "distintivo"
 msgstr[1] "distintivos"
 
 #: lms/templates/discovery/course_card.underscore:43

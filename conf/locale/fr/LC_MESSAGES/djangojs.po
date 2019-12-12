@@ -8772,8 +8772,8 @@ msgstr[1] "%(num)s minutes"
 #, python-format
 msgid "%(num)s hour"
 msgid_plural "%(num)s hours"
-msgstr[0] "%(num)s hour"
-msgstr[1] "%(num)s hours"
+msgstr[0] "%(num)s heure"
+msgstr[1] "%(num)s heures"
 
 #: lms/templates/discovery/course_card.underscore:55
 msgid "Learn More"
