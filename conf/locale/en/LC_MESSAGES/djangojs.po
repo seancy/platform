@@ -8131,8 +8131,10 @@ msgid "Hide Timer"
 msgstr ""
 
 #: lms/templates/discovery/course_card.underscore:33
-msgid "badges"
-msgstr ""
+msgid "badge"
+msgid_plural "badges"
+msgstr[0] ""
+msgstr[1] ""
 
 #: lms/templates/discovery/course_card.underscore:43
 #, python-format

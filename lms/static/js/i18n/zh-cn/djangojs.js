@@ -2214,7 +2214,10 @@
     "answer": "\u7b54\u6848", 
     "answered question": "\u5df2\u56de\u590d\u7684\u95ee\u9898", 
     "asset_path is required": "\u9700\u8981\u63d0\u4f9b\u7ae0\u8282\u540d\u79f0\u548c\u8d44\u6e90_\u8def\u5f84", 
-    "badges": "\u5fbd\u7ae0", 
+    "badge": [
+      "\u5fbd\u7ae0", 
+      "\u5fbd\u7ae0"
+    ], 
     "bytes": "\u5b57\u8282", 
     "certificate": "certificate", 
     "close": "\u5173\u95ed", 

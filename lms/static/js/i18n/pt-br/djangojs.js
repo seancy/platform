@@ -54,12 +54,12 @@
     ], 
     "%(new_item_message)s": "%(new_item_message)s", 
     "%(num)s hour": [
-      "%(value)s hora", 
-      "%(value)s horas"
+      "%(num)s hora", 
+      "%(num)s horas"
     ], 
     "%(num)s minute": [
-      "%(value)s minuto", 
-      "%(value)s minutos"
+      "%(num)s minuto", 
+      "%(num)s minutos"
     ], 
     "%(num_points)s point possible (graded)": [
       "%(num_points)s ponto poss\u00edvel (avaliado)", 
@@ -2257,7 +2257,10 @@
     "answer": "resposta", 
     "answered question": "quest\u00e3o respondida", 
     "asset_path is required": "asset_path \u00e9 necess\u00e1rio", 
-    "badges": "distintivos", 
+    "badge": [
+      "distintivo", 
+      "distintivos"
+    ], 
     "bytes": "bytes", 
     "certificate": "certificado", 
     "close": "fechar", 
