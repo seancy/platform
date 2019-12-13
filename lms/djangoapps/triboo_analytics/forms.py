@@ -67,6 +67,21 @@ class UserPropertiesHelper():
         return self.initial_choices
 
 
+class TimePeriodForm(forms.Form):
+    from_day = forms.CharField(required=False, initial='', label=_('From'))
+    to_day = forms.CharField(required=False, initial='', label=_('To'))
+
+    course_id = forms.CharField(widget=forms.HiddenInput(), required=False)
+    report = forms.CharField(widget=forms.HiddenInput(), required=False)
+    query_string = forms.CharField(widget=forms.HiddenInput(), required=False)
+    queried_field = forms.CharField(widget=forms.HiddenInput(), required=False)
+    selected_properties = forms.CharField(widget=forms.MultipleHiddenInput(), required=False)
+
+    def __init__(self, data=None, choices=[]):
+        super(TimePeriodForm, self).__init__(data)
+        self.fields['from_day'].choices = choices
+
+
 class TableFilterForm(forms.Form):
     query_string = forms.CharField(required=False, initial='', label=_('Query'))
     queried_field = forms.ChoiceField(required=False, label=_('Field'))
@@ -74,6 +89,8 @@ class TableFilterForm(forms.Form):
     course_id = forms.CharField(widget=forms.HiddenInput(), required=False)
     report = forms.CharField(widget=forms.HiddenInput(), required=False)
     selected_properties = forms.CharField(widget=forms.MultipleHiddenInput(), required=False)
+    from_day = forms.CharField(widget=forms.HiddenInput(), required=False)
+    to_day = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, data=None, choices=[]):
         super(TableFilterForm, self).__init__(data)
@@ -92,6 +109,8 @@ class UserPropertiesForm(forms.Form):
     page = forms.CharField(widget=forms.HiddenInput(), required=False)
     query_string = forms.CharField(widget=forms.HiddenInput(), required=False)
     queried_field = forms.CharField(widget=forms.HiddenInput(), required=False)
+    from_day = forms.CharField(widget=forms.HiddenInput(), required=False)
+    to_day = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, data=None, choices=[], initial={}):
         super(UserPropertiesForm, self).__init__(data, initial={'selected_properties': initial})
