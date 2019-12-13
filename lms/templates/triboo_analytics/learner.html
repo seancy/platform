@@ -19,6 +19,10 @@
                     <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
                   </div>
 
+                  <form class="table-period-form" action="${reverse('analytics_learner')}" method="get">
+                      ${time_period_form}
+                      <input type="submit" value="${_("Go")}"/>
+                  </form>
                   <form class="table-filter-form" action="${reverse('analytics_learner')}" method="get">
                       ${filter_form}
                       % for key, value in query_dict.items():

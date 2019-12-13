@@ -840,7 +840,7 @@ class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeMode
         return cls._get_unique_visitors_csv_data(unique_visitors)
 
 
-class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
+class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeModel):
     class Meta:
         app_label = "triboo_analytics"
         get_latest_by = "created"
