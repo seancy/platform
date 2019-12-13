@@ -59,6 +59,19 @@
                 if (data.course_category) {
                     data.course_category = window.COURSE_CATEGORIES[data.course_category];
                 }
+                if (data.content.duration) {
+                    var duration = data.content.duration.trim().split(' ');
+                    var fmt = '';
+                    if (duration.length > 1 && !_.isNaN(duration[0])) {
+                        if (duration[1].startsWith('minute')) {
+                            fmt = ngettext('%(num)s minute', '%(num)s minutes', duration[0]);
+                            data.display_duration = interpolate(fmt, {num: duration[0]}, true);
+                        } else if (duration[1].startsWith('hour')) {
+                            fmt = ngettext('%(num)s hour', '%(num)s hours', duration[0]);
+                            data.display_duration = interpolate(fmt, {num: duration[0]}, true);
+                        }
+                    }
+                }
                 this.$el.html(this.tpl(data));
             //     return this.postRender();
             // },

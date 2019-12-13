@@ -27,6 +27,7 @@ import track.views
 from bulk_email.models import BulkEmailFlag, Optout  # pylint: disable=import-error
 from course_modes.models import CourseMode
 from courseware.access import has_access
+from courseware.courses import sort_by_last_block_completed
 from courseware.models import StudentModule, XModuleUserStateSummaryField
 from edxmako.shortcuts import render_to_response, render_to_string
 from entitlements.models import CourseEntitlement
@@ -34,6 +35,7 @@ from lms.djangoapps.commerce.utils import EcommerceService  # pylint: disable=im
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.verify_student.services import IDVerificationService
 from lms.lib import comment_client as cc
+from lms.lib.comment_client.utils import CommentClientMaintenanceError
 from openedx.core.djangoapps import monitoring_utils
 from openedx.core.djangoapps.catalog.utils import (
     get_programs,
@@ -661,8 +663,11 @@ def student_dashboard(request):
         }
         progress_summaries.update({c.course_id: summary})
         nb_badges_obtained += nb_trophies_earned
-        cc_user = cc.User(id=user.id, course_id=c.course_id).to_dict()
-        nb_posts += cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
+        try:
+            cc_user = cc.User(id=user.id, course_id=c.course_id).to_dict()
+            nb_posts += cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
+        except CommentClientMaintenanceError:
+            pass
 
     # filter completed courses and not completed
     completed_courses = [c for c in course_enrollments if c.completed]
@@ -674,6 +679,7 @@ def student_dashboard(request):
 
     # the ordered courses on dashboard, limited to 12
     course_enrollments = started_courses + not_started_courses + completed_courses
+    last_activity_enrollments = [e for e in course_enrollments if not e.completed]
     if len(course_enrollments) > 12:
         course_enrollments = course_enrollments[:12]
 
@@ -867,6 +873,17 @@ def student_dashboard(request):
             enr for enr in course_enrollments if entitlement.enrollment_course_run.course_id != enr.course_id
         ]
 
+    if configuration_helpers.get_value(
+            'ENABLE_LAST_ACTIVITY',
+            settings.FEATURES.get('ENABLE_LAST_ACTIVITY', False)):
+        last_activity_enrollments = sort_by_last_block_completed(
+            user, last_activity_enrollments)
+        max_display = settings.FEATURES.get('LAST_ACTIVITY_COURSES_NUM', 3)
+        if len(last_activity_enrollments) > max_display:
+            last_activity_enrollments = last_activity_enrollments[:max_display]
+    else:
+        last_activity_enrollments = []
+
     context = {
         'urls': urls,
         'programs_data': programs_data,
@@ -918,6 +935,7 @@ def student_dashboard(request):
         'nb_badges_obtained': nb_badges_obtained,
         'nb_posts': nb_posts,
         'progress_summaries': progress_summaries,
+        'last_activity_enrollments': last_activity_enrollments,
     }
 
     if ecommerce_service.is_enabled(request.user):

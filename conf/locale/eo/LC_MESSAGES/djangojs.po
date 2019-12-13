@@ -11245,7 +11245,7 @@ msgstr "Böökmärkéd ön Ⱡ'σяєм ιρѕυм ∂σłσя ѕι#"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore
 #: test_root/staticfiles/course_bookmarks/templates/bookmarks-list.underscore
-msgid "You have not bookmarked any courseware pages yet"
+msgid "You have not bookmarked any pages yet"
 msgstr ""
 "Ýöü hävé nöt ßöökmärkéd äný çöürséwäré pägés ýét Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт "
 "αмєт, ¢σηѕє¢тєтυя α#"
@@ -11253,7 +11253,7 @@ msgstr ""
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore
 #: test_root/staticfiles/course_bookmarks/templates/bookmarks-list.underscore
 msgid ""
-"Use bookmarks to help you easily return to courseware pages. To bookmark a "
+"Use bookmarks to help you easily return to pages. To bookmark a "
 "page, click \"Bookmark this page\" under the page title."
 msgstr ""
 "Ûsé ßöökmärks tö hélp ýöü éäsïlý rétürn tö çöürséwäré pägés. Tö ßöökmärk ä "

@@ -2,6 +2,7 @@
 from __future__ import absolute_import
 
 import logging
+import numbers
 import re
 from abc import ABCMeta, abstractmethod
 from datetime import timedelta
@@ -632,7 +633,7 @@ class CourseAboutSearchIndexer(object):
                     exc_info=True,
                 )
 
-            if section_content:
+            if section_content or isinstance(section_content, numbers.Number):
                 if about_information.index_flags & AboutInfo.ANALYSE:
                     analyse_content = section_content
                     if isinstance(section_content, basestring):

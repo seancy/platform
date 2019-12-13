@@ -21501,15 +21501,15 @@ msgstr "Envie e-mail para alguém dizendo que se inscreveu neste curso."
 #: lms/templates/dashboard/_dashboard_course_listing.html:233
 msgid "{num} minute"
 msgid_plural "{num} minutes"
-msgstr[0] "{num_minute} minuto"
-msgstr[1] "{num_minute} minutos"
+msgstr[0] "{num} minuto"
+msgstr[1] "{num} minutos"
 
 #: lms/templates/courseware/course_banner.html:39
 #: lms/templates/dashboard/_dashboard_course_listing.html:235
 msgid "{num} hour"
 msgid_plural "{num} hours"
-msgstr[0] "{num_hour} hora"
-msgstr[1] "{num_hour} horas"
+msgstr[0] "{num} hora"
+msgstr[1] "{num} horas"
 
 #: lms/templates/courseware/course_banner.html:61
 msgid "English"

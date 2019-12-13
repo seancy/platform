@@ -6,8 +6,12 @@ import logging
 from collections import defaultdict
 from datetime import datetime
 
+from completion.exceptions import UnavailableCompletionData
+from completion.utilities import get_key_to_last_completed_course_block
+from completion.models import BlockCompletion
 import branding
 import pytz
+
 from courseware.access import has_access
 from courseware.access_response import StartDateError, MilestoneAccessError
 from courseware.date_summary import (
@@ -485,6 +489,51 @@ def sort_by_start_date(courses):
     )
 
     return courses
+
+
+def sort_by_last_block_completed(user, course_enrollments):
+    """
+    Sort courses according each course's last completed block time.
+    """
+    def has_last_block_completed(course_enrollment):
+        """
+        Check if the course has any block completed.
+        """
+        last_completed_block = BlockCompletion.get_latest_block_completed(
+            user, course_enrollment.course_id)
+        return True if last_completed_block else False
+
+    def sort_order(course_enrollment):
+        """
+        Sort func to handle.
+        """
+        last_completed_block = BlockCompletion.get_latest_block_completed(
+            user, course_enrollment.course_id)
+        try:
+            return last_completed_block.modified
+        except TypeError:
+            log.exception("Can't get modified time of last completed block: " +
+                          str(course_enrollment.course_id))
+
+    last_activity_enrollments = filter(has_last_block_completed, course_enrollments)
+    return sorted(last_activity_enrollments, key=sort_order, reverse=True)
+
+
+def get_course_resume_url(user, course_enrollment):
+    """
+    Get the resume url for courseware.
+    """
+    try:
+        block_key = get_key_to_last_completed_course_block(
+            user, course_enrollment.course_id)
+        url_to_block = reverse('jump_to',
+                               kwargs={
+                                   'course_id': course_enrollment.course_id,
+                                   'location': block_key
+                               })
+    except UnavailableCompletionData:
+        url_to_block = ''
+    return url_to_block
 
 
 def get_cms_course_link(course, page='course'):

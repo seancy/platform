@@ -43,9 +43,13 @@
     "%(field)s can only contain up to %(count)d characters.": "Les %(field)s ne peuvent pas d\u00e9passer %(count)d caract\u00e8res.", 
     "%(field)s must have at least %(count)d characters.": "Les %(field)s doivent avoir au moins %(count)d caract\u00e8res.", 
     "%(new_item_message)s": "%(new_item_message)s", 
+    "%(num)s hour": [
+      "%(num)s heure", 
+      "%(num)s heures"
+    ], 
     "%(num)s minute": [
-      "%(value)s minute", 
-      "%(value)s minutes"
+      "%(num)s minute", 
+      "%(num)s minutes"
     ], 
     "%(num_questions)s question": [
       "%(num_questions)s question", 
@@ -1902,7 +1906,7 @@
     "Use a practice proctored exam to introduce learners to the proctoring tools and processes. Results of a practice exam do not affect a learner's grade.": "Utilisez un examen de pratique surveill\u00e9 afin d'introduire les apprenants au processus et aux outils de surveillance. Les r\u00e9sultats d'un examen de pratique ne comptent pas pour la note finale de l'apprenant.", 
     "Use a timed exam to limit the time learners can spend on problems in this subsection. Learners must submit answers before the time expires. You can allow additional time for individual learners through the Instructor Dashboard.": "Utiliser un examen minut\u00e9 pour limiter le temps allou\u00e9 aux participants pour r\u00e9pondre aux exercices de cette sous-section. Les participants doivent soumettre leurs r\u00e9ponses avant la fin du temps allou\u00e9. Vous pouvez allouer du temps suppl\u00e9mentaire \u00e0 des participant depuis l'onglet Enseignant.", 
     "Use as a Prerequisite": "Utilis\u00e9 comme Pr\u00e9-requis", 
-    "Use bookmarks to help you easily return to courseware pages. To bookmark a page, click \"Bookmark this page\" under the page title.": "Utilisez les favoris pour vous aider \u00e0 revenir facilement aux pages de cours. Pour ajouter un signet, cliquez sur \u00ab\u00a0Ajouter cette page aux favoris\u00a0\u00bb sous le titre de la page.", 
+    "Use bookmarks to help you easily return to pages. To bookmark a page, click \"Bookmark this page\" under the page title.": "Utilisez les favoris pour vous aider \u00e0 revenir facilement aux pages de cours. Pour ajouter un signet, cliquez sur \u00ab\u00a0Ajouter cette page aux favoris\u00a0\u00bb sous le titre de la page.", 
     "Use cohorts as the basis for dividing discussions. All learners, regardless of cohort, see the same discussion topics, but within divided topics, only members of the same cohort see and respond to each others\u2019 posts. ": "Utilisez les cohortes comme base de segmentation des discussions. Tous les apprenants, peu importe leur cohorte, voient les m\u00eames sujets de discussion. Cependant, dans le cas de sujets s\u00e9par\u00e9s, seuls les membres d'une m\u00eame cohorte peuvent voir et r\u00e9pondre aux messages des autres.", 
     "Use enrollment tracks as the basis for dividing discussions. All learners, regardless of their enrollment track, see the same discussion topics, but within divided topics, only learners who are in the same enrollment track see and respond to each others\u2019 posts.": "Utilisez les parcours d'inscription comme base pour segmenter les discussions. Tous les apprenants, peu importe leur parcours d'inscription, peuvent voir les m\u00eames sujets de discussion. Cependant, dans le cas des sujets s\u00e9par\u00e9s, seuls les apprenants appartenant au m\u00eame parcours d'inscription peuvent voir les messages des autres et y r\u00e9pondre entre eux.", 
     "Use my institution/campus credentials": "Utiliser mes informations institution/campus", 
@@ -2050,7 +2054,7 @@
     "You have been logged out of your account. Click Okay to log in again now. Click Cancel to stay on this page (you must log in again to save your work).": "Vous avez \u00e9t\u00e9 d\u00e9connect\u00e9 de votre compte. Cliquez sur OK pour vous reconnecter d\u00e8s maintenant. Cliquez sur Annuler pour rester sur cette page (afin de sauvegarder votre travail, vous devriez vous reconnecter).", 
     "You have done a dry run of force publishing the course. Nothing has changed. Had you run it, the following course versions would have been change.": "Vous avez effectu\u00e9 une simulation de la publication forc\u00e9e de ce cours. Rien n'a chang\u00e9. SI vous aviez vraiment ex\u00e9cut\u00e9 celle-ci, les versions de cours suivantes aurait \u00e9t\u00e9 chang\u00e9es.", 
     "You have no handouts defined": "Vous n'avez d\u00e9fini aucun documents", 
-    "You have not bookmarked any courseware pages yet": "Vous n'avez marqu\u00e9 aucune page de cours pour le moment.", 
+    "You have not bookmarked any pages yet": "Vous n\u2019avez ajout\u00e9 aucune page de ce cours \u00e0 vos favoris.", 
     "You have not created any certificates yet.": "Vous n'avez pas encore cr\u00e9e de certificat.", 
     "You have not created any content groups yet.": "Vous n'avez pas encore cr\u00e9\u00e9 de groupes de contenu.", 
     "You have not created any group configurations yet.": "Vous n'avez pas encore cr\u00e9\u00e9 de configuration des groupes.", 
@@ -2147,7 +2151,10 @@
     "answer": "r\u00e9ponse", 
     "answered question": "Question r\u00e9pondue", 
     "asset_path is required": "asset_path est requis", 
-    "badges": "badges", 
+    "badge": [
+      "badge", 
+      "badges"
+    ], 
     "bytes": "bytes", 
     "certificate": "certificat", 
     "close": "fermer", 

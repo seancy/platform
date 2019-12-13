@@ -13755,6 +13755,10 @@ msgstr "发布的帖子"
 msgid "View my learning transcript"
 msgstr "查看我的学习报告"
 
+#: lms/templates/dashboard.html:168
+msgid "Continue Learning..."
+msgstr "继续学习..."
+
 #: lms/templates/dashboard.html:253 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
 msgid "You are not enrolled in any courses yet."
@@ -17626,8 +17630,8 @@ msgstr "您可以在{entitlement_expiration_date}前更改您的课程。"
 #: lms/templates/dashboard/_dashboard_course_listing.html:215
 msgid "{num} badge"
 msgid_plural "{num} badges"
-msgstr[0] "{num}徽章"
-msgstr[1] "{num}徽章"
+msgstr[0] "{num} 徽章"
+msgstr[1] "{num} 徽章"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:247
 msgid "I'm taking {course_name} online with {facebook_brand}. Check it out!"

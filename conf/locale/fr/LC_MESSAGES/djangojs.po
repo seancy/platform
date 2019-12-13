@@ -8757,21 +8757,23 @@ msgid "Hide Timer"
 msgstr "Masquer le temps restant"
 
 #: lms/templates/discovery/course_card.underscore:33
-msgid "badges"
-msgstr "badges"
+msgid "badge"
+msgid_plural "badges"
+msgstr[0] "badge"
+msgstr[1] "badges"
 
 #: lms/templates/discovery/course_card.underscore:43
 msgid "%(num)s minute"
 msgid_plural "%(num)s minutes"
-msgstr[0] "%(value)s minute"
-msgstr[1] "%(value)s minutes"
+msgstr[0] "%(num)s minute"
+msgstr[1] "%(num)s minutes"
 
 #: lms/templates/discovery/course_card.underscore:46
 #, python-format
 msgid "%(num)s hour"
 msgid_plural "%(num)s hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num)s heure"
+msgstr[1] "%(num)s heures"
 
 #: lms/templates/discovery/course_card.underscore:55
 msgid "Learn More"
@@ -10247,12 +10249,12 @@ msgid "Bookmarked on"
 msgstr "Signet ajouté"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:46
-msgid "You have not bookmarked any courseware pages yet"
-msgstr "Vous n'avez marqué aucune page de cours pour le moment."
+msgid "You have not bookmarked any pages yet"
+msgstr "Vous n’avez ajouté aucune page de ce cours à vos favoris."
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:51
 msgid ""
-"Use bookmarks to help you easily return to courseware pages. To bookmark a "
+"Use bookmarks to help you easily return to pages. To bookmark a "
 "page, click \"Bookmark this page\" under the page title."
 msgstr ""
 "Utilisez les favoris pour vous aider à revenir facilement aux pages de "
