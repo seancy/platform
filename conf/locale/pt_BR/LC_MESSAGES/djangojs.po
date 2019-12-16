@@ -12203,11 +12203,11 @@ msgstr "Signatário"
 
 #: lms/templates/discovery/facet.underscore
 msgid "true"
-msgstr "verdade"
+msgstr "Sim"
 
 #: lms/templates/discovery/facet.underscore
 msgid "false"
-msgstr "falso"
+msgstr "Não"
 
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
