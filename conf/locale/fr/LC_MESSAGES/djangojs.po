@@ -12305,6 +12305,14 @@ msgstr "Catégorie"
 msgid "Mandatory"
 msgstr "Obligatoire"
 
+#: lms/templates/discovery/facet.underscore
+msgid "true"
+msgstr "vrai"
+
+#: lms/templates/discovery/facet.underscore
+msgid "false"
+msgstr "faux"
+
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435
