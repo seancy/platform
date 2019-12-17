@@ -716,7 +716,7 @@ def get_learner_table_filters(request, orgs, as_string=False):
         })
         return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, last_update, query_dict
 
-    return None, None, None, None, None, None
+    return None, None, None, None, None, None, None
 
 
 def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
@@ -725,7 +725,7 @@ def get_course_summary_table_filters(request, course_key, last_update, as_string
         'date_time': day2str(last_update) if as_string else last_update,
         'course_id': "%s" % course_key if as_string else course_key
     })
-    return filter_form, user_properties_form, filter_kwargs, exclude, query_dict
+    return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
 
 
 def get_ilt_table_filters(request, as_string=False):
@@ -789,6 +789,7 @@ def learner_view(request):
             'query_dict': query_dict,
             'query_triples': query_triples,
             'user_properties_form': user_properties_form,
+            'time_period_form': time_period_form,
             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'learner'}),
             'last_update': last_update
         }
@@ -971,14 +972,14 @@ def course_view(request):
             last_update = last_reportlog.course
             course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
 
-            from_date = request.GET.get('lineChart-from-date')
+            from_date = request.GET.get('from_day')
             from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
-            to_date = request.GET.get('lineChart-to-date')
+            to_date = request.GET.get('to_day')
             to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
             unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, from_date, to_date)
 
             if report == "summary":
-                filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
+                filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
                                                                                             request,
                                                                                             course_key,
                                                                                             last_update)
