@@ -52,8 +52,12 @@
                             'courses':${json.dumps([{'cid': item[0], 'course_title':item[1]} for item in courses]) | n}
                         });
                     </%static:webpack>
-                    <section class="search-form">
-                      <div id="filter-form" role="search" aria-label="course" class="wrapper-search-context">
+                    <div class="table-period-form">
+                        <input name="from_day">
+                        <input name="to_day">
+                    </div>
+                    <section class="filter-form">
+                      <div id="filter-form">
                         <div class="table-filter-form">
                             ${filter_form}
                             <button id="filter-form" class="filter-submit">${_('Filter')}</button>

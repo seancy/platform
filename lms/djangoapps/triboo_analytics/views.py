@@ -1404,8 +1404,7 @@ def customized_export_table(request):
             course_key = CourseKey.from_string(courses_selected)
         except InvalidKeyError:
             return JsonResponseBadRequest({"message": _("Invalid course id.")})
-        unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
-                                                                                    request)
+        unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
         report_args = {
             'filter_kwargs': filter_kwargs,
             'exclude': list(exclude)
@@ -1431,11 +1430,15 @@ def customized_export_table(request):
     elif report_type in ['ilt_global', 'ilt_learner']:
 
         if report_type == "global":
-            report_args = {'orgs': orgs}
+            unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request, as_string=True)
+            report_args = {
+                'orgs': orgs,
+                'filter_kwargs': filter_kwargs
+            }
             return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
 
-        # ilt_report_type == "learner"
-        unused_filter_form, unused_prop_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+        # report == "learner"
+        unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request, as_string=True)
         report_args = {
             'orgs': orgs,
             'filter_kwargs': filter_kwargs,
