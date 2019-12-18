@@ -25,6 +25,12 @@
                     <li class="nav-item"><a href="${ilt_learner_url}">${_("ILT Learner Report")}</a></li>
                 </ul>
 
+                <p>Time Period:</p>
+                <form class="table-period-form" action="${ilt_global_url}" method="get">
+                    ${time_period_form}
+                    <input type="submit" value="${_("Go")}"/>
+                </form>
+
                 <% tpl = "{% load render_table from django_tables2 %}{% render_table ilt_report_table 'triboo_analytics/table.html' %}" %>
                 ${Template(tpl).render(Context({'ilt_report_table': ilt_report_table,
                                                     'request': request,
@@ -36,6 +42,12 @@
                     <li class="nav-item "><a href="${ilt_global_url}">${_("ILT Global Report")}</a></li>
                     <li class="nav-item active">${_("ILT Learner Report")}</li>
                 </ul>
+
+                <p>Time Period:</p>
+                <form class="table-period-form" action="${ilt_global_url}" method="get">
+                    ${time_period_form}
+                    <input type="submit" value="${_("Go")}"/>
+                </form>
 
                 <form class="table-filter-form" action="${ilt_global_url}" method="get">
                     ${filter_form}
