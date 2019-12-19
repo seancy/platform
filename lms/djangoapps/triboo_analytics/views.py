@@ -190,15 +190,16 @@ def _transcript_view(user, request, template, report_type):
             for report in learner_course_reports:
                 content = toc_for_course(
                             user, request, modulestore().get_course(report.course_id), None, None, None)
-                for chapter in content['chapters']:
-                    chapter['disabled'] = True
-                    for section in chapter['sections']:
-                        section.pop('due', None)
-                        if section['graded']:
-                            chapter['disabled'] = False
-                            break
+                if 'chapters' in content:
+                    for chapter in content['chapters']:
+                        chapter['disabled'] = True
+                        for section in chapter['sections']:
+                            section.pop('due', None)
+                            if section['graded']:
+                                chapter['disabled'] = False
+                                break
 
-                course_contents[unicode(report.course_id)] = content
+                    course_contents[unicode(report.course_id)] = content
             course_contents = json.dumps(course_contents)
 
     return render_to_response(
