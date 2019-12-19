@@ -53,8 +53,8 @@
                         });
                     </%static:webpack>
                     <div class="table-period-form">
-                        <input name="from_day">
-                        <input name="to_day">
+                        <input name="from_day" id="from_day"/>
+                        <input name="to_day" id="to_day"/>
                     </div>
                     <section class="filter-form">
                       <div id="filter-form">
@@ -88,6 +88,8 @@
                         </div>
                     </div>
                     <input type="hidden" name="courses_selected" value="${ courses_selected }" id="course_selected_return"/>
+                    <input type="hidden" name="from_day" id="from_day_return"/>
+                    <input type="hidden" name="to_day" id="to_day_return"/>
                     <div id="hidden-queries"></div>
                     <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
                     <input type="submit" value="${_("Go")}" id="submit-button" class="disabled"/>

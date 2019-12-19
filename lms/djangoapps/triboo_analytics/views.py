@@ -1429,7 +1429,7 @@ def customized_export_table(request):
 
     elif report_type in ['ilt_global', 'ilt_learner']:
 
-        if report_type == "global":
+        if report_type == "ilt_global":
             unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request, as_string=True)
             report_args = {
                 'orgs': orgs,
@@ -1437,7 +1437,7 @@ def customized_export_table(request):
             }
             return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
 
-        # report == "learner"
+        # report_type == "ilt_learner"
         unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request, as_string=True)
         report_args = {
             'orgs': orgs,

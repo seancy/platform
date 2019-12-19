@@ -30,6 +30,7 @@ export class CustomizedReport {
             e.preventDefault();
             this.synchronizeProperties();
             this.synchronizeSelectedCourses();
+            this.synchronizePeriodDates();
             setTimeout(async () => {
                 const json = await this.submit()
                 LearningTribes.dialog.show(json.message);
@@ -112,6 +113,13 @@ export class CustomizedReport {
     synchronizeSelectedCourses() {
         let courseSelectedValueStr = this.$courseReportSelect2.val();
         $('#course_selected_return').val(courseSelectedValueStr)
+    }
+
+    synchronizePeriodDates() {
+        let from_day = $('#from_day').val()
+        let to_day = $('#to_day').val()
+        $('#from_day_return').val(from_day)
+        $('#to_day_return').val(to_day)
     }
 }
 
