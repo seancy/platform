@@ -36,7 +36,9 @@ DJANGO_JS_PO = "djangojs.po"
 DJANGO_MO = "django.mo"
 DJANGO_JS_MO = "djangojs.mo"
 CUSTOMERS_EXTRA_PO = "customers-extra.po"
+CUSTOMERS_EXTRA_JS_PO = "customers-extrajs.po"
 LANGUAGES = ["ar", "es_419", "fr", "he", "hi", "ko_KR", "pt_BR", "ru", "zh_CN"]
+ENABLE_COMPILE = False
 
 
 def execute_cmd(cmd, shell=False):
@@ -91,7 +93,7 @@ def compile(pofile, mofile):
     execute_cmd(cmd)
 
 
-def compilejs(cmds):
+def compile_js(cmds):
     """Compiles po files to djangjs.js files.
     """
     for cmd in cmds:
@@ -114,9 +116,9 @@ def init_trans():
         print "%s is invalid path" % PLAT_PATH
     extract(EXTRACT_CMD)
     partial_paths = [file_path(part) for part in PARTIAL_PO]
-    partialjs_paths = [file_path(part) for part in PARTIAL_JS_PO]
+    partial_js_paths = [file_path(part) for part in PARTIAL_JS_PO]
     msg_cat(file_path(DJANGO_PO), partial_paths)
-    msg_cat(file_path(DJANGO_JS_PO), partialjs_paths)
+    msg_cat(file_path(DJANGO_JS_PO), partial_js_paths)
 
 
 def trans_lang(lang):
@@ -125,21 +127,28 @@ def trans_lang(lang):
     msg_merge(file_path(DJANGO_JS_PO, lang),
               file_path(DJANGO_JS_PO),
               update=True)
+
     # Appends customer po files.
-    customer_file = file_path(CUSTOMERS_EXTRA_PO, lang)
-    if os.path.isfile(customer_file):
-        msg_cat(file_path(DJANGO_PO, lang), [customer_file], use_first=True)
+    customer_po_file = file_path(CUSTOMERS_EXTRA_PO, lang)
+    if os.path.isfile(customer_po_file):
+        msg_cat(file_path(DJANGO_PO, lang), [file_path(DJANGO_PO, lang), customer_po_file], use_first=True)
+    customer_js_po_file = file_path(CUSTOMERS_EXTRA_JS_PO, lang)
+    if os.path.isfile(customer_js_po_file):
+        msg_cat(file_path(DJANGO_JS_PO, lang), [file_path(DJANGO_JS_PO, lang), customer_js_po_file], use_first=True)
+
     # Compiles po files to mo files.
-    compile(file_path(DJANGO_PO, lang), file_path(DJANGO_MO, lang))
-    compile(file_path(DJANGO_JS_PO, lang), file_path(DJANGO_JS_MO, lang))
-    # Updates djangojs.js file.
-    compilejs(COMPILE_JS_CMD)
+    if ENABLE_COMPILE:
+        compile(file_path(DJANGO_PO, lang), file_path(DJANGO_MO, lang))
+        compile(file_path(DJANGO_JS_PO, lang), file_path(DJANGO_JS_MO, lang))
+        # Updates djangojs.js file.
+        compile_js(COMPILE_JS_CMD)
 
 
 def main():
     if len(sys.argv) < 2:
         print "need extra args for specific languages(e.g. fr zh_CN)"
         sys.exit(1)
+
     init_trans()
     for lang in sys.argv[1:]:
         if lang not in LANGUAGES:

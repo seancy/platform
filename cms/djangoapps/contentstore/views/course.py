@@ -70,6 +70,7 @@ from openedx.core.lib.course_tabs import CourseTabPluginManager
 from openedx.core.lib.courses import course_image_url
 from student import auth
 from student.auth import has_course_author_access, has_studio_read_access, has_studio_write_access
+from student.models import UserProfile
 from student.roles import (
     studio_login_required,
     CourseCreatorRole,
@@ -1110,8 +1111,30 @@ def settings_handler(request, course_key_string):
                 'enrollment_end_editable': enrollment_end_editable,
                 'is_prerequisite_courses_enabled': is_prerequisite_courses_enabled(),
                 'is_entrance_exams_enabled': is_entrance_exams_enabled(),
-                'enable_extended_course_details': enable_extended_course_details
+                'enable_extended_course_details': enable_extended_course_details,
+                'is_programmatic_enrollment_enabled': False
             }
+
+            if configuration_helpers.get_value(
+                    'ENABLE_PROGRAMMATIC_ENROLLMENT',
+                    settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT',
+                                          False)):
+                user_job_codes = UserProfile.objects.values_list(
+                    'lt_job_code', flat=True).distinct()
+                enrollment_job_codes = dict((job_code, False)
+                                            for job_code in user_job_codes
+                                            if job_code)
+                attached_course_job_codes = CourseDetails.fetch(
+                    course_key).enrollment_job_codes
+                enrollment_job_codes.update(
+                    (job_code, True) for job_code in attached_course_job_codes)
+                settings_context.update({
+                    'enrollment_job_codes':
+                    enrollment_job_codes,
+                    'is_programmatic_enrollment_enabled':
+                    True
+                })
+
             if is_prerequisite_courses_enabled():
                 courses, in_process_course_actions = get_courses_accessible_to_user(request)
                 # exclude current course from the list of available courses
@@ -1531,7 +1554,7 @@ def textbooks_detail_handler(request, course_key_string, textbook_id):
                 return JsonResponse(status=404)
             return JsonResponse(textbook)
         elif request.method in ('POST', 'PUT'):  # can be either and sometimes
-                                            # django is rewriting one to the other
+            # django is rewriting one to the other
             try:
                 new_textbook = validate_textbook_json(request.body)
             except TextbookValidationError as err:
@@ -1704,7 +1727,7 @@ def group_configurations_detail_handler(request, course_key_string, group_config
             configuration = None
 
         if request.method in ('POST', 'PUT'):  # can be either and sometimes
-                                            # django is rewriting one to the other
+            # django is rewriting one to the other
             try:
                 new_configuration = GroupConfiguration(request.body, course, group_configuration_id).get_user_partition()
             except GroupConfigurationsValidationError as err:

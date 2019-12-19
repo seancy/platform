@@ -18475,6 +18475,10 @@ msgstr "Ma collection de badges"
 msgid "badge"
 msgstr "badge"
 
+#: lms/templates/dashboard/_dashboard_last_activity.html:26
+msgid "badges"
+msgstr "badges"
+
 #: lms/templates/courseware/progress_badges.html:82
 msgid "Badges not obtained"
 msgstr "Badges non obtenus"
@@ -27326,6 +27330,22 @@ msgstr "Ajouter un rappel par mail"
 #: cms/templates/settings.html:339
 msgid "Course Details"
 msgstr "Détails du cours"
+
+#: cms/templates/settings.html:584
+msgid "Course Programmatic Enrollments"
+msgstr "Inscription automatique au cours"
+
+#: cms/templates/settings.html:585
+msgid "Set automatic enrollment rules for this course"
+msgstr "Définir les règles d’inscriptions automatiques pour ce cours"
+
+#: cms/templates/settings.html:599
+msgid "Job Codes"
+msgstr "Codes métier"
+
+#: cms/templates/settings.html:599
+msgid "Identify the enrollment job codes here."
+msgstr "Identifiez ici le ou les code(s) métier pour inscription."
 
 #: cms/templates/settings.html:340
 msgid "Provide useful information about your course"

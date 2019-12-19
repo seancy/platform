@@ -588,14 +588,6 @@ msgstr ""
 msgid "Location name"
 msgstr ""
 
-#: lms/templates/triboo_analytics/table.html
-msgid "Location name"
-msgstr ""
-
-#: lms/templates/triboo_analytics/table.html
-msgid "Location name"
-msgstr ""
-
 #  #: lms/templates/triboo_analytics/table.html
 #  msgid "Address"
 #  msgstr ""

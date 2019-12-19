@@ -17349,6 +17349,10 @@ msgstr "我的徽章收藏"
 msgid "badge"
 msgstr "徽章"
 
+#: lms/templates/dashboard/_dashboard_last_activity.html:26
+msgid "badges"
+msgstr "徽章"
+
 #: lms/templates/courseware/progress_badges.html:82
 msgid "Badges not obtained"
 msgstr "未获取的徽章"
@@ -17577,6 +17581,22 @@ msgstr "您必须先完成 {link_start}\"{prc_display}\"{link_end}才能开始�
 #: lms/templates/dashboard/_dashboard_course_listing.html:94
 msgid "Course details"
 msgstr "课程详情"
+
+#: cms/templates/settings.html:584
+msgid "Course Programmatic Enrollments"
+msgstr "课程程序性注册"
+
+#: cms/templates/settings.html:585
+msgid "Set automatic enrollment rules for this course"
+msgstr "为该课程设置自动注册规则"
+
+#: cms/templates/settings.html:599
+msgid "Job Codes"
+msgstr "职责编码"
+
+#: cms/templates/settings.html:599
+msgid "Identify the enrollment job codes here."
+msgstr "在此设置注册职责编码"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:97
 msgid "{course_number} {course_name} Home Page"
