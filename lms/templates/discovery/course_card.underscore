@@ -29,27 +29,20 @@
         </section>
         <section class="sub-info">
             <div class="badge">
-                <i class="far fa-trophy"></i>
-                <span><%- badges %> <%- ngettext("badge", "badges", badges) %></span>
+                <% if (badges || badges === 0) { %>
+                    <i class="far fa-trophy"></i>
+                    <span><%- badges %> <%- ngettext("badge", "badges", badges) %></span>
+                <% } %>
             </div>
-            <div class="spliter"></div>
-            <% if (content.duration) { %>
-            <div class="duration">
-                <i class="far fa-clock"></i>
-                <span>
-                <%
-                    var duration = content.duration.trim().split(' ');
-                    if (duration[1] === 'minutes') {
-                        var fmt = ngettext("%(num)s minute", "%(num)s minutes", duration[0]);
-                        print(interpolate(fmt, {num: duration[0]}, true));
-                    } else if (duration[1] === 'hours') {
-                        var fmt = ngettext("%(num)s hour", "%(num)s hours", duration[0]);
-                        print(interpolate(fmt, {num: duration[0]}, true));
-                    }
-                %>
-                </span>
-            </div>
+            <% if (badges || badges === 0 || typeof(display_duration) != "undefined") { %>
+                <div class="spliter"></div>
             <% } %>
+            <div class="duration">
+                <% if (typeof(display_duration) != "undefined") { %>
+                    <i class="far fa-clock"></i>
+                    <span><%- display_duration %></span>
+                <% } %>
+            </div>
         </section>
         <div class="course-actions" aria-hidden="true">
             <div class="learn-more"><%- gettext("Learn More") %></div>

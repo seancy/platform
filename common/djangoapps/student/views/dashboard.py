@@ -35,7 +35,7 @@ from lms.djangoapps.commerce.utils import EcommerceService  # pylint: disable=im
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.verify_student.services import IDVerificationService
 from lms.lib import comment_client as cc
-from lms.lib.comment_client.utils import CommentClientMaintenanceError
+from lms.lib.comment_client.utils import CommentClientMaintenanceError, CommentClientRequestError
 from openedx.core.djangoapps import monitoring_utils
 from openedx.core.djangoapps.catalog.utils import (
     get_programs,
@@ -666,7 +666,7 @@ def student_dashboard(request):
         try:
             cc_user = cc.User(id=user.id, course_id=c.course_id).to_dict()
             nb_posts += cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
-        except CommentClientMaintenanceError:
+        except (CommentClientMaintenanceError, CommentClientRequestError):
             pass
 
     # filter completed courses and not completed

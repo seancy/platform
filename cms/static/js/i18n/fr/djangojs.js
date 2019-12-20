@@ -43,9 +43,13 @@
     "%(field)s can only contain up to %(count)d characters.": "Les %(field)s ne peuvent pas d\u00e9passer %(count)d caract\u00e8res.", 
     "%(field)s must have at least %(count)d characters.": "Les %(field)s doivent avoir au moins %(count)d caract\u00e8res.", 
     "%(new_item_message)s": "%(new_item_message)s", 
+    "%(num)s hour": [
+      "%(num)s heure", 
+      "%(num)s heures"
+    ], 
     "%(num)s minute": [
-      "%(value)s minute", 
-      "%(value)s minutes"
+      "%(num)s minute", 
+      "%(num)s minutes"
     ], 
     "%(num_questions)s question": [
       "%(num_questions)s question", 
@@ -2147,7 +2151,10 @@
     "answer": "r\u00e9ponse", 
     "answered question": "Question r\u00e9pondue", 
     "asset_path is required": "asset_path est requis", 
-    "badges": "badges", 
+    "badge": [
+      "badge", 
+      "badges"
+    ], 
     "bytes": "bytes", 
     "certificate": "certificat", 
     "close": "fermer", 
@@ -2172,6 +2179,7 @@
     "endorsed %(time_ago)s": "approuv\u00e9 %(time_ago)s", 
     "enter code here": "saisir du code ici", 
     "enter link description here": "saisir une description du lien ici", 
+    "false": "Non", 
     "follow this post": "Suivre ce message", 
     "for": "pour", 
     "for {courseName}": "pour {courseName}", 
@@ -2218,6 +2226,7 @@
     "title_word_{uniqueId}": "title_word_{uniqueId}", 
     "toggle chapter %(displayName)s": "Afficher le chapitre %(displayName)s", 
     "toggle subsection %(displayName)s": "Afficher la sous-section %(displayName)s", 
+    "true": "Oui", 
     "unanswered question": "Question non r\u00e9pondue", 
     "unit": "unit\u00e9", 
     "unsubmitted": "non envoy\u00e9", 

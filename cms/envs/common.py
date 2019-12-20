@@ -327,6 +327,9 @@ FEATURES = {
 
     # Set this to true to make API docs available at /api-docs/.
     'ENABLE_API_DOCS': False,
+
+    # Whether to display programmatic enrollment in Schedule & Details
+    'ENABLE_PROGRAMMATIC_ENROLLMENT': False
 }
 
 ENABLE_JASMINE = False

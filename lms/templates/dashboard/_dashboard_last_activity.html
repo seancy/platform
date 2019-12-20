@@ -23,7 +23,7 @@ from openedx.features.course_experience import course_home_url_name
     <h2>
       <a href="${course_url}">${course_overview.display_name_with_default}</a>
     </h2>
-    <span><i class="far fa-trophy"></i>  ${nb_of_badges_earned} / ${nb_of_badges_possible} badges</span>
+    <span><i class="far fa-trophy"></i>  ${nb_of_badges_earned} / ${nb_of_badges_possible} ${_('badges')}</span>
   </div>
   <div class="progress-icon">
     <svg class="progress-ring" data-percent="${progress}">

@@ -10647,7 +10647,7 @@ msgstr "Nível"
 #: lms/djangoapps/triboo_analytics/forms.py:27
 #: openedx/core/djangoapps/user_api/api.py:948
 msgid "Job Code"
-msgstr "Código do Trabalho"
+msgstr "Código de Cargo"
 
 #: lms/djangoapps/triboo_analytics/forms.py:28
 #: openedx/core/djangoapps/user_api/api.py:955
@@ -16797,6 +16797,22 @@ msgstr "Adicionar lembrete de e-mail"
 msgid "Course Details"
 msgstr "Detalhes do Curso"
 
+#: cms/templates/settings.html:584
+msgid "Course Programmatic Enrollments"
+msgstr "Inscrições Programáticas do Curso"
+
+#: cms/templates/settings.html:585
+msgid "Set automatic enrollment rules for this course"
+msgstr "Definir regras de inscrição automáticas para este curso"
+
+#: cms/templates/settings.html:599
+msgid "Job Codes"
+msgstr "Códigos de Cargo"
+
+#: cms/templates/settings.html:599
+msgid "Identify the enrollment job codes here."
+msgstr "Identifique os códigos de cargo de inscrição aqui."
+
 #: cms/templates/settings.html:340
 msgid "Provide useful information about your course"
 msgstr "Fornece informações úteis sobre o seu curso."
@@ -21501,15 +21517,15 @@ msgstr "Envie e-mail para alguém dizendo que se inscreveu neste curso."
 #: lms/templates/dashboard/_dashboard_course_listing.html:233
 msgid "{num} minute"
 msgid_plural "{num} minutes"
-msgstr[0] "{num_minute} minuto"
-msgstr[1] "{num_minute} minutos"
+msgstr[0] "{num} minuto"
+msgstr[1] "{num} minutos"
 
 #: lms/templates/courseware/course_banner.html:39
 #: lms/templates/dashboard/_dashboard_course_listing.html:235
 msgid "{num} hour"
 msgid_plural "{num} hours"
-msgstr[0] "{num_hour} hora"
-msgstr[1] "{num_hour} horas"
+msgstr[0] "{num} hora"
+msgstr[1] "{num} horas"
 
 #: lms/templates/courseware/course_banner.html:61
 msgid "English"
@@ -22105,6 +22121,10 @@ msgstr "Minha coleção de medalhas"
 #: lms/templates/courseware/progress_badges.html:98
 msgid "badge"
 msgstr "medalha"
+
+#: lms/templates/dashboard/_dashboard_last_activity.html:26
+msgid "badges"
+msgstr "medalhas"
 
 #: lms/templates/courseware/progress_badges.html:114
 msgid "Badges not obtained"

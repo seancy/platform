@@ -483,6 +483,15 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    default: // Everything else is handled by datepickers and CodeMirror.
                        break;
                    }
+
+                   var name = event.currentTarget.getAttribute('name');
+                   if (name === 'job-code[]') {
+                       var checkedValue = [];
+                       $("input[name='job-code[]']:checked").each(function() {
+                           checkedValue.push($(this).val());
+                       });
+                       this.model.set('enrollment_job_codes', checkedValue);
+                   }
                },
                updateImageField: function(event, image_field, selector) {
                    this.setField(event);

@@ -1088,8 +1088,12 @@ class IltSession(TimeStampedModel):
                         except User.DoesNotExist:
                             pass
 
-            cls.update_or_create(ilt_module, ilt_module_id.org, sessions, users)
-            IltLearnerReport.generate_today_reports(ilt_module, users)
+            try:
+                cls.update_or_create(ilt_module, ilt_module_id.org, sessions, users)
+                IltLearnerReport.generate_today_reports(ilt_module, users)
+            except Exception as err:  # pylint: disable=broad-except
+                logger.error('Error with %s: %r', ilt_block_id, err)
+                pass
 
         cls.objects.filter(is_active=False).delete()
         IltLearnerReport.objects.filter(is_active=False).delete()
@@ -1110,7 +1114,7 @@ class IltSession(TimeStampedModel):
                                          session_nb=session_nb,
                                          defaults={'start': datetime.strptime(session['start_at'], '%Y-%m-%dT%H:%M').replace(tzinfo=UTC),
                                                    'end': datetime.strptime(session['end_at'], '%Y-%m-%dT%H:%M').replace(tzinfo=UTC),
-                                                   'duration': session.get('duration', ""),
+                                                   'duration': session.get('duration', 0),
                                                    'seats': session['total_seats'],
                                                    'ack_attendance_sheet': session.get('ack_attendance_sheet', False),
                                                    'location_id': session.get('location_id', ""),

@@ -8397,8 +8397,10 @@ msgid "Hide Timer"
 msgstr "隐藏计时器"
 
 #: lms/templates/discovery/course_card.underscore:33
-msgid "badges"
-msgstr "徽章"
+msgid "badge"
+msgid_plural "badges"
+msgstr[0] "徽章"
+msgstr[1] "徽章"
 
 #: lms/templates/discovery/course_card.underscore:43
 #, python-format
@@ -11682,6 +11684,14 @@ msgstr "课程类型"
 #: lms/templates/discovery/facet.underscore
 msgid "Mandatory"
 msgstr "必修课"
+
+#: lms/templates/discovery/facet.underscore
+msgid "true"
+msgstr "是"
+
+#: lms/templates/discovery/facet.underscore
+msgid "false"
+msgstr "否"
 
 #: lms/templates/student_account/login.underscore
 msgid "Welcome to your training platform, log in to find your learning space!"

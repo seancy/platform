@@ -70,6 +70,14 @@ msgstr ""
 msgid "Mandatory"
 msgstr ""
 
+#: lms/templates/discovery/facet.underscore
+msgid "true"
+msgstr ""
+
+#: lms/templates/discovery/facet.underscore
+msgid "false"
+msgstr ""
+
 #: lms/templates/student_account/login.underscore
 msgid "Welcome to your training platform, log in to find your learning space!"
 msgstr ""

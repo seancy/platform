@@ -2214,7 +2214,10 @@
     "answer": "\u7b54\u6848", 
     "answered question": "\u5df2\u56de\u590d\u7684\u95ee\u9898", 
     "asset_path is required": "\u9700\u8981\u63d0\u4f9b\u7ae0\u8282\u540d\u79f0\u548c\u8d44\u6e90_\u8def\u5f84", 
-    "badges": "\u5fbd\u7ae0", 
+    "badge": [
+      "\u5fbd\u7ae0", 
+      "\u5fbd\u7ae0"
+    ], 
     "bytes": "\u5b57\u8282", 
     "certificate": "certificate", 
     "close": "\u5173\u95ed", 
@@ -2239,6 +2242,7 @@
     "endorsed %(time_ago)s": "%(time_ago)s\u524d\u83b7\u5f97\u652f\u6301", 
     "enter code here": "\u6b64\u5904\u8f93\u5165\u4ee3\u7801", 
     "enter link description here": "\u6b64\u5904\u8f93\u5165\u94fe\u63a5\u7684\u63cf\u8ff0", 
+    "false": "\u5426", 
     "follow this post": "\u5173\u6ce8\u8fd9\u4e2a\u5e16\u5b50", 
     "for": "\u5bf9\u4e8e", 
     "for {courseName}": "\u5bf9\u4e8e {courseName}", 
@@ -2282,6 +2286,7 @@
     "title_word_{uniqueId}": "title_word_{uniqueId}", 
     "toggle chapter %(displayName)s": "\u5207\u6362\u7ae0\u8282%(displayName)s", 
     "toggle subsection %(displayName)s": "\u5207\u6362\u5c0f\u8282 %(displayName)s", 
+    "true": "\u662f", 
     "unanswered question": "\u5f85\u56de\u590d\u7684\u95ee\u9898", 
     "unit": "\u5355\u5143", 
     "unsubmitted": "\u672a\u63d0\u4ea4", 

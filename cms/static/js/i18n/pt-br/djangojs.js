@@ -54,12 +54,12 @@
     ], 
     "%(new_item_message)s": "%(new_item_message)s", 
     "%(num)s hour": [
-      "%(value)s hora", 
-      "%(value)s horas"
+      "%(num)s hora", 
+      "%(num)s horas"
     ], 
     "%(num)s minute": [
-      "%(value)s minuto", 
-      "%(value)s minutos"
+      "%(num)s minuto", 
+      "%(num)s minutos"
     ], 
     "%(num_points)s point possible (graded)": [
       "%(num_points)s ponto poss\u00edvel (avaliado)", 
@@ -2257,7 +2257,10 @@
     "answer": "resposta", 
     "answered question": "quest\u00e3o respondida", 
     "asset_path is required": "asset_path \u00e9 necess\u00e1rio", 
-    "badges": "distintivos", 
+    "badge": [
+      "distintivo", 
+      "distintivos"
+    ], 
     "bytes": "bytes", 
     "certificate": "certificado", 
     "close": "fechar", 
@@ -2282,6 +2285,7 @@
     "endorsed %(time_ago)s": "aprovado %(time_ago)s", 
     "enter code here": "insira o c\u00f3digo aqui", 
     "enter link description here": "digite a descri\u00e7\u00e3o do link aqui", 
+    "false": "N\u00e3o", 
     "follow this post": "seguir esta publica\u00e7\u00e3o", 
     "for": "para", 
     "for {courseName}": "para {courseName}", 
@@ -2335,6 +2339,7 @@
     "title_word_{uniqueId}": "title_word_{uniqueId}", 
     "toggle chapter %(displayName)s": "Alternar cap\u00edtulo %(displayName)s", 
     "toggle subsection %(displayName)s": "Alternar subse\u00e7\u00e3o %(displayName)s", 
+    "true": "Sim", 
     "unanswered question": "quest\u00e3o n\u00e3o respondida", 
     "unit": "unidade", 
     "unsubmitted": "N\u00e3o enviado", 

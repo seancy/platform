@@ -293,46 +293,6 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
           </ol>
         </div>
 
-        <div class="group-settings course-reminders">
-          <header>
-            <h2 class="title-2">${_('Course Reminders')}</h2>
-            <span class="tip">${_('Configure reminders to learners who enroll in this course')}</span>
-          </header>
-
-          <ol class="list-input">
-            <li id="course-due">
-              <span>${_("The course must be finished within")}</span>
-              <input type="text" id="course-finish-days" />
-              <span>${_("day(s)")}</span>
-            </li>
-            <li id="course-re-enroll">
-              <span>${_("Learners will be automatically re-enrolled in this course after")}</span>
-              <input type="text" id="course-re-enroll-time" />
-              <select id="re-enroll-time-unit">
-                <option value="month">${_("Month")}</option>
-                <option value="year">${_("Year")}</option>
-              </select>
-              <span>${_("after completion")}</span>
-            </li>
-            <li id="periodic-reminder">
-              <input type="checkbox" id="periodic-reminder-enabled">
-              <span>${_("Send a reminder email every")}</span>
-              <input type="text" id="periodic-reminder-day" placeholder="1">
-              <span>${_("day(s)")}</span>
-            </li>
-
-          </ol>
-          <ol class="list-input enum">
-            <li class="course-reminder-details-fields"></li>
-
-            <div class="actions">
-              <button type="button" class="action action-primary button new-button add-course-reminder-info">
-                <span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>${_("Add an Email Reminder")}
-              </button>
-            </div>
-          </ol>
-        </div>
-
         % if about_page_editable:
         <div class="group-settings course_details">
           <header>
@@ -340,15 +300,6 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             <span class="tip">${_('Provide useful information about your course')}</span>
           </header>
           <ol class="list-input">
-            <li class="field" id="field-course-country">
-              <label for="course-country">${_("Course Country")}</label>
-              <select id="course-country">
-                % for country in country_options:
-                  <option value="${country}">${country}</option>
-                % endfor
-              </select>
-              <span class="tip tip-stacked">${_("Identify the course country here.")}</span>
-            </li>
             <li class="field" id="field-course-language">
               <label for="course-language">${_("Course Language")}</label>
               <select id="course-language">
@@ -369,19 +320,19 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
               </select>
               <span class="tip tip-stacked">${_("Identify the course category here.")}</span>
             </li>
+            <li class="field" id="field-course-vendor">
+              <label for="course-vendor">${_("Course Tags")}</label>
+              <input type="text" id="course-vendor">
+              <button type="button" class="action action-primary add-course-tags">${_("Add")}</button>
+              <div class="course-tags"></div>
+              <span class="tip tip-stacked">${_("Identify the course tags here.")}</span>
+            </li>
             <li class="field" id="field-course-order">
                 <label for="course-order">${_("Course Order")}</label>
                 <a href="javascript: void(0);" id="course-order-decrease" title="- 10"><span class="fa fa-minus-square"></span></a>
                 <input type="number" id="course-order">
                 <a href="javascript: void(0);" id="course-order-increase" title="+ 10"><span class="fa fa-plus-square"></span></a>
                 <span class="tip tip-stacked">${_("Sort the courses to display on dashboard in ascending order. The order is from 0 to 99.")}</span>
-            </li>
-            <li class="field" id="field-course-vendor">
-              <label for="course-vendor">${_("Course Tag")}</label>
-              <input type="text" id="course-vendor">
-              <button type="button" class="action action-primary add-course-tags">${_("Add")}</button>
-              <div class="course-tags"></div>
-              <span class="tip tip-stacked">${_("Identify the course tag here.")}</span>
             </li>
             <li class="field" id="field-course-mandatory">
                 <label for="course-mandatory">${_("Course Mandatory Flag")}</label>
@@ -627,6 +578,85 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
               </div>
             </div>
           % endif
+
+          % if is_programmatic_enrollment_enabled:
+            <div class="group-settings course-programmatic-enrollments">
+              <header>
+                <h2 class="title-2">${_('Course Programmatic Enrollments')}</h2>
+                <span class="tip">${_('Set automatic enrollment rules for this course')}</span>
+              </header>
+              <ol class="list-input">
+                <li class="field" id="field-course-country">
+                  <label for="course-country">${_("Course Country")}</label>
+                  <select id="course-country">
+                    % for country in country_options:
+                      <option value="${country}">${country}</option>
+                    % endfor
+                  </select>
+                  <span class="tip tip-stacked">${_("Identify the course country here.")}</span>
+                </li>
+                % if enrollment_job_codes:
+                  <li class="field" id="field-enrollment-job-code">
+                    <label for="list-job-codes">${_("Job Codes")}</label>
+                    <ul id="list-job-codes">
+                      % for job_code in sorted(enrollment_job_codes):
+                        <li>
+                          % if enrollment_job_codes[job_code]:
+                            <input type="checkbox" id="job-code-${job_code}" name="job-code[]" value="${job_code}" checked>
+                            <label for="job-code-${job_code}">${job_code}</label>
+                          % else:
+                            <input type="checkbox" id="job-code-${job_code}" name="job-code[]" value="${job_code}">
+                            <label for="job-code-${job_code}">${job_code}</label>
+                          % endif
+                        </li>
+                      % endfor
+                    </ul>
+                    <span class="tip tip-stacked">${_("Identify the enrollment job codes here.")}</span>
+                  </li>
+                % endif
+              </ol>
+            </div>
+          % endif
+
+          <div class="group-settings course-reminders">
+            <header>
+              <h2 class="title-2">${_('Course Reminders')}</h2>
+              <span class="tip">${_('Configure reminders to learners who enroll in this course')}</span>
+            </header>
+
+            <ol class="list-input">
+              <li id="course-due">
+                <span>${_("The course must be finished within")}</span>
+                <input type="text" id="course-finish-days" />
+                <span>${_("day(s)")}</span>
+              </li>
+              <li id="course-re-enroll">
+                <span>${_("Learners will be automatically re-enrolled in this course after")}</span>
+                <input type="text" id="course-re-enroll-time" />
+                <select id="re-enroll-time-unit">
+                  <option value="month">${_("Month")}</option>
+                  <option value="year">${_("Year")}</option>
+                </select>
+                <span>${_("after completion")}</span>
+              </li>
+              <li id="periodic-reminder">
+                <input type="checkbox" id="periodic-reminder-enabled">
+                <span>${_("Send a reminder email every")}</span>
+                <input type="text" id="periodic-reminder-day" placeholder="1">
+                <span>${_("day(s)")}</span>
+              </li>
+
+            </ol>
+            <ol class="list-input enum">
+              <li class="course-reminder-details-fields"></li>
+
+              <div class="actions">
+                <button type="button" class="action action-primary button new-button add-course-reminder-info">
+                  <span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>${_("Add an Email Reminder")}
+                </button>
+              </div>
+            </ol>
+          </div>
 
           % if about_page_editable or is_prerequisite_courses_enabled or is_entrance_exams_enabled:
             <hr class="divide" />
