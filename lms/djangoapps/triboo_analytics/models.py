@@ -184,6 +184,16 @@ class TrackingLogHelper(object):
             user_logs[l.user_id].append(l)
         for user_id, logs in user_logs.iteritems():
             user_logs[user_id] = sorted(logs, key=lambda v:v.time)
+            first_log_time = user_logs[user_id][0].time
+            try:
+                user = User.objects.get(id=user_id)
+                if user.last_login.date() < first_log_time.date():
+                    logger.info("user %d last_login %s should => %s" % (user_id, user.last_login, first_log_time))
+                    user.last_login = first_log_time
+                    user.save()
+            except User.DoesNotExist:
+                pass
+
         return user_logs
 
 
