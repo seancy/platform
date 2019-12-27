@@ -441,7 +441,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def process_generate_today_reports(cls, course_last_update, enrollment_ids, sections):
-        logger.info("process %d enrollments" % len(enrollment_ids))
+        # logger.info("process %d enrollments" % len(enrollment_ids))
         for enrollment_id in enrollment_ids:
             enrollment = CourseEnrollment.objects.get(id=enrollment_id)
             cls.generate_enrollment_report(course_last_update, enrollment, sections)
@@ -1255,7 +1255,7 @@ def generate_today_reports(multi_process=False):
     LearnerCourseDailyReport.generate_today_reports(overviews, tracking_log_helper.sections_by_course, multi_process=multi_process)
 
     logger.info("start double checking generated Learner Course reports")
-    check_generated_learner_course_reports(course_ids, tracking_log_helper.sections_by_course)
+    check_generated_learner_course_reports(overviews, tracking_log_helper.sections_by_course)
 
     logger.info("fetch Learner Course reports")
     learner_course_reports = LearnerCourseDailyReport.filter_by_day().prefetch_related('user__profile')
@@ -1278,9 +1278,10 @@ def generate_today_reports(multi_process=False):
     IltSession.generate_today_reports()
 
 
-def check_generated_learner_course_reports(course_ids, sections_by_course):
+def check_generated_learner_course_reports(overviews, sections_by_course):
     all_good = False
-    course_ids_to_check = course_ids
+    course_last_updates = {o.id: o.modified.date() for o in overviews}
+    course_ids_to_check = [o.id for o in overviews]
     while not all_good:
         course_ids_nok = []
         logger.info("new check round with %d courses" % len(course_ids_to_check))
@@ -1293,7 +1294,7 @@ def check_generated_learner_course_reports(course_ids, sections_by_course):
                 if not LearnerCourseDailyReport.filter_by_day(course_id=course_id, user_id=enrollment.user_id).exists():
                     course_id_needs_fix = True
                     logger.info("missing report for user_id=%d => trying to generate it" % enrollment.user_id)
-                    LearnerCourseDailyReport.generate_enrollment_report(enrollment, sections)
+                    LearnerCourseDailyReport.generate_enrollment_report(course_last_updates[course_id], enrollment, sections)
             if course_id_needs_fix:
                 course_ids_nok.append(course_id)
         if len(course_ids_nok) == 0:
