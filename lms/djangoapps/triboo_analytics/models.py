@@ -396,7 +396,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def generate_today_reports(cls, overviews, sections_by_course, multi_process=False):
+    def generate_today_reports(cls, last_analytics_success, overviews, sections_by_course, multi_process=False):
         nb_processes = 2 * multiprocessing.cpu_count() if multi_process else 1
 
         nb_courses = len(overviews)
@@ -432,7 +432,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 processes = []
                 for process_enrollments in enrollments_by_process:
                     process = multiprocessing.Process(target=cls.process_generate_today_reports,
-                                                      args=(course_last_update, process_enrollments, sections,))
+                                                      args=(last_analytics_success, course_last_update, process_enrollments, sections,))
                     process.start()
                     processes.append(process)
                 [process.join() for process in processes]
@@ -450,31 +450,30 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def process_generate_today_reports(cls, course_last_update, enrollment_ids, sections):
+    def process_generate_today_reports(cls, last_analytics_success, course_last_update, enrollment_ids, sections):
         # logger.info("process %d enrollments" % len(enrollment_ids))
         for enrollment_id in enrollment_ids:
             enrollment = CourseEnrollment.objects.get(id=enrollment_id)
-            cls.generate_enrollment_report(course_last_update, enrollment, sections)
+            cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, sections)
 
 
     @classmethod
-    def generate_enrollment_report(cls, course_last_update, enrollment, sections):
-        updated = cls.update_or_create(course_last_update, enrollment)
+    def generate_enrollment_report(cls, last_analytics_success, course_last_update, enrollment, sections):
+        updated = cls.update_or_create(last_analytics_success, course_last_update, enrollment)
         if updated:
             LearnerSectionReport.update_or_create(enrollment, sections)
 
 
     @classmethod
-    def update_or_create(cls, course_last_update, enrollment):
+    def update_or_create(cls, last_analytics_success, course_last_update, enrollment):
         course_key = enrollment.course_id
         user = enrollment.user
         day = timezone.now().date()
 
         report_needs_update = True
         if user.is_active:
-            last_report = cls.objects.filter(course_id=course_key, user_id=user.id)
-            if last_report:
-                last_report = last_report.latest()
+            try:
+                last_report = cls.objects.get(course_id=course_key, user_id=user.id, created=last_analytics_success)
                 if ((not enrollment.gradebook_edit or enrollment.gradebook_edit.date() < last_report.created)
                     and (not user.last_login or user.last_login.date() < last_report.created)
                     and course_last_update < last_report.created
@@ -493,6 +492,8 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                               'posts': last_report.posts,
                               'enrollment_date': enrollment.created,
                               'completion_date': enrollment.completed})
+            except cls.DoesNotExist:
+                pass
 
             if report_needs_update:
                 with modulestore().bulk_operations(course_key):
@@ -1261,11 +1262,16 @@ def generate_today_reports(multi_process=False):
     logger.info("start Learner Visits reports")
     LearnerVisitsDailyReport.generate_today_reports()
 
+    last_analytics_success = None
+    last_reportlog = ReportLog.get_latest()
+    if last_reportlog:
+        last_analytics_success = last_reportlog.created.date()
+
     logger.info("start Learner Course reports")
-    LearnerCourseDailyReport.generate_today_reports(overviews, tracking_log_helper.sections_by_course, multi_process=multi_process)
+    LearnerCourseDailyReport.generate_today_reports(last_analytics_success, overviews, tracking_log_helper.sections_by_course, multi_process=multi_process)
 
     logger.info("start double checking generated Learner Course reports")
-    check_generated_learner_course_reports(overviews, tracking_log_helper.sections_by_course)
+    check_generated_learner_course_reports(last_analytics_success, overviews, tracking_log_helper.sections_by_course)
 
     logger.info("fetch Learner Course reports")
     learner_course_reports = LearnerCourseDailyReport.filter_by_day().prefetch_related('user__profile')
@@ -1288,7 +1294,7 @@ def generate_today_reports(multi_process=False):
     IltSession.generate_today_reports()
 
 
-def check_generated_learner_course_reports(overviews, sections_by_course):
+def check_generated_learner_course_reports(last_analytics_success, overviews, sections_by_course):
     all_good = False
     course_last_updates = {o.id: o.modified.date() for o in overviews}
     course_ids_to_check = [o.id for o in overviews]
@@ -1304,7 +1310,7 @@ def check_generated_learner_course_reports(overviews, sections_by_course):
                 if not LearnerCourseDailyReport.filter_by_day(course_id=course_id, user_id=enrollment.user_id).exists():
                     course_id_needs_fix = True
                     logger.info("missing report for user_id=%d => trying to generate it" % enrollment.user_id)
-                    LearnerCourseDailyReport.generate_enrollment_report(course_last_updates[course_id], enrollment, sections)
+                    LearnerCourseDailyReport.generate_enrollment_report(last_analytics_success, course_last_updates[course_id], enrollment, sections)
             if course_id_needs_fix:
                 course_ids_nok.append(course_id)
         if len(course_ids_nok) == 0:
