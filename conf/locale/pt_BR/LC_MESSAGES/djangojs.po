@@ -8287,7 +8287,7 @@ msgstr "Página Inicial de discussão"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:11
 msgid "How to use discussions"
-msgstr "Como usar  as discussões de %(platform_name)s"
+msgstr "Como usar as discussões"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:15
 msgid "Engage with posts"
@@ -9528,7 +9528,7 @@ msgstr "Cadastrar pelo edX"
 #: lms/templates/student_account/login.underscore
 msgid "Welcome to your training platform, log in to find your learning space!"
 msgstr ""
-"Bem-vindo à sua plataforma de treinamento, faça o login"
+"Bem-vindo à sua plataforma de treinamento, faça o login "
 "para encontrar seu espaço de aprendizado"
 
 #: lms/templates/student_account/login.underscore:22

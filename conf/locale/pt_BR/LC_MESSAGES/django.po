@@ -6931,8 +6931,8 @@ msgid ""
 "now{enroll_link_end}."
 msgstr ""
 "Você deve estar matriculado no curso para ver o conteúdo"
-"do curso {registration_link_start} Inscreva-se"
-"agora {registration_link_end}."
+"do curso {enroll_link_start} Inscreva-se"
+"agora {enroll_link_end}."
 
 #: lms/djangoapps/courseware/views/views.py:589
 #: openedx/features/course_experience/views/course_home_messages.py:125
