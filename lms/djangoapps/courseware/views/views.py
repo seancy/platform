@@ -2304,6 +2304,10 @@ class CourseReminder():
         send email to student who is automatically re-enrolled in the course
         """
         descriptor = modulestore().get_course(course_enrollment.course_id)
+
+        # in case course does not exist any more
+        if not descriptor:
+            return
         re_enroll_time = descriptor.course_re_enroll_time
 
         # if the course doesn't have a automatically re-enroll time, just pass
@@ -2357,6 +2361,10 @@ class CourseReminder():
         send reminder email to student, to reminder him/her the deadline of the course
         """
         descriptor = modulestore().get_course(course_enrollment.course_id)
+
+        # in case course does not exist any more
+        if not descriptor:
+            return
         finish_days = descriptor.course_finish_days
 
         # if the course is required to finish within certain days, we check the reminder info,
