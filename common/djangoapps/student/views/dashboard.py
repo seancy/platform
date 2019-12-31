@@ -48,6 +48,7 @@ from openedx.core.djangoapps.programs.utils import ProgramDataExtender, ProgramP
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.util.maintenance_banner import add_maintenance_banner
 from openedx.core.djangoapps.waffle_utils import WaffleFlag, WaffleFlagNamespace
+from openedx.core.djangoapps.bookmarks.models import Bookmark
 from openedx.core.djangolib.markup import HTML, Text
 from openedx.features.enterprise_support.api import get_dashboard_consent_notification
 from shoppingcart.api import order_history
@@ -884,6 +885,9 @@ def student_dashboard(request):
     else:
         last_activity_enrollments = []
 
+    course_keys = [course.course_id for course in course_enrollments]
+    bookmarks = Bookmark.objects.filter(user=user, course_key__in=course_keys).order_by('-modified')
+
     context = {
         'urls': urls,
         'programs_data': programs_data,
@@ -936,6 +940,7 @@ def student_dashboard(request):
         'nb_posts': nb_posts,
         'progress_summaries': progress_summaries,
         'last_activity_enrollments': last_activity_enrollments,
+        'bookmarks': bookmarks,
     }
 
     if ecommerce_service.is_enabled(request.user):

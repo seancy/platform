@@ -11239,6 +11239,14 @@ msgstr ""
 msgid "Mandatory"
 msgstr ""
 
+#: lms/templates/discovery/facet.underscore
+msgid "true"
+msgstr ""
+
+#: lms/templates/discovery/facet.underscore
+msgid "false"
+msgstr ""
+
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435

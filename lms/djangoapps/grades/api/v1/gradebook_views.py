@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.urls import reverse
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 from django.views.decorators.http import require_POST
 from rest_framework import status
 from rest_framework.response import Response
@@ -36,6 +37,7 @@ from lms.djangoapps.grades.models import (
     PersistentSubsectionGradeOverrideHistory,
 )
 from lms.djangoapps.grades.services import GradesService
+from lms.djangoapps.grades.signals.signals import GRADE_EDITED
 from lms.djangoapps.grades.subsection_grade import CreateSubsectionGrade
 from lms.djangoapps.grades.tasks import recalculate_subsection_grade_v3, send_grade_override_email
 from lms.djangoapps.instructor.enrollment import get_user_email_language
@@ -193,7 +195,7 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
     def post(self, request, course_key):
         """
         Creates or updates `PersistentSubsectionGradeOverrides` for the (user_id, usage_key)
-        specified in the request data.  The `SUBSECTION_OVERRIDE_CHANGED` signal is invoked
+        specified in the request data.  The `GRADE_EDITED` signal is invoked
         after the grade override is created, which triggers a celery task to update the
         course and subsection grades for the specified user.
         """
@@ -335,13 +337,20 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
     def _create_override(self, request_user, subsection_grade_model, **override_data):
         """
         Helper method to create a `PersistentSubsectionGradeOverride` object
-        and send a `SUBSECTION_OVERRIDE_CHANGED` signal.
+        and send a `GRADE_EDITED` signal.
         """
         override = PersistentSubsectionGradeOverride.update_or_create_override(
             requesting_user=request_user,
             subsection_grade_model=subsection_grade_model,
             feature=PersistentSubsectionGradeOverrideHistory.GRADEBOOK,
             **override_data
+        )
+
+        GRADE_EDITED.send(
+            sender=None,
+            user_id=subsection_grade_model.user_id,
+            course_id=subsection_grade_model.course_id,
+            modified=override.modified,
         )
 
         set_event_transaction_type(SUBSECTION_GRADE_CALCULATED)
@@ -418,6 +427,12 @@ def undo_override_for_student(request, course_id):
     usage_ids = json.loads(request.POST.get('usage_ids'))
     for key in usage_ids:
         GradesService().undo_override_subsection_grade(user_id, course_id, key)
+    GRADE_EDITED.send(
+        sender=None,
+        user_id=user_id,
+        course_id=course_key,
+        modified=timezone.now(),
+    )
     grade_summary = CourseGradeFactory().read(user, course_key=course_key).summary
     data = []
     for section in grade_summary['section_breakdown']:

@@ -14762,6 +14762,22 @@ msgstr ""
 msgid "Course Details"
 msgstr ""
 
+#: cms/templates/settings.html:584
+msgid "Course Programmatic Enrollments"
+msgstr ""
+
+#: cms/templates/settings.html:585
+msgid "Set automatic enrollment rules for this course"
+msgstr ""
+
+#: cms/templates/settings.html:599
+msgid "Job Codes"
+msgstr ""
+
+#: cms/templates/settings.html:599
+msgid "Identify the enrollment job codes here."
+msgstr ""
+
 #: cms/templates/settings.html:340
 msgid "Provide useful information about your course"
 msgstr ""
@@ -19463,6 +19479,10 @@ msgstr ""
 
 #: lms/templates/courseware/progress_badges.html:98
 msgid "badge"
+msgstr ""
+
+#: lms/templates/dashboard/_dashboard_last_activity.html:26
+msgid "badges"
 msgstr ""
 
 #: lms/templates/courseware/progress_badges.html:114

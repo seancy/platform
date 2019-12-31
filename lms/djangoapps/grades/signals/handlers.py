@@ -13,7 +13,7 @@ from django.db import models
 from django.dispatch import receiver
 from submissions.models import score_reset, score_set
 from xblock.scorable import ScorableXBlockMixin, Score
-
+from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangoapps.course_groups.signals.signals import COHORT_MEMBERSHIP_UPDATED
 from openedx.core.lib.grade_utils import is_score_higher_or_equal
 from student.models import CourseEnrollment, user_by_anonymous_id
@@ -26,6 +26,7 @@ from .signals import (
     SCORE_PUBLISHED,
     SUBSECTION_SCORE_CHANGED,
     SUBSECTION_OVERRIDE_CHANGED,
+    GRADE_EDITED
 )
 from ..models import PersistentSubsectionGradeOverride
 from .. import events
@@ -233,6 +234,23 @@ def enqueue_subsection_update(sender, **kwargs):  # pylint: disable=unused-argum
         ),
         countdown=RECALCULATE_GRADE_DELAY_SECONDS,
     )
+    GRADE_EDITED.send(
+        sender=None,
+        user_id=kwargs['user_id'],
+        course_id=CourseKey.from_string(kwargs['course_id']),
+        modified=kwargs['modified'],
+    )
+
+
+@receiver(GRADE_EDITED)
+def update_course_enrollment(sender, course_id, user_id, **kwargs):
+    try:
+        enrollment = CourseEnrollment.objects.get(course_id=course_id, user_id=user_id)
+        enrollment.gradebook_edit = kwargs['modified']
+        enrollment.save()
+    except CourseEnrollment.DoesNotExist:
+        pass
+
 
 
 @receiver(SUBSECTION_SCORE_CHANGED)

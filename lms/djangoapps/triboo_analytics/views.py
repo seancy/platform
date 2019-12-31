@@ -42,6 +42,7 @@ from lms.djangoapps.grades.models import (
     PersistentSubsectionGradeOverride,
     PersistentSubsectionGradeOverrideHistory,
 )
+from lms.djangoapps.grades.signals.signals import GRADE_EDITED
 from lms.djangoapps.grades.subsection_grade import CreateSubsectionGrade
 from lms.djangoapps.grades.tasks import recalculate_subsection_grade_v3
 from lms.djangoapps.instructor.enrollment import get_user_email_language, send_mail_to_student
@@ -198,15 +199,16 @@ def _transcript_view(user, request, template, report_type):
             for report in learner_course_reports:
                 content = toc_for_course(
                             user, request, modulestore().get_course(report.course_id), None, None, None)
-                for chapter in content['chapters']:
-                    chapter['disabled'] = True
-                    for section in chapter['sections']:
-                        section.pop('due', None)
-                        if section['graded']:
-                            chapter['disabled'] = False
-                            break
+                if 'chapters' in content:
+                    for chapter in content['chapters']:
+                        chapter['disabled'] = True
+                        for section in chapter['sections']:
+                            section.pop('due', None)
+                            if section['graded']:
+                                chapter['disabled'] = False
+                                break
 
-                course_contents[unicode(report.course_id)] = content
+                    course_contents[unicode(report.course_id)] = content
             course_contents = json.dumps(course_contents)
 
     return render_to_response(
@@ -469,13 +471,20 @@ def create_subsection_grade(user, course, subsection):
 def create_override(request_user, subsection_grade_model, **override_data):
     """
     Helper method to create a `PersistentSubsectionGradeOverride` object
-    and send a `SUBSECTION_OVERRIDE_CHANGED` signal.
+    and send a `GRADE_EDITED` signal.
     """
     override = PersistentSubsectionGradeOverride.update_or_create_override(
         requesting_user=request_user,
         subsection_grade_model=subsection_grade_model,
         feature=PersistentSubsectionGradeOverrideHistory.GRADEBOOK,
         **override_data
+    )
+
+    GRADE_EDITED.send(
+        sender=None,
+        user_id=subsection_grade_model.user_id,
+        course_id=subsection_grade_model.course_id,
+        modified=override.modified,
     )
 
     set_event_transaction_type(SUBSECTION_GRADE_CALCULATED)

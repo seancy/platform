@@ -938,6 +938,15 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
+    enrollment_job_codes = List(
+        display_name=_("Course Enrollment By User's Job Code"),
+        help=_(
+            "Used to automatically enrollment course by user's job code property."
+        ),
+        default=[],
+        scope=Scope.settings
+    )
+
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method
     """

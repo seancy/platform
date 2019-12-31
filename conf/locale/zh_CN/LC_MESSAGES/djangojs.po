@@ -11685,6 +11685,14 @@ msgstr "课程类型"
 msgid "Mandatory"
 msgstr "必修课"
 
+#: lms/templates/discovery/facet.underscore
+msgid "true"
+msgstr "是"
+
+#: lms/templates/discovery/facet.underscore
+msgid "false"
+msgstr "否"
+
 #: lms/templates/student_account/login.underscore
 msgid "Welcome to your training platform, log in to find your learning space!"
 msgstr "欢迎来到您的培训平台，登录查找您的学习空间！"

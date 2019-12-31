@@ -1256,3 +1256,6 @@ if FEATURES.get('ENABLE_SAML_IDP'):
 FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False
 FEATURES['ENABLE_SPECIAL_EXAMS'] = True
 FEATURES['MILESTONES_APP'] = True
+
+################ Enable bookmarks feature ####################
+FEATURES['ENABLE_DASHBOARD_BOOKMARKS'] = False

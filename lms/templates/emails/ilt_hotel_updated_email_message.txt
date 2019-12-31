@@ -22,7 +22,9 @@ Session information:
     ${_("Duration")}: ${ session_info['duration'] } h
     % endif
     ${_("Timezone")}: ${ session_info['timezone'] } ${ session_info['timezone_offset'] }h
+    % if 'area_region' in session_info:
     ${_("Area / Region")}: ${ session_info['area_region'] }
+    % endif
     ${pgettext('xblock-ilt', "Location")}: ${ session_info['location'] }
     % if 'address' in session_info:
     ${pgettext('xblock-ilt', "Address")}: ${ session_info['address'] }
