@@ -444,7 +444,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 logger.info("learner course report for course_id=%s (%d / %d): %d enrollments" % (
                             course_id, i, nb_courses, len(enrollments)))
                 for enrollment in enrollments:
-                    cls.generate_enrollment_report(course_last_update, enrollment, sections)
+                    cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, sections)
 
         ReportLog.update_or_create(learner_course=timezone.now())
 
