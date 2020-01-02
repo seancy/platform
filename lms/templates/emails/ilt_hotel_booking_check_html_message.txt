@@ -5,6 +5,9 @@
 <%!
     platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
 %>
+
+<%inherit file="./base_body_html.txt" />
+
 <br>
 ${_("Hello,")}
 <br>

@@ -44,6 +44,7 @@ from web_fragments.fragment import Fragment
 
 import shoppingcart
 import survey.views
+from branding.api import get_logo_url
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import CertificateStatuses
 from course_modes.models import CourseMode, get_course_prices
@@ -2138,9 +2139,14 @@ def process_ilt_hotel_check_email():
         'SITE_NAME',
         settings.SITE_NAME
     )
+    logo_url = u'{proto}://{site}{path}'.format(
+        proto="https",
+        site=stripped_site_name,
+        path=get_logo_url()
+    )
     for admin, courses in admin_course_dict.items():
         email = admin.email
-        params = {"course_list": [], "message": "ilt_hotel_booking_check", "site_name": None}
+        params = {"course_list": [], "message": "ilt_hotel_booking_check", "site_name": None, "logo_url": logo_url}
         for c in courses:
             course = modulestore().get_course(c)
             course_name = course.display_name
