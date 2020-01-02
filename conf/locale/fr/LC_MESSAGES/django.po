@@ -30138,7 +30138,7 @@ msgid ""
 "Please be informed that your enrollment in the {ilt_name} in-class training "
 "scheduled for {start} in {location} at {address}, {city} {zip_code} had to "
 "be canceled."
-msgstr "Nous vous informons que la session de formation {ilt_name} prévue le {start} à {location} située {address}, {zip_code} {city}, à laquelle vous avez été inscrit(e) est annulée."
+msgstr "Nous vous informons que votre inscription à la session de formation {ilt_name} prévue le {start} à {location} située {address}, {zip_code} {city}, a été annulée."
 
 #: master-sephora:lms/templates/emails/ilt_unenrolled_email_subject.txt:2
 msgid "Cancellation of enrollment in the in-class training - {name}"
