@@ -5,6 +5,7 @@ import json
 import logging
 import operator
 import collections
+from datetime import datetime
 from six import text_type
 from pytz import utc
 from datetime import datetime, timedelta
@@ -699,7 +700,7 @@ def get_filter_kwargs_with_table_exclude(request):
                 else:
                     kwargs[queried_field + '__icontains'] = query_string
 
-    time_period_form = TimePeriodForm(request_copy, user_properties_helper.get_possible_choices())
+    time_period_form = TimePeriodForm(request_copy)
     from_day = request_copy.get('from_day', None)
     to_day = request_copy.get('to_day', None)
     if from_day and to_day:
@@ -731,9 +732,9 @@ def get_learner_table_filters(request, orgs, as_string=False):
             'org': learner_report_org,
             'date_time': day2str(last_update) if as_string else last_update
         })
-        return filter_form, user_properties_form, filter_kwargs, exclude, last_update, query_dict
+        return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, last_update, query_dict
 
-    return None, None, None, None, None, None
+    return None, None, None, None, None, None, None
 
 
 def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
@@ -742,7 +743,7 @@ def get_course_summary_table_filters(request, course_key, last_update, as_string
         'date_time': day2str(last_update) if as_string else last_update,
         'course_id': "%s" % course_key if as_string else course_key
     })
-    return filter_form, user_properties_form, filter_kwargs, exclude, query_dict
+    return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
 
 
 def get_ilt_table_filters(request, as_string=False):
@@ -823,7 +824,7 @@ def learner_view(request):
 
     row_count = 0
     learner_table = None
-    filter_form, user_properties_form, filter_kwargs, exclude, last_update, query_dict = get_learner_table_filters(request, orgs)
+    filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, last_update, query_dict = get_learner_table_filters(request, orgs)
     if last_update:
         learner_table, row_count = get_table(LearnerDailyReport, filter_kwargs, LearnerDailyTable, exclude)
         config_tables(request, learner_table)
@@ -840,6 +841,7 @@ def learner_view(request):
             'query_dict': query_dict,
             'query_triples': query_triples,
             'user_properties_form': user_properties_form,
+            'time_period_form': time_period_form,
             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'learner'}),
             'last_update': last_update
         }
@@ -856,7 +858,7 @@ def learner_export_table(request):
     if not orgs:
         return HttpResponseNotFound()
 
-    unused_filter_form, unused_prop_form, filter_kwargs, exclude, unused_update, query_dict = get_learner_table_filters(
+    unused_filter_form, unused_prop_form, time_period_form, filter_kwargs, exclude, unused_update, query_dict = get_learner_table_filters(
                                                                                     request,
                                                                                     orgs,
                                                                                     as_string=True)
@@ -1011,7 +1013,7 @@ def course_view(request):
         course_key = CourseKey.from_string(course_id)
 
         course_report = None
-        enrollments_csv_data = None
+        unique_visitors_csv_data = None
         summary_table = False
         progress_table = False
         time_spent_table = False
@@ -1024,10 +1026,15 @@ def course_view(request):
         if last_reportlog:
             last_update = last_reportlog.course
             course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
-            enrollments_csv_data = CourseDailyReport.get_enrollments_csv_data(course_key)
+
+            from_date = request.GET.get('from_day')
+            from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
+            to_date = request.GET.get('to_day')
+            to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
+            unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, from_date, to_date)
 
             if report == "summary":
-                filter_form, user_properties_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
+                filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
                                                                                             request,
                                                                                             course_key,
                                                                                             last_update)
@@ -1076,12 +1083,13 @@ def course_view(request):
                 'course_name': courses.get(course_id),
                 'last_update': last_update,
                 'course_report': course_report,
-                'enrollments_csv_data': enrollments_csv_data,
+                'unique_visitors_csv_data': unique_visitors_csv_data,
                 'query_dict': query_dict,
                 'query_triples': query_triples,
                 'learner_course_table': summary_table,
                 'learner_course_progress_table': progress_table,
                 'learner_course_time_spent_table': time_spent_table,
+                'time_period_form': time_period_form,
                 'filter_form': filter_form,
                 'user_properties_form': user_properties_form,
                 'row_count': row_count,
@@ -1162,8 +1170,15 @@ def microsite_view(request):
         last_update = last_reportlog.created
         microsite_report = MicrositeDailyReport.get_by_day(date_time=last_update, org=microsite_report_org)
 
-        unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(microsite_report_org)
-
+        from_date = request.GET.get('from_day')
+        from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
+        to_date = request.GET.get('to_day')
+        to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
+        print "LAETITIA -- %s - %s" % (from_date, to_date)
+        unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(microsite_report_org,
+                                                                                     from_date,
+                                                                                     to_date)
+        print "LAETITIA -- %s" % unique_visitors_csv_data
         users_by_country_csv_data = ""
         country_reports = CountryDailyReport.filter_by_day(date_time=last_update, org=microsite_report_org)
         for report in country_reports:
@@ -1183,6 +1198,7 @@ def microsite_view(request):
                 {
                     'last_update': dt2str(last_update),
                     'microsite_report': microsite_report,
+                    'time_period_form': TimePeriodForm(request.GET.copy()),
                     'unique_visitors_csv_data': unique_visitors_csv_data,
                     'users_by_country_csv_data': users_by_country_csv_data,
                     'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'global'}),
@@ -1194,6 +1210,7 @@ def microsite_view(request):
         {
             'last_update': "",
             'microsite_report': None,
+            'time_period_form': TimePeriodForm(),
             'unique_visitors_csv_data': "",
             'users_by_country_csv_data': "",
             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'global'}),

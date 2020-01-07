@@ -77,9 +77,8 @@ class TimePeriodForm(forms.Form):
     queried_field = forms.CharField(widget=forms.HiddenInput(), required=False)
     selected_properties = forms.CharField(widget=forms.MultipleHiddenInput(), required=False)
 
-    def __init__(self, data=None, choices=[]):
+    def __init__(self, data=None):
         super(TimePeriodForm, self).__init__(data)
-        self.fields['from_day'].choices = choices
 
 
 class TableFilterForm(forms.Form):

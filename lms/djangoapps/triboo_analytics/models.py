@@ -291,6 +291,52 @@ class UnicodeMixin(object):
         return unicode(result)
 
 
+class UniqueVisitorsMixin(object):
+    @classmethod
+    def _get_unique_visitors_csv_data(cls, unique_visitors):
+        unique_visitors_csv_data = {"per_day": "", "per_week": "", "per_month": ""}
+
+        unique_visitors = unique_visitors.values('created', 'unique_visitors').order_by('created')
+        if unique_visitors:
+            current_week = unique_visitors[0]['created'].strftime('%W')
+            per_week = {current_week: []}
+            current_month = unique_visitors[0]['created'].strftime('%m-%Y')
+            per_month = {current_month: []}
+
+            for uv in unique_visitors:
+                unique_visitors_csv_data['per_day'] += "%s,%d\\n" % (uv['created'].strftime('%d-%m-%Y'), uv['unique_visitors'])
+
+                uv_week = uv['created'].strftime('%W')
+                if uv_week != current_week:
+                    current_week = uv_week
+                    per_week[current_week] = [uv['unique_visitors']]
+                else:
+                    per_week[current_week].append(uv['unique_visitors'])
+
+                uv_month = uv['created'].strftime('%m-%Y')
+                if uv_month != current_month:
+                    current_month = uv_month
+                    per_month[current_month] = [uv['unique_visitors']]
+                else:
+                    per_month[current_month].append(uv['unique_visitors'])
+
+            weeks = per_week.keys()
+            weeks.sort()
+            for week in weeks:
+                visitors = per_week[week]
+                avg = int(round(sum(visitors) / float(len(visitors))))
+                unique_visitors_csv_data['per_week'] += "%s,%d\\n" % (week, avg)
+
+            months = per_month.keys()
+            months.sort()
+            for month in months:
+                visitors = per_month[month]
+                avg = int(round(sum(visitors) / float(len(visitors))))
+                unique_visitors_csv_data['per_month'] += "%s,%d\\n" % (month, avg)
+
+        return unique_visitors_csv_data
+
+
 class ReportLog(UnicodeMixin, TimeStampedModel):
     class Meta(object):
         app_label = "triboo_analytics"
@@ -371,6 +417,15 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                          device=device,
                                          created=day,
                                          defaults={'time_spent': int(time_spent)})
+
+
+    @classmethod
+    def get_active_user_ids(cls, from_date, to_date, course_id=None):
+        if course_id:
+            reports = cls.objects.filter(created__gte=from_date, created__lte=to_date, course_id=course_id)
+        else:
+            reports = cls.objects.filter(created__gte=from_date, created__lte=to_date)
+        return [result['user'] for result in reports.values('user').distinct()]
 
 
 class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
@@ -564,6 +619,12 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         return False
 
 
+    @classmethod
+    def filter_period(cls, from_date, to_date, course_id):
+        user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
+        # return cls.
+
+
 class LearnerSectionReport(TimeModel):
     class Meta(object):
         app_label = "triboo_analytics"
@@ -690,7 +751,7 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             cls.update_or_create(user_id, combined_org, reports)
 
 
-class CourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
+class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeModel):
     class Meta(object):
         app_label = "triboo_analytics"
         get_latest_by = "created"
@@ -699,6 +760,7 @@ class CourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     course_id = CourseKeyField(max_length=255, db_index=True, null=False)
     enrollments = models.PositiveIntegerField(default=0)
+    unique_visitors = models.PositiveIntegerField(default=0)
     average_final_score = models.PositiveSmallIntegerField(default=0)
     posts = models.PositiveIntegerField(default=0)
     finished = models.PositiveIntegerField(default=0, verbose_name=CourseStatus.verbose_names[CourseStatus.finished])
@@ -752,10 +814,14 @@ class CourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             average_final_score = total_score / nb_completed_courses
             average_complete_time = total_time / nb_completed_courses
 
+        today_unique_visitors = (LearnerVisitsDailyReport.filter_by_day(course_id=course_id).aggregate(
+                                    Count('user_id', distinct=True)).get('user_id__count') or 0)
+
         cls.objects.update_or_create(
             created=timezone.now().date(),
             course_id=course_id,
             defaults={'enrollments': len(learner_course_reports),
+                      'unique_visitors': today_unique_visitors,
                       'average_final_score': average_final_score,
                       'posts': posts,
                       'finished': finished,
@@ -776,7 +842,46 @@ class CourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         return enrollments_csv_data
 
 
-class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
+    @classmethod
+    def update_or_create_unique_visitors(cls, day, course_id):
+        unique_visitors = (LearnerVisitsDailyReport.filter_by_day(date_time=day, course_id=course_id).aggregate(
+                            Count('user_id', distinct=True)).get('user_id__count') or 0)
+        cls.objects.update_or_create(
+            created=day,
+            course_id=course_id,
+            defaults={'unique_visitors': unique_visitors})
+
+
+    @classmethod
+    def get_unique_visitors_csv_data(cls, course_id, from_date=None, to_date=None):
+        course_overview = CourseOverview.objects.get(id=course_id)
+
+        unique_visitors = cls.objects.filter(course_id=course_id, created__gte=course_overview.start)
+
+
+        if from_date:
+            if course_overview.start > from_date:
+                from_date = course_overview.start
+            if to_date:
+                unique_visitors = cls.objects.filter(course_id=course_id,
+                                                     created__gte=from_date,
+                                                     created__lte=to_date)
+            else:
+                unique_visitors = cls.objects.filter(course_id=course_id,
+                                                     created__gte=from_date)
+        else:
+            if to_date:
+                unique_visitors = cls.objects.filter(course_id=course_id,
+                                                     created__gte=course_overview.start,
+                                                     created__lte=to_date)
+            else:
+                unique_visitors = cls.objects.filter(course_id=course_id,
+                                                     created__gte=course_overview.start)
+
+        return cls._get_unique_visitors_csv_data(unique_visitors)
+
+
+class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeModel):
     class Meta:
         app_label = "triboo_analytics"
         get_latest_by = "created"
@@ -922,12 +1027,19 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def get_unique_visitors_csv_data(cls, org):
-        unique_visitors_csv_data = ""
-        unique_visitors = cls.objects.filter(org=org).values('created', 'unique_visitors').order_by('created')
-        for uv in unique_visitors:
-            unique_visitors_csv_data += "%s,%d\\n" % (uv['created'].strftime('%d-%m-%Y'), uv['unique_visitors'])
-        return unique_visitors_csv_data
+    def get_unique_visitors_csv_data(cls, org, from_date=None, to_date=None):
+        if from_date:
+            if to_date:
+                unique_visitors = cls.objects.filter(org=org, created__gte=from_date, created__lte=to_date)
+            else:
+                unique_visitors = cls.objects.filter(org=org, created__gte=from_date)
+        else:
+            if to_date:
+                unique_visitors = cls.objects.filter(org=org, created__lte=to_date)
+            else:
+                unique_visitors = cls.objects.filter(org=org)
+
+        return cls._get_unique_visitors_csv_data(unique_visitors)
 
 
 class CountryDailyReport(UnicodeMixin, ReportMixin, TimeModel):
