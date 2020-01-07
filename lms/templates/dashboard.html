@@ -298,33 +298,97 @@ from xmodule.modulestore.django import modulestore
           % endif
         </div>
 
+        <div class="my-bookmarks swiper-container" id="my-bookmarks">
+          % if configuration_helpers.get_value('ENABLE_DASHBOARD_BOOKMARKS', settings.FEATURES.get('ENABLE_DASHBOARD_BOOKMARKS', False)) and len(bookmarks) > 0 and display_dashboard_courses:
+            <header class="wrapper-header-bookmarks">
+              <h2 class="header-bookmarks">${_("My Bookmarks")}</h2>
+            </header>
+            <ul class="listing-bookmarks swiper-wrapper">
+            % for index, bookmark in enumerate(bookmarks):
+              <%include file='dashboard/_dashboard_bookmark_listing.html' args='index=index, bookmark=bookmark'/>
+            % endfor
+            </ul>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+          % endif
+        </div>
+
         <script type="text/javascript">
-          var slidesNumber = $('.my-courses > .listing-courses > .course-item').length;
-          if (((document.body.offsetWidth < 768) && (slidesNumber > 1))
-            || ((document.body.offsetWidth < 992) && (slidesNumber > 2))
-            || ((document.body.offsetWidth < 1200) && (slidesNumber > 3))
-            || ((document.body.offsetWidth >= 1200))
-          ) {
-            swiperInit();
-          }
+            var slidesNumber = $('.my-courses > .listing-courses > .course-item').length;
+            var slidesNumberBookmark = $('.my-bookmarks > .listing-bookmarks > .bookmark-item').length;
 
-          function swiperInit(){
-            new Swiper('.swiper-container', {
-              slidesPerView: 'auto',
-              spaceBetween: 13,
-              slidesOffsetAfter:160,
+            function shouldInit(number) {
+              return ((document.body.offsetWidth < 768) && (number > 1))
+                    || ((document.body.offsetWidth < 992) && (number > 2))
+                    || ((document.body.offsetWidth < 1200) && (number > 3))
+                    || ((document.body.offsetWidth >= 1200))
+            }
 
-              navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-              },
-              pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-              },
-            });
-          }
+            if (shouldInit(slidesNumber)) {
+              courseSwiperInit();
+            }
+
+            if (shouldInit(slidesNumberBookmark)) {
+              bookmarkSwiperInit();
+            }
+
+            function courseSwiperInit(){
+              new Swiper('.my-courses', {
+                  slidesPerView: 'auto',
+                  spaceBetween: 13,
+                  slidesOffsetAfter:160,
+
+                  navigation: {
+                    nextEl: '.my-courses .swiper-button-next',
+                    prevEl: '.my-courses .swiper-button-prev',
+                  },
+                  pagination: {
+                    el: '.my-courses .swiper-pagination',
+                    clickable: true,
+                  },
+              });
+            }
+
+            function bookmarkSwiperInit(){
+                new Swiper('.my-bookmarks', {
+                  slidesPerView: 'auto',
+                  spaceBetween: 13,
+                  slidesOffsetAfter: 160,
+
+                  navigation: {
+                    nextEl: '.my-bookmarks .swiper-button-next',
+                    prevEl: '.my-bookmarks .swiper-button-prev',
+                  },
+                  pagination: {
+                    el: '.my-bookmarks .swiper-pagination',
+                    clickable: true,
+                  },
+              });
+            }
+
+            $(".my-courses .swiper-button-next").on("click",function(){
+                var courseSwiper = document.querySelector('.my-courses').swiper
+                var width = courseSwiper.slides.outerWidth()
+                var index = courseSwiper.realIndex
+                var translate = courseSwiper.translate
+                console.log('wid', width, 'index', index, 'translate', translate)
+            })
+
+            $(".my-bookmarks .swiper-button-next").on("click",function(){
+                var bookmarkSwiper = document.querySelector('.my-bookmarks').swiper
+                var space_between = bookmarkSwiper.params.spaceBetween
+                var width = bookmarkSwiper.slides.outerWidth()
+                var index = bookmarkSwiper.activeIndex
+                var translate = bookmarkSwiper.translate
+                var border_left = parseInt($('.bookmark-item').css("border-left-width"))
+                var border_right = parseInt($('.bookmark-item').css("border-right-width"))
+                console.log('width', width, 'index', index, 'translate', translate)
+            })
+
         </script>
+
 
         % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
           <div class="ilt-calendar" id="ilt-calendar">

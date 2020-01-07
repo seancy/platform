@@ -184,6 +184,16 @@ class TrackingLogHelper(object):
             user_logs[l.user_id].append(l)
         for user_id, logs in user_logs.iteritems():
             user_logs[user_id] = sorted(logs, key=lambda v:v.time)
+            first_log_time = user_logs[user_id][0].time
+            try:
+                user = User.objects.get(id=user_id)
+                if user.last_login.date() < first_log_time.date():
+                    logger.info("user %d last_login %s should => %s" % (user_id, user.last_login, first_log_time))
+                    user.last_login = first_log_time
+                    user.save()
+            except User.DoesNotExist:
+                pass
+
         return user_logs
 
 
@@ -386,15 +396,18 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def generate_today_reports(cls, course_ids, sections_by_course, multi_process=False):
+    def generate_today_reports(cls, last_analytics_success, overviews, sections_by_course, multi_process=False):
         nb_processes = 2 * multiprocessing.cpu_count() if multi_process else 1
 
-        nb_courses = len(course_ids)
+        nb_courses = len(overviews)
         i = 0
-        for course_id in course_ids:
+        for overview in overviews:
             i += 1
+            course_id = overview.id
+            course_last_update = overview.modified.date()
             course_id_str = "%s" % course_id
             sections = sections_by_course[course_id_str]
+
             if multi_process:
                 queryset = CourseEnrollment.objects.filter(is_active=True,
                                                            course_id=course_id,
@@ -419,7 +432,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 processes = []
                 for process_enrollments in enrollments_by_process:
                     process = multiprocessing.Process(target=cls.process_generate_today_reports,
-                                                      args=(process_enrollments, sections,))
+                                                      args=(last_analytics_success, course_last_update, process_enrollments, sections,))
                     process.start()
                     processes.append(process)
                 [process.join() for process in processes]
@@ -431,96 +444,124 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 logger.info("learner course report for course_id=%s (%d / %d): %d enrollments" % (
                             course_id, i, nb_courses, len(enrollments)))
                 for enrollment in enrollments:
-                    cls.generate_enrollment_report(enrollment, sections)
+                    cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, sections)
 
         ReportLog.update_or_create(learner_course=timezone.now())
 
 
     @classmethod
-    def process_generate_today_reports(cls, enrollment_ids, sections):
-        logger.info("process %d enrollments" % len(enrollment_ids))
+    def process_generate_today_reports(cls, last_analytics_success, course_last_update, enrollment_ids, sections):
+        # logger.info("process %d enrollments" % len(enrollment_ids))
         for enrollment_id in enrollment_ids:
             enrollment = CourseEnrollment.objects.get(id=enrollment_id)
-            cls.generate_enrollment_report(enrollment, sections)
+            cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, sections)
 
 
     @classmethod
-    def generate_enrollment_report(cls, enrollment, sections):
-        cls.update_or_create(enrollment)
-        LearnerSectionReport.update_or_create(enrollment, sections)
+    def generate_enrollment_report(cls, last_analytics_success, course_last_update, enrollment, sections):
+        updated = cls.update_or_create(last_analytics_success, course_last_update, enrollment)
+        if updated:
+            LearnerSectionReport.update_or_create(enrollment, sections)
 
 
     @classmethod
-    def update_or_create(cls, enrollment):
+    def update_or_create(cls, last_analytics_success, course_last_update, enrollment):
         course_key = enrollment.course_id
         user = enrollment.user
         day = timezone.now().date()
 
-        with modulestore().bulk_operations(course_key):
-            if user.is_active:
-                try:
-                    course = get_course_by_id(course_key)
-                except Http404:
-                    logger.error("course_id=%s returned Http404" % course_key)
-                    return
+        report_needs_update = True
+        if user.is_active:
+            try:
+                last_report = cls.objects.get(course_id=course_key, user_id=user.id, created=last_analytics_success)
+                if ((not enrollment.gradebook_edit or enrollment.gradebook_edit.date() < last_report.created)
+                    and (not user.last_login or user.last_login.date() < last_report.created)
+                    and course_last_update < last_report.created
+                    and enrollment.completed == last_report.completion_date):
+                    report_needs_update = False
+                    cls.objects.update_or_create(
+                    created=day,
+                    user=user,
+                    course_id=course_key,
+                    defaults={'org': course_key.org,
+                              'total_time_spent': last_report.total_time_spent,
+                              'status': last_report.status,
+                              'progress': last_report.progress,
+                              'badges': last_report.badges,
+                              'current_score': last_report.current_score,
+                              'posts': last_report.posts,
+                              'enrollment_date': enrollment.created,
+                              'completion_date': enrollment.completed})
+            except cls.DoesNotExist:
+                pass
 
-                total_time_spent = (LearnerVisitsDailyReport.objects.filter(
-                                        user=user, course_id=course_key, created__gte=enrollment.created).aggregate(
-                                        Sum('time_spent')).get('time_spent__sum') or 0)
+            if report_needs_update:
+                with modulestore().bulk_operations(course_key):
+                    try:
+                        course = get_course_by_id(course_key)
+                    except Http404:
+                        logger.error("course_id=%s returned Http404" % course_key)
+                        return
 
-                progress = CourseGradeFactory().get_progress(user, course)
-                progress['progress'] *= 100.0
-                if not progress:
-                    logger.warning('course=%s user_id=%d does not have progress info => empty report.' % (
-                        course_key, user.id))
+                    total_time_spent = (LearnerVisitsDailyReport.objects.filter(
+                                            user=user, course_id=course_key, created__gte=enrollment.created).aggregate(
+                                            Sum('time_spent')).get('time_spent__sum') or 0)
+
+                    progress = CourseGradeFactory().get_progress(user, course)
+                    progress['progress'] *= 100.0
+                    if not progress:
+                        logger.warning('course=%s user_id=%d does not have progress info => empty report.' % (
+                            course_key, user.id))
+                        cls.objects.update_or_create(
+                            created=day,
+                            user=user,
+                            course_id=course_key,
+                            defaults={'org': course_key.org,
+                                      'status': CourseStatus.not_started,
+                                      'progress': 0,
+                                      'badges': 0,
+                                      'current_score': 0,
+                                      'posts': 0,
+                                      'total_time_spent': 0,
+                                      'enrollment_date': enrollment.created,
+                                      'completion_date': None})
+                        return
+
+                    if progress['progress'] == 100:
+                        status = CourseStatus.failed
+
+                        if progress['nb_trophies_possible'] == 0 or progress['is_course_passed']:
+                            status = CourseStatus.finished
+
+                    else:
+                        # by gradebook edit a user could have a progress > 0 while total_time_spent = 0
+                        if total_time_spent > 0 or progress['progress'] > 0:
+                            status = CourseStatus.in_progress
+                        else:
+                            status = CourseStatus.not_started
+
+                    posts = 0
+                    try:
+                        cc_user = cc.User(id=user.id, course_id=course_key).to_dict()
+                        posts = cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
+                    except (cc.CommentClient500Error, cc.CommentClientRequestError, ConnectionError):
+                        pass
+
                     cls.objects.update_or_create(
                         created=day,
                         user=user,
                         course_id=course_key,
                         defaults={'org': course_key.org,
-                                  'status': CourseStatus.not_started,
-                                  'progress': 0,
-                                  'badges': 0,
-                                  'current_score': 0,
-                                  'posts': 0,
-                                  'total_time_spent': 0,
+                                  'total_time_spent': total_time_spent,
+                                  'status': status,
+                                  'progress': progress['progress'],
+                                  'badges': format_badges(progress['nb_trophies_earned'], progress['nb_trophies_possible']),
+                                  'current_score': progress['current_score'],
+                                  'posts': posts,
                                   'enrollment_date': enrollment.created,
-                                  'completion_date': None})
-                    return
-
-                if progress['progress'] == 100:
-                    status = CourseStatus.failed
-
-                    if progress['nb_trophies_possible'] == 0 or progress['is_course_passed']:
-                        status = CourseStatus.finished
-
-                else:
-                    # by gradebook edit a user could have a progress > 0 while total_time_spent = 0
-                    if total_time_spent > 0 or progress['progress'] > 0:
-                        status = CourseStatus.in_progress
-                    else:
-                        status = CourseStatus.not_started
-
-                posts = 0
-                try:
-                    cc_user = cc.User(id=user.id, course_id=course_key).to_dict()
-                    posts = cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
-                except (cc.CommentClient500Error, cc.CommentClientRequestError, ConnectionError):
-                    pass
-
-                cls.objects.update_or_create(
-                    created=day,
-                    user=user,
-                    course_id=course_key,
-                    defaults={'org': course_key.org,
-                              'total_time_spent': total_time_spent,
-                              'status': status,
-                              'progress': progress['progress'],
-                              'badges': format_badges(progress['nb_trophies_earned'], progress['nb_trophies_possible']),
-                              'current_score': progress['current_score'],
-                              'posts': posts,
-                              'enrollment_date': enrollment.created,
-                              'completion_date': enrollment.completed})
+                                  'completion_date': enrollment.completed})
+            return report_needs_update
+        return False
 
 
 class LearnerSectionReport(TimeModel):
@@ -1221,11 +1262,16 @@ def generate_today_reports(multi_process=False):
     logger.info("start Learner Visits reports")
     LearnerVisitsDailyReport.generate_today_reports()
 
+    last_analytics_success = None
+    last_reportlog = ReportLog.get_latest()
+    if last_reportlog:
+        last_analytics_success = last_reportlog.created.date()
+
     logger.info("start Learner Course reports")
-    LearnerCourseDailyReport.generate_today_reports(course_ids, tracking_log_helper.sections_by_course, multi_process=multi_process)
+    LearnerCourseDailyReport.generate_today_reports(last_analytics_success, overviews, tracking_log_helper.sections_by_course, multi_process=multi_process)
 
     logger.info("start double checking generated Learner Course reports")
-    check_generated_learner_course_reports(course_ids, tracking_log_helper.sections_by_course)
+    check_generated_learner_course_reports(last_analytics_success, overviews, tracking_log_helper.sections_by_course)
 
     logger.info("fetch Learner Course reports")
     learner_course_reports = LearnerCourseDailyReport.filter_by_day().prefetch_related('user__profile')
@@ -1248,9 +1294,10 @@ def generate_today_reports(multi_process=False):
     IltSession.generate_today_reports()
 
 
-def check_generated_learner_course_reports(course_ids, sections_by_course):
+def check_generated_learner_course_reports(last_analytics_success, overviews, sections_by_course):
     all_good = False
-    course_ids_to_check = course_ids
+    course_last_updates = {o.id: o.modified.date() for o in overviews}
+    course_ids_to_check = [o.id for o in overviews]
     while not all_good:
         course_ids_nok = []
         logger.info("new check round with %d courses" % len(course_ids_to_check))
@@ -1263,7 +1310,7 @@ def check_generated_learner_course_reports(course_ids, sections_by_course):
                 if not LearnerCourseDailyReport.filter_by_day(course_id=course_id, user_id=enrollment.user_id).exists():
                     course_id_needs_fix = True
                     logger.info("missing report for user_id=%d => trying to generate it" % enrollment.user_id)
-                    LearnerCourseDailyReport.generate_enrollment_report(enrollment, sections)
+                    LearnerCourseDailyReport.generate_enrollment_report(last_analytics_success, course_last_updates[course_id], enrollment, sections)
             if course_id_needs_fix:
                 course_ids_nok.append(course_id)
         if len(course_ids_nok) == 0:

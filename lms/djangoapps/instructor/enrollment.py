@@ -513,107 +513,107 @@ def send_mail_to_student(student, param_dict, language=None):
         'ilt_hotel_cancel': (
             'emails/ilt_hotel_cancel_email_subject.txt',
             'emails/ilt_hotel_cancel_email_message.txt',
-            ''
+            'emails/ilt_hotel_cancel_email_html_message.txt'
         ),
         'ilt_batch_unenroll': (
             'emails/ilt_batch_unenroll_email_subject.txt',
             'emails/ilt_batch_unenroll_email_message.txt',
-            ''
+            'emails/ilt_batch_unenroll_email_html_message.txt'
         ),
         'ilt_self_unenroll': (
             'emails/ilt_self_unenroll_email_subject.txt',
             'emails/ilt_self_unenroll_email_message.txt',
-            ''
+            'emails/ilt_self_unenroll_email_html_message.txt'
         ),
         'ilt_refused': (
             'emails/ilt_refused_email_subject.txt',
             'emails/ilt_refused_email_message.txt',
-            ''
+            'emails/ilt_refused_email_html_message.txt'
         ),
         'ilt_hotel_updated': (
             'emails/ilt_hotel_updated_email_subject.txt',
             'emails/ilt_hotel_updated_email_message.txt',
-            ''
+            'emails/ilt_hotel_updated_email_html_message.txt'
         ),
         'ilt_validate': (
             'emails/ilt_validate_email_subject.txt',
             'emails/ilt_validate_email_message.txt',
-            ''
+            'emails/ilt_validate_email_html_message.txt'
         ),
         'ilt_confirmed': (
             'emails/ilt_confirmed_email_subject.txt',
             'emails/ilt_confirmed_email_message.txt',
-            ''
+            'emails/ilt_confirmed_email_html_message.txt'
         ),
         'ilt_enrolled': (
             'emails/ilt_enrolled_email_subject.txt',
             'emails/ilt_enrolled_email_message.txt',
-            ''
+            'emails/ilt_enrolled_email_html_message.txt'
         ),
         'ilt_unenrolled': (
             'emails/ilt_unenrolled_email_subject.txt',
             'emails/ilt_unenrolled_email_message.txt',
-            ''
+            'emails/ilt_unenrolled_email_html_message.txt'
         ),
         'ilt_session_canceled': (
             'emails/ilt_session_canceled_email_subject.txt',
             'emails/ilt_session_canceled_email_message.txt',
-            ''
+            'emails/ilt_session_canceled_email_html_message.txt'
         ),
         'ilt_session_time_changed': (
             'emails/ilt_session_time_changed_email_subject.txt',
             'emails/ilt_session_time_changed_email_message.txt',
-            ''
+            'emails/ilt_session_time_changed_email_html_message.txt'
         ),
         'allowed_enroll': (
             'emails/enroll_email_allowedsubject.txt',
             'emails/enroll_email_allowedmessage.txt',
-            ''
+            'emails/enroll_email_allowed_html_message.txt'
         ),
         'enrolled_enroll': (
             'emails/enroll_email_enrolledsubject.txt',
             'emails/enroll_email_enrolledmessage.txt',
-            ''
+            'emails/enroll_email_enrolled_html_message.txt'
         ),
         'allowed_unenroll': (
             'emails/unenroll_email_subject.txt',
             'emails/unenroll_email_allowedmessage.txt',
-            '',
+            'emails/unenroll_email_allowed_html_message.txt',
         ),
         'enrolled_unenroll': (
             'emails/unenroll_email_subject.txt',
             'emails/unenroll_email_enrolledmessage.txt',
-            '',
+            'emails/unenroll_email_enrolled_html_message.txt',
         ),
         'add_beta_tester': (
             'emails/add_beta_tester_email_subject.txt',
             'emails/add_beta_tester_email_message.txt',
-            ''
+            'emails/add_beta_tester_email_html_message.txt'
         ),
         'remove_beta_tester': (
             'emails/remove_beta_tester_email_subject.txt',
             'emails/remove_beta_tester_email_message.txt',
-            ''
+            'emails/remove_beta_tester_email_html_message.txt'
         ),
         'account_creation_and_enrollment': (
             'emails/enroll_email_enrolledsubject.txt',
             'emails/account_creation_and_enroll_emailMessage.txt',
-            ''
+            'emails/account_creation_and_enroll_email_html_Message.txt'
         ),
         'waiver_request': (
             'emails/waiver_request_subject.txt',
             'emails/waiver_request_message.txt',
-            ''
+            'emails/waiver_request_html_message.txt'
         ),
         'waiver_request_approved': (
             'emails/waiver_request_accepted_subject.txt',
             'emails/waiver_request_accepted_message.txt',
-            ''
+            'emails/waiver_request_accepted_html_message.txt'
         ),
         'waiver_request_denied': (
             'emails/waiver_request_denied_subject.txt',
             'emails/waiver_request_denied_message.txt',
-            ''
+            'emails/waiver_request_denied_html_message.txt'
         ),
     }
 

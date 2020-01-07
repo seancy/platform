@@ -1,0 +1,20 @@
+<%! from branding.api import get_logo_url %>
+<%! from django.conf import settings %>
+<%! from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers %>
+<%!
+    stripped_site_name = configuration_helpers.get_value(
+        'SITE_NAME',
+        settings.SITE_NAME
+    )
+    logo_url = get_logo_url()
+%>
+<div style="width: 100%">
+    <div style="margin: 30px 50px 0; padding: 0 20px 80px; background-color: #f5f5f5">
+        <div class="logo" style="padding: 20px">
+            <img src="${logo_url}" style="width: 70px">
+        </div>
+        <div class="content" style="padding: 30px 20px; background-color: #ffffff">
+            ${self.body()}
+        </div>
+    </div>
+</div>

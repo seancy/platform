@@ -80,6 +80,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
     ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
     <% prc_target = reverse('about_course', args=[unicode(course_requirements['courses'][0]['key'])]) %>
     <div class="prerequisites">
+      <div class="cover"></div>
       <p class="tip">
         ${Text(_('You must successfully complete {link_start}"{prc_display}"{link_end} before you begin this course.')).format(
             link_start=HTML('<a href="{}">').format(prc_target),
@@ -216,7 +217,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                     '{num} badge', '{num} badges', nb_of_badges).format(num=nb_of_badges)}</span>
             </div>
             <div class="spliter"></div>
-            <% 
+            <%
                   duration_availability = False
                   if course_duration:
                       duration_context = course_duration.strip().split(' ')
