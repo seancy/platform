@@ -479,6 +479,7 @@ XQUEUE_INTERFACE = {
 ################################# Middleware ###################################
 
 MIDDLEWARE_CLASSES = [
+    'crequest.middleware.CrequestMiddleware',
     'crum.CurrentRequestUserMiddleware',
     'openedx.core.djangoapps.request_cache.middleware.RequestCache',
 

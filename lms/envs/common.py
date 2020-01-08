@@ -1242,6 +1242,7 @@ CREDIT_NOTIFICATION_CACHE_TIMEOUT = 5 * 60 * 60
 ################################# Middleware ###################################
 
 MIDDLEWARE_CLASSES = [
+    'crequest.middleware.CrequestMiddleware',
     'crum.CurrentRequestUserMiddleware',
 
     'openedx.core.djangoapps.request_cache.middleware.RequestCache',
