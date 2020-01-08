@@ -625,6 +625,7 @@ def send_mail_to_student(student, param_dict, language=None):
         )
 
     if html_message_template:
+        language = language or settings.LANGUAGE_CODE
         with override_language(language):
             html_message = render_to_string(html_message_template, param_dict)
     else:
