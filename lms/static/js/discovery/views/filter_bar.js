@@ -1,4 +1,5 @@
 (function(define) {
+    'use strict';
     define([
         'jquery',
         'underscore',
@@ -7,8 +8,6 @@
         'js/discovery/models/filter',
         'js/discovery/views/filter_label'
     ], function($, _, Backbone, gettext, Filter, FilterLabel) {
-        'use strict';
-
         return Backbone.View.extend({
 
             el: '#filter-bar',
@@ -53,11 +52,11 @@
 
             clearFilter: function(event) {
                 var $target = $(event.currentTarget);
-                var filter = this.collection.get($target.data('type'));
+                var filter = this.collection.get($target.data('type') + '-' + $target.data('value'));
                 this.trigger('clearFilter', filter.id);
             },
 
-            clearAll: function(event) {
+            clearAll: function() {
                 this.trigger('clearAll');
             },
 

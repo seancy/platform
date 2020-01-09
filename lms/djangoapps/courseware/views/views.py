@@ -32,6 +32,7 @@ from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from django.views.generic import View
+from django_countries import countries
 from eventtracking import tracker
 from ipware.ip import get_ip
 from markupsafe import escape
@@ -113,7 +114,7 @@ from openedx.features.course_experience.waffle import waffle as course_experienc
 from openedx.features.course_experience.waffle import ENABLE_COURSE_ABOUT_SIDEBAR_HTML
 from openedx.features.enterprise_support.api import data_sharing_consent_required
 from shoppingcart.utils import is_shopping_cart_enabled
-from student.models import CourseEnrollment, UserTestGroup
+from student.models import CourseEnrollment, UserProfile, UserTestGroup
 from student.roles import CourseInstructorRole
 from util.cache import cache, cache_if_anonymous
 from util.db import outer_atomic
@@ -250,13 +251,30 @@ def courses(request):
     # Add marketable programs to the context.
     programs_list = get_programs_with_type(request.site, include_hidden=False)
 
+    pre_facet_filters = {}
+    if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
+                                       settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
+        settings.COURSE_DISCOVERY_FILTERS.append('course_country')
+        pre_facet_filters['course_country'] = ['All countries']
+
+        user = UserProfile.objects.get(user=request.user)
+        user_country = user.country if user else None
+        if user_country:
+            country_mapping = configuration_helpers.get_value('COURSE_COUNTRY_MAPPING', settings.COURSE_COUNTRY_MAPPING)
+            if user_country in country_mapping:
+                user_country = country_mapping[user_country]
+            else:
+                user_country = dict(countries)[user_country]
+            pre_facet_filters['course_country'].append(user_country)
+
     return render_to_response(
         "courseware/courses.html",
         {
             'courses': courses_list,
             'course_discovery_meanings': course_discovery_meanings,
             'programs_list': programs_list,
-            'show_dashboard_tabs': True
+            'show_dashboard_tabs': True,
+            'pre_facet_filters': pre_facet_filters
         }
     )
 

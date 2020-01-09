@@ -70,12 +70,24 @@ msgstr ""
 msgid "Mandatory"
 msgstr ""
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr ""
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "false"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "All countries"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "France"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romania"
 msgstr ""
 
 #: lms/templates/student_account/login.underscore

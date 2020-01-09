@@ -415,7 +415,10 @@ FEATURES = {
     'LAST_ACTIVITY_COURSES_NUM': 3,
 
     # Whether to display last activity in dashboard.
-    'ENABLE_LAST_ACTIVITY': False
+    'ENABLE_LAST_ACTIVITY': False,
+
+    # Set to display course country filter in explore.
+    'ENABLE_PROGRAMMATIC_ENROLLMENT': False
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews

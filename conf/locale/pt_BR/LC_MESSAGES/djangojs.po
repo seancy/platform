@@ -12201,13 +12201,25 @@ msgstr "Categoria"
 msgid "Mandatory"
 msgstr "Signatário"
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "Sim"
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "false"
 msgstr "Não"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "All countries"
+msgstr "Todos os países"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "France"
+msgstr "França"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romania"
+msgstr "Romênia"
 
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
