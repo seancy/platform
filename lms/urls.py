@@ -1099,6 +1099,7 @@ if 'debug_toolbar' in settings.INSTALLED_APPS:
 # pylint: disable=invalid-name
 handler404 = static_template_view_views.render_404
 handler500 = static_template_view_views.render_500
+handler403 = static_template_view_views.render_403
 
 # include into our URL patterns the HTTP REST API that comes with edx-proctoring.
 urlpatterns += [

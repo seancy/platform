@@ -15,6 +15,8 @@ from openedx.core.lib.api.authentication import OAuth2AuthenticationAllowInactiv
 def request_user_application(request, email):
     try:
         user = User.objects.get(email=email)
+        if not user.is_active:
+            return Response('Account is disable', status=status.HTTP_403_FORBIDDEN)
     except User.DoesNotExist:
         return Response('No exist user account', status=status.HTTP_404_NOT_FOUND)
     try:
