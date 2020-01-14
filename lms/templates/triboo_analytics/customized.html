@@ -52,39 +52,68 @@
                             'courses':${json.dumps([{'cid': item[0], 'course_title':item[1]} for item in courses]) | n}
                         });
                     </%static:webpack>
-                    <div class="table-period-form">
-                        <input name="from_day" id="from_day"/>
-                        <input name="to_day" id="to_day"/>
-                    </div>
-                    <section class="filter-form">
-                      <div id="filter-form">
-                        <div class="table-filter-form">
-                            ${filter_form}
-                            <button id="filter-form" class="filter-submit">${_('Filter')}</button>
-                            <button id="clear-all-filters" class="clear-filters">
-                                <i class="fa fa-refresh icon"></i>${_("Reset")}
-                            </button>
-                        </div>
-                      </div>
-                      <div id="filter-bar" class="filters hide-phone is-collapsed"></div>
-                      <div id="filter-message" class="search-status-label"></div>
-                    </section>
-                    <div class="table-user-properties-form-customized">
-                        <div id="user-properties">
-                            ${user_properties_form}
-                        </div>
-                        <div class="table-export-customized">
-                            <p>${_("Format")}</p>
-                            <div id="table-export-selection">
-                              % for format in export_formats:
-                                  <li>
-                                      <input type="radio" name="format" id="id-${format}" value="${format}">
-                                      <label for="id-${format}"><code>${format}</code></label>
-                                  </li>
-                              % endfor
+                    <div class="custom-section" id="filter-section">
+                        <button class="section-button accordion-trigger"
+                                aria-expanded="${ 'false' }"
+                                aria-controls="filter_section_contents"
+                                id="filter_section">
+                            <p class="section-title">Filter your custom report</p>
+                            <span class="fa fa-chevron-down" aria-hidden="true"></span>
+                        </button>
+                        <div id="filter_section_contents" class="section-content is-hidden">
+                            <div class="table-period-form">
+                                <input name="from_day" id="from_day"/>
+                                <input name="to_day" id="to_day"/>
                             </div>
-                            <p id="export-notification"></p>
-                            <p id="export-error"></p>
+                            <section class="filter-form">
+                              <div id="filter-form">
+                                <div class="table-filter-form">
+                                    ${filter_form}
+                                    <button id="filter-form" class="filter-submit">${_('Filter')}</button>
+                                    <button id="clear-all-filters" class="clear-filters">
+                                        <i class="fa fa-refresh icon"></i>${_("Reset")}
+                                    </button>
+                                </div>
+                              </div>
+                              <div id="filter-message" class="search-status-label"></div>
+                            </section>
+                        </div>
+                        <div id="filter-bar" class="filters hide-phone is-collapsed"></div>
+                    </div>
+                    <div class="custom-section table-user-properties-form-customized">
+                        <button class="section-button accordion-trigger"
+                                aria-expanded="${ 'false' }"
+                                aria-controls="user_properties_section_contents"
+                                id="user_properties_section">
+                            <p class="section-title">Select the user properties</p>
+                            <span class="fa fa-chevron-down" aria-hidden="true"></span>
+                        </button>
+                        <div id="user_properties_section_contents" class="section-content is-hidden">
+                            <div id="user-properties">
+                                ${user_properties_form}
+                            </div>
+                        </div>
+                        <div id="property_bar" class="property hide-phone is-collapsed"></div>
+                    </div>
+                    <div class="custom-section table-format-customized">
+                        <button class="section-button accordion-trigger"
+                                aria-expanded="${ 'false' }"
+                                aria-controls="format_section_contents"
+                                id="format_section">
+                            <p class="section-title">Choose the export format</p>
+                            <span class="fa fa-chevron-down" aria-hidden="true"></span>
+                        </button>
+                        <div id="format_section_contents" class="section-content is-hidden">
+                            <div class="table-export-customized">
+                                <div id="table-export-selection">
+                                  % for format in export_formats:
+                                      <li>
+                                          <input type="radio" name="format" id="id-${format}" value="${format}">
+                                          <label for="id-${format}"><code>${format}</code></label>
+                                      </li>
+                                  % endfor
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <input type="hidden" name="courses_selected" value="${ courses_selected }" id="course_selected_return"/>

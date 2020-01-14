@@ -18,8 +18,12 @@ export class CustomizedReport {
                 props: props
             });
             this.$submitButton = $('input[type=submit]');
+            this.$reportType = $('#report_type');
             this.$courseReport = $('#course_selected');
+            this.oldCourseValues = []
+            this.oldCourseTexts = []
             this.$courseReportSelect2 = this.$courseReport.select2();
+            this.$accordingTrigger = $('.accordion-trigger');
             this.eventInit()
             this.resetValue()
         })
@@ -36,15 +40,128 @@ export class CustomizedReport {
                 LearningTribes.dialog.show(json.message);
             }, 200)
         })
-        this.$courseReport.on('change', () => {
+        this.$reportType.on('change', (e) => {
+            let report_text = $(e.currentTarget).find("option:selected").text()
+            log('report_text', report_text)
+
+            this.resetCourseSelect()
             this.goButtonStatusUpdate()
+        })
+        this.$courseReport.on('change', (e) => {
+            let vals = []
+            let texts = []
+            $(e.currentTarget).find("option:selected").each(function() {
+                vals.push($(this).val());
+                texts.push($(this).text());
+            })
+            let old_vals = this.oldCourseValues
+            let old_texts = this.oldCourseTexts
+            let diff_val = this.diffElement(old_vals, vals)
+            let diff_text = this.diffElement(old_texts, texts)
+            if (diff_val) {
+                let tag_id = 'tag_' + diff_val.split(':')[1].replace(/\+/g, '_');
+                if (vals.length > old_vals.length){
+                    this.addTagToBar('#course_bar', 'course-option', diff_text, tag_id)
+                } else {
+                    $("#course_bar button").remove('#' + tag_id);
+                }
+                this.oldCourseValues = vals
+                this.oldCourseTexts = texts
+            }
         })
         $('#table-export-selection').delegate('label', 'click', () => {
             this.goButtonStatusUpdate()
         })
-        $('#id_selected_properties').delegate('li label', 'click', () => {
-            this.goButtonStatusUpdate()
-        })
+        $('#id_selected_properties').delegate('li label', 'click', (e) => {
+            let prop_name = $(e.currentTarget)[0].innerText;
+            let cur_input = $(e.currentTarget.querySelector('input'));
+            let prop_id = 'tag_' + cur_input[0].id;
+            let target_tag = $("#property_bar").children('#' + prop_id);
+            let add_class = "property-option"
+            if (!target_tag.length && cur_input[0].checked) {
+                this.addTagToBar('#property_bar', add_class, prop_name, prop_id)
+            } else if (target_tag.length && !cur_input[0].checked) {
+                $("#property_bar button").remove('#' + prop_id);
+            }
+            this.goButtonStatusUpdate();
+        });
+        $('#property_bar').delegate('button', 'click', (e) => {
+            let this_button = $(e.currentTarget);
+            let input_id = this_button[0].id;
+            let prop_id = input_id.substr(4);
+            e.preventDefault();
+            $(this_button).parent().children('button').remove('#' + input_id);
+            $('#' + prop_id).attr("checked", false);
+        });
+        $('#course_bar').delegate('button', 'click', (e) => {
+            e.preventDefault();
+            let this_button = $(e.currentTarget);
+            let input_id = this_button[0].id;
+            $(this_button).parent().children('button').remove('#' + input_id);
+            let bar_texts = this.getBarTexts('#course_bar');
+            let vals = this.oldCourseValues;
+            let texts = this.oldCourseTexts;
+            let diff_text = this.diffElement(texts, bar_texts);
+            let diff_index = texts.indexOf(diff_text);
+            vals.splice(diff_index, 1);
+            texts.splice(diff_index, 1)
+            let set_vals = vals ? vals : ''
+            this.$courseReportSelect2.val(set_vals).change();
+            this.oldCourseValues = vals;
+            this.oldCourseTexts = texts;
+        });
+        this.$accordingTrigger.on('click', (e) => {
+            e.preventDefault();
+        });
+        this.triggerExpand();
+        this.resetCourseSelect();
+    }
+
+    getBarTexts(bar) {
+        let buttons = $(bar).children('button')
+        let texts = []
+        for (let b of buttons) {
+            let span = $(b).children('.query')
+            texts.push($(span)[0].innerText)
+        }
+        return texts
+    }
+
+    diffElement(arr1, arr2) {
+        if (!arr1) {
+            return arr2[0]
+        } else if (!arr2) {
+            return arr1[0]
+        }
+        let long = arr1
+        let short = arr2
+        if (arr1.length < arr2.length) {
+            long = arr2
+            short = arr1
+        }
+        for (let item of long) {
+            if (short.indexOf(item) == -1) {
+                return item
+            }
+        }
+    };
+
+    addTagToBar(tag_bar, tag_class, tag_name, tag_id) {
+        $("<button/>", {
+            "id": tag_id,
+            "class": tag_class,
+        }).appendTo(tag_bar);
+        $("<span/>", {
+            "class": "query",
+            text: tag_name
+        }).appendTo("#" + tag_id);
+        $("<span/>", {
+            "class": "fa fa-times"
+        }).appendTo("#" + tag_id);
+    }
+
+    resetCourseSelect() {
+        this.$courseReport.val('')
     }
 
     resetValue() {
@@ -74,11 +191,14 @@ export class CustomizedReport {
     }
 
     checkFieldsSuccess() {
+        const reportTypeVal = this.$reportType.val()
         const courseReportVal = this.$courseReportSelect2.val()
         const selectedCoursesNum = courseReportVal ? courseReportVal.length : 0;
         const isFormatChecked = $('#table-export-selection input[name=format]:checked').length;
-        if (selectedCoursesNum && isFormatChecked) {
-            return true;
+        if (reportTypeVal == 'learner' || reportTypeVal == 'ilt_global' || reportTypeVal == 'ilt_learner') {
+            return reportTypeVal && isFormatChecked
+        } else {
+            return reportTypeVal && selectedCoursesNum && isFormatChecked
         }
     }
 
@@ -120,6 +240,44 @@ export class CustomizedReport {
         let to_day = $('#to_day').val()
         $('#from_day_return').val(from_day)
         $('#to_day_return').val(to_day)
+    }
+
+    expandSection(sectionToggleButton) {
+        const $toggleButtonChevron = $(sectionToggleButton).children('.fa-chevron-down');
+        const $contentPanel = $(document.getElementById(sectionToggleButton.getAttribute('aria-controls')));
+
+        $contentPanel.slideDown();
+        $contentPanel.removeClass('is-hidden');
+        $toggleButtonChevron.addClass('fa-rotate-180');
+        sectionToggleButton.setAttribute('aria-expanded', 'true');
+    }
+
+    collapseSection(sectionToggleButton) {
+        const $toggleButtonChevron = $(sectionToggleButton).children('.fa-chevron-down');
+        const $contentPanel = $(document.getElementById(sectionToggleButton.getAttribute('aria-controls')));
+
+        $contentPanel.slideUp();
+        $contentPanel.addClass('is-hidden');
+        $toggleButtonChevron.removeClass('fa-rotate-180');
+        sectionToggleButton.setAttribute('aria-expanded', 'false');
+    }
+
+    triggerExpand() {
+      const sections = Array.prototype.slice.call(document.querySelectorAll('.accordion-trigger'));
+
+      sections.forEach(section => section.addEventListener('click', (event) => {
+        const sectionToggleButton = event.currentTarget;
+        if (sectionToggleButton.classList.contains('accordion-trigger')) {
+          const isExpanded = sectionToggleButton.getAttribute('aria-expanded') === 'true';
+          if (!isExpanded) {
+            expandSection(sectionToggleButton);
+          } else if (isExpanded) {
+            collapseSection(sectionToggleButton);
+          }
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+      }));
     }
 }
 
@@ -166,22 +324,47 @@ class ReportTypeAndCourseReport extends React.Component {
 
         return (
             <React.Fragment>
-                <div>
-                    <label htmlFor="report_type">{translation.report_type}</label>
-                    <select name="report_type" id="report_type" ref="report_type"
-                            onChange={this.recreateCourseSelect.bind(this)}>
-                        {report_types.map(({type, title}) => {
-                            return <option key={type} value={type}>{title}</option>
-                        })}
-                    </select>
+                <div className="custom-section">
+                    <button className="section-button accordion-trigger"
+                            aria-expanded="${ 'false' }"
+                            aria-controls="report_section_contents"
+                            id="report_section">
+                        <p className="section-title">Select a report type</p>
+                        <span className="fa fa-chevron-down" aria-hidden="true"></span>
+                    </button>
+                    <div id="report_section_contents" className="section-content is-hidden">
+                        <div className="report-type">
+                            <label htmlFor="report_type">{translation.report_type}</label>
+                            <select name="report_type" id="report_type" ref="report_type"
+                                    onChange={this.recreateCourseSelect.bind(this)}>
+                                        <option key='' disabled selected value=''></option>
+                                {report_types.map(({type, title}) => {
+                                    return <option key={type} value={type}>{title}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div id="report_bar" className="reports hide-phone is-collapsed"></div>
                 </div>
-                <div className={'course-report ' + (this.state.hideCourseReportSelect ? 'hide' : '')}>
-                    <label htmlFor="course_selected">{translation.course}</label>
-                    <select id="course_selected" ref="course_selected">
-                        {courses.map(({cid, course_title}) => {
-                            return <option key={cid} value={cid}>{course_title}</option>
-                        })}
-                    </select>
+                <div className="custom-section">
+                    <button className="section-button accordion-trigger"
+                            aria-expanded="${ 'false' }"
+                            aria-controls="course_section_contents"
+                            id="course_section">
+                        <p className="section-title">Select course(s)</p>
+                        <span className="fa fa-chevron-down" aria-hidden="true"></span>
+                    </button>
+                    <div id="course_section_contents" className="section-content is-hidden">
+                        <div className={'course-report ' + (this.state.hideCourseReportSelect ? 'hide' : '')}>
+                            <label htmlFor="course_selected">{translation.course}</label>
+                            <select id="course_selected" ref="course_selected">
+                                {courses.map(({cid, course_title}) => {
+                                    return <option key={cid} value={cid}>{course_title}</option>
+                                })}
+                            </select>
+                        </div>
+                    </div>
+                    <div id="course_bar" className="courses hide-phone is-collapsed"></div>
                 </div>
             </React.Fragment>
         )

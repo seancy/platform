@@ -11,7 +11,6 @@
                 var filterBar = new FilterBar({collection: filters});
 
                 dispatcher.listenTo(form, 'filter', function(type, query, name) {
-                    log('query', query)
                     var targetQuery = {
                         type: type,
                         query: query,

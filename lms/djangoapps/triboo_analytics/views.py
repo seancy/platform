@@ -1363,7 +1363,7 @@ def customized_view(request):
         ('course_time_spent', 'Course Time Spent', 'single'),
         ('learner', 'Learner', ''),
         ('ilt_global', 'ILT Global', ''),
-        ('ilt_learner', 'ILT Learner', 'single'),
+        ('ilt_learner', 'ILT Learner', ''),
     ]
     export_formats = ['csv', 'xls', 'json']
     courses, courses_list = get_all_courses(request, orgs)
