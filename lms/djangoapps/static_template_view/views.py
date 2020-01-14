@@ -6,7 +6,7 @@
 import mimetypes
 
 from django.conf import settings
-from django.http import Http404, HttpResponseNotFound, HttpResponseServerError
+from django.http import Http404, HttpResponseNotFound, HttpResponseServerError, HttpResponseForbidden
 from django.shortcuts import redirect
 from django.template import TemplateDoesNotExist
 from django.utils.safestring import mark_safe
@@ -93,7 +93,11 @@ def render_press_release(request, slug):
 def render_404(request):
     return HttpResponseNotFound(render_to_string('static_templates/404.html', {}, request=request))
 
+@fix_crum_request
+def render_403(request):
+    return HttpResponseForbidden(render_to_string('static_templates/403.html', {}, request=request))
 
 @fix_crum_request
 def render_500(request):
     return HttpResponseServerError(render_to_string('static_templates/server-error.html', {}, request=request))
+

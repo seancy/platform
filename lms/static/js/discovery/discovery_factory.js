@@ -4,7 +4,7 @@
         'js/discovery/views/search_form', 'js/discovery/views/courses_listing',
         'js/discovery/views/filter_bar', 'js/discovery/views/refine_sidebar'],
         function(Backbone, _, SearchState, Filters, SearchForm, CoursesListing, FilterBar, RefineSidebar) {
-            return function(meanings, titleMeanings, searchQuery, userLanguage, userTimezone) {
+            return function(meanings, titleMeanings, preFacetFilters, searchQuery, userLanguage, userTimezone) {
                 var dispatcher = _.extend({}, Backbone.Events);
                 var search = new SearchState();
                 var filters = new Filters();
@@ -23,6 +23,36 @@
                 };
                 listing = new CoursesListing({model: courseListingModel});
 
+                function removeFilter(filter) {
+                    form.showLoadingIndicator();
+                    filters.remove(filter);
+                    if (filter.startsWith('search_query')) {
+                        form.doSearch('');
+                    } else {
+                        search.refineSearch(filters.getTerms());
+                    }
+                }
+
+                function quote(string) {
+                    return '"' + string + '"';
+                }
+
+                function performPreFilterSearch(preFilters) {
+                    form.showLoadingIndicator();
+                    filters.reset();
+                    _.each(preFilters, function(queries, type) {
+                        _.each(queries, function(query) {
+                            filters.add({
+                                id: type + '-' + query,
+                                type: type,
+                                query: query,
+                                name: query
+                            });
+                        });
+                    });
+                    search.refineSearch(preFilters);
+                }
+
                 dispatcher.listenTo(form, 'search', function(query) {
                     filters.reset();
                     form.showLoadingIndicator();
@@ -31,10 +61,10 @@
 
                 dispatcher.listenTo(refineSidebar, 'selectOption', function(type, query, name) {
                     form.showLoadingIndicator();
-                    if (filters.get(type)) {
-                        removeFilter(type);
+                    if (filters.get(type + '-' + query)) {
+                        removeFilter(type + '-' + query);
                     } else {
-                        filters.add({type: type, query: query, name: name});
+                        filters.add({id: type + '-' + query, type: type, query: query, name: name});
                         search.refineSearch(filters.getTerms());
                     }
                 });
@@ -58,7 +88,7 @@
                         form.showFoundMessage(total);
                         if (query) {
                             filters.add(
-                                {type: 'search_query', query: query, name: quote(query)},
+                                {id: 'search_query-' + query, type: 'search_query', query: query, name: quote(query)},
                                 {merge: true}
                             );
                         }
@@ -77,20 +107,10 @@
                 });
 
                 // kick off search on page refresh
-                form.doSearch(searchQuery);
-
-                function removeFilter(type) {
-                    form.showLoadingIndicator();
-                    filters.remove(type);
-                    if (type === 'search_query') {
-                        form.doSearch('');
-                    } else {
-                        search.refineSearch(filters.getTerms());
-                    }
-                }
-
-                function quote(string) {
-                    return '"' + string + '"';
+                if (preFacetFilters) {
+                    performPreFilterSearch(preFacetFilters);
+                } else {
+                    form.doSearch(searchQuery);
                 }
             };
         });

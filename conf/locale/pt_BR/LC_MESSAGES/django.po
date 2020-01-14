@@ -10670,7 +10670,7 @@ msgstr "Supervisor de ILT"
 #: lms/djangoapps/triboo_analytics/forms.py:32
 #: openedx/core/djangoapps/user_api/api.py:969
 msgid "Learning Group"
-msgstr "Aprendendo a avaliar"
+msgstr "Grupo de aprendizagem"
 
 #: lms/djangoapps/triboo_analytics/forms.py:33
 msgid "Exempt Status"
@@ -16806,12 +16806,12 @@ msgid "Set automatic enrollment rules for this course"
 msgstr "Definir regras de inscrição automáticas para este curso"
 
 #: cms/templates/settings.html:599
-msgid "Job Codes"
-msgstr "Códigos de Cargo"
+msgid "Learning Groups"
+msgstr "Grupos de aprendizagem"
 
 #: cms/templates/settings.html:599
 msgid "Identify the enrollment job codes here."
-msgstr "Identifique os códigos de cargo de inscrição aqui."
+msgstr "Identifique os groupos de aprendizagem de inscrição aqui."
 
 #: cms/templates/settings.html:340
 msgid "Provide useful information about your course"
@@ -23100,7 +23100,8 @@ msgstr ""
 #: lms/templates/emails/unenroll_email_allowedmessage.txt:10
 msgid "This email was automatically sent from {site_name} to {email_address}"
 msgstr ""
-"Este e-mail foi enviado automaticamente de {site_name} para {email_address}"
+"Esse e-mail foi enviado automaticamente através da plataforma {site_name} "
+"para o e-mail {email_address}"
 
 #: lms/templates/emails/add_beta_tester_email_subject.txt:3
 msgid "You have been invited to a beta test for {course_name}"
@@ -23465,8 +23466,8 @@ msgid ""
 "You have been invited to join {course_name} at {site_name} by a member of "
 "the course staff."
 msgstr ""
-"Você foi convidado para participar do curso {course_name} no {site_name} por "
-"um integrante da equipe do curso."
+"Você foi convidado a se juntar ao curso {course_name} na plataforma {site_name} "
+"por um membro administrativo do curso."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:16
 msgid ""
@@ -23478,24 +23479,24 @@ msgid ""
 "To finish your registration, please visit {registration_url} and fill out "
 "the registration form making sure to use {email_address} in the E-mail field."
 msgstr ""
-"Para finalizar o seu registro, por favor, acesse {registration_url} e "
-"preencha o formulário de registro, utilizando {email_address} no campo de e-"
-"mail."
+"Para finalizar o seu cadastro, por favor, visite o site {registration_url} e "
+"preencha o formulário de cadastro, certificando-se de usar o e-mail {email_address} "
+"no campo indicado."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:27
 msgid ""
 "Once you have registered and activated your account, you will see "
 "{course_name} listed on your dashboard."
 msgstr ""
-"Após se registrar e ativar a sua conta, o curso {course_name} será listado "
-"no seu painel de controle."
+"Depois de se registrar e ativar a sua conta, você verá o curso {course_name} "
+"listado em seu painel."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:32
 msgid ""
 "Once you have registered and activated your account, visit "
 "{course_about_url} to join the course."
 msgstr ""
-"Após se registrar e ativar a sua conta, acesse {course_about_url} para "
+"Depois de se registrar e ativar a sua conta, acesse {course_about_url} para "
 "participar do curso."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:35

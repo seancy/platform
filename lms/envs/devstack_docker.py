@@ -113,6 +113,9 @@ COURSE_DISCOVERY_MEANINGS = {
     },
     'course_mandatory_enabled': {
         'name': 'Mandatory'
+    },
+    'course_country': {
+        'name': 'Country'
     }
 }
 

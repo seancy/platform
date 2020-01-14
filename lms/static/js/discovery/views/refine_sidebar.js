@@ -1,12 +1,11 @@
 (function (define) {
+    'use strict';
     define([
         'jquery',
         'underscore',
         'backbone',
         'edx-ui-toolkit/js/utils/html-utils'
     ], function ($, _, Backbone, HtmlUtils) {
-        'use strict';
-
         return Backbone.View.extend({
 
             el: '.search-facets',
@@ -73,7 +72,7 @@
             },
 
             renderFacet: function (facetKey, options) {
-                var displayName = this.facetName(facetKey)
+                var displayName = this.facetName(facetKey);
                 return this.facetTpl({
                     name: facetKey,
                     displayName: displayName,

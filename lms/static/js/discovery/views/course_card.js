@@ -1,4 +1,5 @@
 (function(define) {
+    'use strict';
     define([
         'jquery',
         'underscore',
@@ -6,8 +7,6 @@
         'gettext',
         'edx-ui-toolkit/js/utils/date-utils'
     ], function($, _, Backbone, gettext, DateUtils) {
-        'use strict';
-
         function formatDate(date, userLanguage, userTimezone) {
             var context;
             context = {

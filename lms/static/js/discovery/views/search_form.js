@@ -1,7 +1,6 @@
 (function(define) {
-    define(['jquery', 'backbone', 'gettext'], function($, Backbone, gettext) {
-        'use strict';
-
+    'use strict';
+    define(['jquery', 'underscore', 'backbone', 'gettext'], function($, _, Backbone, gettext) {
         return Backbone.View.extend({
 
             el: '#discovery-form',
@@ -60,7 +59,7 @@
                 this.clearSearch();
             },
 
-            showErrorMessage: function (error) {
+            showErrorMessage: function(error) {
                 this.$message.text(gettext(error || 'There was an error, try searching again.'));
             }
 

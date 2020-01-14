@@ -816,6 +816,7 @@ PDF_RECEIPT_COBRAND_LOGO_HEIGHT_MM = ENV_TOKENS.get(
 FEATURES['ENABLE_COURSE_DISCOVERY'] = True
 FEATURES['ENABLE_COURSEWARE_SEARCH'] = True
 FEATURES['ENABLE_LAST_ACTIVITY'] = False
+FEATURES['ENABLE_PROGRAMMATIC_ENROLLMENT'] = False
 
 if FEATURES.get('ENABLE_COURSEWARE_SEARCH') or \
    FEATURES.get('ENABLE_DASHBOARD_SEARCH') or \
@@ -1102,7 +1103,15 @@ COURSE_DISCOVERY_MEANINGS = {
     },
     'course_mandatory_enabled': {
         'name': 'Mandatory'
+    },
+    'course_country': {
+        'name': 'Country'
     }
+}
+
+# Empty by default, set this value in site configuration.
+COURSE_COUNTRY_MAPPING = {
+    # user.profile.country: course.country
 }
 
 SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True

@@ -485,12 +485,12 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    }
 
                    var name = event.currentTarget.getAttribute('name');
-                   if (name === 'job-code[]') {
+                   if (name === 'learning-group[]') {
                        var checkedValue = [];
-                       $("input[name='job-code[]']:checked").each(function() {
+                       $("input[name='learning-group[]']:checked").each(function() {
                            checkedValue.push($(this).val());
                        });
-                       this.model.set('enrollment_job_codes', checkedValue);
+                       this.model.set('enrollment_learning_groups', checkedValue);
                    }
                },
                updateImageField: function(event, image_field, selector) {

@@ -462,15 +462,20 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             course_last_update = overview.modified.date()
             course_id_str = "%s" % course_id
             sections = sections_by_course[course_id_str]
+            enrollments = CourseEnrollment.objects.filter(is_active=True,
+                                                          course_id=course_id,
+                                                          user__is_active=True)
+            nb_enrollments = len(enrollments)
+
+            logger.info("learner course report for course_id=%s (%d / %d): %d enrollments" % (
+                        course_id, i, nb_courses, nb_enrollments))
+
+            if not multi_process and (course_last_update >= last_analytics_success) and (nb_enrollments > 10000):
+                multi_process = True
+                logger.info("force multiprocessing")
 
             if multi_process:
-                queryset = CourseEnrollment.objects.filter(is_active=True,
-                                                           course_id=course_id,
-                                                           user__is_active=True).values_list('id', flat=True)
-                enrollment_ids = [e_id for e_id in queryset]
-                nb_enrollments = len(enrollment_ids)
-                logger.info("learner course report for course_id=%s (%d / %d): %d enrollments" % (
-                            course_id, i, nb_courses, nb_enrollments))
+                enrollment_ids = [e_id for e_id in enrollments.values_list('id', flat=True)]
 
                 enrollments_by_process = []
                 for j in range(0, nb_processes):
@@ -493,11 +498,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 [process.join() for process in processes]
 
             else:
-                enrollments = CourseEnrollment.objects.filter(is_active=True,
-                                                              course_id=course_id,
-                                                              user__is_active=True).prefetch_related('user')
-                logger.info("learner course report for course_id=%s (%d / %d): %d enrollments" % (
-                            course_id, i, nb_courses, len(enrollments)))
+                enrollments = enrollments.prefetch_related('user')
                 for enrollment in enrollments:
                     cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, sections)
 

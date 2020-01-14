@@ -595,23 +595,23 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                   </select>
                   <span class="tip tip-stacked">${_("Identify the course country here.")}</span>
                 </li>
-                % if enrollment_job_codes:
-                  <li class="field" id="field-enrollment-job-code">
-                    <label for="list-job-codes">${_("Job Codes")}</label>
-                    <ul id="list-job-codes">
-                      % for job_code in sorted(enrollment_job_codes):
+                % if enrollment_learning_groups:
+                  <li class="field" id="field-enrollment-learning-group">
+                    <label for="list-learning-groups">${_("Learning Groups")}</label>
+                    <ul id="list-learning-groups">
+                      % for group in sorted(enrollment_learning_groups):
                         <li>
-                          % if enrollment_job_codes[job_code]:
-                            <input type="checkbox" id="job-code-${job_code}" name="job-code[]" value="${job_code}" checked>
-                            <label for="job-code-${job_code}">${job_code}</label>
+                          % if enrollment_learning_groups[group]:
+                            <input type="checkbox" id="learning-group-${group}" name="learning-group[]" value="${group}" checked>
+                            <label for="learning-group-${group}">${group}</label>
                           % else:
-                            <input type="checkbox" id="job-code-${job_code}" name="job-code[]" value="${job_code}">
-                            <label for="job-code-${job_code}">${job_code}</label>
+                            <input type="checkbox" id="learning-group-${group}" name="learning-group[]" value="${group}">
+                            <label for="learning-group-${group}">${group}</label>
                           % endif
                         </li>
                       % endfor
                     </ul>
-                    <span class="tip tip-stacked">${_("Identify the enrollment job codes here.")}</span>
+                    <span class="tip tip-stacked">${_("Identify the enrollment learning groups here.")}</span>
                   </li>
                 % endif
               </ol>

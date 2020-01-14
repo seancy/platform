@@ -14771,11 +14771,11 @@ msgid "Set automatic enrollment rules for this course"
 msgstr ""
 
 #: cms/templates/settings.html:599
-msgid "Job Codes"
+msgid "Learning Groups"
 msgstr ""
 
 #: cms/templates/settings.html:599
-msgid "Identify the enrollment job codes here."
+msgid "Identify the enrollment learning groups here."
 msgstr ""
 
 #: cms/templates/settings.html:340

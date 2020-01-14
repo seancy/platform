@@ -1,12 +1,11 @@
 (function(define) {
+    'use strict';
     define([
         'jquery',
         'underscore',
         'backbone',
         'gettext'
     ], function($, _, Backbone, gettext) {
-        'use strict';
-
         return Backbone.View.extend({
 
             tagName: 'li',

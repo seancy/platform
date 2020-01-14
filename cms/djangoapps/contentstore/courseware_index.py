@@ -584,7 +584,8 @@ class CourseAboutSearchIndexer(object):
         AboutInfo("vendor", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY),
         AboutInfo("catalog_visibility", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY),
         AboutInfo("course_mandatory_enabled", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY),
-        AboutInfo("badges", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY)
+        AboutInfo("badges", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY),
+        AboutInfo("course_country", AboutInfo.PROPERTY, AboutInfo.FROM_COURSE_PROPERTY)
     ]
 
     @classmethod

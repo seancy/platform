@@ -3,7 +3,9 @@
 # All newly third-party packages should be put here.
 django-auth-ldap==1.2.15  # via python-ldap
 djangosaml2idp==0.3.3  # Used to become an SAML IdP
+django-crequest==2018.5.11
 django-tables2==1.16.0
 python-ldap==2.4.44
 tablib==0.12.1
 ipython==5.8.0
+

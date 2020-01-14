@@ -12305,13 +12305,25 @@ msgstr "Catégorie"
 msgid "Mandatory"
 msgstr "Obligatoire"
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "Oui"
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "false"
 msgstr "Non"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "All countries"
+msgstr "Tout pays"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "France"
+msgstr "France"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romania"
+msgstr "Roumanie"
 
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263

@@ -27340,12 +27340,12 @@ msgid "Set automatic enrollment rules for this course"
 msgstr "Définir les règles d’inscriptions automatiques pour ce cours"
 
 #: cms/templates/settings.html:599
-msgid "Job Codes"
-msgstr "Codes métier"
+msgid "Learning Groups"
+msgstr "Groupes apprenants"
 
 #: cms/templates/settings.html:599
-msgid "Identify the enrollment job codes here."
-msgstr "Identifiez ici le ou les code(s) métier pour inscription."
+msgid "Identify the enrollment learning groups here."
+msgstr "Identifiez ici le ou les groupe(s) apprenants pour inscription."
 
 #: cms/templates/settings.html:340
 msgid "Provide useful information about your course"
