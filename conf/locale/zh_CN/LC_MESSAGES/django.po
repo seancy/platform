@@ -17591,12 +17591,12 @@ msgid "Set automatic enrollment rules for this course"
 msgstr "为该课程设置自动注册规则"
 
 #: cms/templates/settings.html:599
-msgid "Job Codes"
-msgstr "职责编码"
+msgid "Learning Groups"
+msgstr "学习小组"
 
 #: cms/templates/settings.html:599
-msgid "Identify the enrollment job codes here."
-msgstr "在此设置注册职责编码"
+msgid "Identify the enrollment learning groups here."
+msgstr "在此设置注册学习小组"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:97
 msgid "{course_number} {course_name} Home Page"

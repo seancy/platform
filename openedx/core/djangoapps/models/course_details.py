@@ -85,7 +85,7 @@ class CourseDetails(object):
         self.periodic_reminder_day = 1
         self.course_order = None
         self.course_mandatory_enabled = ''
-        self.enrollment_job_codes = [] # used for automatically enrollment course by user job code.
+        self.enrollment_learning_groups = [] # used for automatically enrollment course by user learning group
 
     @classmethod
     def fetch_about_attribute(cls, course_key, attribute):
@@ -144,7 +144,7 @@ class CourseDetails(object):
         course_details.periodic_reminder_day = course_descriptor.periodic_reminder_day
         course_details.course_order = course_descriptor.course_order
         course_details.course_mandatory_enabled = course_descriptor.course_mandatory_enabled
-        course_details.enrollment_job_codes = course_descriptor.enrollment_job_codes
+        course_details.enrollment_learning_groups = course_descriptor.enrollment_learning_groups
 
         # Default course license is "All Rights Reserved"
         course_details.license = getattr(course_descriptor, "license", "all-rights-reserved")
@@ -363,8 +363,8 @@ class CourseDetails(object):
             descriptor.self_paced = jsondict['self_paced']
             dirty = True
 
-        if 'enrollment_job_codes' in jsondict and jsondict['enrollment_job_codes'] != descriptor.enrollment_job_codes:
-            descriptor.enrollment_job_codes = jsondict['enrollment_job_codes']
+        if 'enrollment_learning_groups' in jsondict and jsondict['enrollment_learning_groups'] != descriptor.enrollment_learning_groups:
+            descriptor.enrollment_learning_groups = jsondict['enrollment_learning_groups']
             dirty = True
 
         if dirty:
