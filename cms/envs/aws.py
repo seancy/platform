@@ -595,6 +595,10 @@ if "RAVEN_CONFIG" in ENV_TOKENS:
     INSTALLED_APPS += ('raven.contrib.django.raven_compat',)
     RAVEN_CONFIG = ENV_TOKENS.get('RAVEN_CONFIG')
 
+################### Settings for local video pipeline ###################
+if "VIDEO_PIPELINE_LOCAL" in ENV_TOKENS:
+    VIDEO_PIPELINE_LOCAL = ENV_TOKENS.get('VIDEO_PIPELINE_LOCAL')
+
 ####################### Plugin Settings ##########################
 
 from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants
