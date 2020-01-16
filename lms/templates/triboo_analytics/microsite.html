@@ -2,7 +2,7 @@
 <%namespace name='static' file='../static_content.html'/>
 <%!
     from django.utils.translation import ugettext as _
-    from django.utils.translation import ungettext
+    from django.utils.translation import ungettext, gettext
     from django.core.urlresolvers import reverse
     from triboo_analytics.models import format_time_spent
 %>
@@ -24,38 +24,89 @@
               % if microsite_report:
                 <div class="analytics-basic-wrapper">
                     <div class="analytics-widget-24 analytics-figure">
+                        ${static.renderReact(
+                          component="QuestionMark",
+                          id="id-courses",
+                          props={
+                            'class':'question-mark',
+                            'tooltip': gettext('Number of courses created and available'),
+                          }
+                        )}
                         <p class="figure">${microsite_report.courses}</p>
                         <p class="title">${ungettext("Course", "Courses", microsite_report.courses)}</p>
                     </div>
                     <div class="analytics-widget-24 analytics-figure">
+                        ${static.renderReact(
+                          component="QuestionMark",
+                          id="id-active-learners",
+                          props={
+                            'class':'question-mark',
+                            'tooltip': gettext('Number of learners enrolled in a course'),
+                          }
+                        )}
                         <p class="figure">${microsite_report.users}</p>
-                        <p class="title">${ungettext("Active Learner", "Active Learners", microsite_report.users)}</p>
+                        <p class="title">${ungettext("Learner", "Learners", microsite_report.users)}</p>
                     </div>
                     <div class="analytics-widget-24 analytics-figure">
+                        ${static.renderReact(
+                          component="QuestionMark",
+                          id="id-certificate",
+                          props={
+                            'class':'question-mark',
+                            'tooltip': gettext('Number of times a learner successfully completed a course with 100% progress and a passing total score'),
+                          }
+                        )}
                         <p class="figure">${microsite_report.finished}</p>
                         <p class="title">${ungettext("Certificate Delivered", "Certificates Delivered", microsite_report.finished)}</p>
                     </div>
                     <div class="analytics-widget-24 analytics-figure">
+                        ${static.renderReact(
+                          component="QuestionMark",
+                          id="id-average-time",
+                          props={
+                            'class':'question-mark',
+                            'tooltip': gettext('Average time learners have spent on the platform'),
+                          }
+                        )}
                         <p class="figure">${format_time_spent(microsite_report.average_time_spent)}</p>
                         <p class="title">${_("Average Time Spent Per Active Learner")}</p>
+                        ##<p class="title">${}</p>
                     </div>
                 </div>
 
                 <div class="analytics-basic-wrapper">
                     <div class="analytics-widget-75 analytics-linechart">
+                        ${static.renderReact(
+                          component="QuestionMark",
+                          id="id-unique-visitors",
+                          props={
+                            'class':'question-mark',
+                            'tooltip': gettext('Number of different visitors who logged in the platform per day'),
+                          }
+                        )}
                         <h3>${_("Number of Unique Visitors")}</h3>
-                        <div id="lineChart">
-                            <svg>
-                                <defs>
-                                    <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
-                                      <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
-                                      <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
+                        <div class="line-chart-wrapper">
+                            <div id="lineChart">
+                                <svg>
+                                    <defs>
+                                        <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
+                                          <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
+                                          <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                     <div class="analytics-widget-24 analytics-piechart">
+                        ${static.renderReact(
+                          component="QuestionMark",
+                          id="id-device-use",
+                          props={
+                            'class':'question-mark',
+                            'tooltip': gettext('Proportion of mobile connection vs. computer connection'),
+                          }
+                        )}
                         <h3>${_("Device Use")}</h3>
                         <div id="pieChart">
                             <svg></svg>
@@ -68,6 +119,14 @@
                 </div>
 
                 <div class="analytics-widget-100 analytics-map">
+                    ${static.renderReact(
+                      component="QuestionMark",
+                      id="id-active-learner-location",
+                      props={
+                        'class':'question-mark',
+                        'tooltip': gettext('Where are located the active learners based on their profile information'),
+                      }
+                    )}
                     <h3>${_("Active Learners Location")}</h3>
                     <div id="map">
                         <svg></svg>

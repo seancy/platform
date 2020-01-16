@@ -2,7 +2,7 @@
 <%namespace name='static' file='../static_content.html'/>
 <%!
     from urllib import urlencode
-    from django.utils.translation import ugettext as _, ungettext
+    from django.utils.translation import ugettext as _, ungettext, gettext
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
     from triboo_analytics.models import CourseStatus, format_time_spent
@@ -46,20 +46,52 @@
                     <div class="analytics-float-wrapper">
                         <div class="analytics-basic-wrapper">
                             <div class="analytics-widget-24 analytics-figure">
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-enrollments",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Number of learners enrolled in the course. The learners have been registered by an Admin or self-registered via the catalog'),
+                                  }
+                                )}
                                 <p class="figure">${course_report.enrollments}</p>
                                 <p class="title">${ungettext("Enrollment", "Enrollments", course_report.enrollments)}</p>
                             </div>
                             <div class="analytics-widget-24 analytics-figure">
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-average-time",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Average time it took to learners to complete the course with 100% progress'),
+                                  }
+                                )}
                                 <p class="figure">${format_time_spent(course_report.average_complete_time)}</p>
                                 <p class="title">${_("Average time to complete the course")}</p>
                             </div>
                         </div>
                         <div class="analytics-basic-wrapper">
                             <div class="analytics-widget-24 analytics-figure">
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-average-final-score",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Average total score of the learners who completed the course with 100% progress'),
+                                  }
+                                )}
                                 <p class="figure">${course_report.average_final_score}&nbsp;%</p>
                                 <p class="title">${_("Average Final Score")}</p>
                             </div>
                             <div class="analytics-widget-24 analytics-figure">
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-posts",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Number of posts/answers/comments written in the course discussions/forums'),
+                                  }
+                                )}
                                 <p class="figure">${course_report.posts}</p>
                                 <p class="title">${ungettext("Post", "Posts", course_report.posts)}</p>
                             </div>
@@ -67,30 +99,93 @@
                     </div>
                     <div class="analytics-float-wrapper analytics-piechart-wrapper">
                       <div class="analytics-widget-24 analytics-piechart">
+                          ${static.renderReact(
+                              component="QuestionMark",
+                              id="id-donuts-chart",
+                              props={
+                                'class':'question-mark',
+                                'tooltip': gettext('Proportion of learners according to their course status'),
+                              }
+                            )}
+
                         <div id="pieChart">
                             <svg></svg>
                         </div>
                         <div class="legend">
-                            <p><span class="finished">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.finished])}</p>
-                            <p><span class="failed">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.failed])}</p>
-                            <p><span class="in-progress">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</p>
-                            <p><span class="not-started">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.not_started])}</p>
+                            <div class="status-label">
+                                <span class="finished">&#9679;</span>
+                                ${_(CourseStatus.verbose_names[CourseStatus.finished])}
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-finished-2",
+                                  props={
+                                    'class':'status-message',
+                                    'tooltip': gettext('Leaners who completed the course with 100% progress and a total score passing the minimum required score'),
+                                  }
+                                )}
+                            </div>
+                            <div class="status-label">
+                                <span class="failed">&#9679;</span>
+                                ${_(CourseStatus.verbose_names[CourseStatus.failed])}
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-failed",
+                                  props={
+                                    'class':'status-message',
+                                    'tooltip': gettext('Leaners who completed the course with 100% progress but with a total score below the minimum required score to validate the course'),
+                                  }
+                                )}
+                            </div>
+                            <div class="status-label">
+                                <span class="in-progress">&#9679;</span>
+                                ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-in-progress",
+                                  props={
+                                    'class':'status-message',
+                                    'tooltip': gettext("Learners who started to visit the course but haven't completed it yet"),
+                                  }
+                                )}
+                            </div>
+                            <div class="status-label">
+                                <span class="not-started">&#9679;</span>
+                                ${_(CourseStatus.verbose_names[CourseStatus.not_started])}
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-not-started",
+                                  props={
+                                    'class':'status-message',
+                                    'tooltip': gettext("Learners who are enrolled in the course but haven't visited it yet"),
+                                  }
+                                )}
+                            </div>
                         </div>
                       </div>
                     </div>
                 </div>
               % if len(enrollments_csv_data) > 0:
                 <div class="analytics-widget-100 analytics-linechart">
+                    ${static.renderReact(
+                      component="QuestionMark",
+                      id="id-number-of-enrollments",
+                      props={
+                        'class':'question-mark',
+                        'tooltip': gettext('Cumulative number of enrollments over time'),
+                      }
+                    )}
                     <h3>${_("Number of Enrollments")}</h3>
-                    <div id="lineChart">
-                        <svg>
-                            <defs>
-                                <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
-                                  <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
-                                  <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                    <div class="line-chart-wrapper">
+                        <div id="lineChart">
+                            <svg>
+                                <defs>
+                                    <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
+                                      <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
+                                      <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
                     </div>
                 </div>
               % endif

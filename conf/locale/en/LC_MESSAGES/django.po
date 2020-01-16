@@ -26475,3 +26475,188 @@ msgstr ""
 #: cms/templates/index.html:41
 msgid "Create a new library"
 msgstr ""
+
+#: lms/templates/triboo_analytics/courseware.html
+msgid "Successful"
+msgstr ""
+
+#: lms/templates/triboo_analytics/courseware.html
+msgid "Unsuccessful"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:44
+msgid "Number of learners enrolled in a course"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:75
+msgid "Average time learners have spent on the platform"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:56
+msgid ""
+"Number of times a learner successfully completed a course with 100% progress"
+" and a passing total score"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:34
+msgid "Number of courses created and available"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:91
+msgid "Number of different visitors who logged in the platform per day"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:114
+msgid "Proportion of mobile connection vs. computer connection"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:136
+msgid ""
+"Where are located the active learners based on their profile information"
+msgstr ""
+
+
+#: lms/templates/triboo_analytics/course.html:54
+msgid ""
+"Number of learners enrolled in the course. The learners have been registered"
+" by an Admin or self-registered via the catalog"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:66
+msgid ""
+"Average time it took to learners to complete the course with 100% progress"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:80
+msgid ""
+"Average total score of the learners who completed the course with 100% "
+"progress"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:92
+msgid ""
+"Number of posts/answers/comments written in the course discussions/forums"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:107
+msgid "Proportion of learners according to their course status"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:147
+msgid ""
+"Learners who started to visit the course but haven't completed it yet"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:159
+msgid "Learners who are enrolled in the course but haven't visited it yet"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:123
+msgid ""
+"Leaners who completed the course with 100% progress and a total score "
+"passing the minimum required score"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:159
+msgid "Leaners who completed the course with 100% progress but with "
+"a total score below the minimum required score to validate the course"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:174
+msgid "Cumulative number of enrollments over time"
+msgstr ""
+
+
+#: lms/templates/triboo_analytics/my_transcript.html:262
+msgid "Number of courses you are enrolled in"
+msgstr ""
+
+#: lms/templates/triboo_analytics/my_transcript.html:274
+msgid "Total time you have spent on the platform"
+msgstr ""
+
+#: lms/templates/triboo_analytics/my_transcript.html:288
+msgid ""
+"Average final score over all the courses you have completed (status "
+"successful or unsuccessful)"
+msgstr ""
+
+#: lms/templates/triboo_analytics/my_transcript.html:300
+msgid ""
+"Number of posts/answers/comments you have written in the discussions/forums"
+msgstr ""
+
+#: lms/templates/triboo_analytics/my_transcript.html:315
+msgid "Proportion of courses according to your progress"
+msgstr ""
+
+#: lms/templates/triboo_analytics/my_transcript.html:355
+msgid ""
+"Number of courses you started to visit but you haven't completed yet"
+msgstr ""
+
+#: lms/templates/triboo_analytics/my_transcript.html:367
+msgid "Number of courses you are enrolled in but you haven't visited yet"
+msgstr ""
+
+#: lms/templates/triboo_analytics/my_transcript.html:331
+msgid ""
+"Number of courses you completed with 100% progress and a total score passing"
+" the minimum required score"
+msgstr ""
+
+#: lms/templates/triboo_analytics/my_transcript.html:343
+msgid ""
+"Number of courses you completed with 100% progress but with a total score "
+"below the minimum required score"
+msgstr ""
+
+
+#: lms/templates/triboo_analytics/transcript.html:54
+msgid ""
+"Number of courses the learner is enrolled in (enrollments made by an Admin "
+"or by himself/herself via the catalog)"
+msgstr ""
+
+#: lms/templates/triboo_analytics/transcript.html:66
+msgid "Total time the learner has spent on the platform"
+msgstr ""
+
+#: lms/templates/triboo_analytics/transcript.html:80
+msgid ""
+"Average final score over all the courses the learner has completed (status "
+"successful or unsuccessful)"
+msgstr ""
+
+#: lms/templates/triboo_analytics/transcript.html:92
+msgid ""
+"Number of posts/answers/comments the learner has written in the "
+"discussions/forums"
+msgstr ""
+
+#: lms/templates/triboo_analytics/transcript.html:107
+msgid "Proportion of courses according to the learner's progress"
+msgstr ""
+
+#: lms/templates/triboo_analytics/transcript.html:147
+msgid ""
+"Number of courses the learner started to visit but hasn't completed "
+"yet"
+msgstr ""
+
+#: lms/templates/triboo_analytics/transcript.html:159
+msgid ""
+"Number of courses the learner is enrolled in but hasn't visited yet"
+msgstr ""
+
+#: lms/templates/triboo_analytics/transcript.html:123
+msgid ""
+"Number of courses the learner completed with 100% progress and a total score"
+" passing the minimum required score"
+msgstr ""
+
+#: lms/templates/triboo_analytics/transcript.html:135
+msgid ""
+"Number of courses the learner completed with 100% progress but with a total "
+"score below the minimum required score"
+msgstr ""
