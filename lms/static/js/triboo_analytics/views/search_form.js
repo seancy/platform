@@ -6,7 +6,7 @@
 
             el: '#filter-form',
             events: {
-                'click #filter-form': 'submitForm',
+                'keydown #id_query_string': 'submitForm',
                 'click #clear-all-filters': 'clearAll',
             },
 
@@ -19,8 +19,10 @@
             },
 
             submitForm: function(event) {
-                event.preventDefault();
-                this.doFilter();
+                if (event.which === 13) {
+                    event.preventDefault();
+                    this.doFilter();
+                }
             },
 
             doFilter: function(type, term) {

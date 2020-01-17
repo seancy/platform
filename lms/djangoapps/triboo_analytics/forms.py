@@ -82,8 +82,8 @@ class TimePeriodForm(forms.Form):
 
 
 class TableFilterForm(forms.Form):
-    query_string = forms.CharField(required=False, initial='', label=_('Query'))
     queried_field = forms.ChoiceField(required=False, label=_('Field'))
+    query_string = forms.CharField(required=False, initial='', label=_('Query'))
 
     course_id = forms.CharField(widget=forms.HiddenInput(), required=False)
     report = forms.CharField(widget=forms.HiddenInput(), required=False)
