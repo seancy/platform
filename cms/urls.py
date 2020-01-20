@@ -44,7 +44,7 @@ urlpatterns = [
         contentstore.views.preview_handler, name='preview_handler'),
     url(r'^xblock/(?P<usage_key_string>.*?)/handler/(?P<handler>[^/]*)(?:/(?P<suffix>.*))?$',
         contentstore.views.component_handler, name='component_handler'),
-    url(r'^xblock/resource/(?P<block_type>[^/]*)/(?P<uri>.*)$',
+    url(r'^xblock/resources*/(?P<block_type>[^/]*)/(?P<uri>.*)$',
         openedx.core.djangoapps.common_views.xblock.xblock_resource, name='xblock_resource_url'),
     url(r'^not_found$', contentstore.views.not_found, name='not_found'),
     url(r'^server_error$', contentstore.views.server_error, name='server_error'),

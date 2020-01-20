@@ -18,6 +18,7 @@ from openedx.core.djangolib.markup import HTML, Text
 # App that handles subdomain specific branding
 from branding import api as branding_api
 from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_enabled, released_languages
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 %>
 
 <script type="text/javascript" src="${static.url('js/header/header.js')}"></script>
@@ -99,7 +100,10 @@ from openedx.core.djangoapps.lang_pref.api import header_language_selector_is_en
 <![endif]-->
 % endif
 
-<%include file="../help_modal.html"/>
+% if configuration_helpers.get_value('ENABLE_FEEDBACK_SUBMISSION', settings.FEATURES.get('ENABLE_FEEDBACK_SUBMISSION', False)):
+  <%include file="../help_modal.html"/>
+% endif
+
 % if settings.FEATURES.get('ENABLE_COOKIE_CONSENT', False):
   <%include file="../widgets/cookie-consent.html" />
 % endif

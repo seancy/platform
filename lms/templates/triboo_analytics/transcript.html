@@ -2,7 +2,7 @@
 <%namespace name='static' file='../static_content.html'/>
 <%!
   from django.utils.translation import ugettext as _
-  from django.utils.translation import ungettext
+  from django.utils.translation import ungettext, gettext
   from django.core.urlresolvers import reverse
   from django.template import Template, Context
   from triboo_analytics.models import CourseStatus, format_time_spent, ANALYTICS_LIMITED_ACCESS_GROUP
@@ -46,20 +46,52 @@
                   <div class="analytics-float-wrapper">
                       <div class="analytics-basic-wrapper">
                           <div class="analytics-widget-24 analytics-figure">
+                              ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-enrollment",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Number of courses the learner is enrolled in (enrollments made by an Admin or by himself/herself via the catalog)'),
+                                  }
+                                )}
                               <p class="figure">${learner_report_enrollments}</p>
                               <p class="title">${ungettext("Enrollment", "Enrollments", learner_report_enrollments)}</p>
                           </div>
                           <div class="analytics-widget-24 analytics-figure">
+                              ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-time-spent",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Total time the learner has spent on the platform'),
+                                  }
+                                )}
                               <p class="figure">${format_time_spent(learner_report_total_time_spent)}</p>
                               <p class="title">${_("Time spent on the platform")}</p>
                           </div>
                       </div>
                       <div class="analytics-basic-wrapper">
                           <div class="analytics-widget-24 analytics-figure">
+                              ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-average-final-score",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Average final score over all the courses the learner has completed (status successful or unsuccessful)'),
+                                  }
+                                )}
                               <p class="figure">${learner_report_average_final_score}&nbsp;%</p>
                               <p class="title">${_("Average Final Score")}</p>
                           </div>
                           <div class="analytics-widget-24 analytics-figure">
+                              ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-posts",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Number of posts/answers/comments the learner has written in the discussions/forums'),
+                                  }
+                                )}
                               <p class="figure">${learner_report_posts}</p>
                               <p class="title">${ungettext("Post", "Posts", learner_report_posts)}</p>
                           </div>
@@ -67,14 +99,67 @@
                   </div>
                   <div class="analytics-float-wrapper">
                     <div class="analytics-widget-24 analytics-piechart">
+                        ${static.renderReact(
+                          component="QuestionMark",
+                          id="id-donuts-chart",
+                          props={
+                            'class':'question-mark',
+                            'tooltip': gettext("Proportion of courses according to the learner's progress"),
+                          }
+                        )}
+
                         <div id="pieChart">
                             <svg></svg>
                         </div>
                         <div class="legend">
-                          <p><span class="finished">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.finished])}</p>
-                          <p><span class="failed">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.failed])}</p>
-                          <p><span class="in-progress">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</p>
-                          <p><span class="not-started">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.not_started])}</p>
+                          <div class="status-label">
+                              <span class="finished">&#9679;</span>
+                              ${_(CourseStatus.verbose_names[CourseStatus.finished])}
+                              ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-finished-2",
+                                  props={
+                                    'class':'status-message',
+                                    'tooltip': gettext('Number of courses the learner completed with 100% progress and a total score passing the minimum required score'),
+                                  }
+                                )}
+                          </div>
+                          <div class="status-label">
+                              <span class="failed">&#9679;</span>
+                              ${_(CourseStatus.verbose_names[CourseStatus.failed])}
+                              ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-failed",
+                                  props={
+                                    'class':'status-message',
+                                    'tooltip': gettext('Number of courses the learner completed with 100% progress but with a total score below the minimum required score'),
+                                  }
+                                )}
+                          </div>
+                          <div class="status-label">
+                              <span class="in-progress">&#9679;</span>
+                              ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}
+                              ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-in-progress",
+                                  props={
+                                    'class':'status-message',
+                                    'tooltip': gettext("Number of courses the learner started to visit but hasn't completed yet"),
+                                  }
+                                )}
+                          </div>
+                          <div class="status-label">
+                              <span class="not-started">&#9679;</span>
+                              ${_(CourseStatus.verbose_names[CourseStatus.not_started])}
+                              ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-not-started",
+                                  props={
+                                    'class':'status-message',
+                                    'tooltip': gettext("Number of courses the learner is enrolled in but hasn't visited yet"),
+                                  }
+                                )}
+                          </div>
                         </div>
                     </div>
                   </div>

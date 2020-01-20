@@ -806,6 +806,21 @@ def videos_post(course, request):
             'courses': [unicode(course.id)]
         })
 
+        if hasattr(settings, 'VIDEO_PIPELINE_LOCAL'):
+            upload_url = 'https://' + settings.ENV_TOKENS['CMS_BASE'] + '/api/upload_local/' + edx_video_id
+            metadata_dict = {}
+            for metadata_name, value in metadata_list:
+                metadata_dict[metadata_name] = value
+            if 'course_video_upload_token' not in metadata_dict:
+                metadata_dict['course_video_upload_token'] = None
+            if 'transcript_preferences' not in metadata_dict:
+                metadata_dict['transcript_preferences'] = None 
+            text_txt = json.dumps(metadata_dict)
+            video_txt_name = settings.VIDEO_PIPELINE_LOCAL['UPLOAD_FOLDER'] + edx_video_id + '.txt'
+            f = open(video_txt_name, 'w')
+            f.write(text_txt)
+            f.close()
+
         resp_files.append({'file_name': file_name, 'upload_url': upload_url, 'edx_video_id': edx_video_id})
 
     return JsonResponse({'files': resp_files}, status=200)
