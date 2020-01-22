@@ -19,6 +19,11 @@
                     <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
                   </div>
 
+                ${static.renderReact(
+                  component="Toolbar",
+                  id="test2",
+                  props={}
+                )}
                   <form class="table-period-form" action="${reverse('analytics_learner')}" method="get">
                       ${time_period_form}
                       <input type="submit" value="${_("Go")}"/>
