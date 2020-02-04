@@ -813,6 +813,16 @@ def get_all_courses(request, orgs):
     return courses, courses_list
 
 
+def get_course_triples(course_tuples, last_update):
+    triples = []
+    for course_id, course_name in course_tuples:
+        course_key = CourseKey.from_string(course_id)
+        course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
+        triple = (course_id, course_name, course_report.enrollments)
+        triples.append(triple)
+    return triples
+
+
 @login_required
 @analytics_on
 @analytics_full_member_required
@@ -1368,6 +1378,8 @@ def customized_view(request):
     export_formats = ['csv', 'xls', 'json']
     courses, courses_list = get_all_courses(request, orgs)
     last_reportlog = ReportLog.get_latest()
+    last_update = last_reportlog.created
+    course_triples = get_course_triples(courses_list, last_update)
 
     analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
@@ -1385,7 +1397,7 @@ def customized_view(request):
         {
             'report_types': report_types,
             'report_type': report_type,
-            'courses': courses_list,
+            'courses': course_triples,
             'courses_selected': courses_selected,
             'filter_form': filter_form,
             'user_properties_form': user_properties_form,

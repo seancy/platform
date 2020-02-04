@@ -22,6 +22,8 @@ export class CustomizedReport {
             this.$courseReport = $('#course_selected');
             this.oldCourseValues = []
             this.oldCourseTexts = []
+            this.selectedEnrollments = 0
+            this.enrollmentLimit = 6
             this.$courseReportSelect2 = this.$courseReport.select2();
             this.$accordingTrigger = $('.accordion-trigger');
             this.eventInit()
@@ -51,18 +53,34 @@ export class CustomizedReport {
         })
         this.$courseReport.on('change', () => {
             let report_val = this.$reportType.find("option:selected").val()
-            if (report_val == 'course_summary'){
+            if (report_val == 'course_summary') {
                 let vals = []
                 let texts = []
+                let nums = []
                 this.$courseReport.find("option:selected").each(function() {
                     vals.push($(this).val());
-                    texts.push($(this).text());
+                    let t = $(this).text();
+                    let split_ind = t.lastIndexOf('(');
+                    let ctext = t.substring(0, split_ind - 1);
+                    let cnum = t.substring(split_ind + 1, t.lastIndexOf('user') - 1);
+                    texts.push(ctext);
+                    nums.push(cnum);
                 })
                 let old_vals = this.oldCourseValues
                 let old_texts = this.oldCourseTexts
                 let diff_val = this.diffElement(old_vals, vals)
                 let diff_text = this.diffElement(old_texts, texts)
-                if (diff_val) {
+                let sum_nums = 0
+                if (nums.length > 0) {
+                    sum_nums = nums.reduce(function (a, b) {
+                        return parseInt(a) + parseInt(b);
+                    })
+                }
+                if (sum_nums > this.enrollmentLimit) {
+                    alert('The enrollments of the courses you have been selected is above the limit.')
+                    let set_vals = this.oldCourseValues ? this.oldCourseValues : ''
+                    this.$courseReportSelect2.val(set_vals).change();
+                } else if (diff_val) {
                     let tag_id = 'tag_' + diff_val.split(':')[1].replace(/\+/g, '_');
                     if (vals.length > old_vals.length){
                         this.addTagToBar('#course_bar', 'course-option', diff_text, tag_id)
@@ -71,15 +89,27 @@ export class CustomizedReport {
                     }
                     this.oldCourseValues = vals
                     this.oldCourseTexts = texts
+                    this.selectedEnrollments = nums
                 }
             } else if (report_val == 'course_progress' || report_val == 'course_time_spent') {
-                let text = this.$courseReport.find("option:selected").text()
+                let t = this.$courseReport.find("option:selected").text()
                 let val = this.$courseReport.find("option:selected").val()
-                let cid = "tag_" + text.replace(/\ /g, '_')
+                let split_ind = t.lastIndexOf('(');
+                let ctext = t.substring(0, split_ind - 1);
+                let cnum = t.substring(split_ind + 1, t.lastIndexOf('user') - 1);
+                let cid = "tag_" + ctext.replace(/\ /g, '_')
                 $('#course_bar').empty()
-                this.addTagToBar('#course_bar', 'course-option', text, cid)
+                this.addTagToBar('#course_bar', 'course-option', ctext, cid)
                 $('#' + cid + ' .fa').css('display','none')
+                this.selectedEnrollments.push(cnum)
             }
+            let current_num = 0
+            if (this.selectedEnrollments.length > 0) {
+                current_num = this.selectedEnrollments.reduce(function (a, b) {
+                    return parseInt(a) + parseInt(b);
+                })
+            }
+            $('#enrollment_selected')[0].innerText = current_num
         })
         $('#table-export-selection').delegate('label', 'click', () => {
             this.goButtonStatusUpdate()
@@ -115,15 +145,25 @@ export class CustomizedReport {
                 let bar_texts = this.getBarTexts('#course_bar');
                 let vals = this.oldCourseValues;
                 let texts = this.oldCourseTexts;
+                let nums = this.selectedEnrollments;
                 let diff_text = this.diffElement(texts, bar_texts);
                 let diff_index = texts.indexOf(diff_text);
                 vals.splice(diff_index, 1);
-                texts.splice(diff_index, 1)
+                texts.splice(diff_index, 1);
+                nums.splice(diff_index, 1);
                 let set_vals = vals ? vals : ''
                 this.$courseReportSelect2.val(set_vals).change();
                 this.oldCourseValues = vals;
                 this.oldCourseTexts = texts;
+                this.selectedEnrollments = nums;
             }
+            let current_num = 0
+            if (this.selectedEnrollments.length > 0) {
+                current_num = this.selectedEnrollments.reduce(function (a, b) {
+                    return parseInt(a) + parseInt(b);
+                })
+            }
+            $('#enrollment_selected')[0].innerText = current_num
         });
         $('#report_bar').delegate('button', 'click', (e) => {
             e.preventDefault();
@@ -191,7 +231,6 @@ export class CustomizedReport {
             $('#custom_course_section').removeClass('is-hidden')
         } else if (report_val == 'course_progress' || report_val == 'course_time_spent') {
             // <option key='' disabled selected value='' id='null-option'></option>
-            log('changed to course_progress or course_time_spent')
             $('#course_selected option').remove('#null-option')
             $("<option/>", {
                 "id": 'null-option',
@@ -206,6 +245,7 @@ export class CustomizedReport {
         $('#course_bar').empty()
         this.oldCourseValues = []
         this.oldCourseTexts = []
+        this.selectedEnrollments = []
     }
 
     resetValue() {
@@ -407,9 +447,13 @@ class ReportTypeAndCourseReport extends React.Component {
                     </button>
                     <div id="course_section_contents" className="section-content is-hidden">
                         <div className={'course-report ' + (this.state.hideCourseReportSelect ? 'hide' : '')}>
+                            <p className="section-label">The enrollments of the courses you have been selected is:
+                                <span id="enrollment_selected">0</span>
+                                . (300,000 at most)
+                            </p>
                             <select id="course_selected" ref="course_selected">
-                                {courses.map(({cid, course_title}) => {
-                                    return <option key={cid} value={cid}>{course_title}</option>
+                                {courses.map(({cid, course_title, course_enrollments}) => {
+                                    return <option key={cid} value={cid}>{course_title} ({course_enrollments} users)</option>
                                 })}
                             </select>
                         </div>
