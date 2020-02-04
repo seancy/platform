@@ -310,14 +310,14 @@ class UserBaseTable(tables.Table):
 class ProgressColumn(tables.Column):
     def render(self, value):
         if value['result'] >= value['threshold']:
-            return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%%" % value['result'])
-        return mark_safe("<span class='trophy-no fa fa-times'></span> %d%%" % value['result'])
+            return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%%" % (value['result'] * 100))
+        return mark_safe("<span class='trophy-no fa fa-times'></span> %d%%" % (value['result']  * 100))
 
 
     def value(self, value):
         if value['result'] >= value['threshold']:
-            return "Yes: %d" % value['result']
-        return "No: %d" % value['result']
+            return "Yes: %.2f" % value['result']
+        return "No: %.2f" % value['result']
 
 
     def render_footer(self, bound_column, table):
