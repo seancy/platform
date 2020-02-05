@@ -7,6 +7,7 @@ from django.utils.translation import pgettext_lazy
 
 
 AVAILABLE_CHOICES = {
+    'name': _('Name'),
     'email': _('Email'),
     'username': _('Username'),
     'date_joined': _('Date Joined'),
