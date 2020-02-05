@@ -117,9 +117,13 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         raise UnsupportedExportFormatError()
 
     if _task_input['report_name'] == "transcript":
+        if _task_input['report_args']['last_update'].endswith('UTC'):
+            datetime_format = "%Y-%m-%d %H:%M:%S UTC"
+        else:
+            datetime_format = "%Y-%m-%d"
         table, _ = get_transcript_table(_task_input['report_args']['orgs'],
                                         _task_input['report_args']['user_id'],
-                                        datetime.strptime(_task_input['report_args']['last_update'], "%Y-%m-%d"))
+                                        datetime.strptime(_task_input['report_args']['last_update'], datetime_format))
     
     elif _task_input['report_name'] == "ilt_global_report":
         table, _ = get_ilt_report_table(_task_input['report_args']['orgs'])
