@@ -41,7 +41,7 @@ class UserPropertiesHelper():
     def __init__(self, analytics_user_properties={}):
         self.possible_choices_db_prefix = []
         self.possible_choices = []
-        self.initial_choices = []
+        self.initial_choices = ["user_name"]
         for prop in AVAILABLE_CHOICES.keys():
             if prop in analytics_user_properties.keys():
                 prefix = "user_"
