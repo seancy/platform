@@ -39,7 +39,8 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
         SettingsFactory(
             "${details_url | n, js_escaped_string}",
             ${show_min_grade_warning | n, dump_js_escaped_json},
-            ${can_show_certificate_available_date_field(context_course) | n, dump_js_escaped_json}
+            ${can_show_certificate_available_date_field(context_course) | n, dump_js_escaped_json},
+            "${LANGUAGE_CODE | n, js_escaped_string}"
         );
     });
 </%block>
@@ -375,7 +376,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 </li>
                 <li class="field text" id="field-course-description">
                   <label for="course-description">${_("Course Description")}</label>
-                  <textarea class="text" id="course-description"></textarea>
+                  <textarea class="text tinymce-editor" id="course-description"></textarea>
                   <span class="tip tip-stacked">${_("Displayed on the course details page. Limit to 1000 characters.")}</span>
                 </li>
                 % endif
@@ -391,7 +392,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 % if about_page_editable:
                 <li class="field text" id="field-course-overview">
                   <label for="course-overview">${_("Course Overview")}</label>
-                  <textarea class="tinymce text-editor" id="course-overview"></textarea>
+                  <textarea class="text tinymce-editor" id="course-overview"></textarea>
                   <label class="sr" for="course-overview-cm-textarea">
                     ${_('HTML Code Editor')}
                   </label>
