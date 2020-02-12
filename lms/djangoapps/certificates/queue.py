@@ -108,7 +108,10 @@ class XQueueCertInterface(object):
         )
         self.whitelist = CertificateWhitelist.objects.all()
         self.restricted = UserProfile.objects.filter(allow_certificate=False)
-        self.use_https = True
+        if settings.DEBUG:
+            self.use_https = False
+        else:
+            self.use_https = True
 
     def regen_cert(self, student, course_id, course=None, forced_grade=None,
                    template_file=None, generate_pdf=True, site=None):
