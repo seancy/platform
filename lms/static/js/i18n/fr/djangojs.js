@@ -70,6 +70,10 @@
       "%d minutes"
     ], 
     "%s ago": "il y a %s ", 
+    "%s course found": [
+      "%s cours trouv\u00e9", 
+      "%s cours trouv\u00e9s"
+    ], 
     "%s from now": "depuis %s ", 
     "(Add signatories for a certificate)": "(Ajouter des signatures pour le certificat)", 
     "(Caption will be displayed when you start playing the video.)": "(Les sous-titres s'afficheront quand vous lancerez la vid\u00e9o.)", 
@@ -484,6 +488,7 @@
     "Create a %(link_start)sMozilla Backpack%(link_end)s account, or log in to your existing account": "Cr\u00e9er un compte %(link_start)sMozilla Backpack%(link_end)s, or connectez-vous a votre compte existant", 
     "Create a New Team": "Cr\u00e9er une nouvelle \u00e9quipe", 
     "Create a content group": "Cr\u00e9er un groupe de contenu", 
+    "Create a new learner account to take advantage of the Triboo platform!": "Cr\u00e9er un compte utilisateur pour profiter pleinement de la plateforme Triboo!", 
     "Create a new team if you can't find an existing team to join, or if you would like to learn with friends you know.": "Cr\u00e9ez une nouvelle \u00e9quipe si vous ne trouvez pas une \u00e9quipe existante \u00e0 rejoindre, ou si vous d\u00e9sirez apprendre avec des amis que vous connaissez d\u00e9j\u00e0.", 
     "Create account using %(providerName)s.": "Cr\u00e9er un compte avec %(providerName)s.", 
     "Create an Account": "Cr\u00e9er un compte", 
