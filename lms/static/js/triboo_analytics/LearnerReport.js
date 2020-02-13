@@ -14,7 +14,18 @@ export class LearnerReport extends React.Component {
             properties:this.props.properties || [],
             data:[]
         };
+
+        this.myRef = React.createRef()
+
+
     }
+
+    componentDidMount() {
+        /*setTimeout(()=>{
+            this.myRef.current.classList.remove('hidden')
+        },400)*/
+    }
+
 
     fetchData(parameters){
         //send ajax request with parameters
@@ -62,8 +73,9 @@ export class LearnerReport extends React.Component {
         }
 
         const json = FAKE_JSON
+        // hidden
         return (
-            <section className="analytics-wrapper learner">
+            <section ref={this.myRef} className="analytics-wrapper learner">
                 <div className="report-wrapper">
 
                     <div className="last-update">
