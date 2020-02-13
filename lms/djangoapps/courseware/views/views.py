@@ -27,7 +27,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.http import urlquote_plus
 from django.utils.text import slugify
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ungettext
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
@@ -1783,7 +1783,7 @@ def financial_assistance_form(request):
             {
                 'name': 'course',
                 'type': 'select',
-                'label': _('Course'),
+                'label': ungettext('Course', 'Courses', 1),
                 'placeholder': '',
                 'defaultValue': '',
                 'required': True,

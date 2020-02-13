@@ -452,9 +452,13 @@ msgstr "Assistant"
 
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
+#: lms/templates/courseware/ilt_attendance_sheet.html:57
 #: lms/templates/preview_menu.html:36
+#: lms/templates/triboo_analytics/microsite.html:49
 msgid "Learner"
-msgstr "Apprenant"
+msgid_plural "Learners"
+msgstr[0] "Apprenant"
+msgstr[1] "Apprenants"
 
 #: common/djangoapps/student/admin.py:224
 msgid "User profile"
@@ -4997,18 +5001,23 @@ msgstr "Discussion externe"
 msgid "Home"
 msgstr "Accueil"
 
-#: common/lib/xmodule/xmodule/tabs.py:473 lms/djangoapps/courseware/tabs.py:31
+#: common/lib/xmodule/xmodule/tabs.py:473
+#: lms/djangoapps/courseware/tabs.py:31
 #: lms/djangoapps/courseware/views/views.py:1724
 #: lms/djangoapps/shoppingcart/reports.py:212
 #: lms/djangoapps/shoppingcart/reports.py:262
 #: openedx/features/course_experience/__init__.py:51
-#: cms/templates/widgets/header.html:49 cms/templates/widgets/header.html:53
-#: cms/templates/widgets/header.html:157 lms/templates/help_modal.html:173
+#: cms/templates/widgets/header.html:49
+#: cms/templates/widgets/header.html:53
+#: cms/templates/widgets/header.html:157
+#: lms/templates/help_modal.html:173
 #: lms/templates/courseware/courseware.html:166
-#: lms/templates/triboo_analytics/microsite.html:45
 #: lms/templates/ux/reference/bootstrap/course-skeleton.html:21
+#: lms/templates/triboo_analytics/microsite.html:36
 msgid "Course"
-msgstr "Cours"
+msgid_plural "Courses"
+msgstr[0] "Cours"
+msgstr[1] "Cours"
 
 #: common/lib/xmodule/xmodule/textannotation_module.py:40
 msgid "Text Annotation"
@@ -10433,12 +10442,15 @@ msgstr "Remboursement émis directement par CyberSource."
 
 #: lms/djangoapps/support/views/index.py:26
 #: lms/templates/ccx/coach_dashboard.html:59
-#: lms/templates/ccx/enrollment.html:8 lms/templates/support/enrollment.html:21
+#: lms/templates/ccx/enrollment.html:8
+#: lms/templates/support/enrollment.html:21
 #: lms/templates/triboo_analytics/course.html:66
 #: lms/templates/triboo_analytics/my_transcript.html:258
 #: lms/templates/triboo_analytics/transcript.html:46
 msgid "Enrollment"
-msgstr "Inscriptions"
+msgid_plural "Enrollments"
+msgstr[0] "Inscription"
+msgstr[1] "Inscriptions"
 
 #: lms/djangoapps/support/views/index.py:27
 msgid "View and update learner enrollments."
@@ -14092,8 +14104,9 @@ msgstr "Chargement en cours"
 #: lms/templates/emails/ilt_confirmed_email_message.txt:32
 #: lms/templates/emails/ilt_enrolled_email_message.txt:32
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:36
+#: lms/templates/triboo_analytics/table.html
 msgid "Location ID"
-msgstr "ID de l'emplacement"
+msgstr "ID du lieu"
 
 #: cms/templates/error.html:39 lms/templates/static_templates/404.html:39
 msgid "Back to dashboard"
@@ -14601,9 +14614,13 @@ msgstr "Activez votre compte!"
 msgid "Course-loading errors"
 msgstr "Erreurs de chargement du cours"
 
+#: lms/templates/dashboard.html:304
+msgid "My Bookmarks"
+msgstr "Mes favoris"
+
 #: lms/templates/dashboard.html:307
 msgid "My upcoming ILT sessions"
-msgstr "Mes sessions de présentiels à venir"
+msgstr "Mes sessions présentielles à venir"
 
 #: lms/templates/dashboard.html:330
 #: themes/edx.org/lms/templates/dashboard.html:251
@@ -23673,9 +23690,16 @@ msgstr "Reporting global"
 #: lms/templates/triboo_analytics/learner.html:24
 #: lms/templates/triboo_analytics/microsite.html:31
 #: lms/templates/triboo_analytics/transcript.html:26
-
 msgid "Learner Report"
 msgstr "Reporting des apprenants"
+
+#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/ilt.html:29
+#: lms/templates/triboo_analytics/learner.html:28
+#: lms/templates/triboo_analytics/microsite.html:34
+#: lms/templates/triboo_analytics/transcript.html:28
+msgid "ILT Report"
+msgstr "Reporting ILT"
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
@@ -23726,6 +23750,20 @@ msgstr "Sommaire"
 msgid "Time Spent"
 msgstr "Temps passé"
 
+#: lms/templates/triboo_analytics/ilt.html:11
+msgid "Analytics - ILT Report"
+msgstr "Reporting ILT"
+
+#: lms/templates/triboo_analytics/ilt.html:40
+#: lms/templates/triboo_analytics/ilt.html:52
+msgid "ILT Global Report"
+msgstr "Reporting ILT global"
+
+#: lms/templates/triboo_analytics/ilt.html:41
+#: lms/templates/triboo_analytics/ilt.html:53
+msgid "ILT Learner Report"
+msgstr "Reporting ILT des apprenants"
+
 #: lms/templates/triboo_analytics/learner.html:9
 msgid "Analytics - Learner Report"
 msgstr "Reporting des apprenants "
@@ -23737,12 +23775,6 @@ msgstr "Reporting global"
 #: lms/templates/triboo_analytics/microsite.html:38
 msgid "Let's have a look at your learning data"
 msgstr "Vos données d'apprentissage en un clin d'oeil"
-
-#: lms/templates/triboo_analytics/microsite.html:49
-msgid "Active Learner"
-msgid_plural "Active Learners"
-msgstr[0] "Apprenant actif"
-msgstr[1] "Apprenants actifs"
 
 #: lms/templates/triboo_analytics/microsite.html:53
 msgid "Certificate Delivered"
@@ -30206,6 +30238,10 @@ msgid "Contract Type"
 msgstr "Type de Contrat"
 
 #: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "Cours"
+
+#: lms/templates/triboo_analytics/table.html
 msgid "Current Score"
 msgstr "Score actuel"
 
@@ -30297,6 +30333,37 @@ msgstr "Feuille de présence"
 msgid "Location name"
 msgstr "Nom du lieu"
 
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "Adresse du lieu"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "Code postal"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr "Statut d'inscription"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr "Participant"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr "Nombre d'aller"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr "Nombre de retour"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr "Hébergement"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
+msgstr "Adresse de l'hébergement"
 
 ## for ALT-text
 ##global

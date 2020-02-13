@@ -8,7 +8,7 @@
     <div class="article-inner-wrapper">
         <figure class="welcome-text">
           <a class="brand-link" href="/"><img src="<%- context.static_url %>/logo.png"></a>
-          <figcaption>Create a new learner account to take advantage of the Triboo platform!</figcaption>
+          <figcaption><%- gettext("Create a new learner account to take advantage of the Triboo platform!") %></figcaption>
         </figure>
 
         <div class="js-form-feedback" aria-live="assertive" tabindex="-1">

@@ -545,6 +545,10 @@ msgid "Course code"
 msgstr ""
 
 #: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
 msgid "Session ID"
 msgstr ""
 
@@ -588,10 +592,34 @@ msgstr ""
 msgid "Location name"
 msgstr ""
 
-#  #: lms/templates/triboo_analytics/table.html
-#  msgid "Address"
-#  msgstr ""
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr ""
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Zip code"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
 msgstr ""

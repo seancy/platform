@@ -1,7 +1,7 @@
 """
 Unified course experience settings and helper methods.
 """
-from django.utils.translation import ugettext as _
+from django.utils.translation import ungettext
 
 from openedx.core.djangoapps.util.user_messages import UserMessageCollection
 from openedx.core.djangoapps.waffle_utils import CourseWaffleFlag, WaffleFlagNamespace
@@ -48,7 +48,7 @@ def course_home_page_title(course):  # pylint: disable=unused-argument
     """
     Returns the title for the course home page.
     """
-    return _('Course')
+    return ungettext('Course', 'Courses', 1)
 
 
 def default_course_url_name(course_id):

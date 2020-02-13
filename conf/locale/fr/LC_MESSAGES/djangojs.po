@@ -5085,8 +5085,8 @@ msgstr ""
 #: lms/static/js/discovery/views/search_form.js:47
 msgid "%s course found"
 msgid_plural "%s courses found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s cours trouvé"
+msgstr[1] "%s cours trouvés"
 
 #: lms/static/js/discovery/views/search_form.js:56
 #, javascript-format
@@ -9629,6 +9629,10 @@ msgstr "Texte à customiser"
 #: lms/templates/student_account/password_reset.underscore:27
 msgid "Back to login."
 msgstr "Retour à la connexion"
+
+#: lms/templates/student_account/register.underscore:11
+msgid "Create a new learner account to take advantage of the Triboo platform!"
+msgstr "Créer un compte utilisateur pour profiter pleinement de la plateforme Triboo!"
 
 #: lms/templates/student_account/register.underscore:24
 msgid "Create an account using"

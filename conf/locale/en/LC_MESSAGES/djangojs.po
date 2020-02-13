@@ -8944,6 +8944,10 @@ msgstr ""
 msgid "Back to login."
 msgstr ""
 
+#: lms/templates/student_account/register.underscore:11
+msgid "Create a new learner account to take advantage of the Triboo platform!"
+msgstr ""
+
 #: lms/templates/student_account/register.underscore:24
 msgid "Create an account using"
 msgstr ""

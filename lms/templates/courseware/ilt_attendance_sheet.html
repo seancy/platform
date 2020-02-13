@@ -1,8 +1,7 @@
 <%page expression_filter="h"/>
 <%!
     import json
-    from django.utils.translation import ugettext as _
-    from django.utils.translation import pgettext
+    from django.utils.translation import ugettext as _, ungettext, pgettext
     from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
     from branding import api as branding_api
 %>
@@ -33,7 +32,7 @@
     </section>
      <ul class="session-info">
         <li>
-            <div class="field-name">${_("Course")}</div><div class="field-info">${course_name}</div>
+            <div class="field-name">${ungettext("Course", "Courses", 1)}</div><div class="field-info">${course_name}</div>
         </li>
         <li>
             <div class="field-name">${_("Session")}</div><div class="field-info">${session_name}</div>
