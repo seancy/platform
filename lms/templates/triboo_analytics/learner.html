@@ -4,6 +4,10 @@
     from django.utils.translation import ugettext as _
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
+
+    import json
+    from openedx.core.djangolib.markup import HTML
+    from webpack_loader.templatetags.webpack_loader import render_bundle
 %>
 
 <%block name="pagetitle">${_("Analytics - Learner Report")}</%block>
@@ -12,6 +16,35 @@
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="main-container">
         <%include file="banner_nav.html" args="active_page='learner'" />
+
+        ## ${static.renderReact2(
+        ##   component="LearnerReport",
+        ##   id="learner-report",
+        ##   props={
+        ##     'filtersData':json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data]),
+        ##     'last_update':_("Please, note that these reports are not live. Last update:") + ' ' +last_update,
+        ##     'learner_table':('true' if learner_table else 'false')
+        ##   }
+        ## )}
+
+        ${HTML(render_bundle('LearnerReport'))}
+        ${HTML(render_bundle('ReactRenderer'))}
+        <div id="learner-report"></div>
+        <script type="text/javascript">
+          new ReactRenderer({
+            component: LearnerReport,
+            selector: '#learner-report',
+            componentName: 'LearnerReport',
+            props: {
+                filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
+                last_update: '${_("Please, note that these reports are not live. Last update:") + ' ' +last_update}',
+                learner_table: ${('true' if learner_table else 'false')}
+              }
+          });
+        </script>
+
+
+
         <section class="analytics-wrapper learner">
             <div class="report-wrapper">
               % if learner_table:

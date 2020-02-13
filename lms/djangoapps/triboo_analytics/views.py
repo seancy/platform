@@ -842,12 +842,18 @@ def learner_view(request):
         query_dict = query_dict
         query_triples = get_query_triples(query_dict)
 
+    analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                                settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+    user_properties_helper = UserPropertiesHelper(analytics_user_properties)
+    filters_data = user_properties_helper.get_possible_choices()
+
     return render_to_response(
         "triboo_analytics/learner.html",
         {
             'row_count': row_count,
             'learner_table': learner_table,
             'filter_form': filter_form,
+            'filters_data': filters_data,
             'query_dict': query_dict,
             'query_triples': query_triples,
             'user_properties_form': user_properties_form,

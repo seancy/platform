@@ -59,10 +59,12 @@ module.exports = Merge.smart({
         StudentAccountDeletionInitializer: ['babel-polyfill','./lms/static/js/student_account/StudentAccountDeletionInitializer.js'],
         CustomizedReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CustomizedReport.js'],
         CourseReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CourseReport.js'],
+        Toolbar: ['babel-polyfill','./lms/static/js/triboo_analytics/Toolbar.js'],
 
         Dialog: ['babel-polyfill','./lms/static/js/dialog.js'],
         Dashboard: ['babel-polyfill','./lms/static/js/dashboard.js'],
         Courseware: ['babel-polyfill','./lms/static/js/courseware.js'],
+        LearnerReport: ['babel-polyfill','./lms/static/js/triboo_analytics/LearnerReport.js'],
 
         // Learner Dashboard
         EntitlementFactory: ['babel-polyfill','./lms/static/js/learner_dashboard/course_entitlement_factory.js'],
