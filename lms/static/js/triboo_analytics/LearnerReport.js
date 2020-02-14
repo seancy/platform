@@ -7,8 +7,6 @@ export class LearnerReport extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log(props.learner_table)
-
         this.state = {
             filters:this.props.filters || [],
             properties:this.props.properties || [],
@@ -21,9 +19,6 @@ export class LearnerReport extends React.Component {
     }
 
     componentDidMount() {
-        /*setTimeout(()=>{
-            this.myRef.current.classList.remove('hidden')
-        },400)*/
     }
 
 
@@ -73,13 +68,12 @@ export class LearnerReport extends React.Component {
         }
 
         const json = FAKE_JSON
-        // hidden
         return (
             <section ref={this.myRef} className="analytics-wrapper learner">
                 <div className="report-wrapper">
 
                     <div className="last-update">
-                        <i className="fa fa-history"></i>{this.props.last_update}
+                        <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
                     </div>
                     <Toolbar onChange={this.fetchData.bind(this)} filters={this.props.filters}
                              properties={this.props.filters}/>

@@ -388,6 +388,44 @@ msgstr "在导入新课程到数据库时出现了错误。"
 msgid "Your import has failed."
 msgstr "您的导入操作已失败。"
 
+
+# ----------analytics----------
+
+#: lms/templates/triboo_analytics/course.html:115
+#: lms/templates/triboo_analytics/learner.html:34
+#: lms/templates/triboo_analytics/microsite.html:95
+#: lms/templates/triboo_analytics/my_transcript.html:290
+#: lms/templates/triboo_analytics/transcript.html:78
+msgid "Please, note that these reports are not live. Last update:"
+msgstr "请注意，这些报告不是实时的。上次更新："
+
+# ----------learner report----------
+#: lms/static/js/triboo_analytics/Toolbar.js:167
+msgid "filters"
+msgstr "过滤"
+
+#: lms/static/js/triboo_analytics/Toolbar.js:167
+msgid "properties"
+msgstr "属性"
+
+#: lms/static/js/triboo_analytics/Toolbar.js:167
+msgid "period"
+msgstr "周期"
+
+#: lms/static/js/triboo_analytics/Toolbar.js:167
+msgid "export"
+msgstr "导出"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Page"
+msgstr "页面"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "of"
+msgstr ""
+
+
+
 #: cms/static/js/features/import/views/import.js:66
 #: common/static/bundles/Import.js:226
 msgid "Your import is in progress; navigating away will abort it."
