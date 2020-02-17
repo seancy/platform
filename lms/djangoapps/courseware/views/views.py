@@ -2204,7 +2204,8 @@ class CourseReminder():
     def course_filter(self, course_id):
         descriptor = modulestore().get_course(course_id)
         if descriptor:
-            return len(descriptor.reminder_info) > 0
+            return len(descriptor.reminder_info) > 0 or \
+                   (descriptor.periodic_reminder_enabled and descriptor.periodic_reminder_day > 0)
         return False
 
     def get_course_with_reminders(self):
