@@ -77,7 +77,7 @@ export class LearnerReport extends React.Component {
                     </div>
                     <Toolbar onChange={this.fetchData.bind(this)} filters={this.props.filters}
                              properties={this.props.filters}/>
-                    <DataList className="data-list" enableRowsCount={true} {...json}/>
+                    <DataList className="data-list" defaultLanguage={this.props.defaultLanguage} enableRowsCount={true} {...json}/>
 
                 </div>
             </section>

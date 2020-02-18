@@ -54,7 +54,7 @@
     "sass-loader": "6.0.6",
     "scriptjs": "2.5.8",
     "se-react-checkbox-group": "^1.0.5",
-    "se-react-data-list": "^1.0.9",
+    "se-react-data-list": "^1.0.12",
     "se-react-date-range": "^1.0.26",
     "se-react-dropdown": "^1.0.14",
     "sec-react-label-value": "^1.0.12",
