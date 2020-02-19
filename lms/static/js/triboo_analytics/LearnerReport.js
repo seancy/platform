@@ -7,12 +7,18 @@ export class LearnerReport extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log(props.learner_table)
-
         this.state = {
-            filters:this.props.filters || [],
-            properties:this.props.properties || [],
-            data:[]
+            //for initialize toolbar components
+            filters: this.props.filters || [],
+            properties: this.props.properties || [],
+
+            //storing toolbar data
+            toolbarData: {},
+
+            //ajax result
+            data: [],
+            totalData: {},
+            rowsCount: 0,
         };
 
         this.myRef = React.createRef()
@@ -21,69 +27,103 @@ export class LearnerReport extends React.Component {
     }
 
     componentDidMount() {
-        /*setTimeout(()=>{
-            this.myRef.current.classList.remove('hidden')
-        },400)*/
+        this.fetchData(1)
     }
 
+    toolbarDataUpdate(toolbarData){
+        this.setState(s=>{
+            return {
+                toolbarData
+            }
+        },()=>{
+            this.fetchData(1)
+            this.myRef.current.resetPage(1)
+        })
+    }
 
-    fetchData(parameters){
+    fetchData(pageNo) {
         //send ajax request with parameters
         //hand response to json
         //set json to state
-        console.log(parameters)
+
+        const url = `/static/data.json`
+        const {toolbarData} = this.state
+        const getVal=(key,defaultValue)=>{
+            return toolbarData && toolbarData[key]?toolbarData[key]: defaultValue || '';
+        }
+        let ajaxData = {
+            'report_type': 'learner_report',
+            'courses_selected': [''],
+            'query_tuples': toolbarData && toolbarData.selectedFilterItems ?
+                toolbarData.selectedFilterItems.map(p => [p.text, p.value]) : [],
+            'selected_properties': toolbarData && toolbarData.selectedProperties ?
+                toolbarData.selectedProperties.map(p => p.value): [],
+            'from_day': getVal('startDate'),
+            'to_day': getVal('endDate'),
+            'format': getVal('exportType'),
+            'csrfmiddlewaretoken': 'nDou5pR169v76UwtX4XOpbQsSTLu6SexeWyd0ykjGR2ahYMV0OY7nddkYQqnT6ze',
+            'page': {
+                no: pageNo, size: 10
+            },
+        }
+
+        $.ajax(url, {
+            method: 'get', //please change it to post in real environment.
+            dataType: 'json',
+            data: ajaxData,
+            success: (json) => {
+                this.setState((s, p) => {
+                    return {
+                        data: json.list,
+                        totalData: json.total, //{email: 'total:', first_name: json.total},
+                        rowsCount: json.pagination.rowsCount
+                    }
+                })
+            }
+        })
     }
 
     render() {
-        //const json = this.fetchData();
-        const {data}=this.state
-        const FAKE_JSON = {
-            pagination:{
-                pageSize:2,
-                rowsCount:99,
+        const config = {
+            fields: [
+                {name: 'Name', fieldName: 'userName'},
+                {name: 'Email', fieldName: 'email'},
+                {name: 'Country', fieldName: 'country'},
+                {name: 'Commerical Zone', fieldName: 'country'},
+                {name: 'Commerical Region', fieldName: 'country'},
+                {name: 'City', fieldName: 'country'},
+                {name: 'Employee', fieldName: 'country'},
+                {name: 'Enrollments', fieldName: 'country'},
+                {name: 'Successful', fieldName: 'country'},
+                {name: 'Unsuccessful', fieldName: 'country'},
+                {name: 'In Progress', fieldName: 'country'},
+                {name: 'Not Started', fieldName: 'country'},
+                {name: 'Average Final Score', fieldName: 'country'},
+                {name: 'Badges', fieldName: 'country'},
+                {name: 'Posts', fieldName: 'country'},
+                {name: 'Total Time Spent', fieldName: 'country'},
+                {name: 'Last Login', fieldName: 'country'}
+            ],
+            pagination: {
+                pageSize: 10,
+                rowsCount: this.state.rowsCount,
             },
-            fields : [
-                //{ name:'', fieldName:'id' },
-                { name:'Name', fieldName:'userName' },
-                { name:'Email', fieldName:'email' },
-                { name:'Country', fieldName:'country' },
-                /*{ name:'Commerical Zone', fieldName:'country' },
-                { name:'Commerical Region', fieldName:'country' },
-                { name:'City', fieldName:'country' },
-                { name:'Employee', fieldName:'country' },
-                { name:'Enrollments', fieldName:'country' },
-                { name:'Successful', fieldName:'country' },
-                { name:'Unsuccessful', fieldName:'country' },
-                { name:'In Progress', fieldName:'country' },
-                { name:'Not Started', fieldName:'country' },
-                { name:'Average Final Score', fieldName:'country' },
-                { name:'Badges', fieldName:'country' },
-                { name:'Posts', fieldName:'country' },
-                { name:'Total Time Spent', fieldName:'country' },
-                { name:'Last Login', fieldName:'country' },*/
-            ],
-            data : [
-                { id:'a0', test1:'t1', userName:'The Honor', email:'honor@example.com', country:'US' },
-                { id:'a1', test1:'t11', userName:'Judy Sim', email:'audit@example.com', country:'France' },
-                { id:'a2', test1:'t1111', userName:'verified', email:'verified@example.com', country:'Brazil' },
-            ],
-            totalData : {
-                email:'3'
-            }
+            data: this.state.data,
+            totalData: this.state.totalData
         }
 
-        const json = FAKE_JSON
-        // hidden
         return (
-            <section ref={this.myRef} className="analytics-wrapper learner">
+            <section className="analytics-wrapper learner">
                 <div className="report-wrapper">
 
                     <div className="last-update">
-                        <i className="fa fa-history"></i>{this.props.last_update}
+                        <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
                     </div>
-                    <Toolbar onChange={this.fetchData.bind(this)} filters={this.props.filters}
+                    <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
                              properties={this.props.filters}/>
-                    <DataList className="data-list" enableRowsCount={true} {...json}/>
+                    <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
+                              enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
+                    />
 
                 </div>
             </section>
