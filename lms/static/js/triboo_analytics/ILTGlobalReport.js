@@ -2,6 +2,7 @@
 import React from 'react';
 import {Toolbar} from './Toolbar'
 import DataList from "se-react-data-list"
+import PaginationConfig from './PaginationConfig'
 
 export class ILTGlobalReport extends React.Component {
     constructor(props) {
@@ -22,7 +23,6 @@ export class ILTGlobalReport extends React.Component {
         };
 
         this.myRef = React.createRef()
-
 
     }
 
@@ -63,7 +63,7 @@ export class ILTGlobalReport extends React.Component {
             'format': getVal('exportType'),
             'csrfmiddlewaretoken': 'nDou5pR169v76UwtX4XOpbQsSTLu6SexeWyd0ykjGR2ahYMV0OY7nddkYQqnT6ze',
             'page': {
-                no: pageNo, size: 10
+                no: pageNo, size: PaginationConfig.PageSize
             },
         }
 
@@ -84,27 +84,26 @@ export class ILTGlobalReport extends React.Component {
     }
 
     render() {
-        const config = {
+        const {data,totalData} = this.state
+        const parameterObj = {
             fields: [
                 {name: 'Name', fieldName: 'userName'},
                 {name: 'Email', fieldName: 'email'},
                 {name: 'Country', fieldName: 'country'},
             ],
             pagination: {
-                pageSize: 10,
+                pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,
             },
-            data: this.state.data,
-            totalData: this.state.totalData
+            data, totalData
         }
-        console.log(Toolbar.a1)
 
         return (
             <React.Fragment>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
                     enabledItems={['period','export']} properties={this.props.filters}/>
                  <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
-                          enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
+                          enableRowsCount={true} {...parameterObj} onPageChange={this.fetchData.bind(this)}
                 />
 
             </React.Fragment>

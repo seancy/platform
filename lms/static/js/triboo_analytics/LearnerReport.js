@@ -2,6 +2,7 @@
 import React from 'react';
 import {Toolbar} from './Toolbar'
 import DataList from "se-react-data-list"
+import PaginationConfig from './PaginationConfig'
 
 export class LearnerReport extends React.Component {
     constructor(props) {
@@ -63,7 +64,7 @@ export class LearnerReport extends React.Component {
             'format': getVal('exportType'),
             'csrfmiddlewaretoken': 'nDou5pR169v76UwtX4XOpbQsSTLu6SexeWyd0ykjGR2ahYMV0OY7nddkYQqnT6ze',
             'page': {
-                no: pageNo, size: 10
+                no: pageNo, size: PaginationConfig.PageSize
             },
         }
 
@@ -105,7 +106,7 @@ export class LearnerReport extends React.Component {
                 {name: 'Last Login', fieldName: 'country'}
             ],
             pagination: {
-                pageSize: 10,
+                pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,
             },
             data: this.state.data,
