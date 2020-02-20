@@ -85,9 +85,24 @@ class Properties extends React.Component {
 
 
 export class Toolbar extends React.Component {
+    static a1='a1';
+
     constructor(props) {
         super(props);
         this.fireOnChange = this.fireOnChange.bind(this)
+
+        const {enabledItems}=props
+        this.state = {
+            selectedFilterItems:[],
+            selectedProperties:[],
+            startDate:'',
+            endDate:'',
+            exportType:'',
+            toolbarItems: this.getToolbarItems(enabledItems) || []
+        };
+    }
+
+    getToolbarItems(enabledItems){
         const filterData = [
             {value:'a', text:'Address'},
             {value:'b', text:'City'},
@@ -100,33 +115,25 @@ export class Toolbar extends React.Component {
             {value: 'a3', text: 'gender'},
             {value: 'a43', text: 'country'}
         ]
-
-        this.state = {
-            selectedFilterItems:[],
-            selectedProperties:[],
-            startDate:'',
-            endDate:'',
-            exportType:'',
-            toolbarItems: [
-                {name:'filters', text: gettext('filters'), icon: 'fa-search', active: true, component: LabelValue, props:{
-                    data:this.props.filters || filterData,
-                    onChange:(selectedFilterItems)=>this.setState({selectedFilterItems}, this.fireOnChange)
-                }},
-                {name:'properties', text: gettext('properties'), icon: 'fa-sliders-h', active: false, component: Properties, props:{
-                    data:this.props.properties || propertyData,
-                    onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
-                }},
-                {name:'period', text: gettext('period'), icon: 'fa-calendar-alt', active: false, component: DateRange, props:{
-                    label:'Select a time range， Last',
-                    onChange:(startDate,endDate)=>{
-                        this.setState({startDate,endDate}, this.fireOnChange)
-                    }
-                }},
-                {name:'export', text: gettext('export'), icon: 'fa-file-export', active: false, component: Exporter, props:{
-                    onChange:exportType=>this.setState({exportType}, this.fireOnChange)
-                }},
-            ]
-        };
+        return [
+            {name:'filters', text: gettext('filters'), icon: 'fa-search', active: true, component: LabelValue, props:{
+                data:this.props.filters || filterData,
+                onChange:(selectedFilterItems)=>this.setState({selectedFilterItems}, this.fireOnChange)
+            }},
+            {name:'properties', text: gettext('properties'), icon: 'fa-sliders-h', active: false, component: Properties, props:{
+                data:this.props.properties || propertyData,
+                onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
+            }},
+            {name:'period', text: gettext('period'), icon: 'fa-calendar-alt', active: false, component: DateRange, props:{
+                label:'Select a time range， Last',
+                onChange:(startDate,endDate)=>{
+                    this.setState({startDate,endDate}, this.fireOnChange)
+                }
+            }},
+            {name:'export', text: gettext('export'), icon: 'fa-file-export', active: false, component: Exporter, props:{
+                onChange:exportType=>this.setState({exportType}, this.fireOnChange)
+            }},
+        ].filter(p=>enabledItems.includes(p.name) ||  enabledItems.length <= 0)
     }
 
     fireOnChange () {
