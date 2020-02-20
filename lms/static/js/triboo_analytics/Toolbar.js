@@ -102,7 +102,7 @@ export class Toolbar extends React.Component {
         };
     }
 
-    getToolbarItems(enabledItems){
+    getToolbarItems(enabledItems=[]){
         const filterData = [
             {value:'a', text:'Address'},
             {value:'b', text:'City'},
@@ -116,7 +116,7 @@ export class Toolbar extends React.Component {
             {value: 'a43', text: 'country'}
         ]
         return [
-            {name:'filters', text: gettext('filters'), icon: 'fa-search', active: true, component: LabelValue, props:{
+            {name:'filters', text: gettext('filters'), icon: 'fa-search', active: false, component: LabelValue, props:{
                 data:this.props.filters || filterData,
                 onChange:(selectedFilterItems)=>this.setState({selectedFilterItems}, this.fireOnChange)
             }},
@@ -133,14 +133,19 @@ export class Toolbar extends React.Component {
             {name:'export', text: gettext('export'), icon: 'fa-file-export', active: false, component: Exporter, props:{
                 onChange:exportType=>this.setState({exportType}, this.fireOnChange)
             }},
-        ].filter(p=>enabledItems.includes(p.name) ||  enabledItems.length <= 0)
+        ].filter(p=>enabledItems.includes(p.name) ||  enabledItems.length <= 0).map((p,index)=>{
+            let active = false
+            if (index == 0){
+                active=true
+            }
+            return {...p, active}
+        })
     }
 
     fireOnChange () {
         const {onChange}=this.props
         const json = ['selectedFilterItems','selectedProperties', 'startDate','endDate','exportType']
             .reduce((mem, key)=>({...mem, [key]:this.state[key]}), {});
-        //console.log(json)
         onChange && onChange(json);
     };
 
