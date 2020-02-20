@@ -2,11 +2,11 @@
 import React from 'react';
 import {Toolbar} from './Toolbar'
 import DataList from "se-react-data-list"
+import PaginationConfig from './PaginationConfig'
 
 export class ILTLearnerReport extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             //for initialize toolbar components
             filters: this.props.filters || [],
@@ -20,10 +20,7 @@ export class ILTLearnerReport extends React.Component {
             totalData: {},
             rowsCount: 0,
         };
-
         this.myRef = React.createRef()
-
-
     }
 
     componentDidMount() {
@@ -63,7 +60,7 @@ export class ILTLearnerReport extends React.Component {
             'format': getVal('exportType'),
             'csrfmiddlewaretoken': 'nDou5pR169v76UwtX4XOpbQsSTLu6SexeWyd0ykjGR2ahYMV0OY7nddkYQqnT6ze',
             'page': {
-                no: pageNo, size: 10
+                no: pageNo, size: PaginationConfig.PageSize
             },
         }
 
@@ -84,49 +81,27 @@ export class ILTLearnerReport extends React.Component {
     }
 
     render() {
-        const config = {
+        const {data,totalData} = this.state
+        const parameterObj = {
             fields: [
                 {name: 'Name', fieldName: 'userName'},
                 {name: 'Email', fieldName: 'email'},
-                {name: 'Country', fieldName: 'country'},
-                {name: 'Commerical Zone', fieldName: 'country'},
-                {name: 'Commerical Region', fieldName: 'country'},
-                {name: 'City', fieldName: 'country'},
-                {name: 'Employee', fieldName: 'country'},
-                {name: 'Enrollments', fieldName: 'country'},
-                {name: 'Successful', fieldName: 'country'},
-                {name: 'Unsuccessful', fieldName: 'country'},
-                {name: 'In Progress', fieldName: 'country'},
-                {name: 'Not Started', fieldName: 'country'},
-                {name: 'Average Final Score', fieldName: 'country'},
-                {name: 'Badges', fieldName: 'country'},
-                {name: 'Posts', fieldName: 'country'},
-                {name: 'Total Time Spent', fieldName: 'country'},
-                {name: 'Last Login', fieldName: 'country'}
             ],
             pagination: {
-                pageSize: 10,
+                pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,
             },
-            data: this.state.data,
-            totalData: this.state.totalData
+            data, totalData
         }
 
         return (
-            <section className="analytics-wrapper learner">
-                <div className="report-wrapper">
-
-                    <div className="last-update">
-                        <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
-                    </div>
-                    <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
-                             properties={this.props.filters}/>
-                    <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
-                              enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
-                    />
-
-                </div>
-            </section>
+            <>
+                <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
+                         properties={this.props.filters}/>
+                <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
+                          enableRowsCount={true} {...parameterObj} onPageChange={this.fetchData.bind(this)}
+                />
+            </>
         )
     }
 }

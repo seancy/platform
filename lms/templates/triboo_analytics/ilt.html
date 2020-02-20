@@ -65,6 +65,22 @@
                     <li class="nav-item active">${_("ILT Learner Report")}</li>
                 </ul>
 
+                ${HTML(render_bundle('ILTLearnerReport'))}
+                ${HTML(render_bundle('ReactRenderer'))}
+                <div id="ilt-learner-report"></div>
+                <script type="text/javascript">
+                  new ReactRenderer({
+                    component: ILTLearnerReport,
+                    selector: '#ilt-learner-report',
+                    componentName: 'ILTLearnerReport',
+                    props: {
+                        filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
+                        defaultLanguage: '${request.LANGUAGE_CODE}',
+                      }
+                  });
+                </script>
+
+                <div>------------------------------</div>
                 <form class="table-period-form" action="${ilt_global_url}" method="get">
                     ${time_period_form}
                     <input type="submit" value="${_("Go")}"/>

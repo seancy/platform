@@ -7,12 +7,7 @@ import PaginationConfig from './PaginationConfig'
 export class ILTGlobalReport extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            //for initialize toolbar components
-            filters: this.props.filters || [],
-            properties: this.props.properties || [],
-
             //storing toolbar data
             toolbarData: {},
 
@@ -21,9 +16,7 @@ export class ILTGlobalReport extends React.Component {
             totalData: {},
             rowsCount: 0,
         };
-
         this.myRef = React.createRef()
-
     }
 
     componentDidMount() {
@@ -42,10 +35,6 @@ export class ILTGlobalReport extends React.Component {
     }
 
     fetchData(pageNo) {
-        //send ajax request with parameters
-        //hand response to json
-        //set json to state
-
         const url = `/static/data.json`
         const {toolbarData} = this.state
         const getVal=(key,defaultValue)=>{
@@ -54,10 +43,6 @@ export class ILTGlobalReport extends React.Component {
         let ajaxData = {
             'report_type': 'learner_report',
             'courses_selected': [''],
-            'query_tuples': toolbarData && toolbarData.selectedFilterItems ?
-                toolbarData.selectedFilterItems.map(p => [p.text, p.value]) : [],
-            'selected_properties': toolbarData && toolbarData.selectedProperties ?
-                toolbarData.selectedProperties.map(p => p.value): [],
             'from_day': getVal('startDate'),
             'to_day': getVal('endDate'),
             'format': getVal('exportType'),
@@ -99,15 +84,13 @@ export class ILTGlobalReport extends React.Component {
         }
 
         return (
-            <React.Fragment>
+            <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
                     enabledItems={['period','export']} properties={this.props.filters}/>
                  <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...parameterObj} onPageChange={this.fetchData.bind(this)}
                 />
-
-            </React.Fragment>
-
+            </>
         )
     }
 }
