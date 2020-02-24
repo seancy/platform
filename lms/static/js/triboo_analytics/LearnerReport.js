@@ -47,7 +47,7 @@ export class LearnerReport extends React.Component {
         //hand response to json
         //set json to state
 
-        const url = `/static/data.json`
+        const url = `/analytics/learner/json/`
         const {toolbarData} = this.state
         const getVal=(key,defaultValue)=>{
             return toolbarData && toolbarData[key]?toolbarData[key]: defaultValue || '';
@@ -62,17 +62,22 @@ export class LearnerReport extends React.Component {
             'from_day': getVal('startDate'),
             'to_day': getVal('endDate'),
             'format': getVal('exportType'),
-            'csrfmiddlewaretoken': 'nDou5pR169v76UwtX4XOpbQsSTLu6SexeWyd0ykjGR2ahYMV0OY7nddkYQqnT6ze',
+            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
             'page': {
                 no: pageNo, size: PaginationConfig.PageSize
             },
         }
+        console.log('ajaxData', ajaxData)
 
         $.ajax(url, {
-            method: 'get', //please change it to post in real environment.
+            // method: 'get', //please change it to post in real environment.
+            method: 'post',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(ajaxData),
             dataType: 'json',
-            data: ajaxData,
             success: (json) => {
+                console.log('json', json)
+                console.log('json json', JSON.stringify(json))
                 this.setState((s, p) => {
                     return {
                         data: json.list,

@@ -30,6 +30,7 @@
         ${HTML(render_bundle('LearnerReport'))}
         ${HTML(render_bundle('ReactRenderer'))}
         <div id="learner-report"></div>
+        <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
         <script type="text/javascript">
           new ReactRenderer({
             component: LearnerReport,

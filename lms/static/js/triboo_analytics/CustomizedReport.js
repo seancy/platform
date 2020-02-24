@@ -171,6 +171,15 @@ export class CustomizedReport {
         this.$accordingTrigger.on('click', (e) => {
             e.preventDefault();
         });
+        $('#table-export-selection').delegate('input', 'click', (e) => {
+            let format_val = $('#table-export-selection input[name=format]:checked')[0].value;
+            if (format_val == 'xls') {
+                this.enrollmentLimit = 4
+            } else {
+                this.enrollmentLimit = 6
+            }
+            $('#enrollment_limit').text(this.enrollmentLimit)
+        });
         this.triggerExpand();
         this.reportTypeAndCourseInit();
     }
@@ -293,9 +302,11 @@ export class CustomizedReport {
         $('#form-customized-report').serializeArray().forEach(function ({name, value}) {
             if (name == 'selected_properties') {
                 data['selected_properties'].push({name: value})
+            } else {
+                data[name] = value
             }
-            data[name] = value
         })
+        console.log('data', data)
         return await $.post({
             url: 'export/',
             data: data
@@ -449,7 +460,7 @@ class ReportTypeAndCourseReport extends React.Component {
                         <div className={'course-report ' + (this.state.hideCourseReportSelect ? 'hide' : '')}>
                             <p className="section-label">The enrollments of the courses you have been selected is:
                                 <span id="enrollment_selected">0</span>
-                                . (300,000 at most)
+                                . (<span id="enrollment_limit">6</span> at most)
                             </p>
                             <select id="course_selected" ref="course_selected">
                                 {courses.map(({cid, course_title, course_enrollments}) => {
