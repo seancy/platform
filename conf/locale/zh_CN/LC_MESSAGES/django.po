@@ -4834,18 +4834,23 @@ msgstr "外部讨论"
 msgid "Home"
 msgstr "主页"
 
-#: common/lib/xmodule/xmodule/tabs.py:473 lms/djangoapps/courseware/tabs.py:31
+#: common/lib/xmodule/xmodule/tabs.py:473
+#: lms/djangoapps/courseware/tabs.py:31
 #: lms/djangoapps/courseware/views/views.py:1724
 #: lms/djangoapps/shoppingcart/reports.py:212
 #: lms/djangoapps/shoppingcart/reports.py:262
 #: openedx/features/course_experience/__init__.py:51
-#: cms/templates/widgets/header.html:49 cms/templates/widgets/header.html:53
-#: cms/templates/widgets/header.html:157 lms/templates/help_modal.html:173
+#: cms/templates/widgets/header.html:49
+#: cms/templates/widgets/header.html:53
+#: cms/templates/widgets/header.html:157
+#: lms/templates/help_modal.html:173
 #: lms/templates/courseware/courseware.html:166
-#: lms/templates/triboo_analytics/microsite.html:45
 #: lms/templates/ux/reference/bootstrap/course-skeleton.html:21
+#: lms/templates/triboo_analytics/microsite.html:36
 msgid "Course"
-msgstr "课程"
+msgid_plural "Courses"
+msgstr[0] "课程"
+msgstr[1] "课程"
 
 #: common/lib/xmodule/xmodule/textannotation_module.py:40
 msgid "Text Annotation"
@@ -9830,12 +9835,15 @@ msgstr "直接透过CyberSource追踪退款问题。"
 
 #: lms/djangoapps/support/views/index.py:26
 #: lms/templates/ccx/coach_dashboard.html:59
-#: lms/templates/ccx/enrollment.html:8 lms/templates/support/enrollment.html:21
+#: lms/templates/ccx/enrollment.html:8
+#: lms/templates/support/enrollment.html:21
 #: lms/templates/triboo_analytics/course.html:66
 #: lms/templates/triboo_analytics/my_transcript.html:258
 #: lms/templates/triboo_analytics/transcript.html:46
 msgid "Enrollment"
-msgstr "选课"
+msgid_plural "Enrollments"
+msgstr[0] "选课"
+msgstr[1] "选课"
 
 #: lms/djangoapps/support/views/index.py:27
 msgid "View and update learner enrollments."
@@ -13782,6 +13790,10 @@ msgstr "激活您的账户"
 msgid "Course-loading errors"
 msgstr "课程加载错误"
 
+#: lms/templates/dashboard.html:304
+msgid "My Bookmarks"
+msgstr "我的书签"
+
 #: lms/templates/dashboard.html:307
 msgid "My upcoming ILT sessions"
 msgstr "我即将开始的 ILT 课程"
@@ -14434,12 +14446,15 @@ msgstr "课程内容查看"
 msgid "View this course as:"
 msgstr "查看课程的身份："
 
-#: lms/templates/preview_menu.html:36
-#: lms/templates/instructor/instructor_dashboard_2/membership.html:22
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
+#: lms/templates/courseware/ilt_attendance_sheet.html:57
+#: lms/templates/preview_menu.html:36
+#: lms/templates/triboo_analytics/microsite.html:49
 msgid "Learner"
-msgstr "学员"
+msgid_plural "Learners"
+msgstr[0] "学员"
+msgstr[1] "学员"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:22
 msgid "Partner"
@@ -17591,12 +17606,12 @@ msgid "Set automatic enrollment rules for this course"
 msgstr "为该课程设置自动注册规则"
 
 #: cms/templates/settings.html:599
-msgid "Job Codes"
-msgstr "职责编码"
+msgid "Learning Groups"
+msgstr "学习小组"
 
 #: cms/templates/settings.html:599
-msgid "Identify the enrollment job codes here."
-msgstr "在此设置注册职责编码"
+msgid "Identify the enrollment learning groups here."
+msgstr "在此设置注册学习小组"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:97
 msgid "{course_number} {course_name} Home Page"
@@ -22157,6 +22172,14 @@ msgstr "课程报告"
 msgid "Learner Report"
 msgstr "学员报告"
 
+#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/ilt.html:29
+#: lms/templates/triboo_analytics/learner.html:28
+#: lms/templates/triboo_analytics/microsite.html:34
+#: lms/templates/triboo_analytics/transcript.html:28
+msgid "ILT Report"
+msgstr "ILT 报告"
+
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
 msgstr "选择一个课程查看学习报告："
@@ -22206,6 +22229,20 @@ msgstr "概要"
 msgid "Time Spent"
 msgstr "学习时长"
 
+#: lms/templates/triboo_analytics/ilt.html:11
+msgid "Analytics - ILT Report"
+msgstr "分析 - ILT 报告"
+
+#: lms/templates/triboo_analytics/ilt.html:40
+#: lms/templates/triboo_analytics/ilt.html:52
+msgid "ILT Global Report"
+msgstr "ILT 整体报告"
+
+#: lms/templates/triboo_analytics/ilt.html:41
+#: lms/templates/triboo_analytics/ilt.html:53
+msgid "ILT Learner Report"
+msgstr "ILT 学员报告"
+
 #: lms/templates/triboo_analytics/learner.html:9
 msgid "Analytics - Learner Report"
 msgstr "分析 - 学员报告"
@@ -22217,12 +22254,6 @@ msgstr "学习分析 - 整体报告"
 #: lms/templates/triboo_analytics/microsite.html:38
 msgid "Let's have a look at your learning data"
 msgstr "让我们来看看你的学习数据"
-
-#: lms/templates/triboo_analytics/microsite.html:49
-msgid "Active Learner"
-msgid_plural "Active Learners"
-msgstr[0] "活跃用户"
-msgstr[1] "活跃用户"
 
 #: lms/templates/triboo_analytics/microsite.html:53
 msgid "Certificate Delivered"
@@ -27932,6 +27963,10 @@ msgid "Does this SCORM allow users to submit answer multiple times?"
 msgstr "该 SCORM 允许用户多次提交回答吗？"
 
 #: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "课程名称"
+
+#: lms/templates/triboo_analytics/table.html
 msgid "Current Score"
 msgstr "当前分数"
 
@@ -28022,3 +28057,215 @@ msgstr "考勤表"
 #: lms/templates/triboo_analytics/table.html
 msgid "Location name"
 msgstr "地点名称"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "地址"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "邮政编码"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr "注册状态"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr "参加人员"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr "外出旅行"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr "返程旅行"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr "留宿"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
+msgstr "留宿地址"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+msgid "Number of learners enrolled in a course"
+msgstr "课程注册学生数"
+
+#: lms/templates/triboo_analytics/microsite.html:75
+msgid "Average time learners have spent on the platform"
+msgstr "学生平均在线时长"
+
+#: lms/templates/triboo_analytics/microsite.html:56
+msgid ""
+"Number of times a learner successfully completed a course with 100% progress"
+" and a passing total score"
+msgstr "学生完成课程并达到课程分数线后获得证书的人次"
+
+#: lms/templates/triboo_analytics/microsite.html:34
+msgid "Number of courses created and available"
+msgstr "已创建并可用的课程数"
+
+#: lms/templates/triboo_analytics/microsite.html:91
+msgid "Number of different visitors who logged in the platform per day"
+msgstr "每日登陆学生人数"
+
+#: lms/templates/triboo_analytics/microsite.html:114
+msgid "Proportion of mobile connection vs. computer connection"
+msgstr "使用移动设备及电脑设备的用户比例"
+
+#: lms/templates/triboo_analytics/microsite.html:136
+msgid ""
+"Where are located the active learners based on their profile information"
+msgstr "基于学生身份信息中的地理位置展示的学生分布地图"
+
+
+#: lms/templates/triboo_analytics/course.html:54
+msgid ""
+"Number of learners enrolled in the course. The learners have been registered"
+" by an Admin or self-registered via the catalog"
+msgstr "课程注册学生数，包括管理员注册和自主注册学生"
+
+#: lms/templates/triboo_analytics/course.html:66
+msgid ""
+"Average time it took to learners to complete the course with 100% progress"
+msgstr "学生完成课程所用的平均时间"
+
+#: lms/templates/triboo_analytics/course.html:80
+msgid ""
+"Average total score of the learners who completed the course with 100% "
+"progress"
+msgstr "学生完成课程所取得的平均成绩"
+
+#: lms/templates/triboo_analytics/course.html:92
+msgid ""
+"Number of posts/answers/comments written in the course discussions/forums"
+msgstr "课程论坛及讨论区发表的帖子/回复/评论数"
+
+#: lms/templates/triboo_analytics/course.html:107
+msgid "Proportion of learners according to their course status"
+msgstr "学生课程学习状态的分布比率"
+
+#: lms/templates/triboo_analytics/course.html:147
+msgid ""
+"Learners who started to visit the course but haven't completed it yet"
+msgstr "已开始但未完成的学生"
+
+#: lms/templates/triboo_analytics/course.html:159
+msgid "Learners who are enrolled in the course but haven't visited it yet"
+msgstr "已注册但未开始的学生"
+
+#: lms/templates/triboo_analytics/course.html:123
+msgid ""
+"Leaners who completed the course with 100% progress and a total score "
+"passing the minimum required score"
+msgstr "已完成课程且成绩合格的学生"
+
+#: lms/templates/triboo_analytics/course.html:159
+msgid "Leaners who completed the course with 100% progress but with "
+"a total score below the minimum required score to validate the course"
+msgstr "已完成课程但成绩不合格的学生"
+
+#: lms/templates/triboo_analytics/course.html:174
+msgid "Cumulative number of enrollments over time"
+msgstr "累计注册学生数"
+
+
+#: lms/templates/triboo_analytics/my_transcript.html:262
+msgid "Number of courses you are enrolled in"
+msgstr "您已注册的课程数"
+
+#: lms/templates/triboo_analytics/my_transcript.html:274
+msgid "Total time you have spent on the platform"
+msgstr "您的累计学习时长"
+
+#: lms/templates/triboo_analytics/my_transcript.html:288
+msgid ""
+"Average final score over all the courses you have completed (status "
+"successful or unsuccessful)"
+msgstr "您已完成课程的平均成绩（包括合格成绩和不合格成绩）"
+
+#: lms/templates/triboo_analytics/my_transcript.html:300
+msgid ""
+"Number of posts/answers/comments you have written in the discussions/forums"
+msgstr "您在课程论坛及讨论区发表的帖子/回复/评论数"
+
+#: lms/templates/triboo_analytics/my_transcript.html:315
+msgid "Proportion of courses according to your progress"
+msgstr "基于您学习进度的课程各部分占比"
+
+#: lms/templates/triboo_analytics/my_transcript.html:355
+msgid ""
+"Number of courses you started to visit but you haven't completed yet"
+msgstr "您已经开始学习但尚未完成的课程"
+
+#: lms/templates/triboo_analytics/my_transcript.html:367
+msgid "Number of courses you are enrolled in but you haven't visited yet"
+msgstr "您已注册但尚未开始的课程"
+
+#: lms/templates/triboo_analytics/my_transcript.html:331
+msgid ""
+"Number of courses you completed with 100% progress and a total score passing"
+" the minimum required score"
+msgstr "您已完成且成绩合格的课程"
+
+#: lms/templates/triboo_analytics/my_transcript.html:343
+msgid ""
+"Number of courses you completed with 100% progress but with a total score "
+"below the minimum required score"
+msgstr "您已完成但成绩不合格的课程"
+
+
+#: lms/templates/triboo_analytics/transcript.html:54
+msgid ""
+"Number of courses the learner is enrolled in (enrollments made by an Admin "
+"or by himself/herself via the catalog)"
+msgstr "已注册课程数，包括管理员注册和自主注册"
+
+#: lms/templates/triboo_analytics/transcript.html:66
+msgid "Total time the learner has spent on the platform"
+msgstr "累计学习时长"
+
+#: lms/templates/triboo_analytics/transcript.html:80
+msgid ""
+"Average final score over all the courses the learner has completed (status "
+"successful or unsuccessful)"
+msgstr "已完成课程的平均成绩（包括合格成绩和不合格成绩）"
+
+#: lms/templates/triboo_analytics/transcript.html:92
+msgid ""
+"Number of posts/answers/comments the learner has written in the "
+"discussions/forums"
+msgstr "在课程论坛及讨论区发表的帖子/回复/评论数"
+
+#: lms/templates/triboo_analytics/transcript.html:107
+msgid "Proportion of courses according to the learner's progress"
+msgstr "基于学生学习进度的课程各部分占比"
+
+#: lms/templates/triboo_analytics/transcript.html:147
+msgid ""
+"Number of courses the learner started to visit but hasn't completed "
+"yet"
+msgstr "已经开始学习但尚未完成的课程"
+
+#: lms/templates/triboo_analytics/transcript.html:159
+msgid ""
+"Number of courses the learner is enrolled in but hasn't visited yet"
+msgstr "已注册但尚未开始的课程"
+
+#: lms/templates/triboo_analytics/transcript.html:123
+msgid ""
+"Number of courses the learner completed with 100% progress and a total score"
+" passing the minimum required score"
+msgstr "已完成且成绩合格的课程"
+
+#: lms/templates/triboo_analytics/transcript.html:135
+msgid ""
+"Number of courses the learner completed with 100% progress but with a total "
+"score below the minimum required score"
+msgstr "已完成但成绩不合格的课程"
+
+
+

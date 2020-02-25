@@ -1115,24 +1115,15 @@ def settings_handler(request, course_key_string):
                 'is_programmatic_enrollment_enabled': False
             }
 
-            if configuration_helpers.get_value(
-                    'ENABLE_PROGRAMMATIC_ENROLLMENT',
-                    settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT',
-                                          False)):
-                user_job_codes = UserProfile.objects.values_list(
-                    'lt_job_code', flat=True).distinct()
-                enrollment_job_codes = dict((job_code, False)
-                                            for job_code in user_job_codes
-                                            if job_code)
-                attached_course_job_codes = CourseDetails.fetch(
-                    course_key).enrollment_job_codes
-                enrollment_job_codes.update(
-                    (job_code, True) for job_code in attached_course_job_codes)
+            if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
+                    settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
+                user_learning_groups = UserProfile.objects.values_list('lt_learning_group', flat=True).distinct()
+                enrollment_learning_groups = dict((group, False) for group in user_learning_groups if group)
+                attached_learning_groups = CourseDetails.fetch(course_key).enrollment_learning_groups
+                enrollment_learning_groups.update((group, True) for group in attached_learning_groups)
                 settings_context.update({
-                    'enrollment_job_codes':
-                    enrollment_job_codes,
-                    'is_programmatic_enrollment_enabled':
-                    True
+                    'enrollment_learning_groups': enrollment_learning_groups,
+                    'is_programmatic_enrollment_enabled': True
                 })
 
             if is_prerequisite_courses_enabled():

@@ -133,8 +133,8 @@
     ], 
     "%s ago": "%s atr\u00e1s", 
     "%s course found": [
-      "% curso encontrado", 
-      "% cursos encontrados"
+      "%s curso encontrado", 
+      "%s cursos encontrados"
     ], 
     "%s from now": "%s a partir de agora", 
     "(Add signatories for a certificate)": "(Adicionar assinaturas para um certificado)", 
@@ -242,6 +242,7 @@
     "All Time Zones": "Todos os Fusos-Hor\u00e1rios", 
     "All Topics": "Todos os t\u00f3picos", 
     "All chapters must have a name and asset": "Todos os cap\u00edtulos devem conter nome e recurso", 
+    "All countries": "Todos os pa\u00edses", 
     "All flags have been removed. To undo, uncheck the box.": "Todos as marca\u00e7\u00f5es foram removidas. Para desfazer essa a\u00e7\u00e3o, desmarque a caixa.", 
     "All groups must have a name.": "Todos os grupos necessitam de um nome.", 
     "All groups must have a unique name.": "Todos os grupos devem conter apenas um \u00fanico nome. ", 
@@ -562,6 +563,7 @@
     "Create a %(link_start)sMozilla Backpack%(link_end)s account, or log in to your existing account": "Crie uma conta %(link_start)sMozilla Backpack%(link_end)s, ou fa\u00e7a o loginna sua conta j\u00e1 existente", 
     "Create a New Team": "Criar uma nova equipe", 
     "Create a content group": "Criar um grupo de conte\u00fado", 
+    "Create a new learner account to take advantage of the Triboo platform!": "Crie uma nova conta como aluno para aproveitar a plataforma Triboo!", 
     "Create a new team if you can't find an existing team to join, or if you would like to learn with friends you know.": "Crie uma nova equipe caso voc\u00ea n\u00e3o encontre uma j\u00e1 existente ou queira aprender com outros amigos.", 
     "Create account using %(providerName)s.": "Criar uma conta usando %(providerName)s.", 
     "Create an Account": "Criar uma conta", 
@@ -840,6 +842,7 @@
     "Forgot password?": "Esqueceu a senha?", 
     "Format": "Formato", 
     "Formats": "Formatos", 
+    "France": "Fran\u00e7a", 
     "Free text notes": "Anota\u00e7\u00f5es de texto livre", 
     "French": "Franceza", 
     "Frequently Asked Questions": "Perguntas frequentes", 
@@ -1457,6 +1460,7 @@
     "Right to left": "Direita \u00e0 esquerda", 
     "Robots": "Rob\u00f4s", 
     "Role field should not be left unselected.": "O campo de fun\u00e7\u00e3o n\u00e3o deve ser desmarcado.", 
+    "Romania": "Rom\u00eania", 
     "Romanian": "Rom\u00e2ne\u0219te", 
     "Row": "Linha", 
     "Row group": "Linhas agrupadas", 

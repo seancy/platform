@@ -13,6 +13,7 @@ urlpatterns = [
     # display error page templates, for testing purposes
     url(r'^404$', views.render_404, name='static_template_view.views.render_404'),
     url(r'^500$', views.render_500, name='static_template_view.views.render_500'),
+    url(r'^403$', views.render_403, name='static_template_view.views.render_403'),
 
     url(r'^blog$', views.render, {'template': 'blog.html'}, name="blog"),
     url(r'^contact$', views.render, {'template': 'contact.html'}, name="contact"),

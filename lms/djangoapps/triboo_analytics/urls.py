@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^course/$', views.course_view, name='analytics_course'),
 
     url(r'^learner/$', views.learner_view, name='analytics_learner'),
-    url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),
+    url(r'^learner_transcript/(?P<user_id>\w+)/$', views.transcript_view, name='analytics_learner_transcript'),
 
     url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
         views.list_table_downloads, name='list_table_downloads'),

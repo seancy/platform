@@ -599,10 +599,13 @@ msgstr "Assistente de Ensino da Comunidade"
 
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
-#: lms/templates/preview_menu.html:36
 #: lms/templates/courseware/ilt_attendance_sheet.html:57
+#: lms/templates/preview_menu.html:36
+#: lms/templates/triboo_analytics/microsite.html:47
 msgid "Learner"
-msgstr "Aluno"
+msgid_plural "Learners"
+msgstr[0] "Aluno"
+msgstr[1] "Alunos"
 
 #: common/djangoapps/student/admin.py:224
 msgid "User profile"
@@ -5085,19 +5088,24 @@ msgstr "Discussão Externa"
 msgid "Home"
 msgstr "Página Inicial"
 
-#: common/lib/xmodule/xmodule/tabs.py:473 lms/djangoapps/courseware/tabs.py:31
+#: common/lib/xmodule/xmodule/tabs.py:473
+#: lms/djangoapps/courseware/tabs.py:31
 #: lms/djangoapps/courseware/views/views.py:1743
 #: lms/djangoapps/shoppingcart/reports.py:212
 #: lms/djangoapps/shoppingcart/reports.py:262
 #: openedx/features/course_experience/__init__.py:51
-#: cms/templates/widgets/header.html:49 cms/templates/widgets/header.html:53
-#: cms/templates/widgets/header.html:157 lms/templates/help_modal.html:173
+#: cms/templates/widgets/header.html:49
+#: cms/templates/widgets/header.html:53
+#: cms/templates/widgets/header.html:157
+#: lms/templates/help_modal.html:173
 #: lms/templates/courseware/courseware.html:166
 #: lms/templates/courseware/ilt_attendance_sheet.html:36
-#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/microsite.html:36
 #: lms/templates/ux/reference/bootstrap/course-skeleton.html:21
 msgid "Course"
-msgstr "Curso"
+msgid_plural "Courses"
+msgstr[0] "Curso"
+msgstr[1] "Cursos"
 
 #: common/lib/xmodule/xmodule/textannotation_module.py:40
 msgid "Text Annotation"
@@ -10430,12 +10438,15 @@ msgstr "Acompanhe os reembolsos emitidos diretamente através da CyberSource"
 
 #: lms/djangoapps/support/views/index.py:26
 #: lms/templates/ccx/coach_dashboard.html:59
-#: lms/templates/ccx/enrollment.html:8 lms/templates/support/enrollment.html:21
+#: lms/templates/ccx/enrollment.html:8
+#: lms/templates/support/enrollment.html:21
 #: lms/templates/triboo_analytics/course.html:66
 #: lms/templates/triboo_analytics/my_transcript.html:258
 #: lms/templates/triboo_analytics/transcript.html:50
 msgid "Enrollment"
-msgstr "Matrícula"
+msgid_plural "Enrollments"
+msgstr[0] "Matrícula"
+msgstr[1] "Matrículas"
 
 #: lms/djangoapps/support/views/index.py:27
 msgid "View and update learner enrollments."
@@ -10607,11 +10618,11 @@ msgstr "Localização"
 
 #: lms/djangoapps/triboo_analytics/forms.py:15
 msgid "Commercial Zone"
-msgstr "E-Commerce"
+msgstr "Zona Comercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:16
 msgid "Commercial Region"
-msgstr "Região COmercial"
+msgstr "Região Comercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:19
 msgctxt "user.profile"
@@ -10670,7 +10681,7 @@ msgstr "Supervisor de ILT"
 #: lms/djangoapps/triboo_analytics/forms.py:32
 #: openedx/core/djangoapps/user_api/api.py:969
 msgid "Learning Group"
-msgstr "Aprendendo a avaliar"
+msgstr "Grupo de aprendizagem"
 
 #: lms/djangoapps/triboo_analytics/forms.py:33
 msgid "Exempt Status"
@@ -16806,12 +16817,12 @@ msgid "Set automatic enrollment rules for this course"
 msgstr "Definir regras de inscrição automáticas para este curso"
 
 #: cms/templates/settings.html:599
-msgid "Job Codes"
-msgstr "Códigos de Cargo"
+msgid "Learning Groups"
+msgstr "Grupos de aprendizagem"
 
 #: cms/templates/settings.html:599
 msgid "Identify the enrollment job codes here."
-msgstr "Identifique os códigos de cargo de inscrição aqui."
+msgstr "Identifique os groupos de aprendizagem de inscrição aqui."
 
 #: cms/templates/settings.html:340
 msgid "Provide useful information about your course"
@@ -16844,7 +16855,7 @@ msgstr ""
 
 #: cms/templates/settings.html:379
 msgid "Course Tag"
-msgstr "Nome do Curso"
+msgstr "Etiqueta do Curso"
 
 #: cms/templates/settings.html:381
 msgid "Identify the course tag here."
@@ -18308,6 +18319,10 @@ msgstr "Ative sua conta!"
 #: themes/edx.org/lms/templates/dashboard.html:225
 msgid "Course-loading errors"
 msgstr "Erros de carregamento do curso"
+
+#: lms/templates/dashboard.html:304
+msgid "My Bookmarks"
+msgstr "Meus Favoritos"
 
 #: lms/templates/dashboard.html:320
 msgid "My upcoming ILT sessions"
@@ -21704,7 +21719,7 @@ msgstr "Ritmo definido pelo instrutor"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:39
 msgid "Session"
-msgstr "Permissões"
+msgstr "Sessão"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:42
 msgid "Date and Time"
@@ -21745,7 +21760,7 @@ msgstr "Registre-se"
 
 #: lms/templates/courseware/ilt_validation.html:44
 msgid "Session Name"
-msgstr "Nome do destinatário"
+msgstr "Nome do sessão"
 
 #: lms/templates/courseware/ilt_validation.html:67
 #: lms/templates/emails/ilt_confirmed_email_message.txt:16
@@ -23033,8 +23048,8 @@ msgid ""
 "engaging, high-quality {platform_name} courses. Note that you will not be "
 "able to log back into your account until you have activated it."
 msgstr ""
-"Você está quase chegando! Use o link para ativar sua conta para acessar"
-"cursos envolventes e de alta qualidade no {platform_name}. Observe que você não será"
+"Você está quase chegando! Use o link para ativar sua conta para acessar "
+"cursos engajadores e de alta qualidade no {platform_name}. Observe que você não será "
 "capaz de fazer login novamente em sua conta até que você a ative."
 
 #: lms/templates/emails/activation_email.txt:12
@@ -23100,7 +23115,8 @@ msgstr ""
 #: lms/templates/emails/unenroll_email_allowedmessage.txt:10
 msgid "This email was automatically sent from {site_name} to {email_address}"
 msgstr ""
-"Este e-mail foi enviado automaticamente de {site_name} para {email_address}"
+"Esse e-mail foi enviado automaticamente através da plataforma {site_name} "
+"para o e-mail {email_address}"
 
 #: lms/templates/emails/add_beta_tester_email_subject.txt:3
 msgid "You have been invited to a beta test for {course_name}"
@@ -23465,8 +23481,8 @@ msgid ""
 "You have been invited to join {course_name} at {site_name} by a member of "
 "the course staff."
 msgstr ""
-"Você foi convidado para participar do curso {course_name} no {site_name} por "
-"um integrante da equipe do curso."
+"Você foi convidado para juntar-se ao curso {course_name} na plataforma {site_name} "
+"por um membro administrativo do curso."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:16
 msgid ""
@@ -23478,24 +23494,24 @@ msgid ""
 "To finish your registration, please visit {registration_url} and fill out "
 "the registration form making sure to use {email_address} in the E-mail field."
 msgstr ""
-"Para finalizar o seu registro, por favor, acesse {registration_url} e "
-"preencha o formulário de registro, utilizando {email_address} no campo de e-"
-"mail."
+"Para finalizar o seu cadastro, por favor, visite o site {registration_url} e "
+"preencha o formulário de cadastro, certificando-se de usar o e-mail {email_address} "
+"no campo indicado."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:27
 msgid ""
 "Once you have registered and activated your account, you will see "
 "{course_name} listed on your dashboard."
 msgstr ""
-"Após se registrar e ativar a sua conta, o curso {course_name} será listado "
-"no seu painel de controle."
+"Depois de se registrar e ativar a sua conta, você verá o curso {course_name} "
+"listado em seu painel."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:32
 msgid ""
 "Once you have registered and activated your account, visit "
 "{course_about_url} to join the course."
 msgstr ""
-"Após se registrar e ativar a sua conta, acesse {course_about_url} para "
+"Depois de se registrar e ativar a sua conta, acesse {course_about_url} para "
 "participar do curso."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:35
@@ -27299,7 +27315,7 @@ msgstr "Saiba mais"
 #: lms/templates/triboo_analytics/microsite.html:34
 #: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
-msgstr "Relatórios"
+msgstr "ILT Relatórios"
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
@@ -27314,13 +27330,13 @@ msgstr "Ir"
 
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
-msgstr "Tempo médio para passar por este curso:"
+msgstr "Tempo médio para passar por este curso"
 
 #: lms/templates/triboo_analytics/course.html:76
 #: lms/templates/triboo_analytics/my_transcript.html:268
 #: lms/templates/triboo_analytics/transcript.html:60
 msgid "Average Final Score"
-msgstr ""
+msgstr "Média da pontuação final"
 
 #: lms/templates/triboo_analytics/course.html:80
 #: lms/templates/triboo_analytics/my_transcript.html:272
@@ -27373,12 +27389,6 @@ msgstr "Analytics - Relatório do Aluno"
 #: lms/templates/triboo_analytics/microsite.html:16
 msgid "Analytics - Global Report"
 msgstr "Relatórios Disponíveis"
-
-#: lms/templates/triboo_analytics/microsite.html:47
-msgid "Active Learner"
-msgid_plural "Active Learners"
-msgstr[0] "Uma nota para os alunos"
-msgstr[1] "Uma nota para os alunos"
 
 #: lms/templates/triboo_analytics/microsite.html:51
 msgid "Certificate Delivered"
@@ -29666,3 +29676,310 @@ msgstr "Falhou"
 
 #~ msgid "Sign Up for {studio_name}"
 #~ msgstr "Registre-se em {studio_name}"
+
+
+
+#: lms/templates/triboo_analytics/courseware.html
+msgid "Successful"
+msgstr "Bem sucedido"
+
+#: lms/templates/triboo_analytics/courseware.html
+msgid "Unsuccessful"
+msgstr "Mal sucedido"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+msgid "Number of learners enrolled in a course"
+msgstr "Número de alunos matriculados no curso"
+
+#: lms/templates/triboo_analytics/microsite.html:75
+msgid "Average time learners have spent on the platform"
+msgstr "Média de tempo que os alunos costumam gastar na plataforma"
+
+#: lms/templates/triboo_analytics/microsite.html:56
+msgid ""
+"Number of times a learner successfully completed a course with 100% progress"
+" and a passing total score"
+msgstr "Número de vezes que um aluno concluiu com sucesso um curso com 100% de progresso, e uma pontuação total de aprovação"
+
+#: lms/templates/triboo_analytics/microsite.html:34
+msgid "Number of courses created and available"
+msgstr "Número de cursos criados e disponíveis"
+
+#: lms/templates/triboo_analytics/microsite.html:91
+msgid "Number of different visitors who logged in the platform per day"
+msgstr "Número diário de visitantes diferentes que entram na plataforma"
+
+#: lms/templates/triboo_analytics/microsite.html:114
+msgid "Proportion of mobile connection vs. computer connection"
+msgstr "Proporção de conexão móvel vs. conexão de computador"
+
+#: lms/templates/triboo_analytics/microsite.html:136
+msgid ""
+"Where are located the active learners based on their profile information"
+msgstr "Onde estão localizados os alunos ativos com base em suas informações de perfil"
+
+
+#: lms/templates/triboo_analytics/course.html:54
+msgid ""
+"Number of learners enrolled in the course. The learners have been registered"
+" by an Admin or self-registered via the catalog"
+msgstr "Número de alunos inscritos no curso. Os alunos foram registrados por um administrador ou realizaram o auto registro através do catálogo"
+
+#: lms/templates/triboo_analytics/course.html:66
+msgid ""
+"Average time it took to learners to complete the course with 100% progress"
+msgstr "Tempo médio que os alunos levaram para completar o curso com 100% de progresso"
+
+#: lms/templates/triboo_analytics/course.html:80
+msgid ""
+"Average total score of the learners who completed the course with 100% "
+"progress"
+msgstr "Média da pontuação total dos alunos que completaram o curso com 100% de progresso"
+
+#: lms/templates/triboo_analytics/course.html:92
+msgid ""
+"Number of posts/answers/comments written in the course discussions/forums"
+msgstr "Número de Posts/respostas/comentários escritos nas discussões/fóruns do curso"
+
+#: lms/templates/triboo_analytics/course.html:107
+msgid "Proportion of learners according to their course status"
+msgstr "Proporção de alunos de acordo com o seu status de curso"
+
+#: lms/templates/triboo_analytics/course.html:147
+msgid ""
+"Learners who started to visit the course but haven't completed it yet"
+msgstr "Alunos que começaram a visitar o curso, mas não o completaram ainda"
+
+#: lms/templates/triboo_analytics/course.html:159
+msgid "Learners who are enrolled in the course but haven't visited it yet"
+msgstr "Alunos que estão matriculados no curso, mas não o acessaram ainda"
+
+#: lms/templates/triboo_analytics/course.html:123
+msgid ""
+"Leaners who completed the course with 100% progress and a total score "
+"passing the minimum required score"
+msgstr "Alunos que completaram o curso com 100% de progresso e uma pontuação total passando da pontuação mínima exigida"
+
+#: lms/templates/triboo_analytics/course.html:159
+msgid "Leaners who completed the course with 100% progress but with "
+"a total score below the minimum required score to validate the course"
+msgstr "Alunos que completaram o curso com 100% de progresso, mas com uma pontuação total abaixo da pontuação mínima necessária para validar o curso"
+
+#: lms/templates/triboo_analytics/course.html:174
+msgid "Cumulative number of enrollments over time"
+msgstr "Número de matrículas acumuladas ao longo do tempo"
+
+
+#: lms/templates/triboo_analytics/my_transcript.html:262
+msgid "Number of courses you are enrolled in"
+msgstr "Número de cursos em que você está inscrito"
+
+#: lms/templates/triboo_analytics/my_transcript.html:274
+msgid "Total time you have spent on the platform"
+msgstr "Total de tempo que você passou na plataforma"
+
+#: lms/templates/triboo_analytics/my_transcript.html:288
+msgid ""
+"Average final score over all the courses you have completed (status "
+"successful or unsuccessful)"
+msgstr "Média da pontuação final de todos os cursos que você completou (status bem- sucedido ou malsucedido)"
+
+#: lms/templates/triboo_analytics/my_transcript.html:300
+msgid ""
+"Number of posts/answers/comments you have written in the discussions/forums"
+msgstr "Número de posts/respostas/comentários que você escreveu nas discussões/fóruns"
+
+#: lms/templates/triboo_analytics/my_transcript.html:315
+msgid "Proportion of courses according to your progress"
+msgstr "Proporção de cursos de acordo com o seu progresso"
+
+#: lms/templates/triboo_analytics/my_transcript.html:355
+msgid ""
+"Number of courses you started to visit but you haven't completed yet"
+msgstr "Cursos que você começou a acessar, mas ainda não completou"
+
+#: lms/templates/triboo_analytics/my_transcript.html:367
+msgid "Number of courses you are enrolled in but you haven't visited yet"
+msgstr "Cursos que você está inscrito, mas ainda não acessou"
+
+#: lms/templates/triboo_analytics/my_transcript.html:331
+msgid ""
+"Number of courses you completed with 100% progress and a total score passing"
+" the minimum required score"
+msgstr "Cursos que você completou com 100% de progresso e uma pontuação total passando a pontuação mínima exigida"
+
+#: lms/templates/triboo_analytics/my_transcript.html:343
+msgid ""
+"Number of courses you completed with 100% progress but with a total score "
+"below the minimum required score"
+msgstr "Cursos que você completou com 100% de progresso, mas com uma pontuação total abaixo da pontuação mínima exigida"
+
+
+#: lms/templates/triboo_analytics/transcript.html:54
+msgid ""
+"Number of courses the learner is enrolled in (enrollments made by an Admin "
+"or by himself/herself via the catalog)"
+msgstr "Número de cursos em que o aluno está matriculado (matrículas feitas por um administrador ou por ele /ela através do catálogo)"
+
+#: lms/templates/triboo_analytics/transcript.html:66
+msgid "Total time the learner has spent on the platform"
+msgstr "Tempo total que o aluno passou na plataforma"
+
+#: lms/templates/triboo_analytics/transcript.html:80
+msgid ""
+"Average final score over all the courses the learner has completed (status "
+"successful or unsuccessful)"
+msgstr "Pontuação média final de todos os cursos que o aluno tenha completado (status bem-sucedido ou malsucedido)"
+
+#: lms/templates/triboo_analytics/transcript.html:92
+msgid ""
+"Number of posts/answers/comments the learner has written in the "
+"discussions/forums"
+msgstr "Número de mensagens/respostas/comentários que o aluno escreveu nas discussões/fóruns"
+
+#: lms/templates/triboo_analytics/transcript.html:107
+msgid "Proportion of courses according to the learner's progress"
+msgstr "Proporção de cursos de acordo com o progresso do aluno"
+
+#: lms/templates/triboo_analytics/transcript.html:147
+msgid ""
+"Number of courses the learner started to visit but hasn't completed "
+"yet"
+msgstr "Cursos que o aluno começou a visitar, mas ainda não concluiu"
+
+#: lms/templates/triboo_analytics/transcript.html:159
+msgid ""
+"Number of courses the learner is enrolled in but hasn't visited yet"
+msgstr "Cursos que o aluno está inscrito, mas ainda não visitou"
+
+#: lms/templates/triboo_analytics/transcript.html:123
+msgid ""
+"Number of courses the learner completed with 100% progress and a total score"
+" passing the minimum required score"
+msgstr "Cursos que o aluno completou com 100% de progresso e uma pontuação total passando a pontuação mínima exigida"
+
+#: lms/templates/triboo_analytics/transcript.html:135
+msgid ""
+"Number of courses the learner completed with 100% progress but with a total "
+"score below the minimum required score"
+msgstr "Cursos que o aluno completou com 100% de progresso, mas com uma pontuação total abaixo da pontuação mínima exigida"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "Curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr "Pontuação atual"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr "Tempo total gasto"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr "Data de conclusão"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr "Matrículas"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr "Último login"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr "Área geográfica"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course country"
+msgstr "País do curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr "Área / Região"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr "Etiquetas do curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr "Código do curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr "ID de sessão"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr "Data de início"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr "Hora de início"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr "Data de fim"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr "Hora de fim"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr "Duração (em horas)"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr "Número de assentos"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr "Inscritos"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr "Participantes"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr "Folha de presença"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr "Nome do local"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "Endereço do local"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "Código postal"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr "Status da inscrição"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr "Participante"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr "Viagens para fora"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr "Viagens de retorno"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr "Pernoite"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
+msgstr "Endereço para pernoite"

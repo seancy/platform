@@ -938,10 +938,10 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
-    enrollment_job_codes = List(
-        display_name=_("Course Enrollment By User's Job Code"),
+    enrollment_learning_groups = List(
+        display_name=_("Course Enrollment By User's Learning Group"),
         help=_(
-            "Used to automatically enrollment course by user's job code property."
+            "Used to automatically enroll users in the course by their learning group property."
         ),
         default=[],
         scope=Scope.settings

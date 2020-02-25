@@ -116,7 +116,7 @@ var onCertificatesReady = null;
          */
         $section.on('click', '#btn-start-regenerating-certificates', function(event) {
             LearningTribes.confirmation.show(gettext('Start regenerating certificates for learners in this course?'), function () {
-                var $btn_regenerating_certs = $(this),
+                var $btn_regenerating_certs = $('#btn-start-regenerating-certificates'),
                 $certificate_regeneration_status = $('.certificate-regeneration-status'),
                 url = $btn_regenerating_certs.data('endpoint');
 

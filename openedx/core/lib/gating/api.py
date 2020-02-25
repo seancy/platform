@@ -465,7 +465,7 @@ def get_subsection_completion_percentage(subsection_usage_key, user):
         if any(subsection_structure):
             completable_blocks = [
                 block for block in subsection_structure
-                if block.block_type not in ['chapter', 'sequential', 'vertical', 'course']
+                if block.block_type not in ['chapter', 'sequential', 'vertical', 'course', 'discussion']
             ]
             if not completable_blocks:
                 return 0

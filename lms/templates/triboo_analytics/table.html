@@ -6,7 +6,7 @@
     <ul id="table-export-selection">
       {% for format in table.export_formats %}
         {% if table.path %}
-          <li><a href="{{ table.path }}/export/{% querystring '_export'=format %}">{% trans "Download" %} <code>{{ format }}</code></a></li>
+          <li><a href="{{ table.path }}export/{% querystring '_export'=format %}">{% trans "Download" %} <code>{{ format }}</code></a></li>
         {% else %}
           <li><a href="export/{% querystring '_export'=format %}">{% trans "Download" %} <code>{{ format }}</code></a></li>
         {% endif %}

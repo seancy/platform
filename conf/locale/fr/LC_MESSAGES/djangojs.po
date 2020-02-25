@@ -5085,8 +5085,8 @@ msgstr ""
 #: lms/static/js/discovery/views/search_form.js:47
 msgid "%s course found"
 msgid_plural "%s courses found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s cours trouvé"
+msgstr[1] "%s cours trouvés"
 
 #: lms/static/js/discovery/views/search_form.js:56
 #, javascript-format
@@ -9630,6 +9630,10 @@ msgstr "Texte à customiser"
 msgid "Back to login."
 msgstr "Retour à la connexion"
 
+#: lms/templates/student_account/register.underscore:11
+msgid "Create a new learner account to take advantage of the Triboo platform!"
+msgstr "Créer un compte utilisateur pour profiter pleinement de la plateforme Triboo!"
+
 #: lms/templates/student_account/register.underscore:24
 msgid "Create an account using"
 msgstr "Créer un compte avec"
@@ -12305,13 +12309,25 @@ msgstr "Catégorie"
 msgid "Mandatory"
 msgstr "Obligatoire"
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "Oui"
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "false"
 msgstr "Non"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "All countries"
+msgstr "Tout pays"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "France"
+msgstr "France"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romania"
+msgstr "Roumanie"
 
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263

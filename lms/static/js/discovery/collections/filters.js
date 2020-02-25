@@ -1,12 +1,16 @@
 (function(define) {
+    'use strict';
     define(['backbone', 'js/discovery/models/filter'], function(Backbone, Filter) {
-        'use strict';
-
         return Backbone.Collection.extend({
             model: Filter,
             getTerms: function() {
                 return this.reduce(function(terms, filter) {
-                    terms[filter.id] = filter.get('query');
+                    var filterType = filter.get('type');
+                    var filterQuery = filter.get('query');
+                    if (!terms.hasOwnProperty(filterType)) {
+                        terms[filterType] = [];
+                    }
+                    terms[filterType].push(filterQuery);
                     return terms;
                 }, {});
             }

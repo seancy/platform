@@ -1,13 +1,10 @@
 (function(define) {
+    'use strict';
     define([
         'underscore',
         'backbone',
-        'js/discovery/models/course_discovery',
-        'js/discovery/collections/filters'
-    ], function(_, Backbone, CourseDiscovery, Filters) {
-        'use strict';
-
-
+        'js/discovery/models/course_discovery'
+    ], function(_, Backbone, CourseDiscovery) {
         return Backbone.Model.extend({
 
             page: 0,
@@ -69,6 +66,16 @@
                 return data;
             },
 
+            performFacetSelection: function(facet, term) {
+                var option = this.discovery.facetOptions.findWhere({
+                    facet: facet,
+                    term: term
+                });
+                if (option) {
+                    option.set('selected', true);
+                }
+            },
+
             reset: function() {
                 this.discovery.reset();
                 this.page = 0;
@@ -99,12 +106,12 @@
                     } else {
                         _.each(this.terms, function(term, facet) {
                             if (facet !== 'search_query') {
-                                var option = this.discovery.facetOptions.findWhere({
-                                    facet: facet,
-                                    term: term
-                                });
-                                if (option) {
-                                    option.set('selected', true);
+                                if (Array.isArray(term)) {
+                                    _.each(term, function(termValue) {
+                                        this.performFacetSelection(facet, termValue);
+                                    }, this);
+                                } else {
+                                    this.performFacetSelection(facet, term);
                                 }
                             }
                         }, this);

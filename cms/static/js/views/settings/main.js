@@ -1,9 +1,9 @@
-define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui', 'js/utils/date_utils',
+define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui', 'tinymce', 'js/utils/date_utils',
     'js/models/uploads', 'js/views/uploads', 'js/views/license', 'js/models/license',
     'common/js/components/views/feedback_notification', 'jquery.timepicker', 'date', 'gettext',
     'js/views/learning_info', 'js/views/instructor_info', 'js/views/reminder_info', 'js/views/course_tags_info',
     'edx-ui-toolkit/js/utils/string-utils'],
-       function(ValidatingView, CodeMirror, _, $, ui, DateUtils, FileUploadModel,
+       function(ValidatingView, CodeMirror, _, $, ui, tinymce, DateUtils, FileUploadModel,
                 FileUploadDialog, LicenseView, LicenseModel, NotificationView,
                 timepicker, date, gettext, LearningInfoView, InstructorInfoView, ReminderInfoView, CourseTagsInfo, StringUtils) {
            'use strict';
@@ -17,7 +17,6 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'change textarea': 'updateModel',
                    'change select': 'updateModel',
                    'click .remove-course-introduction-video': 'removeVideo',
-                   'focus #course-overview': 'codeMirrorize',
                    'focus #course-about-sidebar-html': 'codeMirrorize',
                    'mouseover .timezone': 'updateTime',
         // would love to move to a general superclass, but event hashes don't inherit in backbone :-(
@@ -90,6 +89,21 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        el: $('.course-tags'),
                        model: this.model
                    });
+
+                   // This is used to set WYSIWYG text editor for course overview and desc.
+                   tinymce.init({
+                       selector: '.tinymce-editor',
+                       statusbar: false,
+                       menubar: false,
+                       language: options.langCode,
+                       plugins: 'lists link code',
+                       toolbar: 'bold italic bullist numlist blockquote link unlink code',
+                       init_instance_callback: function(editor) {
+                           editor.on('Dirty', function(e) {
+                               $('#' + this.id).trigger('change');
+                           });
+                       }
+                   });
                },
 
                render: function() {
@@ -103,7 +117,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    DateUtils.setupDatePicker('enrollment_end', this);
 
                    this.$el.find('#' + this.fieldToSelectorMap.overview).val(this.model.get('overview'));
-                   this.codeMirrorize(null, $('#course-overview')[0]);
+                   tinymce.get('course-overview').setContent(this.model.get('overview'));
 
                    if (this.model.get('title') !== '') {
                        this.$el.find('#' + this.fieldToSelectorMap.title).val(this.model.get('title'));
@@ -134,6 +148,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        this.$el.find('#' + this.fieldToSelectorMap.course_duration_unit).val('minutes');
                    }
                    this.$el.find('#' + this.fieldToSelectorMap.description).val(this.model.get('description'));
+                   tinymce.get('course-description').setContent(this.model.get('description'));
 
                    this.$el.find('#' + this.fieldToSelectorMap.short_description).val(this.model.get('short_description'));
                    this.$el.find('#' + this.fieldToSelectorMap.about_sidebar_html).val(
@@ -474,8 +489,12 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    case 'course-effort':
                    case 'course-title':
                    case 'course-subtitle':
-                   case 'course-description':
                    case 'course-short-description':
+                       this.setField(event);
+                       break;
+                   case 'course-overview':
+                   case 'course-description':
+                       tinymce.activeEditor.save();
                        this.setField(event);
                        break;
                    case 'course-vendor':
@@ -485,14 +504,15 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    }
 
                    var name = event.currentTarget.getAttribute('name');
-                   if (name === 'job-code[]') {
+                   if (name === 'learning-group[]') {
                        var checkedValue = [];
-                       $("input[name='job-code[]']:checked").each(function() {
+                       $("input[name='learning-group[]']:checked").each(function() {
                            checkedValue.push($(this).val());
                        });
-                       this.model.set('enrollment_job_codes', checkedValue);
+                       this.model.set('enrollment_learning_groups', checkedValue);
                    }
                },
+
                updateImageField: function(event, image_field, selector) {
                    this.setField(event);
                    var url = $(event.currentTarget).val();

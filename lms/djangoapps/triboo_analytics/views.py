@@ -757,16 +757,16 @@ def get_table(report_cls, filter_kwargs, table_cls, exclude):
 
 
 def get_query_triples(query_dict):
+    from forms import AVAILABLE_CHOICES
     query_triples = []
     for key, value in query_dict.items():
         if 'query_string' in key and value:
             suffix = '_' + key.split('_')[-1] if 'query_string_' in key else ''
             query_field_key = 'queried_field' + suffix
-            field_name = query_dict[query_field_key].split('__')[-1]
-            if 'lt' in field_name:
-                field_name = field_name.split('_', 1)[-1]
-            field_name = field_name.capitalize()
-            query_triples.append((value, field_name, query_dict[query_field_key]))
+            value_key = query_dict[query_field_key]
+            value_choice_key = value_key.split('__')[-1]
+            field_name = AVAILABLE_CHOICES[value_choice_key]
+            query_triples.append((value, field_name, value_key))
     return query_triples
 
 

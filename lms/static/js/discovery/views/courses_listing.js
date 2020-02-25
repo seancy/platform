@@ -1,4 +1,5 @@
 (function(define) {
+    'use strict';
     define([
         'jquery',
         'underscore',
@@ -6,8 +7,6 @@
         'gettext',
         'js/discovery/views/course_card'
     ], function($, _, Backbone, gettext, CourseCardView) {
-        'use strict';
-
         return Backbone.View.extend({
 
             el: 'div.courses',

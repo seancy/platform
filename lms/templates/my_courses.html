@@ -135,12 +135,18 @@ from xmodule.modulestore.django import modulestore
                 <h2>${_("My Courses")}</h2>
               </section>
             </section>
+            <%
+              all_courses_tab = "active-section" if tab == "all-courses" else ""
+              not_started_tab = "active-section" if tab == "not-started" else ""
+              started_tab = "active-section" if tab == "started" else ""
+              finished_tab = "active-section" if tab == "finished" else ""
+            %>
             <div class="my-courses" id="my-courses">
               <ul class="my-courses-nav">
-                <li class="nav-item" id="all-courses"><button class="btn-link active-section" title="${_('All my courses')}">${_("All courses")}</button></li>
-                <li class="nav-item" id="not-started"><button class="btn-link" title="${_('My courses not started')}">${_("Not started")}</button></li>
-                <li class="nav-item" id="started"><button class="btn-link" title="${_('My courses started')}">${_("Started")}</button></li>
-                <li class="nav-item" id="finished"><button class="btn-link" title="${_('My courses finished')}">${_("Finished")}</button></li>
+                <li class="nav-item" id="all-courses"><button class="btn-link ${all_courses_tab}" title="${_('All my courses')}">${_("All courses")}</button></li>
+                <li class="nav-item" id="not-started"><button class="btn-link ${not_started_tab}" title="${_('My courses not started')}">${_("Not started")}</button></li>
+                <li class="nav-item" id="started"><button class="btn-link ${started_tab}" title="${_('My courses started')}">${_("Started")}</button></li>
+                <li class="nav-item" id="finished"><button class="btn-link ${finished_tab}" title="${_('My courses finished')}">${_("Finished")}</button></li>
               </ul>
               % if len(course_entitlements + course_enrollments) > 0:
                 <ul class="listing-courses">

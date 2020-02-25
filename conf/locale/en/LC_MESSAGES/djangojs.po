@@ -22,7 +22,6 @@
 # This file is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 # EdX Team <info@edx.org>, 2019.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "#-#-#-#-#  djangojs-partial.po (0.1a)  #-#-#-#-#\n"
@@ -8945,6 +8944,10 @@ msgstr ""
 msgid "Back to login."
 msgstr ""
 
+#: lms/templates/student_account/register.underscore:11
+msgid "Create a new learner account to take advantage of the Triboo platform!"
+msgstr ""
+
 #: lms/templates/student_account/register.underscore:24
 msgid "Create an account using"
 msgstr ""
@@ -11239,12 +11242,24 @@ msgstr ""
 msgid "Mandatory"
 msgstr ""
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr ""
 
-#: lms/templates/discovery/facet.underscore
+#: lms/templates/discovery/facet_option.underscore
 msgid "false"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "All countries"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "France"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Romania"
 msgstr ""
 
 #: xblock-ilt/ilt/static/js/src/ilt.js:196

@@ -5,14 +5,12 @@
 from datetime import datetime
 import pytz
 from django.conf import settings
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ungettext
 from django.urls import reverse
 from openedx.core.djangolib.js_utils import js_escaped_string
 from openedx.core.djangolib.markup import HTML, Text
 from xmodule.tabs import CourseTabList
 %>
-
-% if settings.FEATURES.get('ENABLE_FEEDBACK_SUBMISSION', False):
 
 <div class="help-tab hidden-mobile">
   <a href="#help-modal" rel="leanModal" role="button">${_("Support")}</a>
@@ -170,7 +168,7 @@ $(document).ready(function() {
             $("#feedback_form_wrapper label[data-field='details']").html(details_label);
             if (userAuthenticated && finishedLoadingCourseOptions && courseOptions.length > 1) {
                 $('.js-course-id-anchor').html([
-                    '<label for="feedback_form_course">' + '${_("Course") | n, js_escaped_string}' + '</label>',
+                    '<label for="feedback_form_course">' + '${ungettext("Course", "Courses", 1) | n, js_escaped_string}' + '</label>',
                     '<select name="course_id" id="feedback_form_course" class="feedback-form-select">',
                     courseOptions.join(''),
                     '</select>'
@@ -354,5 +352,3 @@ $(document).ready(function() {
     });
 });
 </script>
-
-%endif

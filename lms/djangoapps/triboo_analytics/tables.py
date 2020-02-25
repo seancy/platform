@@ -310,14 +310,14 @@ class UserBaseTable(tables.Table):
 class ProgressColumn(tables.Column):
     def render(self, value):
         if value['result'] >= value['threshold']:
-            return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%%" % value['result'])
-        return mark_safe("<span class='trophy-no fa fa-times'></span> %d%%" % value['result'])
+            return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%%" % (value['result'] * 100))
+        return mark_safe("<span class='trophy-no fa fa-times'></span> %d%%" % (value['result']  * 100))
 
 
     def value(self, value):
         if value['result'] >= value['threshold']:
-            return "Yes: %d" % value['result']
-        return "No: %d" % value['result']
+            return "Yes: %.2f" % value['result']
+        return "No: %.2f" % value['result']
 
 
     def render_footer(self, bound_column, table):
@@ -534,7 +534,7 @@ class IltBaseTable(tables.Table):
     course_country = tables.Column(accessor='ilt_module.course_country', verbose_name='Course country')
     course_tags = tables.Column(accessor='ilt_module.course_tags', verbose_name='Course tags')
     course_code = tables.Column(accessor='ilt_module.course_id', verbose_name='Course code')
-    course_display_name = tables.Column(accessor='ilt_module.course_display_name', verbose_name='Course')
+    course_display_name = tables.Column(accessor='ilt_module.course_display_name', verbose_name='Course name')
     chapter_display_name = tables.Column(accessor='ilt_module.chapter_display_name', verbose_name='Section')
     section_display_name = tables.Column(accessor='ilt_module.section_display_name', verbose_name='Subsection')
 
@@ -586,7 +586,7 @@ class IltTable(IltBaseTable):
     ack_attendance_sheet = tables.Column(verbose_name='Attendance sheet')
     location_id = tables.Column(verbose_name='Location ID')
     location = tables.Column(verbose_name='Location name')
-    address = tables.Column(verbose_name='Address')
+    address = tables.Column(verbose_name='Location address')
     zip_code = tables.Column(verbose_name='Zip code')
     city = tables.Column(verbose_name='City')
 
@@ -637,7 +637,7 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
     duration = tables.Column(accessor='ilt_session.duration', verbose_name='Duration (in hours)')
     location_id = tables.Column(accessor='ilt_session.location_id', verbose_name='Location ID')
     location = tables.Column(accessor='ilt_session.location', verbose_name='Location name')
-    address = tables.Column(accessor='ilt_session.address', verbose_name='Address')
+    address = tables.Column(accessor='ilt_session.address', verbose_name='Location address')
     zip_code = tables.Column(accessor='ilt_session.zip_code', verbose_name='Zip code')
     city = tables.Column(accessor='ilt_session.city', verbose_name='City')
     status = tables.Column(verbose_name='Enrollment status')

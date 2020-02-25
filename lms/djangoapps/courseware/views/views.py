@@ -27,11 +27,12 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.utils.http import urlquote_plus
 from django.utils.text import slugify
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ungettext
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from django.views.generic import View
+from django_countries import countries
 from eventtracking import tracker
 from ipware.ip import get_ip
 from markupsafe import escape
@@ -44,6 +45,7 @@ from web_fragments.fragment import Fragment
 
 import shoppingcart
 import survey.views
+from branding.api import get_logo_url
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import CertificateStatuses
 from course_modes.models import CourseMode, get_course_prices
@@ -112,7 +114,7 @@ from openedx.features.course_experience.waffle import waffle as course_experienc
 from openedx.features.course_experience.waffle import ENABLE_COURSE_ABOUT_SIDEBAR_HTML
 from openedx.features.enterprise_support.api import data_sharing_consent_required
 from shoppingcart.utils import is_shopping_cart_enabled
-from student.models import CourseEnrollment, UserTestGroup
+from student.models import CourseEnrollment, UserProfile, UserTestGroup
 from student.roles import CourseInstructorRole
 from util.cache import cache, cache_if_anonymous
 from util.db import outer_atomic
@@ -249,13 +251,30 @@ def courses(request):
     # Add marketable programs to the context.
     programs_list = get_programs_with_type(request.site, include_hidden=False)
 
+    pre_facet_filters = {}
+    if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
+                                       settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
+        settings.COURSE_DISCOVERY_FILTERS.append('course_country')
+        pre_facet_filters['course_country'] = ['All countries']
+
+        user = UserProfile.objects.get(user=request.user)
+        user_country = user.country if user else None
+        if user_country:
+            country_mapping = configuration_helpers.get_value('COURSE_COUNTRY_MAPPING', settings.COURSE_COUNTRY_MAPPING)
+            if user_country in country_mapping:
+                user_country = country_mapping[user_country]
+            else:
+                user_country = dict(countries)[user_country]
+            pre_facet_filters['course_country'].append(user_country)
+
     return render_to_response(
         "courseware/courses.html",
         {
             'courses': courses_list,
             'course_discovery_meanings': course_discovery_meanings,
             'programs_list': programs_list,
-            'show_dashboard_tabs': True
+            'show_dashboard_tabs': True,
+            'pre_facet_filters': pre_facet_filters
         }
     )
 
@@ -1764,7 +1783,7 @@ def financial_assistance_form(request):
             {
                 'name': 'course',
                 'type': 'select',
-                'label': _('Course'),
+                'label': ungettext('Course', 'Courses', 1),
                 'placeholder': '',
                 'defaultValue': '',
                 'required': True,
@@ -2138,9 +2157,14 @@ def process_ilt_hotel_check_email():
         'SITE_NAME',
         settings.SITE_NAME
     )
+    logo_url = u'{proto}://{site}{path}'.format(
+        proto="https",
+        site=stripped_site_name,
+        path=get_logo_url()
+    )
     for admin, courses in admin_course_dict.items():
         email = admin.email
-        params = {"course_list": [], "message": "ilt_hotel_booking_check", "site_name": None}
+        params = {"course_list": [], "message": "ilt_hotel_booking_check", "site_name": None, "logo_url": logo_url}
         for c in courses:
             course = modulestore().get_course(c)
             course_name = course.display_name
@@ -2180,7 +2204,8 @@ class CourseReminder():
     def course_filter(self, course_id):
         descriptor = modulestore().get_course(course_id)
         if descriptor:
-            return len(descriptor.reminder_info) > 0
+            return len(descriptor.reminder_info) > 0 or \
+                   (descriptor.periodic_reminder_enabled and descriptor.periodic_reminder_day > 0)
         return False
 
     def get_course_with_reminders(self):

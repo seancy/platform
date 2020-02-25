@@ -1,10 +1,10 @@
 (function(define) {
+    'use strict';
     define(['backbone'], function(Backbone) {
-        'use strict';
-
         return Backbone.Model.extend({
-            idAttribute: 'type',
+            idAttribute: 'id',
             defaults: {
+                id: 'search_query-',
                 type: 'search_query',
                 query: '',
                 name: ''

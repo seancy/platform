@@ -142,7 +142,7 @@ from xmodule.modulestore.django import modulestore
           </section>
           <section class="whiteboard">
             <div class="completed-courses">
-              <a href="${reverse('my_courses')}">
+              <a href="${reverse('my_courses', kwargs={'tab': 'finished'})}">
                 <i class="far fa-file-alt"></i>
                 <h2>${nb_completed_courses}</h2>
                 <p>${_("completed courses")}</p>

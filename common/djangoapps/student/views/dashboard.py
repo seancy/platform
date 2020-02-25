@@ -966,7 +966,7 @@ def student_dashboard(request):
 @login_required
 @ensure_csrf_cookie
 @add_maintenance_banner
-def my_courses(request):
+def my_courses(request, tab):
     user = request.user
     if not UserProfile.objects.filter(user=user).exists():
         return redirect(reverse('account_settings'))
@@ -1126,6 +1126,7 @@ def my_courses(request):
         'show_email_settings_for': show_email_settings_for,
         'staff_access': staff_access,
         'verification_status_by_course': verify_status_by_course,
+        'tab': tab
     }
 
     # Gather urls for course card resume buttons.
