@@ -1,19 +1,81 @@
 import 'select2'
 import '../../../../node_modules/select2/dist/css/select2.css'
 
-export class CourseReport {
+/*class CourseReportTemp {
     constructor(){
         $('.analytics-header form select').select2();
     }
+}*/
+
+function initSelect() {
+    $('.analytics-header form select').select2();
 }
 
 /* eslint-disable react/no-danger, import/prefer-default-export */
 import React from 'react';
 import {Toolbar} from './Toolbar'
 import DataList from "se-react-data-list"
+import Tab from "se-react-tab"
+
 import PaginationConfig from './PaginationConfig'
 
-export class CourseReport2 extends React.Component {
+class CourseReport extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+
+        };
+        //this.myRef = React.createRef()
+
+        initSelect()
+    }
+
+
+    render() {
+        const {} = this.state
+
+
+        const functionStrs = ['Summary', 'Progress', 'Time Spent']
+        const [Summary0,Progress,TimeSpent] = functionStrs.map(p=>{
+            return (props)=>{
+                return (<div className={`${p.toLowerCase()}-component ${(props.className || '')}`}>
+                    {p} component
+                </div>)
+            }
+        })
+        const data = [
+            {text: 'Summary', value: 'summary', component: Summary},
+            {text: 'Progress', value: 'progress', component: Progress},
+            {text: 'Time Spent', value: 'time_spent', component: TimeSpent},
+        ]
+
+        return (
+            <Tab onChange={console.log} data={data}/>
+        )
+    }
+}
+
+{/*
+<>
+        <ul className="analytics-nav">
+            <li className="nav-item summary active">Summary</li>
+            <li className="nav-item progress">Progress</li>
+            <li className="nav-item time_spent">Time Spent</li>
+        </ul>
+        <div className="analytics-nav-content">
+            test info2...
+        </div>
+
+        <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
+            enabledItems={['period','export']} properties={this.props.filters}/>
+         <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
+                  enableRowsCount={true} {...parameterObj} onPageChange={this.fetchData.bind(this)}
+        />
+    </>
+*/}
+
+class Summary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,6 +88,8 @@ export class CourseReport2 extends React.Component {
             rowsCount: 0,
         };
         this.myRef = React.createRef()
+
+        initSelect();
     }
 
     componentDidMount() {
@@ -79,11 +143,32 @@ export class CourseReport2 extends React.Component {
 
     render() {
         const {data,totalData} = this.state
+        //Name	Email	Country	Commercial Zone	Commercial Region	City	Location
+        // Employee ID	Status	Progress	Current Score	Badges
+        // Total Time Spent	Enrollment Date	Completion Date
+        const render=(val)=>{
+            return <span className={val?'in-progress-bg':''}>In Progress</span>
+            //val ? () :
+
+            /*
+            <span className="not-started-bg" >Not Started</span>*/
+        }
         const parameterObj = {
             fields: [
                 {name: 'Name', fieldName: 'userName'},
                 {name: 'Email', fieldName: 'email'},
-                {name: 'Country', fieldName: 'country'},
+                {name: 'Commercial Zone', fieldName: 'commercialZone'},
+                {name: 'City', fieldName: 'city'},
+                {name: 'Location', fieldName: 'location'},
+                {name: 'Employee ID', fieldName: 'employeeID'},
+                {name: 'Status', fieldName: 'status', render},
+                {name: 'Progress', fieldName: 'progress'},
+                {name: 'Current Score', fieldName: 'currentScore'},
+                {name: 'Badges', fieldName: 'badges'},
+                {name: 'Posts', fieldName: 'posts'},
+                {name: 'Total Time Spent', fieldName: 'totalTimeSpent'},
+                {name: 'Enrollment Date', fieldName: 'enrollmentDate'},
+                {name: 'Completion Date', fieldName: 'completionDate'},
             ],
             pagination: {
                 pageSize: PaginationConfig.PageSize,
@@ -95,7 +180,7 @@ export class CourseReport2 extends React.Component {
         return (
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
-                    enabledItems={['period','export']} properties={this.props.filters}/>
+                    enabledItems={['filters','period', 'properties','export']} properties={this.props.filters}/>
                  <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...parameterObj} onPageChange={this.fetchData.bind(this)}
                 />
@@ -103,3 +188,5 @@ export class CourseReport2 extends React.Component {
         )
     }
 }
+
+export { CourseReport }

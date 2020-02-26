@@ -6,6 +6,10 @@
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
     from triboo_analytics.models import CourseStatus, format_time_spent
+
+    import json
+    from openedx.core.djangolib.markup import HTML
+    from webpack_loader.templatetags.webpack_loader import render_bundle
 %>
 
 <%block name="pagetitle">${_("Analytics - Course Report")}</%block>
@@ -102,6 +106,25 @@
                   <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
                 </div>
 
+                ${HTML(render_bundle('CourseReport'))}
+                ${HTML(render_bundle('ReactRenderer'))}
+                <div id="course-report"></div>
+                <script type="text/javascript">
+                  new ReactRenderer({
+                    component: CourseReport,
+                    selector: '#course-report',
+                    componentName: 'CourseReport',
+                    props: {
+                        ##filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
+                        ##defaultLanguage: '${request.LANGUAGE_CODE}',
+                        last_update: '${last_update}',
+                        ##learner_table: ${('true' if learner_table else 'false')}
+                      }
+                  });
+                </script>
+
+                <div>-----------------spliter----------------------------------spliter----------------------------------spliter-----------------</div>
+
               <%
               summary_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'summary'}))
               progress_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'progress'}))
@@ -197,9 +220,9 @@
     </div>
 </main>
 
-<%static:webpack entry="CourseReport">
-    new CourseReport();
-</%static:webpack>
+##<%static:webpack entry="CourseReport">
+##    new CourseReport();
+##</%static:webpack>
 
 % if course_report:
     <!-- load the d3.js library -->
