@@ -87,43 +87,29 @@ from xmodule.modulestore.django import modulestore
   % endif
   <script>
     var $courses = $(".listing-courses li.course-item");
-    $(".my-courses-nav li").click(function () {
-        $(this).find('.btn-link').addClass('active-section');
-        $(this).siblings().find('.btn-link').removeClass('active-section');
-        if($(this).attr('id') == 'all-courses') {
-          $courses.show();
+    function updateCourseList(activeTab) {
+      var activeStatus = activeTab;
+      if (activeTab == 'not-started') {
+        activeStatus = 'Not_started';
+      } else if (activeTab == 'started') {
+        activeStatus = 'Started';
+      } else if (activeTab == 'finished') {
+        activeStatus = 'Finished';
+      }
+      $courses.each(function() {
+        if (activeStatus == 'all-courses' || $(this).data('status') == activeStatus) {
+          $(this).show();
+        } else {
+          $(this).hide();
         }
-        if($(this).attr('id') == 'not-started') {
-          $courses.each(function () {
-              if ($(this).data('status') == 'Not_started') {
-                $(this).show()
-              }
-              else {
-                $(this).hide()
-              }
-          })
-        }
-        if($(this).attr('id') == 'started') {
-          $courses.each(function () {
-              if ($(this).data('status') == 'Started') {
-                $(this).show()
-              }
-              else {
-                $(this).hide()
-              }
-          })
-        }
-        if($(this).attr('id') == 'finished') {
-          $courses.each(function () {
-              if ($(this).data('status') == 'Finished') {
-                $(this).show()
-              }
-              else {
-                $(this).hide()
-              }
-          })
-        }
-    })
+      })      
+    }
+    $('document').ready(function() { updateCourseList("${tab}"); });
+    $(".my-courses-nav li").click(function() {
+      $(this).find('.btn-link').addClass('active-section');
+      $(this).siblings().find('.btn-link').removeClass('active-section');
+      updateCourseList($(this).attr('id'));
+    });
   </script>
 </%block>
 
