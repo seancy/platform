@@ -350,8 +350,17 @@ class ReportLog(UnicodeMixin, TimeStampedModel):
     country = models.DateTimeField(default=None, null=True)
 
     @classmethod
-    def get_latest(cls):
+    def get_latest(cls, from_date=None, to_date=None):
         try:
+            if from_date and to_date:
+                return cls.objects.filter(created__gte=from_date,
+                                          created__lte=to_date,
+                                          learner_visit__isnull=False,
+                                          learner_course__isnull=False,
+                                          learner__isnull=False,
+                                          course__isnull=False,
+                                          microsite__isnull=False,
+                                          country__isnull=False).latest()
             return cls.objects.filter(learner_visit__isnull=False,
                                       learner_course__isnull=False,
                                       learner__isnull=False,
@@ -625,8 +634,12 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def filter_period(cls, from_date, to_date, course_id):
-        user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
-        # return cls.
+        last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
+        if last_reportlog:
+            last_analytics_success = last_reportlog.created
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
+            return cls.objects.filter(created=last_analytics_success, course_id=course_id, user_id__in=user_ids)
+        return None
 
 
 class LearnerSectionReport(TimeModel):
