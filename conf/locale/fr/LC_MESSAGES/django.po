@@ -19796,8 +19796,8 @@ msgstr "Nous vous rappelons que vous devez compléter le cours {course_name} sur
 #: lms/templates/emails/course_reminder_email_message.txt:29
 msgid "You have {days_left} day left to complete the course."
 msgid_plural "You have {days_left} days left to complete the course."
-msgstr[0] "Vous avez seulement {days} jour restant pour terminer ce cours."
-msgstr[1] "Vous avez seulement {days} jours restant pour terminer ce cours."
+msgstr[0] "Vous avez seulement {days_left} jour restant pour terminer ce cours."
+msgstr[1] "Vous avez seulement {days_left} jours restant pour terminer ce cours."
 
 #: lms/templates/emails/course_reminder_email_subject.txt:3
 msgid "The course {course_name} is overdue"
