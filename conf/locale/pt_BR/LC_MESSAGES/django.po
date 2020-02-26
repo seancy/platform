@@ -23432,15 +23432,15 @@ msgstr ""
 msgid "You have {days_left} day left to complete the course."
 msgid_plural "You have {days_left} days left to complete the course."
 msgstr[0] ""
-"Você tem somente {days} dia restante para realizar a verificação para o "
+"Você tem somente {days_left} dia restante para realizar a verificação para o "
 "curso."
 msgstr[1] ""
-"Você tem somente {days} dias restantes para realizar a verificação para o "
+"Você tem somente {days_left} dias restantes para realizar a verificação para o "
 "curso."
 
 #: lms/templates/emails/course_reminder_email_subject.txt:3
 msgid "The course {course_name} is overdue"
-msgstr "O curso {course_key} não existe"
+msgstr "O curso {course_name} não existe"
 
 #: lms/templates/emails/course_reminder_email_subject.txt:7
 msgid "{course_name} Reminders"
