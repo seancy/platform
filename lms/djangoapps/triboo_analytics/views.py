@@ -1275,6 +1275,12 @@ def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
     ilt_learner_report_table = IltLearnerTable(ilt_learner_reports, exclude=exclude)
     return ilt_learner_report_table, row_count
 
+def get_filters_data():
+    analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                                settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+    user_properties_helper = UserPropertiesHelper(analytics_user_properties)
+    filters_data = user_properties_helper.get_possible_choices()
+    return filters_data
 
 @analytics_on
 @login_required
