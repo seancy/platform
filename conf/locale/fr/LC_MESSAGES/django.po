@@ -30604,7 +30604,7 @@ msgid "See my libraries"
 msgstr "Voir mes bibliothèques créés"
 
 #: cms/templates/index.html:35
-msgid "Create a new coures"
+msgid "Create a new course"
 msgstr "Créer un nouveau cours"
 
 #: cms/templates/index.html:41

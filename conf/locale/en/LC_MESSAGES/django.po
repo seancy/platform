@@ -4809,28 +4809,9 @@ msgstr ""
 msgid "Please go to the following page and choose a new password:"
 msgstr ""
 
-#: common/templates/student/edx_ace/passwordreset/email/body.txt:15
-msgid "Thanks for using our site!"
-msgstr ""
-
-#: common/templates/student/edx_ace/passwordreset/email/body.txt:17
-#, python-format
-msgid "The %(platform_name)s Team"
-msgstr ""
-
-#: common/templates/student/edx_ace/passwordcreate/email/body.txt:2
-#: common/templates/student/edx_ace/passwordcreate/email/body.html:10
-msgid "Welcome to %(platform_name)s."
-msgstr ""
-
 #: common/templates/student/edx_ace/passwordcreate/email/body.txt:4
 #: common/templates/student/edx_ace/passwordcreate/email/body.html:14
 msgid "You can sign in with your email address: %(user_email)s"
-msgstr ""
-
-#: common/templates/student/edx_ace/passwordcreate/email/body.txt:7
-#: common/templates/student/edx_ace/passwordcreate/email/body.html:19
-msgid "Please go to the following page to create your password:"
 msgstr ""
 
 #: common/templates/student/edx_ace/passwordreset/email/subject.txt:3
@@ -5116,6 +5097,9 @@ msgstr ""
 #. Translators: This string represents task was executed for all learners.
 #: lms/djangoapps/certificates/models.py:418
 #: lms/djangoapps/certificates/models.py:439
+#: lms/djangoapps/instructor/views/api.py:2658
+#: lms/djangoapps/instructor/views/api.py:2844
+#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
 msgid "All learners"
 msgstr ""
 
@@ -7160,11 +7144,6 @@ msgstr ""
 #: lms/djangoapps/instructor/views/api.py:2838
 #: lms/djangoapps/instructor/views/api.py:2961
 msgid "Course has no valid entrance exam section."
-msgstr ""
-
-#: lms/djangoapps/instructor/views/api.py:2658
-#: lms/djangoapps/instructor/views/api.py:2844
-msgid "All Learners"
 msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py:2832
@@ -18882,11 +18861,6 @@ msgstr ""
 msgid "No prerequisite required for this course"
 msgstr ""
 
-#: lms/templates/courseware/course_about.html:259
-#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:246
-msgid "Additional Resources"
-msgstr ""
-
 #: lms/templates/courseware/course_about.html:294
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:282
 msgctxt "self"
@@ -20202,35 +20176,13 @@ msgid ""
 "Your password has been created. {start_link}Sign-in to your account.{end_link}"
 msgstr ""
 
-#: lms/templates/registration/password_reset_confirm.html:14
-msgid "Reset Your {platform_name} Password"
-msgstr ""
-
 #. Translators: This is a menu option for sorting forum threads
 #: lms/templates/discussion/_thread_list_template.html:42
 msgid "by most activity"
 msgstr ""
 
-#: lms/templates/registration/password_reset_confirm.html:50
-msgid  ""
-"This password reset link is invalid. It may have been used already. "
-"To reset your password, go to the {start_link}sign-in{end_link} page and "
-"select {start_strong}Forgot password{end_strong}."
-msgstr ""
-
 #: lms/templates/registration/password_create_confirm.html:47
 msgid "Invalid Password Creation Link"
-msgstr ""
-
-#: lms/templates/registration/password_create_confirm.html:50
-msgid  ""
-"This password creation link is invalid. It may have been used already. "
-"To reset your password, go to the {start_link}sign-in{end_link} page and "
-"select {start_strong}Forgot password{end_strong}."
-msgstr ""
-
-#: lms/templates/registration/password_reset_done.html:3
-msgid "Password reset successful"
 msgstr ""
 
 #: lms/templates/edxnotes/edxnotes.html:13
@@ -22831,10 +22783,6 @@ msgstr ""
 msgid "Staff and Administrators"
 msgstr ""
 
-#: lms/templates/instructor/instructor_dashboard_2/send_email.html:27
-msgid "All Learners"
-msgstr ""
-
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html:36
 msgid "Cohort: "
 msgstr ""
@@ -23406,16 +23354,6 @@ msgstr ""
 #: lms/templates/registration/password_reset_complete.html:41
 #: lms/templates/registration/password_reset_confirm.html:45
 msgid "Password assistance"
-msgstr ""
-
-#: lms/templates/registration/password_create_complete.html:43
-msgid "Password Creation Complete"
-msgstr ""
-
-#: lms/templates/registration/password_create_complete.html:45
-msgid ""
-"Your password has been created. {start_link}Sign-in to your account."
-"{end_link}"
 msgstr ""
 
 #: lms/templates/registration/password_create_confirm.html:14
@@ -26472,7 +26410,7 @@ msgid "See my libraries"
 msgstr ""
 
 #: cms/templates/index.html:35
-msgid "Create a new coures"
+msgid "Create a new course"
 msgstr ""
 
 #: cms/templates/index.html:41
