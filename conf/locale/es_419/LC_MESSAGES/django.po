@@ -18340,6 +18340,10 @@ msgstr "Cursos completados"
 msgid "badges obtained"
 msgstr "Certificaciones obtenidas"
 
+#: lms/templates/dashboard.html:162
+msgid "View my learning transcript"
+msgstr "Ver mi transcripción"
+
 #: lms/templates/dashboard.html:161
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:139
 msgid "posts"
@@ -27528,7 +27532,7 @@ msgstr "Por favor, proporcione la razón. ¡No puede estar vacío!"
 
 #: lms/templates/triboo_analytics/my_transcript.html:121
 msgid "Analytics - Learning Transcript"
-msgstr ""
+msgstr "Analytics - Transcripción"
 
 #: lms/templates/triboo_analytics/my_transcript.html:213
 #: lms/templates/triboo_analytics/transcript.html:35
@@ -27600,7 +27604,7 @@ msgstr "Analytics - Transcripción del usuario"
 
 #: lms/templates/triboo_analytics/transcript.html:40
 msgid "Learning Transcript of"
-msgstr "Subtítulos por defecto"
+msgstr "Transcripción de"
 
 #: lms/templates/ux/reference/bootstrap/course-skeleton.html:39
 msgid "Skeleton Page"
