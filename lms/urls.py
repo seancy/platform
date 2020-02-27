@@ -308,7 +308,7 @@ urlpatterns += [
 
     # xblock Resource URL
     url(
-        r'xblock/resource/(?P<block_type>[^/]+)/(?P<uri>.*)$',
+        r'xblock/resources*/(?P<block_type>[^/]+)/(?P<uri>.*)$',
         xblock_resource,
         name='xblock_resource_url',
     ),
