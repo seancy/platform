@@ -1099,6 +1099,7 @@ def course_view(request):
                 'filter_form': filter_form,
                 'user_properties_form': user_properties_form,
                 'row_count': row_count,
+                'filters_data': get_filters_data(),
                 'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'course'}),
             }
         )

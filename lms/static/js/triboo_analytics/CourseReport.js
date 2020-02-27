@@ -34,8 +34,6 @@ class CourseReport extends React.Component {
 
     render() {
         const {} = this.state
-
-
         const functionStrs = ['Summary', 'Progress', 'Time Spent']
         const [Summary0,Progress,TimeSpent] = functionStrs.map(p=>{
             return (props)=>{
@@ -45,7 +43,7 @@ class CourseReport extends React.Component {
             }
         })
         const data = [
-            {text: 'Summary', value: 'summary', component: Summary},
+            {text: 'Summary', value: 'summary', component: Summary, props:{filters:this.props.filters, defaultLanguage: this.props.defaultLanguage}},
             {text: 'Progress', value: 'progress', component: Progress},
             {text: 'Time Spent', value: 'time_spent', component: TimeSpent},
         ]
@@ -56,24 +54,6 @@ class CourseReport extends React.Component {
     }
 }
 
-{/*
-<>
-        <ul className="analytics-nav">
-            <li className="nav-item summary active">Summary</li>
-            <li className="nav-item progress">Progress</li>
-            <li className="nav-item time_spent">Time Spent</li>
-        </ul>
-        <div className="analytics-nav-content">
-            test info2...
-        </div>
-
-        <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
-            enabledItems={['period','export']} properties={this.props.filters}/>
-         <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
-                  enableRowsCount={true} {...parameterObj} onPageChange={this.fetchData.bind(this)}
-        />
-    </>
-*/}
 
 class Summary extends React.Component {
     constructor(props) {
@@ -133,7 +113,7 @@ class Summary extends React.Component {
                 this.setState((s, p) => {
                     return {
                         data: json.list,
-                        totalData: json.total, //{email: 'total:', first_name: json.total},
+                        totalData: json.total, //{	Progress	Current Score	Badges	Posts	Total Time Spent},
                         rowsCount: json.pagination.rowsCount
                     }
                 })
@@ -143,25 +123,20 @@ class Summary extends React.Component {
 
     render() {
         const {data,totalData} = this.state
-        //Name	Email	Country	Commercial Zone	Commercial Region	City	Location
-        // Employee ID	Status	Progress	Current Score	Badges
-        // Total Time Spent	Enrollment Date	Completion Date
         const render=(val)=>{
-            return <span className={val?'in-progress-bg':''}>In Progress</span>
-            //val ? () :
-
-            /*
-            <span className="not-started-bg" >Not Started</span>*/
+            return <span className={val?'in-progress-bg':'not-started-bg'}>{val?'In Progress':'Not Started'}</span>
         }
         const parameterObj = {
             fields: [
-                {name: 'Name', fieldName: 'userName'},
+                {name: 'Name', fieldName: 'userName', className:'user_name'},
                 {name: 'Email', fieldName: 'email'},
+                {name: 'Country', fieldName: 'country'},
                 {name: 'Commercial Zone', fieldName: 'commercialZone'},
+                {name: 'Commercial Region', fieldName: 'commercialRegion'},
                 {name: 'City', fieldName: 'city'},
                 {name: 'Location', fieldName: 'location'},
                 {name: 'Employee ID', fieldName: 'employeeID'},
-                {name: 'Status', fieldName: 'status', render},
+                {name: 'Status', fieldName: 'status', render, className:'status'},
                 {name: 'Progress', fieldName: 'progress'},
                 {name: 'Current Score', fieldName: 'currentScore'},
                 {name: 'Badges', fieldName: 'badges'},
