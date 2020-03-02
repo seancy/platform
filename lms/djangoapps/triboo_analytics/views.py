@@ -1795,3 +1795,15 @@ def sec2str(sec):
     h, m = divmod(m, 60)
     t = "%d:%02d:%02d" % (h, m, s)
     return t
+
+
+@analytics_on
+def learner_get_properties(request):
+    analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                                settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+    user_properties_helper = UserPropertiesHelper(analytics_user_properties)
+    filters_data = user_properties_helper.get_possible_choices()
+    json = []
+    for item in filters_data:
+        json.append({ 'text': item[0], 'value':item[1]})
+    return JsonResponse(json)

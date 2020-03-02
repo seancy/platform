@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^learner/$', views.learner_view, name='analytics_learner'),
     url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),
     url(r'^learner/json/$', views.learner_view_data, name='analytics_learner_data'),
+    url(r'^learner/get_properties/json/$', views.learner_get_properties, name='analytics_learner_get_properties'),
 
     url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt|global|customized)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
         views.list_table_downloads, name='list_table_downloads'),
