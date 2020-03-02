@@ -23473,7 +23473,7 @@ msgid ""
 "{site_name}."
 msgstr ""
 "Este mensaje es para recordarle que complete el curso {course_name} "
-"el{nombre del sitio}."
+"de {site_name}."
 
 #: lms/templates/emails/course_reminder_email_message.txt:29
 msgid "You have {days_left} day left to complete the course."
