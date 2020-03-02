@@ -11737,3 +11737,11 @@ msgstr "该课程的注册已关闭。请选择其他课程。"
 #: xblock-ilt/ilt/static/js/src/ilt.js:562
 msgid "Please choose the accommodation need"
 msgstr "请选择住宿需求"
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "yes"
+msgstr "是"
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "no"
+msgstr "否"

@@ -14667,7 +14667,7 @@ msgstr "Enregistrer les paramètres"
 #: themes/edx.org/lms/templates/dashboard.html:365
 #: themes/edx.org/lms/templates/dashboard/_dashboard_entitlement_unenrollment_modal.html:29
 msgid "Unenroll"
-msgstr "Se désinscrire"
+msgstr "désinscrire"
 
 #: lms/templates/edit_unit_link.html:5
 msgid "View Unit in Studio"
@@ -29884,6 +29884,31 @@ msgstr "Les inscriptions seront fermées pour les sessions ayant une date qui se
 msgid "The registration deadline cannot be empty"
 msgstr "La limite des inscriptions ne peut être vide"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Unenroll selected users"
+msgstr "Désinscrire les apprenants sélectionnés"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Change session"
+msgstr "Changer de session"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Accommodation"
+msgstr "Hôtel"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "One way"
+msgstr "Aller"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Return"
+msgstr "Retour"
+
 #: lms/templates/courseware/courses.html
 msgid "Availability"
 msgstr "Disponibilité"
@@ -30197,9 +30222,21 @@ msgid ""
 "at least two weeks from now. If not, the enrollment should be declined."
 msgstr "Avant toute validation, et afin de garantir la meilleure organisation logistique possible (repas, hôtel…), nous vous invitons à vérifier que la formation a bien lieu dans plus de 2 semaines."
 
+#: master-sephora:lms/templates/emails/ilt_validate_email_message.txt
+msgid "You have received in-class training requests."
+msgstr "Vous avez reçu de nouvelles demandes de participations pour des formations en salle."
+
+#: master-sephora:lms/templates/emails/ilt_validate_email_message.txt
+msgid "Click on the link below to accept, edit or decline the requests:"
+msgstr "Cliquez sur le lien ci-dessous pour accepter, modifier ou refuser la/les demande(s) :"
+
 #: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
 msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
 msgstr "POUR VALIDATION -Demande d'inscription formation - {name}"
+
+#: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
+msgid "APPROVAL NEEDED - Request to enroll in the ILT training"
+msgstr "POUR VALIDATION - Demande d’inscription formation"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_message.txt:10
 msgid "This email is to inform you that the learners ({learners}) have been unenrolled from the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}. For more information about the session, please click on the link below:"
@@ -30611,7 +30648,83 @@ msgstr "Créer un nouveau cours"
 msgid "Create a new library"
 msgstr "Créer une nouvelle bibliothèque"
 
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "tab"
+msgid "ILT Follow-up"
+msgstr "Suivi ILT"
 
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "banner"
+msgid "ILT Follow-up"
+msgstr "Suivi des sessions"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Pending Requests"
+msgstr "Demandes en attente"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Upcoming Sessions"
+msgstr "Sessions à venir"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined Requests"
+msgstr "Demandes refusées"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Accommodation needed ?"
+msgstr "Demande de réservation d'hôtel ?"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many one way ?"
+msgstr "Combien d'aller ?"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many return ?"
+msgstr "Combien de retour ?"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Refuse"
+msgstr "Refuser"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Approve"
+msgstr "Approuver"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined"
+msgstr "Décliné"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No approved requests"
+msgstr "Vous n’avez pas de demande approuvée"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No pending requests"
+msgstr "Vous n’avez pas de demande en attente"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No declined requests"
+msgstr "Vous n’avez pas de demande refusée"
+
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT Requests"
+msgstr "Demandes de formation présentielle"
+
+#: lms/templates/emails/ilt_request_update_email_subject.txt
+msgid "Enrollment update of the in-class training - {name}"
+msgstr "Mise à jour inscription formation - {name}"
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "Please be informed that your enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zip_code} has been updated."
+msgstr "Nous vous informons que votre inscription à la session de formation {ilt_name} prévue le {start} à {location} située {address}, {zip_code} {city}, a été modifiée."
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "NEW INFORMATION:"
+msgstr "MISE À JOUR :"
+
+#: lms/templates/emails/ilt_sesson_changed_email_message.txt
+msgid "We are writing to confirm your enrollment in the {ilt_name} in-class training has been switched to another session scheduled for {start} in {location} at {address}, {city} {zipcode}."
+msgstr "Nous vous confirmons que votre inscription à la formation {ilt_name} a été déplacée à la session du {start} à {location} située {address}, {zipcode} {city}."
 
 #: lms/templates/triboo_analytics/microsite.html:44
 msgid "Number of learners enrolled in a course"
@@ -30789,3 +30902,23 @@ msgid ""
 "Number of courses the learner completed with 100% progress but with a total "
 "score below the minimum required score"
 msgstr "Cours terminés par l’apprenant avec une progression de 100% mais une note globale en dessous de la note de passage"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure that you want to unenroll these learners?"
+msgstr "Êtes-vous sûr(e) de vouloir désinscrire ces apprenants ?"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your changes have been taken into account."
+msgstr "Vos changements ont été pris en compte."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner has been unenrolled."
+msgstr "L'apprenant a été désinscrit."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's session has been changed."
+msgstr "La session de l'apprenant a été changée."

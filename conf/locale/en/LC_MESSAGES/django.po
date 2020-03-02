@@ -26100,6 +26100,31 @@ msgstr ""
 msgid "The registration deadline cannot be empty"
 msgstr ""
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Unenroll selected users"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Change session"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Accommodation"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "One way"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Return"
+msgstr ""
+
 #: lms/templates/courseware/courses.html
 msgid "Availability"
 msgstr ""
@@ -26417,6 +26442,88 @@ msgstr ""
 msgid "Create a new library"
 msgstr ""
 
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "tab"
+msgid "ILT Follow-up"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "banner"
+msgid "ILT Follow-up"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Pending Requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Upcoming Sessions"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined Requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Accommodation needed ?"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many one way ?"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many return ?"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Refuse"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Approve"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Unsubscribe"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No approved requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No pending requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No declined requests"
+msgstr ""
+
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT Requests"
+msgstr ""
+
+#: lms/templates/emails/ilt_request_update_email_subject.txt
+msgid "Enrollment update of the in-class training - {name}"
+msgstr ""
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "Please be informed that your enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zip_code} has been updated."
+msgstr ""
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "NEW INFORMATION:"
+msgstr ""
+
+#: lms/templates/emails/ilt_sesson_changed_email_message.txt
+msgid "We are writing to confirm your enrollment in the {ilt_name} in-class training has been switched to another session scheduled for {start} in {location} at {address}, {city} {zipcode}."
+msgstr ""
+
 #: lms/templates/triboo_analytics/courseware.html
 msgid "Successful"
 msgstr ""
@@ -26600,4 +26707,24 @@ msgstr ""
 msgid ""
 "Number of courses the learner completed with 100% progress but with a total "
 "score below the minimum required score"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure that you want to unenroll these learners?"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your changes have been taken into account."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner has been unenrolled."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's session has been changed."
 msgstr ""

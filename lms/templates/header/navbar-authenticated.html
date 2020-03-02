@@ -6,11 +6,11 @@
 <%namespace file='../main.html' import="login_query"/>
 <%!
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import pgettext, ugettext as _
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from branding.views import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP
 from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
-from student.roles import studio_access_role
+from student.roles import studio_access_role, ilt_supervisor_role
 %>
 
 <%
@@ -86,6 +86,15 @@ from student.roles import studio_access_role
           <a class="tab-nav-link" href="//${getattr(settings, 'CMS_BASE')}" target="_blank" title="${_('Built-in authoring tool')}">
             <span class="label"><span class="icon far fa-edit" aria-hidden="true"></span></span>
             ${_("Studio")}
+          </a>
+        </div>
+      % endif
+
+      % if ilt_supervisor_role(user) and configuration_helpers.get_value('ILT_FOLLOW_UP_ENABLED', False):
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab ilt-request-tab">
+          <a class="tab-nav-link" href="${reverse('ilt_validation_list')}" title="${_('ILT request validation page')}">
+            <span class="label"><span class="icon far fa-ballot-check" aria-hidden="true"></span></span>
+            ${pgettext('tab', "ILT Follow-up")}
           </a>
         </div>
       % endif

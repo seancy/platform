@@ -231,6 +231,14 @@ msgid ""
 "at least two weeks from now. If not, the enrollment should be declined."
 msgstr "Înainte de a accepta o cerere și pentru a optimiza organizarea logistică (catering, cazare, etc.), te rugăm să verifici dacă trainingul se desfășoară în minim două săptămâni de acum. Dacă nu, înscrierea ar trebui declinată."
 
+#: master-sephora:lms/templates/emails/ilt_validate_email_message.txt
+msgid "You have received in-class training requests."
+msgstr "Ai primit solicitări de înscriere la traininguri în sală."
+
+#: master-sephora:lms/templates/emails/ilt_validate_email_message.txt
+msgid "Click on the link below to accept, edit or decline the requests:"
+msgstr "Click pe link-ul de mai jos pentru a accepta, edita sau respinge solicitările:"
+
 #: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
 msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
 msgstr "APROBARE NECESARĂ – Solicitare înscriere la trainingul - {name}"
@@ -242,3 +250,7 @@ msgstr "Te rugăm să ai în vedere următoarele cereri de cazare pentru fiecare
 #: lms/templates/emails/ilt_hotel_booking_check_subject.txt:2
 msgid "PENDING - Accommodation requests"
 msgstr "ÎN AȘTEPTARE – Cereri de cazare"
+
+#: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
+msgid "APPROVAL NEEDED - Request to enroll in the ILT training"
+msgstr "APROBARE NECESARĂ – Solicitare înscriere la trainingul"

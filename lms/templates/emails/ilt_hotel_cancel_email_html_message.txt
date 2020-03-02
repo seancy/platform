@@ -12,7 +12,7 @@ ${_("Hello")} ${name}
 <br>
 % if action == "ilt_batch_unenroll" or action == "ilt_self_unenroll":
 ${_("This email is to inform you that the following learners have been unenrolled from the ILT session '{ilt_name}' in the course '{course_name}' on the {platform_name} platform.").format(platform_name=platform_name, ilt_name=ilt_name, course_name=course_name)}
-
+% elif action == "ilt_hotel_cancel":
 % else:
 ${_("This email is to inform you that the ILT session '{ilt_name}' in the course {course_name} on the {platform_name} platform has been canceled.").format(platform_name=platform_name, ilt_name=ilt_name, course_name=course_name)}
 % endif

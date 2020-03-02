@@ -23,7 +23,6 @@ log_formatter.converter = time.gmtime
 log_handler.setFormatter(log_formatter)
 logger.addHandler(log_handler)
 
-
-logger.info("Start ilt hotel booking daily check ...")
-process_ilt_hotel_check_email()
+logger.info("Start ilt validation daily check ...")
+process_ilt_validation_check_email()
 logger.info("Finish daily check.")

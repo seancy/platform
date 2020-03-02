@@ -27894,6 +27894,31 @@ msgstr "距离开课时间少于5天，将无法注册"
 msgid "The registration deadline cannot be empty"
 msgstr "注册截止日期不能为空"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Unenroll selected users"
+msgstr "取消所选学员的注册"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Change session"
+msgstr "更改课程"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Accommodation"
+msgstr "住宿"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "One way"
+msgstr "单程"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Return"
+msgstr "往返"
+
 #: cms/templates/login.html
 msgid "Welcome to Joyson Open Online Courses, log in to explore more!"
 msgstr "欢迎来到均胜网络课堂，请登录，让我们一起来探索未知!"
@@ -28058,6 +28083,88 @@ msgstr "考勤表"
 msgid "Location name"
 msgstr "地点名称"
 
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "tab"
+msgid "ILT Follow-up"
+msgstr "ILT 请求跟进"
+
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "banner"
+msgid "ILT Follow-up"
+msgstr "ILT 请求跟进"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Pending Requests"
+msgstr "待处理的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Upcoming Sessions"
+msgstr "即将到来的课程"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined Requests"
+msgstr "被拒绝的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Accommodation needed ?"
+msgstr "住宿需求？"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many one way ?"
+msgstr "单程数？"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many return ?"
+msgstr "往返数？"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Refuse"
+msgstr "拒绝"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Approve"
+msgstr "通过"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined"
+msgstr "拒绝"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Unsubscribe"
+msgstr "取消注册"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No approved requests"
+msgstr "当前没有通过的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No pending requests"
+msgstr "当前没有正在处理的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No declined requests"
+msgstr "当前没有被拒绝的请求"
+
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT Requests"
+msgstr "ILT 请求"
+
+#: lms/templates/emails/ilt_request_update_email_subject.txt
+msgid "Enrollment update of the in-class training - {name}"
+msgstr ""
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "Please be informed that your enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zip_code} has been updated."
+msgstr ""
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "NEW INFORMATION:"
+msgstr ""
+
+#: lms/templates/emails/ilt_sesson_changed_email_message.txt
+msgid "We are writing to confirm your enrollment in the {ilt_name} in-class training has been switched to another session scheduled for {start} in {location} at {address}, {city} {zipcode}."
+msgstr ""
+
 #: lms/templates/triboo_analytics/table.html
 msgid "Location address"
 msgstr "地址"
@@ -28217,7 +28324,6 @@ msgid ""
 "below the minimum required score"
 msgstr "您已完成但成绩不合格的课程"
 
-
 #: lms/templates/triboo_analytics/transcript.html:54
 msgid ""
 "Number of courses the learner is enrolled in (enrollments made by an Admin "
@@ -28267,5 +28373,22 @@ msgid ""
 "score below the minimum required score"
 msgstr "已完成但成绩不合格的课程"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure that you want to unenroll these learners?"
+msgstr "你确定要取消这些学员的注册吗？"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your changes have been taken into account."
+msgstr "改变已经保存。"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner has been unenrolled."
+msgstr "该学员的注册已被取消了。"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's session has been changed."
+msgstr "该学员注册的课程已经更改。"

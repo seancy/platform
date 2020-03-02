@@ -1,0 +1,232 @@
+<%namespace name='static' file='/static_content.html'/>
+<%!
+    import json
+    from datetime import datetime
+    from django.utils.translation import ugettext as _
+    from django.utils.translation import pgettext
+    from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+    from openedx.core.djangolib.js_utils import dump_js_escaped_json
+%>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("ILT Validation")}</%block>
+
+<%block name="js_extra">
+  <script type="text/javascript" src="${static.url('js/courseware/ilt_validation.js')}"></script>
+  <script>
+      iltValidation();
+  </script>
+</%block>
+
+<div id="ilt-validation-page">
+    <section class="banner">
+        <section class="welcome-wrapper">
+            <h2>${pgettext('banner', "ILT Follow-up")}</h2>
+        </section>
+    </section>
+
+    <div class="tabs-wrapper">
+        <ul class="tabs request-tab">
+            <li><a class="pending-tab active" href="javascript:void(0);" v-on:click="chooseTab('pending')">${_("Pending Requests")}</a></li>
+            <li><a class="approved-tab" href="javascript:void(0);" v-on:click="chooseTab('approved')">${_("Upcoming Sessions")}</a></li>
+            <li><a class="declined-tab" href="javascript:void(0);" v-on:click="chooseTab('declined')">${_("Declined Requests")}</a></li>
+        </ul>
+    </div>
+
+    <div class="requests-wrapper pending">
+    <section class="pending-requests" v-if="pending_all.length">
+        <div class="request-container" v-for="(request, r_idx) in pending_all" v-bind:id="'request-'+r_idx">
+            <div class="learner-info">
+                <img class="avatar" :src="request.avatar">
+                <span class="profile-name">{{ request.learner_name }}</span>
+                <span class="user-name">{{ request.user_name }}</span>
+            </div>
+            <div class="request-info">
+                <h2 class="course-name">{{ request.course }}</h2>
+                <h3 class="module-name">{{ request.module }}</h3>
+                <select class="dropdown-list" v-model="request.session_id" v-if="request.is_editing">
+                    <option v-for="(sess, idx) in request.dropdown_list" v-bind:class="sess[1]" v-bind:value="sess[2]" :selected="sess[2] == request.session_id">
+                        {{ sess[0] }}
+                    </option>
+                </select>
+                <div class="dynamic-wrapper">
+                    <div class="time-location-wrapper">
+                        <p class="time">{{ combineDate(current_pending_sessions[r_idx].start_at, current_pending_sessions[r_idx].end_at) }}</p>
+                        <div class="location-wrapper">
+                            <p class="location">{{ current_pending_sessions[r_idx].location }}</p>
+                            <p class="address">{{ current_pending_sessions[r_idx].address }}</p>
+                            <p class="city-zip">{{ current_pending_sessions[r_idx].zip_code }} <b>{{ current_pending_sessions[r_idx].city }}</b></p>
+                        </div>
+                    </div>
+                    <div class="input-wrapper editor-mode" v-if="request.is_editing">
+                        <div class="accommodation">
+                            <label>${_("Accommodation needed ?")} </label>
+                            <input type="radio" v-bind:id="r_idx+'-accommodation-yes'" value="yes" v-model="request.accommodation" :checked="request.accommodation === 'yes'">
+                            <label :for="r_idx+'-accommodation-yes'">${_("Yes")}</label>
+                            <input type="radio" v-bind:id="r_idx+'-accommodation-no'" v-model="request.accommodation" value="no" :checked="request.accommodation === 'no'">
+                            <label :for="r_idx+'-accommodation-no'">${_("No")}</label>
+                        </div>
+                        <div class="trip">
+                            <div class="field">
+                                <label :for="r_idx+'-one-way'">${_("How many one way ?")}</label>
+                                <input type="text" v-bind:id="r_idx+'-one-way'" v-model="request.number_of_one_way">
+                            </div>
+
+                            <div class="field">
+                                <label :for="r_idx+'-return'">${_("How many return ?")}: </label>
+                                <input type="text" v-bind:id="r_idx+'-return'" v-model="request.number_of_return">
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <label :for="r_idx+'-comment'">${_("Comment")} : </label>
+                            <textarea :id="r_idx+'-comment'" v-model="request.comment" placeholder="${_('accommodation, preferences, specific diet ...')}"></textarea>
+                        </div>
+                    </div>
+                    <div class="input-wrapper" v-else>
+                        <div class="accommodation">
+                            <label>${_("Accommodation needed ?")} </label>
+                            <span>{{ trans(request.accommodation) }}</span>
+                        </div>
+                        <div class="trip">
+                            <div class="field">
+                                <label>${_("How many one way ?")}</label>
+                                <span>{{ request.number_of_one_way }}</span>
+                            </div>
+                            <div class="field">
+                                <label>${_("How many return ?")}</label>
+                                <span>{{ request.number_of_return }}</span>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <label>${_("Comment")} : </label>&nbsp;
+                            <span>{{ request.comment }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-button">
+                    <div v-if="isWithinDeadline(r_idx)" title="${_('This session is no longer open to registration.')}">
+                        <button class="edit disabled"><i class="far fa-edit"></i></button>
+                    </div>
+                    <div v-else>
+                        <button class="edit" v-if="!request.is_editing" v-on:click="edit(r_idx)"><i class="far fa-edit"></i></button>
+                    </div>
+                    <button class="cancel" v-if="request.is_editing" v-on:click="cancel(r_idx)">${_("Cancel")}</button>
+                    <button class="save" v-if="request.is_editing" v-on:click="save(r_idx)">${_("Save")}</button>
+                    <button class="refuse" v-if="!request.is_editing" v-on:click="validate('refused', r_idx)">${_("Refuse")}</button>
+                    <div v-if="isWithinDeadline(r_idx)" title="${_('This session is no longer open to registration.')}">
+                        <button class="approve disabled">${_("Approve")}</button>
+                    </div>
+                    <div v-else>
+                        <button class="approve" v-if="!request.is_editing" v-on:click="validate('approved', r_idx)">${_("Approve")}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="pending-requests" v-else>
+        <p class="empty-request">${_("No pending requests")}</p>
+    </section>
+    <section class="approved-requests" v-if="approved_all.length" style="display: none">
+        <div class="request-container" v-for="(request, r_idx) in approved_all" v-bind:id="'request-'+r_idx">
+            <div class="learner-info">
+                <img class="avatar" :src="request.avatar">
+                <span class="profile-name">{{ request.learner_name }}</span>
+                <span class="user-name">{{ request.user_name }}</span>
+            </div>
+            <div class="request-status">
+                <span class="approved">${_("Approved")} <i class="fa fa-check-circle"></i></span>
+                <div class="action-button">
+                    <button class="unsubscribe" v-on:click="unsubscribe(r_idx, 'approved_all')">${_("Unenroll")}</button>
+                </div>
+            </div>
+            <div class="request-info">
+                <h2 class="course-name">{{ request.course }}</h2>
+                <h3 class="module-name">{{ request.module }}</h3>
+                <div class="dynamic-wrapper">
+                    <div class="time-location-wrapper">
+                        <p class="time">{{ combineDate(current_approved_sessions[r_idx].start_at, current_approved_sessions[r_idx].end_at) }}</p>
+                        <div class="location-wrapper">
+                            <p class="location">{{ current_approved_sessions[r_idx].location }}</p>
+                            <p class="address">{{ current_approved_sessions[r_idx].address }}</p>
+                            <p class="city-zip">{{ current_approved_sessions[r_idx].city }}, {{ current_approved_sessions[r_idx].zip_code }}</p>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <div class="accommodation">
+                            <label>${_("Accommodation needed ?")} </label>
+                            <span class="text">{{ trans(request.accommodation) }}</span>
+                        </div>
+                        <div class="trip">
+                            <div class="field">
+                                <label>${_("How many one way ?")}</label>
+                                <span>{{ request.number_of_one_way }}</span>
+                            </div>
+                            <div class="field">
+                                <label>${_("How many return ?")}</label>
+                                <span>{{ request.number_of_return }}</span>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <label>${_("Comment")} : </label>
+                            <span>{{ request.comment }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="approved-requests" v-else style="display: none">
+        <p class="empty-request">${_("No approved requests")}</p>
+    </section>
+    <section class="declined-requests" v-if="declined_all.length" style="display: none">
+        <div class="request-container" v-for="(request, r_idx) in declined_all" v-bind:id="'request-'+r_idx">
+            <div class="learner-info">
+                <img class="avatar" :src="request.avatar">
+                <span class="profile-name">{{ request.learner_name }}</span>
+                <span class="user-name">{{ request.user_name }}</span>
+            </div>
+            <div class="request-status">
+                <span class="declined">${_("Declined")} <i class="fa fa-times-circle"></i></span>
+            </div>
+            <div class="request-info">
+                <h2 class="course-name">{{ request.course }}</h2>
+                <h3 class="module-name">{{ request.module }}</h3>
+                <div class="dynamic-wrapper">
+                    <div class="time-location-wrapper">
+                        <p class="time">{{ combineDate(current_declined_sessions[r_idx].start_at, current_declined_sessions[r_idx].end_at) }}</p>
+                        <div class="location-wrapper">
+                            <p class="location">{{ current_declined_sessions[r_idx].location }}</p>
+                            <p class="address">{{ current_declined_sessions[r_idx].address }}</p>
+                            <p class="city-zip">{{ current_declined_sessions[r_idx].city }}, {{ current_declined_sessions[r_idx].zip_code }}</p>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <div class="accommodation">
+                            <label>${_("Accommodation needed ?")} </label>
+                            <span class="text">{{ trans(request.accommodation) }}</span>
+                        </div>
+                        <div class="trip">
+                            <div class="field">
+                                <label>${_("How many one way ?")}</label>
+                                <span>{{ request.number_of_one_way }}</span>
+                            </div>
+                            <div class="field">
+                                <label>${_("How many return ?")}</label>
+                                <span>{{ request.number_of_return }}</span>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <label>${_("Comment")} : </label>
+                            <span>{{ request.comment }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="declined-requests" v-else style="display: none">
+        <p class="empty-request">${_("No declined requests")}</p>
+    </section>
+    </div>
+</div>

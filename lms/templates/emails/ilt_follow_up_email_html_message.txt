@@ -4,13 +4,21 @@
 <%!
     platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
 %>
+<%inherit file="./base_body_html.txt" />
 
+<br>
 ${_("Hello")},
-
-${_("A learner ({name}) has sent a request to enroll in the ILT session '{ilt_name}' on the {platform_name} platform. Please click the link below to validate the request:").format(name=name, platform_name=platform_name, ilt_name=ilt_name)}
-
-${ilt_link}
-
-${_("Best regards")},
-
+<br>
+<br>
+${_("You have received in-class training requests.")}
+<br>
+<br>
+${_("Click on the link below to accept, edit or decline the requests:")}
+<br>
+<a href="${link}">${link}</a>
+<br>
+<br>
+<br>
+${_("See you soon.")}
+<br>
 ${_("{platform_name} Team").format(platform_name=platform_name)}

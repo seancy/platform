@@ -12381,3 +12381,11 @@ msgstr "Polonais"
 #: lms/templates/discovery/facet_option.underscore
 msgid "Spanish"
 msgstr "Espagnol"
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "yes"
+msgstr "oui"
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "no"
+msgstr "non"

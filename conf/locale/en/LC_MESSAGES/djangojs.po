@@ -11282,3 +11282,11 @@ msgstr ""
 #: xblock-ilt/ilt/static/js/src/ilt.js:562
 msgid "Please choose the accommodation need"
 msgstr ""
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "yes"
+msgstr ""
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "no"
+msgstr ""

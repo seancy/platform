@@ -21,6 +21,8 @@ from courseware.views.views import (
     CourseTabView,
     EnrollStaffView,
     ilt_attendance_sheet,
+    ilt_validation_list,
+    ilt_validation_request_data,
     ilt_registration_validation,
     StaticCourseTabView
 )
@@ -789,6 +791,10 @@ if settings.FEATURES.get('ENABLE_DISCUSSION_SERVICE'):
             },
             name='resubscribe_forum_update',
         ),
+
+        url(r'^ilt-validation-list/$', ilt_validation_list, name='ilt_validation_list'),
+
+        url(r'^ilt-validation-request-data/$', ilt_validation_request_data, name='ilt_registration_validation'),
 
         url(
             r'^ilt-validation/{course_key}/{usage_key}/(?P<user_id>[0-9]+)/$'.format(
