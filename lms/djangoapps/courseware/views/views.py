@@ -322,16 +322,20 @@ def jump_to(_request, course_id, location):
         course_key = CourseKey.from_string(course_id)
         usage_key = UsageKey.from_string(location).replace(course_key=course_key)
     except InvalidKeyError:
+        log.exception("Invalid course_key: %s, or convert to usage_key from location: %s", course_id, location)
         raise Http404(u"Invalid course_key or usage_key")
     try:
         redirect_url = get_redirect_url(course_key, usage_key)
     except ItemNotFoundError:
+        log.warning("Can't find item %s for %s, redirect to course home page", usage_key, course_key)
         return redirect('openedx.course_experience.course_home',
                         course_id=course_id)
     except NoPathToItem:
+        log.exception("Can't find any path for the item: %s", usage_key)
         raise Http404(u"This location is not in any class: {0}".format(usage_key))
 
     return redirect(redirect_url)
+
 
 def get_resume_course_url(request, course):
     resume_course_url = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
