@@ -85,8 +85,6 @@ class Properties extends React.Component {
 
 
 export class Toolbar extends React.Component {
-    static a1='a1';
-
     constructor(props) {
         super(props);
         this.fireOnChange = this.fireOnChange.bind(this)

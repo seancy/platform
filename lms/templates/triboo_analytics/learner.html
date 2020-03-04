@@ -37,7 +37,7 @@
             selector: '#learner-report',
             componentName: 'LearnerReport',
             props: {
-                filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
+                filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8"), 'display':'true'} for item in filters_data])},
                 defaultLanguage: '${request.LANGUAGE_CODE}',
                 last_update: '${last_update}',
                 learner_table: ${('true' if learner_table else 'false')}
@@ -105,6 +105,8 @@
                             <input type="submit" value="${_("Go")}"/>
                       </div>
                   </form>
+
+                  ${learner_table}
 
                   <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_table 'triboo_analytics/table.html' %}" %>
                   ${Template(tpl).render(Context({'learner_table': learner_table, 'request': request, 'row_count': row_count}))}

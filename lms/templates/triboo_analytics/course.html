@@ -168,7 +168,7 @@
                       </div>
                     </div>
                 </div>
-              % if len(enrollments_csv_data) > 0:
+              % if len(unique_visitors_csv_data) > 0:
                 <div class="analytics-widget-100 analytics-linechart">
                     ${static.renderReact(
                       component="QuestionMark",
@@ -347,9 +347,9 @@
     drawPieChart('pieChart', pieChartData);
     </script>
 % endif
-% if enrollments_csv_data and len(enrollments_csv_data) > 0:
+% if unique_visitors_csv_data and len(unique_visitors_csv_data) > 0:
     <script type="text/javascript">
-        var lineChartCsvData = "date,value\n" + "${enrollments_csv_data}";
+        var lineChartCsvData = "date,value\n" + "${unique_visitors_csv_data}";
         drawLineChart('lineChart', lineChartCsvData, 0, 0);
     </script>
 % endif

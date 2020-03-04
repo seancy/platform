@@ -9,10 +9,6 @@ export class LearnerReport extends React.Component {
         super(props);
 
         this.state = {
-            //for initialize toolbar components
-            filters: this.props.filters || [],
-            properties: this.props.properties || [],
-
             //storing toolbar data
             toolbarData: {},
 
@@ -23,8 +19,6 @@ export class LearnerReport extends React.Component {
         };
 
         this.myRef = React.createRef()
-
-
     }
 
     componentDidMount() {
@@ -56,7 +50,7 @@ export class LearnerReport extends React.Component {
             'report_type': 'learner_report',
             'courses_selected': [''],
             'query_tuples': toolbarData && toolbarData.selectedFilterItems ?
-                toolbarData.selectedFilterItems.map(p => [p.text, p.value]) : [],
+                toolbarData.selectedFilterItems.map(p => [p.value, p.key]) : [],
             'selected_properties': toolbarData && toolbarData.selectedProperties ?
                 toolbarData.selectedProperties.map(p => p.value): [],
             'from_day': getVal('startDate'),
@@ -67,7 +61,6 @@ export class LearnerReport extends React.Component {
                 no: pageNo, size: PaginationConfig.PageSize
             },
         }
-        console.log('ajaxData', ajaxData)
 
         $.ajax(url, {
             // method: 'get', //please change it to post in real environment.
@@ -76,8 +69,6 @@ export class LearnerReport extends React.Component {
             data: JSON.stringify(ajaxData),
             dataType: 'json',
             success: (json) => {
-                console.log('json', json)
-                console.log('json json', JSON.stringify(json))
                 this.setState((s, p) => {
                     return {
                         data: json.list,
@@ -90,15 +81,24 @@ export class LearnerReport extends React.Component {
     }
 
     render() {
+        const properties=this.props.filters.map(p=>({...p, checked:p.display}))
+        const {selectedProperties=properties}=this.state.toolbarData;
+
         const config = {
             fields: [
                 {name: 'Name', fieldName: 'Name'},
-                {name: 'Email', fieldName: 'Email'},
+                ...selectedProperties.filter(p=>p.checked).map(p=>({
+                    name: p.text,
+                    fieldName: p.value
+                })),
+
+                /*{name: 'Email', fieldName: 'Email'},
                 {name: 'Country', fieldName: 'Country'},
                 {name: 'Commerical Zone', fieldName: 'CommericalZone'},
                 {name: 'Commerical Region', fieldName: 'CommericalRegion'},
                 {name: 'City', fieldName: 'City'},
-                {name: 'Employee', fieldName: 'Employee'},
+                {name: 'Employee', fieldName: 'Employee'},*/
+
                 {name: 'Enrollments', fieldName: 'Enrollments'},
                 {name: 'Successful', fieldName: 'Successful'},
                 {name: 'Unsuccessful', fieldName: 'Unsuccessful'},
@@ -126,7 +126,7 @@ export class LearnerReport extends React.Component {
                         <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
                     </div>
                     <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
-                             properties={this.props.filters}/>
+                             properties={properties}/>
                     <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                               enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
                     />
