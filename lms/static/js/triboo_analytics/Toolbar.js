@@ -54,9 +54,6 @@ class Properties extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.myRef = React.createRef()
-        this.state={
-            selectedItems:[]
-        }
     }
 
     clean(){
@@ -64,13 +61,8 @@ class Properties extends React.Component {
     }
 
     handleChange(selectedItems){
-        this.setState({
-            selectedItems
-        },()=>{
-            if (this.props.onChange){
-                this.props.onChange(this.state.selectedItems);
-            }
-        })
+        const {onChange}=this.props
+        onChange && onChange(selectedItems)
     }
 
     render() {
@@ -100,26 +92,38 @@ export class Toolbar extends React.Component {
         };
     }
 
+    componentDidMount(){
+        fetch('/analytics/common/get_properties/json/')
+            .then(response=>{
+                return response.json()
+            })
+            .then(data=>{
+                this.setState((prev)=>{
+                    let toolbarItems = prev.toolbarItems.map(p=>{
+                        if (['filters','properties'].includes(p.name)){
+                            return {...p, props:{ ...p.props, data:data.list }}
+                        }else{
+                            return p
+                        }
+                    })
+                    return {
+                        toolbarItems
+                    }
+                })
+            })
+    }
+
     getToolbarItems(enabledItems=[]){
-        const filterData = [
-            {value:'a', text:'Address'},
-            {value:'b', text:'City'},
-            {value:'c', text:'Commercial'}
-        ]
         const propertyData = [
-            {value: 'a0', text: 'name'},
-            {value: 'a1', text: 'address'},
-            {value: 'a2', text: 'city'},
-            {value: 'a3', text: 'gender'},
-            {value: 'a43', text: 'country'}
+            {value: 'failed', text: 'load data failed'},
         ]
         return [
             {name:'filters', text: gettext('filters'), icon: 'fa-search', active: false, component: LabelValue, props:{
-                data:this.props.filters || filterData,
+                data:propertyData,
                 onChange:(selectedFilterItems)=>this.setState({selectedFilterItems}, this.fireOnChange)
             }},
             {name:'properties', text: gettext('properties'), icon: 'fa-sliders-h', active: false, component: Properties, props:{
-                data:this.props.properties || propertyData,
+                data:propertyData,
                 onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
             }},
             {name:'period', text: gettext('period'), icon: 'fa-calendar-alt', active: false, component: DateRange, props:{
@@ -190,11 +194,11 @@ export class Toolbar extends React.Component {
 
 const DATA_ARRAY = PropTypes.arrayOf(PropTypes.exact({
     value:PropTypes.string,
-    text:PropTypes.string
+    text:PropTypes.string,
+    checked:PropTypes.bool
 }))
 
 Toolbar.propTypes = {
-    filters:DATA_ARRAY,
     properties:DATA_ARRAY,
     onChange:PropTypes.func,
 }
