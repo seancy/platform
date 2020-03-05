@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 
 from django import forms
+from pytz import utc
+from datetime import datetime, timedelta
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext_lazy
 
@@ -80,6 +82,14 @@ class TimePeriodForm(forms.Form):
 
     def __init__(self, data=None):
         super(TimePeriodForm, self).__init__(data)
+        self.period = None
+        if data:
+            from_day = data.get('from_day', None)
+            to_day = data.get('to_day', None)
+            if from_day and to_day:
+                from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
+                to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
+                self.period = (from_date, to_date)
 
 
 class TableFilterForm(forms.Form):

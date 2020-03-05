@@ -5,7 +5,6 @@ import json
 import logging
 import operator
 import collections
-from datetime import datetime
 from six import text_type
 from pytz import utc
 from datetime import datetime, timedelta
@@ -692,12 +691,6 @@ def get_filter_kwargs_with_table_exclude(request):
                     kwargs[queried_field + '__icontains'] = query_string
 
     time_period_form = TimePeriodForm(request_copy)
-    from_day = request_copy.get('from_day', None)
-    to_day = request_copy.get('to_day', None)
-    if from_day and to_day:
-        from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
-        to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
-        kwargs['start__range'] = (from_date, to_date)
 
     exclude = []
     user_properties_form = UserPropertiesForm(request_copy,
@@ -707,6 +700,20 @@ def get_filter_kwargs_with_table_exclude(request):
         data = user_properties_form.cleaned_data
         exclude = data['excluded_properties']
 
+    return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
+
+
+def get_period_filter_kwargs_with_table_exclude(request, as_string=False):
+    filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+    if time_period_form.period:
+        last_reportlog = ReportLog.get_latest(from_date=time_period_form.period[0], to_date=time_period_form.period[1])
+        if last_reportlog:
+            last_analytics_success = last_reportlog.created
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
+            kwargs.update({
+                'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
+                'user_id__in': "%s" % user_ids if as_string else user_ids
+            })
     return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
 
 
@@ -729,20 +736,24 @@ def get_learner_table_filters(request, orgs, as_string=False):
 
 
 def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
-    filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
-    filter_kwargs.update({
-        'date_time': day2str(last_update) if as_string else last_update,
-        'course_id': "%s" % course_key if as_string else course_key
-    })
+    filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_period_filter_kwargs_with_table_exclude(
+                                                                                                request, as_string)
+    filter_kwargs.update({ 'course_id': "%s" % course_key if as_string else course_key })
+    if not time_period_form.period:
+        filter_kwargs.update({ 'date_time': day2str(last_update) if as_string else last_update })
+    
     return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
 
 
 def get_ilt_table_filters(request, as_string=False):
     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
-    if as_string and 'start__range' in filter_kwargs:
-        from_date = filter_kwargs['start__range'][0]
-        to_date = filter_kwargs['start__range'][1]
-        filter_kwargs['start__range'] = json.dumps((dt2str(from_date), dt2str(to_date)))
+    if time_period_form.period:
+        if as_string:
+            from_date = dt2str(time_period_form.period[0])
+            to_date = dt2str(time_period_form.period[1])
+            filter_kwargs['start__range'] = json.dumps((from_date, to_date))
+        else:
+            filter_kwargs['start__range'] = time_period_form.period
     return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
 
 
