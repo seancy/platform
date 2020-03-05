@@ -3923,6 +3923,14 @@ msgstr "Activado el recordatorio periódico."
 msgid "Periodic Reminder Day"
 msgstr "Dia del recordatorio periódico."
 
+#: cms/templates/settings.html:338
+msgid "Course Tags"
+msgstr "Etiquetas del curso"
+
+#: cms/templates/settings.html:344
+msgid "Identify the course tags here."
+msgstr "Identifique las etiquetas del curso aquí."
+
 #: common/lib/xmodule/xmodule/course_module.py:926
 #: cms/templates/settings.html:372
 msgid "Course Order"
@@ -16684,6 +16692,17 @@ msgstr ""
 "sido anunciado. Para proporcionar contenido para la página y obtener una "
 "vista previa, sige las instrucciones proporcionadas por su gerente de "
 "programa."
+
+#: cms/templates/settings.html:138
+msgid "Delete course"
+msgstr "Borrar el curso"
+
+#: cms/templates/settings.html:140
+msgid ""
+"Please note: deleting a course and all related data is permanent and cannot "
+"be undone. We will not be able to recover the course or the data that is "
+"deleted."
+msgstr "Nota: la supresión de un curso y sus datos es permanente y no se puede cancelar. No podremos recuperar el curso o sus datos después de la eliminación."
 
 #: cms/templates/settings.html:135
 msgid "Course Credit Requirements"

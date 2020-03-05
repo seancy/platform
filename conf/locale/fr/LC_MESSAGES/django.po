@@ -3913,6 +3913,14 @@ msgstr "Activer le rappel périodique."
 msgid "Periodic Reminder Day"
 msgstr "Période avant rappel"
 
+#: cms/templates/settings.html:338
+msgid "Course Tags"
+msgstr "Labels du cours"
+
+#: cms/templates/settings.html:344
+msgid "Identify the course tags here."
+msgstr "Identifiez les balises de cours ici."
+
 #: common/lib/xmodule/xmodule/course_module.py:951
 #: cms/templates/settings.html:363
 msgid "Course Order"
@@ -27203,6 +27211,17 @@ msgstr ""
 "La page sommaire de votre cours ne sera pas visible tant que votre cours ne "
 "sera pas annoncé. Afin de fournir le contenu pour cette page et la "
 "prévisualiser, suivez les instructions fournies par votre chef de projet."
+
+#: cms/templates/settings.html:138
+msgid "Delete course"
+msgstr "Supprimer le cours"
+
+#: cms/templates/settings.html:140
+msgid ""
+"Please note: deleting a course and all related data is permanent and cannot "
+"be undone. We will not be able to recover the course or the data that is "
+"deleted."
+msgstr "Note : la suppression d’un cours et des données qui lui sont liées est permanente et ne peut être annulée. Nous ne serons pas en mesure de récupérer le cours ou ses données après suppression."
 
 #: cms/templates/settings.html:135
 msgid "Course Credit Requirements"

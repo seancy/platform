@@ -322,7 +322,7 @@ def jump_to(_request, course_id, location):
         course_key = CourseKey.from_string(course_id)
         usage_key = UsageKey.from_string(location).replace(course_key=course_key)
     except InvalidKeyError:
-        log.error("Invalid course_key: %s, or convert to usage_key from location: %s", course_id, location)
+        log.exception("Invalid course_key: %s, or convert to usage_key from location: %s", course_id, location)
         raise Http404(u"Invalid course_key or usage_key")
     try:
         redirect_url = get_redirect_url(course_key, usage_key)
@@ -331,7 +331,7 @@ def jump_to(_request, course_id, location):
         return redirect('openedx.course_experience.course_home',
                         course_id=course_id)
     except NoPathToItem:
-        log.error("Can't find any path for the item: %s", usage_key)
+        log.exception("Can't find any path for the item: %s", usage_key)
         raise Http404(u"This location is not in any class: {0}".format(usage_key))
 
     return redirect(redirect_url)
@@ -644,10 +644,8 @@ class CourseTabView(EdxFragmentView):
         Handle exceptions raised when rendering a view.
         """
         if isinstance(exception, Redirect) or isinstance(exception, Http404):
-            log.error("Redirect exception or Http404 exception")
             raise
         if isinstance(exception, UnicodeEncodeError):
-            log.error("URL contains Unicode characters")
             raise Http404("URL contains Unicode characters")
         if settings.DEBUG:
             raise

@@ -7699,6 +7699,10 @@ msgstr "El ritmo del curso no se puede cambiar una vez que el curso ha comenzado
 msgid "{hours}:{minutes} (current UTC time)"
 msgstr "{hours}: {minutes} (hora UTC actual)"
 
+#: cms/static/js/views/settings/main.js:370
+msgid "I want to delete the course"
+msgstr "Quiero borrar el curso"
+
 #: cms/static/js/views/settings/main.js:603
 msgid "Upload your course image."
 msgstr "Sube la imagen de tu curso."
@@ -10668,6 +10672,15 @@ msgstr ""
 "Si selecciona una opción que no sea \"%(hide_label)s\", las unidades "
 "publicadas en esta subsección estarán disponibles para los usuarios a menos "
 "que estén explícitamente ocultas."
+
+#: cms/templates/js/course-delete-dialog.underscore:3
+#, python-format
+msgid ""
+"You are going to delete this course. All related data including learner data"
+" will be permanently deleted and this cannot be undone. We advise you to <a "
+"href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">export the "
+"course content</a> before you delete it."
+msgstr "Vas a borrar este curso. Todos sus datos, incluidos los datos del alumno, se eliminarán permanentemente y esto no se puede deshacer. Sugerimos que <a href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">exporte el contenido del curso</a> antes de eliminarlo."
 
 #: cms/templates/js/course-highlights-enable.underscore:3
 msgid "Weekly Highlight Emails"

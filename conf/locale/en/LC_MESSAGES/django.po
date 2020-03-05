@@ -14600,6 +14600,17 @@ msgid ""
 "instructions provided by your Program Manager."
 msgstr ""
 
+#: cms/templates/settings.html:138
+msgid "Delete course"
+msgstr ""
+
+#: cms/templates/settings.html:140
+msgid ""
+"Please note: deleting a course and all related data is permanent and cannot "
+"be undone. We will not be able to recover the course or the data that is "
+"deleted."
+msgstr ""
+
 #: cms/templates/settings.html:135
 msgid "Course Credit Requirements"
 msgstr ""

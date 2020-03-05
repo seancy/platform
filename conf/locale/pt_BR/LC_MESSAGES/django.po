@@ -4029,6 +4029,15 @@ msgstr "Habilitar o lembrete periódico"
 msgid "Periodic Reminder Day"
 msgstr "Dia do lembrete periódico"
 
+#: cms/templates/settings.html:338
+msgid "Course Tags"
+msgstr "Tags do Curso"
+
+#: cms/templates/settings.html:344
+msgid "Identify the course tags here."
+msgstr "Identifique as tags do curso aqui."
+
+
 #: common/lib/xmodule/xmodule/course_module.py:926
 #: cms/templates/settings.html:372
 msgid "Course Order"
@@ -16649,6 +16658,17 @@ msgstr ""
 "Sua página com o resumo do curso não estará visível até que o seu curso "
 "tenha sido publicado. Para inserir conteúdo para uma página e visualizá-lo, "
 "siga as instruções fornecidas pelo seu Gerente de Programa."
+
+#: cms/templates/settings.html:138
+msgid "Delete course"
+msgstr "Excluir curso"
+
+#: cms/templates/settings.html:140
+msgid ""
+"Please note: deleting a course and all related data is permanent and cannot "
+"be undone. We will not be able to recover the course or the data that is "
+"deleted."
+msgstr "Nota: a exclusão de um curso e seus dados são permanentes e não podem ser cancelados. Não poderemos recuperar o curso ou seus dados após a exclusão."
 
 #: cms/templates/settings.html:135
 msgid "Course Credit Requirements"
