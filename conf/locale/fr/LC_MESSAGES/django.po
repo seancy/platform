@@ -3668,6 +3668,19 @@ msgstr "Langue du cours"
 msgid "Specify the language of your course."
 msgstr "Spécifier la langue de votre cours."
 
+#: common/lib/xmodule/xmodule/course_module.py:710
+#: cms/templates/settings.html:606
+msgid "Course Country"
+msgstr "Pays du cours"
+
+#: cms/templates/settings.html:612
+msgid "Identify the course country here."
+msgstr "Identifiez le pays du cours ici."
+
+#: common/lib/xmodule/xmodule/course_module.py:711
+msgid "Specify the country of your course."
+msgstr "Précisez le pays de votre cours."
+
 #: common/lib/xmodule/xmodule/course_module.py:742
 #: cms/templates/settings.html:354
 msgid "Course Category"
