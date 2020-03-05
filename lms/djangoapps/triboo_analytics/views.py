@@ -1807,7 +1807,14 @@ def learner_get_properties(request):
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
     filters_data = user_properties_helper.get_possible_choices()
-    json = []
+    json_string = """
+    {
+        "status":1,
+        "message":"",
+        "list":[]
+    }
+    """
+    jsonData = json.loads(json_string)
     for item in filters_data:
-        json.append({ 'text': item[0], 'value':item[1]})
-    return JsonResponse(json)
+        jsonData['list'].append({ 'text': item[1], 'value':item[0]})
+    return JsonResponse(jsonData)

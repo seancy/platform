@@ -9,6 +9,8 @@ export class LearnerReport extends React.Component {
         super(props);
 
         this.state = {
+            properties:[],
+
             //storing toolbar data
             toolbarData: {},
 
@@ -23,7 +25,9 @@ export class LearnerReport extends React.Component {
 
     componentDidMount() {
         this.fetchData(1)
+
     }
+
 
     toolbarDataUpdate(toolbarData){
         this.setState(s=>{
@@ -81,7 +85,7 @@ export class LearnerReport extends React.Component {
     }
 
     render() {
-        const properties=this.props.filters.map(p=>({...p, checked:p.display}))
+        const properties=this.state.properties.map(p=>({...p, checked:p.checked || false}))
         const {selectedProperties=properties}=this.state.toolbarData;
 
         const config = {
@@ -125,7 +129,7 @@ export class LearnerReport extends React.Component {
                     <div className="last-update">
                         <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
                     </div>
-                    <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
+                    <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
                              properties={properties}/>
                     <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                               enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
