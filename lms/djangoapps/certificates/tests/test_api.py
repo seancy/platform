@@ -4,6 +4,7 @@ from contextlib import contextmanager
 from functools import wraps
 
 import ddt
+import pytest
 from datetime import datetime
 from datetime import timedelta
 from config_models.models import cache
@@ -184,6 +185,7 @@ class CertificateDownloadableStatusTests(WebCertificateTestMixin, ModuleStoreTes
     def test_pdf_cert_with_html_disabled(self):
         self.verify_downloadable_pdf_cert()
 
+    @pytest.mark.skip("We don't need Web cert any more")
     @patch.dict(settings.FEATURES, {'CERTIFICATES_HTML_VIEW': True})
     def test_with_downloadable_web_cert(self):
 
@@ -209,6 +211,7 @@ class CertificateDownloadableStatusTests(WebCertificateTestMixin, ModuleStoreTes
             }
         )
 
+    @pytest.mark.skip("We don't need Web cert any more")
     @ddt.data(
         (False, timedelta(days=2), False),
         (False, -timedelta(days=2), True),
@@ -600,6 +603,7 @@ class GenerateUserCertificatesTest(EventTestMixin, WebCertificateTestMixin, Modu
                 status = certs_api.generate_user_certificates(self.student, self.course.id)
                 self.assertEqual(status, 'generating')
 
+    @pytest.mark.skip("We don't need Web cert any more")
     @patch.dict(settings.FEATURES, {'CERTIFICATES_HTML_VIEW': True})
     def test_new_cert_requests_returns_generating_for_html_certificate(self):
         """

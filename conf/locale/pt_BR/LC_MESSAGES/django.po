@@ -599,10 +599,13 @@ msgstr "Assistente de Ensino da Comunidade"
 
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
-#: lms/templates/preview_menu.html:36
 #: lms/templates/courseware/ilt_attendance_sheet.html:57
+#: lms/templates/preview_menu.html:36
+#: lms/templates/triboo_analytics/microsite.html:47
 msgid "Learner"
-msgstr "Aluno"
+msgid_plural "Learners"
+msgstr[0] "Aluno"
+msgstr[1] "Alunos"
 
 #: common/djangoapps/student/admin.py:224
 msgid "User profile"
@@ -4026,6 +4029,15 @@ msgstr "Habilitar o lembrete periódico"
 msgid "Periodic Reminder Day"
 msgstr "Dia do lembrete periódico"
 
+#: cms/templates/settings.html:338
+msgid "Course Tags"
+msgstr "Tags do Curso"
+
+#: cms/templates/settings.html:344
+msgid "Identify the course tags here."
+msgstr "Identifique as tags do curso aqui."
+
+
 #: common/lib/xmodule/xmodule/course_module.py:926
 #: cms/templates/settings.html:372
 msgid "Course Order"
@@ -5085,19 +5097,24 @@ msgstr "Discussão Externa"
 msgid "Home"
 msgstr "Página Inicial"
 
-#: common/lib/xmodule/xmodule/tabs.py:473 lms/djangoapps/courseware/tabs.py:31
+#: common/lib/xmodule/xmodule/tabs.py:473
+#: lms/djangoapps/courseware/tabs.py:31
 #: lms/djangoapps/courseware/views/views.py:1743
 #: lms/djangoapps/shoppingcart/reports.py:212
 #: lms/djangoapps/shoppingcart/reports.py:262
 #: openedx/features/course_experience/__init__.py:51
-#: cms/templates/widgets/header.html:49 cms/templates/widgets/header.html:53
-#: cms/templates/widgets/header.html:157 lms/templates/help_modal.html:173
+#: cms/templates/widgets/header.html:49
+#: cms/templates/widgets/header.html:53
+#: cms/templates/widgets/header.html:157
+#: lms/templates/help_modal.html:173
 #: lms/templates/courseware/courseware.html:166
 #: lms/templates/courseware/ilt_attendance_sheet.html:36
-#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/microsite.html:36
 #: lms/templates/ux/reference/bootstrap/course-skeleton.html:21
 msgid "Course"
-msgstr "Curso"
+msgid_plural "Courses"
+msgstr[0] "Curso"
+msgstr[1] "Cursos"
 
 #: common/lib/xmodule/xmodule/textannotation_module.py:40
 msgid "Text Annotation"
@@ -10430,12 +10447,15 @@ msgstr "Acompanhe os reembolsos emitidos diretamente através da CyberSource"
 
 #: lms/djangoapps/support/views/index.py:26
 #: lms/templates/ccx/coach_dashboard.html:59
-#: lms/templates/ccx/enrollment.html:8 lms/templates/support/enrollment.html:21
+#: lms/templates/ccx/enrollment.html:8
+#: lms/templates/support/enrollment.html:21
 #: lms/templates/triboo_analytics/course.html:66
 #: lms/templates/triboo_analytics/my_transcript.html:258
 #: lms/templates/triboo_analytics/transcript.html:50
 msgid "Enrollment"
-msgstr "Matrícula"
+msgid_plural "Enrollments"
+msgstr[0] "Matrícula"
+msgstr[1] "Matrículas"
 
 #: lms/djangoapps/support/views/index.py:27
 msgid "View and update learner enrollments."
@@ -10607,11 +10627,11 @@ msgstr "Localização"
 
 #: lms/djangoapps/triboo_analytics/forms.py:15
 msgid "Commercial Zone"
-msgstr "E-Commerce"
+msgstr "Zona Comercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:16
 msgid "Commercial Region"
-msgstr "Região COmercial"
+msgstr "Região Comercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:19
 msgctxt "user.profile"
@@ -16639,6 +16659,17 @@ msgstr ""
 "tenha sido publicado. Para inserir conteúdo para uma página e visualizá-lo, "
 "siga as instruções fornecidas pelo seu Gerente de Programa."
 
+#: cms/templates/settings.html:138
+msgid "Delete course"
+msgstr "Excluir curso"
+
+#: cms/templates/settings.html:140
+msgid ""
+"Please note: deleting a course and all related data is permanent and cannot "
+"be undone. We will not be able to recover the course or the data that is "
+"deleted."
+msgstr "Nota: a exclusão de um curso e seus dados são permanentes e não podem ser cancelados. Não poderemos recuperar o curso ou seus dados após a exclusão."
+
 #: cms/templates/settings.html:135
 msgid "Course Credit Requirements"
 msgstr "É necessário os créditos do curso."
@@ -16844,7 +16875,7 @@ msgstr ""
 
 #: cms/templates/settings.html:379
 msgid "Course Tag"
-msgstr "Nome do Curso"
+msgstr "Etiqueta do Curso"
 
 #: cms/templates/settings.html:381
 msgid "Identify the course tag here."
@@ -18308,6 +18339,10 @@ msgstr "Ative sua conta!"
 #: themes/edx.org/lms/templates/dashboard.html:225
 msgid "Course-loading errors"
 msgstr "Erros de carregamento do curso"
+
+#: lms/templates/dashboard.html:304
+msgid "My Bookmarks"
+msgstr "Meus Favoritos"
 
 #: lms/templates/dashboard.html:320
 msgid "My upcoming ILT sessions"
@@ -21704,7 +21739,7 @@ msgstr "Ritmo definido pelo instrutor"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:39
 msgid "Session"
-msgstr "Permissões"
+msgstr "Sessão"
 
 #: lms/templates/courseware/ilt_attendance_sheet.html:42
 msgid "Date and Time"
@@ -21745,7 +21780,7 @@ msgstr "Registre-se"
 
 #: lms/templates/courseware/ilt_validation.html:44
 msgid "Session Name"
-msgstr "Nome do destinatário"
+msgstr "Nome do sessão"
 
 #: lms/templates/courseware/ilt_validation.html:67
 #: lms/templates/emails/ilt_confirmed_email_message.txt:16
@@ -23033,8 +23068,8 @@ msgid ""
 "engaging, high-quality {platform_name} courses. Note that you will not be "
 "able to log back into your account until you have activated it."
 msgstr ""
-"Você está quase chegando! Use o link para ativar sua conta para acessar"
-"cursos envolventes e de alta qualidade no {platform_name}. Observe que você não será"
+"Você está quase chegando! Use o link para ativar sua conta para acessar "
+"cursos engajadores e de alta qualidade no {platform_name}. Observe que você não será "
 "capaz de fazer login novamente em sua conta até que você a ative."
 
 #: lms/templates/emails/activation_email.txt:12
@@ -23411,21 +23446,21 @@ msgid ""
 "{site_name}."
 msgstr ""
 "Esta mensagem é para lembrá-lo de concluir o curso {course_name} em "
-"{nome do site}"
+"{site_name}"
 
 #: lms/templates/emails/course_reminder_email_message.txt:29
 msgid "You have {days_left} day left to complete the course."
 msgid_plural "You have {days_left} days left to complete the course."
 msgstr[0] ""
-"Você tem somente {days} dia restante para realizar a verificação para o "
+"Você tem somente {days_left} dia restante para realizar a verificação para o "
 "curso."
 msgstr[1] ""
-"Você tem somente {days} dias restantes para realizar a verificação para o "
+"Você tem somente {days_left} dias restantes para realizar a verificação para o "
 "curso."
 
 #: lms/templates/emails/course_reminder_email_subject.txt:3
 msgid "The course {course_name} is overdue"
-msgstr "O curso {course_key} não existe"
+msgstr "O curso {course_name} não existe"
 
 #: lms/templates/emails/course_reminder_email_subject.txt:7
 msgid "{course_name} Reminders"
@@ -23466,7 +23501,7 @@ msgid ""
 "You have been invited to join {course_name} at {site_name} by a member of "
 "the course staff."
 msgstr ""
-"Você foi convidado a se juntar ao curso {course_name} na plataforma {site_name} "
+"Você foi convidado para juntar-se ao curso {course_name} na plataforma {site_name} "
 "por um membro administrativo do curso."
 
 #: lms/templates/emails/enroll_email_allowedmessage.txt:16
@@ -27300,7 +27335,7 @@ msgstr "Saiba mais"
 #: lms/templates/triboo_analytics/microsite.html:34
 #: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
-msgstr "Relatórios"
+msgstr "ILT Relatórios"
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
@@ -27374,12 +27409,6 @@ msgstr "Analytics - Relatório do Aluno"
 #: lms/templates/triboo_analytics/microsite.html:16
 msgid "Analytics - Global Report"
 msgstr "Relatórios Disponíveis"
-
-#: lms/templates/triboo_analytics/microsite.html:47
-msgid "Active Learner"
-msgid_plural "Active Learners"
-msgstr[0] "Uma nota para os alunos"
-msgstr[1] "Uma nota para os alunos"
 
 #: lms/templates/triboo_analytics/microsite.html:51
 msgid "Certificate Delivered"
@@ -29549,6 +29578,31 @@ msgstr "Ver Lista de Chamada"
 msgid "Acknowledge reception of the attendance sheet"
 msgstr "Reconhecer recebemindo da lista de chamada"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Unenroll selected users"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Change session"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Accommodation"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "One way"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Return"
+msgstr ""
+
 #: lms/templates/courseware/courses.html
 msgid "Availability"
 msgstr "Disponível"
@@ -29668,7 +29722,21 @@ msgstr "Falhou"
 #~ msgid "Sign Up for {studio_name}"
 #~ msgstr "Registre-se em {studio_name}"
 
+#: lms/templates/emails/ilt_request_update_email_subject.txt
+msgid "Enrollment update of the in-class training - {name}"
+msgstr ""
 
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "Please be informed that your enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zip_code} has been updated."
+msgstr ""
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "NEW INFORMATION:"
+msgstr ""
+
+#: lms/templates/emails/ilt_sesson_changed_email_message.txt
+msgid "We are writing to confirm your enrollment in the {ilt_name} in-class training has been switched to another session scheduled for {start} in {location} at {address}, {city} {zipcode}."
+msgstr ""
 
 #: lms/templates/triboo_analytics/courseware.html
 msgid "Successful"
@@ -29854,3 +29922,123 @@ msgid ""
 "Number of courses the learner completed with 100% progress but with a total "
 "score below the minimum required score"
 msgstr "Cursos que o aluno completou com 100% de progresso, mas com uma pontuação total abaixo da pontuação mínima exigida"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "Curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr "Pontuação atual"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr "Tempo total gasto"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr "Data de conclusão"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr "Matrículas"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr "Último login"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr "Área geográfica"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course country"
+msgstr "País do curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr "Área / Região"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr "Etiquetas do curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr "Código do curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr "ID de sessão"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr "Data de início"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr "Hora de início"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr "Data de fim"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr "Hora de fim"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr "Duração (em horas)"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr "Número de assentos"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr "Inscritos"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr "Participantes"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr "Folha de presença"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr "Nome do local"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "Endereço do local"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "Código postal"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr "Status da inscrição"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr "Participante"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr "Viagens para fora"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr "Viagens de retorno"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr "Pernoite"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
+msgstr "Endereço para pernoite"

@@ -102,7 +102,7 @@
               <li><a href="${reverse('edflex_catalog')}">${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}</a></li>
             % endif
 
-              <li><a href="${reverse('my_courses')}">${_('My Courses')}</a></li>
+              <li><a href="${reverse('my_courses', kwargs={'tab': 'all-courses'})}">${_('My Courses')}</a></li>
               <li><a href="${reverse('account_settings')}">${_('My Account')}</a></li>
             % if configuration_helpers.get_value('ENABLE_FAQ_LINK', settings.FEATURES.get('ENABLE_FAQ_LINK', False)):
               <li><a href="${reverse('faq')}">${_('FAQ')}</a></li>

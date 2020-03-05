@@ -32,7 +32,7 @@ from datetime import date
       <ul>
         <li class="nav-item">
           % if course_creator_status=='granted':
-          <a href="#" class="button new-button new-course-button" title="${_('Create a new coures')}"><span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>
+          <a href="#" class="button new-button new-course-button" title="${_('Create a new course')}"><span class="icon fa fa-plus icon-inline" aria-hidden="true"></span>
               ${_("New Course")}</a>
           % elif course_creator_status=='disallowed_for_this_site' and settings.FEATURES.get('STUDIO_REQUEST_EMAIL',''):
           <a href="mailto:${settings.FEATURES.get('STUDIO_REQUEST_EMAIL','')}">${_("Email staff to create course")}</a>

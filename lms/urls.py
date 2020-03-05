@@ -21,6 +21,8 @@ from courseware.views.views import (
     CourseTabView,
     EnrollStaffView,
     ilt_attendance_sheet,
+    ilt_validation_list,
+    ilt_validation_request_data,
     ilt_registration_validation,
     StaticCourseTabView
 )
@@ -79,7 +81,7 @@ urlpatterns = [
     url(r'', include('student.urls')),
     # TODO: Move lms specific student views out of common code
     url(r'^dashboard/?$', student_views.student_dashboard, name='dashboard'),
-    url(r'^my_courses/?$', student_views.my_courses, name='my_courses'),
+    url(r'^my_courses/(?P<tab>[a-z-]+)$', student_views.my_courses, name='my_courses'),
     url(r'^change_enrollment$', student_views.change_enrollment, name='change_enrollment'),
 
     # Event tracking endpoints
@@ -789,6 +791,10 @@ if settings.FEATURES.get('ENABLE_DISCUSSION_SERVICE'):
             },
             name='resubscribe_forum_update',
         ),
+
+        url(r'^ilt-validation-list/$', ilt_validation_list, name='ilt_validation_list'),
+
+        url(r'^ilt-validation-request-data/$', ilt_validation_request_data, name='ilt_registration_validation'),
 
         url(
             r'^ilt-validation/{course_key}/{usage_key}/(?P<user_id>[0-9]+)/$'.format(

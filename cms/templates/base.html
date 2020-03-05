@@ -175,5 +175,14 @@ from openedx.core.release import RELEASE_LINE
     </%block>
     <%include file="widgets/segment-io-footer.html" />
     <div class="modal-cover"></div>
+
+    <script aria-hidden="true" type="text/template" id="dialog-template">
+        <%static:include path="components/dialog.html" />
+    </script>
+    <script aria-hidden="true" type="text/template" id="confirmation-template">
+        <%include file="components/confirmation.html" />
+    </script>
+    <div id="dialog-container"></div>
+    <%static:webpack entry="Dialog"></%static:webpack>
   </body>
 </html>

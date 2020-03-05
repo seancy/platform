@@ -3,7 +3,7 @@
 from decimal import Decimal
 
 import unicodecsv
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ungettext
 from six import text_type
 
 from course_modes.models import CourseMode
@@ -209,7 +209,7 @@ class CertificateStatusReport(Report):
     def header(self):
         return [
             _("University"),
-            _("Course"),
+            ungettext("Course", "Courses", 1),
             _("Course Announce Date"),
             _("Course Start Date"),
             _("Course Registration Close Date"),
@@ -259,7 +259,7 @@ class UniversityRevenueShareReport(Report):
     def header(self):
         return [
             _("University"),
-            _("Course"),
+            ungettext("Course", "Courses", 1),
             _("Number of Transactions"),
             _("Total Payments Collected"),
             _("Service Fees (if any)"),

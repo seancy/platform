@@ -49,7 +49,8 @@ from contentstore.utils import (
     reverse_course_url,
     reverse_library_url,
     reverse_url,
-    reverse_usage_url
+    reverse_usage_url,
+    delete_course
 )
 from contentstore.views.entrance_exam import create_entrance_exam, delete_entrance_exam, update_entrance_exam
 from course_action_state.managers import CourseActionStateItemNotFoundError
@@ -95,7 +96,7 @@ from xblock_django.api import deprecated_xblocks
 from xmodule.contentstore.content import StaticContent
 from xmodule.course_module import DEFAULT_START_DATE, CourseFields
 from xmodule.error_module import ErrorDescriptor
-from xmodule.modulestore import EdxJSONEncoder
+from xmodule.modulestore import EdxJSONEncoder, ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import DuplicateCourseError, ItemNotFoundError
 from xmodule.tabs import CourseTab, CourseTabList, InvalidTabsException
@@ -1044,7 +1045,7 @@ def course_info_update_handler(request, course_key_string, provided_id=None):
 
 @studio_login_required
 @ensure_csrf_cookie
-@require_http_methods(("GET", "PUT", "POST"))
+@require_http_methods(("GET", "PUT", "POST", "DELETE"))
 @expect_json
 def settings_handler(request, course_key_string):
     """
@@ -1054,6 +1055,8 @@ def settings_handler(request, course_key_string):
         json: get the CourseDetails model
     PUT
         json: update the Course and About xblocks through the CourseDetails model
+    DELETE
+        json: delete the whole course
     """
     course_key = CourseKey.from_string(course_key_string)
     credit_eligibility_enabled = settings.FEATURES.get('ENABLE_CREDIT_ELIGIBILITY', False)
@@ -1112,7 +1115,10 @@ def settings_handler(request, course_key_string):
                 'is_prerequisite_courses_enabled': is_prerequisite_courses_enabled(),
                 'is_entrance_exams_enabled': is_entrance_exams_enabled(),
                 'enable_extended_course_details': enable_extended_course_details,
-                'is_programmatic_enrollment_enabled': False
+                'is_programmatic_enrollment_enabled': False,
+                'enable_delete_course': False,
+                'export_url': reverse_course_url('export_handler', course_key),
+                'homepage_url': reverse_url('homepage')
             }
 
             if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
@@ -1155,6 +1161,14 @@ def settings_handler(request, course_key_string):
                         }
                     )
 
+            # check user permission who can delete the course.
+            if GlobalStaff().has_user(request.user) or CourseInstructorRole(course_key).has_user(request.user):
+                settings_context.update(
+                    {
+                        'enable_delete_course': True
+                    }
+                )
+
             return render_to_response('settings.html', settings_context)
         elif 'application/json' in request.META.get('HTTP_ACCEPT', ''):
             if request.method == 'GET':
@@ -1164,6 +1178,14 @@ def settings_handler(request, course_key_string):
                     # encoder serializes dates, old locations, and instances
                     encoder=CourseSettingsEncoder
                 )
+            elif request.method == 'DELETE':
+                try:
+                    delete_course(course_key, ModuleStoreEnum.UserID.mgmt_command, remove_course_reports=True,
+                                  remove_course_search_index=True)
+                except Exception as err:
+                    log.exception(text_type(err))
+                    return JsonResponseBadRequest({'error': "Can't delete course due to internal reason."})
+                return JsonResponse()
             # For every other possible method type submitted by the caller...
             else:
                 # if pre-requisite course feature is enabled set pre-requisite course

@@ -5,8 +5,7 @@ Defines concrete class for cybersource  Enrollment Report.
 import collections
 
 from django.conf import settings
-from django.utils.translation import ugettext as _
-
+from django.utils.translation import ugettext as _, ungettext
 from courseware.access import has_access
 from courseware.courses import get_course_by_id
 from lms.djangoapps.instructor.enrollment_report import BaseAbstractEnrollmentReportProvider
@@ -41,7 +40,7 @@ class PaidCourseEnrollmentReportProvider(BaseAbstractEnrollmentReportProvider):
         elif is_course_staff:
             enrollment_role = _('Course Staff')
         else:
-            enrollment_role = _('Learner')
+            enrollment_role = ungettext('Learner', 'Learners', 1)
 
         course_enrollment = CourseEnrollment.get_enrollment(user=user, course_key=course_id)
 

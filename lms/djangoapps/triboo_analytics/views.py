@@ -717,7 +717,11 @@ def get_filter_kwargs_with_table_exclude(request):
                                               user_properties_helper.get_initial_choices())
     if user_properties_form.is_valid():
         data = user_properties_form.cleaned_data
-        exclude = data['excluded_properties']
+        if 'user_name' in data['excluded_properties']:
+            new_excluded_properties = list(set(data['excluded_properties']) - {'user_name'})
+            exclude = new_excluded_properties
+        else:
+            exclude = data['excluded_properties']
 
     return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
 

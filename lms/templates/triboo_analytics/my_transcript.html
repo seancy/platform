@@ -1,8 +1,7 @@
 <%inherit file="../main.html" />
 <%namespace name='static' file='../static_content.html'/>
 <%!
-  from django.utils.translation import ugettext as _
-  from django.utils.translation import ungettext, gettext
+  from django.utils.translation import ugettext as _, ungettext, gettext
   from django.core.urlresolvers import reverse
   from django.template import Template, Context
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
@@ -10,9 +9,6 @@
 %>
 
 <%block name="js_extra">
-    <link href="https://cdn.bootcss.com/izimodal/1.5.1/css/iziModal.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/izimodal/1.5.1/js/iziModal.min.js"></script>
-    <script src="https://cdn.bootcss.com/notify/0.4.2/notify.js"></script>
     <script>
         $("#waiver-pop-up").iziModal({
             width: 700,

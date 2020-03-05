@@ -25867,9 +25867,21 @@ msgid ""
 "at least two weeks from now. If not, the enrollment should be declined."
 msgstr "Înainte de a accepta o cerere și pentru a optimiza organizarea logistică (catering, cazare, etc.), te rugăm să verifici dacă trainingul se desfășoară în minim două săptămâni de acum. Dacă nu, înscrierea ar trebui declinată."
 
+#: master-sephora:lms/templates/emails/ilt_validate_email_message.txt
+msgid "You have received in-class training requests."
+msgstr "Ai primit solicitări de înscriere la traininguri în sală."
+
+#: master-sephora:lms/templates/emails/ilt_validate_email_message.txt
+msgid "Click on the link below to accept, edit or decline the requests:"
+msgstr "Click pe link-ul de mai jos pentru a accepta, edita sau respinge solicitările:"
+
 #: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
 msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
 msgstr "APROBARE NECESARĂ – Solicitare înscriere la trainingul - {name}"
+
+#: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
+msgid "APPROVAL NEEDED - Request to enroll in the ILT training"
+msgstr "APROBARE NECESARĂ – Solicitare înscriere la trainingul"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_message.txt:10
 msgid "This email is to inform you that the learners ({learners}) have been unenrolled from the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}. For more information about the session, please click on the link below:"
@@ -25890,3 +25902,53 @@ msgstr "Vă rugăm să invitați următorii participanți să își reprogramaț
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_subject.txt:2
 msgid "In-class training canceled"
 msgstr "Anularea trainingului"
+
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "tab"
+msgid "ILT Follow-up"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "banner"
+msgid "ILT Follow-up"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Pending Requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Upcoming Sessions"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined Requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Accommodation needed ?"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many one way ?"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many return ?"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Refuse"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Approve"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Unsubscribe"
+msgstr ""

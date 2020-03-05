@@ -1,11 +1,10 @@
 <%page expression_filter="h"/>
 <%!
-from django.utils.translation import ugettext as _
-from django.utils.translation import pgettext
+from django.utils.translation import ugettext as _, pgettext, ungettext
 from openedx.core.djangolib.markup import HTML, Text
 %>
 
-<h2 class="hd hd-2">${_("Enrollment")}</h2>
+<h2 class="hd hd-2">${ungettext("Enrollment", "Enrollments", 1)}</h2>
 <div class="batch-enrollment-ccx">
   <form method="POST" action="ccx-manage-students">
   <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
