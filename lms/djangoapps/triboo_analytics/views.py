@@ -69,6 +69,7 @@ from forms import (
     TableFilterForm,
     UserPropertiesForm,
     TimePeriodForm,
+    AVAILABLE_CHOICES,
 )
 from models import (
     ANALYTICS_ACCESS_GROUP,
@@ -783,7 +784,6 @@ def get_customized_table(report_cls, filter_kwargs, filters, table_cls, exclude)
 
 
 def get_query_triples(query_dict):
-    from forms import AVAILABLE_CHOICES
     query_triples = []
     for key, value in query_dict.items():
         if 'query_string' in key and value:
@@ -1279,12 +1279,14 @@ def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
     ilt_learner_report_table = IltLearnerTable(ilt_learner_reports, exclude=exclude)
     return ilt_learner_report_table, row_count
 
-def get_filters_data():
+
+def get_filters_data(db=True):
     analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
-    filters_data = user_properties_helper.get_possible_choices()
+    filters_data = user_properties_helper.get_possible_choices(db)
     return filters_data
+
 
 @analytics_on
 @login_required
@@ -1505,13 +1507,26 @@ def customized_export_table(request):
         return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
 
 
-def get_filter_kwargs_with_table_exclude_for_json_table(data):
+def to_db_tuples(tuples):
+    query_tuples = []
+    for string, field in tuples:
+        prop = field.split('_', 1)[1]
+        db_prefix = "user__"
+        if prop not in ['email', 'username', 'date_joined']:
+            db_prefix += "profile__"
+        db_tuple = (string, db_prefix + prop)
+        query_tuples.append(db_tuple)
+    return query_tuples
+
+
+def get_filter_kwargs_with_table_exclude_for_json_table(data, selected_props):
     kwargs = {}
     analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
 
-    query_tuples = data.get('query_tuples')
+    tuples = data.get('query_tuples')
+    query_tuples = to_db_tuples(tuples)
     for query_string, queried_field in query_tuples:
         if query_string:
             if queried_field == "user__profile__country":
@@ -1543,13 +1558,24 @@ def get_filter_kwargs_with_table_exclude_for_json_table(data):
         to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
         kwargs['start__range'] = (from_date, to_date)
 
-    exclude = []
-    user_properties_form = UserPropertiesForm(data,
-                                              user_properties_helper.get_possible_choices(False),
-                                              user_properties_helper.get_initial_choices())
-    if user_properties_form.is_valid():
-        cleaned_data = user_properties_form.cleaned_data
-        exclude = cleaned_data['excluded_properties']
+    all_properties = ["user_%s" % prop for prop in AVAILABLE_CHOICES.keys()]
+    if selected_props:
+        selected_props += ['user_name']
+    else:
+        selected_props = ['user_name']
+        for prop in AVAILABLE_CHOICES.keys():
+            if prop in analytics_user_properties.keys() and analytics_user_properties[prop] == "default":
+                selected_props.append("user_%s" % prop)
+    # user_properties_form = UserPropertiesForm(data, user_properties_helper.get_possible_choices(False), initial_choices)
+    # exclude = []
+    # if user_properties_form.is_valid():
+    #     data = user_properties_form.cleaned_data
+    #     if 'user_name' in data['excluded_properties']:
+    #         new_excluded_properties = list(set(data['excluded_properties']) - {'user_name'})
+    #         exclude = new_excluded_properties
+    #     else:
+    #         exclude = data['excluded_properties']
+    exclude = set(all_properties) - set(selected_props)
 
     return kwargs, exclude
 
@@ -1562,7 +1588,7 @@ def get_json_table(data):
             "{
                 'report_type': 'course_summary',
                 'courses_selected': ['course-v1:edX+DemoX+Demo_Course'],
-                'query_tuples': [['Yu', 'user__profile__name'], ['China', 'user__profile__country']],
+                'query_tuples': [['Yu', 'user_name'], ['China', 'user_country']],
                 'from_day': '',
                 'to_day': '',
                 'selected_properties': ['user_lt_address', 'user_country'],
@@ -1580,13 +1606,14 @@ def get_json_table(data):
 
     report_type = data.get('report_type', None)
     courses_selected = data.get('courses_selected', None)
+    selected_properties = data.get('selected_properties', None)
 
     if report_type == 'course_summary':
         last_reportlog = ReportLog.get_latest()
         if last_reportlog:
             last_update = last_reportlog.created
             date_time = day2str(last_update)
-            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data)
+            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
             report_args = {
                 'report_name': "summary_report",
                 'report_cls': LearnerCourseDailyReport.__name__,
@@ -1603,7 +1630,7 @@ def get_json_table(data):
             course_key = CourseKey.from_string(courses_selected)
         except InvalidKeyError:
             return JsonResponseBadRequest({"message": _("Invalid course id.")})
-        filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data)
+        filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
         report_args = {
             'filter_kwargs': filter_kwargs,
             'exclude': list(exclude)
@@ -1622,7 +1649,7 @@ def get_json_table(data):
         last_reportlog = ReportLog.get_latest()
         if last_reportlog:
             last_update = last_reportlog.created
-            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data)
+            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
             filter_kwargs.update({
                 'org': learner_report_org,
                 'date_time': day2str(last_update)
@@ -1638,7 +1665,7 @@ def get_json_table(data):
 
     elif report_type in ['ilt_global', 'ilt_learner']:
         if report_type == "ilt_global":
-            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data)
+            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
             report_args = {
                 'report_name': "ilt_global_report",
                 'orgs': orgs,
@@ -1648,7 +1675,7 @@ def get_json_table(data):
 
         # report_type == "ilt_learner"
         else:
-            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data)
+            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
             report_args = {
                 'report_name': "ilt_learner_report",
                 'orgs': orgs,
@@ -1672,13 +1699,15 @@ def learner_view_data(request):
     if len(orgs) > 1:
         learner_report_org = get_combined_org(orgs)
 
-    post_data = request.POST.copy()
+    # post_data = request.POST.copy()
     body_data = request.body.decode('utf-8')
     data = json.loads(body_data)
+
+    selected_properties = data['selected_properties']
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
         last_update = last_reportlog.created
-        filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data)
+        filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
         filter_kwargs.update({
             'org': learner_report_org,
             'date_time': day2str(last_update)
@@ -1745,37 +1774,15 @@ def export_table_data(course_id, _task_input):
                     kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
                 table, _ = get_table(report_cls, kwargs, table_cls, exclude)
 
-    page = _task_input['report_args']['page']
-
+    report_name = _task_input['report_name']
     exporter = TableExport('json', table)
     content = exporter.export()
     content = json.loads(content)
-    response_data = []
-    index = 1
-    for row in content:
-        new_row = dict(
-            ID=index
-        )
-        for k, v in row.items():
-            key = k.replace(' ', '')
-            new_row[key] = v
-        response_data.append(new_row)
-        index += 1
-    total_dict = dict()
-    summary_columns = ['Enrollments', 'Successful', 'Unsuccessful', 'NotStarted', 'AverageFinalScore', 'Badges', 'Posts', 'TotalTimeSpent']
-    for col in summary_columns:
-        if col == 'Badges':
-            values = [int(row[col].split('/')[0].strip()) for row in response_data]
-            total_dict[col] = sum(values)
-        elif col == 'TotalTimeSpent':
-            values = [str2sec(row[col]) for row in response_data]
-            total_dict[col] = sec2str(sum(values))
-        elif col == 'AverageFinalScore':
-            values = [int(row[col].split('%')[0].strip()) for row in response_data]
-            total_dict[col] = str(sum(values) // len(values)) + '%'
-        else:
-            values = [row[col] for row in response_data]
-            total_dict[col] = sum(values)
+    reversed_filter_dict = reverse_filter_dict(get_filters_data(False))
+    response_data = format_headers(content, reversed_filter_dict)
+    total_dict = get_total_dict(response_data, report_name)
+
+    page = _task_input['report_args']['page']
     page_start = (page['no'] - 1) * page['size']
     page_end = page['no'] * page['size']
     response_data = response_data[page_start:page_end]
@@ -1787,6 +1794,54 @@ def export_table_data(course_id, _task_input):
         )
     )
     return JsonResponse(response_dict)
+
+
+def get_total_dict(data, report):
+    total_dict = dict()
+    summary_columns = []
+    if report == "summary_report":
+        summary_columns = ['Progress', 'CurrentScore', 'Badges', 'Posts', 'TotalTimeSpent']
+    elif report == "learner_report":
+        summary_columns = ['Enrollments', 'Successful', 'Unsuccessful', 'NotStarted', 'AverageFinalScore', 'Badges', 'Posts', 'TotalTimeSpent']
+    for col in summary_columns:
+        if col == 'Badges':
+            values = [int(row[col].split('/')[0].strip()) for row in data]
+            total_dict[col] = sum(values)
+        elif col == 'TotalTimeSpent':
+            values = [str2sec(row[col]) for row in data]
+            total_dict[col] = sec2str(sum(values))
+        elif col in ['Progress', 'CurrentScore', 'AverageFinalScore']:
+            values = [int(row[col].split('%')[0].strip()) for row in data]
+            total_dict[col] = str(sum(values) // len(values)) + '%' if values else '0%'
+        else:
+            values = [row[col] for row in data]
+            total_dict[col] = sum(values)
+    return total_dict
+
+
+def format_headers(data, formats):
+    response_data = []
+    index = 1
+    for row in data:
+        new_row = dict(
+            ID=index
+        )
+        for k, v in row.items():
+            if k in formats.keys():
+                key = formats[k]
+            else:
+                key = k.replace(' ', '')
+            new_row[key] = v
+        response_data.append(new_row)
+        index += 1
+    return response_data
+
+
+def reverse_filter_dict(filter_tuples):
+    f = dict()
+    for t in filter_tuples:
+        f[t[1]] = t[0]
+    return f
 
 
 def str2sec(t):
@@ -1806,7 +1861,7 @@ def learner_get_properties(request):
     analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
-    filters_data = user_properties_helper.get_possible_choices()
+    filters_data = user_properties_helper.get_possible_choices(False)
     json_string = """
     {
         "status":1,
