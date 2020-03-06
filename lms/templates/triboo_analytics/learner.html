@@ -40,6 +40,7 @@
                 ## filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8"), 'checked':'true'} for item in filters_data])},
                 defaultLanguage: '${request.LANGUAGE_CODE}',
                 last_update: '${last_update}',
+                token:'${ csrf_token }',
                 learner_table: ${('true' if learner_table else 'false')}
               }
           });

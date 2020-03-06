@@ -4,7 +4,7 @@ import {Toolbar} from './Toolbar'
 import DataList from "se-react-data-list"
 import PaginationConfig from './PaginationConfig'
 
-export class ILTGlobalReport extends React.Component {
+export default class ILTGlobalReport extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,12 +41,12 @@ export class ILTGlobalReport extends React.Component {
             return toolbarData && toolbarData[key]?toolbarData[key]: defaultValue || '';
         }
         let ajaxData = {
-            'report_type': 'learner_report',
+            'report_type': 'ilt_global_report',
             'courses_selected': [''],
             'from_day': getVal('startDate'),
             'to_day': getVal('endDate'),
             'format': getVal('exportType'),
-            'csrfmiddlewaretoken': 'nDou5pR169v76UwtX4XOpbQsSTLu6SexeWyd0ykjGR2ahYMV0OY7nddkYQqnT6ze',
+            'csrfmiddlewaretoken': this.props.token,
             'page': {
                 no: pageNo, size: PaginationConfig.PageSize
             },
@@ -70,11 +70,38 @@ export class ILTGlobalReport extends React.Component {
 
     render() {
         const {data,totalData} = this.state
-        const parameterObj = {
+        const config = {
             fields: [
                 {name: 'Name', fieldName: 'userName'},
-                {name: 'Email', fieldName: 'email'},
-                {name: 'Country', fieldName: 'country'},
+
+                {name: 'Geographical area', fieldName: 'GeographicalArea'},
+                {name: 'Course country', fieldName: 'CourseCountry'},
+                {name: 'ZoneRegion', fieldName: 'Zone/Region'},
+                {name: 'CourseTags', fieldName: 'Course tags'},
+
+                {name: 'CourseCode', fieldName: 'Course code'},
+                {name: 'Course', fieldName: 'Course'},
+                {name: 'Section', fieldName: 'Section'},
+                {name: 'Subsection', fieldName: 'Subsection'},
+
+                {name: 'SessionID', fieldName: 'Session ID'},
+                {name: 'StartDate', fieldName: 'Start date'},
+                {name: 'StartTime', fieldName: 'Start time'},
+                {name: 'EndDate', fieldName: 'End date'},
+
+                {name: 'EndTime', fieldName: 'End time'},
+                {name: 'Duration', fieldName: 'Duration (in hours)'},
+                {name: 'MaxCapacity', fieldName: 'Max capacity'},
+                {name: 'Enrollees', fieldName: 'Enrollees'},
+
+                {name: 'Attendees', fieldName: 'Attendees'},
+                {name: 'AttendanceSheet', fieldName: 'Attendance sheet'},
+                {name: 'LocationID', fieldName: 'Location ID'},
+                {name: 'LocationName', fieldName: 'Location name'},
+
+                {name: 'Address', fieldName: 'Address'},
+                {name: 'ZipCode', fieldName: 'Zip code'},
+                {name: 'City', fieldName: 'City'},
             ],
             pagination: {
                 pageSize: PaginationConfig.PageSize,
@@ -85,10 +112,9 @@ export class ILTGlobalReport extends React.Component {
 
         return (
             <>
-                <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
-                    enabledItems={['period','export']} properties={this.props.filters}/>
+                <Toolbar onChange={this.toolbarDataUpdate.bind(this)} enabledItems={['period','export']} />
                  <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
-                          enableRowsCount={true} {...parameterObj} onPageChange={this.fetchData.bind(this)}
+                          enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
                 />
             </>
         )

@@ -22,6 +22,21 @@
           ilt_global_url = "%s?%s" % (reverse('analytics_ilt'), urlencode({'report': 'global'}))
           ilt_learner_url = "%s?%s" % (reverse('analytics_ilt'), urlencode({'report': 'learner'}))
           %>
+            ${HTML(render_bundle('ILTReport'))}
+            ${HTML(render_bundle('ReactRenderer'))}
+            <div id="ilt-report" class="report-wrapper ilt_report"></div>
+            <script type="text/javascript">
+              new ReactRenderer({
+                component: ILTReport,
+                selector: '#ilt-report',
+                componentName: 'ILTReport',
+                props: {
+                    defaultLanguage: '${request.LANGUAGE_CODE}',
+                    token:'${ csrf_token }'
+                  }
+              });
+            </script>
+
           % if ilt_report_table:
             <div class="report-wrapper ilt_global">
                 <ul class="analytics-nav">
@@ -29,24 +44,23 @@
                     <li class="nav-item"><a href="${ilt_learner_url}">${_("ILT Learner Report")}</a></li>
                 </ul>
 
-                ${HTML(render_bundle('ILTGlobalReport'))}
-                ${HTML(render_bundle('ReactRenderer'))}
-                <div id="ilt-global-report"></div>
-                <script type="text/javascript">
-                  new ReactRenderer({
-                    component: ILTGlobalReport,
-                    selector: '#ilt-global-report',
-                    componentName: 'ILTGlobalReport',
-                    props: {
-                        ##filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
-                        ##defaultLanguage: '${request.LANGUAGE_CODE}',
-                        ##last_update: '${last_update}',
-                        ##learner_table: ${('true' if learner_table else 'false')}
-                      }
-                  });
-                </script>
+                ##${HTML(render_bundle('ILTGlobalReport'))}
+                ##${HTML(render_bundle('ReactRenderer'))}
+                ##<div id="ilt-global-report"></div>
+                ##<script type="text/javascript">
+                ##  new ReactRenderer({
+                ##    component: ILTGlobalReport,
+                ##    selector: '#ilt-global-report',
+                ##    componentName: 'ILTGlobalReport',
+                ##    props: {
+                ##        ##filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
+                ##        ##defaultLanguage: '${request.LANGUAGE_CODE}',
+                ##        ##last_update: '${last_update}',
+                ##        ##learner_table: ${('true' if learner_table else 'false')}
+                ##      }
+                ##  });
+                ##</script>
 
-                <div>------------------------------</div>
                 <p>Time Period:</p>
                 <form class="table-period-form" action="${ilt_global_url}" method="get">
                     ${time_period_form}
@@ -65,20 +79,20 @@
                     <li class="nav-item active">${_("ILT Learner Report")}</li>
                 </ul>
 
-                ${HTML(render_bundle('ILTLearnerReport'))}
-                ${HTML(render_bundle('ReactRenderer'))}
-                <div id="ilt-learner-report"></div>
-                <script type="text/javascript">
-                  new ReactRenderer({
-                    component: ILTLearnerReport,
-                    selector: '#ilt-learner-report',
-                    componentName: 'ILTLearnerReport',
-                    props: {
-                        filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
-                        defaultLanguage: '${request.LANGUAGE_CODE}',
-                      }
-                  });
-                </script>
+                ##${HTML(render_bundle('ILTLearnerReport'))}
+                ##${HTML(render_bundle('ReactRenderer'))}
+                ##<div id="ilt-learner-report"></div>
+                ##<script type="text/javascript">
+                ##  new ReactRenderer({
+                ##    component: ILTLearnerReport,
+                ##    selector: '#ilt-learner-report',
+                ##    componentName: 'ILTLearnerReport',
+                ##    props: {
+                ##        filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
+                ##        defaultLanguage: '${request.LANGUAGE_CODE}',
+                ##      }
+                ##  });
+                ##    </script>
 
                 <div>------------------------------</div>
                 <form class="table-period-form" action="${ilt_global_url}" method="get">

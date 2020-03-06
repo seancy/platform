@@ -55,12 +55,11 @@ export class LearnerReport extends React.Component {
             'courses_selected': [''],
             'query_tuples': toolbarData && toolbarData.selectedFilterItems ?
                 toolbarData.selectedFilterItems.map(p => [p.value, p.key]) : [],
-            'selected_properties': toolbarData && toolbarData.selectedProperties ?
-                toolbarData.selectedProperties.map(p => p.value): [],
+            'selected_properties': toolbarData && toolbarData.selectedProperties ? toolbarData.selectedProperties.map(p => p.value): [],
             'from_day': getVal('startDate'),
             'to_day': getVal('endDate'),
             'format': getVal('exportType'),
-            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+            'csrfmiddlewaretoken': this.props.token,
             'page': {
                 no: pageNo, size: PaginationConfig.PageSize
             },
@@ -85,23 +84,17 @@ export class LearnerReport extends React.Component {
     }
 
     render() {
-        const properties=this.state.properties.map(p=>({...p, checked:p.checked || false}))
-        const {selectedProperties=properties}=this.state.toolbarData;
+        const properties=this.state.properties.map((p,index)=>({...p, checked:p.checked || false}))
+        const {selectedProperties}=this.state.toolbarData;
+        const dynamicFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
+                name: p.text,
+                fieldName: p.value
+            }))
 
         const config = {
             fields: [
                 {name: 'Name', fieldName: 'Name'},
-                ...selectedProperties.filter(p=>p.checked).map(p=>({
-                    name: p.text,
-                    fieldName: p.value
-                })),
-
-                /*{name: 'Email', fieldName: 'Email'},
-                {name: 'Country', fieldName: 'Country'},
-                {name: 'Commerical Zone', fieldName: 'CommericalZone'},
-                {name: 'Commerical Region', fieldName: 'CommericalRegion'},
-                {name: 'City', fieldName: 'City'},
-                {name: 'Employee', fieldName: 'Employee'},*/
+                ...dynamicFields,
 
                 {name: 'Enrollments', fieldName: 'Enrollments'},
                 {name: 'Successful', fieldName: 'Successful'},
@@ -130,7 +123,7 @@ export class LearnerReport extends React.Component {
                         <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
                     </div>
                     <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
-                             properties={properties}/>
+                             onInit={properties=>this.setState({properties})}/>
                     <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                               enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
                     />
