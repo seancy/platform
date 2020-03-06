@@ -86,6 +86,7 @@ module.exports = Merge.smart({
         WelcomeMessage: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/WelcomeMessage.js'],
         ILTGlobalReport: ['./lms/static/js/triboo_analytics/ILTGlobalReport.js'],
         ILTLearnerReport: ['@babel/polyfill','./lms/static/js/triboo_analytics/ILTLearnerReport.js'],
+        ILTReport: ['@babel/polyfill','./lms/static/js/triboo_analytics/ILTReport.js'],
 
         CookiePolicyBanner: ['@babel/polyfill','./common/static/js/src/CookiePolicyBanner.jsx'],
 

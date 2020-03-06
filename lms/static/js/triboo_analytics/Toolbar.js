@@ -110,6 +110,8 @@ export class Toolbar extends React.Component {
                         toolbarItems
                     }
                 })
+                const {onInit} = this.props
+                onInit && onInit(data.list)
             })
     }
 
@@ -199,6 +201,7 @@ const DATA_ARRAY = PropTypes.arrayOf(PropTypes.exact({
 }))
 
 Toolbar.propTypes = {
-    properties:DATA_ARRAY,
+    //properties:DATA_ARRAY,
+    onInit:PropTypes.func,
     onChange:PropTypes.func,
 }
