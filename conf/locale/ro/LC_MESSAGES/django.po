@@ -25952,3 +25952,31 @@ msgstr ""
 #: lms/templates/ilt_all_validations_page.html
 msgid "Unsubscribe"
 msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No approved requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No pending requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No declined requests"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Name / MSC ID"
+msgstr ""
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Module"
+msgstr ""
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Select the learners you want to enroll and click on 'enroll'. You will receive a confirmation by email."
+msgstr ""
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Session Date"
+msgstr ""

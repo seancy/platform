@@ -1917,9 +1917,73 @@ def ilt_validation_list(request):
 
 @login_required
 @csrf_exempt
+def ilt_batch_enroll(request):
+    """
+    batch enroll, this will bypass validation
+    """
+    data = json.loads(request.body)
+    usage_id = data['usage_key']
+    learners_id = data['learners']
+    session_nb = data['session_nb']
+    course_name = data['course_name']
+    module_name = data['module_name']
+    session_info = data['session_info']
+    session_info['start_at'] = convert_datetime(session_info['start_at'])
+    session_info['end_at'] = convert_datetime(session_info['end_at'])
+    usage_key = UsageKey.from_string(usage_id)
+    info = {
+        "status": "confirmed",
+        "accommodation": "no",
+        "comment": "",
+        "number_of_one_way": 1,
+        "number_of_return": 1,
+        "hotel": ""
+    }
+    user_info_dict = {user_id: info for user_id in learners_id}
+    enrolled_users = XModuleUserStateSummaryField.objects.filter(
+        usage_id=usage_key, field_name="enrolled_users"
+    )
+    if enrolled_users.exists():
+        enrolled_users = enrolled_users.first()
+        value = json.loads(enrolled_users.value)
+        if session_nb in value:
+            value[session_nb].update(user_info_dict)
+        else:
+            value[session_nb] = user_info_dict
+        enrolled_users.value = json.dumps(value)
+        enrolled_users.save()
+    else:
+        enrolled_users = XModuleUserStateSummaryField.objects.create(
+            usage_id=usage_key, field_name="enrolled_users", value=json.dumps({session_nb: user_info_dict})
+        )
+    ilt_block = modulestore().get_item(usage_key)
+    section_id = ilt_block.get_parent().parent.block_id
+    chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+    url = reverse('courseware_section', args=[ilt_block.course_id, chapter_id, section_id])
+    url = request.build_absolute_uri(url)
+    for user_id in learners_id:
+        learner = User.objects.get(id=user_id)
+        if settings.LEARNER_NO_EMAIL and learner.email.endswith(settings.LEARNER_NO_EMAIL):
+            email = learner.profile.lt_ilt_supervisor
+        else:
+            email = learner.email
+        params = {'message': 'ilt_confirmed',
+                  'name': learner.profile.name or learner.username,
+                  'ilt_link': url, 'site_name': None,
+                  'ilt_name': module_name,
+                  'course_name': course_name,
+                  'session_info': session_info}
+        send_mail_to_student(email, params, language=get_user_email_language(request.user))
+    return JsonResponse(status=200)
+
+
+@login_required
+@csrf_exempt
 def ilt_validation_request_data(request):
     """
-    This is the ILT registration validation page for all requests
+    This is the api for ILT Follow-up page. return JSON format data
+    We retreive the data in courseware/ilt_all_validations_page.html
+    by ajax call
     """
     learner_no_email = settings.LEARNER_NO_EMAIL
     accommodation = configuration_helpers.get_value("ILT_ACCOMMODATION_ENABLED", False)
@@ -1943,6 +2007,8 @@ def ilt_validation_request_data(request):
         session_info['start_at'] = convert_datetime(session_info['start_at'])
         session_info['end_at'] = convert_datetime(session_info['end_at'])
         enrolled_users = json.loads(summary.value)
+        section_id = ilt_block.get_parent().parent.block_id
+        chapter_id = ilt_block.get_parent().get_parent().parent.block_id
 
         for k, v in enrolled_users.items():
             if str(learner_id) in v:
@@ -1952,8 +2018,6 @@ def ilt_validation_request_data(request):
             if accommodation and info['accommodation'] == 'yes':
                 info['status'] = 'accepted'
             else:
-                section_id = ilt_block.get_parent().parent.block_id
-                chapter_id = ilt_block.get_parent().get_parent().parent.block_id
                 url = reverse('courseware_section', args=[course_key, chapter_id, section_id])
                 url = request.build_absolute_uri(url)
                 info['status'] = 'confirmed'
@@ -1967,11 +2031,9 @@ def ilt_validation_request_data(request):
                 email = learner.email
                 if learner_no_email and email.endswith(learner_no_email):
                     email = learner.profile.lt_ilt_supervisor
-                send_mail_to_student(email, params, language=get_user_email_language(learner))
+                send_mail_to_student(email, params, language=get_user_email_language(request.user))
         elif action == 'refused':
             info['status'] = 'refused'
-            section_id = ilt_block.get_parent().parent.block_id
-            chapter_id = ilt_block.get_parent().get_parent().parent.block_id
             url = reverse('courseware_section', args=[course_key, chapter_id, section_id])
             url = request.build_absolute_uri(url)
             params = {'message': 'ilt_refused',
@@ -1984,7 +2046,7 @@ def ilt_validation_request_data(request):
             email = learner.email
             if learner_no_email and email.endswith(learner_no_email):
                 email = learner.profile.lt_ilt_supervisor
-            send_mail_to_student(email, params, language=get_user_email_language(learner))
+            send_mail_to_student(email, params, language=get_user_email_language(request.user))
 
         # in case ILT supervisor altered learner's request session number
         if session_id != registered_session:
@@ -1993,6 +2055,63 @@ def ilt_validation_request_data(request):
                 enrolled_users[session_id][str(learner_id)] = old_info
             else:
                 enrolled_users[session_id] = {str(learner_id): old_info}
+
+        old_info = enrolled_users[session_id][str(learner_id)]
+        if old_info['status'] in ['confirmed', 'accepted']:
+            hotel_reservation = []
+            updated = False
+            for k, v in old_info.items():
+                if k in ['status', 'hotel']:
+                    continue
+                if v != info[k]:
+                    updated = True
+
+                    if k == 'accommodation' and v == 'yes':
+                        if old_info.get('hotel'):
+                            hotel_info = "Name: {user_name}, Hotel Booked: {hotel_booked}".format(
+                                user_name=learner.profile.name,
+                                hotel_booked=old_info.get('hotel')
+                            )
+                            hotel_reservation.append(hotel_info)
+                            old_info['hotel'] = ''
+                        else:
+                            old_info['status'] = 'confirmed'
+                    if k == 'accommodation' and v == 'no':
+                        old_info['status'] = 'accepted'
+
+                    old_info[k] = info[k]
+            if updated:
+                url = reverse('courseware_section', args=[course_key, chapter_id, section_id])
+                url = request.build_absolute_uri(url)
+                params = {'message': 'ilt_request_updated',
+                          'name': learner.profile.name or learner.username,
+                          'ilt_link': url, 'site_name': None,
+                          'ilt_name': ilt_block.display_name,
+                          'course_name': course.display_name,
+                          'session_info': session_info,
+                          'request_info': old_info}
+                email = learner.email
+                if learner_no_email and email.endswith(learner_no_email):
+                    email = learner.profile.lt_ilt_supervisor
+                info = old_info
+                send_mail_to_student(email, params, language=get_user_email_language(request.user))
+
+                if hotel_reservation:
+                    params = {
+                        'name': '',
+                        'ilt_link': url,
+                        'ilt_name': ilt_block.display_name,
+                        'site_name': None,
+                        'hotel_info': hotel_reservation,
+                        'message': 'ilt_hotel_cancel',
+                        'action': 'ilt_hotel_cancel',
+                        'course_name': course.display_name,
+                        'session_info': session_info
+                    }
+                    course_admins = CourseInstructorRole(course_key).users_with_role()
+                    for u in course_admins:
+                        params['name'] = u.profile.name or u.username
+                        send_mail_to_student(u.email, params, language=get_user_email_language(request.user))
 
         enrolled_users[session_id][str(learner_id)].update(info)
         summary.value = json.dumps(enrolled_users)
@@ -2003,30 +2122,24 @@ def ilt_validation_request_data(request):
     supervised_learners = UserProfile.objects.filter(lt_ilt_supervisor=user.email)
     learners = [i.user for i in supervised_learners]
     learners_id = [i.id for i in learners]
-    all_enrolled_summaries = XModuleUserStateSummaryField.objects.filter(field_name="enrolled_users")
+    course_enrollments = CourseEnrollment.objects.filter(user__in=learners, is_active=True)
+    all_ilt_sessions = XModuleUserStateSummaryField.objects.filter(field_name="sessions")
     date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "YYYY-MM-DD HH:mm")
     result = {"pending_all": [], "approved_all": [], "declined_all": [], "session_info": {},
               "accommodation": accommodation, "date_format": date_format}
-    for summary in all_enrolled_summaries:
-        usage_key = summary.usage_id
+    course_module_dict = {}
+    module_course_dict = {}
+    for sessions in all_ilt_sessions:
+        usage_key = sessions.usage_id
         course_key = usage_key.course_key
-
+        enrollment = course_enrollments.filter(course_id=course_key)
+        if not enrollment.exists():
+            continue
         try:
             ilt_block = modulestore().get_item(usage_key)
             course = modulestore().get_course(course_key)
-            sessions = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="sessions")
         except:
             continue
-
-        course_name = course.display_name
-        module_name = ilt_block.display_name
-        data = json.loads(summary.value)
-        sessions_info = json.loads(sessions.value)
-
-        if unicode(course_key) in result["session_info"]:
-            result["session_info"][unicode(course_key)][unicode(usage_key)] = sessions_info
-        else:
-            result["session_info"][unicode(course_key)] = {unicode(usage_key): sessions_info}
 
         response = handle_xblock_callback(
             request,
@@ -2035,40 +2148,80 @@ def ilt_validation_request_data(request):
             'student_handler'
         )
         ilt_module_info = json.loads(response.content)
-
-        for k, v in data.items():
-            start_at = sessions_info[k]['start_at']
-            expired = datetime.now() - decode_datetime(start_at) > timedelta(days=1)
+        dropdown_list = ilt_module_info['dropdown_list']
+        for i in range(len(ilt_module_info['sessions'])):
+            within_deadline = 'within-deadline' in dropdown_list[i][1]
+            ilt_module_info['sessions'][i][1].update({'within_deadline': within_deadline})
+        for ordered_session in ilt_module_info['sessions']:
+            start_date = ordered_session[1]['start_at']
+            expired = datetime.now() - decode_datetime(start_date) > timedelta(days=1)
             if expired:
-                continue
-
-            for user_id, info in v.items():
-                if int(user_id) in learners_id:
-                    learner = User.objects.get(id=user_id)
-                    info.update({
-                        "start": start_at,
-                        "employee_id": learner.profile.lt_employee_id,
-                        "learner_name": learner.profile.name,
-                        "user_name": learner.username,
-                        "user_id": learner.id,
-                        "avatar": get_profile_image_urls_for_user(learner, request=request)["medium"],
-                        "module": module_name,
-                        "course": course_name,
-                        "dropdown_list": ilt_module_info['dropdown_list'],
-                        "usage_key": unicode(usage_key),
-                        "course_key": unicode(course_key),
-                        "session_id": k,
-                        "is_editing": False,
-                        "action": None
-                    })
-                    if info['status'] == "pending":
-                        result["pending_all"].append(info)
-                    elif info['status'] == "refused":
-                        result["declined_all"].append(info)
-                    else:
-                        result["approved_all"].append(info)
-                else:
+                ilt_module_info['sessions'].remove(ordered_session)
+        sessions_info = json.loads(sessions.value)
+        course_name = course.display_name
+        module_name = ilt_block.display_name
+        module_course_dict[unicode(usage_key)] = (module_name, unicode(course_key))
+        enrollment_user_list = {str(u.id): {'user_name': u.username, 'full_name': u.profile.name, 'checked': False}
+                                for u in learners}
+        try:
+            enrolled_users = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="enrolled_users")
+            data = json.loads(enrolled_users.value)
+            for k, v in data.items():
+                start_at = sessions_info[k]['start_at']
+                expired = datetime.now() - decode_datetime(start_at) > timedelta(days=1)
+                if expired:
                     continue
+
+                for user_id, info in v.items():
+                    if int(user_id) in learners_id:
+                        if info['status'] != 'refused':
+                            enrollment_user_list.pop(user_id)
+                        learner = User.objects.get(id=user_id)
+                        info.update({
+                            "start": start_at,
+                            "employee_id": learner.profile.lt_employee_id,
+                            "learner_name": learner.profile.name,
+                            "user_name": learner.username,
+                            "user_id": learner.id,
+                            "avatar": get_profile_image_urls_for_user(learner, request=request)["medium"],
+                            "module": module_name,
+                            "course": course_name,
+                            "dropdown_list": ilt_module_info['dropdown_list'],
+                            "usage_key": unicode(usage_key),
+                            "course_key": unicode(course_key),
+                            "session_id": k,
+                            "is_editing": False,
+                            "action": None
+                        })
+                        if info['status'] == "pending":
+                            result["pending_all"].append(info)
+                        elif info['status'] == "refused":
+                            result["declined_all"].append(info)
+                        else:
+                            result["approved_all"].append(info)
+                    else:
+                        continue
+        except XModuleUserStateSummaryField.DoesNotExist:
+            pass
+        if unicode(course_key) in course_module_dict:
+            course_module_dict[unicode(course_key)]['modules'].append(
+                (module_name, unicode(usage_key), ilt_module_info['sessions'], enrollment_user_list)
+            )
+        else:
+            course_module_dict[unicode(course_key)] = {
+                'course_name': course_name,
+                'modules': [(module_name, unicode(usage_key), ilt_module_info['sessions'], enrollment_user_list)]
+            }
+
+        if unicode(course_key) in result["session_info"]:
+            result["session_info"][unicode(course_key)][unicode(usage_key)] = sessions_info
+        else:
+            result["session_info"][unicode(course_key)] = {unicode(usage_key): sessions_info}
+
+    result.update({
+        'course_module_dict': course_module_dict,
+        'module_course_dict': module_course_dict
+    })
     result["pending_all"].sort(key=lambda x: decode_datetime(x['start']))
     result["approved_all"].sort(key=lambda x: decode_datetime(x['start']))
     result["declined_all"].sort(key=lambda x: decode_datetime(x['start']))
@@ -2078,7 +2231,7 @@ def ilt_validation_request_data(request):
 
 def ilt_registration_validation(request, course_id, usage_id, user_id):
     """
-    This is the individual validation page
+    This is the individual validation page, deprecated soon
     """
     usage_key = UsageKey.from_string(usage_id)
     learner_no_email = settings.LEARNER_NO_EMAIL

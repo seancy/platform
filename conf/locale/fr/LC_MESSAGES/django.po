@@ -29854,7 +29854,7 @@ msgstr "hébergement, préférence, régime spécifique…"
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "Enroll"
-msgstr "S'inscrire"
+msgstr "Inscrire"
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
@@ -30738,6 +30738,14 @@ msgstr "Vous n’avez pas de demande en attente"
 msgid "No declined requests"
 msgstr "Vous n’avez pas de demande refusée"
 
+#: lms/templates/ilt_all_validations_page.html
+msgid "Name / MSC ID"
+msgstr "Nom / MSC ID"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Module"
+msgstr "Module"
+
 #: lms/templates/header/navbar-authenticated.html
 msgid "ILT Requests"
 msgstr "Demandes de formation présentielle"
@@ -30954,3 +30962,11 @@ msgstr "L'apprenant a été désinscrit."
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "The learner's session has been changed."
 msgstr "La session de l'apprenant a été changée."
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Select the learners you want to enroll and click on 'enroll'. You will receive a confirmation by email."
+msgstr "Sélectionnez les apprenants que vous souhaitez inscrire et cliquez sur le bouton 'inscrire'. Vous recevrez une confirmation par email."
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Session Date"
+msgstr "Date de la session"

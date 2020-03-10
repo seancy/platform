@@ -297,6 +297,7 @@
     "Any divided discussion topics are divided based on enrollment track.": "\u4efb\u4f55\u5212\u5206\u7684\u8ba8\u8bba\u4e3b\u9898\u90fd\u6839\u636e\u6ce8\u518c\u8ddf\u8e2a\u8fdb\u884c\u5212\u5206\u3002", 
     "Are you having trouble finding a team to join?": "\u4f60\u662f\u5426\u5728\u627e\u56e2\u961f\u52a0\u5165\u8fc7\u7a0b\u4e2d\u9047\u5230\u56f0\u96be\uff1f", 
     "Are you sure that you want to leave this session?": "\u60a8\u786e\u5b9a\u60a8\u8981\u79bb\u5f00\u5f53\u524d\u8bfe\u7a0b\u5c0f\u8282\u5417\uff1f", 
+    "Are you sure to unenroll this learner ?": "\u4f60\u786e\u5b9a\u8981\u53d6\u6d88\u8be5\u5b66\u751f\u7684\u6ce8\u518c\u5417 \uff1f", 
     "Are you sure you want to change to a different session?": "\u60a8\u662f\u5426\u786e\u5b9a\u60a8\u8981\u66f4\u6539\u5230\u53e6\u4e00\u5c0f\u8282\uff1f", 
     "Are you sure you want to delete this comment?": "\u60a8\u786e\u5b9a\u8981\u5220\u9664\u8fd9\u6761\u8bc4\u8bba\u5417\uff1f", 
     "Are you sure you want to delete this page? This action cannot be undone.": "\u60a8\u786e\u8ba4\u8981\u5220\u9664\u8be5\u9875\u9762\u5417\uff1f\u8be5\u64cd\u4f5c\u65e0\u6cd5\u64a4\u9500\u3002", 

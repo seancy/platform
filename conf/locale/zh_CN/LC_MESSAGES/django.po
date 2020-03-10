@@ -28177,6 +28177,14 @@ msgstr "当前没有正在处理的请求"
 msgid "No declined requests"
 msgstr "当前没有被拒绝的请求"
 
+#: lms/templates/ilt_all_validations_page.html
+msgid "Name / MSC ID"
+msgstr "名字 / 用户名"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Module"
+msgstr "模块"
+
 #: lms/templates/header/navbar-authenticated.html
 msgid "ILT Requests"
 msgstr "ILT 请求"
@@ -28424,3 +28432,11 @@ msgstr "该学员的注册已被取消了。"
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "The learner's session has been changed."
 msgstr "该学员注册的课程已经更改。"
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Select the learners you want to enroll and click on 'enroll'. You will receive a confirmation by email."
+msgstr "选择你要注册的学员，然后点击注册。你会收到一封确认邮件。"
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Session Date"
+msgstr "课程日期"

@@ -11303,3 +11303,11 @@ msgstr ""
 #: lms/static/js/courseware/ilt_validation.js:157
 msgid "no"
 msgstr ""
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Are you sure to unenroll this learner ?"
+msgstr ""
+
+#: lms/static/js/courseware/ilt_validation.js
+msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
+msgstr ""
