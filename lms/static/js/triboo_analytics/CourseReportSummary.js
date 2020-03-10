@@ -120,20 +120,13 @@ export default class CourseReportSummary extends React.Component {
         }
 
         return (
-            <section className="analytics-wrapper learner">
-                <div className="report-wrapper">
-
-                    <div className="last-update">
-                        <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
-                    </div>
-                    <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
-                             onInit={properties=>this.setState({properties})}/>
-                    <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
-                              enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
-                    />
-
-                </div>
-            </section>
+            <>
+                <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
+                         onInit={properties=>this.setState({properties})}/>
+                <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
+                          enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
+                />
+            </>
         )
     }
 }

@@ -15,6 +15,7 @@ function initSelect() {
 import React from 'react';
 import Tab from "se-react-tab"
 import Summary from './CourseReportSummary'
+import Progress from './CourseReportProgress'
 
 
 class CourseReport extends React.Component {
@@ -33,16 +34,17 @@ class CourseReport extends React.Component {
     render() {
         const {} = this.state
         const functionStrs = ['Summary', 'Progress', 'Time Spent']
-        const [Summary0,Progress,TimeSpent] = functionStrs.map(p=>{
+        const [Summary0,Progress0,TimeSpent] = functionStrs.map(p=>{
             return (props)=>{
                 return (<div className={`${p.toLowerCase()}-component ${(props.className || '')}`}>
                     {p} component
                 </div>)
             }
         })
+        const common_props = {defaultLanguage: this.props.defaultLanguage, token:this.props.defaultLanguage}
         const data = [
-            {text: 'Summary', value: 'summary', component: Summary, props:{filters:this.props.filters, defaultLanguage: this.props.defaultLanguage}},
-            {text: 'Progress', value: 'progress', component: Progress},
+            {text: 'Summary', value: 'summary', component: Summary, props:common_props},
+            {text: 'Progress', value: 'progress', component: Progress, props:common_props},
             {text: 'Time Spent', value: 'time_spent', component: TimeSpent},
         ]
 

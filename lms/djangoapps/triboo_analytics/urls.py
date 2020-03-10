@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^global/$', views.microsite_view, name='analytics_microsite'),
 
     url(r'^course/$', views.course_view, name='analytics_course'),
+    url(r'^course/progress/json/$', views.course_progress_data, name='analytics_course_progress_data'),
 
     url(r'^learner/$', views.learner_view, name='analytics_learner'),
     url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),

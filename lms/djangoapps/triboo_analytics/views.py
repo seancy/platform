@@ -1782,7 +1782,7 @@ def export_table_data(course_id, _task_input):
             rowsCount=len(content)
         )
     )
-    return JsonResponse(response_dict)
+    return Response(response_dict)
 
 
 def str2sec(t):
@@ -1802,7 +1802,7 @@ def learner_get_properties(request):
     analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
-    filters_data = user_properties_helper.get_possible_choices()
+    filters_data = user_properties_helper.get_possible_choices(False)
     json_string = """
     {
         "status":1,
@@ -1813,4 +1813,34 @@ def learner_get_properties(request):
     jsonData = json.loads(json_string)
     for item in filters_data:
         jsonData['list'].append({ 'text': item[1], 'value':item[0]})
+    return JsonResponse(jsonData)
+
+@analytics_on
+def course_progress_data(request):
+    analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                                settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+    user_properties_helper = UserPropertiesHelper(analytics_user_properties)
+    filters_data = user_properties_helper.get_possible_choices()
+    json_string = """
+    {
+        "total":{ 
+            "Email":"3"
+        },
+        "pagination":{ 
+            "rowsCount":"1"
+        },
+        "list":[
+            {
+                "Name": "John Snow",
+                "user_email": "edx@example.com",
+                "user_country": "China",
+                "Homework": "No: 0.00",  
+                "Exam": "No: 0.00"
+            }
+        ]
+    }
+    """
+    jsonData = json.loads(json_string)
+    ##for item in filters_data:
+    ##    jsonData['list'].append({ 'text': item[1], 'value':item[0]})
     return JsonResponse(jsonData)

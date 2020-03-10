@@ -39,7 +39,7 @@ export default class CourseReportProgress extends React.Component {
     }
 
     fetchData(pageNo) {
-        const url = `/analytics/learner/json/`
+        const url = `/analytics/course/progress/json/`
         const {toolbarData} = this.state
         const getVal=(key,defaultValue)=>{
             return toolbarData && toolbarData[key]?toolbarData[key]: defaultValue || '';
@@ -80,29 +80,34 @@ export default class CourseReportProgress extends React.Component {
     render() {
         const properties=this.state.properties.map((p,index)=>({...p, checked:p.checked || false}))
         const {selectedProperties}=this.state.toolbarData;
-        const dynamicFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
+        const propertiesFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))
-        const render=(val)=>{
-            return <span className={val?'in-progress-bg':'not-started-bg'}>{val?'In Progress':'Not Started'}</span>
+        const {data}=this.state;
+        let dynamicFields = []
+        if (data && data.length > 0){
+            const firstRow = data[0]
+            const propertiesValues = this.state.properties.map(p=>p.value)
+            dynamicFields = Object.keys(firstRow).filter(key=>{
+                return !propertiesValues.includes(key) && key != 'Name';
+            }).map(key=>({name:key, fieldName:key}));
         }
+
         const config = {
-            fields: [
-                /*{name: 'Name', fieldName: 'Name'},
-
-                ...dynamicFields,
-
-                {name: 'Status', fieldName: 'status', render, className:'status'},
-                {name: 'Progress', fieldName: 'progress'},
-                {name: 'Current Score', fieldName: 'currentScore'},
-                {name: 'Badges', fieldName: 'badges'},
-                {name: 'Posts', fieldName: 'posts'},
-                {name: 'Total Time Spent', fieldName: 'totalTimeSpent'},
-                {name: 'Enrollment Date', fieldName: 'enrollmentDate'},
-                {name: 'Completion Date', fieldName: 'completionDate'},*/
-
+            fields:[
+                {name: 'Name', fieldName: 'Name'},
+                ...propertiesFields,
+                ...dynamicFields
             ],
+            cellRender:v=>{
+                if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')){
+                    const arr = v.split(':')
+                    return (<><span class={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}</> )
+                }else{
+                    return v
+                }
+            },
             pagination: {
                 pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,
@@ -112,20 +117,13 @@ export default class CourseReportProgress extends React.Component {
         }
 
         return (
-            <section className="analytics-wrapper learner">
-                <div className="report-wrapper">
-
-                    <div className="last-update">
-                        <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
-                    </div>
-                    <Toolbar onChange={this.toolbarDataUpdate.bind(this)} enabledItems={['period','export']}
-                             onInit={properties=>this.setState({properties})}/>
-                    <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
-                              enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
-                    />
-
-                </div>
-            </section>
+            <>
+                <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
+                         onInit={properties=>this.setState({properties})}/>
+                <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
+                          enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
+                />
+            </>
         )
     }
 }

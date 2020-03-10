@@ -206,10 +206,8 @@
                     selector: '#course-report',
                     componentName: 'CourseReport',
                     props: {
-                        filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
                         defaultLanguage: '${request.LANGUAGE_CODE}',
                         token:'${ csrf_token }',
-                        last_update: '${last_update}',
                       }
                   });
                 </script>
