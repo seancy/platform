@@ -15,6 +15,11 @@ from six import text_type
 from course_modes.models import CourseMode
 from django_comment_common.models import assign_default_role
 from django_comment_common.utils import seed_permissions_roles
+from lms.djangoapps.triboo_analytics.models import (
+    LearnerCourseDailyReport,
+    LearnerSectionReport,
+    CourseDailyReport
+)
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 from student import auth
 from student.models import CourseEnrollment
@@ -80,7 +85,16 @@ def remove_all_instructors(course_key):
     instructor_role.remove_users(*instructor_role.users_with_role())
 
 
-def delete_course(course_key, user_id, keep_instructors=False):
+def remove_course_reports(course_key):
+    """
+    Delete all reports related to the course.
+    """
+    LearnerCourseDailyReport.objects.filter(course_id=course_key).delete()
+    LearnerSectionReport.objects.filter(course_id=course_key).delete()
+    CourseDailyReport.objects.filter(course_id=course_key).delete()
+
+
+def delete_course(course_key, user_id, keep_instructors=False, **kwargs):
     """
     Delete course from module store and if specified remove user and
     groups permissions from course.
@@ -89,6 +103,14 @@ def delete_course(course_key, user_id, keep_instructors=False):
     delete_course_mode(course_key)
     if not keep_instructors:
         _remove_instructors(course_key)
+
+    if kwargs.get('remove_course_reports', False):
+        remove_course_reports(course_key)
+
+    if kwargs.get('remove_course_search_index', False):
+        # Used to avoid import issues.
+        from contentstore.courseware_index import CoursewareSearchIndexer
+        CoursewareSearchIndexer.delete_course_index(course_key)
 
 
 def _delete_course_from_modulestore(course_key, user_id):

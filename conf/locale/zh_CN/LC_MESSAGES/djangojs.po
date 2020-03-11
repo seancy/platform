@@ -7387,6 +7387,10 @@ msgstr "课程开始后，无法更改课程速度。"
 msgid "{hours}:{minutes} (current UTC time)"
 msgstr "{hours}:{minutes}  (当前 UTC )"
 
+#: cms/static/js/views/settings/main.js:370
+msgid "I want to delete the course"
+msgstr "我想删除课程"
+
 #: cms/static/js/views/settings/main.js:546
 msgid "Upload your course image."
 msgstr "上传您的课程图片。"
@@ -10215,6 +10219,15 @@ msgstr ""
 "如果选择\"%(hide_label)s\"以外的选项，则此子节中的已发布单位将可供学员使用，"
 "除非它们被显式隐藏。"
 
+#: cms/templates/js/course-delete-dialog.underscore:3
+#, python-format
+msgid ""
+"You are going to delete this course. All related data including learner data"
+" will be permanently deleted and this cannot be undone. We advise you to <a "
+"href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">export the "
+"course content</a> before you delete it."
+msgstr "您将删除此课程。所有相关数据（包括学员数据）将被永久删除，并且无法撤消。我们建议您在删除课程前<a href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">导出课程内容</a>。"
+
 #: cms/templates/js/course-highlights-enable.underscore:3
 msgid "Weekly Highlight Emails"
 msgstr "每周亮点电子邮件"
@@ -11737,3 +11750,19 @@ msgstr "该课程的注册已关闭。请选择其他课程。"
 #: xblock-ilt/ilt/static/js/src/ilt.js:562
 msgid "Please choose the accommodation need"
 msgstr "请选择住宿需求"
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "yes"
+msgstr "是"
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "no"
+msgstr "否"
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Are you sure to unenroll this learner ?"
+msgstr "你确定要取消该学生的注册吗 ？"
+
+#: lms/static/js/courseware/ilt_validation.js
+msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
+msgstr "注册已被确认通过。<br>你可以点击\"即将到来的课程\"来修改与该请求相关的信息。"

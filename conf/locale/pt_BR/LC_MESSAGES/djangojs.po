@@ -7724,6 +7724,10 @@ msgstr "Andamento do curso não pode ser alterado uma vez que já foi iniciado."
 msgid "{hours}:{minutes} (current UTC time)"
 msgstr "{hours}:{minutes} (current UTC time)"
 
+#: cms/static/js/views/settings/main.js:370
+msgid "I want to delete the course"
+msgstr "Eu quero excluir o curso"
+
 #: cms/static/js/views/settings/main.js:549
 msgid "Upload your course image."
 msgstr "Enviar imagem do seu curso."
@@ -10722,6 +10726,15 @@ msgstr ""
 "Se você selecionar uma opção diferente de \"%(hide_label)s\", as unidades"
 "publicadas na subseção começam a ficar disponíveis para os alunos, "
 "a menos que eles fiquem explicitamente ocultos."
+
+#: cms/templates/js/course-delete-dialog.underscore:3
+#, python-format
+msgid ""
+"You are going to delete this course. All related data including learner data"
+" will be permanently deleted and this cannot be undone. We advise you to <a "
+"href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">export the "
+"course content</a> before you delete it."
+msgstr "Você está prestes a excluir este curso. Todos los dados, incluindo os dados do aluno, serão excluídos permanentemente e esta ação não poderá ser desfeito. Sugerimos que você <a href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">exporte o conteúdo do curso</a> antes de excluí-lo."
 
 #: cms/templates/js/course-highlights-enable.underscore:3
 msgid "Weekly Highlight Emails"

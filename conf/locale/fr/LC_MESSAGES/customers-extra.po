@@ -246,6 +246,18 @@ msgid ""
 "at least two weeks from now. If not, the enrollment should be declined."
 msgstr "Avant toute validation, et afin de garantir la meilleure organisation logistique possible (repas, hôtel…), nous vous invitons à vérifier que la formation a bien lieu dans plus de 2 semaines."
 
+#: master-sephora:lms/templates/emails/ilt_validate_email_message.txt
+msgid "You have received in-class training requests."
+msgstr "Vous avez reçu de nouvelles demandes de participations pour des formations en salle."
+
+#: master-sephora:lms/templates/emails/ilt_validate_email_message.txt
+msgid "Click on the link below to accept, edit or decline the requests:"
+msgstr "Cliquez sur le lien ci-dessous pour accepter, modifier ou refuser la/les demande(s) :"
+
 #: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
 msgid "APPROVAL NEEDED - Request to enroll in the in-class training - {name}"
 msgstr "POUR VALIDATION -Demande d'inscription formation - {name}"
+
+#: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
+msgid "APPROVAL NEEDED - Request to enroll in the ILT training"
+msgstr "POUR VALIDATION - Demande d’inscription formation"

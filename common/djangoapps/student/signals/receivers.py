@@ -12,8 +12,9 @@ from student.helpers import (
     USERNAME_EXISTS_MSG_FMT
 )
 from student.models import (
+    CourseEnrollment,
     is_email_retired,
-    is_username_retired,
+    is_username_retired
 )
 
 
@@ -56,3 +57,8 @@ def on_user_updated(sender, instance, **kwargs):  # pylint: disable=unused-argum
                 EMAIL_EXISTS_MSG_FMT.format(username=instance.email),
                 field="email"
             )
+
+
+def listen_for_course_delete(sender, course_key, **kwargs):  # pylint: disable=unused-argument
+    """Delete course enrollment when course was deleted."""
+    CourseEnrollment.objects.filter(course=course_key).delete()

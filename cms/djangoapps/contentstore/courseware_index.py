@@ -378,6 +378,20 @@ class CoursewareSearchIndexer(SearchIndexerBase):
         return cls._do_reindex(modulestore, course_key)
 
     @classmethod
+    def delete_course_index(cls, course_key):
+        """Delete all docs in index(course_info, courseware_content) for the course_key"""
+        # First delete course about info in course_info index.
+        CourseAboutSearchIndexer.remove_deleted_items(course_key)
+        # Then use delete_by_query to delete related content with the course in courseware_content index.
+        searcher = SearchEngine.get_search_engine(cls.INDEX_NAME)
+        if not searcher:
+            return
+
+        # This delete_by_query api should be put in edx-search package, but now used here directly.
+        query_body = {"query": {"term": {"course": str(course_key)}}}
+        searcher._es.delete_by_query(cls.INDEX_NAME, cls.DOCUMENT_TYPE, query_body)
+
+    @classmethod
     def fetch_group_usage(cls, modulestore, structure):
         groups_usage_dict = {}
         groups_usage_info = GroupConfiguration.get_partitions_usage_info(modulestore, structure).items()

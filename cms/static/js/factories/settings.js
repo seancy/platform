@@ -2,7 +2,7 @@ define([
     'jquery', 'js/models/settings/course_details', 'js/views/settings/main'
 ], function($, CourseDetailsModel, MainView) {
     'use strict';
-    return function(detailsUrl, showMinGradeWarning, showCertificateAvailableDate, langCode) {
+    return function(detailsUrl, showMinGradeWarning, showCertificateAvailableDate, langCode, exportUrl, homepageUrl) {
         var model;
         // highlighting labels when fields are focused in
         $('form :input')
@@ -22,7 +22,9 @@ define([
                     el: $('.settings-details'),
                     model: model,
                     showMinGradeWarning: showMinGradeWarning,
-                    langCode: langCode
+                    langCode: langCode,
+                    exportUrl: exportUrl,
+                    homepageUrl: homepageUrl
                 });
                 editor.render();
             },

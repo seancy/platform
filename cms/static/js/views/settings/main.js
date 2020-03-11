@@ -28,7 +28,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'click .add-course-reminder-info': 'addReminderFields',
                    'click #course-order-increase': 'increaseCourseOrder',
                    'click #course-order-decrease': 'decreaseCourseOrder',
-                   'click .add-course-tags': 'addCourseTags'
+                   'click .add-course-tags': 'addCourseTags',
+                   'click .delete-course-btn': 'deleteCourse'
                },
 
                initialize: function(options) {
@@ -104,6 +105,9 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                            });
                        }
                    });
+
+                   this.exportUrl = options.exportUrl;
+                   this.homepageUrl = options.homepageUrl
                },
 
                render: function() {
@@ -354,6 +358,28 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    }
                    courseTags.push(tagInputValue);
                    this.model.set('vendor', courseTags);
+               },
+
+               deleteCourse: function() {
+                   var dialogId = _.template($('#course-delete-dialog-tpl').html());
+                   var dialogContent = dialogId({exportUrl: this.exportUrl});
+                   var requestUrl = this.model.urlRoot;
+                   var homepageUrl = this.homepageUrl;
+                   LearningTribes.confirmation.show({ /* global LearningTribes */
+                       message: dialogContent,
+                       confirmationText: gettext('I want to delete the course'),
+                       cancelationText: gettext('Cancel'),
+                       confirmationCallback: function() {
+                           $.ajax({
+                               type: 'DELETE',
+                               url: requestUrl
+                           }).done(function() {
+                               self.location.href = homepageUrl;
+                           }).fail(function() {
+                               self.location.href = homepageUrl;
+                           });
+                       }
+                   });
                },
 
                updateModel: function(event) {

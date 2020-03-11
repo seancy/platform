@@ -123,6 +123,7 @@ class CoursewareIndex(View):
                 self._setup_masquerade_for_effective_user()
                 return self.render(request)
         except Exception as exception:  # pylint: disable=broad-except
+            log.error("%s is captured", exception)
             return CourseTabView.handle_exceptions(request, self.course, exception)
 
     def _setup_masquerade_for_effective_user(self):
