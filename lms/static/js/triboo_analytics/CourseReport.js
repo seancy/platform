@@ -16,7 +16,9 @@ import React from 'react';
 import Tab from "se-react-tab"
 import Summary from './CourseReportSummary'
 import Progress from './CourseReportProgress'
+import TimeSpent from './CourseReportTimeSpent'
 
+import { pick } from 'lodash'
 
 class CourseReport extends React.Component {
     constructor(props) {
@@ -34,18 +36,18 @@ class CourseReport extends React.Component {
     render() {
         const {} = this.state
         const functionStrs = ['Summary', 'Progress', 'Time Spent']
-        const [Summary0,Progress0,TimeSpent] = functionStrs.map(p=>{
+        const [Summary0,Progress0,TimeSpent0] = functionStrs.map(p=>{
             return (props)=>{
                 return (<div className={`${p.toLowerCase()}-component ${(props.className || '')}`}>
                     {p} component
                 </div>)
             }
         })
-        const common_props = {defaultLanguage: this.props.defaultLanguage, token:this.props.defaultLanguage}
+        const common_props = pick(this.props, 'defaultLanguage', 'token')
         const data = [
             {text: 'Summary', value: 'summary', component: Summary, props:common_props},
             {text: 'Progress', value: 'progress', component: Progress, props:common_props},
-            {text: 'Time Spent', value: 'time_spent', component: TimeSpent},
+            {text: 'Time Spent', value: 'time_spent', component: TimeSpent, props:common_props},
         ]
 
         return (

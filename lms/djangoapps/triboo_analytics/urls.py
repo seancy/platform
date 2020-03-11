@@ -17,6 +17,8 @@ urlpatterns = [
 
     url(r'^course/$', views.course_view, name='analytics_course'),
     url(r'^course/progress/json/$', views.course_progress_data, name='analytics_course_progress_data'),
+    url(r'^course/time_spent/json/$', views.course_time_spent_data, name='analytics_course_time_spent_data'),
+
 
     url(r'^learner/$', views.learner_view, name='analytics_learner'),
     url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),

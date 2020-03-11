@@ -1841,6 +1841,117 @@ def course_progress_data(request):
     }
     """
     jsonData = json.loads(json_string)
-    ##for item in filters_data:
-    ##    jsonData['list'].append({ 'text': item[1], 'value':item[0]})
+    return JsonResponse(jsonData)
+
+@analytics_on
+def course_time_spent_data(request):
+    json_string = """
+    {
+        "total":{ 
+            "Email":"3"
+        },
+        "pagination":{ 
+            "rowsCount":"1"
+        },
+        "list":[
+            {
+                "Name": "High Land",
+                "Email": "verified@example.com",
+                "Country": "",
+                "Commercial Zone": "",
+                "Commercial Region": "",
+                "City": "",
+                "Location": "",
+                "Address 2": "",
+                "Employee ID": "",
+                "Level": "",
+                "Job Code": "",
+                "Introduction / Demo Course Overview": "0:00:00",
+                "Example Week 1: Getting Started / Lesson 1 - Getting Started": "0:00:00",
+                "Example Week 1: Getting Started / Homework - Question Styles": "0:00:00",
+                "Example Week 2: Get Interactive / Lesson 2 - Let's Get Interactive!": "0:00:00",
+                "Example Week 2: Get Interactive / Homework - Labs and Demos": "0:00:00",
+                "Example Week 2: Get Interactive / Homework - Essays": "0:00:00",
+                "Example Week 3: Be Social / Lesson 3 - Be Social": "0:00:00",
+                "Example Week 3: Be Social / Homework - Find Your Study Buddy": "0:00:00",
+                "Example Week 3: Be Social / More Ways to Connect": "0:00:00",
+                "About Exams and Certificates / edX Exams": "0:00:00",
+                "holding section / New Subsection": "0:00:00"
+            },
+            {
+                "Name": "High Land1",
+                "Email": "verified@example.com",
+                "Country": "",
+                "Commercial Zone": "",
+                "Commercial Region": "",
+                "City": "",
+                "Location": "",
+                "Address 2": "",
+                "Employee ID": "",
+                "Level": "",
+                "Job Code": "",
+                "Introduction / Demo Course Overview": "0:00:00",
+                "Example Week 1: Getting Started / Lesson 1 - Getting Started": "0:00:00",
+                "Example Week 1: Getting Started / Homework - Question Styles": "0:00:00",
+                "Example Week 2: Get Interactive / Lesson 2 - Let's Get Interactive!": "0:00:00",
+                "Example Week 2: Get Interactive / Homework - Labs and Demos": "0:00:00",
+                "Example Week 2: Get Interactive / Homework - Essays": "0:00:00",
+                "Example Week 3: Be Social / Lesson 3 - Be Social": "0:00:00",
+                "Example Week 3: Be Social / Homework - Find Your Study Buddy": "0:00:00",
+                "Example Week 3: Be Social / More Ways to Connect": "0:00:00",
+                "About Exams and Certificates / edX Exams": "0:00:00",
+                "holding section / New Subsection": "0:00:00"
+            },
+            {
+                "Name": "High Land2",
+                "Email": "verified@example.com",
+                "Country": "",
+                "Commercial Zone": "",
+                "Commercial Region": "",
+                "City": "",
+                "Location": "",
+                "Address 2": "",
+                "Employee ID": "",
+                "Level": "",
+                "Job Code": "",
+                "Introduction / Demo Course Overview": "0:00:00",
+                "Example Week 1: Getting Started / Lesson 1 - Getting Started": "0:00:00",
+                "Example Week 1: Getting Started / Homework - Question Styles": "0:00:00",
+                "Example Week 2: Get Interactive / Lesson 2 - Let's Get Interactive!": "0:00:00",
+                "Example Week 2: Get Interactive / Homework - Labs and Demos": "0:00:00",
+                "Example Week 2: Get Interactive / Homework - Essays": "0:00:00",
+                "Example Week 3: Be Social / Lesson 3 - Be Social": "0:00:00",
+                "Example Week 3: Be Social / Homework - Find Your Study Buddy": "0:00:00",
+                "Example Week 3: Be Social / More Ways to Connect": "0:00:00",
+                "About Exams and Certificates / edX Exams": "0:00:00",
+                "holding section / New Subsection": "0:00:00"
+            },
+            {
+                "Name": "High Land3",
+                "Email": "verified@example.com",
+                "Country": "",
+                "Commercial Zone": "",
+                "Commercial Region": "",
+                "City": "",
+                "Location": "",
+                "Address 2": "",
+                "Employee ID": "",
+                "Level": "",
+                "Job Code": "",
+                "Introduction / Demo Course Overview": "0:00:00",
+                "Example Week 1: Getting Started / Lesson 1 - Getting Started": "0:00:00",
+                "Example Week 1: Getting Started / Homework - Question Styles": "0:00:00",
+                "Example Week 2: Get Interactive / Lesson 2 - Let's Get Interactive!": "0:00:00",
+                "Example Week 2: Get Interactive / Homework - Labs and Demos": "0:00:00",
+                "Example Week 2: Get Interactive / Homework - Essays": "0:00:00",
+                "Example Week 3: Be Social / Lesson 3 - Be Social": "0:00:00",
+                "Example Week 3: Be Social / Homework - Find Your Study Buddy": "0:00:00",
+                "Example Week 3: Be Social / More Ways to Connect": "0:00:00",
+                "About Exams and Certificates / edX Exams": "0:00:00",
+                "holding section / New Subsection": "0:00:00"
+            }
+        ]
+    }
+    """
+    jsonData = json.loads(json_string);
     return JsonResponse(jsonData)

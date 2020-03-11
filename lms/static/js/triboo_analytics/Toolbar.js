@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger, import/prefer-default-export */
 import React from 'react';
 import PropTypes from 'prop-types'
+import { pick } from 'lodash'
 
 import DateRange from 'se-react-date-range'
 import LabelValue from 'sec-react-label-value'
@@ -148,8 +149,7 @@ export class Toolbar extends React.Component {
 
     fireOnChange () {
         const {onChange}=this.props
-        const json = ['selectedFilterItems','selectedProperties', 'startDate','endDate','exportType']
-            .reduce((mem, key)=>({...mem, [key]:this.state[key]}), {});
+        const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate','exportType')
         onChange && onChange(json);
     };
 
