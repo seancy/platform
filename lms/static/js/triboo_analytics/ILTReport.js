@@ -13,27 +13,19 @@ export class ILTReport extends React.Component {
     }
 
     render() {
-        //const {} = this.state
-        /*const functionStrs = ['Summary', 'Progress', 'Time Spent']
-        const [Summary,Progress,TimeSpent] = functionStrs.map(p=>{
-            return (props)=>{
-                return (<div className={`${p.toLowerCase()}-component ${(props.className || '')}`}>
-                    {p} component
-                </div>)
-            }
-        })*/
         const {defaultLanguage,token} = this.props
         const data = [
-            {text: 'ILT Global Report', value: 'summary', component: ILTGlobalReport, props:{
+            {text: 'ILT Global Report', value: 'global', component: ILTGlobalReport, props:{
                     defaultLanguage, token
             }},
-            {text: 'ILT Learner Report', value: 'progress', component: ILTLearnerReport, props:{
+            {text: 'ILT Learner Report', value: 'learner', component: ILTLearnerReport, props:{
                     defaultLanguage, token
             }}
         ]
 
         return (
-            <Tab onChange={console.log} data={data}/>
+            <Tab activeValue={(new URLSearchParams(location.search)).get('report')}
+                 onChange={console.log} data={data}/>
         )
     }
 }

@@ -51,7 +51,8 @@ class CourseReport extends React.Component {
         ]
 
         return (
-            <Tab onChange={console.log} data={data}/>
+            <Tab activeValue={(new URLSearchParams(location.search)).get('report')}
+                 onChange={console.log} data={data}/>
         )
     }
 }

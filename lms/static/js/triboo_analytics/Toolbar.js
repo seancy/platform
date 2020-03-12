@@ -142,7 +142,7 @@ export class Toolbar extends React.Component {
 
     getToolbarItems(enabledItems=[]){
         const propertyData = [
-            {value: 'failed', text: 'load data failed'},
+            {value: '', text: ''},
         ]
         return [
             {name:'filters', text: gettext('filters'), icon: 'fa-search', active: false, component: LabelValue, props:{
