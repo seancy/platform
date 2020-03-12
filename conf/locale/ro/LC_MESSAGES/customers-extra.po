@@ -148,8 +148,8 @@ msgid ""
 msgstr "Ai respins cererea emisă de {name} la trainingul în sală {ilt_name} programat la data de {start} la {location}, {address}, {city} {zipcode}."
 
 #: master-sephora:lms/templates/emails/ilt_refused_email_subject.txt:2
-msgid "DECLINED - Enrollment in the in-class training - {name}"
-msgstr "RESPINSĂ – Înscrierea la trainingul - {name}"
+msgid "DECLINED - Enrollment in the in-class training [{ilt_name}] - [{name}]"
+msgstr "RESPINSĂ – Înscrierea la trainingul [{ilt_name}] - [{name}]"
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_message.txt:5
 msgid ""

@@ -30171,8 +30171,8 @@ msgid ""
 msgstr "Vous avez refusé la demande de {name} pour participer à la formation en salle {ilt_name} prévue le {start} à {location} située {address}, {zipcode} {city}."
 
 #: master-sephora:lms/templates/emails/ilt_refused_email_subject.txt:2
-msgid "DECLINED - Enrollment in the in-class training - {name}"
-msgstr "REFUS - inscription formation - {name}"
+msgid "DECLINED - Enrollment in the in-class training [{ilt_name}] - [{name}]"
+msgstr "REFUS - inscription formation [{ilt_name}] - [{name}]"
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_message.txt:5
 msgid ""
@@ -30275,8 +30275,8 @@ msgid "This email is to inform you that the learners ({learners}) have been unen
 msgstr "Nous vous informons que des apprenants ({learners}) ont été désinscrits de la formation en salle {ilt_name} prévue le {start} à {location} située {address}, {zipcode} {city}. Pour plus d’informations, merci de cliquer sur le lien ci-dessous :"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_subject.txt:2
-msgid "In-class training batch unenrollment notification"
-msgstr "Annulation inscription formation"
+msgid "In-class training batch unenrollment notification [{ilt_name}] - [{name}]"
+msgstr "Annulation inscription formation [{ilt_name}] - [{name}]"
 
 #: master-sephora:ilt_self_unenroll_email_html_message.txt:6
 msgid "This email is to inform you that {name} has canceled his/her enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}."
@@ -30287,8 +30287,8 @@ msgid "Please invite the following participants to reschedule their training: {l
 msgstr "Invitez les apprenants suivants à vérifier la disponibilité d'une nouvelle date de formation : {learners}."
 
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_subject.txt:2
-msgid "In-class training canceled"
-msgstr "Annulation session formation"
+msgid "In-class training canceled [{ilt_name}] - [{name}]"
+msgstr "Annulation session formation [{ilt_name}] - [{name}]"
 
 #: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:15
 msgid "Commercial Zone"

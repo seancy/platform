@@ -163,8 +163,8 @@ msgid ""
 msgstr "Vous avez refusé la demande de {name} pour participer à la formation en salle {ilt_name} prévue le {start} à {location} située {address}, {zipcode} {city}."
 
 #: master-sephora:lms/templates/emails/ilt_refused_email_subject.txt:2
-msgid "DECLINED - Enrollment in the in-class training - {name}"
-msgstr "REFUS - inscription formation - {name}"
+msgid "DECLINED - Enrollment in the in-class training [{ilt_name}] - [{name}]"
+msgstr "REFUS - inscription formation [{ilt_name}] - [{name}]"
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_message.txt:5
 msgid ""
