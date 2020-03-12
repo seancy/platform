@@ -25980,3 +25980,11 @@ msgstr ""
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Session Date"
 msgstr ""
+
+#: master-sephora: email subject
+msgid "DO NOT REPLY"
+msgstr "NU RĂSPUNDE"
+
+#: master-sephora: lms/templates/emails/base_body_html.txt
+msgid "This is an automatically generated email, please do not reply."
+msgstr "Acesta este un e-mail generat automat; te rugăm să nu răspunzi la el."

@@ -30970,3 +30970,11 @@ msgstr "Sélectionnez les apprenants que vous souhaitez inscrire et cliquez sur 
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Session Date"
 msgstr "Date de la session"
+
+#: master-sephora: email subject
+msgid "DO NOT REPLY"
+msgstr "NE PAS REPONDRE"
+
+#: master-sephora: lms/templates/emails/base_body_html.txt
+msgid "This is an automatically generated email, please do not reply."
+msgstr "Ceci est un email automatique, merci de ne pas répondre."
