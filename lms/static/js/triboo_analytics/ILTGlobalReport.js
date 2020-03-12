@@ -2,79 +2,57 @@
 import React from 'react';
 import {Toolbar} from './Toolbar'
 import DataList from "se-react-data-list"
-import PaginationConfig from './PaginationConfig'
+import {PaginationConfig, ReportType} from "./Config";
+import BaseReport from './BaseReport'
 
-export class ILTGlobalReport extends React.Component {
+export default class ILTGlobalReport extends BaseReport {
     constructor(props) {
         super(props);
         this.state = {
-            //storing toolbar data
-            toolbarData: {},
-
-            //ajax result
-            data: [],
-            totalData: {},
-            rowsCount: 0,
+            ...this.state,
+            properties:[],
         };
-        this.myRef = React.createRef()
     }
 
-    componentDidMount() {
-        this.fetchData(1)
-    }
-
-    toolbarDataUpdate(toolbarData){
-        this.setState(s=>{
-            return {
-                toolbarData
-            }
-        },()=>{
-            this.fetchData(1)
-            this.myRef.current.resetPage(1)
-        })
-    }
-
-    fetchData(pageNo) {
-        const url = `/static/data.json`
-        const {toolbarData} = this.state
-        const getVal=(key,defaultValue)=>{
-            return toolbarData && toolbarData[key]?toolbarData[key]: defaultValue || '';
-        }
-        let ajaxData = {
-            'report_type': 'learner_report',
-            'courses_selected': [''],
-            'from_day': getVal('startDate'),
-            'to_day': getVal('endDate'),
-            'format': getVal('exportType'),
-            'csrfmiddlewaretoken': 'nDou5pR169v76UwtX4XOpbQsSTLu6SexeWyd0ykjGR2ahYMV0OY7nddkYQqnT6ze',
-            'page': {
-                no: pageNo, size: PaginationConfig.PageSize
-            },
-        }
-
-        $.ajax(url, {
-            method: 'get', //please change it to post in real environment.
-            dataType: 'json',
-            data: ajaxData,
-            success: (json) => {
-                this.setState((s, p) => {
-                    return {
-                        data: json.list,
-                        totalData: json.total, //{email: 'total:', first_name: json.total},
-                        rowsCount: json.pagination.rowsCount
-                    }
-                })
-            }
-        })
+    setting = {
+        reportType:ReportType.ILT_GLOBAL,
+        dataUrl:'/analytics/ilt/global/json/'
     }
 
     render() {
         const {data,totalData} = this.state
-        const parameterObj = {
+        const config = {
             fields: [
                 {name: 'Name', fieldName: 'userName'},
-                {name: 'Email', fieldName: 'email'},
-                {name: 'Country', fieldName: 'country'},
+
+                {name: 'Geographical area', fieldName: 'GeographicalArea'},
+                {name: 'Course country', fieldName: 'CourseCountry'},
+                {name: 'ZoneRegion', fieldName: 'Zone/Region'},
+                {name: 'CourseTags', fieldName: 'Course tags'},
+
+                {name: 'CourseCode', fieldName: 'Course code'},
+                {name: 'Course', fieldName: 'Course'},
+                {name: 'Section', fieldName: 'Section'},
+                {name: 'Subsection', fieldName: 'Subsection'},
+
+                {name: 'SessionID', fieldName: 'Session ID'},
+                {name: 'StartDate', fieldName: 'Start date'},
+                {name: 'StartTime', fieldName: 'Start time'},
+                {name: 'EndDate', fieldName: 'End date'},
+
+                {name: 'EndTime', fieldName: 'End time'},
+                {name: 'Duration', fieldName: 'Duration (in hours)'},
+                {name: 'MaxCapacity', fieldName: 'Max capacity'},
+                {name: 'Enrollees', fieldName: 'Enrollees'},
+
+                {name: 'Attendees', fieldName: 'Attendees'},
+                {name: 'AttendanceSheet', fieldName: 'Attendance sheet'},
+                {name: 'LocationID', fieldName: 'Location ID'},
+                {name: 'LocationName', fieldName: 'Location name'},
+
+                {name: 'Address', fieldName: 'Address'},
+                {name: 'ZipCode', fieldName: 'Zip code'},
+                {name: 'City', fieldName: 'City'},
             ],
             pagination: {
                 pageSize: PaginationConfig.PageSize,
@@ -85,10 +63,11 @@ export class ILTGlobalReport extends React.Component {
 
         return (
             <>
-                <Toolbar onChange={this.toolbarDataUpdate.bind(this)} filters={this.props.filters}
-                    enabledItems={['period','export']} properties={this.props.filters}/>
+                <Toolbar onChange={this.toolbarDataUpdate.bind(this)} enabledItems={['period','export']}
+                    onExportTypeChange={this.startExport.bind(this)} onGo={this.startExport.bind(this)}
+                     onInit={properties=>this.setState({properties})}/>
                  <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
-                          enableRowsCount={true} {...parameterObj} onPageChange={this.fetchData.bind(this)}
+                          enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
                 />
             </>
         )
