@@ -1680,6 +1680,7 @@
     "The display of ungraded and checked out responses could not be loaded.": "\u672a\u6253\u5206\u53ca\u5df2\u901a\u8fc7\u56de\u7b54\u7684\u7a97\u53e3\u65e0\u6cd5\u52a0\u8f7d\u3002", 
     "The email address you've provided isn't formatted correctly.": "\u60a8\u6240\u63d0\u4f9b\u7684\u7535\u5b50\u90ae\u4ef6\u5730\u5740\u7684\u683c\u5f0f\u4e0d\u6b63\u786e\u3002", 
     "The enrollment end date cannot be after the course end date.": "\u9009\u8bfe\u622a\u6b62\u65e5\u671f\u5e94\u5728\u8bfe\u7a0b\u7ed3\u675f\u65e5\u671f\u4e4b\u524d\u3002", 
+    "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab.": "\u6ce8\u518c\u5df2\u88ab\u786e\u8ba4\u901a\u8fc7\u3002<br>\u4f60\u53ef\u4ee5\u70b9\u51fb\"\u5373\u5c06\u5230\u6765\u7684\u8bfe\u7a0b\"\u6765\u4fee\u6539\u4e0e\u8be5\u8bf7\u6c42\u76f8\u5173\u7684\u4fe1\u606f\u3002", 
     "The enrollment start date cannot be after the enrollment end date.": "\u9009\u8bfe\u5f00\u59cb\u65e5\u671f\u5e94\u8be5\u65e9\u4e8e\u9009\u8bfe\u622a\u6b62\u65e5\u671f\u3002", 
     "The file could not be uploaded.": "\u60a8\u7684\u6587\u4ef6\u65e0\u6cd5\u4e0a\u4f20\u3002", 
     "The file must be at least {size} in size.": "\u6587\u4ef6\u5fc5\u987b\u5927\u4e8e {size}", 
