@@ -1955,3 +1955,17 @@ def course_time_spent_data(request):
     """
     jsonData = json.loads(json_string);
     return JsonResponse(jsonData)
+
+
+##
+
+@analytics_on
+def learner_export_data(request):
+    json_string = """
+    {
+        "status":"1",
+        "message":"export successful"
+    }
+    """
+    jsonData = json.loads(json_string);
+    return JsonResponse(jsonData)

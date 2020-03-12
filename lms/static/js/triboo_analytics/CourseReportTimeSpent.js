@@ -1,87 +1,27 @@
 import React from 'react';
 import {Toolbar} from "./Toolbar";
 import DataList from "se-react-data-list";
-import PaginationConfig from "./PaginationConfig";
+import {PaginationConfig, ReportType} from "./Config";
+import BaseReport from './BaseReport'
 
-
-export default class CourseReportTimeSpent extends React.Component {
+export default class CourseReportTimeSpent extends BaseReport {
     constructor(props) {
         super(props);
 
         this.state = {
+            ...this.state,
             properties:[],
-
-            //storing toolbar data
-            toolbarData: {},
-
-            //ajax result
-            data: [],
-            totalData: {},
-            rowsCount: 0,
         };
-
-        this.myRef = React.createRef()
     }
 
-    componentDidMount() {
-        this.fetchData(1)
-    }
-
-    toolbarDataUpdate(toolbarData){
-        this.setState(s=>{
-            return {
-                toolbarData
-            }
-        },()=>{
-            this.fetchData(1)
-            this.myRef.current.resetPage(1)
-        })
-    }
-
-    fetchData(pageNo) {
-        const url = `/analytics/course/time_spent/json/`
-        const {toolbarData} = this.state
-        const getVal=(key,defaultValue)=>{
-            return toolbarData && toolbarData[key]?toolbarData[key]: defaultValue || '';
-        }
-        let ajaxData = {
-            'report_type': 'course_report_time_spent',
-            'courses_selected': [''],
-            'query_tuples': toolbarData && toolbarData.selectedFilterItems ?
-                toolbarData.selectedFilterItems.map(p => [p.value, p.key]) : [],
-            'selected_properties': toolbarData && toolbarData.selectedProperties ? toolbarData.selectedProperties.map(p => p.value): [],
-            'from_day': getVal('startDate'),
-            'to_day': getVal('endDate'),
-            'format': getVal('exportType'),
-            'csrfmiddlewaretoken': this.props.token,
-            'page': {
-                no: pageNo, size: PaginationConfig.PageSize
-            },
-        }
-
-        $.ajax(url, {
-            // method: 'get', //please change it to post in real environment.
-            method: 'post',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(ajaxData),
-            dataType: 'json',
-            success: (json) => {
-                this.setState((s, p) => {
-                    return {
-                        data: json.list,
-                        totalData: json.total, //{email: 'total:', first_name: json.total},
-                        rowsCount: json.pagination.rowsCount
-                    }
-                })
-            }
-        })
+    setting = {
+        reportType:ReportType.COURSE_TIME_SPENT,
+        dataUrl:'/analytics/course/time_spent/json/'
     }
 
     getDynamicFields(){
         const {data} = this.state
-
         const propertiesValues = this.state.properties.map(p=>p.value)
-        //const propertiesValues = fields.map(f=>f.fieldName)
 
         let dynamicFields = [], subFields = []
         if (data && data.length > 0){
@@ -111,30 +51,16 @@ export default class CourseReportTimeSpent extends React.Component {
         return {dynamicFields, subFields}
     }
 
-
-    render() {
-        //
-
-
-
+    getConfig(){
         const properties=this.state.properties.map((p,index)=>({...p, checked:p.checked || false}))
         const {selectedProperties}=this.state.toolbarData;
         const propertiesFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))
-        const {data}=this.state;
-        //let dynamicFields = []
         const {dynamicFields, subFields}=this.getDynamicFields()
-        /*if (data && data.length > 0){
-            const firstRow = data[0]
-            const propertiesValues = this.state.properties.map(p=>p.value)
-            dynamicFields = Object.keys(firstRow).filter(key=>{
-                return !propertiesValues.includes(key) && key != 'Name';
-            }).map(key=>({name:key, fieldName:key}));
-        }*/
 
-        const config = {
+        return {
             fields:[
                 {name: 'Name', fieldName: 'Name'},
                 ...propertiesFields,
@@ -155,10 +81,14 @@ export default class CourseReportTimeSpent extends React.Component {
             data: this.state.data,
             totalData: this.state.totalData
         }
+    }
 
+    render() {
+        const config = this.getConfig()
         return (
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
+                         onExportTypeChange={this.startExport.bind(this)} onGo={this.startExport.bind(this)}
                          onInit={properties=>this.setState({properties})}/>
                 <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}

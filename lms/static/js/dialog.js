@@ -23,10 +23,15 @@ var edx = edx || {};
         }, this))
     }
 
-    initialize.prototype.show = function (content) {
+    initialize.prototype.show = function (content, delay) {
         this.$el.find('.dialog-content').html(content);
         this.$bg.removeClass('hide')
         this.$el.removeClass('hide');
+        if (delay){
+            setTimeout(()=>{
+                this.hide()
+            }, delay)
+        }
     }
 
     initialize.prototype.hide = function(){

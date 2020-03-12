@@ -11,6 +11,7 @@ class Exporter extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state={
+            buttonStatus:'disabled',
             value:''
         }
     }
@@ -18,10 +19,12 @@ class Exporter extends React.Component {
     handleChange(item){
         const {value}=item
         this.setState({
-            value
+            value,
+            buttonStatus:''
         },()=>{
             const {onChange}=this.props
             onChange && onChange(value)
+
         })
     }
 
@@ -31,6 +34,7 @@ class Exporter extends React.Component {
             {value: 'xls', text: 'XLS report'},
             {value: 'json', text: 'JSON report'},
         ]
+        const {onGo}=this.props
         return (
             <div className="exporter-wrapper">
                 <ul>
@@ -44,7 +48,7 @@ class Exporter extends React.Component {
                     )
                 })}
                 </ul>
-                <input type="button" value="Go" onClick={()=>{}}/>
+                <input type="button" value="Go" className={this.state.buttonStatus} onClick={onGo}/>
             </div>
         )
     }
@@ -83,13 +87,16 @@ export class Toolbar extends React.Component {
         this.fireOnChange = this.fireOnChange.bind(this)
 
         const {enabledItems}=props
+        const toolbarItems = this.getToolbarItems(enabledItems)
         this.state = {
             selectedFilterItems:[],
             selectedProperties:[],
             startDate:'',
             endDate:'',
             exportType:'',
-            toolbarItems: this.getToolbarItems(enabledItems) || []
+
+            toolbarItems,
+            activeTabName:toolbarItems.length > 0 ? toolbarItems[0].name : ''
         };
     }
 
@@ -116,6 +123,23 @@ export class Toolbar extends React.Component {
             })
     }
 
+    export(){
+        const {onGo}=this.props
+        //const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate','exportType')
+        onGo && onGo(this.state.exportType)
+    }
+
+    fireExportTypeChange(){
+        const {onExportTypeChange}=this.props
+        onExportTypeChange && onExportTypeChange(this.state.exportType);
+    }
+
+    fireOnChange () {
+        const {onChange}=this.props
+        const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate', 'exportType')
+        onChange && onChange(json);
+    }
+
     getToolbarItems(enabledItems=[]){
         const propertyData = [
             {value: 'failed', text: 'load data failed'},
@@ -136,43 +160,21 @@ export class Toolbar extends React.Component {
                 }
             }},
             {name:'export', text: gettext('export'), icon: 'fa-file-export', active: false, component: Exporter, props:{
-                onChange:exportType=>this.setState({exportType}, this.fireOnChange)
+                onGo:this.export.bind(this),
+                onChange:exportType=>this.setState({exportType}, this.fireExportTypeChange.bind(this))
             }},
-        ].filter(p=>enabledItems.includes(p.name) ||  enabledItems.length <= 0).map((p,index)=>{
-            let active = false
-            if (index == 0){
-                active=true
-            }
-            return {...p, active}
-        })
-    }
-
-    fireOnChange () {
-        const {onChange}=this.props
-        const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate','exportType')
-        onChange && onChange(json);
-    };
-
-    turnOnTab(json) {
-        this.setState((prevState, props) => ({
-            toolbarItems: prevState.toolbarItems.map(p => {
-                if (p.name == json.name) {
-                    p.active = true;
-                } else {
-                    p.active = false;
-                }
-                return p;
-            })
-        }))
+        ]
+            .filter(p=>enabledItems.includes(p.name) ||  enabledItems.length <= 0)
     }
 
     render() {
+        const {activeTabName}=this.state
         return (
             <div className="toolbar">
                 <ul className="toolbar-tabs">
                     {this.state.toolbarItems.map(json =>
-                        (<li key={json.name} onClick={this.turnOnTab.bind(this, json)}
-                             className={json.name + (json.active && ' active' || '')}>
+                        (<li key={json.name} onClick={()=>this.setState({activeTabName:json.name})}
+                             className={json.name + (activeTabName==json.name ? ' active' : '')}>
                             <i className={'far ' + json.icon}></i><span>{json.text}</span>
                         </li>)
                     )}
@@ -182,11 +184,9 @@ export class Toolbar extends React.Component {
                         const Component = json.component || function () {
                             return <div>no component is set.</div>
                         }
-                        return (<div key={json.name} className={'toolbar-content ' + json.name + (json.active && ' active' || '')}>
+                        return (<div key={json.name} className={'toolbar-content ' + json.name + (activeTabName==json.name ? ' active' : '')}>
                             <Component {...json.props}/>
                         </div>)
-
-
                     })}
                 </div>
             </div>
@@ -202,6 +202,7 @@ const DATA_ARRAY = PropTypes.arrayOf(PropTypes.exact({
 
 Toolbar.propTypes = {
     //properties:DATA_ARRAY,
+    onExportTypeChange:PropTypes.func,
     onInit:PropTypes.func,
     onChange:PropTypes.func,
 }
