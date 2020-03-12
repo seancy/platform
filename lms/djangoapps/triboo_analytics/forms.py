@@ -40,6 +40,7 @@ class UserPropertiesHelper():
     def __init__(self, analytics_user_properties={}):
         self.possible_choices_db_prefix = []
         self.possible_choices = []
+        self.possible_choices2 = []
         self.initial_choices = []
         for prop in AVAILABLE_CHOICES.keys():
             if prop in analytics_user_properties.keys():
@@ -49,11 +50,14 @@ class UserPropertiesHelper():
                     db_prefix += "profile__"
 
                 self.possible_choices.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop]))
+                self.possible_choices2.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop], analytics_user_properties[prop]))
                 self.possible_choices_db_prefix.append(("%s%s" % (db_prefix, prop), AVAILABLE_CHOICES[prop]))
 
                 if analytics_user_properties[prop] == "default":
                     self.initial_choices.append("%s%s" % (prefix, prop))
+
         self.possible_choices.sort(key=lambda choice: choice[1])
+        self.possible_choices2.sort(key=lambda choice: choice[1])
         self.possible_choices_db_prefix.sort(key=lambda choice: choice[1])
 
 
@@ -61,6 +65,9 @@ class UserPropertiesHelper():
         if db_prefix:
             return self.possible_choices_db_prefix
         return self.possible_choices
+
+    def get_possible_choices2(self, db_prefix=True):
+        return self.possible_choices2
 
 
     def get_initial_choices(self):

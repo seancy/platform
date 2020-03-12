@@ -20,7 +20,7 @@ export default class CourseReportSummary extends BaseReport {
     }
 
     getConfig(){
-        const properties=this.state.properties.map((p,index)=>({...p, checked:p.checked || false}))
+        const properties=this.state.properties.filter(p=>p.type == 'default')
         const {selectedProperties}=this.state.toolbarData;
         const dynamicFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
                 name: p.text,

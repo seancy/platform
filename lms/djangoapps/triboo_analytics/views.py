@@ -1802,7 +1802,7 @@ def learner_get_properties(request):
     analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
-    filters_data = user_properties_helper.get_possible_choices(False)
+    filters_data = user_properties_helper.get_possible_choices2(False)
     json_string = """
     {
         "status":1,
@@ -1812,7 +1812,7 @@ def learner_get_properties(request):
     """
     jsonData = json.loads(json_string)
     for item in filters_data:
-        jsonData['list'].append({ 'text': item[1], 'value':item[0]})
+        jsonData['list'].append({ 'text': item[1], 'value':item[0], 'type':item[2] })
     return JsonResponse(jsonData)
 
 @analytics_on
