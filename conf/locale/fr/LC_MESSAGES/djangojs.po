@@ -5085,8 +5085,8 @@ msgstr ""
 #: lms/static/js/discovery/views/search_form.js:47
 msgid "%s course found"
 msgid_plural "%s courses found"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%s cours trouvé"
+msgstr[1] "%s cours trouvés"
 
 #: lms/static/js/discovery/views/search_form.js:56
 #, javascript-format
@@ -7711,6 +7711,10 @@ msgstr ""
 msgid "{hours}:{minutes} (current UTC time)"
 msgstr "{hours}:{minutes} (heure actuelle UTC )"
 
+#: cms/static/js/views/settings/main.js:370
+msgid "I want to delete the course"
+msgstr "Je souhaite supprimer le cours"
+
 #: cms/static/js/views/settings/main.js:546
 msgid "Upload your course image."
 msgstr "Envoyez votre image de cours."
@@ -9630,6 +9634,10 @@ msgstr "Texte à customiser"
 msgid "Back to login."
 msgstr "Retour à la connexion"
 
+#: lms/templates/student_account/register.underscore:11
+msgid "Create a new learner account to take advantage of the Triboo platform!"
+msgstr "Créer un compte utilisateur pour profiter pleinement de la plateforme Triboo!"
+
 #: lms/templates/student_account/register.underscore:24
 msgid "Create an account using"
 msgstr "Créer un compte avec"
@@ -10712,6 +10720,15 @@ msgstr ""
 "Si vous sélectionnez une option autre que « %(hide_label)s », les unités "
 "publiées dans cette sous-section deviendront disponibles aux apprenants à "
 "moins qu'elles ne soient clairement masquées."
+
+#: cms/templates/js/course-delete-dialog.underscore:3
+#, python-format
+msgid ""
+"You are going to delete this course. All related data including learner data"
+" will be permanently deleted and this cannot be undone. We advise you to <a "
+"href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">export the "
+"course content</a> before you delete it."
+msgstr "Vous êtes sur le point de supprimer ce cours. Toutes les données qui lui sont liées, y compris les données apprenants, seront supprimées de manière permanente et cette action ne pourra être annulée. Nous vous suggérons d'<a href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">exporter le contenu du cours</a> avant de le supprimer."
 
 #: cms/templates/js/course-highlights-enable.underscore:3
 msgid "Weekly Highlight Emails"
@@ -12377,3 +12394,19 @@ msgstr "Polonais"
 #: lms/templates/discovery/facet_option.underscore
 msgid "Spanish"
 msgstr "Espagnol"
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "yes"
+msgstr "oui"
+
+#: lms/static/js/courseware/ilt_validation.js:157
+msgid "no"
+msgstr "non"
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Are you sure to unenroll this learner ?"
+msgstr "Êtes-vous sûr(e) de vouloir désinscrire cet apprenant ?"
+
+#: lms/static/js/courseware/ilt_validation.js
+msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
+msgstr "L'inscription est confirmée.<br>Vous pouvez changer les information relatives à la demande dans l'onglet \"Sessions à venir\"."

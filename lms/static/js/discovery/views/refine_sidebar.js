@@ -57,16 +57,17 @@
                 return this.titleMeanings[key];
             },
 
-            termName: function (facetKey, termKey) {
-                return this.meanings[facetKey] &&
-                    this.meanings[facetKey].terms &&
-                    this.meanings[facetKey].terms[termKey] || termKey;
+            termName: function (option) {
+                return this.meanings[option.attributes.facet] &&
+                    this.meanings[option.attributes.facet].terms &&
+                    this.meanings[option.attributes.facet].terms[option.attributes.term] || option.attributes.term;
             },
 
             renderOptions: function (options) {
-                return HtmlUtils.joinHtml.apply(this, _.map(options, function (option) {
+                var sortedOptions = _.sortBy(options, this.termName, this);
+                return HtmlUtils.joinHtml.apply(this, _.map(sortedOptions, function (option) {
                     var data = _.clone(option.attributes);
-                    data.name = this.termName(data.facet, data.term);
+                    data.name = this.termName(option);
                     return this.facetOptionTpl(data);
                 }, this));
             },

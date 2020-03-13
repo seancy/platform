@@ -154,7 +154,8 @@ def generate_user_certificates(student, course_key, course=None, insecure=False,
     if not course:
         course = modulestore().get_course(course_key, depth=0)
 
-    generate_pdf = not has_any_active_web_certificate(course)
+    generate_pdf = True
+    # generate_pdf = not has_any_active_web_certificate(course)
 
     cert = xqueue.add_cert(
         student,

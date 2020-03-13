@@ -3639,6 +3639,19 @@ msgstr "课程语言"
 msgid "Specify the language of your course."
 msgstr "指定您的课程语言。"
 
+#: common/lib/xmodule/xmodule/course_module.py:710
+#: cms/templates/settings.html:606
+msgid "Course Country"
+msgstr "课程所在国家"
+
+#: cms/templates/settings.html:612
+msgid "Identify the course country here."
+msgstr "在这里定义课程所在国家"
+
+#: common/lib/xmodule/xmodule/course_module.py:711
+msgid "Specify the country of your course."
+msgstr "指定您的课程所在国家"
+
 #: common/lib/xmodule/xmodule/course_module.py:742
 #: cms/templates/settings.html:354
 msgid "Course Category"
@@ -3862,6 +3875,14 @@ msgstr "启用定期提醒。"
 #: common/lib/xmodule/xmodule/course_module.py:944
 msgid "Periodic Reminder Day"
 msgstr "定期提醒日"
+
+#: cms/templates/settings.html:338
+msgid "Course Tags"
+msgstr "课程标签"
+
+#: cms/templates/settings.html:344
+msgid "Identify the course tags here."
+msgstr "在这里定义课程标签。"
 
 #: common/lib/xmodule/xmodule/course_module.py:951
 #: cms/templates/settings.html:363
@@ -4834,18 +4855,23 @@ msgstr "外部讨论"
 msgid "Home"
 msgstr "主页"
 
-#: common/lib/xmodule/xmodule/tabs.py:473 lms/djangoapps/courseware/tabs.py:31
+#: common/lib/xmodule/xmodule/tabs.py:473
+#: lms/djangoapps/courseware/tabs.py:31
 #: lms/djangoapps/courseware/views/views.py:1724
 #: lms/djangoapps/shoppingcart/reports.py:212
 #: lms/djangoapps/shoppingcart/reports.py:262
 #: openedx/features/course_experience/__init__.py:51
-#: cms/templates/widgets/header.html:49 cms/templates/widgets/header.html:53
-#: cms/templates/widgets/header.html:157 lms/templates/help_modal.html:173
+#: cms/templates/widgets/header.html:49
+#: cms/templates/widgets/header.html:53
+#: cms/templates/widgets/header.html:157
+#: lms/templates/help_modal.html:173
 #: lms/templates/courseware/courseware.html:166
-#: lms/templates/triboo_analytics/microsite.html:45
 #: lms/templates/ux/reference/bootstrap/course-skeleton.html:21
+#: lms/templates/triboo_analytics/microsite.html:36
 msgid "Course"
-msgstr "课程"
+msgid_plural "Courses"
+msgstr[0] "课程"
+msgstr[1] "课程"
 
 #: common/lib/xmodule/xmodule/textannotation_module.py:40
 msgid "Text Annotation"
@@ -9830,12 +9856,15 @@ msgstr "直接透过CyberSource追踪退款问题。"
 
 #: lms/djangoapps/support/views/index.py:26
 #: lms/templates/ccx/coach_dashboard.html:59
-#: lms/templates/ccx/enrollment.html:8 lms/templates/support/enrollment.html:21
+#: lms/templates/ccx/enrollment.html:8
+#: lms/templates/support/enrollment.html:21
 #: lms/templates/triboo_analytics/course.html:66
 #: lms/templates/triboo_analytics/my_transcript.html:258
 #: lms/templates/triboo_analytics/transcript.html:46
 msgid "Enrollment"
-msgstr "选课"
+msgid_plural "Enrollments"
+msgstr[0] "选课"
+msgstr[1] "选课"
 
 #: lms/djangoapps/support/views/index.py:27
 msgid "View and update learner enrollments."
@@ -13782,6 +13811,10 @@ msgstr "激活您的账户"
 msgid "Course-loading errors"
 msgstr "课程加载错误"
 
+#: lms/templates/dashboard.html:304
+msgid "My Bookmarks"
+msgstr "我的书签"
+
 #: lms/templates/dashboard.html:307
 msgid "My upcoming ILT sessions"
 msgstr "我即将开始的 ILT 课程"
@@ -14434,12 +14467,15 @@ msgstr "课程内容查看"
 msgid "View this course as:"
 msgstr "查看课程的身份："
 
-#: lms/templates/preview_menu.html:36
-#: lms/templates/instructor/instructor_dashboard_2/membership.html:22
 #: common/djangoapps/django_comment_common/models.py:24
 #: lms/djangoapps/instructor/paidcourse_enrollment_report.py:44
+#: lms/templates/courseware/ilt_attendance_sheet.html:57
+#: lms/templates/preview_menu.html:36
+#: lms/templates/triboo_analytics/microsite.html:49
 msgid "Learner"
-msgstr "学员"
+msgid_plural "Learners"
+msgstr[0] "学员"
+msgstr[1] "学员"
 
 #: lms/templates/instructor/instructor_dashboard_2/membership.html:22
 msgid "Partner"
@@ -18560,8 +18596,8 @@ msgstr "此消息旨在提醒您完成 {site_name}的课程 {course_name}。"
 #: lms/templates/emails/course_reminder_email_message.txt:29
 msgid "You have {days_left} day left to complete the course."
 msgid_plural "You have {days_left} days left to complete the course."
-msgstr[0] "你还有 {days} 天时间完成此课程。"
-msgstr[1] "你还有 {days} 天时间完成此课程。"
+msgstr[0] "你还有 {days_left} 天时间完成此课程。"
+msgstr[1] "你还有 {days_left} 天时间完成此课程。"
 
 #: lms/templates/emails/course_reminder_email_subject.txt:3
 msgid "The course {course_name} is overdue"
@@ -22157,6 +22193,14 @@ msgstr "课程报告"
 msgid "Learner Report"
 msgstr "学员报告"
 
+#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/ilt.html:29
+#: lms/templates/triboo_analytics/learner.html:28
+#: lms/templates/triboo_analytics/microsite.html:34
+#: lms/templates/triboo_analytics/transcript.html:28
+msgid "ILT Report"
+msgstr "ILT 报告"
+
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
 msgstr "选择一个课程查看学习报告："
@@ -22206,6 +22250,20 @@ msgstr "概要"
 msgid "Time Spent"
 msgstr "学习时长"
 
+#: lms/templates/triboo_analytics/ilt.html:11
+msgid "Analytics - ILT Report"
+msgstr "分析 - ILT 报告"
+
+#: lms/templates/triboo_analytics/ilt.html:40
+#: lms/templates/triboo_analytics/ilt.html:52
+msgid "ILT Global Report"
+msgstr "ILT 整体报告"
+
+#: lms/templates/triboo_analytics/ilt.html:41
+#: lms/templates/triboo_analytics/ilt.html:53
+msgid "ILT Learner Report"
+msgstr "ILT 学员报告"
+
 #: lms/templates/triboo_analytics/learner.html:9
 msgid "Analytics - Learner Report"
 msgstr "分析 - 学员报告"
@@ -22217,12 +22275,6 @@ msgstr "学习分析 - 整体报告"
 #: lms/templates/triboo_analytics/microsite.html:38
 msgid "Let's have a look at your learning data"
 msgstr "让我们来看看你的学习数据"
-
-#: lms/templates/triboo_analytics/microsite.html:49
-msgid "Active Learner"
-msgid_plural "Active Learners"
-msgstr[0] "活跃用户"
-msgstr[1] "活跃用户"
 
 #: lms/templates/triboo_analytics/microsite.html:53
 msgid "Certificate Delivered"
@@ -25381,6 +25433,17 @@ msgstr ""
 "您的课程概要页面在您的课程公开之后才对外可见。为了向该页面提供信息并预览该页"
 "面，请遵循您的项目经理提供的指导。"
 
+#: cms/templates/settings.html:138
+msgid "Delete course"
+msgstr "删除课程"
+
+#: cms/templates/settings.html:140
+msgid ""
+"Please note: deleting a course and all related data is permanent and cannot "
+"be undone. We will not be able to recover the course or the data that is "
+"deleted."
+msgstr "请注意：删除课程以及所有相关数据是永久性的，无法撤消。 我们将无法恢复课程或已删除的数据。"
+
 #: cms/templates/settings.html:135
 msgid "Course Credit Requirements"
 msgstr "课程证书要求"
@@ -27863,6 +27926,31 @@ msgstr "距离开课时间少于5天，将无法注册"
 msgid "The registration deadline cannot be empty"
 msgstr "注册截止日期不能为空"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Unenroll selected users"
+msgstr "取消所选学员的注册"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Change session"
+msgstr "更改课程"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Accommodation"
+msgstr "住宿"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "One way"
+msgstr "单程"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Return"
+msgstr "往返"
+
 #: cms/templates/login.html
 msgid "Welcome to Joyson Open Online Courses, log in to explore more!"
 msgstr "欢迎来到均胜网络课堂，请登录，让我们一起来探索未知!"
@@ -27930,6 +28018,10 @@ msgstr "该课程区域的相关权重"
 #: edx_xblock_scorm/scormxblock/static/scormxblock.py: 170
 msgid "Does this SCORM allow users to submit answer multiple times?"
 msgstr "该 SCORM 允许用户多次提交回答吗？"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "课程名称"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Current Score"
@@ -28023,7 +28115,127 @@ msgstr "考勤表"
 msgid "Location name"
 msgstr "地点名称"
 
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "tab"
+msgid "ILT Follow-up"
+msgstr "ILT 请求跟进"
 
+#: lms/templates/ilt_all_validations_page.html
+msgctxt "banner"
+msgid "ILT Follow-up"
+msgstr "ILT 请求跟进"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Pending Requests"
+msgstr "待处理的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Upcoming Sessions"
+msgstr "即将到来的课程"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined Requests"
+msgstr "被拒绝的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Accommodation needed ?"
+msgstr "住宿需求？"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many one way ?"
+msgstr "单程数？"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "How many return ?"
+msgstr "往返数？"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Refuse"
+msgstr "拒绝"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Approve"
+msgstr "通过"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Declined"
+msgstr "拒绝"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Unsubscribe"
+msgstr "取消注册"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No approved requests"
+msgstr "当前没有通过的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No pending requests"
+msgstr "当前没有正在处理的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "No declined requests"
+msgstr "当前没有被拒绝的请求"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Name / MSC ID"
+msgstr "名字 / 用户名"
+
+#: lms/templates/ilt_all_validations_page.html
+msgid "Module"
+msgstr "模块"
+
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT Requests"
+msgstr "ILT 请求"
+
+#: lms/templates/emails/ilt_request_update_email_subject.txt
+msgid "Enrollment update of the in-class training - {name}"
+msgstr ""
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "Please be informed that your enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zip_code} has been updated."
+msgstr ""
+
+#: lms/templates/emails/ilt_request_update_email_message.txt
+msgid "NEW INFORMATION:"
+msgstr ""
+
+#: lms/templates/emails/ilt_sesson_changed_email_message.txt
+msgid "We are writing to confirm your enrollment in the {ilt_name} in-class training has been switched to another session scheduled for {start} in {location} at {address}, {city} {zipcode}."
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "地址"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "邮政编码"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr "注册状态"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr "参加人员"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr "外出旅行"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr "返程旅行"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr "留宿"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
+msgstr "留宿地址"
 
 #: lms/templates/triboo_analytics/microsite.html:44
 msgid "Number of learners enrolled in a course"
@@ -28152,7 +28364,6 @@ msgid ""
 "below the minimum required score"
 msgstr "您已完成但成绩不合格的课程"
 
-
 #: lms/templates/triboo_analytics/transcript.html:54
 msgid ""
 "Number of courses the learner is enrolled in (enrollments made by an Admin "
@@ -28202,5 +28413,30 @@ msgid ""
 "score below the minimum required score"
 msgstr "已完成但成绩不合格的课程"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure that you want to unenroll these learners?"
+msgstr "你确定要取消这些学员的注册吗？"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your changes have been taken into account."
+msgstr "改变已经保存。"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner has been unenrolled."
+msgstr "该学员的注册已被取消了。"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's session has been changed."
+msgstr "该学员注册的课程已经更改。"
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Select the learners you want to enroll and click on 'enroll'. You will receive a confirmation by email."
+msgstr "选择你要注册的学员，然后点击注册。你会收到一封确认邮件。"
+
+#: lms/templates/courseware/ilt_all_validation_page.html
+msgid "Session Date"
+msgstr "课程日期"

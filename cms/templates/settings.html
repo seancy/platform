@@ -17,7 +17,9 @@
 %>
 
 <%block name="header_extras">
-% for template_name in ["basic-modal", "modal-button", "upload-dialog", "license-selector", "course-settings-learning-fields", "course-instructor-details", "course-reminder-details-fields", "course-settings-tags-fields"]:
+% for template_name in ["basic-modal", "modal-button", "upload-dialog", "license-selector",\
+"course-settings-learning-fields", "course-instructor-details", "course-reminder-details-fields",\
+"course-settings-tags-fields", "course-delete-dialog"]:
   <script type="text/template" id="${template_name}-tpl">
     <%static:include path="js/${template_name}.underscore" />
   </script>
@@ -39,7 +41,10 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
         SettingsFactory(
             "${details_url | n, js_escaped_string}",
             ${show_min_grade_warning | n, dump_js_escaped_json},
-            ${can_show_certificate_available_date_field(context_course) | n, dump_js_escaped_json}
+            ${can_show_certificate_available_date_field(context_course) | n, dump_js_escaped_json},
+            "${LANGUAGE_CODE | n, js_escaped_string}",
+            "${export_url | n, js_escaped_string}",
+            "${homepage_url | n, js_escaped_string}"
         );
     });
 </%block>
@@ -124,6 +129,15 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 'it, follow the instructions provided by your Program Manager.')}
               </p>
             </div>
+          </div>
+          % endif
+
+          % if enable_delete_course:
+          <div class="delete-course">
+            <button class="action action-primary delete-course-btn" type="button">
+              <i class="icon fa fa-trash icon-inline" aria-hidden="true"></i>${_("Delete course")}
+            </button>
+            <span>${_("Please note: deleting a course and all related data is permanent and cannot be undone. We will not be able to recover the course or the data that is deleted.")}</span>
           </div>
           % endif
         </div>
@@ -323,7 +337,9 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             <li class="field" id="field-course-vendor">
               <label for="course-vendor">${_("Course Tags")}</label>
               <input type="text" id="course-vendor">
-              <button type="button" class="action action-primary add-course-tags">${_("Add")}</button>
+              <button type="button" class="action action-primary button new-button add-course-tags">
+                <i class="icon fa fa-plus icon-inline" aria-hidden="true"></i>${_("Add")}
+              </button>
               <div class="course-tags"></div>
               <span class="tip tip-stacked">${_("Identify the course tags here.")}</span>
             </li>
@@ -375,7 +391,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 </li>
                 <li class="field text" id="field-course-description">
                   <label for="course-description">${_("Course Description")}</label>
-                  <textarea class="text" id="course-description"></textarea>
+                  <textarea class="text tinymce-editor" id="course-description"></textarea>
                   <span class="tip tip-stacked">${_("Displayed on the course details page. Limit to 1000 characters.")}</span>
                 </li>
                 % endif
@@ -391,7 +407,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 % if about_page_editable:
                 <li class="field text" id="field-course-overview">
                   <label for="course-overview">${_("Course Overview")}</label>
-                  <textarea class="tinymce text-editor" id="course-overview"></textarea>
+                  <textarea class="text tinymce-editor" id="course-overview"></textarea>
                   <label class="sr" for="course-overview-cm-textarea">
                     ${_('HTML Code Editor')}
                   </label>

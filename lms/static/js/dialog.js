@@ -40,7 +40,9 @@ var edx = edx || {};
     }
 
     // confirmation dialog
-    var Confirmation = function (message, confirmationCallback, cancelCallback, commonCallback) {
+    var Confirmation = function (message, confirmationCallback, cancelCallback, commonCallback2) {
+        const messageIsObject = typeof(message) == 'object'
+
         this.$bg = $('<div class="confirmation-dialog-transparent-background"></div>').addClass('hide');
         this.$el = $('<div></div>').addClass('confirmation-dialog hide').html($('#confirmation-template').html());
         $dialogContainer.append(this.$el);
@@ -49,18 +51,47 @@ var edx = edx || {};
         var cancel = $.proxy(function () {
             this.destroy();
             cancelCallback && cancelCallback();
-            commonCallback && commonCallback();
+            commonCallback2 && commonCallback2();
+            if (messageIsObject){
+                const { cancelationCallback, commonCallback}=message;
+                cancelationCallback && cancelationCallback();
+                commonCallback && commonCallback();
+            }
         }, this)
         var confirm = $.proxy(function () {
             this.destroy();
             confirmationCallback && confirmationCallback();
-            commonCallback && commonCallback();
+            commonCallback2 && commonCallback2();
+            if (messageIsObject){
+                const {confirmationCallback, commonCallback}=message;
+                confirmationCallback && confirmationCallback();
+                commonCallback && commonCallback();
+            }
         }, this)
         this.$el.find('i').on('click', cancel)
-        this.$el.find('.btn-secondary').on('click', cancel)
-        this.$el.find('.btn-primary').on('click', confirm)
+        const $primary = this.$el.find('.btn-primary'),
+            $secondary = this.$el.find('.btn-secondary')
+        $primary.on('click', confirm)
+        $secondary.on('click', cancel)
+        if (messageIsObject){
+            if (message.confirmationText){
+                $primary.val(message.confirmationText)
+            }
+            if (message.cancelationText){
+                $secondary.val(message.cancelationText)
+            }
+        }
 
-        this.$el.find('.dialog-content').html(message);
+        const $dialogContent = this.$el.find('.dialog-content')
+        if (messageIsObject){
+            if (typeof(message.message) == 'object'){
+                $dialogContent.append(message.message)
+            }else{
+                $dialogContent.html(message.message)
+            }
+        }else{
+            $dialogContent.html(message);
+        }
     }
 
     Confirmation.prototype.destroy = function(){

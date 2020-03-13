@@ -54,6 +54,18 @@ class Command(BaseCommand):
                  'Be careful! These assets may be associated with another course',
         )
 
+        parser.add_argument(
+            '--remove-course-reports',
+            action='store_true',
+            help='Remove all reports related to the course.',
+        )
+
+        parser.add_argument(
+            '--remove-course-search-index',
+            action='store_true',
+            help='Remove all docs in ES index related to the course.'
+        )
+
     def handle(self, *args, **options):
         try:
             # a course key may have unicode chars in it
@@ -73,7 +85,9 @@ class Command(BaseCommand):
 
         if query_yes_no('Are you sure you want to delete course {}?'.format(course_key), default='no'):
             if query_yes_no('Are you sure? This action cannot be undone!', default='no'):
-                delete_course(course_key, ModuleStoreEnum.UserID.mgmt_command, options['keep_instructors'])
+                delete_course(course_key, ModuleStoreEnum.UserID.mgmt_command, options['keep_instructors'],
+                              remove_course_reports=options['remove_course_reports'],
+                              remove_course_search_index=options['remove_course_search_index'])
 
                 if options['remove_assets']:
                     contentstore().delete_all_course_assets(course_key)

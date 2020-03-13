@@ -2,8 +2,7 @@
 Index view for the support app.
 """
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
-
+from django.utils.translation import ugettext_lazy as _, ungettext_lazy
 from edxmako.shortcuts import render_to_response
 from support.decorators import require_support_permission
 
@@ -23,7 +22,7 @@ SUPPORT_INDEX_URLS = [
     },
     {
         "url": reverse_lazy("support:enrollment"),
-        "name": _("Enrollment"),
+        "name": ungettext_lazy("Enrollment", "Enrollments", 1),
         "description": _("View and update learner enrollments."),
     },
     {

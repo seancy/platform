@@ -356,6 +356,31 @@ msgstr ""
 msgid "The registration deadline cannot be empty"
 msgstr ""
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Unenroll selected users"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Change session"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Accommodation"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "One way"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Return"
+msgstr ""
+
 #: lms/templates/courseware/courses.html
 msgid "Availability"
 msgstr ""
@@ -545,6 +570,10 @@ msgid "Course code"
 msgstr ""
 
 #: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
 msgid "Session ID"
 msgstr ""
 
@@ -588,10 +617,54 @@ msgstr ""
 msgid "Location name"
 msgstr ""
 
-#  #: lms/templates/triboo_analytics/table.html
-#  msgid "Address"
-#  msgstr ""
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr ""
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Zip code"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure that you want to unenroll these learners?"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your changes have been taken into account."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner has been unenrolled."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's session has been changed."
 msgstr ""

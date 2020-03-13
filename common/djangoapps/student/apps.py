@@ -23,3 +23,7 @@ class StudentConfig(AppConfig):
         from django.contrib.auth.models import User
         from .signals.receivers import on_user_updated
         pre_save.connect(on_user_updated, sender=User)
+
+        from xmodule.modulestore.django import SignalHandler
+        from .signals.receivers import listen_for_course_delete
+        SignalHandler.course_deleted.connect(listen_for_course_delete)

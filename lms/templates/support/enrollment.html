@@ -1,5 +1,5 @@
 <%!
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ungettext
 from openedx.core.djangolib.js_utils import js_escaped_string
 %>
 
@@ -18,7 +18,7 @@ from openedx.core.djangolib.js_utils import js_escaped_string
 </%block>
 
 <%block name="pagetitle">
-${_("Enrollment")}
+${ungettext("Enrollment", "Enrollments", 1)}
 </%block>
 
 <%block name="content">

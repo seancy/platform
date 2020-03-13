@@ -133,8 +133,8 @@
     ], 
     "%s ago": "%s atr\u00e1s", 
     "%s course found": [
-      "% curso encontrado", 
-      "% cursos encontrados"
+      "%s curso encontrado", 
+      "%s cursos encontrados"
     ], 
     "%s from now": "%s a partir de agora", 
     "(Add signatories for a certificate)": "(Adicionar assinaturas para um certificado)", 
@@ -563,6 +563,7 @@
     "Create a %(link_start)sMozilla Backpack%(link_end)s account, or log in to your existing account": "Crie uma conta %(link_start)sMozilla Backpack%(link_end)s, ou fa\u00e7a o loginna sua conta j\u00e1 existente", 
     "Create a New Team": "Criar uma nova equipe", 
     "Create a content group": "Criar um grupo de conte\u00fado", 
+    "Create a new learner account to take advantage of the Triboo platform!": "Crie uma nova conta como aluno para aproveitar a plataforma Triboo!", 
     "Create a new team if you can't find an existing team to join, or if you would like to learn with friends you know.": "Crie uma nova equipe caso voc\u00ea n\u00e3o encontre uma j\u00e1 existente ou queira aprender com outros amigos.", 
     "Create account using %(providerName)s.": "Criar uma conta usando %(providerName)s.", 
     "Create an Account": "Criar uma conta", 
@@ -927,6 +928,7 @@
     "How to create useful text alternatives.": "Como criar alternativas de texto \u00fateis.", 
     "How to use discussions": "Como usar as discuss\u00f5es", 
     "Hyperlink (Ctrl+L)": "Hiperlink (Ctrl+L)", 
+    "I want to delete the course": "Eu quero excluir o curso", 
     "ID": "ID", 
     "ID-Verification is not required for this Professional Education course.": "A verifica\u00e7\u00e3o do ID n\u00e3o \u00e9 necess\u00e1ria para esse curso de Educa\u00e7\u00e3o Profissional", 
     "ILT": "ILT", 
@@ -2123,6 +2125,7 @@
     "You are a member of this team.": "Voc\u00ea \u00e9 membro desta equipe", 
     "You are currently sharing a limited profile.": "Voc\u00ea est\u00e1 compartilhando um perfil limitado no momento.", 
     "You are enrolling in: {courseName}": "Voc\u00ea est\u00e1 se matriculando em:", 
+    "You are going to delete this course. All related data including learner data will be permanently deleted and this cannot be undone. We advise you to <a href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">export the course content</a> before you delete it.": "Voc\u00ea est\u00e1 prestes a excluir este curso. Todos los dados, incluindo os dados do aluno, ser\u00e3o exclu\u00eddos permanentemente e esta a\u00e7\u00e3o n\u00e3o poder\u00e1 ser desfeito. Sugerimos que voc\u00ea <a href=\"%(exportUrl)s\" target=\"_blank\" class=\"link-export\">exporte o conte\u00fado do curso</a> antes de exclu\u00ed-lo.", 
     "You are not currently a member of any team.": "No momento, voc\u00ea n\u00e3o \u00e9 membro de nenhuma equipe. ", 
     "You are not enrolled in any programs yet.": "Voc\u00ea n\u00e3o est\u00e1 matriculado em nenhum programa ainda.", 
     "You are now enrolled as a verified learner for:": "Voc\u00ea est\u00e1 inscrito como aluno verificado para:", 

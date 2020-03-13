@@ -470,7 +470,9 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             logger.info("learner course report for course_id=%s (%d / %d): %d enrollments" % (
                         course_id, i, nb_courses, nb_enrollments))
 
-            if not multi_process and (course_last_update >= last_analytics_success) and (nb_enrollments > 10000):
+            if (not multi_process
+                and (nb_enrollments > 10000)
+                and (not last_analytics_success or (course_last_update >= last_analytics_success))):
                 multi_process = True
                 logger.info("force multiprocessing")
 
@@ -528,28 +530,29 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
         report_needs_update = True
         if user.is_active:
-            try:
-                last_report = cls.objects.get(course_id=course_key, user_id=user.id, created=last_analytics_success)
-                if ((not enrollment.gradebook_edit or enrollment.gradebook_edit.date() < last_report.created)
-                    and (not user.last_login or user.last_login.date() < last_report.created)
-                    and course_last_update < last_report.created
-                    and enrollment.completed == last_report.completion_date):
-                    report_needs_update = False
-                    cls.objects.update_or_create(
-                    created=day,
-                    user=user,
-                    course_id=course_key,
-                    defaults={'org': course_key.org,
-                              'total_time_spent': last_report.total_time_spent,
-                              'status': last_report.status,
-                              'progress': last_report.progress,
-                              'badges': last_report.badges,
-                              'current_score': last_report.current_score,
-                              'posts': last_report.posts,
-                              'enrollment_date': enrollment.created,
-                              'completion_date': enrollment.completed})
-            except cls.DoesNotExist:
-                pass
+            if last_analytics_success:
+                try:
+                    last_report = cls.objects.get(course_id=course_key, user_id=user.id, created=last_analytics_success)
+                    if ((not enrollment.gradebook_edit or enrollment.gradebook_edit.date() < last_report.created)
+                        and (not user.last_login or user.last_login.date() < last_report.created)
+                        and course_last_update < last_report.created
+                        and enrollment.completed == last_report.completion_date):
+                        report_needs_update = False
+                        cls.objects.update_or_create(
+                        created=day,
+                        user=user,
+                        course_id=course_key,
+                        defaults={'org': course_key.org,
+                                  'total_time_spent': last_report.total_time_spent,
+                                  'status': last_report.status,
+                                  'progress': last_report.progress,
+                                  'badges': last_report.badges,
+                                  'current_score': last_report.current_score,
+                                  'posts': last_report.posts,
+                                  'enrollment_date': enrollment.created,
+                                  'completion_date': enrollment.completed})
+                except cls.DoesNotExist:
+                    pass
 
             if report_needs_update:
                 with modulestore().bulk_operations(course_key):

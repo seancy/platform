@@ -21,7 +21,7 @@ urlpatterns = [
 
 
     url(r'^learner/$', views.learner_view, name='analytics_learner'),
-    url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),
+    url(r'^learner_transcript/(?P<user_id>\w+)/$', views.transcript_view, name='analytics_learner_transcript'),
     url(r'^learner/json/$', views.learner_view_data, name='analytics_learner_data'),
     url(r'^learner/export/json/$', views.learner_export_data, name='analytics_learner_export_data'),
     url(r'^common/get_properties/json/$', views.learner_get_properties, name='analytics_learner_get_properties'),

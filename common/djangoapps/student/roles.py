@@ -15,7 +15,7 @@ from django.utils.translation import ugettext as _
 from opaque_keys.edx.django.models import CourseKeyField
 
 from openedx.core.djangoapps.request_cache import get_cache
-from student.models import CourseAccessRole
+from student.models import CourseAccessRole, UserProfile
 from edxmako.shortcuts import render_to_string
 
 log = logging.getLogger(__name__)
@@ -44,6 +44,11 @@ def register_access_role(cls):
 
 def studio_access_role(user):
     return user.is_staff or STUDIO_ADMIN_ACCESS_GROUP in [group.name for group in user.groups.all()]
+
+
+def ilt_supervisor_role(user):
+    supervised_learners = UserProfile.objects.filter(lt_ilt_supervisor=user.email)
+    return supervised_learners.count() > 0
 
 
 def studio_login_required(func):

@@ -7,6 +7,7 @@ from django.utils.translation import pgettext_lazy
 
 
 AVAILABLE_CHOICES = {
+    'name': _('Name'),
     'email': _('Email'),
     'username': _('Username'),
     'date_joined': _('Date Joined'),
@@ -40,8 +41,8 @@ class UserPropertiesHelper():
     def __init__(self, analytics_user_properties={}):
         self.possible_choices_db_prefix = []
         self.possible_choices = []
+        self.initial_choices = ["user_name"]
         self.possible_choices2 = []
-        self.initial_choices = []
         for prop in AVAILABLE_CHOICES.keys():
             if prop in analytics_user_properties.keys():
                 prefix = "user_"

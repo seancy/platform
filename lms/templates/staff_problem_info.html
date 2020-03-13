@@ -25,7 +25,7 @@ from six import text_type
       % if settings.FEATURES.get('ENABLE_STUDENT_HISTORY_VIEW') and location.block_type == 'problem':
         <a class="instructor-info-action" href="#${element_id}_history" id="${element_id}_history_trig"><i class="fal fa-history"></i><span class="sr">${_("Submission history")}</span></a>
       % endif
-      % if location.block_type == "problem":
+      % if location.block_type in ['problem', 'ilt']:
         <a class="instructor-info-action" href="#${element_id}_debug" id="${element_id}_trig"><i class="fal fa-cog"></i><span class="sr">${_("Staff Debug Info")}</span></a>
       % endif
     </div>

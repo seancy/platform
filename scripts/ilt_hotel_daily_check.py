@@ -5,7 +5,7 @@ import os
 import time
 
 from logging.handlers import TimedRotatingFileHandler
-from courseware.views.views import process_ilt_hotel_check_email
+from courseware.views.views import process_ilt_hotel_check_email, process_ilt_validation_check_email
 
 
 logger = logging.getLogger("edx.scripts.ilt_hotel_daily_check")

@@ -505,6 +505,16 @@ def send_mail_to_student(student, param_dict, language=None):
     message_type = param_dict['message']
 
     email_template_dict = {
+        'ilt_request_updated': (
+            'emails/ilt_request_update_email_subject.txt',
+            'emails/ilt_request_update_email_message.txt',
+            'emails/ilt_request_update_email_html_message.txt'
+        ),
+        'ilt_session_changed': (
+            'emails/ilt_session_changed_email_subject.txt',
+            'emails/ilt_session_changed_email_message.txt',
+            'emails/ilt_session_changed_email_html_message.txt'
+        ),
         'ilt_hotel_booking_check': (
             'emails/ilt_hotel_booking_check_subject.txt',
             'emails/ilt_hotel_booking_check_message.txt',
@@ -539,6 +549,11 @@ def send_mail_to_student(student, param_dict, language=None):
             'emails/ilt_validate_email_subject.txt',
             'emails/ilt_validate_email_message.txt',
             'emails/ilt_validate_email_html_message.txt'
+        ),
+        'ilt_follow_up': (
+            'emails/ilt_follow_up_email_subject.txt',
+            'emails/ilt_follow_up_email_message.txt',
+            'emails/ilt_follow_up_email_html_message.txt'
         ),
         'ilt_confirmed': (
             'emails/ilt_confirmed_email_subject.txt',
