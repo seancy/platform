@@ -6,6 +6,8 @@ export default class BaseReport extends React.Component{
     constructor(props){
         super(props)
         this.state = {
+            properties:[],
+
             //storing toolbar data
             toolbarData: {},
 
@@ -31,6 +33,27 @@ export default class BaseReport extends React.Component{
             this.fetchData(1)
             this.myRef.current.resetPage(1)
         })
+    }
+
+    getOrderedProperties(){
+        const {data}=this.state;
+        const {selectedProperties}=this.state.toolbarData;
+        let properties=selectedProperties && selectedProperties.length ?
+            selectedProperties : this.state.properties.filter(p=>p.type == 'default')
+        let orderedProperties = []
+        if (data && data.length > 0){
+            const firstRow = data[0]
+            const propertiesValues = properties.map(p=>p.value)
+            orderedProperties = Object.keys(firstRow)
+                .filter(key=>{
+                    return propertiesValues.includes(key);
+                })
+                .map(key=>{
+                    const item = properties.find(p=>p.value == key)
+                    return item || {text:key, value:key}
+                });
+        }
+        return orderedProperties.length > 0 ? orderedProperties : properties;
     }
 
     generateParameter(){

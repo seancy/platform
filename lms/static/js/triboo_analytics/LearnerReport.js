@@ -21,16 +21,17 @@ export class LearnerReport extends BaseReport {
     }
 
     getConfig(){
-        const properties=this.state.properties.filter(p=>p.type == 'default')
-        const {selectedProperties}=this.state.toolbarData;
-        const dynamicFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
+        /*const properties=this.state.properties.filter(p=>p.type == 'default')
+        const {selectedProperties}=this.state.toolbarData;*/
+        const propertiesFields = this.getOrderedProperties().map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))
+
         return {
             fields: [
                 {name: 'Name', fieldName: 'Name'},
-                ...dynamicFields,
+                ...propertiesFields,
 
                 {name: 'Enrollments', fieldName: 'Enrollments'},
                 {name: 'Successful', fieldName: 'Successful'},

@@ -52,9 +52,9 @@ export default class CourseReportTimeSpent extends BaseReport {
     }
 
     getConfig(){
-        const properties=this.state.properties.filter(p=>p.type == 'default')
-        const {selectedProperties}=this.state.toolbarData;
-        const propertiesFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
+        /*const properties=this.state.properties.filter(p=>p.type == 'default')
+        const {selectedProperties}=this.state.toolbarData;*/
+        const propertiesFields = this.getOrderedProperties().map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))

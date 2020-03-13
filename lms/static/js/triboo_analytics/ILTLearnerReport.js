@@ -20,9 +20,9 @@ export default class ILTLearnerReport extends BaseReport {
     }
 
     getConfig(){
-        const properties=this.state.properties.filter(p=>p.type == 'default')
-        const {selectedProperties}=this.state.toolbarData;
-        const dynamicFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
+        /*const properties=this.state.properties.filter(p=>p.type == 'default')
+        const {selectedProperties}=this.state.toolbarData;*/
+        const propertiesFields = this.getOrderedProperties().map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))
@@ -54,7 +54,7 @@ export default class ILTLearnerReport extends BaseReport {
                 {name: 'City', fieldName: 'City'},
                 {name: 'Name', fieldName: 'Name'},
 
-                ...dynamicFields,
+                ...propertiesFields,
 
                 {name: 'EnrollmentStatus', fieldName: 'Enrollment status'},
                 {name: 'Attendee', fieldName: 'Attendee'},
