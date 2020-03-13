@@ -2140,13 +2140,15 @@ def ilt_validation_request_data(request):
             course = modulestore().get_course(course_key)
         except:
             continue
-
-        response = handle_xblock_callback(
-            request,
-            unicode(course_key),
-            unicode(usage_key),
-            'student_handler'
-        )
+        try:
+            response = handle_xblock_callback(
+                request,
+                unicode(course_key),
+                unicode(usage_key),
+                'student_handler'
+            )
+        except Http404:
+            continue
         ilt_module_info = json.loads(response.content)
         dropdown_list = ilt_module_info['dropdown_list']
         for i in range(len(ilt_module_info['sessions'])):
