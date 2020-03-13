@@ -22,8 +22,6 @@ export class LearnerReport extends BaseReport {
 
     getConfig(){
         const properties=this.state.properties.filter(p=>p.type == 'default')
-        if (properties.length>0)
-            debugger
         const {selectedProperties}=this.state.toolbarData;
         const dynamicFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
                 name: p.text,

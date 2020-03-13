@@ -214,6 +214,7 @@
 
                 <div>-----------------spliter----------------------------------spliter----------------------------------spliter-----------------</div>
 
+              % if show_base == 'true':
               <%
               summary_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'summary'}))
               progress_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'progress'}))
@@ -303,6 +304,9 @@
                                                 'request': request,
                                                 'row_count': row_count}))}
               % endif
+
+              % endif
+
             % endif
           </div>
         </section>

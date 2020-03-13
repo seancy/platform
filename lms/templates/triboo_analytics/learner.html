@@ -8,6 +8,7 @@
     import json
     from openedx.core.djangolib.markup import HTML
     from webpack_loader.templatetags.webpack_loader import render_bundle
+    import urlparse
 %>
 
 <%block name="pagetitle">${_("Analytics - Learner Report")}</%block>
@@ -46,8 +47,7 @@
           });
         </script>
 
-
-
+        % if show_base == 'true':
         <section class="analytics-wrapper learner">
             <div class="report-wrapper">
               % if learner_table:
@@ -114,6 +114,8 @@
               %endif
             </div>
         </section>
+        % endif
+
     </div>
 </main>
 
