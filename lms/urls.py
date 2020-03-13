@@ -21,6 +21,7 @@ from courseware.views.views import (
     CourseTabView,
     EnrollStaffView,
     ilt_attendance_sheet,
+    ilt_batch_enroll,
     ilt_validation_list,
     ilt_validation_request_data,
     ilt_registration_validation,
@@ -793,6 +794,8 @@ if settings.FEATURES.get('ENABLE_DISCUSSION_SERVICE'):
         ),
 
         url(r'^ilt-validation-list/$', ilt_validation_list, name='ilt_validation_list'),
+
+        url(r'^ilt-batch-enroll/$', ilt_batch_enroll, name='ilt_batch_enroll'),
 
         url(r'^ilt-validation-request-data/$', ilt_validation_request_data, name='ilt_registration_validation'),
 

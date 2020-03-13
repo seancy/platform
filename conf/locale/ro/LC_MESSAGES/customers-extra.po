@@ -148,8 +148,8 @@ msgid ""
 msgstr "Ai respins cererea emisă de {name} la trainingul în sală {ilt_name} programat la data de {start} la {location}, {address}, {city} {zipcode}."
 
 #: master-sephora:lms/templates/emails/ilt_refused_email_subject.txt:2
-msgid "DECLINED - Enrollment in the in-class training - {name}"
-msgstr "RESPINSĂ – Înscrierea la trainingul - {name}"
+msgid "DECLINED - Enrollment in the in-class training [{ilt_name}] - [{name}]"
+msgstr "RESPINSĂ – Înscrierea la trainingul [{ilt_name}] - [{name}]"
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_message.txt:5
 msgid ""
@@ -254,3 +254,11 @@ msgstr "ÎN AȘTEPTARE – Cereri de cazare"
 #: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
 msgid "APPROVAL NEEDED - Request to enroll in the ILT training"
 msgstr "APROBARE NECESARĂ – Solicitare înscriere la trainingul"
+
+#: master-sephora: email subject
+msgid "DO NOT REPLY"
+msgstr "NU RĂSPUNDE"
+
+#: master-sephora: lms/templates/emails/base_body_html.txt
+msgid "This is an automatically generated email, please do not reply."
+msgstr "Acesta este un e-mail generat automat; te rugăm să nu răspunzi la el."

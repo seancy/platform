@@ -3778,7 +3778,7 @@ msgid "Specify the language of your course."
 msgstr "Defina o idioma do seu curso."
 
 #: common/lib/xmodule/xmodule/course_module.py:710
-#: cms/templates/settings.html:344
+#: cms/templates/settings.html:606
 msgid "Course Country"
 msgstr "Versão do Curso"
 
