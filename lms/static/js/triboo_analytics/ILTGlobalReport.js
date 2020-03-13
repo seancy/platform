@@ -64,7 +64,7 @@ export default class ILTGlobalReport extends BaseReport {
         return (
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)} enabledItems={['period','export']}
-                    onExportTypeChange={this.startExport.bind(this)} onGo={this.startExport.bind(this)}
+                    onGo={this.startExport.bind(this)}
                      onInit={properties=>this.setState({properties})}/>
                  <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
