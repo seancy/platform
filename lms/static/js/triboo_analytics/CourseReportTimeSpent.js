@@ -15,6 +15,7 @@ export default class CourseReportTimeSpent extends BaseReport {
     }
 
     setting = {
+        extraParams:{course_id: this.props.course_id},
         reportType:ReportType.COURSE_TIME_SPENT,
         dataUrl:'/analytics/course/time_spent/json/'
     }

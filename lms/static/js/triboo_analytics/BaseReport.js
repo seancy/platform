@@ -61,7 +61,8 @@ export default class BaseReport extends React.Component{
         const getVal=(key,defaultValue)=>{
             return toolbarData && toolbarData[key]?toolbarData[key]: defaultValue || '';
         }
-        return {
+
+        return {...{
             'report_type': get(this.setting, 'reportType', ''),
             'courses_selected': [''],
             'query_tuples': get(toolbarData, 'selectedFilterItems', []).map(p => [p.value, p.key]),
@@ -71,8 +72,8 @@ export default class BaseReport extends React.Component{
             'csrfmiddlewaretoken': this.props.token,
             'page': {
                 size: PaginationConfig.PageSize
-            },
-        }
+            }
+        }, ...get(this.setting, 'extraParams', {})}
     }
 
     fetchData(pageNo) {

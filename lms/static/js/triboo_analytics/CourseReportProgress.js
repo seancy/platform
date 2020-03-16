@@ -14,6 +14,7 @@ export default class CourseReportProgress extends BaseReport {
     }
 
     setting = {
+        extraParams:{course_id: this.props.course_id},
         reportType:ReportType.COURSE_PROGRESS,
         dataUrl:'/analytics/course/progress/json/'
     }
