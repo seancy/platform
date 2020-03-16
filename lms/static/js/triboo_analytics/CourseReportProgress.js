@@ -10,19 +10,19 @@ export default class CourseReportProgress extends BaseReport {
 
         this.state = {
             ...this.state,
-            properties:[],
         };
     }
 
     setting = {
+        extraParams:{course_id: this.props.course_id},
         reportType:ReportType.COURSE_PROGRESS,
-        dataUrl:'/analytics/course/progress/json/'
+        dataUrl:'/analytics/course/json/'
     }
 
     getConfig(){
-        const properties=this.state.properties.filter(p=>p.type == 'default')
-        const {selectedProperties}=this.state.toolbarData;
-        const propertiesFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
+        //const properties= this.state.properties.filter(p=>p.type == 'default')
+        //const {selectedProperties}=this.state.toolbarData;
+        const propertiesFields = this.getOrderedProperties().map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))
@@ -63,7 +63,7 @@ export default class CourseReportProgress extends BaseReport {
         return (
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
-                         onExportTypeChange={this.startExport.bind(this)} onGo={this.startExport.bind(this)}
+                         onGo={this.startExport.bind(this)}
                          onInit={properties=>this.setState({properties})}/>
                 <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}

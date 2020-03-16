@@ -109,7 +109,9 @@ export class Toolbar extends React.Component {
                 this.setState((prev)=>{
                     let toolbarItems = prev.toolbarItems.map(p=>{
                         if (['filters','properties'].includes(p.name)){
-                            return {...p, props:{ ...p.props, data:data.list }}
+                            const nameList = p.name == 'filters'?[{text:'Name', value:'user_name'}]:[]
+                            const dataList = [...nameList, ...data.list.map(item=>pick(item, ['text','value']))]
+                            return {...p, props:{ ...p.props, data:dataList }}
                         }else{
                             return p
                         }
@@ -194,11 +196,11 @@ export class Toolbar extends React.Component {
     }
 }
 
-const DATA_ARRAY = PropTypes.arrayOf(PropTypes.exact({
+/*const DATA_ARRAY = PropTypes.arrayOf(PropTypes.exact({
     value:PropTypes.string,
     text:PropTypes.string,
     checked:PropTypes.bool
-}))
+}))*/
 
 Toolbar.propTypes = {
     //properties:DATA_ARRAY,

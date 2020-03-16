@@ -853,10 +853,14 @@ def learner_view(request):
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
     filters_data = user_properties_helper.get_possible_choices()
+    show_base = 'false'
+    if request.GET and request.GET.get('show_base', 'false') == 'true':
+        show_base = 'true'
 
     return render_to_response(
         "triboo_analytics/learner.html",
         {
+            'show_base': show_base,
             'row_count': row_count,
             'learner_table': learner_table,
             'filter_form': filter_form,
@@ -1098,9 +1102,14 @@ def course_view(request):
             query_dict = query_dict
             query_triples = get_query_triples(query_dict)
 
+        show_base = 'false'
+        if request.GET and request.GET.get('show_base', 'false') == 'true':
+            show_base = 'true'
+
         return render_to_response(
             "triboo_analytics/course.html",
             {
+                'show_base':show_base,
                 'courses': courses_list,
                 'course_id': course_id,
                 'course_name': courses.get(course_id),
@@ -1307,6 +1316,10 @@ def ilt_view(request):
     user_properties_form = None
     row_count = 0
 
+    show_base = 'false'
+    if request.GET and request.GET.get('show_base', 'false') == 'true':
+        show_base = 'true'
+
     if report == "global":
         filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request)
         ilt_report_table, row_count = get_ilt_report_table(orgs, filter_kwargs)
@@ -1315,6 +1328,7 @@ def ilt_view(request):
         return render_to_response(
             "triboo_analytics/ilt.html",
             {
+                'show_base':show_base,
                 'ilt_report_table': ilt_report_table,
                 'time_period_form': time_period_form,
                 'filter_form': filter_form,
@@ -1333,6 +1347,7 @@ def ilt_view(request):
         return render_to_response(
             "triboo_analytics/ilt.html",
             {
+                'show_base': show_base,
                 'ilt_learner_report_table': ilt_learner_report_table,
                 'time_period_form': time_period_form,
                 'filter_form': filter_form,

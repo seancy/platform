@@ -23,27 +23,14 @@ import { pick } from 'lodash'
 class CourseReport extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: [],
-
-        };
-        //this.myRef = React.createRef()
-
         initSelect()
     }
 
-
     render() {
-        const {} = this.state
-        const functionStrs = ['Summary', 'Progress', 'Time Spent']
-        const [Summary0,Progress0,TimeSpent0] = functionStrs.map(p=>{
-            return (props)=>{
-                return (<div className={`${p.toLowerCase()}-component ${(props.className || '')}`}>
-                    {p} component
-                </div>)
-            }
-        })
-        const common_props = pick(this.props, 'defaultLanguage', 'token')
+        const urlParams = new URLSearchParams(location.search)
+        const course_id = urlParams.get('course_id')
+        //const token = urlParams.get('csrfmiddlewaretoken')  please keep it.
+        const common_props = {...pick(this.props, 'defaultLanguage', 'token'), ...{course_id}}
         const data = [
             {text: 'Summary', value: 'summary', component: Summary, props:common_props},
             {text: 'Progress', value: 'progress', component: Progress, props:common_props},
@@ -51,12 +38,9 @@ class CourseReport extends React.Component {
         ]
 
         return (
-            <Tab activeValue={(new URLSearchParams(location.search)).get('report')}
-                 onChange={console.log} data={data}/>
+            <Tab activeValue={(new URLSearchParams(location.search)).get('report')} data={data}/>
         )
     }
 }
-
-
 
 export { CourseReport }

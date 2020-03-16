@@ -15,14 +15,15 @@ export default class CourseReportSummary extends BaseReport {
     }
 
     setting = {
+        extraParams:{course_id: this.props.course_id},
         reportType:ReportType.COURSE_SUMMARY,
-        dataUrl:'/analytics/course/summary/json/'
+        dataUrl:'/analytics/course/json/'
     }
 
     getConfig(){
-        const properties=this.state.properties.filter(p=>p.type == 'default')
-        const {selectedProperties}=this.state.toolbarData;
-        const dynamicFields = (selectedProperties && selectedProperties.length ? selectedProperties : properties).map(p=>({
+        /*const properties=this.state.properties.filter(p=>p.type == 'default')
+        const {selectedProperties}=this.state.toolbarData;*/
+        const propertiesFields = this.getOrderedProperties().map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))
@@ -32,7 +33,7 @@ export default class CourseReportSummary extends BaseReport {
         return {
             fields: [
                 {name: 'Name', fieldName: 'Name'},
-                ...dynamicFields,
+                ...propertiesFields,
 
                 {name: 'Status', fieldName: 'status', render, className:'status'},
                 {name: 'Progress', fieldName: 'progress'},
@@ -58,7 +59,7 @@ export default class CourseReportSummary extends BaseReport {
         return (
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
-                         onExportTypeChange={this.startExport.bind(this)} onGo={this.startExport.bind(this)}
+                         onGo={this.startExport.bind(this)}
                          onInit={properties=>this.setState({properties})}/>
                 <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}

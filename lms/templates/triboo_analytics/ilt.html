@@ -37,6 +37,7 @@
               });
             </script>
 
+        % if show_base == 'true':
           % if ilt_report_table:
             <div class="report-wrapper ilt_global">
                 <ul class="analytics-nav">
@@ -154,6 +155,7 @@
                                                 'row_count': row_count}))}
           % endif
             </div>
+        % endif
         </section>
     </div>
 </main>
