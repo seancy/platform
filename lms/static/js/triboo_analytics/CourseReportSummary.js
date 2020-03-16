@@ -35,14 +35,14 @@ export default class CourseReportSummary extends BaseReport {
                 {name: 'Name', fieldName: 'Name'},
                 ...propertiesFields,
 
-                {name: 'Status', fieldName: 'status', render, className:'status'},
-                {name: 'Progress', fieldName: 'progress'},
-                {name: 'Current Score', fieldName: 'currentScore'},
-                {name: 'Badges', fieldName: 'badges'},
-                {name: 'Posts', fieldName: 'posts'},
-                {name: 'Total Time Spent', fieldName: 'totalTimeSpent'},
-                {name: 'Enrollment Date', fieldName: 'enrollmentDate'},
-                {name: 'Completion Date', fieldName: 'completionDate'},
+                {name: 'Status', fieldName: 'Status', render, className:'status'},
+                {name: 'Progress', fieldName: 'Progress'},
+                {name: 'Current Score', fieldName: 'CurrentScore'},
+                {name: 'Badges', fieldName: 'Badges'},
+                {name: 'Posts', fieldName: 'Posts'},
+                {name: 'Total Time Spent', fieldName: 'TotalTimeSpent'},
+                {name: 'Enrollment Date', fieldName: 'EnrollmentDate'},
+                {name: 'Completion Date', fieldName: 'CompletionDate'},
 
             ],
             pagination: {
