@@ -16,7 +16,7 @@ export default class ILTLearnerReport extends BaseReport {
 
     setting = {
         reportType:ReportType.ILT_LEARNER,
-        dataUrl:'/analytics/ilt/learner/json/'
+        dataUrl:'/analytics/ilt/json/'
     }
 
     getConfig(){

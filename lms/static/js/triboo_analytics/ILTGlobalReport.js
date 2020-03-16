@@ -16,7 +16,7 @@ export default class ILTGlobalReport extends BaseReport {
 
     setting = {
         reportType:ReportType.ILT_GLOBAL,
-        dataUrl:'/analytics/ilt/global/json/'
+        dataUrl:'/analytics/ilt/json/'
     }
 
     render() {

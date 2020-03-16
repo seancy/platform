@@ -30,7 +30,7 @@ class Exporter extends React.Component {
 
     render() {
         const EXPORT_TYPES = [
-            {value: 'cvs', text: 'CVS report'},
+            {value: 'csv', text: 'CSV report'},
             {value: 'xls', text: 'XLS report'},
             {value: 'json', text: 'JSON report'},
         ]

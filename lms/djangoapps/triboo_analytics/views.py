@@ -538,6 +538,10 @@ def _export_table(request, course_key, report_name, report_args):
         task_type = 'triboo_analytics_export_table'
         task_class = generate_export_table_task
         format = request.POST.get('format', None) if request.method == "POST" else request.GET.get('_export', None)
+        if format is None:
+            body_data = request.body.decode('utf-8')
+            data = json.loads(body_data)
+            format = data.get('format', None)
         task_input = {
             'user_id': request.user.id,
             'report_name': report_name,
@@ -1328,7 +1332,7 @@ def ilt_view(request):
         return render_to_response(
             "triboo_analytics/ilt.html",
             {
-                'show_base':show_base,
+                'show_base': show_base,
                 'ilt_report_table': ilt_report_table,
                 'time_period_form': time_period_form,
                 'filter_form': filter_form,
@@ -1595,14 +1599,19 @@ def get_filter_kwargs_with_table_exclude_for_json_table(data, selected_props):
     return kwargs, exclude
 
 
-def get_json_table(data):
+@transaction.non_atomic_requests
+@analytics_on
+@analytics_member_required
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def export_tables(request):
     """
     :param data:
         Filter condition to get query for table.
         Example:
             "{
                 'report_type': 'course_summary',
-                'courses_selected': ['course-v1:edX+DemoX+Demo_Course'],
+                'courses_selected': 'course-v1:edX+DemoX+Demo_Course',
                 'query_tuples': [['Yu', 'user_name'], ['China', 'user_country']],
                 'from_day': '',
                 'to_day': '',
@@ -1619,6 +1628,9 @@ def get_json_table(data):
     if not orgs:
         return HttpResponseNotFound()
 
+    body_data = request.body.decode('utf-8')
+    data = json.loads(body_data)
+
     report_type = data.get('report_type', None)
     courses_selected = data.get('courses_selected', None)
     selected_properties = data.get('selected_properties', None)
@@ -1630,7 +1642,6 @@ def get_json_table(data):
             date_time = day2str(last_update)
             filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
             report_args = {
-                'report_name': "summary_report",
                 'report_cls': LearnerCourseDailyReport.__name__,
                 'filter_kwargs': filter_kwargs,
                 'courses_selected': courses_selected,
@@ -1638,7 +1649,7 @@ def get_json_table(data):
                 'table_cls': CustomizedCourseTable.__name__,
                 'exclude': list(exclude)
             }
-            return export_table_data(CourseKeyField.Empty, report_args)
+            return _export_table(request, CourseKeyField.Empty, 'summary_report', report_args)
 
     elif report_type in ['course_progress', 'course_time_spent']:
         try:
@@ -1651,10 +1662,9 @@ def get_json_table(data):
             'exclude': list(exclude)
         }
         if report_type == "course_progress":
-            report_args['report_name'] = "progress_report"
+            return _export_table(request, course_key, 'progress_report', report_args)
         elif report_type == "course_time_spent":
-            report_args['report_name'] = "time_spent_report"
-        return export_table_data(course_key, report_args)
+            return _export_table(request, course_key, 'time_spent_report', report_args)
 
     elif report_type == 'learner':
         learner_report_org = orgs[0]
@@ -1670,34 +1680,90 @@ def get_json_table(data):
                 'date_time': day2str(last_update)
             })
             report_args = {
-                'report_name': "learner_report",
                 'report_cls': LearnerDailyReport.__name__,
                 'filter_kwargs': filter_kwargs,
                 'table_cls': LearnerDailyTable.__name__,
                 'exclude': list(exclude)
             }
-            return export_table_data(CourseKeyField.Empty, report_args)
+            return _export_table(request, CourseKeyField.Empty, 'learner_report', report_args)
 
     elif report_type in ['ilt_global', 'ilt_learner']:
         if report_type == "ilt_global":
             filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
             report_args = {
-                'report_name': "ilt_global_report",
                 'orgs': orgs,
                 'filter_kwargs': filter_kwargs
             }
-            return export_table_data(CourseKeyField.Empty, report_args)
+            return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
 
         # report_type == "ilt_learner"
         else:
             filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
             report_args = {
-                'report_name': "ilt_learner_report",
                 'orgs': orgs,
                 'filter_kwargs': filter_kwargs,
                 'exclude': list(exclude)
             }
-            return export_table_data(CourseKeyField.Empty, report_args)
+            return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
+
+
+@transaction.non_atomic_requests
+@analytics_on
+@analytics_member_required
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def course_view_data(request):
+    body_data = request.body.decode('utf-8')
+    data = json.loads(body_data)
+    report = data.get('report_type', 'course_summary')
+    selected_properties = data['selected_properties']
+
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+    try:
+        course_key = CourseKey.from_string(data.get('course_id', None))
+        # course_key = CourseKey.from_string('course-v1:edX+DemoX+Demo_Course')
+    except InvalidKeyError:
+        return JsonResponseBadRequest({"message": _("Invalid course id.")})
+
+    last_reportlog = ReportLog.get_latest()
+    if last_reportlog:
+        last_update = last_reportlog.created
+
+        if report == "course_summary":
+            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
+            filter_kwargs.update({
+                'date_time': day2str(last_update),
+                'course_id': "%s" % course_key
+            })
+            report_args = {
+                'report_cls': LearnerCourseDailyReport.__name__,
+                'filter_kwargs': filter_kwargs,
+                'table_cls': CourseTable.__name__,
+                'exclude': list(exclude),
+                'page': data['page'],
+            }
+            task_input = {
+                'report_name': "summary_report",
+                'report_args': report_args
+            }
+            return table_view_data(course_key, task_input)
+
+        else:
+            filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
+            report_args = {
+                'filter_kwargs': filter_kwargs,
+                'exclude': list(exclude),
+                'page': data['page'],
+            }
+            report_name = "progress_report" if report == "course_progress" else "time_spent_report"
+            task_input = {
+                'report_name': report_name,
+                'report_args': report_args
+            }
+            return table_view_data(course_key, task_input)
+    return None
 
 
 @transaction.non_atomic_requests
@@ -1714,7 +1780,6 @@ def learner_view_data(request):
     if len(orgs) > 1:
         learner_report_org = get_combined_org(orgs)
 
-    # post_data = request.POST.copy()
     body_data = request.body.decode('utf-8')
     data = json.loads(body_data)
 
@@ -1738,10 +1803,47 @@ def learner_view_data(request):
             'report_name': "learner_report",
             'report_args': report_args
         }
-        return export_table_data(CourseKeyField.Empty, task_input)
+        return table_view_data(CourseKeyField.Empty, task_input)
 
 
-def export_table_data(course_id, _task_input):
+@transaction.non_atomic_requests
+@analytics_on
+@analytics_full_member_required
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def ilt_view_data(request):
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+
+    body_data = request.body.decode('utf-8')
+    data = json.loads(body_data)
+    report = data.get('report_type', 'ilt_global')
+    selected_properties = data['selected_properties']
+
+    last_reportlog = ReportLog.get_latest()
+    if last_reportlog:
+        last_update = last_reportlog.created
+        filter_kwargs, exclude = get_filter_kwargs_with_table_exclude_for_json_table(data, selected_properties)
+        if 'start__range' in filter_kwargs:
+            from_date = filter_kwargs['start__range'][0]
+            to_date = filter_kwargs['start__range'][1]
+            filter_kwargs['start__range'] = json.dumps((dt2str(from_date), dt2str(to_date)))
+        report_args = {
+            'filter_kwargs': filter_kwargs,
+            'orgs': orgs,
+            'exclude': list(exclude),
+            'page': data['page'],
+        }
+        report_name = 'ilt_global_report' if report == 'ilt_global' else 'ilt_learner_report'
+        task_input = {
+            'report_name': report_name,
+            'report_args': report_args
+        }
+        return table_view_data(CourseKeyField.Empty, task_input)
+
+
+def table_view_data(course_id, _task_input):
     if _task_input['report_name'] == "transcript":
         table, _ = get_transcript_table(_task_input['report_args']['orgs'],
                                         _task_input['report_args']['user_id'],
@@ -1804,15 +1906,16 @@ def export_table_data(course_id, _task_input):
     response_dict = dict(
         list=response_data,
         total=total_dict,
+
         pagination=dict(
             rowsCount=len(content)
         )
     )
-    return Response(response_dict)
+    return JsonResponse(response_dict)
 
 
 def get_total_dict(data, report):
-    total_dict = dict()
+    total_dict = collections.OrderedDict()
     summary_columns = []
     if report == "summary_report":
         summary_columns = ['Progress', 'CurrentScore', 'Badges', 'Posts', 'TotalTimeSpent']
@@ -1820,16 +1923,20 @@ def get_total_dict(data, report):
         summary_columns = ['Enrollments', 'Successful', 'Unsuccessful', 'NotStarted', 'AverageFinalScore', 'Badges', 'Posts', 'TotalTimeSpent']
     for col in summary_columns:
         if col == 'Badges':
-            values = [int(row[col].split('/')[0].strip()) for row in data]
+            values = []
+            for row in data:
+                if row[col]:
+                    split_str = '(/' if '(' in row[col] else '/'
+                    values.append(int(row[col].split(split_str)[0].strip()))
             total_dict[col] = sum(values)
         elif col == 'TotalTimeSpent':
-            values = [str2sec(row[col]) for row in data]
+            values = [str2sec(row[col]) for row in data if row[col]]
             total_dict[col] = sec2str(sum(values))
         elif col in ['Progress', 'CurrentScore', 'AverageFinalScore']:
-            values = [int(row[col].split('%')[0].strip()) for row in data]
+            values = [int(row[col].split('%')[0].strip()) for row in data if row[col]]
             total_dict[col] = str(sum(values) // len(values)) + '%' if values else '0%'
         else:
-            values = [row[col] for row in data]
+            values = [row[col] for row in data if row[col] and row[col] != '-']
             total_dict[col] = sum(values)
     return total_dict
 
@@ -1838,7 +1945,7 @@ def format_headers(data, formats):
     response_data = []
     index = 1
     for row in data:
-        new_row = dict(
+        new_row = collections.OrderedDict(
             ID=index
         )
         for k, v in row.items():
@@ -1853,7 +1960,7 @@ def format_headers(data, formats):
 
 
 def reverse_filter_dict(filter_tuples):
-    f = dict()
+    f = collections.OrderedDict()
     for t in filter_tuples:
         f[t[1]] = t[0]
     return f
@@ -1872,7 +1979,7 @@ def sec2str(sec):
 
 
 @analytics_on
-def learner_get_properties(request):
+def get_properties(request):
     analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
                                                                 settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
     user_properties_helper = UserPropertiesHelper(analytics_user_properties)
@@ -1881,165 +1988,14 @@ def learner_get_properties(request):
     {
         "status":1,
         "message":"",
-        "list":[]
+        "list": []
     }
     """
     jsonData = json.loads(json_string)
     for item in filters_data:
-        jsonData['list'].append({ 'text': item[1], 'value':item[0], 'type':item[2] })
-    return JsonResponse(jsonData)
-
-@analytics_on
-def course_progress_data(request):
-    analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
-                                                                settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
-    user_properties_helper = UserPropertiesHelper(analytics_user_properties)
-    filters_data = user_properties_helper.get_possible_choices()
-    json_string = """
-    {
-        "total":{ 
-            "Email":"3"
-        },
-        "pagination":{ 
-            "rowsCount":"1"
-        },
-        "list":[
-            {
-                "Name": "John Snow",
-                "user_email": "edx@example.com",
-                "user_country": "China",
-                "Homework": "No: 0.00",  
-                "Exam": "No: 0.00"
-            }
-        ]
-    }
-    """
-    jsonData = json.loads(json_string)
-    return JsonResponse(jsonData)
-
-@analytics_on
-def course_time_spent_data(request):
-    json_string = """
-    {
-        "total":{ 
-            "Email":"3"
-        },
-        "pagination":{ 
-            "rowsCount":"1"
-        },
-        "list":[
-            {
-                "Name": "High Land",
-                "Email": "verified@example.com",
-                "Country": "",
-                "Commercial Zone": "",
-                "Commercial Region": "",
-                "City": "",
-                "Location": "",
-                "Address 2": "",
-                "Employee ID": "",
-                "Level": "",
-                "Job Code": "",
-                "Introduction / Demo Course Overview": "0:00:00",
-                "Example Week 1: Getting Started / Lesson 1 - Getting Started": "0:00:00",
-                "Example Week 1: Getting Started / Homework - Question Styles": "0:00:00",
-                "Example Week 2: Get Interactive / Lesson 2 - Let's Get Interactive!": "0:00:00",
-                "Example Week 2: Get Interactive / Homework - Labs and Demos": "0:00:00",
-                "Example Week 2: Get Interactive / Homework - Essays": "0:00:00",
-                "Example Week 3: Be Social / Lesson 3 - Be Social": "0:00:00",
-                "Example Week 3: Be Social / Homework - Find Your Study Buddy": "0:00:00",
-                "Example Week 3: Be Social / More Ways to Connect": "0:00:00",
-                "About Exams and Certificates / edX Exams": "0:00:00",
-                "holding section / New Subsection": "0:00:00"
-            },
-            {
-                "Name": "High Land1",
-                "Email": "verified@example.com",
-                "Country": "",
-                "Commercial Zone": "",
-                "Commercial Region": "",
-                "City": "",
-                "Location": "",
-                "Address 2": "",
-                "Employee ID": "",
-                "Level": "",
-                "Job Code": "",
-                "Introduction / Demo Course Overview": "0:00:00",
-                "Example Week 1: Getting Started / Lesson 1 - Getting Started": "0:00:00",
-                "Example Week 1: Getting Started / Homework - Question Styles": "0:00:00",
-                "Example Week 2: Get Interactive / Lesson 2 - Let's Get Interactive!": "0:00:00",
-                "Example Week 2: Get Interactive / Homework - Labs and Demos": "0:00:00",
-                "Example Week 2: Get Interactive / Homework - Essays": "0:00:00",
-                "Example Week 3: Be Social / Lesson 3 - Be Social": "0:00:00",
-                "Example Week 3: Be Social / Homework - Find Your Study Buddy": "0:00:00",
-                "Example Week 3: Be Social / More Ways to Connect": "0:00:00",
-                "About Exams and Certificates / edX Exams": "0:00:00",
-                "holding section / New Subsection": "0:00:00"
-            },
-            {
-                "Name": "High Land2",
-                "Email": "verified@example.com",
-                "Country": "",
-                "Commercial Zone": "",
-                "Commercial Region": "",
-                "City": "",
-                "Location": "",
-                "Address 2": "",
-                "Employee ID": "",
-                "Level": "",
-                "Job Code": "",
-                "Introduction / Demo Course Overview": "0:00:00",
-                "Example Week 1: Getting Started / Lesson 1 - Getting Started": "0:00:00",
-                "Example Week 1: Getting Started / Homework - Question Styles": "0:00:00",
-                "Example Week 2: Get Interactive / Lesson 2 - Let's Get Interactive!": "0:00:00",
-                "Example Week 2: Get Interactive / Homework - Labs and Demos": "0:00:00",
-                "Example Week 2: Get Interactive / Homework - Essays": "0:00:00",
-                "Example Week 3: Be Social / Lesson 3 - Be Social": "0:00:00",
-                "Example Week 3: Be Social / Homework - Find Your Study Buddy": "0:00:00",
-                "Example Week 3: Be Social / More Ways to Connect": "0:00:00",
-                "About Exams and Certificates / edX Exams": "0:00:00",
-                "holding section / New Subsection": "0:00:00"
-            },
-            {
-                "Name": "High Land3",
-                "Email": "verified@example.com",
-                "Country": "",
-                "Commercial Zone": "",
-                "Commercial Region": "",
-                "City": "",
-                "Location": "",
-                "Address 2": "",
-                "Employee ID": "",
-                "Level": "",
-                "Job Code": "",
-                "Introduction / Demo Course Overview": "0:00:00",
-                "Example Week 1: Getting Started / Lesson 1 - Getting Started": "0:00:00",
-                "Example Week 1: Getting Started / Homework - Question Styles": "0:00:00",
-                "Example Week 2: Get Interactive / Lesson 2 - Let's Get Interactive!": "0:00:00",
-                "Example Week 2: Get Interactive / Homework - Labs and Demos": "0:00:00",
-                "Example Week 2: Get Interactive / Homework - Essays": "0:00:00",
-                "Example Week 3: Be Social / Lesson 3 - Be Social": "0:00:00",
-                "Example Week 3: Be Social / Homework - Find Your Study Buddy": "0:00:00",
-                "Example Week 3: Be Social / More Ways to Connect": "0:00:00",
-                "About Exams and Certificates / edX Exams": "0:00:00",
-                "holding section / New Subsection": "0:00:00"
-            }
-        ]
-    }
-    """
-    jsonData = json.loads(json_string);
-    return JsonResponse(jsonData)
-
-
-##
-
-@analytics_on
-def learner_export_data(request):
-    json_string = """
-    {
-        "status":"1",
-        "message":"export successful"
-    }
-    """
-    jsonData = json.loads(json_string);
+        jsonData['list'].append({
+            'text': item[1],
+            'value': item[0],
+            'type': item[2]
+        })
     return JsonResponse(jsonData)
