@@ -31,38 +31,38 @@ export default class ILTLearnerReport extends BaseReport {
 
                 {name: 'Geographical area', fieldName: 'GeographicalArea'},
                 {name: 'Course country', fieldName: 'CourseCountry'},
-                {name: 'ZoneRegion', fieldName: 'Zone/Region'},
-                {name: 'CourseTags', fieldName: 'Course tags'},
+                {name: 'Zone/Region', fieldName: 'ZoneRegion'},
+                {name: 'Course tags', fieldName: 'CourseTags'},
 
-                {name: 'CourseCode', fieldName: 'Course code'},
+                {name: 'Course code', fieldName: 'CourseCode'},
                 {name: 'Course', fieldName: 'Course'},
                 {name: 'Section', fieldName: 'Section'},
                 {name: 'Subsection', fieldName: 'Subsection'},
 
-                {name: 'SessionID', fieldName: 'Session ID'},
-                {name: 'StartDate', fieldName: 'Start date'},
-                {name: 'StartTime', fieldName: 'Start time'},
-                {name: 'EndDate', fieldName: 'End date'},
+                {name: 'Session ID', fieldName: 'SessionID'},
+                {name: 'Start date', fieldName: 'StartDate'},
+                {name: 'Start time', fieldName: 'StartTime'},
+                {name: 'End date', fieldName: 'EndDate'},
 
-                {name: 'EndTime', fieldName: 'End time'},
-                {name: 'Duration', fieldName: 'Duration (in hours)'},
-                {name: 'LocationID', fieldName: 'Location ID'},
-                {name: 'LocationName', fieldName: 'Location name'},
+                {name: 'End time', fieldName: 'EndTime'},
+                {name: 'Duration (in hours)', fieldName: 'Duration'},
+                {name: 'Location ID', fieldName: 'LocationID'},
+                {name: 'Location name', fieldName: 'LocationName'},
 
                 {name: 'Address', fieldName: 'Address'},
-                {name: 'ZipCode', fieldName: 'Zip code'},
+                {name: 'Zip code', fieldName: 'ZipCode'},
                 {name: 'City', fieldName: 'City'},
                 {name: 'Name', fieldName: 'Name'},
 
                 ...propertiesFields,
 
-                {name: 'EnrollmentStatus', fieldName: 'Enrollment status'},
+                {name: 'Enrollment status', fieldName: 'EnrollmentStatus'},
                 {name: 'Attendee', fieldName: 'Attendee'},
-                {name: 'OutwardTrips', fieldName: 'Outward trips'},
-                {name: 'ReturnTrips', fieldName: 'Return trips'},
+                {name: 'Outward trips', fieldName: 'OutwardTrips'},
+                {name: 'Return trips', fieldName: 'ReturnTrips'},
 
-                {name: 'OvernightStay', fieldName: 'Overnight stay'},
-                {name: 'OvernightStayAddress', fieldName: 'Overnight stay address'},
+                {name: 'Overnight stay', fieldName: 'OvernightStay'},
+                {name: 'Overnight stay address', fieldName: 'OvernightStayAddress'},
                 {name: 'Comment', fieldName: 'Comment'}
             ],
             pagination: {
