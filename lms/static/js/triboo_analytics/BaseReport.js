@@ -64,7 +64,6 @@ export default class BaseReport extends React.Component{
 
         return {...{
             'report_type': get(this.setting, 'reportType', ''),
-            'courses_selected': [''],
             'query_tuples': get(toolbarData, 'selectedFilterItems', []).map(p => [p.value, p.key]),
             'selected_properties': get(toolbarData,'selectedProperties',[]).map(p => p.value),
             'from_day': getVal('startDate'),
