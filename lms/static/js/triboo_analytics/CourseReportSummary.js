@@ -17,7 +17,7 @@ export default class CourseReportSummary extends BaseReport {
     setting = {
         extraParams:{course_id: this.props.course_id},
         reportType:ReportType.COURSE_SUMMARY,
-        dataUrl:'/analytics/course/summary/json/'
+        dataUrl:'/analytics/course/json/'
     }
 
     getConfig(){
