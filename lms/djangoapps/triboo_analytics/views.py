@@ -1920,7 +1920,7 @@ def get_total_dict(data, report):
     if report == "summary_report":
         summary_columns = ['Progress', 'CurrentScore', 'Badges', 'Posts', 'TotalTimeSpent']
     elif report == "learner_report":
-        summary_columns = ['Enrollments', 'Successful', 'Unsuccessful', 'NotStarted', 'AverageFinalScore', 'Badges', 'Posts', 'TotalTimeSpent']
+        summary_columns = ['Enrollments', 'Successful', 'Unsuccessful', 'NotStarted', 'AverageFinalScore', 'Badges', 'Posts', 'TotalTimeSpent', 'InProgress']
     for col in summary_columns:
         if col == 'Badges':
             values = []
