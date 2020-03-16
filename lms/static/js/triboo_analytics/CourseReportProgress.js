@@ -45,7 +45,7 @@ export default class CourseReportProgress extends BaseReport {
             cellRender:v=>{
                 if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')){
                     const arr = v.split(':')
-                    return (<><span class={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}</> )
+                    return (<><span class={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}%</> )
                 }else{
                     return v
                 }
