@@ -180,23 +180,6 @@ FEATURES['ENABLE_DASHBOARD_SEARCH'] = True
 ########################## Certificates Web/HTML View #######################
 FEATURES['CERTIFICATES_HTML_VIEW'] = False
 
-
-########################## Course Discovery #######################
-LANGUAGE_MAP = {'terms': {lang: display for lang, display in ALL_LANGUAGES}, 'name': 'Language'}
-COURSE_DISCOVERY_MEANINGS = {
-    'org': {
-        'name': 'Organization',
-    },
-    'modes': {
-        'name': 'Category',
-        'terms': {
-            'honor': 'Honor',
-            'verified': 'Verified',
-        },
-    },
-    'language': LANGUAGE_MAP,
-}
-
 FEATURES['ENABLE_COURSE_DISCOVERY'] = True
 # Setting for overriding default filtering facets for Course discovery
 # COURSE_DISCOVERY_FILTERS = ["org", "language", "modes"]

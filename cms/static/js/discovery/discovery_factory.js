@@ -3,7 +3,8 @@
     define(['backbone', 'underscore', 'js/discovery/models/search_state', 'js/discovery/collections/filters',
         'js/discovery/views/search_form', 'js/discovery/views/courses_listing',
         'js/discovery/views/filter_bar', 'js/discovery/views/refine_sidebar'],
-        function(Backbone, _, SearchState, Filters, SearchForm, CoursesListing, FilterBar, RefineSidebar) {
+        function(Backbone, _, SearchState, Filters, SearchForm,
+                 CoursesListing, FilterBar, RefineSidebar) {
             return function(meanings, titleMeanings, preFacetFilters, searchQuery, userLanguage, userTimezone) {
                 var dispatcher = _.extend({}, Backbone.Events);
                 var search = new SearchState();
@@ -110,7 +111,7 @@
                 if (!_.isEmpty(preFacetFilters)) {
                     performPreFilterSearch(preFacetFilters);
                 } else {
-                    form.doSearch(searchQuery);
+                    form.doSearch(searchQuery, false);
                 }
             };
         });

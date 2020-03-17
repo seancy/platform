@@ -8,7 +8,7 @@
         return Backbone.Model.extend({
 
             page: 0,
-            pageSize: 300,
+            pageSize: 1000,
             searchTerm: '',
             terms: {},
             jqhxr: null,
@@ -96,7 +96,7 @@
                     if (total === 0) {
                     // list all courses
                         this.cachedDiscovery().done(function(cached) {
-                            this.discovery.courseCards.reset(cached.courseCards.toJSON());
+                            this.discovery.courseItems.reset(cached.courseItems.toJSON());
                             this.discovery.facetOptions.reset(cached.facetOptions.toJSON());
                             this.discovery.set('latestCount', cached.get('latestCount'));
                             this.trigger('search', originalSearchTerm, total);

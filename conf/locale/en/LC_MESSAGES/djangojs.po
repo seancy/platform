@@ -11275,6 +11275,18 @@ msgstr ""
 msgid "Romania"
 msgstr ""
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Archived"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Draft"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Published"
+msgstr ""
+
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435

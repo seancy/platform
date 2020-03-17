@@ -22,6 +22,7 @@ from .tabs import *
 from .videos import *
 from .transcript_settings import *
 from .transcripts_ajax import *
+from .discovery_api import *
 try:
     from .dev import *
 except ImportError:

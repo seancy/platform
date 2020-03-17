@@ -3,11 +3,11 @@
     define([
         'underscore',
         'backbone',
-        'js/discovery/models/course_card',
+        'js/discovery/models/course_item',
         'js/discovery/models/facet_option'
-    ], function(_, Backbone, CourseCard, FacetOption) {
+    ], function(_, Backbone, CourseItem, FacetOption) {
         return Backbone.Model.extend({
-            url: '/search/course_discovery/',
+            url: '/course_search/',
             jqhxr: null,
 
             defaults: {
@@ -16,7 +16,10 @@
             },
 
             initialize: function() {
-                this.courseCards = new Backbone.Collection([], {model: CourseCard});
+                this.courseItems = new Backbone.Collection([], {model: CourseItem});
+                this.courseItems.comparator = function(item) {
+                    return item.get('content').display_name.toLowerCase();
+                };
                 this.facetOptions = new Backbone.Collection([], {model: FacetOption});
             },
 
@@ -24,7 +27,7 @@
                 var courses = response.results || [];
                 var facets = response.facets || {};
                 var options = this.facetOptions;
-                this.courseCards.add(_.pluck(courses, 'data'));
+                this.courseItems.add(_.pluck(courses, 'data'));
 
                 this.set({
                     totalCount: response.total,
@@ -33,11 +36,13 @@
 
                 _(facets).each(function(obj, key) {
                     _(obj.terms).each(function(count, term) {
-                        options.add({
-                            facet: key,
-                            term: term,
-                            count: count
-                        }, {merge: true});
+                        if (count > 0) {
+                            options.add({
+                                facet: key,
+                                term: term,
+                                count: count
+                            }, {merge: true});
+                        }
                     });
                 });
             },
@@ -47,12 +52,12 @@
                     totalCount: 0,
                     latestCount: 0
                 });
-                this.courseCards.reset();
+                this.courseItems.reset();
                 this.facetOptions.reset();
             },
 
             latest: function() {
-                return this.courseCards.last(this.get('latestCount'));
+                return this.courseItems.last(this.get('latestCount'));
             }
 
         });

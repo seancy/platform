@@ -14,7 +14,6 @@ from branding import views as branding_views
 from config_models.views import ConfigurationModelCurrentAPIView
 from courseware.masquerade import handle_ajax as courseware_masquerade_handle_ajax
 from courseware.module_render import handle_xblock_callback, handle_xblock_callback_noauth, xblock_view, xqueue_callback
-from courseware import discovery_api
 from courseware.views import views as courseware_views
 from courseware.views.index import CoursewareIndex
 from courseware.views.views import (
@@ -267,7 +266,6 @@ urlpatterns += [
         courseware_views.jump_to_id,
         name='jump_to_id',
     ),
-    url(r'^courses/course_discovery/$', discovery_api.course_discovery, name='course_discovery'),
 
     # xblock Handler APIs
     url(

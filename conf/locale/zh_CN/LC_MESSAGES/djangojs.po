@@ -11722,6 +11722,18 @@ msgstr "法国"
 msgid "Romania"
 msgstr "罗马尼亚"
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Archived"
+msgstr "存档"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Draft"
+msgstr "草稿"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Published"
+msgstr "已发布"
+
 #: lms/templates/student_account/login.underscore
 msgid "Welcome to your training platform, log in to find your learning space!"
 msgstr "欢迎来到您的培训平台，登录查找您的学习空间！"

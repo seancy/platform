@@ -1110,6 +1110,9 @@ COURSE_DISCOVERY_MEANINGS = {
     }
 }
 
+# Max search page size for LMS Catalog
+SEARCH_MAX_PAGE_SIZE = 1000
+
 # Empty by default, set this value in site configuration.
 COURSE_COUNTRY_MAPPING = {
     # user.profile.country: course.country
