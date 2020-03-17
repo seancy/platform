@@ -713,7 +713,9 @@ def get_period_filter_kwargs_with_table_exclude(request, as_string=False):
         last_reportlog = ReportLog.get_latest(from_date=time_period_form.period[0], to_date=time_period_form.period[1])
         if last_reportlog:
             last_analytics_success = last_reportlog.created
-            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(time_period_form.period[0],
+                                                                    time_period_form.period[1],
+                                                                    course_id)
             kwargs.update({
                 'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
                 'user_id__in': "%s" % user_ids if as_string else user_ids
@@ -729,11 +731,12 @@ def get_learner_table_filters(request, orgs, as_string=False):
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
         last_update = last_reportlog.created
-        filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
-        filter_kwargs.update({
-            'org': learner_report_org,
-            'date_time': day2str(last_update) if as_string else last_update
-        })
+        filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_period_filter_kwargs_with_table_exclude(
+                                                                                                    request, as_string)
+        filter_kwargs.update({ 'org': learner_report_org })
+        if not time_period_form.period:
+            filter_kwargs.update({ 'date_time': day2str(last_update) if as_string else last_update })
+
         return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, last_update, query_dict
 
     return None, None, None, None, None, None, None

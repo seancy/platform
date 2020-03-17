@@ -62,7 +62,7 @@ class TrackingLog(models.Model):
     class Meta(object):
         app_label = 'track'
         db_table = 'track_trackinglog'
-        index_together = ['user_id', 'section']
+        index_together = ['user_id', 'section', 'time']
 
     def __unicode__(self):
         fmt = (

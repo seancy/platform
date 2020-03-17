@@ -351,22 +351,24 @@ class ReportLog(UnicodeMixin, TimeStampedModel):
 
     @classmethod
     def get_latest(cls, from_date=None, to_date=None):
+        filter_kwargs = {
+            'learner_visit__isnull': False,
+            'learner_course__isnull': False,
+            'learner__isnull': False,
+            'course__isnull': False,
+            'microsite__isnull': False,
+            'country__isnull': False
+        }
         try:
-            if from_date and to_date:
-                return cls.objects.filter(created__gte=from_date,
-                                          created__lte=to_date,
-                                          learner_visit__isnull=False,
-                                          learner_course__isnull=False,
-                                          learner__isnull=False,
-                                          course__isnull=False,
-                                          microsite__isnull=False,
-                                          country__isnull=False).latest()
-            return cls.objects.filter(learner_visit__isnull=False,
-                                      learner_course__isnull=False,
-                                      learner__isnull=False,
-                                      course__isnull=False,
-                                      microsite__isnull=False,
-                                      country__isnull=False).latest()
+            if from_date:
+                if to_date:
+                    filter_kwargs['created__gte'] = from_date
+                    filter_kwargs['created__lte'] = to_date
+                else:
+                    filter_kwargs['created__gte'] = from_date
+            elif to_date:
+                filter_kwargs['created__lte'] = to_date
+            return cls.objects.filter(**filter_kwargs).latest()
         except cls.DoesNotExist:
             return None
 
@@ -431,9 +433,12 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     @classmethod
     def get_active_user_ids(cls, from_date, to_date, course_id=None):
         if course_id:
-            reports = cls.objects.filter(created__gte=from_date, created__lte=to_date, course_id=course_id)
+            reports = cls.objects.filter(created__gte=from_date,
+                                         created__lte=to_date,
+                                         user__is_active=True,
+                                         course_id=course_id)
         else:
-            reports = cls.objects.filter(created__gte=from_date, created__lte=to_date)
+            reports = cls.objects.filter(created__gte=from_date, created__lte=to_date, user__is_active=True,)
         return [result['user'] for result in reports.values('user').distinct()]
 
 
@@ -547,19 +552,18 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                         and course_last_update < last_report.created
                         and enrollment.completed == last_report.completion_date):
                         report_needs_update = False
-                        cls.objects.update_or_create(
-                        created=day,
-                        user=user,
-                        course_id=course_key,
-                        defaults={'org': course_key.org,
-                                  'total_time_spent': last_report.total_time_spent,
-                                  'status': last_report.status,
-                                  'progress': last_report.progress,
-                                  'badges': last_report.badges,
-                                  'current_score': last_report.current_score,
-                                  'posts': last_report.posts,
-                                  'enrollment_date': enrollment.created,
-                                  'completion_date': enrollment.completed})
+                        cls.objects.update_or_create(created=day,
+                                                     user=user,
+                                                     course_id=course_key,
+                                                     defaults={'org': course_key.org,
+                                                               'total_time_spent': last_report.total_time_spent,
+                                                               'status': last_report.status,
+                                                               'progress': last_report.progress,
+                                                               'badges': last_report.badges,
+                                                               'current_score': last_report.current_score,
+                                                               'posts': last_report.posts,
+                                                               'enrollment_date': enrollment.created,
+                                                               'completion_date': enrollment.completed})
                 except cls.DoesNotExist:
                     pass
 
@@ -640,6 +644,45 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
             return cls.objects.filter(created=last_analytics_success, course_id=course_id, user_id__in=user_ids)
         return None
+
+
+class LearnerSectionDailyReport(TimeModel, ReportMixin):
+    class Meta(object):
+        app_label = "triboo_analytics"
+        get_latest_by = "created"
+        unique_together = ('created', 'user', 'course_id', 'section_key')
+        index_together = (['created', 'user', 'course_id', 'section_key'],
+                          ['created', 'course_id'])
+
+    user = models.ForeignKey(User, null=False)
+    course_id = CourseKeyField(max_length=255, db_index=True, null=False)
+    section_key = models.CharField(max_length=100, null=False)
+    section_name = models.CharField(max_length=512, null=False)
+    total_time_spent = models.PositiveIntegerField(default=0)
+    time_spent = models.PositiveIntegerField(default=0)
+
+    @classmethod
+    def update_or_create(cls, enrollment, sections):
+        day = timezone.now().date()
+        yesterday = timezone.now() + timezone.timedelta(days=-1)
+        for section_combined_url, section_combined_display_name in sections.iteritems():
+            total_time_spent = (TrackingLog.objects.filter(user_id=enrollment.user.id,
+                                                           section=section_combined_url,
+                                                           time__gte=enrollment.created).aggregate(
+                                                               Sum('time_spent')).get('time_spent__sum') or 0)
+            total_time_spent = int(round(total_time_spent))
+            time_spent = (TrackingLog.objects.filter(user_id=enrollment.user.id,
+                                                     section=section_combined_url,
+                                                     time__date=yesterday.date()).aggregate(
+                                                         Sum('time_spent')).get('time_spent__sum') or 0)
+            time_spent = int(round(total_time_spent))
+            cls.objects.update_or_create(created=day,
+                                         user=enrollment.user,
+                                         course_id=enrollment.course_id,
+                                         section_key=section_combined_url,
+                                         defaults={'section_name': section_combined_display_name,
+                                                   'total_time_spent': total_time_spent,
+                                                   'time_spent': time_spent})
 
 
 class LearnerSectionReport(TimeModel):
@@ -1395,6 +1438,18 @@ def generate_today_reports(multi_process=False):
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
         last_analytics_success = last_reportlog.created.date()
+
+    if last_analytics_success:
+        last_reports = LearnerSectionDailyReport.filter_by_day(last_analytics_success)
+        new_reports = [LearnerSectionDailyReport(created=today,
+                                                 user_id=report.user_id,
+                                                 course_id=report.course_id,
+                                                 section_key=report.section_key,
+                                                 section_name=report.section_name,
+                                                 total_time_spent=report.total_time_spent,
+                                                 time_spent=report.time_spent) for report in last_reports]
+        LearnerSectionDailyReport.objects.bulk_create(new_reports)
+
 
     logger.info("start Learner Course reports")
     LearnerCourseDailyReport.generate_today_reports(last_analytics_success, overviews, tracking_log_helper.sections_by_course, multi_process=multi_process)
