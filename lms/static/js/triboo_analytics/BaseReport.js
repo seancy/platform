@@ -6,6 +6,7 @@ export default class BaseReport extends React.Component{
     constructor(props){
         super(props)
         this.state = {
+            isLoading:false,
             properties:[],
 
             //storing toolbar data
@@ -82,6 +83,7 @@ export default class BaseReport extends React.Component{
                 no: pageNo
             }
         })
+        this.setState({isLoading:true})
         $.ajax(url, {
             // method: 'get', //please change it to post in real environment.
             method: 'post',
@@ -91,6 +93,7 @@ export default class BaseReport extends React.Component{
             success: (json) => {
                 this.setState((s, p) => {
                     return {
+                        isLoading:false,
                         data: json.list,
                         totalData: json.total, //{email: 'total:', first_name: json.total},
                         rowsCount: json.pagination.rowsCount

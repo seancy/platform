@@ -3,6 +3,7 @@ import {Toolbar} from "./Toolbar";
 import DataList from "se-react-data-list";
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
+import {pick} from "lodash";
 
 export default class CourseReportSummary extends BaseReport {
     constructor(props) {
@@ -31,6 +32,8 @@ export default class CourseReportSummary extends BaseReport {
             return <span className={val?'in-progress-bg':'not-started-bg'}>{val?'In Progress':'Not Started'}</span>
         }
         return {
+            ...pick(this.state, ['isLoading']),
+            keyField:"ID",
             fields: [
                 {name: 'Name', fieldName: 'Name'},
                 ...propertiesFields,

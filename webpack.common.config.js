@@ -272,6 +272,10 @@ module.exports = Merge.smart({
                 loader: 'svg-inline-loader'
             },
             {
+                test:/\.gif$/,
+                use:['file-loader']
+            },
+            {
                 test: /xblock\/core/,
                 loader: 'exports-loader?window.XBlock!imports-loader?jquery,jquery.immediateDescendents,this=>window'
             },

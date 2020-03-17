@@ -4,6 +4,7 @@ import {Toolbar} from './Toolbar'
 import DataList from "se-react-data-list"
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
+import {pick} from 'lodash'
 
 export class LearnerReport extends BaseReport {
     constructor(props) {
@@ -29,6 +30,7 @@ export class LearnerReport extends BaseReport {
             }))
 
         return {
+            ...pick(this.state, ['isLoading']),
             fields: [
                 {name: 'Name', fieldName: 'Name'},
                 ...propertiesFields,
