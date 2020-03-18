@@ -966,7 +966,7 @@ def student_dashboard(request):
 @login_required
 @ensure_csrf_cookie
 @add_maintenance_banner
-def my_courses(request, tab):
+def my_courses(request, tab="all-courses"):
     user = request.user
     if not UserProfile.objects.filter(user=user).exists():
         return redirect(reverse('account_settings'))
