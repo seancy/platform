@@ -162,3 +162,6 @@ SECRET_KEY = '85920908f28904ed733fe576320db18cabd7b6cd'
 
 # The default Advanced Module List for every course
 COURSE_ADVANCED_MODULES = ENV_TOKENS.get('COURSE_ADVANCED_MODULES', ['openassessment'])
+
+# Skip enrollment start date filtering
+SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True

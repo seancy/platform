@@ -559,6 +559,7 @@ def course_listing(request):
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
     orgs = SiteConfiguration.get_all_orgs()
+    pre_facet_filters = {}
 
     return render_to_response(u'index.html', {
         u'orgs': orgs,
@@ -574,7 +575,9 @@ def course_listing(request):
         u'rerun_creator_status': GlobalStaff().has_user(user),
         u'allow_unicode_course_id': settings.FEATURES.get(u'ALLOW_UNICODE_COURSE_ID', False),
         u'allow_course_reruns': settings.FEATURES.get(u'ALLOW_COURSE_RERUNS', True),
-        u'optimization_enabled': optimization_enabled
+        u'optimization_enabled': optimization_enabled,
+        u'course_discovery_meanings': getattr(settings, 'COURSE_DISCOVERY_MEANINGS', {}),
+        u'pre_facet_filters': pre_facet_filters
     })
 
 

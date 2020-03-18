@@ -12238,6 +12238,18 @@ msgstr "França"
 msgid "Romania"
 msgstr "Romênia"
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Archived"
+msgstr "Arquivados"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Draft"
+msgstr "Rascunhos"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Published"
+msgstr "Publicados"
+
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435

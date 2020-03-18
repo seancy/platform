@@ -107,7 +107,7 @@
                 });
 
                 // kick off search on page refresh
-                if (preFacetFilters) {
+                if (!_.isEmpty(preFacetFilters)) {
                     performPreFilterSearch(preFacetFilters);
                 } else {
                     form.doSearch(searchQuery);

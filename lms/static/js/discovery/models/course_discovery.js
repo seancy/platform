@@ -7,7 +7,7 @@
         'js/discovery/models/facet_option'
     ], function(_, Backbone, CourseCard, FacetOption) {
         return Backbone.Model.extend({
-            url: '/courses/course_discovery/',
+            url: '/search/course_discovery/',
             jqhxr: null,
 
             defaults: {

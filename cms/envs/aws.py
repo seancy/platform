@@ -631,3 +631,42 @@ if FEATURES['ENABLE_COURSEWARE_INDEX'] or FEATURES['ENABLE_LIBRARY_INDEX']:
     SEARCH_ENGINE = "search.elastic.ElasticSearchEngine"
 
 ELASTIC_SEARCH_CONFIG = ENV_TOKENS.get('ELASTIC_SEARCH_CONFIG', [{}])
+
+LANGUAGE_MAP = {'terms': {lang: display for lang, display in ALL_LANGUAGES}, 'name': 'Language'}
+
+COURSE_DISCOVERY_FILTERS = ["language", "status", "course_category", "vendor", "course_mandatory_enabled"]
+
+COURSE_DISCOVERY_MEANINGS = {
+    'language': LANGUAGE_MAP,
+    'status': {   # This is combined with 'start' and 'end' property of course
+        'name': 'Status',
+        'terms': {
+            'past': 'Archived',
+            'current': 'Published',
+            'future': 'Draft'
+        },
+    },
+    'course_category': {
+        'name': 'Category',
+        'terms': dict(COURSE_CATEGORIES),
+    },
+    'vendor': {
+        'name': 'Tag'
+    },
+    'course_mandatory_enabled': {
+        'name': 'Mandatory'
+    },
+    'course_country': {
+        'name': 'Country'
+    }
+}
+
+# Empty by default, set this value in site configuration.
+COURSE_COUNTRY_MAPPING = {
+    # user.profile.country: course.country
+}
+
+SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
+
+# Max search page size for Studio home page
+SEARCH_MAX_PAGE_SIZE = 1000
