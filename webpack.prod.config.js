@@ -34,11 +34,7 @@ var optimizedConfig = Merge.smart(commonConfig, {
             {
                 test: /(.scss|.css)$/,
                 include: [
-                    /node_modules\/se-react-data-list/,
-                    /node_modules\/se-react-date-range/,
-                    /node_modules\/se-react-dropdown/,
-                    /node_modules\/se-react-tab/,
-                    /node_modules\/sec-react-label-value/,
+                    /node_modules/,
                     /node_modules\/select2/
                 ],
                 use: [
