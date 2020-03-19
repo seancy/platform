@@ -110,15 +110,17 @@ export default class BaseReport extends React.Component{
             format: type,
             report_type:get(this.setting, 'reportType', '')
         }, 'page')
+        const showMessage = (result)=>{
+            LearningTribes.dialog.show(result.message, 3000)
+        }
         $.ajax(url, {
             // method: 'get', //please change it to post in real environment.
             method: 'post',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(ajaxData),
             dataType: 'json',
-            success: (result) => {
-                LearningTribes.dialog.show(result.message, 3000)
-            }
+            success: showMessage,
+            error:showMessage
         })
     }
 }
