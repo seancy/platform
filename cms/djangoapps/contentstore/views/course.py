@@ -1135,6 +1135,10 @@ def settings_handler(request, course_key_string):
                     'is_programmatic_enrollment_enabled': True
                 })
 
+            site_config_course_tags = configuration_helpers.get_value('COURSE_TAGS', [])
+            if site_config_course_tags and isinstance(site_config_course_tags, list):
+                settings_context.update({'site_config_course_tags': sorted(set(site_config_course_tags))})
+
             if is_prerequisite_courses_enabled():
                 courses, in_process_course_actions = get_courses_accessible_to_user(request)
                 # exclude current course from the list of available courses

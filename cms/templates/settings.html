@@ -336,11 +336,22 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             </li>
             <li class="field" id="field-course-vendor">
               <label for="course-vendor">${_("Course Tags")}</label>
+              % if site_config_course_tags:
+              <ul id="list-course-tags">
+                % for tag in site_config_course_tags:
+                <li>
+                  <input type="checkbox" id="course-tag-${tag}" name="course-tag[]" value="${tag}">
+                  <label for="course-tag-${tag}">${tag}</label>
+                </li>
+                % endfor
+              </ul>
+              % else:
               <input type="text" id="course-vendor">
               <button type="button" class="action action-primary button new-button add-course-tags">
                 <i class="icon fa fa-plus icon-inline" aria-hidden="true"></i>${_("Add")}
               </button>
               <div class="course-tags"></div>
+              % endif
               <span class="tip tip-stacked">${_("Identify the course tags here.")}</span>
             </li>
             <li class="field" id="field-course-order">
