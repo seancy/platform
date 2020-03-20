@@ -39,7 +39,11 @@ from lms.djangoapps.grades.models import (
 from lms.djangoapps.grades.services import GradesService
 from lms.djangoapps.grades.signals.signals import GRADE_EDITED
 from lms.djangoapps.grades.subsection_grade import CreateSubsectionGrade
-from lms.djangoapps.grades.tasks import recalculate_subsection_grade_v3, send_grade_override_email
+from lms.djangoapps.grades.tasks import (
+    recalculate_subsection_grade_v3,
+    send_grade_override_email,
+    update_course_progress
+)
 from lms.djangoapps.instructor.enrollment import get_user_email_language
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
@@ -204,6 +208,7 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
 
         result = []
         email_list = []
+        course_progress_users = []
         whole = False
         data = request.data['log']
         number_of_sections = int(request.data['number_of_sections'])
@@ -304,6 +309,7 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
                     'sections': override_sections,
                     'language': get_user_email_language(user)
                 })
+                course_progress_users.append(user.id)
 
         if email_list:
             # we don't finish the anaytics transcript feature yet, so use this fake link
@@ -318,6 +324,13 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
                     'platform_name': platform_name
                 }
             )
+            if course_progress_users:
+                update_course_progress.apply_async(
+                    kwargs={
+                        'users': course_progress_users,
+                        'course_id': unicode(course_key)
+                    }
+                )
 
         status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
         if len(result) > 0:
@@ -434,6 +447,12 @@ def undo_override_for_student(request, course_id):
         modified=timezone.now(),
     )
     grade_summary = CourseGradeFactory().read(user, course_key=course_key).summary
+    update_course_progress.apply_async(
+        kwargs={
+            'users': [user_id],
+            'course_id': course_id
+        }
+    )
     data = []
     for section in grade_summary['section_breakdown']:
         attrs = {'percent': section['percent'], 'category': section['category'],

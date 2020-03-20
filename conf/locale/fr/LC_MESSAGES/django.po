@@ -30978,3 +30978,7 @@ msgstr "NE PAS REPONDRE"
 #: master-sephora: lms/templates/emails/base_body_html.txt
 msgid "This is an automatically generated email, please do not reply."
 msgstr "Ceci est un email automatique, merci de ne pas répondre."
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "Completed by gradebook edit"
+msgstr "Complété par édition du carnet de notes"

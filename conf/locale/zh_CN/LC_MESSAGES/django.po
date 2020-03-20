@@ -28440,3 +28440,7 @@ msgstr "选择你要注册的学员，然后点击注册。你会收到一封确
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Session Date"
 msgstr "课程日期"
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "Completed by gradebook edit"
+msgstr "通过成绩单编辑完成"

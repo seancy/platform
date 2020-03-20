@@ -30042,3 +30042,7 @@ msgstr "Pernoite"
 #: lms/templates/triboo_analytics/table.html
 msgid "Overnight stay address"
 msgstr "Endereço para pernoite"
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "Completed by gradebook edit"
+msgstr "Completado pela edição do boletim"

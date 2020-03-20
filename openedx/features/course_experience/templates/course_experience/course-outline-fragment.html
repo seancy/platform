@@ -85,6 +85,8 @@ course_sections = blocks.get('children')
                                         </h4>
                     % if subsection.get('complete'):
                                         <span class="complete-checkmark far fa-check-circle"></span>
+                    % elif subsection['id'] in overridden_subsection_keys:
+                                        <span class="complete-checkmark far fa-flag-checkered" title="${_('Completed by gradebook edit')}"></span>
                     % endif
                 % endif
                                         <div class="details">
@@ -166,6 +168,8 @@ course_sections = blocks.get('children')
                                             </div>
                         % if vertical.get('complete'):
                                                 <span class="complete-checkmark far fa-check-circle"></span>
+                        % elif subsection['id'] in overridden_subsection_keys:
+                                                <span class="complete-checkmark far fa-flag-checkered" title="${_('Completed by gradebook edit')}"></span>
                         % endif
                                         </a>
                                     </li>

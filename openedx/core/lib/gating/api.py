@@ -450,6 +450,53 @@ def get_subsection_grade_percentage(subsection_usage_key, user):
     return subsection_grade_percentage
 
 
+def get_subsection_completion_percentage_with_gradebook_edit(subsection_usage_key, user, overrides=None):
+    """
+    Computes completion percentage for a subsection in a given course for a user, consider the gradeook override
+    Arguments:
+        subsection_usage_key: key of subsection
+        user: The user whose completion percentage needs to be computed
+        overrides: list of usage_keys of subsections which are overridden
+    Returns:
+        User's completion percentage for given subsection
+    """
+    overridden_blocks = []
+    if overrides:
+        for key in overrides:
+            struct = get_course_blocks(user, key)
+            if any(struct):
+                blocks = [
+                    block for block in struct
+                    if block.block_type not in ['chapter', 'sequential', 'vertical', 'course', 'discussion']
+                ]
+                overridden_blocks = overridden_blocks + blocks
+    subsection_completion_percentage = 0.0
+    try:
+        subsection_structure = get_course_blocks(user, subsection_usage_key)
+        if any(subsection_structure):
+            completable_blocks = [
+                block for block in subsection_structure
+                if block.block_type not in ['chapter', 'sequential', 'vertical', 'course', 'discussion']
+            ]
+            if not completable_blocks:
+                return 0
+            subsection_completion_total = 0
+            course_block_completions = BlockCompletion.get_course_completions(user, subsection_usage_key.course_key)
+            for block in completable_blocks:
+                if block in overridden_blocks:
+                    subsection_completion_total += 1
+                elif course_block_completions.get(block):
+                    subsection_completion_total += course_block_completions.get(block)
+            subsection_completion_percentage = min(
+                100 * (subsection_completion_total / float(len(completable_blocks))), 100
+            )
+
+    except ItemNotFoundError as err:
+        log.warning("Could not find course_block for subsection=%s error=%s", subsection_usage_key, err)
+
+    return subsection_completion_percentage
+
+
 def get_subsection_completion_percentage(subsection_usage_key, user):
     """
     Computes completion percentage for a subsection in a given course for a user
