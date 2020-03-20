@@ -1626,7 +1626,7 @@ def export_tables(request):
 
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
-        return HttpResponseNotFound()
+        return JsonResponseBadRequest({"message": _("Response Not Found.")})
 
     body_data = request.body.decode('utf-8')
     data = json.loads(body_data)
@@ -1720,7 +1720,7 @@ def course_view_data(request):
 
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
-        return HttpResponseNotFound()
+        return JsonResponseBadRequest({"message": _("Response Not Found.")})
     try:
         course_key = CourseKey.from_string(data.get('course_id', None))
         # course_key = CourseKey.from_string('course-v1:edX+DemoX+Demo_Course')
@@ -1774,7 +1774,7 @@ def course_view_data(request):
 def learner_view_data(request):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
-        return HttpResponseNotFound()
+        return JsonResponseBadRequest({"message": _("Response Not Found.")})
 
     learner_report_org = orgs[0]
     if len(orgs) > 1:
@@ -1814,7 +1814,7 @@ def learner_view_data(request):
 def ilt_view_data(request):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
-        return HttpResponseNotFound()
+        return JsonResponseBadRequest({"message": _("Response Not Found.")})
 
     body_data = request.body.decode('utf-8')
     data = json.loads(body_data)
@@ -1844,74 +1844,77 @@ def ilt_view_data(request):
 
 
 def table_view_data(course_id, _task_input):
-    if _task_input['report_name'] == "transcript":
-        table, _ = get_transcript_table(_task_input['report_args']['orgs'],
-                                        _task_input['report_args']['user_id'],
-                                        datetime.strptime(_task_input['report_args']['last_update'], "%Y-%m-%d"))
-    elif _task_input['report_name'] == "ilt_global_report":
-        kwargs = _task_input['report_args']['filter_kwargs']
-        table, _ = get_ilt_report_table(_task_input['report_args']['orgs'],
-                                        kwargs)
-    elif _task_input['report_name'] == "ilt_learner_report":
-        kwargs = _task_input['report_args']['filter_kwargs']
-        table, _ = get_ilt_learner_report_table(_task_input['report_args']['orgs'],
-                                                kwargs,
-                                                _task_input['report_args']['exclude'])
-    else:
-        kwargs = _task_input['report_args']['filter_kwargs']
-        exclude = _task_input['report_args']['exclude']
-        date_time = _task_input['report_args'].get('date_time', None)
-        # customized course summary report
-        if date_time:
-            day = datetime.strptime(date_time, "%Y-%m-%d").date()
-            courses_selected = _task_input['report_args'].get('courses_selected', None)
-            course_keys = [CourseKey.from_string(id) for id in courses_selected.split(',')]
-            course_filter = Q()
-            for course_key in course_keys:
-                course_filter |= Q(**{'course_id': course_key})
-            filters = Q(**{'created': day}) & Q(**kwargs) & course_filter
-            report_cls = getattr(models, _task_input['report_args']['report_cls'])
-            table_cls = getattr(tables, _task_input['report_args']['table_cls'])
-            table, _ = get_customized_table(report_cls, kwargs, filters, table_cls, exclude)
+    try:
+        if _task_input['report_name'] == "transcript":
+            table, _ = get_transcript_table(_task_input['report_args']['orgs'],
+                                            _task_input['report_args']['user_id'],
+                                            datetime.strptime(_task_input['report_args']['last_update'], "%Y-%m-%d"))
+        elif _task_input['report_name'] == "ilt_global_report":
+            kwargs = _task_input['report_args']['filter_kwargs']
+            table, _ = get_ilt_report_table(_task_input['report_args']['orgs'],
+                                            kwargs)
+        elif _task_input['report_name'] == "ilt_learner_report":
+            kwargs = _task_input['report_args']['filter_kwargs']
+            table, _ = get_ilt_learner_report_table(_task_input['report_args']['orgs'],
+                                                    kwargs,
+                                                    _task_input['report_args']['exclude'])
         else:
-            if _task_input['report_name'] == "progress_report":
-                enrollments = CourseEnrollment.objects.filter(is_active=True,
-                                                              course_id=course_id,
-                                                              user__is_active=True,
-                                                              **kwargs).prefetch_related('user')
-                table, _ = get_course_progress_table(course_id, enrollments, kwargs, exclude)
-            elif _task_input['report_name'] == "time_spent_report":
-                table, _ = get_course_time_spent_table(course_id, kwargs, exclude)
-            else:
+            kwargs = _task_input['report_args']['filter_kwargs']
+            exclude = _task_input['report_args']['exclude']
+            date_time = _task_input['report_args'].get('date_time', None)
+            # customized course summary report
+            if date_time:
+                day = datetime.strptime(date_time, "%Y-%m-%d").date()
+                courses_selected = _task_input['report_args'].get('courses_selected', None)
+                course_keys = [CourseKey.from_string(id) for id in courses_selected.split(',')]
+                course_filter = Q()
+                for course_key in course_keys:
+                    course_filter |= Q(**{'course_id': course_key})
+                filters = Q(**{'created': day}) & Q(**kwargs) & course_filter
                 report_cls = getattr(models, _task_input['report_args']['report_cls'])
                 table_cls = getattr(tables, _task_input['report_args']['table_cls'])
-                if 'date_time' in kwargs.keys():
-                    kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
-                if 'course_id' in kwargs.keys():
-                    kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
-                table, _ = get_table(report_cls, kwargs, table_cls, exclude)
+                table, _ = get_customized_table(report_cls, kwargs, filters, table_cls, exclude)
+            else:
+                if _task_input['report_name'] == "progress_report":
+                    enrollments = CourseEnrollment.objects.filter(is_active=True,
+                                                                  course_id=course_id,
+                                                                  user__is_active=True,
+                                                                  **kwargs).prefetch_related('user')
+                    table, _ = get_course_progress_table(course_id, enrollments, kwargs, exclude)
+                elif _task_input['report_name'] == "time_spent_report":
+                    table, _ = get_course_time_spent_table(course_id, kwargs, exclude)
+                else:
+                    report_cls = getattr(models, _task_input['report_args']['report_cls'])
+                    table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+                    if 'date_time' in kwargs.keys():
+                        kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
+                    if 'course_id' in kwargs.keys():
+                        kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
+                    table, _ = get_table(report_cls, kwargs, table_cls, exclude)
 
-    report_name = _task_input['report_name']
-    exporter = TableExport('json', table)
-    content = exporter.export()
-    content = json.loads(content)
-    reversed_filter_dict = reverse_filter_dict(get_filters_data(False))
-    response_data = format_headers(content, reversed_filter_dict)
-    total_dict = get_total_dict(response_data, report_name)
+        report_name = _task_input['report_name']
+        exporter = TableExport('json', table)
+        content = exporter.export()
+        content = json.loads(content)
+        reversed_filter_dict = reverse_filter_dict(get_filters_data(False))
+        response_data = format_headers(content, reversed_filter_dict)
+        total_dict = get_total_dict(response_data, report_name)
 
-    page = _task_input['report_args']['page']
-    page_start = (page['no'] - 1) * page['size']
-    page_end = page['no'] * page['size']
-    response_data = response_data[page_start:page_end]
-    response_dict = dict(
-        list=response_data,
-        total=total_dict,
+        page = _task_input['report_args']['page']
+        page_start = (page['no'] - 1) * page['size']
+        page_end = page['no'] * page['size']
+        response_data = response_data[page_start:page_end]
+        response_dict = dict(
+            list=response_data,
+            total=total_dict,
 
-        pagination=dict(
-            rowsCount=len(content)
+            pagination=dict(
+                rowsCount=len(content)
+            )
         )
-    )
-    return JsonResponse(response_dict)
+        return JsonResponse(response_dict)
+    except Exception as e:
+        return JsonResponseBadRequest({"message": "Unable to fetch data."})
 
 
 def get_total_dict(data, report):
