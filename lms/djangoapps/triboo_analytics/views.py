@@ -1921,9 +1921,9 @@ def get_total_dict(data, report):
     total_dict = collections.OrderedDict()
     summary_columns = []
     if report == "summary_report":
-        summary_columns = ['Progress', 'CurrentScore', 'Badges', 'Posts', 'TotalTimeSpent']
+        summary_columns = ['Progress', 'Current Score', 'Badges', 'Posts', 'Total Time Spent']
     elif report == "learner_report":
-        summary_columns = ['Enrollments', 'Successful', 'Unsuccessful', 'NotStarted', 'AverageFinalScore', 'Badges', 'Posts', 'TotalTimeSpent', 'InProgress']
+        summary_columns = ['Enrollments', 'Successful', 'Unsuccessful', 'Not Started', 'Average Final Score', 'Badges', 'Posts', 'Total Time Spent', 'In Progress']
     for col in summary_columns:
         if col == 'Badges':
             values = []
@@ -1932,10 +1932,10 @@ def get_total_dict(data, report):
                     split_str = '(/' if '(' in row[col] else '/'
                     values.append(int(row[col].split(split_str)[0].strip()))
             total_dict[col] = sum(values)
-        elif col == 'TotalTimeSpent':
+        elif col == 'Total Time Spent':
             values = [str2sec(row[col]) for row in data if row[col]]
             total_dict[col] = sec2str(sum(values))
-        elif col in ['Progress', 'CurrentScore', 'AverageFinalScore']:
+        elif col in ['Progress', 'Current Score', 'Average Final Score']:
             values = [int(row[col].split('%')[0].strip()) for row in data if row[col]]
             total_dict[col] = str(sum(values) // len(values)) + '%' if values else '0%'
         else:
@@ -1955,7 +1955,7 @@ def format_headers(data, formats):
             if k in formats.keys():
                 key = formats[k]
             else:
-                key = k.replace(' ', '')
+                key = k ##.replace(' ', '')
             new_row[key] = v
         response_data.append(new_row)
         index += 1
