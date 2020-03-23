@@ -31,7 +31,7 @@ export default class CourseReportSummary extends BaseReport {
             return <span className={val?'in-progress-bg':'not-started-bg'}>{val?'In Progress':'Not Started'}</span>
         }
         return {
-            ...pick(this.state, ['isLoading']),
+            ...pick(this.state, ['isLoading', 'data', 'totalData']),
             keyField:"ID",
             fields: [
                 {name: 'Name', fieldName: 'Name'},
@@ -39,20 +39,18 @@ export default class CourseReportSummary extends BaseReport {
 
                 {name: 'Status', fieldName: 'Status', render, className:'status'},
                 {name: 'Progress', fieldName: 'Progress'},
-                {name: 'Current Score', fieldName: 'CurrentScore'},
+                {name: 'Current Score', fieldName: 'Current Score'},
                 {name: 'Badges', fieldName: 'Badges'},
                 {name: 'Posts', fieldName: 'Posts'},
-                {name: 'Total Time Spent', fieldName: 'TotalTimeSpent'},
-                {name: 'Enrollment Date', fieldName: 'EnrollmentDate'},
-                {name: 'Completion Date', fieldName: 'CompletionDate'},
+                {name: 'Total Time Spent', fieldName: 'Total Time Spent'},
+                {name: 'Enrollment Date', fieldName: 'Enrollment Date'},
+                {name: 'Completion Date', fieldName: 'Completion Date'},
 
             ],
             pagination: {
                 pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,
-            },
-            data: this.state.data,
-            totalData: this.state.totalData
+            }
         }
     }
 

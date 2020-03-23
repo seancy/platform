@@ -63,7 +63,7 @@ export default class CourseReportTimeSpent extends BaseReport {
         const {dynamicFields, subFields}=this.getDynamicFields()
 
         return {
-            ...pick(this.state, ['isLoading']),
+            ...pick(this.state, ['isLoading', 'data', 'totalData']),
             keyField:"ID",
             fields:[
                 {name: 'Name', fieldName: 'Name'},
@@ -81,9 +81,7 @@ export default class CourseReportTimeSpent extends BaseReport {
             pagination: {
                 pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,
-            },
-            data: this.state.data,
-            totalData: this.state.totalData
+            }
         }
     }
 

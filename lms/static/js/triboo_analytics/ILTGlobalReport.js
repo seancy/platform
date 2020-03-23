@@ -27,33 +27,33 @@ export default class ILTGlobalReport extends BaseReport {
             fields: [
                 {name: 'Name', fieldName: 'userName'},
 
-                {name: 'Geographical area', fieldName: 'GeographicalArea'},
-                {name: 'Course country', fieldName: 'CourseCountry'},
-                {name: 'Zone/Region', fieldName: 'ZoneRegion'},
-                {name: 'Course tags', fieldName: 'CourseTags'},
+                {name: 'Geographical area', fieldName: 'Geographical Area'},
+                {name: 'Course country', fieldName: 'Course Country'},
+                {name: 'Zone/Region', fieldName: 'Zone Region'},
+                {name: 'Course tags', fieldName: 'Course Tags'},
 
-                {name: 'Course code', fieldName: 'CourseCode'},
+                {name: 'Course code', fieldName: 'Course Code'},
                 {name: 'Course', fieldName: 'Course'},
                 {name: 'Section', fieldName: 'Section'},
                 {name: 'Subsection', fieldName: 'Subsection'},
 
-                {name: 'Session ID', fieldName: 'SessionID'},
-                {name: 'Start date', fieldName: 'StartDate'},
-                {name: 'Start time', fieldName: 'StartTime'},
-                {name: 'End date', fieldName: 'EndDate'},
+                {name: 'Session ID', fieldName: 'Session ID'},
+                {name: 'Start date', fieldName: 'Start Date'},
+                {name: 'Start time', fieldName: 'Start Time'},
+                {name: 'End date', fieldName: 'End Date'},
 
-                {name: 'End time', fieldName: 'EndTime'},
+                {name: 'End time', fieldName: 'End Time'},
                 {name: 'Duration (in hours)', fieldName: 'Duration'},
-                {name: 'Max capacity', fieldName: 'MaxCapacity'},
+                {name: 'Max capacity', fieldName: 'Max Capacity'},
                 {name: 'Enrollees', fieldName: 'Enrollees'},
 
                 {name: 'Attendees', fieldName: 'Attendees'},
-                {name: 'Attendance sheet', fieldName: 'AttendanceSheet'},
-                {name: 'Location ID', fieldName: 'LocationID'},
-                {name: 'Location name', fieldName: 'LocationName'},
+                {name: 'Attendance sheet', fieldName: 'Attendance Sheet'},
+                {name: 'Location ID', fieldName: 'Location ID'},
+                {name: 'Location name', fieldName: 'Location Name'},
 
                 {name: 'Address', fieldName: 'Address'},
-                {name: 'Zip code', fieldName: 'ZipCode'},
+                {name: 'Zip code', fieldName: 'Zip Code'},
                 {name: 'City', fieldName: 'City'},
             ],
             pagination: {

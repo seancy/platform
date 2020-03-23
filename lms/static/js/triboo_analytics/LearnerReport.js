@@ -38,13 +38,13 @@ export class LearnerReport extends BaseReport {
                 {name: 'Enrollments', fieldName: 'Enrollments'},
                 {name: 'Successful', fieldName: 'Successful'},
                 {name: 'Unsuccessful', fieldName: 'Unsuccessful'},
-                {name: 'In Progress', fieldName: 'InProgress'},
-                {name: 'Not Started', fieldName: 'NotStarted'},
-                {name: 'Average Final Score', fieldName: 'AverageFinalScore'},
+                {name: 'In Progress', fieldName: 'In Progress'},
+                {name: 'Not Started', fieldName: 'Not Started'},
+                {name: 'Average Final Score', fieldName: 'Average Final Score'},
                 {name: 'Badges', fieldName: 'Badges'},
                 {name: 'Posts', fieldName: 'Posts'},
-                {name: 'Total Time Spent', fieldName: 'TotalTimeSpent'},
-                {name: 'Last Login', fieldName: 'LastLogin'}
+                {name: 'Total Time Spent', fieldName: 'Total Time Spent'},
+                {name: 'Last Login', fieldName: 'Last Login'}
             ],
             pagination: {
                 pageSize: PaginationConfig.PageSize,
