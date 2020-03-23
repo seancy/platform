@@ -48,7 +48,7 @@ export default class CourseReportProgress extends BaseReport {
             cellRender:v=>{
                 if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')){
                     const arr = v.split(':')
-                    return (<><span class={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}%</> )
+                    return (<><span className={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}%</> )
                 }else{
                     return v
                 }
@@ -61,12 +61,14 @@ export default class CourseReportProgress extends BaseReport {
             totalData: this.state.totalData
         }
     }
+
     render() {
         const config = this.getConfig()
         return (
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
                          onGo={this.startExport.bind(this)}
+                         {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}/>
                 <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}

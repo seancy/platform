@@ -4,6 +4,7 @@ import DataList from "se-react-data-list";
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
 import {pick} from "lodash";
+import PropTypes from "prop-types";
 
 export default class CourseReportSummary extends BaseReport {
     constructor(props) {
@@ -22,8 +23,6 @@ export default class CourseReportSummary extends BaseReport {
     }
 
     getConfig(){
-        /*const properties=this.state.properties.filter(p=>p.type == 'default')
-        const {selectedProperties}=this.state.toolbarData;*/
         const propertiesFields = this.getOrderedProperties().map(p=>({
                 name: p.text,
                 fieldName: p.value
@@ -63,6 +62,7 @@ export default class CourseReportSummary extends BaseReport {
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
                          onGo={this.startExport.bind(this)}
+                         {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}/>
                 <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
@@ -70,4 +70,12 @@ export default class CourseReportSummary extends BaseReport {
             </>
         )
     }
+}
+
+CourseReportSummary.propTypes = {
+    defaultLanguage: PropTypes.string,
+    token: PropTypes.string,
+    course_id: PropTypes.string,
+    defaultToolbarData:PropTypes.object,
+    onChange:PropTypes.func
 }

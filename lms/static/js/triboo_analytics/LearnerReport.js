@@ -64,7 +64,6 @@ export class LearnerReport extends BaseReport {
                         <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
                     </div>
                     <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
-                             //onExportTypeChange={this.startExport.bind(this)}
                              onGo={this.startExport.bind(this)}
                              onInit={properties=>this.setState({properties})}/>
                     <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}

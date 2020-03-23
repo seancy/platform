@@ -1,11 +1,13 @@
 import React from 'react';
 import {PaginationConfig} from "./Config";
-import {get, merge, omit} from "lodash";
+import {get, merge, omit, isEmpty} from "lodash";
 
 export default class BaseReport extends React.Component{
     constructor(props){
         super(props)
         this.state = {
+            timer:null,
+
             isLoading:false,
             properties:[],
 
@@ -22,17 +24,29 @@ export default class BaseReport extends React.Component{
     }
 
     componentDidMount() {
-        this.fetchData(1)
+        const toolbarData = this.props.defaultToolbarData
+        const {selectedFilterItems=[], selectedProperties=[], startDate='', endDate=''} = toolbarData
+        if (Object.keys(toolbarData).length <= 0 ||
+            (selectedFilterItems.length <= 0 &&
+            selectedProperties.length <= 0  &&
+            startDate == '' &&
+            endDate == '') ){
+            this.fetchData(1)
+        }
     }
 
-    toolbarDataUpdate(toolbarData){
-        this.setState(s=>{
+    toolbarDataUpdate(toolbarData, isExcluded){
+        this.setState(()=>{
             return {
                 toolbarData
             }
         },()=>{
-            this.fetchData(1)
-            this.myRef.current.resetPage(1)
+            if (!isExcluded){
+                this.fetchData(1)
+                this.myRef.current.resetPage(1)
+            }
+            const {onChange} = this.props
+            onChange && onChange(this.state.toolbarData)
         })
     }
 

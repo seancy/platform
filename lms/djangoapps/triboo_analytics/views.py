@@ -829,7 +829,7 @@ def get_course_triples(course_tuples, last_update):
     for course_id, course_name in course_tuples:
         course_key = CourseKey.from_string(course_id)
         course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
-        triple = (course_id, course_name, course_report.enrollments)
+        triple = (course_id, course_name, course_report.enrollments if course_report else None)
         triples.append(triple)
     return triples
 

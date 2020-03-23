@@ -1,12 +1,6 @@
 import 'select2'
 import '../../../../node_modules/select2/dist/css/select2.css'
 
-/*class CourseReportTemp {
-    constructor(){
-        $('.analytics-header form select').select2();
-    }
-}*/
-
 function initSelect() {
     $('.analytics-header form select').select2();
 }
@@ -24,13 +18,26 @@ class CourseReport extends React.Component {
     constructor(props) {
         super(props);
         initSelect()
+
+        this.state = {
+            activeTabName:'',
+            toolbarData:{}
+        }
     }
 
     render() {
         const urlParams = new URLSearchParams(location.search)
         const course_id = urlParams.get('course_id')
         //const token = urlParams.get('csrfmiddlewaretoken')  please keep it.
-        const common_props = {...pick(this.props, 'defaultLanguage', 'token'), ...{course_id}}
+        const common_props = {...pick(this.props, 'defaultLanguage', 'token'), ...{
+            course_id,
+            defaultToolbarData:this.state.toolbarData,
+            defaultActiveTabName:this.state.activeTabName,
+            onTabSwitch:activeTabName=>{
+                this.setState({activeTabName})
+            },
+            onChange:toolbarData=>this.setState({ toolbarData })
+        }}
         const data = [
             {text: 'Summary', value: 'summary', component: Summary, props:common_props},
             {text: 'Progress', value: 'progress', component: Progress, props:common_props},

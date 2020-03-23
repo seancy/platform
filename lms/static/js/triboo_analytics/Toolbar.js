@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger, import/prefer-default-export */
 import React from 'react';
 import PropTypes from 'prop-types'
-import { pick } from 'lodash'
+import { pick, get } from 'lodash'
 
 import DateRange from 'se-react-date-range'
 import LabelValue from 'sec-react-label-value'
@@ -12,7 +12,14 @@ class Exporter extends React.Component {
         super(props, context);
         this.state={
             buttonStatus:'disabled',
-            value:''
+            value:props.defaultValue || ''
+        }
+    }
+
+    componentDidMount() {
+        const {defaultValue}=this.props
+        if (defaultValue != ''){
+            this.fireChange(defaultValue)
         }
     }
 
@@ -22,10 +29,14 @@ class Exporter extends React.Component {
             value,
             buttonStatus:''
         },()=>{
-            const {onChange}=this.props
-            onChange && onChange(value)
-
+            this.fireChange(value)
         })
+    }
+
+    fireChange(value){
+        const {onChange}=this.props
+        onChange && onChange(value)
+        this.setState({buttonStatus:''})
     }
 
     render() {
@@ -42,7 +53,7 @@ class Exporter extends React.Component {
                     const key = 'radio-'+index
                     return (
                         <li key={key}>
-                            <input type="radio" name="radio0" id={key} onClick={this.handleChange.bind(this, item)}/>
+                            <input type="radio" name="radio0" id={key} checked={this.state.value == item.value?true:false} onChange={this.handleChange.bind(this, item)}/>
                             <label htmlFor={key}>{item.text}</label>
                         </li>
                     )
@@ -73,13 +84,12 @@ class Properties extends React.Component {
     render() {
         return (
             <div className="properties-wrapper">
-                <CheckboxGroup ref={this.myRef} data={this.props.data} onChange={this.handleChange.bind(this)}/>
-                <input type="button" value="Reset" onClick={this.clean.bind(this)}/>
+                <CheckboxGroup ref={this.myRef} {...pick(this.props, ['data', 'checkedList'])}
+                               onChange={this.handleChange.bind(this)}/>
             </div>
         )
     }
 }
-
 
 export class Toolbar extends React.Component {
     constructor(props) {
@@ -89,6 +99,8 @@ export class Toolbar extends React.Component {
         const {enabledItems}=props
         const toolbarItems = this.getToolbarItems(enabledItems)
         this.state = {
+            timer:null,
+
             selectedFilterItems:[],
             selectedProperties:[],
             startDate:'',
@@ -96,8 +108,8 @@ export class Toolbar extends React.Component {
             exportType:'',
 
             toolbarItems,
-            activeTabName:toolbarItems.length > 0 ? toolbarItems[0].name : ''
-        };
+            activeTabName:props.defaultActiveTabName || '' //toolbarItems.length > 0 ? toolbarItems[0].name : ''
+        }
     }
 
     componentDidMount(){
@@ -127,46 +139,76 @@ export class Toolbar extends React.Component {
 
     export(){
         const {onGo}=this.props
-        //const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate','exportType')
         onGo && onGo(this.state.exportType)
     }
 
     fireExportTypeChange(){
-        const {onExportTypeChange}=this.props
-        onExportTypeChange && onExportTypeChange(this.state.exportType);
+        this.state.timer && clearTimeout(this.state.timer)
+        this.setState({
+            timer:setTimeout(()=>{
+                this.doFireChange(true)
+            },500)
+        })
     }
 
     fireOnChange () {
+        this.state.timer && clearTimeout(this.state.timer)
+        this.setState({
+            timer:setTimeout(()=>{
+                this.doFireChange()
+            },500)
+        })
+    }
+
+    doFireChange(isExcluded=false){
+        this.setState({timer:null})
         const {onChange}=this.props
         const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate', 'exportType')
-        onChange && onChange(json);
+        onChange && onChange(json, isExcluded);
     }
 
     getToolbarItems(enabledItems=[]){
         const propertyData = [
             {value: '', text: ''},
         ]
+        const {
+            selectedFilterItems = [], selectedProperties=[], exportType='',startDate='',endDate='',
+        } = get(this, 'props.defaultToolbarData', {})
+
         return [
             {name:'filters', text: gettext('filters'), icon: 'fa-search', active: false, component: LabelValue, props:{
-                data:propertyData,
+                data:propertyData, selectedList:selectedFilterItems,
                 onChange:(selectedFilterItems)=>this.setState({selectedFilterItems}, this.fireOnChange)
             }},
             {name:'properties', text: gettext('properties'), icon: 'fa-sliders-h', active: false, component: Properties, props:{
-                data:propertyData,
+                data:[], checkedList:selectedProperties.map(p => p.value),
                 onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
             }},
             {name:'period', text: gettext('period'), icon: 'fa-calendar-alt', active: false, component: DateRange, props:{
-                label:'Select a time range， Last',
+                label:'Select a time range， Last', startDate, endDate,
                 onChange:(startDate,endDate)=>{
                     this.setState({startDate,endDate}, this.fireOnChange)
                 }
             }},
             {name:'export', text: gettext('export'), icon: 'fa-file-export', active: false, component: Exporter, props:{
-                onGo:this.export.bind(this),
+                onGo:this.export.bind(this), defaultValue:exportType,
                 onChange:exportType=>this.setState({exportType}, this.fireExportTypeChange.bind(this))
             }},
         ]
             .filter(p=>enabledItems.includes(p.name) ||  enabledItems.length <= 0)
+    }
+
+    setActiveTab(json){
+        const {onTabSwitch}=this.props
+        this.setState((prev)=>{
+            let activeTabName = ''
+            if (prev.activeTabName != json.name){
+                activeTabName = json.name
+            }
+            return {activeTabName}
+        }, ()=>{
+            onTabSwitch && onTabSwitch(json.name)
+        })
     }
 
     render() {
@@ -175,7 +217,7 @@ export class Toolbar extends React.Component {
             <div className="toolbar">
                 <ul className="toolbar-tabs">
                     {this.state.toolbarItems.map(json =>
-                        (<li key={json.name} onClick={()=>this.setState({activeTabName:json.name})}
+                        (<li key={json.name} onClick={this.setActiveTab.bind(this, json)}
                              className={json.name + (activeTabName==json.name ? ' active' : '')}>
                             <i className={'far ' + json.icon}></i><span>{json.text}</span>
                         </li>)
@@ -196,15 +238,10 @@ export class Toolbar extends React.Component {
     }
 }
 
-/*const DATA_ARRAY = PropTypes.arrayOf(PropTypes.exact({
-    value:PropTypes.string,
-    text:PropTypes.string,
-    checked:PropTypes.bool
-}))*/
-
 Toolbar.propTypes = {
     //properties:DATA_ARRAY,
     onExportTypeChange:PropTypes.func,
     onInit:PropTypes.func,
     onChange:PropTypes.func,
+    defaultToolbarData:PropTypes.object
 }
