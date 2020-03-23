@@ -24,7 +24,7 @@ export default class BaseReport extends React.Component{
     }
 
     componentDidMount() {
-        const toolbarData = this.props.defaultToolbarData
+        const toolbarData = get(this, 'props.defaultToolbarData', {})
         const {selectedFilterItems=[], selectedProperties=[], startDate='', endDate=''} = toolbarData
         if (Object.keys(toolbarData).length <= 0 ||
             (selectedFilterItems.length <= 0 &&
