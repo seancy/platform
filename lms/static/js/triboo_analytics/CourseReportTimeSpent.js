@@ -3,7 +3,7 @@ import {Toolbar} from "./Toolbar";
 import DataList from "se-react-data-list";
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
-import {pick} from "lodash";
+import {pick, flatten} from "lodash";
 
 export default class CourseReportTimeSpent extends BaseReport {
     constructor(props) {
@@ -44,11 +44,15 @@ export default class CourseReportTimeSpent extends BaseReport {
 
             dynamicFields = [...normalDynamicFields.map(key=>({name:key,fieldName:key})),
                 ...complexDynamicFields.map(key=>({name:key,fieldName:key, colSpan:countSpan(key)}))]
-            subFields = complexDynamicKeys.map(key=>{
-                const arr = key.split('/')
-                const keyL2 = arr[1]
-                return {name:keyL2,fieldName:key}
-            })
+            subFields = flatten(complexDynamicFields.map(keyL1=>{
+                return complexDynamicKeys.filter(key=>{
+                    return key.split('/')[0] == keyL1
+                }).map(key=>{
+                    const arr = key.split('/')
+                    const keyL2 = arr[1]
+                    return {name:keyL2,fieldName:key}
+                })
+            }))
         }
         return {dynamicFields, subFields}
     }
