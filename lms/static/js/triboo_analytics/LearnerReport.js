@@ -29,8 +29,7 @@ export class LearnerReport extends BaseReport {
                 fieldName: p.value
             }))
 
-        return {
-            ...pick(this.state, ['isLoading']),
+        return {...{
             fields: [
                 {name: 'Name', fieldName: 'Name'},
                 ...propertiesFields,
@@ -46,13 +45,7 @@ export class LearnerReport extends BaseReport {
                 {name: 'Total Time Spent', fieldName: 'Total Time Spent'},
                 {name: 'Last Login', fieldName: 'Last Login'}
             ],
-            pagination: {
-                pageSize: PaginationConfig.PageSize,
-                rowsCount: this.state.rowsCount,
-            },
-            data: this.state.data,
-            totalData: this.state.totalData
-        }
+        }, ...this.getBaseConfig()}
     }
 
     render() {

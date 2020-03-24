@@ -20,10 +20,8 @@ export default class ILTGlobalReport extends BaseReport {
         dataUrl:'/analytics/ilt/json/'
     }
 
-    render() {
-        const {data,totalData} = this.state
-        const config = {
-            ...pick(this.state, ['isLoading']),
+    getConfig(){
+        return {...{
             fields: [
                 {name: 'Name', fieldName: 'userName'},
 
@@ -56,13 +54,11 @@ export default class ILTGlobalReport extends BaseReport {
                 {name: 'Zip code', fieldName: 'Zip Code'},
                 {name: 'City', fieldName: 'City'},
             ],
-            pagination: {
-                pageSize: PaginationConfig.PageSize,
-                rowsCount: this.state.rowsCount,
-            },
-            data, totalData
-        }
+        }, ...this.getBaseConfig()}
+    }
 
+    render() {
+        const config = this.getConfig()
         return (
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)} enabledItems={['period','export']}

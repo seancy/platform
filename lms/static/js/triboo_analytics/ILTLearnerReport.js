@@ -21,14 +21,11 @@ export default class ILTLearnerReport extends BaseReport {
     }
 
     getConfig(){
-        /*const properties=this.state.properties.filter(p=>p.type == 'default')
-        const {selectedProperties}=this.state.toolbarData;*/
         const propertiesFields = this.getOrderedProperties().map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))
-        return {
-            ...pick(this.state, ['isLoading']),
+        return {...{
             fields: [
 
                 {name: 'Geographical area', fieldName: 'Geographical Area'},
@@ -67,13 +64,7 @@ export default class ILTLearnerReport extends BaseReport {
                 {name: 'Overnight stay address', fieldName: 'Overnight Stay Address'},
                 {name: 'Comment', fieldName: 'Comment'}
             ],
-            pagination: {
-                pageSize: PaginationConfig.PageSize,
-                rowsCount: this.state.rowsCount,
-            },
-            data: this.state.data,
-            totalData: this.state.totalData
-        }
+        }, ...this.getBaseConfig()}
     }
 
     render() {

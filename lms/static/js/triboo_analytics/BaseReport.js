@@ -1,6 +1,6 @@
 import React from 'react';
 import {PaginationConfig} from "./Config";
-import {get, merge, omit, isEmpty} from "lodash";
+import {get, merge, omit, isEmpty, pick} from "lodash";
 
 export default class BaseReport extends React.Component{
     constructor(props){
@@ -90,12 +90,27 @@ export default class BaseReport extends React.Component{
         }, ...get(this.setting, 'extraParams', {})}
     }
 
-    fetchData(pageNo) {
+    getBaseConfig(){
+        return {
+            onSort:sort=>{
+                sort == '' ?
+                    this.fetchData(1) :
+                    this.fetchData(1, sort)
+            },
+            ...pick(this.state, ['isLoading', 'data', 'totalData']),
+            pagination: {
+                pageSize: PaginationConfig.PageSize,
+                rowsCount: this.state.rowsCount,
+            }
+        }
+    }
+
+    fetchData(pageNo, sort='+ID') {
         const url = get(this.setting, 'dataUrl', '')
         let ajaxData = merge(this.generateParameter(),{
             page:{
                 no: pageNo
-            }
+            }, ...(sort!=''?{sort}:{})
         })
         this.setState({isLoading:true})
         $.ajax(url, {

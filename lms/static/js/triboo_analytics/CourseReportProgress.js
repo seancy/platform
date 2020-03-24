@@ -37,8 +37,7 @@ export default class CourseReportProgress extends BaseReport {
             }).map(key=>({name:key, fieldName:key}));
         }
 
-        return {
-            ...pick(this.state, ['isLoading', 'data', 'totalData']),
+        return {...{
             keyField:"ID",
             fields:[
                 {name: 'Name', fieldName: 'Name'},
@@ -53,11 +52,7 @@ export default class CourseReportProgress extends BaseReport {
                     return v
                 }
             },
-            pagination: {
-                pageSize: PaginationConfig.PageSize,
-                rowsCount: this.state.rowsCount,
-            }
-        }
+        }, ...this.getBaseConfig()}
     }
 
     render() {

@@ -30,8 +30,7 @@ export default class CourseReportSummary extends BaseReport {
         const render=(val)=>{
             return <span className={val?'in-progress-bg':'not-started-bg'}>{val?'In Progress':'Not Started'}</span>
         }
-        return {
-            ...pick(this.state, ['isLoading', 'data', 'totalData']),
+        return {...{
             keyField:"ID",
             fields: [
                 {name: 'Name', fieldName: 'Name'},
@@ -47,11 +46,7 @@ export default class CourseReportSummary extends BaseReport {
                 {name: 'Completion Date', fieldName: 'Completion Date'},
 
             ],
-            pagination: {
-                pageSize: PaginationConfig.PageSize,
-                rowsCount: this.state.rowsCount,
-            }
-        }
+        }, ...this.getBaseConfig()}
     }
 
     render() {
