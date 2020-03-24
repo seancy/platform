@@ -1743,6 +1743,7 @@ def course_view_data(request):
                 'table_cls': CourseTable.__name__,
                 'exclude': list(exclude),
                 'page': data['page'],
+                'sort': data['sort'],
             }
             task_input = {
                 'report_name': "summary_report",
@@ -1756,6 +1757,7 @@ def course_view_data(request):
                 'filter_kwargs': filter_kwargs,
                 'exclude': list(exclude),
                 'page': data['page'],
+                'sort': data['sort'],
             }
             report_name = "progress_report" if report == "course_progress" else "time_spent_report"
             task_input = {
@@ -1798,6 +1800,7 @@ def learner_view_data(request):
             'table_cls': LearnerDailyTable.__name__,
             'exclude': list(exclude),
             'page': data['page'],
+            'sort': data['sort'],
         }
         task_input = {
             'report_name': "learner_report",
@@ -1834,6 +1837,7 @@ def ilt_view_data(request):
             'orgs': orgs,
             'exclude': list(exclude),
             'page': data['page'],
+            'sort': data['sort'],
         }
         report_name = 'ilt_global_report' if report == 'ilt_global' else 'ilt_learner_report'
         task_input = {
