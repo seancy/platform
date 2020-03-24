@@ -1898,6 +1898,9 @@ def table_view_data(course_id, _task_input):
         content = json.loads(content)
         reversed_filter_dict = reverse_filter_dict(get_filters_data(False))
         response_data = format_headers(content, reversed_filter_dict)
+        sort_flag, sort_key = _task_input['report_args']['sort'][0], _task_input['report_args']['sort'][1:]
+        reverse_flag = True if sort_flag == '-' else False
+        response_data = sorted(response_data, key=lambda x: x[sort_key], reverse=reverse_flag)
         total_dict = get_total_dict(response_data, report_name)
 
         page = _task_input['report_args']['page']
