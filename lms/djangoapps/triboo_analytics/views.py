@@ -707,7 +707,7 @@ def get_filter_kwargs_with_table_exclude(request):
     return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
 
 
-def get_period_filter_kwargs_with_table_exclude(request, as_string=False):
+def get_period_filter_kwargs_with_table_exclude(request, as_string=False, course_id=None, with_period_start=False):
     filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
     if time_period_form.period:
         last_reportlog = ReportLog.get_latest(from_date=time_period_form.period[0], to_date=time_period_form.period[1])
@@ -720,6 +720,12 @@ def get_period_filter_kwargs_with_table_exclude(request, as_string=False):
                 'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
                 'user_id__in': "%s" % user_ids if as_string else user_ids
             })
+            if with_period_start:
+                period_start_reportlog = ReportLog.get_latest(to_date=time_period_form.period[0])
+                if period_start_reportlog:
+                    period_start = period_start_reportlog.created
+                    kwargs.update({ 'period_start': day2str(period_start) if as_string else period_start })
+                
     return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
 
 
@@ -732,7 +738,9 @@ def get_learner_table_filters(request, orgs, as_string=False):
     if last_reportlog:
         last_update = last_reportlog.created
         filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_period_filter_kwargs_with_table_exclude(
-                                                                                                    request, as_string)
+                                                                                                    request,
+                                                                                                    as_string=as_string,
+                                                                                                    with_period_start=True)
         filter_kwargs.update({ 'org': learner_report_org })
         if not time_period_form.period:
             filter_kwargs.update({ 'date_time': day2str(last_update) if as_string else last_update })
@@ -744,7 +752,9 @@ def get_learner_table_filters(request, orgs, as_string=False):
 
 def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_period_filter_kwargs_with_table_exclude(
-                                                                                                request, as_string)
+                                                                                                request,
+                                                                                                as_string=as_string,
+                                                                                                course_id=course_key)
     filter_kwargs.update({ 'course_id': "%s" % course_key if as_string else course_key })
     if not time_period_form.period:
         filter_kwargs.update({ 'date_time': day2str(last_update) if as_string else last_update })
@@ -764,11 +774,15 @@ def get_ilt_table_filters(request, as_string=False):
     return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
 
 
-def get_table(report_cls, filter_kwargs, table_cls, exclude):
+def get_table(report_cls, filter_kwargs, table_cls, exclude, by_period=False):
     if filter_kwargs.pop('invalid', False):
         return table_cls([]), 0
 
-    queryset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
+    queryset = report_cls.objects.none()
+    if by_period:
+        queryset = report_cls.filter_by_period(**filter_kwargs).prefetch_related('user__profile')
+    else:
+        queryset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
     row_count = queryset.count()
     table = table_cls(queryset, exclude=exclude)
     return table, row_count

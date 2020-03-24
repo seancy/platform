@@ -636,14 +636,14 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         return False
 
 
-    @classmethod
-    def filter_period(cls, from_date, to_date, course_id):
-        last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
-        if last_reportlog:
-            last_analytics_success = last_reportlog.created
-            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
-            return cls.objects.filter(created=last_analytics_success, course_id=course_id, user_id__in=user_ids)
-        return None
+    # @classmethod
+    # def filter_period(cls, from_date, to_date, course_id):
+    #     last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
+    #     if last_reportlog:
+    #         last_analytics_success = last_reportlog.created
+    #         user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
+    #         return cls.objects.filter(created=last_analytics_success, course_id=course_id, user_id__in=user_ids)
+    #     return None
 
 
 class LearnerSectionDailyReport(TimeModel, ReportMixin):
@@ -810,6 +810,38 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             logger.debug("learner report for user_id=%d org=%s" % (user_id, combined_org))
             cls.update_or_create(user_id, combined_org, reports)
 
+
+    @classmethod
+    def filter_by_period(cls, date_time=None, period_start=None, **kwargs):
+        day = date_time.date() if date_time else timezone.now().date()
+        new_results = cls.objects.filter(created=day, **kwargs)
+        if period_start:
+            results = []
+            old_results = cls.objects.filter(created=period_start, **kwargs)
+            old_time_spent_by_user = { r.user_id: r.total_time_spent for r in old_results }
+            for r in new_results:
+                old_time_spent = 0
+                try:
+                    old_time_spent = old_time_spent_by_user[r.user_id]
+                except KeyError:
+                    pass
+                results.append({
+                        'created': r.created,
+                        'user': r.user,
+                        'org': r.org,
+                        'enrollments': r.enrollments,
+                        'average_final_score': r.,average_final_score
+                        'badges': r.badges,
+                        'posts': r.posts,
+                        'finished': r.finished,
+                        'failed': r.failed,
+                        'not_started': r.not_started,
+                        'in_progress': r.in_progress,
+                        'total_time_spent': (r.total_time_spent - old_time_spent)
+                    })
+            return results
+        return new_results
+        
 
 class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeModel):
     class Meta(object):
