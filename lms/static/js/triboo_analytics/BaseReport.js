@@ -15,6 +15,7 @@ export default class BaseReport extends React.Component{
             toolbarData: {},
 
             //ajax result
+            message:'',
             data: [],
             totalData: {},
             rowsCount: 0,
@@ -102,7 +103,7 @@ export default class BaseReport extends React.Component{
                     this.fetchData(pageNo) :
                     this.fetchData(pageNo, sort)
             },
-            ...pick(this.state, ['isLoading', 'data', 'totalData']),
+            ...pick(this.state, ['isLoading', 'data', 'totalData', 'message']),
             pagination: {
                 pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,
@@ -127,10 +128,19 @@ export default class BaseReport extends React.Component{
             success: (json) => {
                 this.setState((s, p) => {
                     return {
+                        message: json.message,
                         isLoading:false,
                         data: json.list,
                         totalData: json.total, //{email: 'total:', first_name: json.total},
                         rowsCount: json.pagination.rowsCount
+                    }
+                })
+            },
+            error:(json)=>{
+                this.setState((s, p) => {
+                    return {
+                        message: get(json, 'responseJSON.message', ''),
+                        isLoading:false
                     }
                 })
             }

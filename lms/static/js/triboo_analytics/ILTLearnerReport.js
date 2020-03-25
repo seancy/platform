@@ -73,6 +73,7 @@ export default class ILTLearnerReport extends BaseReport {
             <>
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
                          onGo={this.startExport.bind(this)}
+                         {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}/>
                 <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
