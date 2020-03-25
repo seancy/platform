@@ -28444,3 +28444,11 @@ msgstr "课程日期"
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "Completed by gradebook edit"
 msgstr "通过成绩单编辑完成"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Areas of Development"
+msgstr "发展领域"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Identify the course areas of development here."
+msgstr "在这里定义发展领域"

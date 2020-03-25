@@ -3932,7 +3932,7 @@ msgstr "Labels du cours"
 
 #: cms/templates/settings.html:344
 msgid "Identify the course tags here."
-msgstr "Identifiez les balises de cours ici."
+msgstr "Identifiez les labels de cours ici."
 
 #: common/lib/xmodule/xmodule/course_module.py:951
 #: cms/templates/settings.html:363
@@ -30982,3 +30982,11 @@ msgstr "Ceci est un email automatique, merci de ne pas répondre."
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "Completed by gradebook edit"
 msgstr "Complété par édition du carnet de notes"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Areas of Development"
+msgstr "Axes de Développement"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Identify the course areas of development here."
+msgstr "Identifiez les axes de développement du cours ici."
