@@ -3,7 +3,7 @@
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.conf import settings
-from courseware.courses import get_course_about_section
+from courseware.courses import get_course_about_section, get_displayed_tags
 from openedx.core.lib.courses import course_image_url
 from six import string_types
 %>
@@ -108,8 +108,8 @@ from six import string_types
       </ul>
       % if course.vendor:
       <ul class="course-tags-list">
-        % for course_tag in course.vendor:
-          <li>${_(course_tag)}</li>
+        % for tag in course.vendor:
+          <li>${get_displayed_tags(LANGUAGE_CODE, tag)}</li>
         % endfor
       </ul>
       % endif

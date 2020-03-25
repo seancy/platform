@@ -10,7 +10,7 @@ import dogstats_wrapper as dog_stats_api
 from six import text_type
 
 from openedx.core.djangoapps.signals.signals import COURSE_GRADE_CHANGED, COURSE_GRADE_NOW_PASSED
-from openedx.core.lib.gating.api import get_subsection_completion_percentage
+from openedx.core.lib.gating.api import get_subsection_completion_percentage_with_gradebook_edit
 from student.models import CourseEnrollment
 from xmodule.modulestore.django import modulestore
 
@@ -221,15 +221,18 @@ class CourseGradeFactory(object):
 
     def update_course_completion_percentage(self, course_key, user, course_grade=None, enrollment=None):
         course_usage_key = modulestore().make_course_usage_key(course_key)
-        percent_progress = get_subsection_completion_percentage(course_usage_key, user)
-        log.info(u'Course Progress Calculate: %s, User: %s', unicode(course_key), user.id)
-        if not enrollment:
-            enrollment = CourseEnrollment.get_enrollment(user, course_key)
-
         overrides = PersistentSubsectionGradeOverride.objects.filter(
             grade__user_id=user.id,
             grade__course_id=course_key,
+        ).select_related('grade')
+        overridden_subsection_keys = [i.grade.usage_key for i in overrides]
+        overridden_subsection_keys = list(set(overridden_subsection_keys))
+        percent_progress = get_subsection_completion_percentage_with_gradebook_edit(
+            course_usage_key, user, overrides=overridden_subsection_keys
         )
+        log.info(u'Course Progress Calculate: %s, User: %s', unicode(course_key), user.id)
+        if not enrollment:
+            enrollment = CourseEnrollment.get_enrollment(user, course_key)
         if overrides.exists():
             if not course_grade:
                 course_grade = self.read(user, course_key=course_key)

@@ -336,11 +336,26 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
             </li>
             <li class="field" id="field-course-vendor">
               <label for="course-vendor">${_("Course Tags")}</label>
+              % if site_config_course_tags:
+              <ul id="list-course-tags">
+                % for tag in sorted(site_config_course_tags):
+                <li>
+                  % if site_config_course_tags[tag]['checked']:
+                  <input type="checkbox" id="course-tag-${tag}" name="course-tag[]" value="${tag}" checked>
+                  % else:
+                  <input type="checkbox" id="course-tag-${tag}" name="course-tag[]" value="${tag}">
+                  % endif
+                  <label for="course-tag-${tag}">${site_config_course_tags[tag].get(LANGUAGE_CODE, tag)}</label>
+                </li>
+                % endfor
+              </ul>
+              % else:
               <input type="text" id="course-vendor">
               <button type="button" class="action action-primary button new-button add-course-tags">
                 <i class="icon fa fa-plus icon-inline" aria-hidden="true"></i>${_("Add")}
               </button>
               <div class="course-tags"></div>
+              % endif
               <span class="tip tip-stacked">${_("Identify the course tags here.")}</span>
             </li>
             <li class="field" id="field-course-order">
@@ -606,29 +621,29 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                   <label for="course-country">${_("Course Country")}</label>
                   <select id="course-country">
                     % for country in country_options:
-                      <option value="${country}">${country}</option>
+                    <option value="${country}">${country}</option>
                     % endfor
                   </select>
                   <span class="tip tip-stacked">${_("Identify the course country here.")}</span>
                 </li>
                 % if enrollment_learning_groups:
-                  <li class="field" id="field-enrollment-learning-group">
-                    <label for="list-learning-groups">${_("Learning Groups")}</label>
-                    <ul id="list-learning-groups">
-                      % for group in sorted(enrollment_learning_groups):
-                        <li>
-                          % if enrollment_learning_groups[group]:
-                            <input type="checkbox" id="learning-group-${group}" name="learning-group[]" value="${group}" checked>
-                            <label for="learning-group-${group}">${group}</label>
-                          % else:
-                            <input type="checkbox" id="learning-group-${group}" name="learning-group[]" value="${group}">
-                            <label for="learning-group-${group}">${group}</label>
-                          % endif
-                        </li>
-                      % endfor
-                    </ul>
-                    <span class="tip tip-stacked">${_("Identify the enrollment learning groups here.")}</span>
-                  </li>
+                <li class="field" id="field-enrollment-learning-group">
+                  <label for="list-learning-groups">${_("Learning Groups")}</label>
+                  <ul id="list-learning-groups">
+                    % for group in sorted(enrollment_learning_groups):
+                    <li>
+                      % if enrollment_learning_groups[group]:
+                      <input type="checkbox" id="learning-group-${group}" name="learning-group[]" value="${group}"
+                             checked>
+                      % else:
+                      <input type="checkbox" id="learning-group-${group}" name="learning-group[]" value="${group}">
+                      % endif
+                      <label for="learning-group-${group}">${group}</label>
+                    </li>
+                    % endfor
+                  </ul>
+                  <span class="tip tip-stacked">${_("Identify the enrollment learning groups here.")}</span>
+                </li>
                 % endif
               </ol>
             </div>

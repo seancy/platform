@@ -107,7 +107,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    });
 
                    this.exportUrl = options.exportUrl;
-                   this.homepageUrl = options.homepageUrl
+                   this.homepageUrl = options.homepageUrl;
                },
 
                render: function() {
@@ -530,12 +530,17 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    }
 
                    var name = event.currentTarget.getAttribute('name');
+                   var checkedValue = [];
                    if (name === 'learning-group[]') {
-                       var checkedValue = [];
                        $("input[name='learning-group[]']:checked").each(function() {
                            checkedValue.push($(this).val());
                        });
                        this.model.set('enrollment_learning_groups', checkedValue);
+                   } else if (name === 'course-tag[]') {
+                       $("input[name='course-tag[]']:checked").each(function() {
+                           checkedValue.push($(this).val());
+                       });
+                       this.model.set('vendor', checkedValue);
                    }
                },
 

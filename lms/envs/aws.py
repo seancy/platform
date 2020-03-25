@@ -1273,3 +1273,6 @@ FEATURES['MILESTONES_APP'] = True
 
 ################ Enable bookmarks feature ####################
 FEATURES['ENABLE_DASHBOARD_BOOKMARKS'] = False
+
+################ Enable Video auto-advance in video player control ####################
+FEATURES['ENABLE_AUTOADVANCE_VIDEOS'] = True

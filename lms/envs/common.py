@@ -3565,3 +3565,6 @@ COURSE_ADVANCED_MODULES = []
 SAML_IDP_BASE_URL = '/idp/'
 SAML_IDP_CONFIG = {}
 SAML_IDP_SPCONFIG = {}
+
+############# Allow if course catalog visibility do ES searh ###########################
+ALLOW_CATALOG_VISIBILITY_FILTER = True

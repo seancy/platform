@@ -20,3 +20,11 @@ msgstr ""
 msgid "Welcome to Joyson Open Online Courses, log in to explore more!
 "
 msgstr "欢迎来到均胜网络课堂，请登录，让我们一起来探索未知!"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Areas of Development"
+msgstr "发展领域"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Identify the course areas of development here."
+msgstr "在这里定义发展领域"

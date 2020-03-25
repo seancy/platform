@@ -174,6 +174,23 @@ def recalculate_subsection_grade_v3(self, **kwargs):
     default_retry_delay=RETRY_DELAY_SECONDS,
     routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
 )
+def update_course_progress(self, **kwargs):
+    users = kwargs.get('users')
+    course_id = kwargs.get('course_id')
+    course_key = CourseKey.from_string(course_id)
+    for u in users:
+        user = User.objects.get(id=u)
+        CourseGradeFactory().update_course_completion_percentage(course_key, user)
+
+
+@task(
+    bind=True,
+    base=LoggedPersistOnFailureTask,
+    time_limit=SUBSECTION_GRADE_TIMEOUT_SECONDS,
+    max_retries=2,
+    default_retry_delay=RETRY_DELAY_SECONDS,
+    routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
+)
 def send_grade_override_email(self, **kwargs):
     student_info = kwargs['student_info']
     transcript = kwargs['transcript_link']
