@@ -75,7 +75,7 @@ from models import (
     LearnerCourseDailyReport,
     LearnerDailyReport,
     CourseDailyReport,
-    LearnerSectionReport,
+    LearnerSectionDailyReport,
     MicrositeDailyReport,
     CountryDailyReport,
     IltSession,
@@ -750,7 +750,7 @@ def get_learner_table_filters(request, orgs, as_string=False):
     return None, None, None, None, None, None, None
 
 
-def get_course_summary_table_filters(request, course_key, last_update, as_string=False):
+def get_course_table_filters(request, course_key, last_update, as_string=False):
     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_period_filter_kwargs_with_table_exclude(
                                                                                                 request,
                                                                                                 as_string=as_string,
@@ -780,7 +780,7 @@ def get_table(report_cls, filter_kwargs, table_cls, exclude, by_period=False):
 
     queryset = report_cls.objects.none()
     if by_period:
-        queryset = report_cls.filter_by_period(**filter_kwargs).prefetch_related('user__profile')
+        queryset = report_cls.filter_by_period(**filter_kwargs)
     else:
         queryset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
     row_count = queryset.count()
@@ -815,7 +815,7 @@ def learner_view(request):
     learner_table = None
     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, last_update, query_dict = get_learner_table_filters(request, orgs)
     if last_update:
-        learner_table, row_count = get_table(LearnerDailyReport, filter_kwargs, LearnerDailyTable, exclude)
+        learner_table, row_count = get_table(LearnerDailyReport, filter_kwargs, LearnerDailyTable, exclude, by_period=True)
         config_tables(request, learner_table)
         last_update = dt2str(last_update)
         query_dict = query_dict
@@ -930,7 +930,7 @@ def get_course_time_spent_table(course_key, filter_kwargs, exclude):
     if filter_kwargs.pop('invalid', False):
         reports = CourseEnrollment.objects.none()
     else:
-        reports = LearnerSectionReport.objects.filter(course_id=course_key, **filter_kwargs).prefetch_related('user')
+        reports = LearnerSectionDailyReport.filter_by_period(**filter_kwargs)
     for report in reports:
         if report.user.id not in user_times_spent.keys():
             user_times_spent[report.user.id] = {'user': report.user}
@@ -1019,43 +1019,37 @@ def course_view(request):
             to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
             unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, from_date, to_date)
 
+            filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_course_table_filters(
+                                                                                                        request,
+                                                                                                        course_key,
+                                                                                                        last_update)
+
             if report == "summary":
-                filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_course_summary_table_filters(
-                                                                                            request,
-                                                                                            course_key,
-                                                                                            last_update)
                 summary_table, row_count = get_table(LearnerCourseDailyReport, filter_kwargs, CourseTable, exclude)
                 config_tables(request, summary_table)
 
-            else:
-                filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(
-                                                                                            request)
-                report_args = {
-                    'filter_kwargs': filter_kwargs,
-                    'exclude': exclude
-                }
-                if report == "progress":
-                    if filter_kwargs.pop('invalid', False):
-                        enrollments = CourseEnrollment.objects.none()
-                    else:
-                        enrollments = CourseEnrollment.objects.filter(is_active=True,
-                                                                      course_id=course_key,
-                                                                      user__is_active=True,
-                                                                      **filter_kwargs).prefetch_related('user')
-                    nb_enrollments = len(enrollments)
-                    if nb_enrollments >= 10000:
-                        enrollments = CourseEnrollment.objects.none()
+            elif report == "progress":
+                if filter_kwargs.pop('invalid', False):
+                    enrollments = CourseEnrollment.objects.none()
+                else:
+                    enrollments = CourseEnrollment.objects.filter(is_active=True,
+                                                                  course_id=course_key,
+                                                                  user__is_active=True,
+                                                                  **filter_kwargs).prefetch_related('user')
+                nb_enrollments = len(enrollments)
+                if nb_enrollments >= 10000:
+                    enrollments = CourseEnrollment.objects.none()
 
-                    progress_table, row_count = get_course_progress_table(course_key, enrollments,
-                                                                          filter_kwargs, exclude)
-                    config_tables(request, progress_table)
+                progress_table, row_count = get_course_progress_table(course_key, enrollments,
+                                                                      filter_kwargs, exclude)
+                config_tables(request, progress_table)
 
-                    if nb_enrollments >= 10000:
-                        row_count = -1
+                if nb_enrollments >= 10000:
+                    row_count = -1
 
-                elif report == "time_spent":
-                    time_spent_table, row_count = get_course_time_spent_table(course_key, filter_kwargs, exclude)
-                    config_tables(request, time_spent_table)
+            elif report == "time_spent":
+                time_spent_table, row_count = get_course_time_spent_table(course_key, filter_kwargs, exclude)
+                config_tables(request, time_spent_table)
 
             last_update = dt2str(last_update)
             query_dict = query_dict
@@ -1138,8 +1132,7 @@ def course_export_table(request):
     return None
 
 
-@analytics_on
-@login_required
+@analytlogin_required
 @analytics_member_required
 @ensure_csrf_cookie
 def microsite_view(request):

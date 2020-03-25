@@ -386,6 +386,7 @@ def get_time_spent_table_class(chapters, sections):
 
     def render_user_country(self, value):
         return dict(countries)[value]
+        
     attributes['render_user_country'] = render_user_country
 
     return type("TimeSpentTable", (UserBaseTable,), attributes)

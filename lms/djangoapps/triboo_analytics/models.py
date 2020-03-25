@@ -646,6 +646,15 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     #     return None
 
 
+class LearnerSectionDailyReportMockup(object):
+    def __init__(self, learner_section_daily_report, total_time_spent):
+        self.course_id = learner_section_daily_report.
+        self.user = learner_section_daily_report.
+        self.section_key = learner_section_daily_report.
+        self.section_name = learner_section_daily_report.
+        self.total_time_spent = total_time_spent
+
+
 class LearnerSectionDailyReport(TimeModel, ReportMixin):
     class Meta(object):
         app_label = "triboo_analytics"
@@ -659,7 +668,7 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
     section_key = models.CharField(max_length=100, null=False)
     section_name = models.CharField(max_length=512, null=False)
     total_time_spent = models.PositiveIntegerField(default=0)
-    time_spent = models.PositiveIntegerField(default=0)
+
 
     @classmethod
     def update_or_create(cls, enrollment, sections):
@@ -683,6 +692,26 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
                                          defaults={'section_name': section_combined_display_name,
                                                    'total_time_spent': total_time_spent,
                                                    'time_spent': time_spent})
+
+
+    @classmethod
+    def filter_by_period(cls, course_id, date_time=None, period_start=None, **kwargs):
+        day = date_time.date() if date_time else timezone.now().date()
+        new_results = cls.objects.filter(course_id=course_id, created=day, **kwargs)
+        if period_start:
+            results = []
+            old_results = cls.objects.filter(course_id=course_id, created=period_start, **kwargs)
+            old_time_spent_by_user = { (r.user_id, r.section_key): r.total_time_spent for r in old_results }
+            for r in new_results:
+                old_time_spent = 0
+                try:
+                    old_time_spent = old_time_spent_by_user[(r.user_id, r.section_key)]
+                except KeyError:
+                    pass
+                results.append(LearnerSectionDailyReportMockup(r, (r.total_time_spent - old_time_spent)))
+            return results
+        return new_results
+
 
 
 class LearnerSectionReport(TimeModel):
@@ -710,6 +739,22 @@ class LearnerSectionReport(TimeModel):
                                          section_key=section_combined_url,
                                          defaults={'section_name': section_combined_display_name,
                                                    'time_spent': time_spent})
+
+
+class LearnerDailyReportMockup(object):
+    def __init__(self, learner_daily_report, total_time_spent):
+        self.org = learner_daily_report.org
+        self.user = learner_daily_report.user
+        self.enrollments = learner_daily_report.enrollments
+        self.average_final_score = learner_daily_report.average_final_score
+        self.badges = learner_daily_report.badges
+        self.posts = learner_daily_report.posts
+        self.finished = learner_daily_report.finished
+        self.failed = learner_daily_report.failed
+        self.not_started = learner_daily_report.not_started
+        self.in_progress = learner_daily_report.in_progress
+        self.total_time_spent = total_time_spent
+
 
 
 class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
@@ -812,12 +857,12 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def filter_by_period(cls, date_time=None, period_start=None, **kwargs):
+    def filter_by_period(cls, org, date_time=None, period_start=None, **kwargs):
         day = date_time.date() if date_time else timezone.now().date()
-        new_results = cls.objects.filter(created=day, **kwargs)
+        new_results = cls.objects.filter(org=org, created=day, **kwargs)
         if period_start:
             results = []
-            old_results = cls.objects.filter(created=period_start, **kwargs)
+            old_results = cls.objects.filter(org=org, created=period_start, **kwargs)
             old_time_spent_by_user = { r.user_id: r.total_time_spent for r in old_results }
             for r in new_results:
                 old_time_spent = 0
@@ -825,20 +870,7 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                     old_time_spent = old_time_spent_by_user[r.user_id]
                 except KeyError:
                     pass
-                results.append({
-                        'created': r.created,
-                        'user': r.user,
-                        'org': r.org,
-                        'enrollments': r.enrollments,
-                        'average_final_score': r.,average_final_score
-                        'badges': r.badges,
-                        'posts': r.posts,
-                        'finished': r.finished,
-                        'failed': r.failed,
-                        'not_started': r.not_started,
-                        'in_progress': r.in_progress,
-                        'total_time_spent': (r.total_time_spent - old_time_spent)
-                    })
+                results.append(LearnerDailyReportMockup(r, (r.total_time_spent - old_time_spent)))
             return results
         return new_results
         
