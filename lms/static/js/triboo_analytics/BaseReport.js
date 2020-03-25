@@ -92,10 +92,15 @@ export default class BaseReport extends React.Component{
 
     getBaseConfig(){
         return {
-            onSort:sort=>{
+            onSort:(sort, pageNo)=>{
                 sort == '' ?
-                    this.fetchData(1) :
-                    this.fetchData(1, sort)
+                    this.fetchData(pageNo) :
+                    this.fetchData(pageNo, sort)
+            },
+            onPageChange:(pageNo, sort)=>{
+                sort == '' ?
+                    this.fetchData(pageNo) :
+                    this.fetchData(pageNo, sort)
             },
             ...pick(this.state, ['isLoading', 'data', 'totalData']),
             pagination: {

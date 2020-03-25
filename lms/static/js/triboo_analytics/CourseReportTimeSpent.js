@@ -93,7 +93,7 @@ export default class CourseReportTimeSpent extends BaseReport {
                          {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}/>
                 <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
-                          enableRowsCount={true} {...config} onPageChange={this.fetchData.bind(this)}
+                          enableRowsCount={true} {...config}
                 />
             </>
         )
