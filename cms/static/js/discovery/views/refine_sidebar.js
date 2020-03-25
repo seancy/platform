@@ -20,6 +20,8 @@
             initialize: function (options) {
                 this.meanings = options.meanings || {};
                 this.titleMeanings = options.titleMeanings || {};
+                this.transForTags = options.transForTags || {};
+                this.userLanguage = options.userLanguage;
                 this.$container = this.$el.find('.search-facets-lists');
                 this.facetTpl = HtmlUtils.template($('#facet-tpl').html());
                 this.facetOptionTpl = HtmlUtils.template($('#facet_option-tpl').html());
@@ -65,11 +67,22 @@
                     this.meanings[facet].terms[term] || term;
             },
 
+            tagTrans: function (key) {
+                if (_.has(this.transForTags, key) && _.has(this.transForTags[key], this.userLanguage)) {
+                    return this.transForTags[key][this.userLanguage];
+                }
+                return key;
+            },
+
             renderOptions: function (options) {
                 var sortedOptions = _.sortBy(options, this.termName, this);
                 return HtmlUtils.joinHtml.apply(this, _.map(sortedOptions, function (option) {
                     var data = _.clone(option.attributes);
-                    data.name = this.termName(option);
+                    if (data.facet === 'vendor') {
+                        data.name = this.tagTrans(data.term)
+                    } else {
+                        data.name = this.termName(option);
+                    }
                     return this.facetOptionTpl(data);
                 }, this));
             },

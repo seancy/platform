@@ -43,7 +43,9 @@ from openedx.core.djangolib.js_utils import (
       ${course_discovery_meanings | n, dump_js_escaped_json},
       ${keyValuePair | n, dump_js_escaped_json},
       ${pre_facet_filters | n, dump_js_escaped_json},
-      null
+      ${trans_for_tags | n, dump_js_escaped_json},
+      null,
+      "${LANGUAGE_CODE}"
     );
   </%static:require_module>
 </%block>

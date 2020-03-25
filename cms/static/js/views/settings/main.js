@@ -230,13 +230,6 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        paceToggleTip.text(gettext('Course pacing cannot be changed once a course has started.'));
                    }
 
-                   var tags = this.model.get('vendor');
-                   $("input[name='course-tag[]']").each(function() {
-                       if (_.contains(tags, $(this).val())) {
-                           $(this).prop('checked', true);
-                       }
-                   });
-
                    this.licenseView.render();
                    this.learning_info_view.render();
                    this.instructor_info_view.render();

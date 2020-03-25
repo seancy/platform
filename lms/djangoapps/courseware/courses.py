@@ -663,3 +663,13 @@ def get_course_chapter_ids(course_key):
         log.exception('Failed to retrieve course from modulestore.')
         return []
     return [unicode(chapter_key) for chapter_key in chapter_keys if chapter_key.block_type == 'chapter']
+
+
+def get_displayed_tags(lang, tag):
+    """
+    Only used for getting displayed tag defined in site config.
+    """
+    course_tags = configuration_helpers.get_value('COURSE_TAGS', {})
+    if tag in course_tags and lang in course_tags[tag]:
+        return course_tags[tag][lang]
+    return tag
