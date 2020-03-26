@@ -12342,6 +12342,18 @@ msgstr "France"
 msgid "Romania"
 msgstr "Roumanie"
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Archived"
+msgstr "Archivé"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Draft"
+msgstr "Brouillons"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Published"
+msgstr "Publiés"
+
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435
@@ -12410,3 +12422,8 @@ msgstr "Êtes-vous sûr(e) de vouloir désinscrire cet apprenant ?"
 #: lms/static/js/courseware/ilt_validation.js
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
 msgstr "L'inscription est confirmée.<br>Vous pouvez changer les information relatives à la demande dans l'onglet \"Sessions à venir\"."
+
+#: master-sitel: #: lms/templates/discovery/facet.underscore
+#: master-sitel: #: cms/templates/discovery/facet.underscore
+msgid "Area of Development"
+msgstr "Axe de développement"

@@ -3932,7 +3932,7 @@ msgstr "Labels du cours"
 
 #: cms/templates/settings.html:344
 msgid "Identify the course tags here."
-msgstr "Identifiez les balises de cours ici."
+msgstr "Identifiez les labels de cours ici."
 
 #: common/lib/xmodule/xmodule/course_module.py:951
 #: cms/templates/settings.html:363
@@ -30171,8 +30171,8 @@ msgid ""
 msgstr "Vous avez refusé la demande de {name} pour participer à la formation en salle {ilt_name} prévue le {start} à {location} située {address}, {zipcode} {city}."
 
 #: master-sephora:lms/templates/emails/ilt_refused_email_subject.txt:2
-msgid "DECLINED - Enrollment in the in-class training - {name}"
-msgstr "REFUS - inscription formation - {name}"
+msgid "DECLINED - Enrollment in the in-class training [{ilt_name}] - [{name}]"
+msgstr "REFUS - inscription formation [{ilt_name}] - [{name}]"
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_message.txt:5
 msgid ""
@@ -30275,8 +30275,8 @@ msgid "This email is to inform you that the learners ({learners}) have been unen
 msgstr "Nous vous informons que des apprenants ({learners}) ont été désinscrits de la formation en salle {ilt_name} prévue le {start} à {location} située {address}, {zipcode} {city}. Pour plus d’informations, merci de cliquer sur le lien ci-dessous :"
 
 #: master-sephora:lms/templates/emails/ilt_batch_unenroll_email_subject.txt:2
-msgid "In-class training batch unenrollment notification"
-msgstr "Annulation inscription formation"
+msgid "In-class training batch unenrollment notification [{ilt_name}] - [{name}]"
+msgstr "Annulation inscription formation [{ilt_name}] - [{name}]"
 
 #: master-sephora:ilt_self_unenroll_email_html_message.txt:6
 msgid "This email is to inform you that {name} has canceled his/her enrollment in the {ilt_name} in-class training scheduled for {start} in {location} at {address}, {city} {zipcode}."
@@ -30287,8 +30287,8 @@ msgid "Please invite the following participants to reschedule their training: {l
 msgstr "Invitez les apprenants suivants à vérifier la disponibilité d'une nouvelle date de formation : {learners}."
 
 #: master-sephora:lms/templates/emails/ilt_session_canceled_email_subject.txt:2
-msgid "In-class training canceled"
-msgstr "Annulation session formation"
+msgid "In-class training canceled [{ilt_name}] - [{name}]"
+msgstr "Annulation session formation [{ilt_name}] - [{name}]"
 
 #: master-sephora:#: lms/djangoapps/triboo_analytics/forms.py:15
 msgid "Commercial Zone"
@@ -30970,3 +30970,23 @@ msgstr "Sélectionnez les apprenants que vous souhaitez inscrire et cliquez sur 
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Session Date"
 msgstr "Date de la session"
+
+#: master-sephora: email subject
+msgid "DO NOT REPLY"
+msgstr "NE PAS REPONDRE"
+
+#: master-sephora: lms/templates/emails/base_body_html.txt
+msgid "This is an automatically generated email, please do not reply."
+msgstr "Ceci est un email automatique, merci de ne pas répondre."
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "Completed by gradebook edit"
+msgstr "Complété par édition du carnet de notes"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Areas of Development"
+msgstr "Axes de Développement"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Identify the course areas of development here."
+msgstr "Identifiez les axes de développement du cours ici."

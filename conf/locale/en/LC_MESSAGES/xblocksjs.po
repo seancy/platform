@@ -90,6 +90,18 @@ msgstr ""
 msgid "Romania"
 msgstr ""
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Archived"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Draft"
+msgstr ""
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "Published"
+msgstr ""
+
 #: lms/templates/student_account/login.underscore
 msgid "Welcome to your training platform, log in to find your learning space!"
 msgstr ""

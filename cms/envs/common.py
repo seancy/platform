@@ -1395,6 +1395,14 @@ FILES_AND_UPLOAD_TYPE_FILTERS = {
 
 # Default to no Search Engine
 SEARCH_ENGINE = None
+# Use CMS specific search initializer
+SEARCH_INITIALIZER = "cms.lib.course_search.cms_search_initializer.CmsSearchInitializer"
+# Use the CMS specific result processor
+SEARCH_RESULT_PROCESSOR = "cms.lib.course_search.cms_result_processor.CmsSearchResultProcessor"
+# Use the CMS specific filter generator
+SEARCH_FILTER_GENERATOR = "cms.lib.course_search.cms_filter_generator.CmsSearchFilterGenerator"
+# Override to skip enrollment start date filtering in course search
+SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = False
 ELASTIC_FIELD_MAPPINGS = {
     "start_date": {
         "type": "date"
@@ -1562,3 +1570,6 @@ plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.CMS, plugin_c
 # setting for the FileWrapper class used to iterate over the export file data.
 # See: https://docs.python.org/2/library/wsgiref.html#wsgiref.util.FileWrapper
 COURSE_EXPORT_DOWNLOAD_CHUNK_SIZE = 8192
+
+############# Allow if course catalog visibility do ES searh ###########################
+ALLOW_CATALOG_VISIBILITY_FILTER = False

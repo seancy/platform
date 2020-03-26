@@ -96,15 +96,15 @@ define(['edx-ui-toolkit/js/utils/html-utils',
             },
 
             showNotificationBar: function(message, primaryClick, secondaryClick) {
-        // Show a notification with message. primaryClick is called on
-        // pressing the save button, and secondaryClick (if it's
-        // passed, which it may not be) will be called on
-        // cancel. Takes care of hiding the notification bar at the
-        // appropriate times.
+                // Show a notification with message. primaryClick is called on
+                // pressing the save button, and secondaryClick (if it's
+                // passed, which it may not be) will be called on
+                // cancel. Takes care of hiding the notification bar at the
+                // appropriate times.
                 if (this.notificationBarShowing) {
                     return;
                 }
-        // If we've already saved something, hide the alert.
+                // If we've already saved something, hide the alert.
                 if (this.saved) {
                     this.saved.hide();
                 }
@@ -137,7 +137,7 @@ define(['edx-ui-toolkit/js/utils/html-utils',
                     }});
                 this.notificationBarShowing = true;
                 this.confirmation.show();
-        // Make sure the bar is in the right state
+                // Make sure the bar is in the right state
                 this.model.isValid();
             },
 
@@ -159,7 +159,7 @@ define(['edx-ui-toolkit/js/utils/html-utils',
             saveView: function() {
                 var self = this;
                 this.model.save(
-            {},
+                    {},
                     {
                         success: function() {
                             self.showSavedBar();
@@ -167,7 +167,7 @@ define(['edx-ui-toolkit/js/utils/html-utils',
                         },
                         silent: true
                     }
-        );
+                );
             }
         });
 

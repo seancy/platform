@@ -26755,3 +26755,7 @@ msgstr ""
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Session Date"
 msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "Completed by gradebook edit"
+msgstr ""

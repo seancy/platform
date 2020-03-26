@@ -93,30 +93,4 @@ CREDENTIALS_SERVICE_USERNAME = 'credentials_worker'
 
 COURSE_CATALOG_API_URL = 'http://edx.devstack.discovery:18381/api/v1/'
 
-COURSE_DISCOVERY_MEANINGS = {
-    'language': LANGUAGE_MAP,
-    'start': {
-        'name': 'Availability',
-        'terms': {
-            'current': 'Current',
-            'new': 'New',
-            'soon': 'Starts soon',
-            'future': 'Future'
-        },
-    },
-    'course_category': {
-        'name': 'Category',
-        'terms': dict(COURSE_CATEGORIES),
-    },
-    'vendor': {
-        'name': 'Tag'
-    },
-    'course_mandatory_enabled': {
-        'name': 'Mandatory'
-    },
-    'course_country': {
-        'name': 'Country'
-    }
-}
-
 COURSE_ABOUT_VISIBILITY_PERMISSION = "see_private_about_page"

@@ -14,6 +14,7 @@ from waffle.models import Switch
 from web_fragments.fragment import Fragment
 
 from courseware.courses import get_course_overview_with_access
+from lms.djangoapps.grades.models import PersistentSubsectionGradeOverride
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.plugin_api.views import EdxFragmentView
 from student.models import CourseEnrollment
@@ -46,11 +47,19 @@ class CourseOutlineFragmentView(EdxFragmentView):
         if not course_block_tree:
             return None
 
+        overrides = PersistentSubsectionGradeOverride.objects.filter(
+            grade__user_id=request.user.id,
+            grade__course_id=course_key,
+        ).select_related('grade')
+        overridden_subsection_keys = [unicode(i.grade.usage_key) for i in overrides]
+        overridden_subsection_keys = list(set(overridden_subsection_keys))
+
         context = {
             'csrf': csrf(request)['csrf_token'],
             'course': course_overview,
             'due_date_display_format': course.due_date_display_format,
-            'blocks': course_block_tree
+            'blocks': course_block_tree,
+            'overridden_subsection_keys': overridden_subsection_keys
         }
 
         resume_block = get_resume_block(course_block_tree)

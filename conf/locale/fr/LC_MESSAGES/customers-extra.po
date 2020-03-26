@@ -163,8 +163,8 @@ msgid ""
 msgstr "Vous avez refusé la demande de {name} pour participer à la formation en salle {ilt_name} prévue le {start} à {location} située {address}, {zipcode} {city}."
 
 #: master-sephora:lms/templates/emails/ilt_refused_email_subject.txt:2
-msgid "DECLINED - Enrollment in the in-class training - {name}"
-msgstr "REFUS - inscription formation - {name}"
+msgid "DECLINED - Enrollment in the in-class training [{ilt_name}] - [{name}]"
+msgstr "REFUS - inscription formation [{ilt_name}] - [{name}]"
 
 #: master-sephora:lms/templates/emails/ilt_self_unenroll_email_message.txt:5
 msgid ""
@@ -261,3 +261,19 @@ msgstr "POUR VALIDATION -Demande d'inscription formation - {name}"
 #: master-sephora:lms/templates/emails/ilt_validate_email_subject.txt:2
 msgid "APPROVAL NEEDED - Request to enroll in the ILT training"
 msgstr "POUR VALIDATION - Demande d’inscription formation"
+
+#: master-sephora: email subject
+msgid "DO NOT REPLY"
+msgstr "NE PAS REPONDRE"
+
+#: master-sephora: lms/templates/emails/base_body_html.txt
+msgid "This is an automatically generated email, please do not reply."
+msgstr "Ceci est un email automatique, merci de ne pas répondre."
+
+#: master-sitel: cms/templates/settings.html
+msgid "Areas of Development"
+msgstr "Axes de Développement"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Identify the course areas of development here."
+msgstr "Identifiez les axes de développement du cours ici."

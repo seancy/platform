@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 from completion.models import BlockCompletion
+from completion import waffle as completion_waffle
 from lms.djangoapps.courseware.access import _has_access_to_course
 from lms.djangoapps.course_blocks.api import get_course_blocks
 from lms.djangoapps.grades.subsection_grade_factory import SubsectionGradeFactory
@@ -450,6 +451,64 @@ def get_subsection_grade_percentage(subsection_usage_key, user):
     return subsection_grade_percentage
 
 
+def get_subsection_completion_percentage_with_gradebook_edit(subsection_usage_key, user, overrides=None):
+    """
+    Computes completion percentage for a subsection in a given course for a user, consider the gradeook override
+    Arguments:
+        subsection_usage_key: key of subsection
+        user: The user whose completion percentage needs to be computed
+        overrides: list of usage_keys of subsections which are overridden
+    Returns:
+        User's completion percentage for given subsection
+    """
+    overridden_blocks = []
+    if overrides:
+        for key in overrides:
+            struct = get_course_blocks(user, key)
+            if any(struct):
+                blocks = [
+                    block for block in struct
+                    if block.block_type not in ['chapter', 'sequential', 'vertical', 'course', 'discussion']
+                ]
+                overridden_blocks = overridden_blocks + blocks
+    subsection_completion_percentage = 0.0
+    try:
+        subsection_structure = get_course_blocks(user, subsection_usage_key)
+        if any(subsection_structure):
+            if completion_waffle.waffle().is_enabled(completion_waffle.ENABLE_COMPLETION_TRACKING):
+                subsection_grade_factory = SubsectionGradeFactory(user, course_structure=subsection_structure)
+                for block in subsection_structure:
+                    if block.block_type == 'problem':
+                        subsection_grade = subsection_grade_factory.update(subsection_structure[block], persist_grade=False)
+                        if not subsection_grade.all_total.possible:
+                            BlockCompletion.objects.submit_completion(
+                                user=user,
+                                course_key=subsection_usage_key.course_key,
+                                block_key=block,
+                                completion=1.0,)
+            completable_blocks = [
+                block for block in subsection_structure
+                if block.block_type not in ['chapter', 'sequential', 'vertical', 'course', 'discussion']
+            ]
+            if not completable_blocks:
+                return 0
+            subsection_completion_total = 0
+            course_block_completions = BlockCompletion.get_course_completions(user, subsection_usage_key.course_key)
+            for block in completable_blocks:
+                if block in overridden_blocks:
+                    subsection_completion_total += 1
+                elif course_block_completions.get(block):
+                    subsection_completion_total += course_block_completions.get(block)
+            subsection_completion_percentage = min(
+                100 * (subsection_completion_total / float(len(completable_blocks))), 100
+            )
+
+    except ItemNotFoundError as err:
+        log.warning("Could not find course_block for subsection=%s error=%s", subsection_usage_key, err)
+
+    return subsection_completion_percentage
+
+
 def get_subsection_completion_percentage(subsection_usage_key, user):
     """
     Computes completion percentage for a subsection in a given course for a user
@@ -463,6 +522,17 @@ def get_subsection_completion_percentage(subsection_usage_key, user):
     try:
         subsection_structure = get_course_blocks(user, subsection_usage_key)
         if any(subsection_structure):
+            subsection_grade_factory = SubsectionGradeFactory(user, course_structure=subsection_structure)
+            for block in subsection_structure:
+                if completion_waffle.waffle().is_enabled(completion_waffle.ENABLE_COMPLETION_TRACKING):
+                    if block.block_type == 'problem':
+                        subsection_grade = subsection_grade_factory.update(subsection_structure[block], persist_grade=False)
+                        if not subsection_grade.all_total.possible:
+                            BlockCompletion.objects.submit_completion(
+                                user=user,
+                                course_key=subsection_usage_key.course_key,
+                                block_key=block,
+                                completion=1.0,)
             completable_blocks = [
                 block for block in subsection_structure
                 if block.block_type not in ['chapter', 'sequential', 'vertical', 'course', 'discussion']

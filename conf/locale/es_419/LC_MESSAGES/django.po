@@ -30222,3 +30222,15 @@ msgid ""
 msgstr ""
 "Número de cursos que el alumno completó con un progreso del 100% pero con un "
 "totalpuntaje por debajo del puntaje mínimo requerido"
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "Completed by gradebook edit"
+msgstr "Completado por la edición del libro de calificaciones"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Áreas de desarrollo"
+msgstr "Áreas de desarrollo"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Identify the course areas of development here."
+msgstr "Identifique las áreas de desarrollo del curso aquí."

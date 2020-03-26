@@ -30042,3 +30042,15 @@ msgstr "Pernoite"
 #: lms/templates/triboo_analytics/table.html
 msgid "Overnight stay address"
 msgstr "Endereço para pernoite"
+
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
+msgid "Completed by gradebook edit"
+msgstr "Completado pela edição do boletim"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Areas of Development"
+msgstr "Áreas de desenvolvimento"
+
+#: master-sitel: cms/templates/settings.html
+msgid "Identify the course areas of development here."
+msgstr "Identifique aqui as áreas de desenvolvimento do curso."

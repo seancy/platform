@@ -269,6 +269,8 @@ def courses(request):
                 user_country = dict(countries)[user_country]
             pre_facet_filters['course_country'].append(user_country)
 
+    trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
+
     return render_to_response(
         "courseware/courses.html",
         {
@@ -276,7 +278,8 @@ def courses(request):
             'course_discovery_meanings': course_discovery_meanings,
             'programs_list': programs_list,
             'show_dashboard_tabs': True,
-            'pre_facet_filters': pre_facet_filters
+            'pre_facet_filters': pre_facet_filters,
+            'trans_for_tags': trans_for_tags
         }
     )
 
@@ -2140,13 +2143,15 @@ def ilt_validation_request_data(request):
             course = modulestore().get_course(course_key)
         except:
             continue
-
-        response = handle_xblock_callback(
-            request,
-            unicode(course_key),
-            unicode(usage_key),
-            'student_handler'
-        )
+        try:
+            response = handle_xblock_callback(
+                request,
+                unicode(course_key),
+                unicode(usage_key),
+                'student_handler'
+            )
+        except Http404:
+            continue
         ilt_module_info = json.loads(response.content)
         dropdown_list = ilt_module_info['dropdown_list']
         for i in range(len(ilt_module_info['sessions'])):

@@ -8,7 +8,6 @@
         return Backbone.Collection.extend({
 
             model: CourseCard,
-            // pageSize: 20,
             pageSize: 300,
             totalCount: 0,
             latestModelsCount: 0,

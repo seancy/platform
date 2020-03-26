@@ -4,7 +4,8 @@
         'js/discovery/views/search_form', 'js/discovery/views/courses_listing',
         'js/discovery/views/filter_bar', 'js/discovery/views/refine_sidebar'],
         function(Backbone, _, SearchState, Filters, SearchForm, CoursesListing, FilterBar, RefineSidebar) {
-            return function(meanings, titleMeanings, preFacetFilters, searchQuery, userLanguage, userTimezone) {
+            return function(meanings, titleMeanings, preFacetFilters, transForTags,
+                            searchQuery, userLanguage, userTimezone) {
                 var dispatcher = _.extend({}, Backbone.Events);
                 var search = new SearchState();
                 var filters = new Filters();
@@ -13,7 +14,9 @@
                 var refineSidebar = new RefineSidebar({
                     collection: search.discovery.facetOptions,
                     meanings: meanings,
-                    titleMeanings: titleMeanings
+                    titleMeanings: titleMeanings,
+                    transForTags: transForTags,
+                    userLanguage: userLanguage
                 });
                 var listing;
                 var courseListingModel = search.discovery;
@@ -107,7 +110,7 @@
                 });
 
                 // kick off search on page refresh
-                if (preFacetFilters) {
+                if (!_.isEmpty(preFacetFilters)) {
                     performPreFilterSearch(preFacetFilters);
                 } else {
                     form.doSearch(searchQuery);

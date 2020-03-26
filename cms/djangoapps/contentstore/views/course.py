@@ -559,6 +559,9 @@ def course_listing(request):
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
     orgs = SiteConfiguration.get_all_orgs()
+    pre_facet_filters = {}
+
+    trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
 
     return render_to_response(u'index.html', {
         u'orgs': orgs,
@@ -574,7 +577,10 @@ def course_listing(request):
         u'rerun_creator_status': GlobalStaff().has_user(user),
         u'allow_unicode_course_id': settings.FEATURES.get(u'ALLOW_UNICODE_COURSE_ID', False),
         u'allow_course_reruns': settings.FEATURES.get(u'ALLOW_COURSE_RERUNS', True),
-        u'optimization_enabled': optimization_enabled
+        u'optimization_enabled': optimization_enabled,
+        u'course_discovery_meanings': getattr(settings, 'COURSE_DISCOVERY_MEANINGS', {}),
+        u'pre_facet_filters': pre_facet_filters,
+        u'trans_for_tags': trans_for_tags
     })
 
 
@@ -1131,6 +1137,18 @@ def settings_handler(request, course_key_string):
                     'enrollment_learning_groups': enrollment_learning_groups,
                     'is_programmatic_enrollment_enabled': True
                 })
+
+            site_config_course_tags = configuration_helpers.get_value('COURSE_TAGS', {})
+            if site_config_course_tags and isinstance(site_config_course_tags, dict):
+                for tag in site_config_course_tags:
+                    site_config_course_tags[tag]['checked'] = False
+                course_tags = CourseDetails.fetch(course_key).vendor
+                for tag in course_tags:
+                    if tag in site_config_course_tags:
+                        site_config_course_tags[tag]['checked'] = True
+                    else:
+                        site_config_course_tags[tag] = {'checked': True}
+                settings_context.update({'site_config_course_tags': site_config_course_tags})
 
             if is_prerequisite_courses_enabled():
                 courses, in_process_course_actions = get_courses_accessible_to_user(request)
