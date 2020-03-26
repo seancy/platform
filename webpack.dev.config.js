@@ -26,6 +26,7 @@ module.exports = Merge.smart(commonConfig, {
             {
                 test: /(.scss|.css)$/,
                 include: [
+                    /node_modules\/select2/,
                     /paragon/,
                     /font-awesome/,
                     /lms\/static/

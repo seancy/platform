@@ -44,6 +44,7 @@ class UserPropertiesHelper():
         self.possible_choices_db_prefix = []
         self.possible_choices = []
         self.initial_choices = ["user_name"]
+        self.possible_choices2 = []
         for prop in AVAILABLE_CHOICES.keys():
             if prop in analytics_user_properties.keys():
                 prefix = "user_"
@@ -52,11 +53,14 @@ class UserPropertiesHelper():
                     db_prefix += "profile__"
 
                 self.possible_choices.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop]))
+                self.possible_choices2.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop], analytics_user_properties[prop]))
                 self.possible_choices_db_prefix.append(("%s%s" % (db_prefix, prop), AVAILABLE_CHOICES[prop]))
 
                 if analytics_user_properties[prop] == "default":
                     self.initial_choices.append("%s%s" % (prefix, prop))
+
         self.possible_choices.sort(key=lambda choice: choice[1])
+        self.possible_choices2.sort(key=lambda choice: choice[1])
         self.possible_choices_db_prefix.sort(key=lambda choice: choice[1])
 
 
@@ -64,6 +68,9 @@ class UserPropertiesHelper():
         if db_prefix:
             return self.possible_choices_db_prefix
         return self.possible_choices
+
+    def get_possible_choices2(self, db_prefix=True):
+        return self.possible_choices2
 
 
     def get_initial_choices(self):
@@ -93,8 +100,8 @@ class TimePeriodForm(forms.Form):
 
 
 class TableFilterForm(forms.Form):
-    query_string = forms.CharField(required=False, initial='', label=_('Query'))
     queried_field = forms.ChoiceField(required=False, label=_('Field'))
+    query_string = forms.CharField(required=False, initial='', label=_('Query'))
 
     course_id = forms.CharField(widget=forms.HiddenInput(), required=False)
     report = forms.CharField(widget=forms.HiddenInput(), required=False)

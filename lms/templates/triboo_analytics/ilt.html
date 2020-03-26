@@ -5,6 +5,10 @@
   from django.utils.translation import ugettext as _
   from django.core.urlresolvers import reverse
   from django.template import Template, Context
+
+  import json
+  from openedx.core.djangolib.markup import HTML
+  from webpack_loader.templatetags.webpack_loader import render_bundle
 %>
 
 <%block name="pagetitle">${_("Analytics - ILT Report")}</%block>
@@ -18,12 +22,51 @@
           ilt_global_url = "%s?%s" % (reverse('analytics_ilt'), urlencode({'report': 'global'}))
           ilt_learner_url = "%s?%s" % (reverse('analytics_ilt'), urlencode({'report': 'learner'}))
           %>
+            ${HTML(render_bundle('ILTReport'))}
+            ${HTML(render_bundle('ReactRenderer'))}
+            <div id="ilt-report" class="report-wrapper ilt_report"></div>
+            <script type="text/javascript">
+              new ReactRenderer({
+                component: ILTReport,
+                selector: '#ilt-report',
+                componentName: 'ILTReport',
+                props: {
+                    defaultLanguage: '${request.LANGUAGE_CODE}',
+                    token:'${ csrf_token }'
+                  }
+              });
+            </script>
+
+        % if show_base == 'true':
           % if ilt_report_table:
             <div class="report-wrapper ilt_global">
                 <ul class="analytics-nav">
                     <li class="nav-item active">${_("ILT Global Report")}</li>
                     <li class="nav-item"><a href="${ilt_learner_url}">${_("ILT Learner Report")}</a></li>
                 </ul>
+
+                ##${HTML(render_bundle('ILTGlobalReport'))}
+                ##${HTML(render_bundle('ReactRenderer'))}
+                ##<div id="ilt-global-report"></div>
+                ##<script type="text/javascript">
+                ##  new ReactRenderer({
+                ##    component: ILTGlobalReport,
+                ##    selector: '#ilt-global-report',
+                ##    componentName: 'ILTGlobalReport',
+                ##    props: {
+                ##        ##filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
+                ##        ##defaultLanguage: '${request.LANGUAGE_CODE}',
+                ##        ##last_update: '${last_update}',
+                ##        ##learner_table: ${('true' if learner_table else 'false')}
+                ##      }
+                ##  });
+                ##</script>
+
+                <p>Time Period:</p>
+                <form class="table-period-form" action="${ilt_global_url}" method="get">
+                    ${time_period_form}
+                    <input type="submit" value="${_("Go")}"/>
+                </form>
 
                 <% tpl = "{% load render_table from django_tables2 %}{% render_table ilt_report_table 'triboo_analytics/table.html' %}" %>
                 ${Template(tpl).render(Context({'ilt_report_table': ilt_report_table,
@@ -37,39 +80,63 @@
                     <li class="nav-item active">${_("ILT Learner Report")}</li>
                 </ul>
 
-                <form class="table-filter-form" action="${ilt_global_url}" method="get">
-                    ${filter_form}
-                    % for key, value in query_dict.items():
-                        <input type="hidden" value="${value}" name="${key}"/>
-                    % endfor
-                    <input type="submit" value="${_("Filter")}"/>
+                ##${HTML(render_bundle('ILTLearnerReport'))}
+                ##${HTML(render_bundle('ReactRenderer'))}
+                ##<div id="ilt-learner-report"></div>
+                ##<script type="text/javascript">
+                ##  new ReactRenderer({
+                ##    component: ILTLearnerReport,
+                ##    selector: '#ilt-learner-report',
+                ##    componentName: 'ILTLearnerReport',
+                ##    props: {
+                ##        filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data])},
+                ##        defaultLanguage: '${request.LANGUAGE_CODE}',
+                ##      }
+                ##  });
+                ##    </script>
+
+                <div>------------------------------</div>
+                <form class="table-period-form" action="${ilt_global_url}" method="get">
+                    ${time_period_form}
+                    <input type="submit" value="${_("Go")}"/>
                 </form>
-                <form class="clear-filter-form" action="${ilt_global_url}" method="get">
-                    <span style="display: none">${filter_form}</span>
-                    <input type="hidden" value="1" name="clear">
-                    <input type="hidden" value="" name="query_string">
-                    <input type="hidden" value="Name" name="queried_field">
-                    <button type="submit" id="clear-all-filters" class="clear-filters reset-button">
-                        <i class="fa fa-refresh icon"></i>${_("Reset")}
-                    </button>
-                </form>
-                <div class="filter-forms">
-                % for query_string, queried_field, queried_field_name in query_triples:
-                <form class="delete-filter-form" action="${ilt_global_url}" method="get">
-                    <span style="display: none">${filter_form}</span>
-                    <input type="hidden" value="1" name="delete">
-                    % for key, value in query_dict.items():
-                        <input type="hidden" value="${value}" name="${key}"/>
-                    % endfor
-                    <input type="hidden" value="${query_string}" name="query_string">
-                    <input type="hidden" value="${queried_field_name}" name="queried_field">
-                    <button type="submit" class="delete-filter">
-                        <span class="query">${_(queried_field)}: ${query_string}</span>
-                        <span aria-hidden="true" class="fa fa-times"></span>
-                    </button>
-                </form>
-                % endfor
-                </div>
+
+              <div class="filter-section">
+                  <div class="filter-forms">
+                    <form class="table-filter-form" action="${reverse('analytics_course')}" method="get">
+                        ${filter_form}
+                        % for key, value in query_dict.items():
+                            <input type="hidden" value="${value}" name="${key}"/>
+                        % endfor
+                    </form>
+                    <form class="clear-filter-form" action="${reverse('analytics_course')}" method="get">
+                        <span style="display: none">${filter_form}</span>
+                        <input type="hidden" value="1" name="clear">
+                        <input type="hidden" value="" name="query_string">
+                        <input type="hidden" value="Name" name="queried_field">
+                        <button type="submit" id="clear-all-filters" class="clear-filters reset-button">
+                            <i class="fa fa-refresh icon"></i>${_("Reset")}
+                        </button>
+                    </form>
+                  </div>
+                  <div class="delete-filter-forms">
+                  % for query_string, queried_field, queried_field_name in query_triples:
+                    <form class="delete-filter-form" action="${reverse('analytics_course')}" method="get">
+                        <span style="display: none">${filter_form}</span>
+                        <input type="hidden" value="1" name="delete">
+                        % for key, value in query_dict.items():
+                            <input type="hidden" value="${value}" name="${key}"/>
+                        % endfor
+                        <input type="hidden" value="${query_string}" name="query_string">
+                        <input type="hidden" value="${queried_field_name}" name="queried_field">
+                        <button type="submit" class="delete-filter">
+                            <span class="query">${_(queried_field)}: ${query_string}</span>
+                            <span aria-hidden="true" class="fa fa-times"></span>
+                        </button>
+                    </form>
+                  % endfor
+                  </div>
+              </div>
 
                 <form class="table-user-properties-form" action="${reverse('analytics_ilt')}" method="get">
                     <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
@@ -87,8 +154,8 @@
                                                 'request': request,
                                                 'row_count': row_count}))}
           % endif
-              <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
             </div>
+        % endif
         </section>
     </div>
 </main>
@@ -103,10 +170,9 @@
       menu.slideToggle();
     });
 
-    $(window).on("load", function () {
-        console.log("after load");
-        $("#id_query_string").val("");
-        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
+    $(window).on("load", function() {
+        $(".table-filter-form #id_query_string").val("");
+        $(".table-filter-form #id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
     });
   });
 </script>

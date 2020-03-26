@@ -6,6 +6,10 @@
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
     from triboo_analytics.models import CourseStatus, format_time_spent
+
+    import json
+    from openedx.core.djangolib.markup import HTML
+    from webpack_loader.templatetags.webpack_loader import render_bundle
 %>
 
 <%block name="pagetitle">${_("Analytics - Course Report")}</%block>
@@ -193,6 +197,22 @@
                   <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
                 </div>
 
+                ${HTML(render_bundle('CourseReport'))}
+                ${HTML(render_bundle('ReactRenderer'))}
+                <div id="course-report"></div>
+                <script type="text/javascript">
+                  new ReactRenderer({
+                    component: CourseReport,
+                    selector: '#course-report',
+                    componentName: 'CourseReport',
+                    props: {
+                        defaultLanguage: '${request.LANGUAGE_CODE}',
+                        token:'${ csrf_token }',
+                      }
+                  });
+                </script>
+
+              % if show_base == 'true':
               <%
               summary_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'summary'}))
               progress_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'progress'}))
@@ -217,39 +237,41 @@
                       <li class="nav-item active">${_("Time Spent")}</li>
                   </ul>
               % endif
-
-                <form class="table-filter-form" action="${reverse('analytics_course')}" method="get">
-                    ${filter_form}
-                    % for key, value in query_dict.items():
-                        <input type="hidden" value="${value}" name="${key}"/>
-                    % endfor
-                    <input type="submit" value="${_("Filter")}"/>
-                </form>
-                <form class="clear-filter-form" action="${reverse('analytics_course')}" method="get">
-                    <span style="display: none">${filter_form}</span>
-                    <input type="hidden" value="1" name="clear">
-                    <input type="hidden" value="" name="query_string">
-                    <input type="hidden" value="Name" name="queried_field">
-                    <button type="submit" id="clear-all-filters" class="clear-filters reset-button">
-                        <i class="fa fa-refresh icon"></i>${_("Reset")}
-                    </button>
-                </form>
-              <div class="filter-forms">
-              % for query_string, queried_field, queried_field_name in query_triples:
-                <form class="delete-filter-form" action="${reverse('analytics_course')}" method="get">
-                    <span style="display: none">${filter_form}</span>
-                    <input type="hidden" value="1" name="delete">
-                    % for key, value in query_dict.items():
-                        <input type="hidden" value="${value}" name="${key}"/>
-                    % endfor
-                    <input type="hidden" value="${query_string}" name="query_string">
-                    <input type="hidden" value="${queried_field_name}" name="queried_field">
-                    <button type="submit" class="delete-filter">
-                        <span class="query">${_(queried_field)}: ${query_string}</span>
-                        <span aria-hidden="true" class="fa fa-times"></span>
-                    </button>
-                </form>
-              % endfor
+              <div class="filter-section">
+                  <div class="filter-forms">
+                    <form class="table-filter-form" action="${reverse('analytics_course')}" method="get">
+                        ${filter_form}
+                        % for key, value in query_dict.items():
+                            <input type="hidden" value="${value}" name="${key}"/>
+                        % endfor
+                    </form>
+                    <form class="clear-filter-form" action="${reverse('analytics_course')}" method="get">
+                        <span style="display: none">${filter_form}</span>
+                        <input type="hidden" value="1" name="clear">
+                        <input type="hidden" value="" name="query_string">
+                        <input type="hidden" value="Name" name="queried_field">
+                        <button type="submit" id="clear-all-filters" class="clear-filters reset-button">
+                            <i class="fa fa-refresh icon"></i>${_("Reset")}
+                        </button>
+                    </form>
+                  </div>
+                  <div class="delete-filter-forms">
+                  % for query_string, queried_field, queried_field_name in query_triples:
+                    <form class="delete-filter-form" action="${reverse('analytics_course')}" method="get">
+                        <span style="display: none">${filter_form}</span>
+                        <input type="hidden" value="1" name="delete">
+                        % for key, value in query_dict.items():
+                            <input type="hidden" value="${value}" name="${key}"/>
+                        % endfor
+                        <input type="hidden" value="${query_string}" name="query_string">
+                        <input type="hidden" value="${queried_field_name}" name="queried_field">
+                        <button type="submit" class="delete-filter">
+                            <span class="query">${_(queried_field)}: ${query_string}</span>
+                            <span aria-hidden="true" class="fa fa-times"></span>
+                        </button>
+                    </form>
+                  % endfor
+                  </div>
               </div>
                 <form class="table-user-properties-form" action="${reverse('analytics_course')}" method="get">
                     <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
@@ -281,12 +303,17 @@
                                                 'row_count': row_count}))}
               % endif
 
-              <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
+              % endif
+
             % endif
           </div>
         </section>
     </div>
 </main>
+
+##<%static:webpack entry="CourseReport">
+##    new CourseReport();
+##</%static:webpack>
 
 % if course_report:
     <!-- load the d3.js library -->
@@ -337,10 +364,9 @@
       menu.slideToggle();
     });
 
-    $(window).on("load", function () {
-        console.log("after load");
-        $("#id_query_string").val("");
-        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
+    $(window).on("load", function() {
+        $(".table-filter-form #id_query_string").val("");
+        $(".table-filter-form #id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
     });
   });
 </script>

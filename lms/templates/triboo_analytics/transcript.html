@@ -170,8 +170,6 @@
 
               <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
               ${Template(tpl).render(Context({'learner_course_table': learner_course_table, 'request': request}))}
-
-              <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
             % endif
           </div>
         </section>
