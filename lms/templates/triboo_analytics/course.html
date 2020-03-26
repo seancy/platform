@@ -164,10 +164,6 @@
                       </div>
                     </div>
                 </div>
-                <form class="table-period-form" action="${reverse('analytics_course')}" method="get">
-                    ${time_period_form}
-                    <input type="submit" value="${_("Go")}"/>
-                </form>
               % if len(unique_visitors_csv_data) > 0:
                 <div class="analytics-widget-100 analytics-linechart">
                     ${static.renderReact(
@@ -209,18 +205,19 @@
                     <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
                 </ul>
               % elif learner_course_progress_table:
-                <ul class="analytics-nav">
-                    <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
-                    <li class="nav-item active">${_("Progress")}</li>
-                    <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
-                </ul>
+                  <ul class="analytics-nav">
+                      <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
+                      <li class="nav-item active">${_("Progress")}</li>
+                      <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
+                  </ul>
               % elif learner_course_time_spent_table:
-                <ul class="analytics-nav">
-                    <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
-                    <li class="nav-item"><a href="${progress_url}">${_("Progress")}</a></li>
-                    <li class="nav-item active">${_("Time Spent")}</li>
-                </ul>
+                  <ul class="analytics-nav">
+                      <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
+                      <li class="nav-item"><a href="${progress_url}">${_("Progress")}</a></li>
+                      <li class="nav-item active">${_("Time Spent")}</li>
+                  </ul>
               % endif
+
                 <form class="table-filter-form" action="${reverse('analytics_course')}" method="get">
                     ${filter_form}
                     % for key, value in query_dict.items():
