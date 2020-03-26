@@ -20,6 +20,7 @@ define([
             var courseTags = this.model.get('vendor');
             $(this.el).empty();
             $(this.el).append(this.template({courseTags: courseTags}));
+            $('#course-vendor').val('');
         },
 
         removeTagItem: function(event) {
@@ -28,6 +29,7 @@ define([
             var pos = $(event.currentTarget).data('index');
             courseTags.splice(pos, 1);
             this.model.set('vendor', courseTags);
+            this.render();
         }
     });
     return CourseTagsInfo;
