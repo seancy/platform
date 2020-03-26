@@ -402,6 +402,7 @@
     "Are you sure you want to unenroll from {courseName} ({courseNumber})? You will be refunded the amount you paid.": "\u00bfEst\u00e1 seguro de que desea darse de baja de {courseName} ({courseNumber})? Se le reembolsar\u00e1 la cantidad que pag\u00f3.", 
     "Are you sure you wish to delete this item. It cannot be reversed!\n\nAlso any content that links/refers to this item will no longer work (e.g. broken images and/or links)": "\u00bfEst\u00e1s seguro de querer borrar este \u00edtem? \u00a1La operaci\u00f3n no es reversible!\nPor otro lado, cualquier contenido que enlace o referencie este \u00edtem dejar\u00e1 de funcionar (por ejemplo, im\u00e1genes o enlaces rotos)", 
     "Are you sure?": "\u00bfEst\u00e1s seguro?", 
+    "Area of Development": "\u00c1rea de desarrollo", 
     "As part of the verification process, you take a photo of both your face and a government-issued photo ID. Our authorization service confirms your identity by comparing the photo you take with the photo on your ID.": "Como parte del proceso de verificaci\u00f3n, tienes que tomar una foto de tu rostro y una foto de un documento de identidad oficial. Nuestro servicio de autorizaci\u00f3n confirmar\u00e1 tu identidad comparando ambas fotos.", 
     "As you complete courses, you will see them listed here.": "A medida que complete los cursos, los ver\u00e1 listados aqu\u00ed.", 
     "Assessment": "Evaluaci\u00f3n", 

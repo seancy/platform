@@ -3,6 +3,7 @@ API for the gating djangoapp
 """
 import json
 import logging
+import sys
 
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -12,6 +13,7 @@ from completion.models import BlockCompletion
 from completion import waffle as completion_waffle
 from lms.djangoapps.courseware.access import _has_access_to_course
 from lms.djangoapps.course_blocks.api import get_course_blocks
+from lms.djangoapps.grades.models import PersistentSubsectionGradeOverride
 from lms.djangoapps.grades.subsection_grade_factory import SubsectionGradeFactory
 from milestones import api as milestones_api
 from opaque_keys.edx.keys import UsageKey
@@ -407,7 +409,8 @@ def update_milestone(milestone, usage_key, prereq_milestone, user, grade_percent
     if not grade_percentage:
         grade_percentage = get_subsection_grade_percentage(usage_key, user) if min_score > 0 else 0
     if not completion_percentage:
-        completion_percentage = get_subsection_completion_percentage(usage_key, user) if min_completion > 0 else 0
+        completion_percentage = get_subsection_completion_percentage_with_gradebook_edit(usage_key, user) \
+            if min_completion > 0 else 0
 
     if grade_percentage >= min_score and completion_percentage >= min_completion:
         milestones_helpers.add_user_milestone({'id': user.id}, prereq_milestone)
@@ -443,7 +446,7 @@ def get_subsection_grade_percentage(subsection_usage_key, user):
             if subsection_usage_key in subsection_structure:
                 # this will force a recalculation of the subsection grade
                 subsection_grade = subsection_grade_factory.update(
-                    subsection_structure[subsection_usage_key], persist_grade=False
+                    subsection_structure[subsection_usage_key], only_if_higher=True, persist_grade=True
                 )
                 subsection_grade_percentage = subsection_grade.percent_graded * 100.0
     except ItemNotFoundError as err:
@@ -462,6 +465,14 @@ def get_subsection_completion_percentage_with_gradebook_edit(subsection_usage_ke
         User's completion percentage for given subsection
     """
     overridden_blocks = []
+    # skip override check in testing mode
+    if overrides is None and "pytest" not in sys.modules:
+        grade_overrides = PersistentSubsectionGradeOverride.objects.filter(
+            grade__user_id=user.id,
+            grade__course_id=subsection_usage_key.course_key,
+        ).select_related('grade')
+        overridden_subsection_keys = [i.grade.usage_key for i in grade_overrides]
+        overrides = list(set(overridden_subsection_keys))
     if overrides:
         for key in overrides:
             struct = get_course_blocks(user, key)

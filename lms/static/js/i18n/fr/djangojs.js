@@ -259,6 +259,7 @@
     "Are you sure you want to unenroll from {courseName} ({courseNumber})? You will be refunded the amount you paid.": "\u00cates-vous s\u00fbr de vouloir vous d\u00e9sinscrire de {courseName} ({courseNumber})\u00a0? Le montant que vous aviez pay\u00e9 vous sera rembours\u00e9. ", 
     "Are you sure you wish to delete this item. It cannot be reversed!\n\nAlso any content that links/refers to this item will no longer work (e.g. broken images and/or links)": "\u00cates vous s\u00fbr de vouloir supprimer cet \u00e9l\u00e9ment ? L'op\u00e9ration est irr\u00e9versible !\n\nTout contenu associ\u00e9 ne fonctionnera plus (par exemple : images et/ou liens cass\u00e9s)", 
     "Are you sure?": "\u00cates-vous certain ?", 
+    "Area of Development": "Axe de d\u00e9veloppement", 
     "As part of the verification process, you take a photo of both your face and a government-issued photo ID. Our authorization service confirms your identity by comparing the photo you take with the photo on your ID.": "Participant au processus de v\u00e9rification, vous prenez une photo de votre visage ainsi que de votre pi\u00e8ce d'identit\u00e9. Notre service d'autorisation confirme votre identit\u00e9 en comparant votre visage \u00e0 la photo de la pi\u00e8ce d'identit\u00e9.", 
     "As you complete courses, you will see them listed here.": "Au fur et \u00e0 mesure que vous terminez des cours, vous les verrez appara\u00eetre ici.", 
     "Assessment Results Visibility": "Visibilit\u00e9 de l'\u00e9valuation des r\u00e9sultats", 

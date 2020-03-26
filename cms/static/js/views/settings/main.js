@@ -358,6 +358,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    }
                    courseTags.push(tagInputValue);
                    this.model.set('vendor', courseTags);
+                   this.course_tags_info_view.render();
                },
 
                deleteCourse: function() {
@@ -596,7 +597,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                            mirror.save();
                            cachethis.clearValidationErrors();
                            var newVal = mirror.getValue();
-                           if (cachethis.model.get(field) != newVal) {
+                           if (cachethis.model.get(field) !== newVal) {
                                cachethis.setAndValidate(field, newVal);
                            }
                        });
@@ -606,8 +607,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                },
 
                revertView: function() {
-        // Make sure that the CodeMirror instance has the correct
-        // data from its corresponding textarea
+                   // Make sure that the CodeMirror instance has the correct
+                   // data from its corresponding textarea
                    var self = this;
                    this.model.fetch({
                        success: function() {
@@ -635,12 +636,12 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                },
 
                showNotificationBar: function() {
-        // We always call showNotificationBar with the same args, just
-        // delegate to superclass
+                   // We always call showNotificationBar with the same args, just
+                   // delegate to superclass
                    ValidatingView.prototype.showNotificationBar.call(this,
-                                                          this.save_message,
-                                                          _.bind(this.saveView, this),
-                                                          _.bind(this.revertView, this));
+                       this.save_message,
+                       _.bind(this.saveView, this),
+                       _.bind(this.revertView, this));
                },
 
                uploadImage: function(event) {
