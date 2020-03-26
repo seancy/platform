@@ -636,16 +636,6 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         return False
 
 
-    # @classmethod
-    # def filter_period(cls, from_date, to_date, course_id):
-    #     last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
-    #     if last_reportlog:
-    #         last_analytics_success = last_reportlog.created
-    #         user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date, course_id)
-    #         return cls.objects.filter(created=last_analytics_success, course_id=course_id, user_id__in=user_ids)
-    #     return None
-
-
 class LearnerSectionDailyReportMockup(object):
     def __init__(self, learner_section_daily_report, total_time_spent):
         self.course_id = learner_section_daily_report.
@@ -710,36 +700,29 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
                     pass
                 results.append(LearnerSectionDailyReportMockup(r, (r.total_time_spent - old_time_spent)))
             return results
-        return new_results
+
+
+# class Badge(models.Model):
+#     class Meta(object):
+#         app_label = "triboo_analytics"
+#         unique_together = [course_id, badge_format]
+#         index_together = [course_id, badge_format]
+
+#     course_id = CourseKeyField(max_length=255, db_index=True, null=False)
+#     badge_format = models.CharField(max_length=100, db_index=True, null=False)
+#     display_name = models.CharField(max_length=255, null=True, blank=True, default=None)
 
 
 
-class LearnerSectionReport(TimeModel):
-    class Meta(object):
-        app_label = "triboo_analytics"
-        unique_together = ('user', 'course_id', 'section_key')
+# class LearnerCourseBadgeReport(UnicodeMixin, TimeStampedModel):
+#     class Meta(object):
+#        app_label = "triboo_analytics"
+#        unique_together = []
 
-    user = models.ForeignKey(User, null=False)
-    course_id = CourseKeyField(max_length=255, db_index=True, null=False)
-    section_key = models.CharField(max_length=100, null=False)
-    section_name = models.CharField(max_length=512, null=False)
-    time_spent = models.PositiveIntegerField(default=0)
+#     user = models.ForeignKey(User, null=False)
+#     badge = models.ForeignKey(Badge, null=False)
 
-    @classmethod
-    def update_or_create(cls, enrollment, sections):
-        for section_combined_url, section_combined_display_name in sections.iteritems():
-            time_spent = (TrackingLog.objects.filter(
-                            user_id=enrollment.user.id,
-                            section=section_combined_url,
-                            time__gte=enrollment.created).aggregate(
-                                Sum('time_spent')).get('time_spent__sum') or 0)
-            time_spent = int(round(time_spent))
-            cls.objects.update_or_create(user=enrollment.user,
-                                         course_id=enrollment.course_id,
-                                         section_key=section_combined_url,
-                                         defaults={'section_name': section_combined_display_name,
-                                                   'time_spent': time_spent})
-
+            
 
 class LearnerDailyReportMockup(object):
     def __init__(self, learner_daily_report, total_time_spent):
