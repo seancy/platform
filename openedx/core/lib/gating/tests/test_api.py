@@ -211,7 +211,7 @@ class TestGatingApi(ModuleStoreTestCase, MilestonesTestCaseMixin):
 
         # complete the prerequisite to unlock the gated content
         # this call triggers reevaluation of prerequisites fulfilled by the gating block.
-        with patch.object(gating_api, 'get_subsection_completion_percentage') as mock_grade:
+        with patch.object(gating_api, 'get_subsection_completion_percentage_with_gradebook_edit') as mock_grade:
             mock_grade.return_value = learner_completion
             lms_gating_api.evaluate_prerequisite(
                 self.course,
