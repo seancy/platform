@@ -320,6 +320,7 @@
     "Are you sure you want to unenroll from {courseName} ({courseNumber})? You will be refunded the amount you paid.": "Tem certeza de que deseja cancelar a inscri\u00e7\u00e3o em {courseName} ({courseNumber})? Voc\u00ea ser\u00e1 reembolsado do valor pago.", 
     "Are you sure you wish to delete this item. It cannot be reversed!\n\nAlso any content that links/refers to this item will no longer work (e.g. broken images and/or links)": "Voc\u00ea tem certeza de que deseja apagar este item? A opera\u00e7\u00e3o n\u00e3o pode ser revertida!\n\n\nAl\u00e9m disso, qualquer conte\u00fado que possua links ou se refira a este item n\u00e3o ir\u00e1 funcionar mais (ex.: imagens e/ou links quebrados) ", 
     "Are you sure?": "Tem certeza?", 
+    "Area of Development": "\u00c1rea de Desenvolvimento", 
     "As part of the verification process, you take a photo of both your face and a government-issued photo ID. Our authorization service confirms your identity by comparing the photo you take with the photo on your ID.": "Como parte do processo de verifica\u00e7\u00e3o, voc\u00ea ir\u00e1 tirar uma foto tanto do seu rosto como de uma foto de documento oficial. Nosso servi\u00e7o de autoriza\u00e7\u00e3o confirma sua identidade ao comparar a foto que voc\u00ea tira com a foto no seu documento.", 
     "As you complete courses, you will see them listed here.": "Ao concluir os cursos, voc\u00ea os ver\u00e1 listados aqui.", 
     "Assessment Results Visibility": "Visibilidade dos resultados da avalia\u00e7\u00e3o", 
