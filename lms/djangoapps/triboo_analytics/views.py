@@ -891,7 +891,8 @@ def create_override(request_user, subsection_grade_model, **override_data):
     return override
 
 
-@analytlogin_required
+@analytics_on
+@login_required
 @analytics_member_required
 @ensure_csrf_cookie
 def microsite_view(request):
@@ -955,6 +956,14 @@ def microsite_view(request):
             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'global'}),
         }
     )
+
+
+def get_filters_data(db=True):
+    analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                                settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+    user_properties_helper = UserPropertiesHelper(analytics_user_properties)
+    filters_data = user_properties_helper.get_possible_choices(db)
+    return filters_data
 
 
 def get_all_courses(request, orgs):
@@ -1479,12 +1488,8 @@ def table_view_data(course_id, _task_input):
         content = exporter.export()
         content = json.loads(content)
 
-        analytics_user_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
-                                                                settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
-        user_properties_helper = UserPropertiesHelper(analytics_user_properties)
-        filters_data = user_properties_helper.get_possible_choices(False)
-
         reversed_filter_dict = collections.OrderedDict()
+        filters_data = get_filters_data(False)
         for t in filters_data:
             reversed_filter_dict[t[1]] = t[0]
 
