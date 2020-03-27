@@ -17,7 +17,7 @@ from django_comment_common.models import assign_default_role
 from django_comment_common.utils import seed_permissions_roles
 from lms.djangoapps.triboo_analytics.models import (
     LearnerCourseDailyReport,
-    LearnerSectionReport,
+    LearnerSectionDailyReport,
     CourseDailyReport
 )
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
@@ -90,7 +90,7 @@ def remove_course_reports(course_key):
     Delete all reports related to the course.
     """
     LearnerCourseDailyReport.objects.filter(course_id=course_key).delete()
-    LearnerSectionReport.objects.filter(course_id=course_key).delete()
+    LearnerSectionDailyReport.objects.filter(course_id=course_key).delete()
     CourseDailyReport.objects.filter(course_id=course_key).delete()
 
 

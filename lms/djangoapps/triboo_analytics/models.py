@@ -533,7 +533,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     def generate_enrollment_report(cls, last_analytics_success, course_last_update, enrollment, sections):
         updated = cls.update_or_create(last_analytics_success, course_last_update, enrollment)
         if updated:
-            LearnerSectionReport.update_or_create(enrollment, sections)
+            LearnerSectionDailyReport.update_or_create(enrollment, sections)
 
 
     @classmethod
@@ -638,10 +638,10 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 class LearnerSectionDailyReportMockup(object):
     def __init__(self, learner_section_daily_report, total_time_spent):
-        self.course_id = learner_section_daily_report.
-        self.user = learner_section_daily_report.
-        self.section_key = learner_section_daily_report.
-        self.section_name = learner_section_daily_report.
+        self.course_id = learner_section_daily_report.course_id
+        self.user = learner_section_daily_report.user
+        self.section_key = learner_section_daily_report.section_key
+        self.section_name = learner_section_daily_report.section_name
         self.total_time_spent = total_time_spent
 
 
@@ -670,18 +670,12 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
                                                            time__gte=enrollment.created).aggregate(
                                                                Sum('time_spent')).get('time_spent__sum') or 0)
             total_time_spent = int(round(total_time_spent))
-            time_spent = (TrackingLog.objects.filter(user_id=enrollment.user.id,
-                                                     section=section_combined_url,
-                                                     time__date=yesterday.date()).aggregate(
-                                                         Sum('time_spent')).get('time_spent__sum') or 0)
-            time_spent = int(round(total_time_spent))
             cls.objects.update_or_create(created=day,
                                          user=enrollment.user,
                                          course_id=enrollment.course_id,
                                          section_key=section_combined_url,
                                          defaults={'section_name': section_combined_display_name,
-                                                   'total_time_spent': total_time_spent,
-                                                   'time_spent': time_spent})
+                                                   'total_time_spent': total_time_spent})
 
 
     @classmethod
@@ -1487,14 +1481,14 @@ def generate_today_reports(multi_process=False):
         last_analytics_success = last_reportlog.created.date()
 
     if last_analytics_success:
-        last_reports = LearnerSectionDailyReport.filter_by_day(last_analytics_success)
-        new_reports = [LearnerSectionDailyReport(created=today,
+        LearnerSectionDailyReport.filter_by_day(timezone.now()).delete()
+        last_reports = LearnerSectionDailyReport.filter_by_day(last_reportlog.created)
+        new_reports = [LearnerSectionDailyReport(created=timezone.now().date(),
                                                  user_id=report.user_id,
                                                  course_id=report.course_id,
                                                  section_key=report.section_key,
                                                  section_name=report.section_name,
-                                                 total_time_spent=report.total_time_spent,
-                                                 time_spent=report.time_spent) for report in last_reports]
+                                                 total_time_spent=report.total_time_spent) for report in last_reports]
         LearnerSectionDailyReport.objects.bulk_create(new_reports)
 
 
