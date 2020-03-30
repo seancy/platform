@@ -4,7 +4,8 @@ import time
 from datetime import datetime, timedelta
 import logging
 from triboo_analytics.models import (
-    CourseDailyReportMicrositeDailyReport,
+    CourseDailyReport,
+    MicrositeDailyReport,
     LearnerVisitsDailyReport,
     get_day_limits
 )
