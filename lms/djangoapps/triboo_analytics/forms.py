@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django import forms
-from pytz import utc
 from datetime import datetime, timedelta
+from pytz import utc
+from django import forms
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext_lazy
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 
 AVAILABLE_CHOICES = {
@@ -40,23 +42,25 @@ AVAILABLE_CHOICES = {
 
 
 class UserPropertiesHelper():
-    def __init__(self, analytics_user_properties={}):
+    def __init__(self):
+        config_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                            settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
         self.possible_choices_db_prefix = []
         self.possible_choices = []
         self.initial_choices = ["user_name"]
         self.possible_choices2 = []
         for prop in AVAILABLE_CHOICES.keys():
-            if prop in analytics_user_properties.keys():
+            if prop in config_properties.keys():
                 prefix = "user_"
                 db_prefix = "user__"
                 if prop not in ['email', 'username', 'date_joined']:
                     db_prefix += "profile__"
 
                 self.possible_choices.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop]))
-                self.possible_choices2.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop], analytics_user_properties[prop]))
+                self.possible_choices2.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop], config_properties[prop]))
                 self.possible_choices_db_prefix.append(("%s%s" % (db_prefix, prop), AVAILABLE_CHOICES[prop]))
 
-                if analytics_user_properties[prop] == "default":
+                if config_properties[prop] == "default":
                     self.initial_choices.append("%s%s" % (prefix, prop))
 
         self.possible_choices.sort(key=lambda choice: choice[1])
@@ -75,28 +79,6 @@ class UserPropertiesHelper():
 
     def get_initial_choices(self):
         return self.initial_choices
-
-
-class TimePeriodForm(forms.Form):
-    from_day = forms.CharField(required=False, initial='', label=_('From'))
-    to_day = forms.CharField(required=False, initial='', label=_('To'))
-
-    course_id = forms.CharField(widget=forms.HiddenInput(), required=False)
-    report = forms.CharField(widget=forms.HiddenInput(), required=False)
-    query_string = forms.CharField(widget=forms.HiddenInput(), required=False)
-    queried_field = forms.CharField(widget=forms.HiddenInput(), required=False)
-    selected_properties = forms.CharField(widget=forms.MultipleHiddenInput(), required=False)
-
-    def __init__(self, data=None):
-        super(TimePeriodForm, self).__init__(data)
-        self.period = None
-        if data:
-            from_day = data.get('from_day', None)
-            to_day = data.get('to_day', None)
-            if from_day and to_day:
-                from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
-                to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
-                self.period = (from_date, to_date)
 
 
 class TableFilterForm(forms.Form):

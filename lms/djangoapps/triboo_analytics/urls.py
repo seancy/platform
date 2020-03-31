@@ -14,20 +14,23 @@ urlpatterns = [
     url(r'^transcript/{}/process-waiver-request/(?P<waiver_id>[0-9]+)'.format(settings.COURSE_ID_PATTERN),
         views.process_waiver_request, name='process_waiver_request'),
 
-    url(r'^global/$', views.microsite_view, name='analytics_microsite'),
-
-    url(r'^course/$', views.course_view, name='analytics_course'),
-    url(r'^course/export/$', views.course_export_table, name='analytics_course_export'),
-
-    url(r'^learner/$', views.learner_view, name='analytics_learner'),
-    url(r'^learner/export/$', views.learner_export_table, name='analytics_learner_export'),
-
-    url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt|global|customized)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
-        views.list_table_downloads, name='list_table_downloads'),
     url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),
     url(r'^learner_transcript/(?P<user_id>\w+)/export/$', views.transcript_export_table, name='analytics_transcript_export'),
 
+    url(r'^global/$', views.microsite_view, name='analytics_microsite'),
+
+    url(r'^common/get_properties/json/$', views.get_properties, name='analytics_get_properties'),
+
+    url(r'^course/$', views.course_view, name='analytics_course'),
+    url(r'^course/json/$', views.course_view_data, name='analytics_course_data'),
+    url(r'^course/export/$', views.course_export_table, name='analytics_course_export'),
+
+    url(r'^learner/$', views.learner_view, name='analytics_learner'),
+    url(r'^learner/json/$', views.learner_view_data, name='analytics_learner_data'),
+    url(r'^learner/export/$', views.learner_export_table, name='analytics_learner_export'),
+
     url(r'^ilt/$', views.ilt_view, name='analytics_ilt'),
+    url(r'^ilt/json/$', views.ilt_view_data, name='analytics_ilt_data'),
     url(r'^ilt/export/$', views.ilt_export_table, name='analytics_ilt_export'),
 
     url(r'^customized/$', views.customized_view, name='analytics_customized'),
@@ -35,9 +38,6 @@ urlpatterns = [
 
     url(r'^export/$', views.export_tables, name='analytics_export_tables'),
 
-    url(r'^course/json/$', views.course_view_data, name='analytics_course_data'),
-    url(r'^learner/json/$', views.learner_view_data, name='analytics_learner_data'),
-    url(r'^ilt/json/$', views.ilt_view_data, name='analytics_ilt_data'),
-
-    url(r'^common/get_properties/json/$', views.get_properties, name='analytics_get_properties'),
+    url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt|global|customized)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
+        views.list_table_downloads, name='list_table_downloads'),
 ]
