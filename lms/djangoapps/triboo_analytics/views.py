@@ -715,6 +715,7 @@ def table_view_data(course_id, _task_input):
 def json_response(table, sort, page, summary_columns=[]):
     try:
         res = TableExport('json', table).export()
+        logger.info("LAETITIA -- %s" % res)
         table_json = json.loads(res)
         table_response = []
         total = collections.OrderedDict()
