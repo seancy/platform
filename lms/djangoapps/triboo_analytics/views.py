@@ -73,6 +73,7 @@ from models import (
     get_combined_org,
     TrackingLogHelper,
     ReportLog,
+    LearnerVisitsDailyReport,
     LearnerCourseDailyReport,
     LearnerDailyReport,
     CourseDailyReport,
@@ -293,9 +294,14 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
         from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
         to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
 
+        print "LAETITIA -- from %s to %s" % (from_date, to_date)
+
         last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
         if last_reportlog:
             last_analytics_success = last_reportlog.created
+
+            print "LAETITIA -- last_analytics_success = %s" % last_analytics_success
+
             user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date,
                                                                     to_date,
                                                                     course_id)
