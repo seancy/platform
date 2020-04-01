@@ -726,8 +726,8 @@ class LearnerDailyReportMockup(object):
         self.average_final_score = learner_daily_report.average_final_score
         self.badges = learner_daily_report.badges
         self.posts = learner_daily_report.posts
-        self.finished = learner_daily_report.finished
-        self.failed = learner_daily_report.failed
+        self.successful = learner_daily_report.finished
+        self.unsuccessful = learner_daily_report.failed
         self.not_started = learner_daily_report.not_started
         self.in_progress = learner_daily_report.in_progress
         self.total_time_spent = total_time_spent
@@ -838,12 +838,12 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         day = date_time.date() if date_time else timezone.now().date()
         new_results = cls.objects.filter(org=org, created=day, **kwargs)
         for new_res in new_results:
-            print "LAETITIA -- %s" % new_res
+            logger.info("LAETITIA -- %s" % new_res)
         if period_start:
             results = []
             old_results = cls.objects.filter(org=org, created=period_start, **kwargs)
             for old_res in old_results:
-                print "LAETITIA -- %s" % old_res
+                logger.info("LAETITIA -- %s" % old_res)
             old_time_spent_by_user = { r.user_id: r.total_time_spent for r in old_results }
             for r in new_results:
                 old_time_spent = 0
