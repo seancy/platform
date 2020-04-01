@@ -305,6 +305,8 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
             user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date,
                                                                     to_date,
                                                                     course_id)
+            print "LAETITIA -- user_ids = %s" % user_ids
+
             kwargs.update({
                 'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
                 'user_id__in': "%s" % user_ids if as_string else user_ids
@@ -632,6 +634,9 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
     else:
         queryset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
     table = table_cls(queryset, exclude=exclude)
+    for res in queryset:
+        print "LAETITIA -- %s" % res
+    print "LAETITIA -- table = %s" % table
     return table
 
 

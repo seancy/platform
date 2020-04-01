@@ -837,9 +837,13 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     def filter_by_period(cls, org, date_time=None, period_start=None, **kwargs):
         day = date_time.date() if date_time else timezone.now().date()
         new_results = cls.objects.filter(org=org, created=day, **kwargs)
+        for new_res in new_results:
+            print "LAETITIA -- %s" % new_res
         if period_start:
             results = []
             old_results = cls.objects.filter(org=org, created=period_start, **kwargs)
+            for old_res in old_results:
+                print "LAETITIA -- %s" % old_res
             old_time_spent_by_user = { r.user_id: r.total_time_spent for r in old_results }
             for r in new_results:
                 old_time_spent = 0
