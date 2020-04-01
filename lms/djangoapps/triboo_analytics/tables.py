@@ -539,10 +539,10 @@ class LearnerDailyTable(LearnerBaseTable):
     user_name = tables.LinkColumn('analytics_learner_transcript', args=[A('user.id')],
                                   verbose_name='Name', text=lambda record: record.user.profile.name)
     enrollments = SumFooterColumn()
-    finished = SumFooterColumn()
-    failed = SumFooterColumn()
-    in_progress = SumFooterColumn()
-    not_started = SumFooterColumn()
+    finished = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.finished])
+    failed = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.failed])
+    in_progress = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.not_started])
+    not_started = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.in_progress])
     posts = SumFooterColumn()
     average_final_score = tables.Column(footer=lambda table: "{}%".format(
                                     get_avg(None, [r.average_final_score for r in table.data])))

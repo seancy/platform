@@ -726,8 +726,8 @@ class LearnerDailyReportMockup(object):
         self.average_final_score = learner_daily_report.average_final_score
         self.badges = learner_daily_report.badges
         self.posts = learner_daily_report.posts
-        self.successful = learner_daily_report.finished
-        self.unsuccessful = learner_daily_report.failed
+        self.finished = learner_daily_report.finished
+        self.failed = learner_daily_report.failed
         self.not_started = learner_daily_report.not_started
         self.in_progress = learner_daily_report.in_progress
         self.total_time_spent = total_time_spent
