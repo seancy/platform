@@ -16,6 +16,8 @@ from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from track.backends import BaseBackend
 from opaque_keys.edx.django.models import CourseKeyField
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from django.contrib.auth.models import User
 
 
 log = logging.getLogger('track.backends.django')
@@ -118,3 +120,17 @@ class DjangoBackend(BaseBackend):
                 tldat.save(using=self.name)
             except Exception as e:  # pylint: disable=broad-except
                 log.exception(e)
+
+
+class CourseUnenrollment(models.Model):
+    created = models.DateTimeField('unenrollment date', auto_now_add=True, db_index=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    course = models.ForeignKey(CourseOverview, on_delete=models.CASCADE, db_index=True)
+
+    class Meta(object):
+        app_label = 'track'
+
+    def __unicode__(self):
+        return (
+            "[CourseUnenrollment] {} - {} : {}"
+        ).format(self.user, self.course_id, self.created)
