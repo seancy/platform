@@ -21,6 +21,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic import View
 from opaque_keys.edx.keys import CourseKey
 from web_fragments.fragment import Fragment
+from rest_framework.reverse import reverse as rest_reverse
 
 from edxmako.shortcuts import render_to_response, render_to_string
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect
@@ -569,7 +570,15 @@ def render_seq_nav(user, request, course, chapter_url_name, section_url_name, fi
                         'id': sequence.location,
                         'title': sequence.display_name_with_default_escaped,
                         'graded': sequence.graded,
-                        'complete': complete
+                        'complete': complete,
+                        'lms_web_url': rest_reverse(
+                            'jump_to',
+                            kwargs={
+                                'course_id': unicode(sequence.location.course_key),
+                                'location': unicode(sequence.location)
+                                },
+                            request=request,
+                        ),
                     })
     return render_to_string('seq_nav.html', {'sequence_list': sequence_list})
 
