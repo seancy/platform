@@ -17,4 +17,8 @@ $(function () {
       var $courseDescription = $src.parent('.course-description');
       $courseDescription.toggleClass('all-paragraphs');
     })
+
+    setTimeout(function () {
+        $('.container .intro').removeClass('skeleton')
+    },2500)
 })

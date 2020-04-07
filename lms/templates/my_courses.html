@@ -85,32 +85,8 @@ from xmodule.modulestore.django import modulestore
         banner.showMessage(${redirect_message | n, dump_js_escaped_json})
     </%static:require_module>
   % endif
-  <script>
-    var $courses = $(".listing-courses li.course-item");
-    function updateCourseList(activeTab) {
-      var activeStatus = activeTab;
-      if (activeTab == 'not-started') {
-        activeStatus = 'Not_started';
-      } else if (activeTab == 'started') {
-        activeStatus = 'Started';
-      } else if (activeTab == 'finished') {
-        activeStatus = 'Finished';
-      }
-      $courses.each(function() {
-        if (activeStatus == 'all-courses' || $(this).data('status') == activeStatus) {
-          $(this).show();
-        } else {
-          $(this).hide();
-        }
-      })      
-    }
-    $('document').ready(function() { updateCourseList("${tab}"); });
-    $(".my-courses-nav li").click(function() {
-      $(this).find('.btn-link').addClass('active-section');
-      $(this).siblings().find('.btn-link').removeClass('active-section');
-      updateCourseList($(this).attr('id'));
-    });
-  </script>
+
+  <%static:webpack entry="MyCourses">MyCourses("${tab}")</%static:webpack>
 </%block>
 
 <main id="main" aria-label="Content" tabindex="-1">

@@ -43,6 +43,7 @@ module.exports = Merge.smart({
         'js/sock': ['babel-polyfill','./cms/static/js/sock.js'],
 
         LanguageSelector: ['babel-polyfill','./cms/static/js/language_selector.js'],
+        MyCourses: ['babel-polyfill','./lms/static/js/MyCourses.js'],
 
         // LMS
         SingleSupportForm: ['babel-polyfill','./lms/static/support/jsx/single_support_form.jsx'],

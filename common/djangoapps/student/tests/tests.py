@@ -318,9 +318,9 @@ class DashboardTest(ModuleStoreTestCase):
 
         response = self.client.get(reverse('dashboard'))
         if mode in ['professional', 'no-id-professional']:
-            self.assertContains(response, 'class="course professional"')
+            self.assertContains(response, 'class="course professional')
         else:
-            self.assertContains(response, 'class="course {0}"'.format(mode))
+            self.assertContains(response, 'class="course {0}'.format(mode))
         self.assertContains(response, value)
 
     @patch.dict("django.conf.settings.FEATURES", {'ENABLE_VERIFIED_CERTIFICATES': True})
@@ -654,7 +654,7 @@ class DashboardTestsWithSiteOverrides(SiteMixin, ModuleStoreTestCase):
         self.set_up_site(site_domain, site_configuration_values)
         self.client.login(username='jack', password='test')
         response = self.client.get(reverse('dashboard'))
-        self.assertContains(response, 'class="course professional"')
+        self.assertContains(response, 'class="course professional')
 
     @unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
     @patch.dict("django.conf.settings.FEATURES", {'ENABLE_VERIFIED_CERTIFICATES': False})
@@ -675,7 +675,7 @@ class DashboardTestsWithSiteOverrides(SiteMixin, ModuleStoreTestCase):
         self.set_up_site(site_domain, site_configuration_values)
         self.client.login(username='jack', password='test')
         response = self.client.get(reverse('dashboard'))
-        self.assertNotContains(response, 'class="course professional"')
+        self.assertNotContains(response, 'class="course professional')
 
 
 class UserSettingsEventTestMixin(EventTestMixin):
