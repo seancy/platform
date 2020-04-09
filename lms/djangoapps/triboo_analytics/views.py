@@ -161,6 +161,7 @@ def _transcript_view(user, request, template, report_type):
     learner_report_total_time_spent = 0
 
     last_reportlog = ReportLog.get_latest()
+    course_contents = {}
     if last_reportlog:
         last_update = last_reportlog.created
 
@@ -186,7 +187,6 @@ def _transcript_view(user, request, template, report_type):
             if overview.id in report_courses:
                 courses.append({'id': overview.id, 'display_name': overview.display_name_with_default})
 
-        course_contents = {}
         if configuration_helpers.get_value("ENABLE_WAIVER_REQUEST", False) and report_type == "my_transcript":
             for report in learner_course_reports:
                 content = toc_for_course(
