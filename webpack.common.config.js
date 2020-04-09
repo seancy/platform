@@ -31,70 +31,64 @@ module.exports = Merge.smart({
 
     entry: {
         // Studio
-        Import: ['@babel/polyfill','./cms/static/js/features/import/factories/import.js'],
-        CourseOrLibraryListing: ['@babel/polyfill','./cms/static/js/features_jsx/studio/CourseOrLibraryListing.jsx'],
-        'js/factories/login': ['@babel/polyfill','./cms/static/js/factories/login.js'],
-        'js/factories/textbooks': ['@babel/polyfill','./cms/static/js/factories/textbooks.js'],
-        'js/factories/container': ['@babel/polyfill','./cms/static/js/factories/container.js'],
+        Import: ['babel-polyfill','./cms/static/js/features/import/factories/import.js'],
+        CourseOrLibraryListing: ['babel-polyfill','./cms/static/js/features_jsx/studio/CourseOrLibraryListing.jsx'],
+        'js/factories/login': ['babel-polyfill','./cms/static/js/factories/login.js'],
+        'js/factories/textbooks': ['babel-polyfill','./cms/static/js/factories/textbooks.js'],
+        'js/factories/container': ['babel-polyfill','./cms/static/js/factories/container.js'],
         'js/factories/context_course': './cms/static/js/factories/context_course.js',
-        'js/factories/library': ['@babel/polyfill','./cms/static/js/factories/library.js'],
-        'js/factories/xblock_validation': ['@babel/polyfill','./cms/static/js/factories/xblock_validation.js'],
-        'js/factories/edit_tabs': ['@babel/polyfill','./cms/static/js/factories/edit_tabs.js'],
-        'js/sock': ['@babel/polyfill','./cms/static/js/sock.js'],
+        'js/factories/library': ['babel-polyfill','./cms/static/js/factories/library.js'],
+        'js/factories/xblock_validation': ['babel-polyfill','./cms/static/js/factories/xblock_validation.js'],
+        'js/factories/edit_tabs': ['babel-polyfill','./cms/static/js/factories/edit_tabs.js'],
+        'js/sock': ['babel-polyfill','./cms/static/js/sock.js'],
 
-        LanguageSelector: ['@babel/polyfill','./cms/static/js/language_selector.js'],
+        LanguageSelector: ['babel-polyfill','./cms/static/js/language_selector.js'],
+        MyCourses: ['babel-polyfill','./lms/static/js/MyCourses.js'],
 
         // LMS
-        SingleSupportForm: ['@babel/polyfill','./lms/static/support/jsx/single_support_form.jsx'],
-        AlertStatusBar: ['@babel/polyfill','./lms/static/js/accessible_components/StatusBarAlert.jsx'],
-        LearnerAnalyticsDashboard: ['@babel/polyfill','./lms/static/js/learner_analytics_dashboard/LearnerAnalyticsDashboard.jsx'],
-        UpsellExperimentModal: ['@babel/polyfill','./lms/static/common/js/components/UpsellExperimentModal.jsx'],
-        PortfolioExperimentUpsellModal: ['@babel/polyfill','./lms/static/common/js/components/PortfolioExperimentUpsellModal.jsx'],
-        EntitlementSupportPage: ['@babel/polyfill','./lms/djangoapps/support/static/support/jsx/entitlements/index.jsx'],
-        PasswordResetConfirmation: ['@babel/polyfill','./lms/static/js/student_account/components/PasswordResetConfirmation.jsx'],
-        QuestionMark: ['@babel/polyfill','./lms/static/js/QuestionMark.js'],
+        SingleSupportForm: ['babel-polyfill','./lms/static/support/jsx/single_support_form.jsx'],
+        AlertStatusBar: ['babel-polyfill','./lms/static/js/accessible_components/StatusBarAlert.jsx'],
+        LearnerAnalyticsDashboard: ['babel-polyfill','./lms/static/js/learner_analytics_dashboard/LearnerAnalyticsDashboard.jsx'],
+        UpsellExperimentModal: ['babel-polyfill','./lms/static/common/js/components/UpsellExperimentModal.jsx'],
+        PortfolioExperimentUpsellModal: ['babel-polyfill','./lms/static/common/js/components/PortfolioExperimentUpsellModal.jsx'],
+        EntitlementSupportPage: ['babel-polyfill','./lms/djangoapps/support/static/support/jsx/entitlements/index.jsx'],
+        PasswordResetConfirmation: ['babel-polyfill','./lms/static/js/student_account/components/PasswordResetConfirmation.jsx'],
+        QuestionMark: ['babel-polyfill','./lms/static/js/QuestionMark.js'],
 
-        PasswordCreateConfirmation: ['@babel/polyfill','./lms/static/js/student_account/components/PasswordCreateConfirmation.jsx'],
-        StudentAccountDeletion: ['@babel/polyfill','./lms/static/js/student_account/components/StudentAccountDeletion.jsx'],
-        StudentAccountDeletionInitializer: ['@babel/polyfill','./lms/static/js/student_account/StudentAccountDeletionInitializer.js'],
-        CustomizedReport: ['@babel/polyfill','./lms/static/js/triboo_analytics/CustomizedReport.js'],
-        CourseReport: ['@babel/polyfill','./lms/static/js/triboo_analytics/CourseReport.js'],
-        Toolbar: ['./lms/static/js/triboo_analytics/Toolbar.js'],
+        PasswordCreateConfirmation: ['babel-polyfill','./lms/static/js/student_account/components/PasswordCreateConfirmation.jsx'],
+        StudentAccountDeletion: ['babel-polyfill','./lms/static/js/student_account/components/StudentAccountDeletion.jsx'],
+        StudentAccountDeletionInitializer: ['babel-polyfill','./lms/static/js/student_account/StudentAccountDeletionInitializer.js'],
 
-        Dialog: ['@babel/polyfill','./lms/static/js/dialog.js'],
-        Dashboard: ['@babel/polyfill','./lms/static/js/dashboard.js'],
-        Courseware: ['@babel/polyfill','./lms/static/js/courseware.js'],
-        LearnerReport: ['@babel/polyfill','./lms/static/js/triboo_analytics/LearnerReport.js'],
+        Dialog: ['babel-polyfill','./lms/static/js/dialog.js'],
+        Dashboard: ['babel-polyfill','./lms/static/js/dashboard.js'],
+        Courseware: ['babel-polyfill','./lms/static/js/courseware.js'],
 
         // Learner Dashboard
-        EntitlementFactory: ['@babel/polyfill','./lms/static/js/learner_dashboard/course_entitlement_factory.js'],
-        EntitlementUnenrollmentFactory: ['@babel/polyfill','./lms/static/js/learner_dashboard/entitlement_unenrollment_factory.js'],
-        ProgramDetailsFactory: ['@babel/polyfill','./lms/static/js/learner_dashboard/program_details_factory.js'],
-        ProgramListFactory: ['@babel/polyfill','./lms/static/js/learner_dashboard/program_list_factory.js'],
-        UnenrollmentFactory: ['@babel/polyfill','./lms/static/js/learner_dashboard/unenrollment_factory.js'],
-        CompletionOnViewService: ['@babel/polyfill','./lms/static/completion/js/CompletionOnViewService.js'],
+        EntitlementFactory: ['babel-polyfill','./lms/static/js/learner_dashboard/course_entitlement_factory.js'],
+        EntitlementUnenrollmentFactory: ['babel-polyfill','./lms/static/js/learner_dashboard/entitlement_unenrollment_factory.js'],
+        ProgramDetailsFactory: ['babel-polyfill','./lms/static/js/learner_dashboard/program_details_factory.js'],
+        ProgramListFactory: ['babel-polyfill','./lms/static/js/learner_dashboard/program_list_factory.js'],
+        UnenrollmentFactory: ['babel-polyfill','./lms/static/js/learner_dashboard/unenrollment_factory.js'],
+        CompletionOnViewService: ['babel-polyfill','./lms/static/completion/js/CompletionOnViewService.js'],
 
         // Features
-        CourseGoals: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/CourseGoals.js'],
-        CourseHome: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/CourseHome.js'],
-        CourseOutline: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/CourseOutline.js'],
-        CourseSock: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/CourseSock.js'],
-        CourseTalkReviews: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/CourseTalkReviews.js'],
-        Currency: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/currency.js'],
-        Enrollment: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/Enrollment.js'],
-        LatestUpdate: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/LatestUpdate.js'],
-        WelcomeMessage: ['@babel/polyfill','./openedx/features/course_experience/static/course_experience/js/WelcomeMessage.js'],
-        ILTGlobalReport: ['./lms/static/js/triboo_analytics/ILTGlobalReport.js'],
-        ILTLearnerReport: ['@babel/polyfill','./lms/static/js/triboo_analytics/ILTLearnerReport.js'],
-        ILTReport: ['@babel/polyfill','./lms/static/js/triboo_analytics/ILTReport.js'],
+        CourseGoals: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/CourseGoals.js'],
+        CourseHome: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/CourseHome.js'],
+        CourseOutline: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/CourseOutline.js'],
+        CourseSock: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/CourseSock.js'],
+        CourseTalkReviews: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/CourseTalkReviews.js'],
+        Currency: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/currency.js'],
+        Enrollment: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/Enrollment.js'],
+        LatestUpdate: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/LatestUpdate.js'],
+        WelcomeMessage: ['babel-polyfill','./openedx/features/course_experience/static/course_experience/js/WelcomeMessage.js'],
 
-        CookiePolicyBanner: ['@babel/polyfill','./common/static/js/src/CookiePolicyBanner.jsx'],
+        CookiePolicyBanner: ['babel-polyfill','./common/static/js/src/CookiePolicyBanner.jsx'],
 
         // Common
-        ReactRenderer: ['@babel/polyfill','./common/static/js/src/ReactRenderer.jsx'],
-        XModuleShim: ['@babel/polyfill','xmodule/js/src/xmodule.js'],
+        ReactRenderer: ['babel-polyfill','./common/static/js/src/ReactRenderer.jsx'],
+        XModuleShim: ['babel-polyfill','xmodule/js/src/xmodule.js'],
 
-        VerticalStudentView: ['@babel/polyfill','./common/lib/xmodule/xmodule/assets/vertical/public/js/vertical_student_view.js']
+        VerticalStudentView: ['babel-polyfill','./common/lib/xmodule/xmodule/assets/vertical/public/js/vertical_student_view.js']
     },
 
     output: {
@@ -270,10 +264,6 @@ module.exports = Merge.smart({
             {
                 test: /\.svg$/,
                 loader: 'svg-inline-loader'
-            },
-            {
-                test:/\.gif$/,
-                use:['file-loader']
             },
             {
                 test: /xblock\/core/,

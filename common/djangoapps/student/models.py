@@ -69,6 +69,7 @@ from openedx.core.djangoapps.xmodule_django.models import NoneToEmptyManager
 from django_auth_ldap.backend import populate_user
 from openedx.core.djangolib.model_mixins import DeletableByUserValue
 from track import contexts
+from track.backends.django import CourseUnenrollment
 from util.milestones_helpers import is_entrance_exams_enabled
 from util.model_utils import emit_field_changed_events, get_changed_fields_dict
 from util.query import use_read_replica_if_available
@@ -481,7 +482,7 @@ class UserProfile(models.Model):
     lt_is_tos_agreed = models.BooleanField(verbose_name='TOS agreed', default=0)
 
     lt_comments = models.TextField(verbose_name='Comments', blank=True, null=True)
-    lt_ilt_supervisor = models.EmailField(verbose_name='ILT Supervisor', blank=True, null=True)
+    lt_ilt_supervisor = models.EmailField(verbose_name='ILT Supervisor', blank=True, null=True, db_index=True)
 
 
     @property
@@ -1411,6 +1412,8 @@ class CourseEnrollment(models.Model):
                 UNENROLL_DONE.send(sender=None, course_enrollment=self, skip_refund=skip_refund)
                 self.emit_event(EVENT_NAME_ENROLLMENT_DEACTIVATED)
                 self.send_signal(EnrollStatusChange.unenroll)
+                if configuration_helpers.get_value('ENABLE_UNENROLLMENT_TRACKING', settings.FEATURES.get('ENABLE_UNENROLLMENT_TRACKING', False)):
+                    CourseUnenrollment.objects.create(user=self.user, course=self.course)
 
         if mode_changed:
             # Only emit mode change events when the user's enrollment

@@ -2,17 +2,18 @@
     <a href="/courses/<%- course %>/about">
         <header class="course-image">
             <div class="cover-image">
-                <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
-              <% if (language != "") { %>
-                <img src="/static/images/country-icons/<%- language %>.png" alt="<%- language %>" class="course-language">
-              <% } %>
+                <img src="<%- image_url %>" alt="<%-content.display_name%><%- content.number %>" class="<%=!image_url?'hidden':''%>" />
+              <% //if (language != "") { %>
+                <img src="/static/images/country-icons/<%- language %>.png" alt="<%- language %>"
+                     class="<%=language == ''?'hidden ':''%>course-language">
+              <% //} %>
             </div>
             <% if (course_mandatory_enabled) { %>
             <div class="course-mandatory"><i class="fa fa-exclamation"></i></div>
             <% } %>
-            <% if (course_category) { %>
-            <div class="course-category"><%- gettext(course_category) %></div>
-            <% } %>
+            <% //if (course_category) { %>
+            <div class="<%=!course_category?'hidden ':''%>course-category"><%- gettext(course_category) %></div>
+            <% //} %>
         </header>
         <section class="course-info" aria-hidden="true">
             <h2 class="course-name">
@@ -28,20 +29,20 @@
             </div>
         </section>
         <section class="sub-info">
-            <div class="badge">
-                <% if (badges || badges === 0) { %>
+            <div class="badge<%=(!badges && badges !== 0)?' hidden':''%>">
+                <% //if (badges || badges === 0) { %>
                     <i class="far fa-trophy"></i>
                     <span><%- badges %> <%- ngettext("badge", "badges", badges) %></span>
-                <% } %>
+                <% //} %>
             </div>
             <% if (badges || badges === 0 || typeof(display_duration) != "undefined") { %>
                 <div class="spliter"></div>
             <% } %>
-            <div class="duration">
-                <% if (typeof(display_duration) != "undefined") { %>
+            <div class="duration<%=(typeof(display_duration) == "undefined")?' hidden':''%>">
+                <% //if (typeof(display_duration) != "undefined") { %>
                     <i class="far fa-clock"></i>
-                    <span><%- display_duration %></span>
-                <% } %>
+                    <span><%- typeof(display_duration) != "undefined"?display_duration:'' %></span>
+                <% //} %>
             </div>
         </section>
         <div class="course-actions" aria-hidden="true">

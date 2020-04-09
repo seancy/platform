@@ -16,6 +16,7 @@
             initialize: function() {
                 this.$list = this.$el.find('.courses-listing');
                 this.attachScrollHandler();
+                this.loadSkeletons()
             },
 
             render: function() {
@@ -27,6 +28,17 @@
             renderNext: function() {
                 this.renderItems();
                 this.isLoading = false;
+            },
+
+            loadSkeletons(){
+                var items = [0, 1,2,3,4,5,6].map(function(index) {
+                    var m0 = {attributes:{duration:'', badges:'', org:'', course_category:'', course_mandatory_enabled:'', language:'', image_url:'', course:'',content:{}}}
+                    var item = new CourseCardView({model: m0})
+                    var el = item.render().el;
+                    $(el).find('.course').addClass('skeleton')
+                    return el;
+                }, this);
+                this.$list.append(items);
             },
 
             renderItems: function() {

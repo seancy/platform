@@ -101,6 +101,7 @@ FEATURES = {
 
     'ENABLE_DJANGO_ADMIN_SITE': True,  # set true to enable django's admin site, even on prod (e.g. for course ops)
     'ENABLE_SQL_TRACKING_LOGS': False,
+    'ENABLE_UNENROLLMENT_TRACKING': False,
     'ENABLE_LMS_MIGRATION': False,
     'ENABLE_MANUAL_GIT_RELOAD': False,
 

@@ -44,7 +44,6 @@ from xmodule.modulestore.django import modulestore
 </script>
 % endfor
 
-<%static:webpack entry="Dashboard"></%static:webpack>
 </%block>
 
 <%block name="js_extra">
@@ -92,6 +91,8 @@ from xmodule.modulestore.django import modulestore
         banner.showMessage(${redirect_message | n, dump_js_escaped_json})
     </%static:require_module>
   % endif
+
+  <%static:webpack entry="Dashboard">Dashboard()</%static:webpack>
 
   % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
     <script src="${static.url('js/ilt_calendar.js')}"></script>
@@ -164,7 +165,7 @@ from xmodule.modulestore.django import modulestore
         </section>
 
         % if last_activity_enrollments:
-          <div class="last-activity">
+          <div class="last-activity skeleton">
             <header class="wrapper-header-last-activity">
               <h2 class="header-last-activity">${_("Continue Learning...")}</h2>
             </header>
@@ -314,81 +315,6 @@ from xmodule.modulestore.django import modulestore
             <div class="swiper-pagination"></div>
           % endif
         </div>
-
-        <script type="text/javascript">
-            var slidesNumber = $('.my-courses > .listing-courses > .course-item').length;
-            var slidesNumberBookmark = $('.my-bookmarks > .listing-bookmarks > .bookmark-item').length;
-
-            function shouldInit(number) {
-              return ((document.body.offsetWidth < 768) && (number > 1))
-                    || ((document.body.offsetWidth < 992) && (number > 2))
-                    || ((document.body.offsetWidth < 1200) && (number > 3))
-                    || ((document.body.offsetWidth >= 1200))
-            }
-
-            if (shouldInit(slidesNumber)) {
-              courseSwiperInit();
-            }
-
-            if (shouldInit(slidesNumberBookmark)) {
-              bookmarkSwiperInit();
-            }
-
-            function courseSwiperInit(){
-              new Swiper('.my-courses', {
-                  slidesPerView: 'auto',
-                  spaceBetween: 13,
-                  slidesOffsetAfter:160,
-
-                  navigation: {
-                    nextEl: '.my-courses .swiper-button-next',
-                    prevEl: '.my-courses .swiper-button-prev',
-                  },
-                  pagination: {
-                    el: '.my-courses .swiper-pagination',
-                    clickable: true,
-                  },
-              });
-            }
-
-            function bookmarkSwiperInit(){
-                new Swiper('.my-bookmarks', {
-                  slidesPerView: 'auto',
-                  spaceBetween: 13,
-                  slidesOffsetAfter: 160,
-
-                  navigation: {
-                    nextEl: '.my-bookmarks .swiper-button-next',
-                    prevEl: '.my-bookmarks .swiper-button-prev',
-                  },
-                  pagination: {
-                    el: '.my-bookmarks .swiper-pagination',
-                    clickable: true,
-                  },
-              });
-            }
-
-            $(".my-courses .swiper-button-next").on("click",function(){
-                var courseSwiper = document.querySelector('.my-courses').swiper
-                var width = courseSwiper.slides.outerWidth()
-                var index = courseSwiper.realIndex
-                var translate = courseSwiper.translate
-                console.log('wid', width, 'index', index, 'translate', translate)
-            })
-
-            $(".my-bookmarks .swiper-button-next").on("click",function(){
-                var bookmarkSwiper = document.querySelector('.my-bookmarks').swiper
-                var space_between = bookmarkSwiper.params.spaceBetween
-                var width = bookmarkSwiper.slides.outerWidth()
-                var index = bookmarkSwiper.activeIndex
-                var translate = bookmarkSwiper.translate
-                var border_left = parseInt($('.bookmark-item').css("border-left-width"))
-                var border_right = parseInt($('.bookmark-item').css("border-right-width"))
-                console.log('width', width, 'index', index, 'translate', translate)
-            })
-
-        </script>
-
 
         % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
           <div class="ilt-calendar" id="ilt-calendar">
