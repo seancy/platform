@@ -12,6 +12,7 @@ from six import text_type, string_types
 
 import lms.lib.comment_client as cc
 from courseware.courses import get_course_about_section
+from django_comment_client.utils import is_discussion_enabled
 from edxmako.shortcuts import marketing_link
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from openedx.features.course_experience import course_home_url_name
@@ -135,12 +136,14 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
   <div class="container">
       <div class="details">
         <div class="user-summary">
+          % if is_discussion_enabled(course_key):
           <div class="discussions">
             <a href="${discussion_url}" title="${_('Access to the discussion')}">
               <i class="far fa-comment-alt"></i>
               ${nb_talks} ${_("posts")}
             </a>
           </div>
+          % endif
           <div class="trophies">
             <a href="${progress_url}" title="${_('Access to the badge')}">
               <i class="far fa-trophy"></i>

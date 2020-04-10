@@ -24,6 +24,7 @@ from xblock.field_data import DictFieldData
 from xblock.fields import ScopeIds
 
 from bulk_email.models import BulkEmailFlag
+from django_comment_client.utils import is_discussion_enabled
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import (
     CertificateGenerationConfiguration,
@@ -211,10 +212,12 @@ def instructor_dashboard_2(request, course_id):
         _section_course_info(course, access),
         _section_membership(course, access),
         _section_cohort_management(course, access),
-        _section_discussions_management(course, access),
         _section_student_admin(course, access),
         _section_data_download(course, access),
     ]
+
+    if is_discussion_enabled(course):
+        sections.insert(3, _section_discussions_management(course, access))
 
     analytics_dashboard_message = None
     if show_analytics_dashboard_message(course_key):

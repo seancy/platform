@@ -20,6 +20,7 @@ from contentstore.utils import get_lms_link_for_item, get_xblock_aside_instance,
 from contentstore.views.helpers import get_parent_xblock, is_unit, xblock_type_display_name
 from contentstore.views.item import StudioEditModuleRuntime, add_container_page_publishing_info, create_xblock_info
 from edxmako.shortcuts import render_to_response
+from lms.djangoapps.django_comment_client.utils import is_discussion_enabled
 from student.auth import has_course_author_access
 from student.roles import studio_login_required
 from xblock_django.api import authorable_xblocks, disabled_xblocks
@@ -114,6 +115,12 @@ def container_handler(request, usage_key_string):
                 return HttpResponseBadRequest()
 
             component_templates = get_component_templates(course)
+            if not is_discussion_enabled(course):
+                for index, template in enumerate(component_templates):
+                    if template.get('type', None) == 'discussion':
+                        component_templates.pop(index)
+                        break
+
             ancestor_xblocks = []
             parent = get_parent_xblock(xblock)
             action = request.GET.get('action', 'view')
