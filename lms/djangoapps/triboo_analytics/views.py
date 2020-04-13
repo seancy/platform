@@ -220,7 +220,8 @@ def _transcript_view(user, request, template, report_type):
                 'learner_report_total_time_spent': learner_report_total_time_spent,
                 'learner_course_table': learner_course_table,
                 'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': report_type}),
-                'user_profile_name': user.profile.name
+                'user_profile_name': user.profile.name,
+                'user_id': user.id,
             }
         )
 
@@ -235,6 +236,13 @@ def my_transcript_view(request):
 @analytics_on
 @login_required
 @ensure_csrf_cookie
+def my_transcript_view_pdf(request):
+    return _transcript_view(request.user, request, "triboo_analytics/my_transcript_pdf.html", "my_transcript")
+
+
+@analytics_on
+@login_required
+@ensure_csrf_cookie
 def transcript_view(request, user_id):
     try:
         user = User.objects.get(id=user_id)
@@ -244,6 +252,20 @@ def transcript_view(request, user_id):
                 {"error_message": _("Invalid User ID")}
             )
     return _transcript_view(user, request, "triboo_analytics/transcript.html", "transcript")
+
+
+@analytics_on
+@login_required
+@ensure_csrf_cookie
+def transcript_view_pdf(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+    except (ValueError, User.DoesNotExist):
+        return render_to_response(
+                "triboo_analytics/transcript.html",
+                {"error_message": _("Invalid User ID")}
+            )
+    return _transcript_view(user, request, "triboo_analytics/transcript_pdf.html", "transcript")
 
 
 @require_POST

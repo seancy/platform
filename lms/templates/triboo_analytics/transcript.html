@@ -29,6 +29,7 @@
         </nav>
         <section class="analytics-wrapper transcript">
           <div class="report-wrapper">
+
             <div class="analytics-header">
               % if error_message:
                 <h2>${_("Learning Transcript")}</h2>
@@ -162,6 +163,12 @@
                         </div>
                     </div>
                   </div>
+                  <div class="table-pdf-view">
+                      <button id="table-pdf-button">
+                          <i class="far fa-print"></i>
+                            ${_("Print")}
+                      </button>
+                  </div>
               </div>
 
               <div class="last-update">
@@ -210,5 +217,10 @@
   ];
 
   drawPieChart('pieChart', pieChartData);
+
+    $('#table-pdf-button').click(function(e){
+        e.preventDefault();
+        window.open("${reverse('analytics_learner_transcript_pdf', args=[user_id])}");
+    });
   </script>
 % endif
