@@ -25,6 +25,7 @@ from openedx.core.djangoapps.content.course_structures.models import CourseStruc
 from openedx.core.djangoapps.course_groups.cohorts import get_cohort_id, get_cohort_names, is_course_cohorted
 from openedx.core.djangoapps.request_cache.middleware import request_cached
 from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from student.models import get_user_by_username_or_email, UserProfile
 from student.roles import GlobalStaff
 from xmodule.modulestore.django import modulestore
@@ -1069,7 +1070,8 @@ def is_discussion_enabled(course_id):
     """
     Return True if discussions are enabled; else False
     """
-    return settings.FEATURES.get('ENABLE_DISCUSSION_SERVICE')
+    return not configuration_helpers.get_value('HIDE_DISCUSSION', False) and settings.FEATURES.get(
+        'ENABLE_DISCUSSION_SERVICE')
 
 
 def is_content_authored_by(content, user):

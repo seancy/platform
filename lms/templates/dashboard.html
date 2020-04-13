@@ -10,6 +10,7 @@ from django.utils.translation import ugettext as _
 from django.template import RequestContext
 
 from branding.views import CATALOG_DENIED_GROUP
+from django_comment_client.utils import is_discussion_enabled
 from entitlements.models import CourseEntitlement
 from third_party_auth import pipeline
 from util.date_utils import strftime_localized
@@ -154,11 +155,13 @@ from xmodule.modulestore.django import modulestore
               <h2>${nb_badges_obtained}</h2>
               <p>${_("badges obtained")}</p>
             </div>
+            % if is_discussion_enabled(None):
             <div class="nb_posts">
               <i class="far fa-comment-alt-lines"></i>
               <h2>${nb_posts}</h2>
               <p>${_("posts")}</p>
             </div>
+            % endif
 
             <a class="flat-button view-transcript" href="${reverse('analytics_my_transcript')}" title="${_('Access to my learning experience')}"><i class="far fa-analytics"></i>${_("View my learning transcript")}</a>
           </section>
