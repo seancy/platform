@@ -16855,7 +16855,7 @@ msgstr "después de completar"
 
 #: cms/templates/settings.html:319
 msgid "Send a reminder email every"
-msgstr "envía un correo electrónico a {email}"
+msgstr "Enviar un correo electrónico todos los"
 
 #: cms/templates/settings.html:330
 msgid "Add an Email Reminder"
@@ -23502,7 +23502,7 @@ msgstr[1] "Le quedan {days_left} días para completar el curso."
 
 #: lms/templates/emails/course_reminder_email_subject.txt:3
 msgid "The course {course_name} is overdue"
-msgstr "El curso {course_key} está vencido."
+msgstr "El curso {course_name} está vencido."
 
 #: lms/templates/emails/course_reminder_email_subject.txt:7
 msgid "{course_name} Reminders"
