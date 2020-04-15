@@ -682,8 +682,8 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
     def filter_by_period(cls, course_id, date_time=None, period_start=None, **kwargs):
         day = date_time.date() if date_time else timezone.now().date()
         new_results = cls.objects.filter(course_id=course_id, created=day, **kwargs)
+        results = []
         if period_start:
-            results = []
             old_results = cls.objects.filter(course_id=course_id, created=period_start, **kwargs)
             old_time_spent_by_user = { (r.user_id, r.section_key): r.total_time_spent for r in old_results }
             for r in new_results:
@@ -693,7 +693,19 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
                 except KeyError:
                     pass
                 results.append(LearnerSectionDailyReportMockup(r, (r.total_time_spent - old_time_spent)))
-            return results
+        else:
+            results = new_results
+
+        dataset = {}
+        sections = {}
+        for res in results:
+            key = res.user.id
+            if key not in dataset.keys():
+                dataset[key] = {'user': res.user}
+            dataset[key][res.section_key] = res.total_time_spent
+            sections[res.section_key] = res.section_name
+
+        return dataset.values(), sections
 
 
 # class Badge(models.Model):
@@ -731,7 +743,6 @@ class LearnerDailyReportMockup(object):
         self.not_started = learner_daily_report.not_started
         self.in_progress = learner_daily_report.in_progress
         self.total_time_spent = total_time_spent
-
 
 
 class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):

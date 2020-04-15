@@ -288,25 +288,20 @@ def get_kwargs(data):
 def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=False):
     kwargs, exclude = get_kwargs(data)
 
+    if course_id:
+        kwargs['course_id'] = "%s" % course_id if as_string else course_id
+
     from_day = data.get('from_day')
     to_day = data.get('to_day')
     if from_day and to_day:
         from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
         to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
-
-        logger.info("LAETITIA -- from %s to %s" % (from_date, to_date))
-
         last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
         if last_reportlog:
             last_analytics_success = last_reportlog.created
-
-            logger.info("LAETITIA -- last_analytics_success = %s" % last_analytics_success)
-
             user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date,
                                                                     to_date,
                                                                     course_id)
-            logger.info("LAETITIA -- user_ids = %s" % user_ids)
-
             kwargs.update({
                 'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
                 'user_id__in': "%s" % user_ids if as_string else user_ids
@@ -320,6 +315,7 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
     return kwargs, exclude
 
 
+# DEPRECATED
 def get_filter_kwargs_with_table_exclude(request):
     kwargs = {}
     
@@ -381,6 +377,7 @@ def get_filter_kwargs_with_table_exclude(request):
     return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
 
 
+# DEPRECATED
 def get_period_filter_kwargs_with_table_exclude(request, as_string=False, course_id=None, with_period_start=False):
     filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
     if time_period_form.period:
@@ -403,6 +400,7 @@ def get_period_filter_kwargs_with_table_exclude(request, as_string=False, course
     return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
 
 
+# DEPRECATED
 def get_learner_table_filters(request, orgs, as_string=False):
     learner_report_org = orgs[0]
     if len(orgs) > 1:
@@ -424,6 +422,7 @@ def get_learner_table_filters(request, orgs, as_string=False):
     return None, None, None, None, None, None, None
 
 
+# DEPRECATED
 def get_course_table_filters(request, course_key, last_update, as_string=False):
     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_period_filter_kwargs_with_table_exclude(
                                                                                                 request,
@@ -456,6 +455,7 @@ def get_transcript_table(orgs, user_id, last_update):
     return TranscriptTable(queryset), queryset
 
 
+# DEPRECATED
 def get_table(report_cls, filter_kwargs, table_cls, exclude, by_period=False):
     if filter_kwargs.pop('invalid', False):
         return table_cls([]), 0
@@ -533,12 +533,13 @@ def get_course_sections(course_key):
     return ordered_chapters, ordered_sections
 
 
+# DEPRECATED
 def get_course_time_spent_table(course_key, filter_kwargs, exclude):
     user_times_spent = {}
     time_spent_dataset = []
     sections = {}
     if filter_kwargs.pop('invalid', False):
-        reports = CourseEnrollment.objects.none()
+        reports = LearnerSectionDailyReport.objects.none()
     else:
         reports = LearnerSectionDailyReport.filter_by_period(**filter_kwargs)
     for report in reports:
@@ -634,12 +635,28 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
     else:
         queryset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
     table = table_cls(queryset, exclude=exclude)
-    for res in queryset:
-        logger.info("LAETITIA -- %s" % res)
-    logger.info("LAETITIA -- table = %s" % table)
     return table
 
 
+def get_time_spent_table_data(course_key, filter_kwargs, exclude):
+    if filter_kwargs.pop('invalid', False):
+        return []
+    dataset, sections = LearnerSectionDailyReport.filter_by_period(**filter_kwargs)
+
+    ordered_chapters, ordered_sections = get_course_sections(course_key)
+    table_sections = []
+    for section_key, chapter_name in ordered_sections:
+        if section_key in sections.keys():
+            section_name = sections[section_key]
+            table_sections.append({'key': section_key,
+                                   'name': section_name,
+                                   'chapter': chapter_name})
+
+    TimeSpentTable = get_time_spent_table_class(ordered_chapters, table_sections)
+    return TimeSpentTable(dataset, exclude=exclude)
+
+
+# DEPRECATED
 def table_view_data(course_id, _task_input):
     if _task_input['report_name'] == "transcript":
         table, _ = get_transcript_table(_task_input['report_args']['orgs'],
@@ -1238,9 +1255,9 @@ def get_all_courses(request, orgs):
 @analytics_member_required
 @ensure_csrf_cookie
 def course_view(request):
-    report = request.GET.get('report', "summary")
-    if report not in ['summary', 'progress', 'time_spent']:
-        report = "summary"
+    # report = request.GET.get('report', "summary")
+    # if report not in ['summary', 'progress', 'time_spent']:
+    #     report = "summary"
 
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
@@ -1282,12 +1299,12 @@ def course_view(request):
 
         course_report = None
         unique_visitors_csv_data = None
-        summary_table = False
-        progress_table = False
-        time_spent_table = False
-        filter_form = None
-        user_properties_form = None
-        row_count = 0
+        # summary_table = False
+        # progress_table = False
+        # time_spent_table = False
+        # filter_form = None
+        # user_properties_form = None
+        # row_count = 0
         last_update = None
 
         last_reportlog = ReportLog.get_latest()
@@ -1295,72 +1312,69 @@ def course_view(request):
             last_update = last_reportlog.course
             course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
 
-            from_date = request.GET.get('from_day')
-            from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
-            to_date = request.GET.get('to_day')
-            to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
-            unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, from_date, to_date)
+            unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, None, None)
+            print "LAETITIA -- unique_visitors_csv_data=%s" % unique_visitors_csv_data
 
-            filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_course_table_filters(
-                                                                                                        request,
-                                                                                                        course_key,
-                                                                                                        last_update)
+            # filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_course_table_filters(
+            #                                                                                             request,
+            #                                                                                             course_key,
+            #                                                                                             last_update)
 
-            if report == "summary":
-                summary_table, row_count = get_table(LearnerCourseDailyReport, filter_kwargs, CourseTable, exclude)
-                config_tables(request, summary_table)
+            # if report == "summary":
+            #     summary_table, row_count = get_table(LearnerCourseDailyReport, filter_kwargs, CourseTable, exclude)
+            #     config_tables(request, summary_table)
 
-            elif report == "progress":
-                if filter_kwargs.pop('invalid', False):
-                    enrollments = CourseEnrollment.objects.none()
-                else:
-                    enrollments = CourseEnrollment.objects.filter(is_active=True,
-                                                                  course_id=course_key,
-                                                                  user__is_active=True,
-                                                                  **filter_kwargs).prefetch_related('user')
-                nb_enrollments = len(enrollments)
-                if nb_enrollments >= 10000:
-                    enrollments = CourseEnrollment.objects.none()
+            # elif report == "progress":
+            #     if filter_kwargs.pop('invalid', False):
+            #         enrollments = CourseEnrollment.objects.none()
+            #     else:
+            #         enrollments = CourseEnrollment.objects.filter(is_active=True,
+            #                                                       course_id=course_key,
+            #                                                       user__is_active=True,
+            #                                                       **filter_kwargs).prefetch_related('user')
+            #     nb_enrollments = len(enrollments)
+            #     if nb_enrollments >= 10000:
+            #         enrollments = CourseEnrollment.objects.none()
 
-                progress_table, row_count = get_course_progress_table(course_key, enrollments,
-                                                                      filter_kwargs, exclude)
-                config_tables(request, progress_table)
+            #     progress_table, row_count = get_course_progress_table(course_key, enrollments,
+            #                                                           filter_kwargs, exclude)
+            #     config_tables(request, progress_table)
 
-                if nb_enrollments >= 10000:
-                    row_count = -1
+            #     if nb_enrollments >= 10000:
+            #         row_count = -1
 
-            elif report == "time_spent":
-                time_spent_table, row_count = get_course_time_spent_table(course_key, filter_kwargs, exclude)
-                config_tables(request, time_spent_table)
+            # elif report == "time_spent":
+            #     time_spent_table, row_count = get_course_time_spent_table(course_key, filter_kwargs, exclude)
+            #     config_tables(request, time_spent_table)
 
             last_update = dt2str(last_update)
-            query_dict = query_dict
-            query_triples = get_query_triples(query_dict)
+            # query_dict = query_dict
+            # query_triples = get_query_triples(query_dict)
 
-        show_base = 'false'
-        if request.GET and request.GET.get('show_base', 'false') == 'true':
-            show_base = 'true'
+        # show_base = 'false'
+        # if request.GET and request.GET.get('show_base', 'false') == 'true':
+        #     show_base = 'true'
 
         return render_to_response(
             "triboo_analytics/course.html",
             {
-                'show_base':show_base,
+                # 'show_base':show_base,
                 'courses': courses_list,
                 'course_id': course_id,
                 'course_name': courses.get(course_id),
                 'last_update': last_update,
                 'course_report': course_report,
                 'unique_visitors_csv_data': unique_visitors_csv_data,
-                'query_dict': query_dict,
-                'query_triples': query_triples,
-                'learner_course_table': summary_table,
-                'learner_course_progress_table': progress_table,
-                'learner_course_time_spent_table': time_spent_table,
-                'time_period_form': time_period_form,
-                'filter_form': filter_form,
-                'user_properties_form': user_properties_form,
-                'row_count': row_count,
-                'filters_data': get_filters_data(),
+                # 'query_dict': query_dict,
+                # 'query_triples': query_triples,
+                # 'learner_course_table': summary_table,
+                # 'learner_course_progress_table': progress_table,
+                # 'learner_course_time_spent_table': time_spent_table,
+                # 'time_period_form': time_period_form,
+                # 'filter_form': filter_form,
+                # 'user_properties_form': user_properties_form,
+                # 'row_count': row_count,
+                # 'filters_data': get_filters_data(),
                 'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'course'}),
             }
         )
@@ -1377,58 +1391,53 @@ def course_view(request):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def course_view_data(request):
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return JsonResponseBadRequest({"message": _("Response Not Found.")})
+
     body_data = request.body.decode('utf-8')
     data = json.loads(body_data)
     report = data.get('report_type', 'course_summary')
 
-    orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs:
-        return JsonResponseBadRequest({"message": _("Response Not Found.")})
     try:
         course_key = CourseKey.from_string(data.get('course_id', None))
         
     except InvalidKeyError:
         return JsonResponseBadRequest({"message": _("Invalid course id.")})
 
+    table = []
+    summary_columns = []
+
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
         last_update = last_reportlog.course
 
-        if report == "course_summary":
-            filter_kwargs, exclude = get_period_kwargs(data)
-            filter_kwargs.update({
-                'date_time': day2str(last_update),
-                'course_id': "%s" % course_key
-            })
-            report_args = {
-                'report_cls': LearnerCourseDailyReport.__name__,
-                'filter_kwargs': filter_kwargs,
-                'table_cls': CourseTable.__name__,
-                'exclude': list(exclude),
-                'page': data['page'],
-                'sort': data['sort'],
-            }
-            task_input = {
-                'report_name': "summary_report",
-                'report_args': report_args
-            }
-            return table_view_data(course_key, task_input)
+        with_period_start = True if report == "course_time_spent" else False
+        filter_kwargs, exclude = get_period_kwargs(data,
+                                                   course_id=course_key,
+                                                   with_period_start=with_period_start)
+        if 'date_time' not in filter_kwargs.keys():
+            filter_kwargs['date_time'] = last_update
 
-        else:
-            filter_kwargs, exclude = get_period_kwargs(data)
-            report_args = {
-                'filter_kwargs': filter_kwargs,
-                'exclude': list(exclude),
-                'page': data['page'],
-                'sort': data['sort'],
-            }
-            report_name = "progress_report" if report == "course_progress" else "time_spent_report"
-            task_input = {
-                'report_name': report_name,
-                'report_args': report_args
-            }
-            return table_view_data(course_key, task_input)
-    return None
+        if report == "course_summary":
+            table = get_table_data(LearnerCourseDailyReport, CourseTable, filter_kwargs, exclude)
+            summary_columns = ['Progress',
+                               'Current Score',
+                               'Badges',
+                               'Posts',
+                               'Total Time Spent']
+
+        elif report == "course_progress":
+            pass
+
+        elif report == "course_time_spent":
+            print "LAETITIA -- filter_kwargs=%s" % filter_kwargs
+            table = get_time_spent_table_data(course_key, filter_kwargs, exclude)
+    
+    return json_response(table,
+                         data.get('sort'),
+                         data.get('page'),
+                         summary_columns)
 
 
 @login_required
@@ -1439,39 +1448,6 @@ def learner_view(request):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return HttpResponseNotFound()
-
-    # row_count = 0
-    # learner_table = None
-    # filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, last_update, query_dict = get_learner_table_filters(request, orgs)
-    # if last_update:
-    #     learner_table, row_count = get_table(LearnerDailyReport, filter_kwargs, LearnerDailyTable, exclude, by_period=True)
-    #     config_tables(request, learner_table)
-    #     last_update = dt2str(last_update)
-    #     query_dict = query_dict
-    #     query_triples = get_query_triples(query_dict)
-
-    # user_properties_helper = UserPropertiesHelper()
-    # filters_data = user_properties_helper.get_possible_choices()
-    # show_base = 'false'
-    # if request.GET and request.GET.get('show_base', 'false') == 'true':
-    #     show_base = 'true'
-
-    # return render_to_response(
-    #     "triboo_analytics/learner.html",
-    #     {
-    #         'show_base': show_base,
-    #         'row_count': row_count,
-    #         'learner_table': learner_table,
-    #         'filter_form': filter_form,
-    #         'filters_data': filters_data,
-    #         'query_dict': query_dict,
-    #         'query_triples': query_triples,
-    #         'user_properties_form': user_properties_form,
-    #         'time_period_form': time_period_form,
-    #         'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'learner'}),
-    #         'last_update': last_update
-    #     }
-    # )
 
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
@@ -1492,6 +1468,7 @@ def learner_view(request):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def learner_view_data(request):
+    print "LAETITIA -- in learner_view_data"
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return JsonResponseBadRequest({"message": _("Response Not Found.")})
@@ -1524,6 +1501,7 @@ def learner_view_data(request):
 
         table = get_table_data(LearnerDailyReport, LearnerDailyTable, filter_kwargs, exclude, by_period=True)
 
+    print "LAETITIA -- table = %s" % table
     return json_response(table,
                          data.get('sort'),
                          data.get('page'),

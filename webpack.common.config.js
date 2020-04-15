@@ -84,6 +84,15 @@ module.exports = Merge.smart({
 
         CookiePolicyBanner: ['babel-polyfill','./common/static/js/src/CookiePolicyBanner.jsx'],
 
+        // Triboo Analytics
+        Toolbar: ['./lms/static/js/triboo_analytics/Toolbar.js'],
+        CourseReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CourseReport.js'],
+        LearnerReport: ['babel-polyfill','./lms/static/js/triboo_analytics/LearnerReport.js'],
+        ILTGlobalReport: ['./lms/static/js/triboo_analytics/ILTGlobalReport.js'],
+        ILTLearnerReport: ['babel-polyfill','./lms/static/js/triboo_analytics/ILTLearnerReport.js'],
+        ILTReport: ['babel-polyfill','./lms/static/js/triboo_analytics/ILTReport.js'],
+        CustomizedReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CustomizedReport.js'],
+
         // Common
         ReactRenderer: ['babel-polyfill','./common/static/js/src/ReactRenderer.jsx'],
         XModuleShim: ['babel-polyfill','xmodule/js/src/xmodule.js'],
@@ -264,6 +273,10 @@ module.exports = Merge.smart({
             {
                 test: /\.svg$/,
                 loader: 'svg-inline-loader'
+            },
+            {
+                test:/\.gif$/,
+                use:['file-loader']
             },
             {
                 test: /xblock\/core/,

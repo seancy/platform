@@ -172,13 +172,13 @@
                 <div class="analytics-widget-100 analytics-linechart">
                     ${static.renderReact(
                       component="QuestionMark",
-                      id="id-number-of-enrollments",
+                      id="id-number-of-unique-course-visitors",
                       props={
                         'class':'question-mark',
-                        'tooltip': gettext('Cumulative number of enrollments over time'),
+                        'tooltip': gettext('Number of different visitors who opened the course per day'),
                       }
                     )}
-                    <h3>${_("Number of Enrollments")}</h3>
+                    <h3>${_("Number of Unique Visitors")}</h3>
                     <div class="line-chart-wrapper">
                         <div id="lineChart">
                             <svg>
