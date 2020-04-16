@@ -315,6 +315,21 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
     return kwargs, exclude
 
 
+def get_ilt_period_kwargs(data, orgs, as_string=False):
+    kwargs, exclude = get_kwargs(data)
+
+    kwargs['org__in'] = "%s" % orgs if as_string else orgs
+
+    from_day = data.get('from_day')
+    to_day = data.get('to_day')
+    if from_day and to_day:
+        from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
+        to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
+        kwargs['start__range'] = (from_date, to_date)
+
+    return kwargs, exclude
+
+
 # DEPRECATED
 def get_filter_kwargs_with_table_exclude(request):
     kwargs = {}
@@ -435,6 +450,7 @@ def get_course_table_filters(request, course_key, last_update, as_string=False):
     return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
 
 
+# DEPRECATED
 def get_ilt_table_filters(request, as_string=False):
     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
     if time_period_form.period:
@@ -455,7 +471,7 @@ def get_transcript_table(orgs, user_id, last_update):
     return TranscriptTable(queryset), queryset
 
 
-# DEPRECATED
+# DEPRECATED to be replaced by get_table_data
 def get_table(report_cls, filter_kwargs, table_cls, exclude, by_period=False):
     if filter_kwargs.pop('invalid', False):
         return table_cls([]), 0
@@ -533,7 +549,7 @@ def get_course_sections(course_key):
     return ordered_chapters, ordered_sections
 
 
-# DEPRECATED
+# DEPRECATED to be replaced by get_time_spent_table_data
 def get_course_time_spent_table(course_key, filter_kwargs, exclude):
     user_times_spent = {}
     time_spent_dataset = []
@@ -565,44 +581,6 @@ def get_course_time_spent_table(course_key, filter_kwargs, exclude):
     return table, row_count
 
 
-def get_ilt_report_table(orgs, filter_kwargs):
-    ilt_reports = IltSession.objects.none()
-    time_range = None
-    if filter_kwargs.has_key('start__range'):
-        time_range = filter_kwargs.pop('start__range')
-
-    for org in orgs:
-        org_ilt_reports = IltSession.objects.filter(org=org) if not time_range \
-                    else IltSession.objects.filter(org=org, start__range=time_range)
-        ilt_reports = ilt_reports | org_ilt_reports
-    row_count = ilt_reports.count()
-    ilt_report_table = IltTable(ilt_reports)
-    return ilt_report_table, row_count
-
-
-def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
-    if filter_kwargs.pop('invalid', False):
-        return IltLearnerTable([]), 0
-
-    ilt_reports = IltSession.objects.none()
-    time_range = None
-    if filter_kwargs.has_key('start__range'):
-        time_range = filter_kwargs.pop('start__range')
-
-    for org in orgs:
-        org_ilt_reports = IltSession.objects.filter(org=org)
-        ilt_reports = ilt_reports | org_ilt_reports
-
-    module_ids = ilt_reports.values_list('ilt_module_id', flat=True)
-    ilt_learner_reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
-    if time_range:
-        ilt_learner_reports_in_range = IltLearnerReport.objects.filter(ilt_session__start__range=time_range).prefetch_related('user__profile')
-        ilt_learner_reports = ilt_learner_reports & ilt_learner_reports_in_range
-    row_count = ilt_learner_reports.count()
-    ilt_learner_report_table = IltLearnerTable(ilt_learner_reports, exclude=exclude)
-    return ilt_learner_report_table, row_count
-
-
 def get_customized_table(report_cls, filter_kwargs, filters, table_cls, exclude):
     if filter_kwargs.pop('invalid', False):
         return table_cls([]), 0
@@ -629,6 +607,7 @@ def get_query_triples(query_dict):
 def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=False):
     if filter_kwargs.pop('invalid', False):
         return []
+
     queryset = report_cls.objects.none()
     if by_period:
         queryset = report_cls.filter_by_period(**filter_kwargs)
@@ -641,6 +620,7 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
 def get_time_spent_table_data(course_key, filter_kwargs, exclude):
     if filter_kwargs.pop('invalid', False):
         return []
+
     dataset, sections = LearnerSectionDailyReport.filter_by_period(**filter_kwargs)
 
     ordered_chapters, ordered_sections = get_course_sections(course_key)
@@ -654,6 +634,70 @@ def get_time_spent_table_data(course_key, filter_kwargs, exclude):
 
     TimeSpentTable = get_time_spent_table_class(ordered_chapters, table_sections)
     return TimeSpentTable(dataset, exclude=exclude)
+
+
+# DEPRECATED to be replaced by get_ilt_global_table_data
+def get_ilt_report_table(orgs, filter_kwargs):
+    ilt_reports = IltSession.objects.none()
+    time_range = None
+    if filter_kwargs.has_key('start__range'):
+        time_range = filter_kwargs.pop('start__range')
+
+    for org in orgs:
+        org_ilt_reports = IltSession.objects.filter(org=org) if not time_range \
+                    else IltSession.objects.filter(org=org, start__range=time_range)
+        ilt_reports = ilt_reports | org_ilt_reports
+    row_count = ilt_reports.count()
+    ilt_report_table = IltTable(ilt_reports)
+    return ilt_report_table, row_count
+
+
+def get_ilt_global_table_data(filter_kwargs):
+    if filter_kwargs.pop('invalid', False):
+        return []
+
+    reports = IltSession.objects.filter(**filter_kwargs)
+    return IltTable(reports)
+
+
+def get_ilt_learner_table_data(filter_kwargs, exclude):
+    if filter_kwargs.pop('invalid', False):
+        return []
+
+    org_filter = filter_kwargs.pop('org__in')
+    sessions = IltSession.objects.filter(org__in=org_filter)
+    module_ids = sessions.values_list('ilt_module_id', flat=True)
+
+    period_filter = filter_kwargs.pop('start__range', None)
+    if period_filter:
+        filter_kwargs['ilt_session__start__range'] = period_filter
+
+    reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
+    return IltLearnerTable(reports, exclude=exclude)
+
+
+# DEPRECATED to be replaced by get_ilt_learner_table_data
+def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
+    if filter_kwargs.pop('invalid', False):
+        return IltLearnerTable([]), 0
+
+    ilt_reports = IltSession.objects.none()
+    time_range = None
+    if filter_kwargs.has_key('start__range'):
+        time_range = filter_kwargs.pop('start__range')
+
+    for org in orgs:
+        org_ilt_reports = IltSession.objects.filter(org=org)
+        ilt_reports = ilt_reports | org_ilt_reports
+
+    module_ids = ilt_reports.values_list('ilt_module_id', flat=True)
+    ilt_learner_reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
+    if time_range:
+        ilt_learner_reports_in_range = IltLearnerReport.objects.filter(ilt_session__start__range=time_range).prefetch_related('user__profile')
+        ilt_learner_reports = ilt_learner_reports & ilt_learner_reports_in_range
+    row_count = ilt_learner_reports.count()
+    ilt_learner_report_table = IltLearnerTable(ilt_learner_reports, exclude=exclude)
+    return ilt_learner_report_table, row_count
 
 
 # DEPRECATED
@@ -1293,18 +1337,11 @@ def course_view(request):
                 }
             )
 
-
     if course_id in courses.keys():
         course_key = CourseKey.from_string(course_id)
 
         course_report = None
         unique_visitors_csv_data = None
-        # summary_table = False
-        # progress_table = False
-        # time_spent_table = False
-        # filter_form = None
-        # user_properties_form = None
-        # row_count = 0
         last_update = None
 
         last_reportlog = ReportLog.get_latest()
@@ -1350,10 +1387,6 @@ def course_view(request):
             last_update = dt2str(last_update)
             # query_dict = query_dict
             # query_triples = get_query_triples(query_dict)
-
-        # show_base = 'false'
-        # if request.GET and request.GET.get('show_base', 'false') == 'true':
-        #     show_base = 'true'
 
         return render_to_response(
             "triboo_analytics/course.html",
@@ -1449,9 +1482,10 @@ def learner_view(request):
     if not orgs:
         return HttpResponseNotFound()
 
+    last_update = None
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
-        last_update = last_reportlog.learner
+        last_update = dt2str(last_reportlog.learner)
 
     return render_to_response(
         "triboo_analytics/learner.html",
@@ -1468,7 +1502,6 @@ def learner_view(request):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def learner_view_data(request):
-    print "LAETITIA -- in learner_view_data"
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return JsonResponseBadRequest({"message": _("Response Not Found.")})
@@ -1508,69 +1541,82 @@ def learner_view_data(request):
                          summary_columns)
 
 
-
 @analytics_on
 @login_required
 @analytics_member_required
 @ensure_csrf_cookie
 def ilt_view(request):
-    report = request.GET.get('report', "global")
-    if report not in ['global', 'learner']:
-        report = "global"
+    # report = request.GET.get('report', "global")
+    # if report not in ['global', 'learner']:
+    #     report = "global"
 
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return HttpResponseNotFound()
 
-    ilt_report_table = False
-    ilt_learner_report_table = False
-    filter_form = None
-    user_properties_form = None
-    row_count = 0
+    last_update = None
+    last_reportlog = ReportLog.get_latest()
+    if last_reportlog:
+        last_update = dt2str(last_reportlog.country)
 
-    show_base = 'false'
-    if request.GET and request.GET.get('show_base', 'false') == 'true':
-        show_base = 'true'
+    return render_to_response(
+        "triboo_analytics/ilt.html",
+        {
+            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
+            'last_update': last_update
+        }
+    )
 
-    if report == "global":
-        filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request)
-        ilt_report_table, row_count = get_ilt_report_table(orgs, filter_kwargs)
-        config_tables(request, ilt_report_table)
 
-        return render_to_response(
-            "triboo_analytics/ilt.html",
-            {
-                'show_base': show_base,
-                'ilt_report_table': ilt_report_table,
-                'time_period_form': time_period_form,
-                'filter_form': filter_form,
-                'user_properties_form': user_properties_form,
-                'row_count': row_count,
-                'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
-            }
-        )
+    # ilt_report_table = False
+    # ilt_learner_report_table = False
+    # filter_form = None
+    # user_properties_form = None
+    # row_count = 0
 
-    elif report == "learner":
-        filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request)
-        ilt_learner_report_table, row_count = get_ilt_learner_report_table(orgs, filter_kwargs, exclude)
-        config_tables(request, ilt_learner_report_table)
-        query_triples = get_query_triples(query_dict)
+    # show_base = 'false'
+    # if request.GET and request.GET.get('show_base', 'false') == 'true':
+    #     show_base = 'true'
 
-        return render_to_response(
-            "triboo_analytics/ilt.html",
-            {
-                'show_base': show_base,
-                'ilt_learner_report_table': ilt_learner_report_table,
-                'time_period_form': time_period_form,
-                'filter_form': filter_form,
-                'filters_data': get_filters_data(),
-                'query_dict': query_dict,
-                'query_triples': query_triples,
-                'user_properties_form': user_properties_form,
-                'row_count': row_count,
-                'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
-            }
-        )
+    # if report == "global":
+    #     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request)
+    #     ilt_report_table, row_count = get_ilt_report_table(orgs, filter_kwargs)
+    #     config_tables(request, ilt_report_table)
+
+    #     return render_to_response(
+    #         "triboo_analytics/ilt.html",
+    #         {
+    #             # 'show_base': show_base,
+    #             # 'ilt_report_table': ilt_report_table,
+    #             # 'time_period_form': time_period_form,
+    #             # 'filter_form': filter_form,
+    #             # 'user_properties_form': user_properties_form,
+    #             # 'row_count': row_count,
+    #             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
+    #         }
+    #     )
+
+    # elif report == "learner":
+    #     filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request)
+    #     ilt_learner_report_table, row_count = get_ilt_learner_report_table(orgs, filter_kwargs, exclude)
+    #     config_tables(request, ilt_learner_report_table)
+    #     query_triples = get_query_triples(query_dict)
+
+    #     return render_to_response(
+    #         "triboo_analytics/ilt.html",
+    #         {
+    #             # 'show_base': show_base,
+    #             # 'ilt_learner_report_table': ilt_learner_report_table,
+    #             # 'time_period_form': time_period_form,
+    #             # 'filter_form': filter_form,
+    #             # 'filters_data': get_filters_data(),
+    #             # 'query_dict': query_dict,
+    #             # 'query_triples': query_triples,
+    #             # 'user_properties_form': user_properties_form,
+    #             # 'row_count': row_count,
+    #             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'ilt'}),
+    #         }
+    #     )
 
 
 @transaction.non_atomic_requests
@@ -1587,27 +1633,23 @@ def ilt_view_data(request):
     data = json.loads(body_data)
     report = data.get('report_type', 'ilt_global')
 
+    table = []
+
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
         last_update = last_reportlog.created
-        filter_kwargs, exclude = get_kwargs(data)
-        if 'start__range' in filter_kwargs:
-            from_date = filter_kwargs['start__range'][0]
-            to_date = filter_kwargs['start__range'][1]
-            filter_kwargs['start__range'] = json.dumps((dt2str(from_date), dt2str(to_date)))
-        report_args = {
-            'filter_kwargs': filter_kwargs,
-            'orgs': orgs,
-            'exclude': list(exclude),
-            'page': data['page'],
-            'sort': data['sort'],
-        }
-        report_name = 'ilt_global_report' if report == 'ilt_global' else 'ilt_learner_report'
-        task_input = {
-            'report_name': report_name,
-            'report_args': report_args
-        }
-        return table_view_data(CourseKeyField.Empty, task_input)
+        filter_kwargs, exclude = get_ilt_period_kwargs(data, orgs)
+
+        if report == "ilt_global":
+            table = get_ilt_global_table_data(filter_kwargs)
+
+        elif report == "ilt_learner":
+            table = get_ilt_learner_table_data(filter_kwargs, exclude)
+
+    return json_response(table,
+                         data.get('sort'),
+                         data.get('page'),
+                         [])
 
 
 @login_required
