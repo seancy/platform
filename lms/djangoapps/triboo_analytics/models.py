@@ -2,8 +2,9 @@
 from __future__ import unicode_literals
 
 from collections import defaultdict
-import logging
+import hashlib
 import json
+import logging
 import multiprocessing
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
@@ -442,6 +443,24 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         return [result['user'] for result in reports.values('user').distinct()]
 
 
+def get_course_badges(course, ):
+    trophies = {}
+    trophies_order = []
+            
+
+            for chapter in progress_summary['trophies_by_chapter']:
+                for trophy in chapter['trophies']:
+                    m = hashlib.md5()
+                    m.update(trophy['section_format'].encode('utf-8'))
+                    trophy_column = m.hexdigest()
+                    if not trophy_column in trophies_order:
+                        trophies[trophy_column] = trophy['section_format']
+                        trophies_order.append(trophy_column)
+    ordered_trophies = []
+    for trophy_column in trophies_order:
+        ordered_trophies.append((trophy_column, trophies[trophy_column]))
+
+
 class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     class Meta(object):
         app_label = "triboo_analytics"
@@ -475,7 +494,15 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             course_id = overview.id
             course_last_update = overview.modified.date()
             course_id_str = "%s" % course_id
+            try:
+                course = get_course_by_id(course_key)
+            except Http404:
+                logger.error("course_id=%s returned Http404" % course_key)
+                continue
+            Badge.refresh(course)
+
             sections = sections_by_course[course_id_str]
+            
             enrollments = CourseEnrollment.objects.filter(is_active=True,
                                                           course_id=course_id,
                                                           user__is_active=True)
@@ -508,7 +535,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 processes = []
                 for process_enrollments in enrollments_by_process:
                     process = multiprocessing.Process(target=cls.process_generate_today_reports,
-                                                      args=(last_analytics_success, course_last_update, process_enrollments, sections,))
+                                                      args=(last_analytics_success, course_last_update, process_enrollments, course, sections,))
                     process.start()
                     processes.append(process)
                 [process.join() for process in processes]
@@ -516,28 +543,27 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             else:
                 enrollments = enrollments.prefetch_related('user')
                 for enrollment in enrollments:
-                    cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, sections)
+                    cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, course, sections)
 
         ReportLog.update_or_create(learner_course=timezone.now())
 
 
     @classmethod
-    def process_generate_today_reports(cls, last_analytics_success, course_last_update, enrollment_ids, sections):
-        # logger.info("process %d enrollments" % len(enrollment_ids))
+    def process_generate_today_reports(cls, last_analytics_success, course_last_update, enrollment_ids, course, sections):
         for enrollment_id in enrollment_ids:
             enrollment = CourseEnrollment.objects.get(id=enrollment_id)
-            cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, sections)
+            cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, course, sections)
 
 
     @classmethod
-    def generate_enrollment_report(cls, last_analytics_success, course_last_update, enrollment, sections):
-        updated = cls.update_or_create(last_analytics_success, course_last_update, enrollment)
+    def generate_enrollment_report(cls, last_analytics_success, course_last_update, enrollment, course, sections):
+        updated = cls.update_or_create(last_analytics_success, course_last_update, enrollment, course)
         if updated:
             LearnerSectionDailyReport.update_or_create(enrollment, sections)
 
 
     @classmethod
-    def update_or_create(cls, last_analytics_success, course_last_update, enrollment):
+    def update_or_create(cls, last_analytics_success, course_last_update, enrollment, course):
         course_key = enrollment.course_id
         user = enrollment.user
         day = timezone.now().date()
@@ -569,12 +595,6 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
             if report_needs_update:
                 with modulestore().bulk_operations(course_key):
-                    try:
-                        course = get_course_by_id(course_key)
-                    except Http404:
-                        logger.error("course_id=%s returned Http404" % course_key)
-                        return
-
                     total_time_spent = (LearnerVisitsDailyReport.objects.filter(
                                             user=user, course_id=course_key, created__gte=enrollment.created).aggregate(
                                             Sum('time_spent')).get('time_spent__sum') or 0)
@@ -632,6 +652,8 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                   'posts': posts,
                                   'enrollment_date': enrollment.created,
                                   'completion_date': enrollment.completed})
+
+                    LearnerBadgeDailyReport.update_or_create(course_key, user, progress['trophies_by_chapter'])
             return report_needs_update
         return False
 
@@ -708,25 +730,74 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
         return dataset.values(), sections
 
 
-# class Badge(models.Model):
-#     class Meta(object):
-#         app_label = "triboo_analytics"
-#         unique_together = [course_id, badge_format]
-#         index_together = [course_id, badge_format]
+class Badge(models.Model):
+    class Meta(object):
+        app_label = "triboo_analytics"
+        unique_together = [course_id, badge_hash]
+        index_together = [course_id, badge_hash]
 
-#     course_id = CourseKeyField(max_length=255, db_index=True, null=False)
-#     badge_format = models.CharField(max_length=100, db_index=True, null=False)
-#     display_name = models.CharField(max_length=255, null=True, blank=True, default=None)
+    course_id = CourseKeyField(max_length=255, db_index=True, null=False)
+    badge_hash = models.CharField(max_length=100, db_index=True, null=False)
+    display_name = models.CharField(max_length=255, null=True, blank=True, default=None)
 
 
+    @classmethod
+    def get_badge_hash(cls, badge_display_name):
+        m = hashlib.md5()
+        m.update(badge_display_name.encode('utf-8'))
+        return m.hexdigest()
 
-# class LearnerCourseBadgeReport(UnicodeMixin, TimeStampedModel):
-#     class Meta(object):
-#        app_label = "triboo_analytics"
-#        unique_together = []
 
-#     user = models.ForeignKey(User, null=False)
-#     badge = models.ForeignKey(Badge, null=False)
+    @classmethod
+    def refresh(cls, course_key, course):
+        hashes = []
+        grading_rules = course.raw_grader
+        for rule in grading_rules:
+            badge_display_name = rule['type']
+            hashes.append(cls.get_badge_hash(badge_display_name))
+            cls.objects.update_or_create(course_id=course_key,
+                                         badge_hash=badge_hash,
+                                         defaults={'display_name': badge_display_name})
+
+        course_badges = cls.objects.filter(course_id=course_key).exclude(badge_hash__in=hashes).delete()
+
+
+class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
+    class Meta(object):
+       app_label = "triboo_analytics"
+       get_latest_by = "created"
+       unique_together = ['created', 'user', 'badge']
+       index_together = ['created', 'user', 'badge']
+
+    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
+    badge = models.ForeignKey(Badge, null=False, on_delete=models.CASCADE)
+    score = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
+    success = models.BooleanField(default=False)
+    sucess_date = models.DateTimeField(default=None, null=True, blank=True)
+
+
+    @classmethod
+    def update_or_create(cls, course_key, user, trophies_by_chapter):
+        for chapter in trophies_by_chapter:
+            for trophy in chapter['trophies']:
+                badge_display_name = trophy['section_format']
+                badge_hash = Badge.get_badge_hash(badge_display_name)
+                try:
+                    badge = Badge.objects.get(course_id=course_key, badge_hash=badge_hash)
+                except Badge.DoesNotExist:
+                    logger.error("user_id=%d - course=%s - progress trophy %s (%s) does not exist in Badge" % (
+                        user.id, course_key, badge_hash, badge_display_name))
+                    continue
+
+                    # TO DO:
+                    # - check logic trophies_by_chapter (when grading rule for X)
+                    # - update/create report
+                    # - verify filtering by acttive users in bulk copies of last reports
+        #         progress_row[trophy_column] = {
+        #             'result': trophy['result'],
+        #             'threshold': trophy['threshold']
+        #         }
+        # progress_dataset.append(progress_row)
 
             
 
@@ -1497,7 +1568,7 @@ def generate_today_reports(multi_process=False):
 
     if last_analytics_success:
         LearnerSectionDailyReport.filter_by_day(timezone.now()).delete()
-        last_reports = LearnerSectionDailyReport.filter_by_day(last_reportlog.created)
+        last_reports = LearnerSectionDailyReport.filter_by_day(last_reportlog.created, user__is_active=True)
         new_reports = [LearnerSectionDailyReport(created=timezone.now().date(),
                                                  user_id=report.user_id,
                                                  course_id=report.course_id,
@@ -1505,6 +1576,16 @@ def generate_today_reports(multi_process=False):
                                                  section_name=report.section_name,
                                                  total_time_spent=report.total_time_spent) for report in last_reports]
         LearnerSectionDailyReport.objects.bulk_create(new_reports)
+
+        LearnerBadgeDailyReport.filter_by_day(timezone.now()).delete()
+        last_reports = LearnerBadgeDailyReport.filter_by_day(last_reportlog.created, user__is_active=True)
+        new_reports = [LearnerBadgeDailyReport(created=timezone.now().date(),
+                                               user_id=report.user_id,
+                                               badge_id=report.badge_id,
+                                               success=report.success,
+                                               sucess_date=report.sucess_date) for report in last_reports]
+        LearnerBadgeDailyReport.objects.bulk_create(new_reports)
+
 
 
     logger.info("start Learner Course reports")
