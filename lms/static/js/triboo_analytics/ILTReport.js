@@ -31,8 +31,11 @@ export class ILTReport extends React.Component {
         ]
 
         return (
-            <Tab activeValue={(new URLSearchParams(location.search)).get('report')}
+            <>
+                <h3>{gettext('ILT Report')}</h3>
+                <Tab activeValue={(new URLSearchParams(location.search)).get('report')}
                  onChange={console.log} data={data}/>
+            </>
         )
     }
 }
