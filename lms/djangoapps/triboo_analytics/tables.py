@@ -309,15 +309,15 @@ class UserBaseTable(tables.Table):
 
 class ProgressColumn(tables.Column):
     def render(self, value):
-        if value['result'] >= value['threshold']:
-            return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%%" % (value['result'] * 100))
-        return mark_safe("<span class='trophy-no fa fa-times'></span> %d%%" % (value['result']  * 100))
+        if value['success']:
+            return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%%" % (value['score']))
+        return mark_safe("<span class='trophy-no fa fa-times'></span> %d%%" % (value['score']))
 
 
     def value(self, value):
-        if value['result'] >= value['threshold']:
-            return "Yes: %.2f" % value['result']
-        return "No: %.2f" % value['result']
+        if value['success']:
+            return "Yes: %d%%" % value['score']
+        return "No: %d%%" % value['score']
 
 
     def render_footer(self, bound_column, table):
@@ -325,17 +325,18 @@ class ProgressColumn(tables.Column):
         nb_rows = len(table.data)
         if nb_rows > 0:
             try:
-                col_sum = sum(bound_column.accessor.resolve(row)['result'] for row in table.data)
+                col_sum = sum(bound_column.accessor.resolve(row)['score'] for row in table.data)
                 col_avg = col_sum / nb_rows
             except ValueError:
                 pass
         return "%d%%" % col_avg
 
 
-def get_progress_table_class(trophies):
+def get_progress_table_class(badges):
     attributes = {}
-    for trophy_name, trophy_verbose in trophies:
-        attributes[trophy_name] = ProgressColumn(verbose_name=trophy_verbose)
+    for badge_hash, grading_rule, section_name in badges:
+        verbose_name = "%s / %s" % (grading_rule.encode('utf-8'), section_name.encode('utf-8'))
+        attributes[badge_hash] = ProgressColumn(verbose_name=verbose_name)
 
     def render_user_country(self, value):
         return dict(countries)[value]

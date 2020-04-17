@@ -71,17 +71,19 @@ from models import (
     ANALYTICS_ACCESS_GROUP,
     ANALYTICS_LIMITED_ACCESS_GROUP,
     get_combined_org,
-    TrackingLogHelper,
-    ReportLog,
-    LearnerVisitsDailyReport,
+    Badge,
+    CountryDailyReport,
+    CourseDailyReport,
+    IltLearnerReport,
+    IltSession,
+    LearnerBadgeDailyReport,
     LearnerCourseDailyReport,
     LearnerDailyReport,
-    CourseDailyReport,
     LearnerSectionDailyReport,
+    LearnerVisitsDailyReport,
     MicrositeDailyReport,
-    CountryDailyReport,
-    IltSession,
-    IltLearnerReport
+    ReportLog,
+    TrackingLogHelper,
 )
 from tasks import generate_export_table as generate_export_table_task, links_for_all, \
     send_waiver_request_email
@@ -486,6 +488,7 @@ def get_table(report_cls, filter_kwargs, table_cls, exclude, by_period=False):
     return table, row_count
 
 
+# DEPRECATED
 def get_course_progress_table(course_key, enrollments, filter_kwargs, exclude):
     if filter_kwargs.pop('invalid', False):
         return get_progress_table_class([]), 0
@@ -608,13 +611,25 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
     if filter_kwargs.pop('invalid', False):
         return []
 
-    queryset = report_cls.objects.none()
+    dataset = report_cls.objects.none()
     if by_period:
-        queryset = report_cls.filter_by_period(**filter_kwargs)
+        dataset = report_cls.filter_by_period(**filter_kwargs)
     else:
-        queryset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
-    table = table_cls(queryset, exclude=exclude)
-    return table
+        dataset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
+    return table_cls(dataset, exclude=exclude)
+
+
+def get_progress_table_data(course_key, filter_kwargs, exclude):
+    if filter_kwargs.pop('invalid', False):
+        return []
+    course_filter = filter_kwargs.pop('course_id')
+    filter_kwargs['badge__course_id'] = course_filter
+    dataset = LearnerBadgeDailyReport.filter_by_day(**filter_kwargs)
+    _badges = Badge.objects.filter(course_id=course_key).order_by('order')
+    badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
+    print "LAETITIA -- badges=%s" % badges
+    ProgressTable = get_progress_table_class(badges)
+    return ProgressTable(dataset, exclude=exclude)
 
 
 def get_time_spent_table_data(course_key, filter_kwargs, exclude):
@@ -1299,10 +1314,6 @@ def get_all_courses(request, orgs):
 @analytics_member_required
 @ensure_csrf_cookie
 def course_view(request):
-    # report = request.GET.get('report', "summary")
-    # if report not in ['summary', 'progress', 'time_spent']:
-    #     report = "summary"
-
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return HttpResponseNotFound()
@@ -1352,62 +1363,17 @@ def course_view(request):
             unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, None, None)
             print "LAETITIA -- unique_visitors_csv_data=%s" % unique_visitors_csv_data
 
-            # filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_course_table_filters(
-            #                                                                                             request,
-            #                                                                                             course_key,
-            #                                                                                             last_update)
-
-            # if report == "summary":
-            #     summary_table, row_count = get_table(LearnerCourseDailyReport, filter_kwargs, CourseTable, exclude)
-            #     config_tables(request, summary_table)
-
-            # elif report == "progress":
-            #     if filter_kwargs.pop('invalid', False):
-            #         enrollments = CourseEnrollment.objects.none()
-            #     else:
-            #         enrollments = CourseEnrollment.objects.filter(is_active=True,
-            #                                                       course_id=course_key,
-            #                                                       user__is_active=True,
-            #                                                       **filter_kwargs).prefetch_related('user')
-            #     nb_enrollments = len(enrollments)
-            #     if nb_enrollments >= 10000:
-            #         enrollments = CourseEnrollment.objects.none()
-
-            #     progress_table, row_count = get_course_progress_table(course_key, enrollments,
-            #                                                           filter_kwargs, exclude)
-            #     config_tables(request, progress_table)
-
-            #     if nb_enrollments >= 10000:
-            #         row_count = -1
-
-            # elif report == "time_spent":
-            #     time_spent_table, row_count = get_course_time_spent_table(course_key, filter_kwargs, exclude)
-            #     config_tables(request, time_spent_table)
-
             last_update = dt2str(last_update)
-            # query_dict = query_dict
-            # query_triples = get_query_triples(query_dict)
-
+ 
         return render_to_response(
             "triboo_analytics/course.html",
             {
-                # 'show_base':show_base,
                 'courses': courses_list,
                 'course_id': course_id,
                 'course_name': courses.get(course_id),
                 'last_update': last_update,
                 'course_report': course_report,
                 'unique_visitors_csv_data': unique_visitors_csv_data,
-                # 'query_dict': query_dict,
-                # 'query_triples': query_triples,
-                # 'learner_course_table': summary_table,
-                # 'learner_course_progress_table': progress_table,
-                # 'learner_course_time_spent_table': time_spent_table,
-                # 'time_period_form': time_period_form,
-                # 'filter_form': filter_form,
-                # 'user_properties_form': user_properties_form,
-                # 'row_count': row_count,
-                # 'filters_data': get_filters_data(),
                 'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'course'}),
             }
         )
@@ -1461,10 +1427,9 @@ def course_view_data(request):
                                'Total Time Spent']
 
         elif report == "course_progress":
-            pass
+            table = get_progress_table_data(course_key, filter_kwargs, exclude)
 
         elif report == "course_time_spent":
-            print "LAETITIA -- filter_kwargs=%s" % filter_kwargs
             table = get_time_spent_table_data(course_key, filter_kwargs, exclude)
     
     return json_response(table,
