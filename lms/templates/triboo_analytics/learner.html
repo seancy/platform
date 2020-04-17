@@ -51,9 +51,9 @@
         <section class="analytics-wrapper learner">
             <div class="report-wrapper">
               % if learner_table:
-                  <div class="last-update">
+                  <p class="last-update">
                     <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                  </div>
+                  </p>
 
                   <form class="table-period-form" action="${reverse('analytics_learner')}" method="get">
                       ${time_period_form}
