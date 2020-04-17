@@ -53,10 +53,12 @@ export class LearnerReport extends BaseReport {
         return (
             <section className="analytics-wrapper learner">
                 <div className="report-wrapper">
-                    <h3>{gettext('Learner Report')}</h3>
-                    <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
+                    <Toolbar
+                        onChange={this.toolbarDataUpdate.bind(this)}
                              onGo={this.startExport.bind(this)}
-                             onInit={properties=>this.setState({properties})}/>
+                             onInit={properties=>this.setState({properties})}>
+                        <h3>{gettext('Learner Report')}</h3>
+                    </Toolbar>
                     <div className="last-update">
                         {gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
                     </div>

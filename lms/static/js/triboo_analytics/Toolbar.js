@@ -217,6 +217,7 @@ export class Toolbar extends React.Component {
         return (
             <div className="toolbar">
                 <ul className="toolbar-tabs">
+                    {this.props.children}
                     {this.state.toolbarItems.map(json =>
                         (<li key={json.name} onClick={this.setActiveTab.bind(this, json)}
                              className={json.name + (activeTabName==json.name ? ' active' : '')}>

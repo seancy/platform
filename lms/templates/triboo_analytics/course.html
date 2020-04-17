@@ -19,6 +19,7 @@
         <%include file="banner_nav.html" args="active_page='course'" />
         <section class="analytics-wrapper course">
           <div class="report-wrapper">
+              <h3>${_("Course Report")}</h3>
                 <div class="analytics-header">
                   % if courses:
                     <form action="${reverse('analytics_course')}" method="get">
