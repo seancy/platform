@@ -84,6 +84,7 @@ class Properties extends React.Component {
     render() {
         return (
             <div className="properties-wrapper">
+                <div>{gettext('Select display properties')}</div>
                 <CheckboxGroup ref={this.myRef} {...pick(this.props, ['data', 'checkedList'])}
                                onChange={this.handleChange.bind(this)}/>
             </div>
@@ -176,21 +177,21 @@ export class Toolbar extends React.Component {
         } = get(this, 'props.defaultToolbarData', {})
 
         return [
-            {name:'filters', text: gettext('filters'), icon: 'fa-search', active: false, component: LabelValue, props:{
+            {name:'filters', text: gettext('Filters'), icon: 'fa-search', active: false, component: LabelValue, props:{
                 data:propertyData, selectedList:selectedFilterItems,
                 onChange:(selectedFilterItems)=>this.setState({selectedFilterItems}, this.fireOnChange)
             }},
-            {name:'properties', text: gettext('properties'), icon: 'fa-sliders-h', active: false, component: Properties, props:{
+            {name:'properties', text: gettext('Properties'), icon: 'fa-sliders-h', active: false, component: Properties, props:{
                 data:[], checkedList:selectedProperties.map(p => p.value),
                 onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
             }},
-            {name:'period', text: gettext('period'), icon: 'fa-calendar-alt', active: false, component: DateRange, props:{
-                label:'Select a time range， Last', startDate, endDate,
+            {name:'period', text: gettext('Period'), icon: 'fa-calendar-alt', active: false, component: DateRange, props:{
+                label:'Select a time range', buttonBegin:'Last ', startDate, endDate,
                 onChange:(startDate,endDate)=>{
                     this.setState({startDate,endDate}, this.fireOnChange)
                 }
             }},
-            {name:'export', text: gettext('export'), icon: 'fa-file-export', active: false, component: Exporter, props:{
+            {name:'export', text: gettext('Export'), icon: 'fa-file-download', active: false, component: Exporter, props:{
                 onGo:this.export.bind(this), defaultValue:exportType,
                 onChange:exportType=>this.setState({exportType}, this.fireExportTypeChange.bind(this))
             }},

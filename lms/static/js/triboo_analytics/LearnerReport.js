@@ -53,12 +53,13 @@ export class LearnerReport extends BaseReport {
         return (
             <section className="analytics-wrapper learner">
                 <div className="report-wrapper">
-                    <div className="last-update">
-                        <i className="fa fa-history"></i>{gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
-                    </div>
+                    <h3>{gettext('Learner Report')}</h3>
                     <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
                              onGo={this.startExport.bind(this)}
                              onInit={properties=>this.setState({properties})}/>
+                    <div className="last-update">
+                        {gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
+                    </div>
                     <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                               enableRowsCount={true} {...config}
                     />
