@@ -6,6 +6,7 @@ import hashlib
 import json
 import logging
 import multiprocessing
+import uuid
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.db import models, connections
@@ -31,7 +32,7 @@ from openedx.core.djangoapps.content.course_structures.api.v0.api import course_
 from openedx.core.djangoapps.content.course_structures.tasks import update_course_structure
 from openedx.core.djangoapps.models.course_details import CourseDetails
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
-from student.models import CourseEnrollment
+from student.models import CourseEnrollment, UserProfile
 from track.backends.django import TrackingLog
 from xmodule.modulestore.django import modulestore
 from six import text_type
@@ -39,9 +40,23 @@ from six import text_type
 ANALYTICS_ACCESS_GROUP = "Triboo Analytics Admin"
 ANALYTICS_LIMITED_ACCESS_GROUP = "Restricted Triboo Analytics Admin"
 
+ANALYTICS_WORKER_USER = "analytics_worker"
+
 IDLE_TIME = 900 # 15 minutes
 
 logger = logging.getLogger('triboo_analytics')
+
+
+def create_analytics_worker():
+    user = User(username=ANALYTICS_WORKER_USER,
+                email="analytics_worker@learning-tribes.com",
+                is_active=True,
+                is_staff=True)
+    user.set_password(uuid.uuid4().hex)
+    user.save()
+
+    profile = UserProfile(user=user)
+    profile.save()
 
 
 def get_day_limits(day=None, offset=0):
@@ -443,24 +458,6 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         return [result['user'] for result in reports.values('user').distinct()]
 
 
-def get_course_badges(course, ):
-    trophies = {}
-    trophies_order = []
-            
-
-            for chapter in progress_summary['trophies_by_chapter']:
-                for trophy in chapter['trophies']:
-                    m = hashlib.md5()
-                    m.update(trophy['section_format'].encode('utf-8'))
-                    trophy_column = m.hexdigest()
-                    if not trophy_column in trophies_order:
-                        trophies[trophy_column] = trophy['section_format']
-                        trophies_order.append(trophy_column)
-    ordered_trophies = []
-    for trophy_column in trophies_order:
-        ordered_trophies.append((trophy_column, trophies[trophy_column]))
-
-
 class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     class Meta(object):
         app_label = "triboo_analytics"
@@ -485,6 +482,8 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def generate_today_reports(cls, last_analytics_success, overviews, sections_by_course, multi_process=False):
+        analytics_worker = User.objects.get(username=ANALYTICS_WORKER_USER)
+
         nb_processes = 2 * multiprocessing.cpu_count() if multi_process else 1
 
         nb_courses = len(overviews)
@@ -495,11 +494,11 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             course_last_update = overview.modified.date()
             course_id_str = "%s" % course_id
             try:
-                course = get_course_by_id(course_key)
+                course = get_course_by_id(course_id)
             except Http404:
                 logger.error("course_id=%s returned Http404" % course_key)
                 continue
-            Badge.refresh(course)
+            Badge.refresh(course_id, course, analytics_worker)
 
             sections = sections_by_course[course_id_str]
             
@@ -733,31 +732,46 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
 class Badge(models.Model):
     class Meta(object):
         app_label = "triboo_analytics"
-        unique_together = [course_id, badge_hash]
-        index_together = [course_id, badge_hash]
+        unique_together = ['course_id', 'badge_hash']
+        index_together = ['course_id', 'badge_hash']
 
     course_id = CourseKeyField(max_length=255, db_index=True, null=False)
     badge_hash = models.CharField(max_length=100, db_index=True, null=False)
-    display_name = models.CharField(max_length=255, null=True, blank=True, default=None)
+    order = models.PositiveSmallIntegerField(default=0)
+    grading_rule = models.CharField(max_length=255, null=False, blank=False)
+    section_name = models.CharField(max_length=255, null=False, blank=False)
+    threshold = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
 
 
     @classmethod
-    def get_badge_hash(cls, badge_display_name):
+    def get_badge_hash(cls, grading_rule, chapter_url, section_url):
         m = hashlib.md5()
-        m.update(badge_display_name.encode('utf-8'))
+        badge = "%s-%s-%s" % (grading_rule.encode('utf-8'),
+                              chapter_url.encode('utf-8'),
+                              section_url.encode('utf-8'))
+        m.update(badge)
         return m.hexdigest()
 
 
     @classmethod
-    def refresh(cls, course_key, course):
+    def refresh(cls, course_key, course, analytics_worker):
         hashes = []
-        grading_rules = course.raw_grader
-        for rule in grading_rules:
-            badge_display_name = rule['type']
-            hashes.append(cls.get_badge_hash(badge_display_name))
-            cls.objects.update_or_create(course_id=course_key,
-                                         badge_hash=badge_hash,
-                                         defaults={'display_name': badge_display_name})
+
+        progress = CourseGradeFactory().get_progress(analytics_worker, course)
+        i = 0
+        for chapter in progress['trophies_by_chapter']:
+            for trophy in chapter['trophies']:
+                i += 1
+                badge_hash = cls.get_badge_hash(trophy['section_format'],
+                                            chapter['url'],
+                                            trophy['section_url'])
+                hashes.append(badge_hash)
+                cls.objects.update_or_create(course_id=course_key,
+                                             badge_hash=badge_hash,
+                                             defaults={'order': i,
+                                                       'grading_rule': trophy['section_format'],
+                                                       'section_name': trophy['section_name'],
+                                                       'threshold': (trophy['threshold'] * 100)})
 
         course_badges = cls.objects.filter(course_id=course_key).exclude(badge_hash__in=hashes).delete()
 
@@ -771,35 +785,34 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     badge = models.ForeignKey(Badge, null=False, on_delete=models.CASCADE)
-    score = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
+    score = models.FloatField(default=0, null=True, blank=True)
     success = models.BooleanField(default=False)
-    sucess_date = models.DateTimeField(default=None, null=True, blank=True)
+    success_date = models.DateTimeField(default=None, null=True, blank=True)
 
 
     @classmethod
     def update_or_create(cls, course_key, user, trophies_by_chapter):
+        day = timezone.now().date()
         for chapter in trophies_by_chapter:
             for trophy in chapter['trophies']:
-                badge_display_name = trophy['section_format']
-                badge_hash = Badge.get_badge_hash(badge_display_name)
+                badge_hash = Badge.get_badge_hash(trophy['section_format'],
+                                                  chapter['url'],
+                                                  trophy['section_url'])
                 try:
                     badge = Badge.objects.get(course_id=course_key, badge_hash=badge_hash)
                 except Badge.DoesNotExist:
-                    logger.error("user_id=%d - course=%s - progress trophy %s (%s) does not exist in Badge" % (
-                        user.id, course_key, badge_hash, badge_display_name))
+                    logger.error("user_id=%d - course=%s - progress trophy %s (%s %s) does not exist in Badge" % (
+                        user.id, course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
                     continue
 
-                    # TO DO:
-                    # - check logic trophies_by_chapter (when grading rule for X)
-                    # - update/create report
-                    # - verify filtering by acttive users in bulk copies of last reports
-        #         progress_row[trophy_column] = {
-        #             'result': trophy['result'],
-        #             'threshold': trophy['threshold']
-        #         }
-        # progress_dataset.append(progress_row)
+                score = trophy['result'] * 100
+                success = True if score >= badge.threshold else False
+                cls.objects.update_or_create(created=day,
+                                             user=user,
+                                             badge=badge,
+                                             defaults={'score': score,
+                                                       'success': success})
 
-            
 
 class LearnerDailyReportMockup(object):
     def __init__(self, learner_daily_report, total_time_spent):
@@ -1546,6 +1559,11 @@ def get_org_combinations():
 
 
 def generate_today_reports(multi_process=False):
+    try:
+        User.objects.get(username=ANALYTICS_WORKER_USER)
+    except User.DoesNotExist:
+        create_analytics_worker()
+
     yesterday = timezone.now() + timezone.timedelta(days=-1)
     overviews = CourseOverview.objects.filter(start__lte=yesterday).only('id')
     course_ids = [o.id for o in overviews]
@@ -1583,7 +1601,7 @@ def generate_today_reports(multi_process=False):
                                                user_id=report.user_id,
                                                badge_id=report.badge_id,
                                                success=report.success,
-                                               sucess_date=report.sucess_date) for report in last_reports]
+                                               success_date=report.success_date) for report in last_reports]
         LearnerBadgeDailyReport.objects.bulk_create(new_reports)
 
 
