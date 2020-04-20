@@ -7026,11 +7026,11 @@ msgstr ""
 
 #: lms/djangoapps/courseware/views/views.py:1897
 msgid "This request has been accepted"
-msgstr "Cette demande a été accepté"
+msgstr "Cette demande a été acceptée"
 
 #: lms/djangoapps/courseware/views/views.py:1910
 msgid "This request has been confirmed"
-msgstr "Cette demande a été confirmé"
+msgstr "Cette demande a été confirmée"
 
 #: lms/djangoapps/courseware/views/views.py:1930
 msgid "This request has been refused"
@@ -30962,6 +30962,11 @@ msgstr "L'apprenant a été désinscrit."
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "The learner's session has been changed."
 msgstr "La session de l'apprenant a été changée."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's request has been accepted."
+msgstr "La demande d’inscription de l’apprenant a été acceptée."
 
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Select the learners you want to enroll and click on 'enroll'. You will receive a confirmation by email."

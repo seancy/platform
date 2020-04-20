@@ -28433,6 +28433,11 @@ msgstr "该学员的注册已被取消了。"
 msgid "The learner's session has been changed."
 msgstr "该学员注册的课程已经更改。"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's request has been accepted."
+msgstr "该学员的请求已被接受。"
+
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Select the learners you want to enroll and click on 'enroll'. You will receive a confirmation by email."
 msgstr "选择你要注册的学员，然后点击注册。你会收到一封确认邮件。"
