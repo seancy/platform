@@ -20,7 +20,7 @@ export default class CourseReportProgress extends BaseReport {
         dataUrl:'/analytics/course/json/'
     }
 
-    getConfig(){
+    getConfig() {
         //const properties= this.state.properties.filter(p=>p.type == 'default')
         //const {selectedProperties}=this.state.toolbarData;
         const propertiesFields = this.getOrderedProperties().map(p=>({
@@ -45,10 +45,10 @@ export default class CourseReportProgress extends BaseReport {
                 ...dynamicFields
             ],
             cellRender:v=>{
-                if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')){
+                if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')) {
                     const arr = v.split(':')
-                    return (<><span className={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}%</> )
-                }else{
+                    return (<><span className={"trophy-" + (v.startsWith('Yes')?'yes fa fa-check':'no fa fa-times')}></span> {arr[1]}</> )
+                } else {
                     return v
                 }
             },

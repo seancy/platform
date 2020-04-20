@@ -814,6 +814,18 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                                        'success': success})
 
 
+    @classmethod
+    def filter_by_day(cls, date_time=None, **kwargs):
+        results = super(LearnerBadgeDailyReport, cls).filter_by_day(date_time, **kwargs)
+        dataset = {}
+        for res in results:
+            key = res.user.id
+            if key not in dataset.keys():
+                dataset[key] = {'user': res.user}
+            dataset[key][res.badge.badge_hash] = {'score': res.score, 'success': res.success, 'success_date': res.success_date}
+        return dataset.values()
+
+
 class LearnerDailyReportMockup(object):
     def __init__(self, learner_daily_report, total_time_spent):
         self.org = learner_daily_report.org

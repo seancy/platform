@@ -59,9 +59,9 @@ export class LearnerReport extends BaseReport {
                              onInit={properties=>this.setState({properties})}>
                         <h3>{gettext('Learner Report')}</h3>
                     </Toolbar>
-                    <div className="last-update">
-                        {gettext('Please, note that these reports are not live. Last update:')}{this.props.last_update}
-                    </div>
+                    <p className="last-update">
+                        {gettext('Please, note that these reports are not live. Last update:')} {this.props.last_update}
+                    </p>
                     <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                               enableRowsCount={true} {...config}
                     />
