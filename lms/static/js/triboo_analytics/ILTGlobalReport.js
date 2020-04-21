@@ -23,33 +23,33 @@ export default class ILTGlobalReport extends BaseReport {
     getConfig(){
         return {...{
             fields: [
-                {name: 'Geographical area', fieldName: 'Geographical Area'},
-                {name: 'Course country', fieldName: 'Course Country'},
-                {name: 'Zone/Region', fieldName: 'Zone Region'},
-                {name: 'Course tags', fieldName: 'Course Tags'},
+                {name: 'Geographical area', fieldName: 'Geographical area'},
+                {name: 'Course country', fieldName: 'Course country'},
+                {name: 'Zone/Region', fieldName: 'Zone/Regionn'},
+                {name: 'Course tags', fieldName: 'Course tags'},
 
-                {name: 'Course code', fieldName: 'Course Code'},
-                {name: 'Course name', fieldName: 'Course'},
+                {name: 'Course code', fieldName: 'Course code'},
+                {name: 'Course name', fieldName: 'Course name'},
                 {name: 'Section', fieldName: 'Section'},
                 {name: 'Subsection', fieldName: 'Subsection'},
 
                 {name: 'Session ID', fieldName: 'Session ID'},
-                {name: 'Start date', fieldName: 'Start Date'},
-                {name: 'Start time', fieldName: 'Start Time'},
-                {name: 'End date', fieldName: 'End Date'},
+                {name: 'Start date', fieldName: 'Start date'},
+                {name: 'Start time', fieldName: 'Start time'},
+                {name: 'End date', fieldName: 'End date'},
 
-                {name: 'End time', fieldName: 'End Time'},
-                {name: 'Duration (in hours)', fieldName: 'Duration'},
-                {name: 'Max capacity', fieldName: 'Max Capacity'},
+                {name: 'End time', fieldName: 'End time'},
+                {name: 'Duration (in hours)', fieldName: 'Duration (in hours)'},
+                {name: 'Max capacity', fieldName: 'Max capacity'},
                 {name: 'Enrollees', fieldName: 'Enrollees'},
 
                 {name: 'Attendees', fieldName: 'Attendees'},
-                {name: 'Attendance sheet', fieldName: 'Attendance Sheet'},
+                {name: 'Attendance sheet', fieldName: 'Attendance sheet'},
                 {name: 'Location ID', fieldName: 'Location ID'},
-                {name: 'Location name', fieldName: 'Location Name'},
+                {name: 'Location name', fieldName: 'Location name'},
 
-                {name: 'Location address', fieldName: 'Address'},
-                {name: 'Zip code', fieldName: 'Zip Code'},
+                {name: 'Location address', fieldName: 'Location address'},
+                {name: 'Zip code', fieldName: 'Zip code'},
                 {name: 'City', fieldName: 'City'},
             ],
         }, ...this.getBaseConfig()}
