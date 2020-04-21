@@ -1611,10 +1611,12 @@ def ilt_view_data(request):
         elif report == "ilt_learner":
             table = get_ilt_learner_table_data(filter_kwargs, exclude)
 
-    return json_response(table,
+    res = json_response(table,
                          data.get('sort'),
                          data.get('page'),
                          [])
+    logger.info("LAETITIA -- res = %s" % res)
+    return res
 
 
 @login_required
