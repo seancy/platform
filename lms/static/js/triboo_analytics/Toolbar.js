@@ -201,14 +201,14 @@ export class Toolbar extends React.Component {
 
     setActiveTab(json){
         const {onTabSwitch}=this.props
+        let activeTabName = ''
         this.setState((prev)=>{
-            let activeTabName = ''
             if (prev.activeTabName != json.name){
                 activeTabName = json.name
             }
             return {activeTabName}
         }, ()=>{
-            onTabSwitch && onTabSwitch(json.name)
+            onTabSwitch && onTabSwitch(activeTabName)
         })
     }
 
