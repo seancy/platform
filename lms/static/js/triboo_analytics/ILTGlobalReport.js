@@ -23,15 +23,13 @@ export default class ILTGlobalReport extends BaseReport {
     getConfig(){
         return {...{
             fields: [
-                {name: 'Name', fieldName: 'userName'},
-
                 {name: 'Geographical area', fieldName: 'Geographical Area'},
                 {name: 'Course country', fieldName: 'Course Country'},
                 {name: 'Zone/Region', fieldName: 'Zone Region'},
                 {name: 'Course tags', fieldName: 'Course Tags'},
 
                 {name: 'Course code', fieldName: 'Course Code'},
-                {name: 'Course', fieldName: 'Course'},
+                {name: 'Course name', fieldName: 'Course'},
                 {name: 'Section', fieldName: 'Section'},
                 {name: 'Subsection', fieldName: 'Subsection'},
 
@@ -50,7 +48,7 @@ export default class ILTGlobalReport extends BaseReport {
                 {name: 'Location ID', fieldName: 'Location ID'},
                 {name: 'Location name', fieldName: 'Location Name'},
 
-                {name: 'Address', fieldName: 'Address'},
+                {name: 'Location address', fieldName: 'Address'},
                 {name: 'Zip code', fieldName: 'Zip Code'},
                 {name: 'City', fieldName: 'City'},
             ],

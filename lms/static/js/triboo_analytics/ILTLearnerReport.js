@@ -34,7 +34,7 @@ export default class ILTLearnerReport extends BaseReport {
                 {name: 'Course tags', fieldName: 'Course Tags'},
 
                 {name: 'Course code', fieldName: 'Course Code'},
-                {name: 'Course', fieldName: 'Course'},
+                {name: 'Course name', fieldName: 'Course'},
                 {name: 'Section', fieldName: 'Section'},
                 {name: 'Subsection', fieldName: 'Subsection'},
 
@@ -48,7 +48,7 @@ export default class ILTLearnerReport extends BaseReport {
                 {name: 'Location ID', fieldName: 'Location ID'},
                 {name: 'Location name', fieldName: 'Location Name'},
 
-                {name: 'Address', fieldName: 'Address'},
+                {name: 'Location address', fieldName: 'Address'},
                 {name: 'Zip code', fieldName: 'Zip Code'},
                 {name: 'City', fieldName: 'City'},
                 {name: 'Name', fieldName: 'Name'},
