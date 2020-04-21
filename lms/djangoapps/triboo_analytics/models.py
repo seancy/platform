@@ -1607,14 +1607,14 @@ def generate_today_reports(multi_process=False):
                                                  total_time_spent=report.total_time_spent) for report in last_reports]
         LearnerSectionDailyReport.objects.bulk_create(new_reports)
 
-        LearnerBadgeDailyReport.filter_by_day(timezone.now()).delete()
-        last_reports = LearnerBadgeDailyReport.filter_by_day(last_reportlog.created, user__is_active=True)
-        new_reports = [LearnerBadgeDailyReport(created=timezone.now().date(),
-                                               user_id=report.user_id,
-                                               badge_id=report.badge_id,
-                                               success=report.success,
-                                               success_date=report.success_date) for report in last_reports]
-        LearnerBadgeDailyReport.objects.bulk_create(new_reports)
+        # LearnerBadgeDailyReport.filter_by_day(timezone.now()).delete()
+        # last_reports = LearnerBadgeDailyReport.filter_by_day(last_reportlog.created, user__is_active=True)
+        # new_reports = [LearnerBadgeDailyReport(created=timezone.now().date(),
+        #                                        user_id=report.user_id,
+        #                                        badge_id=report.badge_id,
+        #                                        success=report.success,
+        #                                        success_date=report.success_date) for report in last_reports]
+        # LearnerBadgeDailyReport.objects.bulk_create(new_reports)
 
 
 
