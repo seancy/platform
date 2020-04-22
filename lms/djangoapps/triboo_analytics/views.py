@@ -306,7 +306,7 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
                                                                     course_id)
             kwargs.update({
                 'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
-                'user_id__in': "%s" % user_ids if as_string else user_ids
+                'user_id__in': user_ids
             })
             if with_period_start:
                 period_start_reportlog = ReportLog.get_latest(to_date=from_date)
@@ -320,7 +320,7 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
 def get_ilt_period_kwargs(data, orgs, as_string=False):
     kwargs, exclude = get_kwargs(data)
 
-    kwargs['org__in'] = "%s" % orgs if as_string else orgs
+    kwargs['org__in'] = orgs
 
     from_day = data.get('from_day')
     to_day = data.get('to_day')
@@ -486,7 +486,6 @@ def get_progress_table_data(course_key, filter_kwargs, exclude):
     dataset = LearnerBadgeDailyReport.filter_by_day(**filter_kwargs)
     _badges = Badge.objects.filter(course_id=course_key).order_by('order')
     badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
-    print "LAETITIA -- badges=%s" % badges
     ProgressTable = get_progress_table_class(badges)
     return ProgressTable(dataset, exclude=exclude)
 
@@ -515,7 +514,6 @@ def get_ilt_global_table_data(filter_kwargs):
         return []
 
     reports = IltSession.objects.filter(**filter_kwargs)
-    logger.info("LAETITIA -- %s" % reports)
     return IltTable(reports)
 
 
@@ -532,14 +530,12 @@ def get_ilt_learner_table_data(filter_kwargs, exclude):
         filter_kwargs['ilt_session__start__range'] = period_filter
 
     reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
-    logger.info("LAETITIA -- %s" % reports)
     return IltLearnerTable(reports, exclude=exclude)
 
 
 def json_response(table, sort, page, summary_columns=[]):
     try:
         res = TableExport('json', table).export()
-        logger.info("LAETITIA -- %s" % res)
         table_json = json.loads(res)
         table_response = []
         total = collections.OrderedDict()
@@ -1107,9 +1103,7 @@ def course_view(request):
         if last_reportlog:
             last_update = last_reportlog.course
             course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
-
             unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, None, None)
-            print "LAETITIA -- unique_visitors_csv_data=%s" % unique_visitors_csv_data
 
             last_update = dt2str(last_update)
  
