@@ -138,19 +138,51 @@ def convert_period_format(kwargs):
 
 def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
     from .views import (
-        get_ilt_report_table,
-        get_ilt_learner_report_table,
         get_transcript_table,
-        get_course_progress_table,
-        get_course_time_spent_table,
-        get_table,
+        get_table_data,
+        get_progress_table_data,
+        get_time_spent_table_data,
+        get_ilt_global_table_data,
+        get_ilt_learner_table_data,
         get_customized_table,
     )
 
     if not TableExport.is_valid_format(_task_input['export_format']):
         raise UnsupportedExportFormatError()
 
-    if _task_input['report_name'] == "transcript":
+    table = []
+    kwargs = _task_input['report_args']['filter_kwargs']
+    exclude = _task_input['report_args']['exclude']
+
+    if 'date_time' in kwargs.keys():
+        kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
+
+    if 'course_id' in kwargs.keys(): 
+        kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
+
+    if _task_input['report_name'] == "summary_report":
+        report_cls = getattr(models, _task_input['report_args']['report_cls'])
+        table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+        table = get_table_data(report_cls, table_cls, kwargs, exclude)
+
+    elif _task_input['report_name'] == "progress_report":
+        table = get_progress_table_data(kwargs['course_id'], kwargs, exclude)
+
+    elif _task_input['report_name'] == "time_spent_report":
+        table = get_time_spent_table_data(kwargs['course_id'], kwargs, exclude)
+
+    elif _task_input['report_name'] == "learner_report":
+        report_cls = getattr(models, _task_input['report_args']['report_cls'])
+        table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+        table = get_table_data(report_cls, table_cls, kwargs, exclude, by_period=True)
+
+    elif _task_input['report_name'] == "ilt_global_report":
+        table = get_ilt_global_table_data(kwargs)
+
+    elif _task_input['report_name'] == "ilt_learner_report":
+        table = get_ilt_learner_table_data(kwargs, exclude)
+
+    elif _task_input['report_name'] == "transcript":
         if _task_input['report_args']['last_update'].endswith('UTC'):
             datetime_format = "%Y-%m-%d %H:%M:%S UTC"
         else:
@@ -158,25 +190,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         table, _ = get_transcript_table(_task_input['report_args']['orgs'],
                                         _task_input['report_args']['user_id'],
                                         datetime.strptime(_task_input['report_args']['last_update'], datetime_format))
-    
-    elif _task_input['report_name'] == "ilt_global_report":
-        kwargs = _task_input['report_args']['filter_kwargs']
-        if 'start__range' in kwargs:
-            kwargs = convert_period_format(kwargs)
-        table, _ = get_ilt_report_table(_task_input['report_args']['orgs'],
-                                        kwargs)
-
-    elif _task_input['report_name'] == "ilt_learner_report":
-        kwargs = _task_input['report_args']['filter_kwargs']
-        if 'start__range' in kwargs:
-            kwargs = convert_period_format(kwargs)
-        table, _ = get_ilt_learner_report_table(_task_input['report_args']['orgs'],
-                                                kwargs,
-                                                _task_input['report_args']['exclude'])
-
     else:
-        kwargs = _task_input['report_args']['filter_kwargs']
-        exclude = _task_input['report_args']['exclude']
         date_time = _task_input['report_args'].get('date_time', None)
         # customized course summary report
         if date_time:
@@ -190,23 +204,6 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
             report_cls = getattr(models, _task_input['report_args']['report_cls'])
             table_cls = getattr(tables, _task_input['report_args']['table_cls'])
             table, _ = get_customized_table(report_cls, kwargs, filters, table_cls, exclude)
-        else:
-            if _task_input['report_name'] == "progress_report":
-                enrollments = CourseEnrollment.objects.filter(is_active=True,
-                                                              course_id=course_id,
-                                                              user__is_active=True,
-                                                              **kwargs).prefetch_related('user')
-                table, _ = get_course_progress_table(course_id, enrollments, kwargs, exclude)
-            elif _task_input['report_name'] == "time_spent_report":
-                table, _ = get_course_time_spent_table(course_id, kwargs, exclude)
-            else:
-                report_cls = getattr(models, _task_input['report_args']['report_cls'])
-                table_cls = getattr(tables, _task_input['report_args']['table_cls'])
-                if 'date_time' in kwargs.keys():
-                    kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
-                if 'course_id' in kwargs.keys():
-                    kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
-                table, _ = get_table(report_cls, kwargs, table_cls, exclude)
 
 
     exporter = TableExport(_task_input['export_format'], table)
