@@ -63,7 +63,8 @@ export default class ILTGlobalReport extends BaseReport {
                      onGo={this.startExport.bind(this)}
                      {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}/>
-                 <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
+                 {this.props.children}
+                 <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
                 />
             </>

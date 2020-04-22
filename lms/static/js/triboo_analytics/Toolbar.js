@@ -186,7 +186,7 @@ export class Toolbar extends React.Component {
                 onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
             }},
             {name:'period', text: gettext('Period'), icon: 'fa-calendar-alt', active: false, component: DateRange, props:{
-                label:'Select a time range', buttonBegin:'Last ', startDate, endDate,
+                label:'Select a time range', buttonBegin:'Last ', startDate, endDate, useFontAwesome:true,
                 onChange:(startDate,endDate)=>{
                     this.setState({startDate,endDate}, this.fireOnChange)
                 }
@@ -221,7 +221,7 @@ export class Toolbar extends React.Component {
                     {this.state.toolbarItems.map(json =>
                         (<li key={json.name} onClick={this.setActiveTab.bind(this, json)}
                              className={json.name + (activeTabName==json.name ? ' active' : '')}>
-                            <i className={'far ' + json.icon}></i><span>{json.text}</span>
+                            <i className={'fal ' + json.icon}></i><span>{json.text}</span>
                         </li>)
                     )}
                 </ul>

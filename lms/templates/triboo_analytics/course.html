@@ -43,7 +43,7 @@
                     <p class="error">${error_message}</p>
                   % endif
                   % if course_name:
-                    <a href="${reverse('info', args=[course_id])}"><h2>${course_name}</h2></a>
+                    <a href="${reverse('info', args=[course_id])}"><h2><i class="fal fa-file-alt"></i>${course_name}</h2></a>
                   % endif
                 </div>
             % if course_report:
@@ -194,9 +194,9 @@
                     </div>
                 </div>
               % endif
-                <div class="last-update">
-                  <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                </div>
+                ##<div class="last-update">
+                ##  <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
+                ##</div>
 
                 ${HTML(render_bundle('CourseReport'))}
                 ${HTML(render_bundle('ReactRenderer'))}
@@ -207,6 +207,7 @@
                     selector: '#course-report',
                     componentName: 'CourseReport',
                     props: {
+                        lastUpdate:'${last_update}',
                         defaultLanguage: '${request.LANGUAGE_CODE}',
                         token:'${ csrf_token }',
                       }
