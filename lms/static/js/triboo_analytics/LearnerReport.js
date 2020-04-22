@@ -62,7 +62,7 @@ export class LearnerReport extends BaseReport {
                     <p className="last-update">
                         {gettext('Please, note that these reports are not live. Last update:')} {this.props.last_update}
                     </p>
-                    <DataList ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
+                    <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                               enableRowsCount={true} {...config}
                     />
                 </div>

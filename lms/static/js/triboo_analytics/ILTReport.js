@@ -26,15 +26,19 @@ export class ILTReport extends React.Component {
             onChange:toolbarData=>this.setState({ toolbarData })
         }}
         const data = [
-            {text: 'ILT Global Report', value: 'global', component: ILTGlobalReport, props:commonProps},
-            {text: 'ILT Learner Report', value: 'learner', component: ILTLearnerReport, props:commonProps}
+            {text: gettext('ILT Global Report'), value: 'global', component: ILTGlobalReport, props:commonProps},
+            {text: gettext('ILT Learner Report'), value: 'learner', component: ILTLearnerReport, props:commonProps}
         ]
 
         return (
             <>
                 <h3>{gettext('ILT Report')}</h3>
                 <Tab activeValue={(new URLSearchParams(location.search)).get('report')}
-                 onChange={console.log} data={data}/>
+                 onChange={console.log} data={data}>
+                    <div className="last-update">
+                        <i className="fa fa-history"></i>{gettext("Please, note that these reports are not live. Last update:")} {this.props.last_update}
+                    </div>
+                </Tab>
             </>
         )
     }

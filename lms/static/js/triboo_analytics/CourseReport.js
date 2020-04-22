@@ -39,13 +39,17 @@ class CourseReport extends React.Component {
             onChange:toolbarData=>this.setState({ toolbarData })
         }}
         const data = [
-            {text: 'Summary', value: 'summary', component: Summary, props:common_props},
-            {text: 'Progress', value: 'progress', component: Progress, props:common_props},
-            {text: 'Time Spent', value: 'time_spent', component: TimeSpent, props:common_props},
+            {text: gettext('Summary'), value: 'summary', component: Summary, props:common_props},
+            {text: gettext('Progress'), value: 'progress', component: Progress, props:common_props},
+            {text: gettext('Time Spent'), value: 'time_spent', component: TimeSpent, props:common_props},
         ]
 
         return (
-            <Tab activeValue={(new URLSearchParams(location.search)).get('report')} data={data}/>
+            <Tab activeValue={(new URLSearchParams(location.search)).get('report')} data={data}>
+                <div className="last-update">
+                    <i className="fa fa-history"></i>{gettext("Please, note that these reports are not live. Last update:")} {this.props.last_update}
+                </div>
+            </Tab>
         )
     }
 }
