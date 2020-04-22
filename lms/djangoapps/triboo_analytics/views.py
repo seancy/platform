@@ -1553,7 +1553,7 @@ def ilt_export_table(request):
     filter_kwargs, exclude = get_ilt_period_kwargs(data, orgs, as_string=True)
 
     report_args = {
-        'filter_kwargs': list(filter_kwargs),
+        'filter_kwargs': filter_kwargs,
         'exclude': list(exclude)
     }
 
