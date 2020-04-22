@@ -515,6 +515,7 @@ def get_ilt_global_table_data(filter_kwargs):
         return []
 
     reports = IltSession.objects.filter(**filter_kwargs)
+    logger.info("LAETITIA -- %s" % reports)
     return IltTable(reports)
 
 
@@ -531,6 +532,7 @@ def get_ilt_learner_table_data(filter_kwargs, exclude):
         filter_kwargs['ilt_session__start__range'] = period_filter
 
     reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
+    logger.info("LAETITIA -- %s" % reports)
     return IltLearnerTable(reports, exclude=exclude)
 
 
@@ -1371,15 +1373,15 @@ def _export_table(request, course_key, report_name, report_args):
     try:
         task_type = 'triboo_analytics_export_table'
         task_class = generate_export_table_task
-        format = request.POST.get('format', None) if request.method == "POST" else request.GET.get('_export', None)
-        if format is None:
+        export_format = request.POST.get('format', None) if request.method == "POST" else request.GET.get('_export', None)
+        if not export_format:
             body_data = request.body.decode('utf-8')
             data = json.loads(body_data)
-            format = data.get('format', None)
+            export_format = data.get('format', None)
         task_input = {
             'user_id': request.user.id,
             'report_name': report_name,
-            'export_format': format,
+            'export_format': export_format,
             'report_args': report_args
         }
         task_key = ""

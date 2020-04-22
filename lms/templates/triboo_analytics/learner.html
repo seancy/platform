@@ -18,16 +18,6 @@
     <div class="main-container">
         <%include file="banner_nav.html" args="active_page='learner'" />
 
-        ## ${static.renderReact2(
-        ##   component="LearnerReport",
-        ##   id="learner-report",
-        ##   props={
-        ##     'filtersData':json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8")} for item in filters_data]),
-        ##     'last_update':_("Please, note that these reports are not live. Last update:") + ' ' +last_update,
-        ##     'learner_table':('true' if learner_table else 'false')
-        ##   }
-        ## )}
-
         ${HTML(render_bundle('LearnerReport'))}
         ${HTML(render_bundle('ReactRenderer'))}
         <div id="learner-report"></div>
@@ -46,76 +36,6 @@
               }
           });
         </script>
-
-        % if show_base == 'true':
-        <section class="analytics-wrapper learner">
-            <div class="report-wrapper">
-              % if learner_table:
-                  <p class="last-update">
-                    <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                  </p>
-
-                  <form class="table-period-form" action="${reverse('analytics_learner')}" method="get">
-                      ${time_period_form}
-                      <input type="submit" value="${_("Go")}"/>
-                  </form>
-                  <div class="filter-section">
-                      <div class="filter-forms">
-                        <form class="table-filter-form" action="${reverse('analytics_course')}" method="get">
-                            ${filter_form}
-                            % for key, value in query_dict.items():
-                                <input type="hidden" value="${value}" name="${key}"/>
-                            % endfor
-                        </form>
-                        <form class="clear-filter-form" action="${reverse('analytics_course')}" method="get">
-                            <span style="display: none">${filter_form}</span>
-                            <input type="hidden" value="1" name="clear">
-                            <input type="hidden" value="" name="query_string">
-                            <input type="hidden" value="Name" name="queried_field">
-                            <button type="submit" id="clear-all-filters" class="clear-filters reset-button">
-                                <i class="fa fa-refresh icon"></i>${_("Reset")}
-                            </button>
-                        </form>
-                      </div>
-                      <div class="delete-filter-forms">
-                      % for query_string, queried_field, queried_field_name in query_triples:
-                        <form class="delete-filter-form" action="${reverse('analytics_course')}" method="get">
-                            <span style="display: none">${filter_form}</span>
-                            <input type="hidden" value="1" name="delete">
-                            % for key, value in query_dict.items():
-                                <input type="hidden" value="${value}" name="${key}"/>
-                            % endfor
-                            <input type="hidden" value="${query_string}" name="query_string">
-                            <input type="hidden" value="${queried_field_name}" name="queried_field">
-                            <button type="submit" class="delete-filter">
-                                <span class="query">${_(queried_field)}: ${query_string}</span>
-                                <span aria-hidden="true" class="fa fa-times"></span>
-                            </button>
-                        </form>
-                      % endfor
-                      </div>
-                  </div>
-
-                  <form class="table-user-properties-form" action="${reverse('analytics_learner')}" method="get">
-                      <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
-                      <div id="user-properties-selection">
-                          ${user_properties_form}
-                          % for key, value in query_dict.items():
-                            <input type="hidden" value="${value}" name="${key}"/>
-                          % endfor
-                            <input type="submit" value="${_("Go")}"/>
-                      </div>
-                  </form>
-
-                  ${learner_table}
-
-                  <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_table 'triboo_analytics/table.html' %}" %>
-                  ${Template(tpl).render(Context({'learner_table': learner_table, 'request': request, 'row_count': row_count}))}
-              %endif
-            </div>
-        </section>
-        % endif
-
     </div>
 </main>
 
