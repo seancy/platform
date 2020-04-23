@@ -483,7 +483,7 @@ def get_progress_table_data(course_key, filter_kwargs, exclude):
         return []
     course_filter = filter_kwargs.pop('course_id')
     filter_kwargs['badge__course_id'] = course_filter
-    dataset = LearnerBadgeDailyReport.filter_by_day(**filter_kwargs)
+    dataset = LearnerBadgeDailyReport.list_filter_by_day(**filter_kwargs)
     _badges = Badge.objects.filter(course_id=course_key).order_by('order')
     badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
     ProgressTable = get_progress_table_class(badges)

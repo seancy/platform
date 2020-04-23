@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.db import models, connections
 from django.db.models import Sum, Count
-from django.http import Http404
 from datetime import date, datetime
 from django.utils import timezone
 from pytz import UTC
@@ -21,7 +20,6 @@ from model_utils.fields import AutoLastModifiedField
 from model_utils.models import TimeStampedModel
 from requests import ConnectionError
 
-from courseware.courses import get_course_by_id
 from courseware.models import XModuleUserStateSummaryField, StudentModule
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 import lms.lib.comment_client as cc
@@ -493,10 +491,9 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             course_id = overview.id
             course_last_update = overview.modified.date()
             course_id_str = "%s" % course_id
-            try:
-                course = get_course_by_id(course_id)
-            except Http404:
-                logger.error("course_id=%s returned Http404" % course_key)
+            course = modulestore().get_course(course_id)
+            if not course:
+                logger.error("course_id=%s returned Http404" % course_id)
                 continue
             Badge.refresh(course_id, course, analytics_worker)
 
@@ -793,6 +790,8 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     @classmethod
     def update_or_create(cls, course_key, user, trophies_by_chapter):
         day = timezone.now().date()
+        _successes = LearnerBadgeSuccess.objects.filter(badge__course_id=course_key, user=user)
+        successes = {s.badge.badge_hash: s.badge.success_date for s in _successes}
         for chapter in trophies_by_chapter:
             for trophy in chapter['trophies']:
                 badge_hash = Badge.get_badge_hash(trophy['section_format'],
@@ -807,16 +806,18 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
                 score = trophy['result'] * 100
                 success = True if score >= badge.threshold else False
+                success_date = successes[badge_hash] if badge_hash in successes.keys() else None
                 cls.objects.update_or_create(created=day,
                                              user=user,
                                              badge=badge,
                                              defaults={'score': score,
-                                                       'success': success})
+                                                       'success': success,
+                                                       'success_date': success_date})
 
 
     @classmethod
-    def filter_by_day(cls, date_time=None, **kwargs):
-        results = super(LearnerBadgeDailyReport, cls).filter_by_day(date_time, **kwargs)
+    def list_filter_by_day(cls, date_time=None, **kwargs):
+        results = cls.filter_by_day(date_time, **kwargs)
         dataset = {}
         for res in results:
             key = res.user.id
@@ -824,6 +825,17 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 dataset[key] = {'user': res.user}
             dataset[key][res.badge.badge_hash] = {'score': res.score, 'success': res.success, 'success_date': res.success_date}
         return dataset.values()
+
+
+class LearnerBadgeSuccess(models.Model):
+    class Meta(object):
+        app_label = "triboo_analytics"
+        unique_together = ['user', 'badge']
+        index_together = ['user', 'badge']
+
+    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
+    badge = models.ForeignKey(Badge, null=False, on_delete=models.CASCADE)
+    success_date = models.DateTimeField(default=None, null=True, blank=True)
 
 
 class LearnerDailyReportMockup(object):
@@ -944,13 +956,9 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     def filter_by_period(cls, org, date_time=None, period_start=None, **kwargs):
         day = date_time.date() if date_time else timezone.now().date()
         new_results = cls.objects.filter(org=org, created=day, **kwargs)
-        for new_res in new_results:
-            logger.info("LAETITIA -- %s" % new_res)
         if period_start:
             results = []
             old_results = cls.objects.filter(org=org, created=period_start, **kwargs)
-            for old_res in old_results:
-                logger.info("LAETITIA -- %s" % old_res)
             old_time_spent_by_user = { r.user_id: r.total_time_spent for r in old_results }
             for r in new_results:
                 old_time_spent = 0
@@ -1599,22 +1607,24 @@ def generate_today_reports(multi_process=False):
     if last_analytics_success:
         LearnerSectionDailyReport.filter_by_day(timezone.now()).delete()
         last_reports = LearnerSectionDailyReport.filter_by_day(last_reportlog.created, user__is_active=True)
-        new_reports = [LearnerSectionDailyReport(created=timezone.now().date(),
-                                                 user_id=report.user_id,
-                                                 course_id=report.course_id,
-                                                 section_key=report.section_key,
-                                                 section_name=report.section_name,
-                                                 total_time_spent=report.total_time_spent) for report in last_reports]
-        LearnerSectionDailyReport.objects.bulk_create(new_reports)
+        if last_reports:
+            new_reports = [LearnerSectionDailyReport(created=timezone.now().date(),
+                                                     user_id=report.user_id,
+                                                     course_id=report.course_id,
+                                                     section_key=report.section_key,
+                                                     section_name=report.section_name,
+                                                     total_time_spent=report.total_time_spent) for report in last_reports]
+            LearnerSectionDailyReport.objects.bulk_create(new_reports)
 
-        # LearnerBadgeDailyReport.filter_by_day(timezone.now()).delete()
-        # last_reports = LearnerBadgeDailyReport.filter_by_day(last_reportlog.created, user__is_active=True)
-        # new_reports = [LearnerBadgeDailyReport(created=timezone.now().date(),
-        #                                        user_id=report.user_id,
-        #                                        badge_id=report.badge_id,
-        #                                        success=report.success,
-        #                                        success_date=report.success_date) for report in last_reports]
-        # LearnerBadgeDailyReport.objects.bulk_create(new_reports)
+        LearnerBadgeDailyReport.filter_by_day(timezone.now()).delete()
+        last_reports = LearnerBadgeDailyReport.filter_by_day(last_reportlog.created, user__is_active=True)
+        if last_reports:
+            new_reports = [LearnerBadgeDailyReport(created=timezone.now().date(),
+                                                   user_id=report.user_id,
+                                                   badge_id=report.badge_id,
+                                                   success=report.success,
+                                                   success_date=report.success_date) for report in last_reports]
+            LearnerBadgeDailyReport.objects.bulk_create(new_reports)
 
 
 

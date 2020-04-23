@@ -6,6 +6,7 @@ from collections import namedtuple
 from datetime import datetime
 from logging import getLogger
 
+from django.utils import timezone
 import dogstats_wrapper as dog_stats_api
 from six import text_type
 
@@ -276,7 +277,9 @@ class CourseGradeFactory(object):
                 course_id=course_key,
                 percent_progress=round(percent_progress / 100, 2)
             )
+        self.check_badge_success(user, course_key, enrollment)
         return round(percent_progress / 100, 2)
+
 
     def get_course_completion_percentage(self, user, course_key, course_grade=None, enrollment=None):
         """
@@ -290,6 +293,7 @@ class CourseGradeFactory(object):
             return self.update_course_completion_percentage(
                 course_key, user, course_grade=course_grade, enrollment=enrollment)
 
+
     def get_nb_trophies_possible(self, course):
         """
         return the number of badges of the given course
@@ -300,6 +304,43 @@ class CourseGradeFactory(object):
         for rule in grading_rules:
             nb_trophies_possible += rule.get('min_count', 0)
         return nb_trophies_possible
+
+
+    def check_badge_success(self, user, course_key, enrollment):
+        from triboo_analytics.models import Badge, LearnerBadgeSuccess
+
+        course = modulestore().get_course(course_key)
+        if not course:
+            log.error("course_id=%s returned Http404" % course_key)
+            return
+
+        progress = self.get_progress(user, course, enrollment=enrollment)
+        for chapter in progress['trophies_by_chapter']:
+            for trophy in chapter['trophies']:
+                badge_hash = Badge.get_badge_hash(trophy['section_format'],
+                                                  chapter['url'],
+                                                  trophy['section_url'])
+                badge = Badge.objects.filter(course_id=course_key, badge_hash=badge_hash).first()
+                if trophy['result'] >= trophy['threshold']:
+                    badge = Badge.objects.filter(course_id=course_key, badge_hash=badge_hash).first()
+                    if not badge:
+                        badge = Badge.objects.update_or_create(course_id=course_key,
+                                                       badge_hash=badge_hash,
+                                                       defaults={'order': i,
+                                                                 'grading_rule': trophy['section_format'],
+                                                                 'section_name': trophy['section_name'],
+                                                                 'threshold': (trophy['threshold'] * 100)})
+                    success = LearnerBadgeSuccess.objects.filter(user=user, badge=badge).first()
+                    if not success:
+                        LearnerBadgeSuccess.objects.update_or_create(user=user,
+                                                                     badge=badge,
+                                                                     defaults={'success_date': timezone.now()})
+                else:
+                    if badge:
+                        success = LearnerBadgeSuccess.objects.filter(user=user, badge=badge).first()
+                        if success:
+                            success.delete()
+
 
     def get_progress(self, user, course, progress=None, grade_summary=None, enrollment=None):
         course_key = course.id
