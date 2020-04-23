@@ -7,7 +7,6 @@ import argparse
 import logging
 import os
 import subprocess
-import sys
 
 
 PLAT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +19,7 @@ DJANGO_PO = "django.po"
 DJANGO_JS_PO = "djangojs.po"
 DJANGO_MO = "django.mo"
 DJANGO_JS_MO = "djangojs.mo"
-LANGUAGES = {"es_419", "fr", "pt_BR", "zh_CN"}
+LANGUAGES = ["es_419", "fr", "pt_BR", "zh_CN", "eo"]  # "eo" is only used for test.
 
 logging.basicConfig(level=logging.INFO)
 
@@ -43,11 +42,21 @@ def execute_cmd(cmd, shell=False):
         logging.exception("Execution failed: ", e)
 
 
-def compile_mo(pofile, mofile):
+def compile_mo(lang):
     """Compiles po files to mo files.
     """
-    cmd = ["msgfmt", "-o", mofile, pofile]
-    execute_cmd(cmd)
+    logging.info('Start to handle {}'.format(lang))
+    if os.path.exists(file_path(DJANGO_PO, lang)):
+        cmd = ["msgfmt", "-o", file_path(DJANGO_MO, lang), file_path(DJANGO_PO, lang)]
+        execute_cmd(cmd)
+    else:
+        logging.warning("django.po file for %s is not existed, skip..." % lang)
+
+    if os.path.exists(file_path(DJANGO_JS_PO, lang)):
+        cmd = ["msgfmt", "-o", file_path(DJANGO_JS_MO, lang), file_path(DJANGO_JS_PO, lang)]
+        execute_cmd(cmd)
+    else:
+        logging.warning("djangojs.po file for %s is not existed, skip..." % lang)
 
 
 def compile_js(settings):
@@ -66,19 +75,6 @@ def file_path(filename, lang="en"):
                         "conf/locale/{}/LC_MESSAGES/{}".format(lang, filename))
 
 
-def translate(lang):
-    """Handle single language's translation.
-
-    Translate language's .po file to .mo file, and also handle js compilation.
-
-    Args:
-        lang: language code ('fr', 'zh_CN')
-    """
-    logging.info('Start to handle {}'.format(lang))
-    compile_mo(file_path(DJANGO_PO, lang), file_path(DJANGO_MO, lang))
-    compile_mo(file_path(DJANGO_JS_PO, lang), file_path(DJANGO_JS_MO, lang))
-
-
 def main():
     parser = argparse.ArgumentParser(description="translation utility for Triboo")
     parser.add_argument('language', nargs='*', help="languages need to be translated")
@@ -89,14 +85,14 @@ def main():
     logging.info('Init work...')
     if args.all:
         for lang in LANGUAGES:
-            translate(lang)
+            compile_mo(lang)
         compile_js(args.settings)
     else:
         for lang in set(args.language):
             if not lang in LANGUAGES:
-                print "invalid language code: {}, skip...".format(lang)
+                logging.warning("invalid language code: %s, skip..." % lang)
                 continue
-            translate(lang)
+            compile_mo(lang)
         if args.language:
             compile_js(args.settings)
 
