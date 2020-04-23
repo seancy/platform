@@ -310,12 +310,17 @@ class UserBaseTable(tables.Table):
 class ProgressColumn(tables.Column):
     def render(self, value):
         if value['success']:
+            if value['success_date']:
+                return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%% (%s)" % (
+                    value['score'], dt2str(value['success_date'])))
             return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%%" % (value['score']))
         return mark_safe("<span class='trophy-no fa fa-times'></span> %d%%" % (value['score']))
 
 
     def value(self, value):
         if value['success']:
+            if value['success_date']:
+                return "Yes: %d%% (%s)" % (value['score'], dt2str(value['success_date']))
             return "Yes: %d%%" % value['score']
         return "No: %d%%" % value['score']
 

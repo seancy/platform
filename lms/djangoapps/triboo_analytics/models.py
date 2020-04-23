@@ -791,7 +791,7 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     def update_or_create(cls, course_key, user, trophies_by_chapter):
         day = timezone.now().date()
         _successes = LearnerBadgeSuccess.objects.filter(badge__course_id=course_key, user=user)
-        successes = {s.badge.badge_hash: s.badge.success_date for s in _successes}
+        successes = {s.badge.badge_hash: s.success_date for s in _successes}
         for chapter in trophies_by_chapter:
             for trophy in chapter['trophies']:
                 badge_hash = Badge.get_badge_hash(trophy['section_format'],
