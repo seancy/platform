@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import 'select2'
 import 'select2/dist/css/select2.css'
 import {ReactRenderer} from '../../../../common/static/js/src/ReactRenderer'
+import LabelValue from 'sec-react-label-value'
+import DateRange from 'se-react-date-range'
 
 export class CustomizedReport {
     constructor(props) {
@@ -388,7 +390,8 @@ class ReportTypeAndCourseReport extends React.Component {
         super(props);
 
         this.state = {
-            hideCourseReportSelect: false
+            hideCourseReportSelect: false,
+            filterData:[{value: 'zzz', text: 'aaa'}]
         };
 
         $(this.refs.report_type).select2().on('select2:select', this.recreateCourseSelect.bind(this));
@@ -400,6 +403,16 @@ class ReportTypeAndCourseReport extends React.Component {
             });
         }, 300)
 
+    }
+
+    componentDidMount() {
+        fetch('/analytics/common/get_properties/json/')
+            .then(response=>{
+                return response.json()
+            })
+            .then(data=>{
+                this.setState({filterData: data.list})
+            })
     }
 
     recreateCourseSelect(e) {
@@ -423,8 +436,20 @@ class ReportTypeAndCourseReport extends React.Component {
         }
     }
 
+    filterOnChange(e) {
+        console.log('e', e)
+    }
+
+    periodOnChange(e, f) {
+        console.log('e', e, f)
+    }
+
     render() {
         const {translation, report_types, courses} = this.props;
+
+        const propertyData = [
+            {value: 'zzz', text: 'aaa'},
+        ]
 
         return (
             <React.Fragment>
@@ -470,6 +495,32 @@ class ReportTypeAndCourseReport extends React.Component {
                         </div>
                     </div>
                     <div id="course_bar" className="courses label-bar is-collapsed"></div>
+                </div>
+                <div class="custom-section" id="filter-section">
+                    <button class="section-button accordion-trigger"
+                            aria-expanded="${ 'false' }"
+                            aria-controls="filter_section_contents"
+                            id="filter_section">
+                        <p class="section-title">Filter your data</p>
+                        <span class="fa fa-chevron-down" aria-hidden="true"></span>
+                    </button>
+                    <div id="filter_section_contents" class="section-content is-hidden">
+                        <section class="filter-form">
+                            <p class="section-label">Select user properties:</p>
+                          <div id="filter-form">
+                            <div class="table-filter-form">
+                                <LabelValue data={this.state.filterData} onChange={this.filterOnChange.bind(this)} />
+                            </div>
+                          </div>
+                        </section>
+                        <section class="period-form">
+                            <p class="section-label">Select a time range:</p>
+                            <div id="period-table">
+                                <DateRange onChange={this.periodOnChange.bind(this)} />
+                            </div>
+                        </section>
+                    </div>
+                    <div id="filter-bar" class="filters is-collapsed"></div>
                 </div>
             </React.Fragment>
         )

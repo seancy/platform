@@ -52,36 +52,6 @@
                             'courses':${json.dumps([{'cid': item[0], 'course_title':item[1], 'course_enrollments':item[2]} for item in courses]) | n}
                         });
                     </%static:webpack>
-                    <div class="custom-section" id="filter-section">
-                        <button class="section-button accordion-trigger"
-                                aria-expanded="${ 'false' }"
-                                aria-controls="filter_section_contents"
-                                id="filter_section">
-                            <p class="section-title">Filter your data</p>
-                            <span class="fa fa-chevron-down" aria-hidden="true"></span>
-                        </button>
-                        <div id="filter_section_contents" class="section-content is-hidden">
-                            <section class="filter-form">
-                                <p class="section-label">Select user properties:</p>
-                              <div id="filter-form">
-                                <div class="table-filter-form">
-                                    ${filter_form}
-                                    <button id="clear-all-filters" class="clear-filters">
-                                        <i class="fa fa-refresh icon"></i>${_("Reset")}
-                                    </button>
-                                </div>
-                              </div>
-                            </section>
-                            <section class="period-form">
-                                <p class="section-label">Select a time range:</p>
-                                <div id="period-table">
-                                    <input name="from_day" id="from_day"/>
-                                    <input name="to_day" id="to_day"/>
-                                </div>
-                            </section>
-                        </div>
-                        <div id="filter-bar" class="filters is-collapsed"></div>
-                    </div>
                     <div class="custom-section table-user-properties-form-customized">
                         <button class="section-button accordion-trigger"
                                 aria-expanded="${ 'false' }"
