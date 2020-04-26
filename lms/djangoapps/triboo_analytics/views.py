@@ -466,7 +466,7 @@ def get_query_triples(query_dict):
     return query_triples
 
 
-def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=False):
+def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=False, html_links=False):
     if filter_kwargs.pop('invalid', False):
         return []
 
@@ -475,6 +475,8 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
         dataset = report_cls.filter_by_period(**filter_kwargs)
     else:
         dataset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
+    if html_links:
+        return table_cls(dataset, exclude=exclude, html_links=True)    
     return table_cls(dataset, exclude=exclude)
 
 
@@ -1241,7 +1243,8 @@ def learner_view_data(request):
         if 'date_time' not in filter_kwargs.keys():
             filter_kwargs['date_time'] = last_update
 
-        table = get_table_data(LearnerDailyReport, LearnerDailyTable, filter_kwargs, exclude, by_period=True)
+        table = get_table_data(LearnerDailyReport,LearnerDailyTable, filter_kwargs, exclude,
+                               by_period=True, html_links=True)
 
     return json_response(table,
                          data.get('sort'),

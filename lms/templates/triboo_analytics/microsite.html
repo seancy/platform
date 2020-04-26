@@ -21,7 +21,7 @@
         <%include file="banner_nav.html" args="active_page='global'" />
         <section class="analytics-wrapper microsite">
             <div class="report-wrapper">
-                <h3>${_("Course Report")}</h3>
+                <h3>${_("Global Report")}</h3>
               % if microsite_report:
                 <div class="analytics-basic-wrapper">
                     <div class="analytics-widget-24 analytics-figure">
@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="last-update">
-                  <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
+                  <span class="fal fa-sync-alt"></span>${_("Please, note that these reports are not live. Last update:")} ${last_update}
                 </div>
               % endif
             </div>

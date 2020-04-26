@@ -601,6 +601,21 @@ class LearnerDailyTable(LearnerBaseTable):
                     'enrollments', 'finished', 'failed', 'in_progress', 'not_started', 'average_final_score',
                     'badges', 'posts', 'total_time_spent', 'user_last_login')
 
+    def __init__(self, data=None, order_by=None, orderable=None, empty_text=None, exclude=None, attrs=None,
+                 row_attrs=None, pinned_row_attrs=None, sequence=None, prefix=None, order_by_field=None,
+                 page_field=None, per_page_field=None, template=None, default=None, request=None, show_header=None,
+                 show_footer=True, extra_columns=None, html_links=False):
+        super(LearnerDailyTable, self).__init__(data, order_by, orderable, empty_text, exclude, attrs, row_attrs,
+                                              pinned_row_attrs, sequence, prefix, order_by_field, page_field,
+                                              per_page_field, template, default, request, show_header, show_footer,
+                                              extra_columns)
+        self.html_links = html_links
+
+    def value_user_name(self, column, bound_column, record, value):
+        if self.html_links:
+            return column.render(bound_column, record, value)
+        return column.value(record, value)
+
     def render_total_time_spent(self, value):
         return format_time_spent(value)
 

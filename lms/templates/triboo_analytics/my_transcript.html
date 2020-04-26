@@ -371,7 +371,7 @@
               </div>
 
               <div class="last-update">
-                <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
+                <span class="fal fa-sync-alt"></span>${_("Please, note that these reports are not live. Last update:")} ${last_update}
               </div>
 
               <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>

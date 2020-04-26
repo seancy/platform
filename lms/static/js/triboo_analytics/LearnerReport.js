@@ -60,7 +60,7 @@ export class LearnerReport extends BaseReport {
                         <h3>{gettext('Learner Report')}</h3>
                     </Toolbar>
                     <p className="last-update">
-                        {gettext('Please, note that these reports are not live. Last update:')} {this.props.last_update}
+                        <span className="fal fa-sync-alt"></span>{gettext('Please, note that these reports are not live. Last update:')} {this.props.last_update}
                     </p>
                     <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                               enableRowsCount={true} {...config}
