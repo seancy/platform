@@ -107,7 +107,7 @@ django-webpack-loader==0.6.0
 django==1.11.15
 djangorestframework-jwt==1.11.0
 djangorestframework-xml==1.3.0  # via edx-enterprise
-djangosaml2idp==0.3.3  # Used to become an SAML IdP
+-e https://github.com/Learningtribes/djangosaml2idp.git@master#egg=djangosaml2idp  # Used to become an SAML IdP
 dm.xmlsec.binding==1.3.3  # via python-saml
 docopt==0.6.2
 docutils==0.14            # via botocore
