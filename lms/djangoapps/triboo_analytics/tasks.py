@@ -166,10 +166,10 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         table = get_table_data(report_cls, table_cls, kwargs, exclude)
 
     elif _task_input['report_name'] == "progress_report":
-        table = get_progress_table_data(kwargs['course_id'], kwargs, exclude)
+        table, _ = get_progress_table_data(kwargs['course_id'], kwargs, exclude)
 
     elif _task_input['report_name'] == "time_spent_report":
-        table = get_time_spent_table_data(kwargs['course_id'], kwargs, exclude)
+        table, _ = get_time_spent_table_data(kwargs['course_id'], kwargs, exclude)
 
     elif _task_input['report_name'] == "learner_report":
         report_cls = getattr(models, _task_input['report_args']['report_cls'])

@@ -489,7 +489,8 @@ def get_progress_table_data(course_key, filter_kwargs, exclude):
     _badges = Badge.objects.filter(course_id=course_key).order_by('order')
     badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
     ProgressTable = get_progress_table_class(badges)
-    return ProgressTable(dataset, exclude=exclude)
+    columns = ["%s / %s" % (b.grading_rule, b.section_name) for b in _badges]
+    return ProgressTable(dataset, exclude=exclude), columns
 
 
 def get_time_spent_table_data(course_key, filter_kwargs, exclude):
@@ -500,15 +501,17 @@ def get_time_spent_table_data(course_key, filter_kwargs, exclude):
 
     ordered_chapters, ordered_sections = get_course_sections(course_key)
     table_sections = []
+    columns = []
     for section_key, chapter_name in ordered_sections:
         if section_key in sections.keys():
             section_name = sections[section_key]
+            columns.append(section_name)
             table_sections.append({'key': section_key,
                                    'name': section_name,
                                    'chapter': chapter_name})
 
     TimeSpentTable = get_time_spent_table_class(ordered_chapters, table_sections)
-    return TimeSpentTable(dataset, exclude=exclude)
+    return TimeSpentTable(dataset, exclude=exclude), columns
 
 
 def get_ilt_global_table_data(filter_kwargs):
@@ -535,7 +538,7 @@ def get_ilt_learner_table_data(filter_kwargs, exclude):
     return IltLearnerTable(reports, exclude=exclude)
 
 
-def json_response(table, sort, page, summary_columns=[]):
+def json_response(table, sort, page, summary_columns=[], column_order=[]):
     try:
         res = TableExport('json', table).export()
         table_json = json.loads(res)
@@ -591,9 +594,12 @@ def json_response(table, sort, page, summary_columns=[]):
         page_end = page['no'] * page['size']
         table_response = table_response[page_start:page_end]
 
-        return JsonResponse({'list': table_response,
-                             'total': total,
-                             'pagination': {'rowsCount': len(table_json)}})
+        response = {'list': table_response,
+                    'total': total,
+                    'pagination': {'rowsCount': len(table_json)}}
+        if column_order:
+            response['columns'] = column_order
+        return JsonResponse(response)
     except Exception as e:
         logger.exception(e)
         return JsonResponseBadRequest({"message": "Unable to fetch data."})
@@ -1152,6 +1158,7 @@ def course_view_data(request):
 
     table = []
     summary_columns = []
+    column_order = []
 
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
@@ -1173,15 +1180,16 @@ def course_view_data(request):
                                'Total Time Spent']
 
         elif report == "course_progress":
-            table = get_progress_table_data(course_key, filter_kwargs, exclude)
+            table, column_order = get_progress_table_data(course_key, filter_kwargs, exclude)
 
         elif report == "course_time_spent":
-            table = get_time_spent_table_data(course_key, filter_kwargs, exclude)
-    
+            table, column_order = get_time_spent_table_data(course_key, filter_kwargs, exclude)
+
     return json_response(table,
                          data.get('sort'),
                          data.get('page'),
-                         summary_columns)
+                         summary_columns,
+                         column_order)
 
 
 @login_required
