@@ -6,6 +6,7 @@ import 'select2/dist/css/select2.css'
 import {ReactRenderer} from '../../../../common/static/js/src/ReactRenderer'
 import LabelValue from 'sec-react-label-value'
 import DateRange from 'se-react-date-range'
+import {pick} from 'lodash'
 
 export class CustomizedReport {
     constructor(props) {
@@ -17,7 +18,10 @@ export class CustomizedReport {
                 component: ReportTypeAndCourseReport,
                 selector: '.report_type_and_course_selected',
                 componentName: 'CustomizedReport',
-                props: props
+                props: {...props, onChange: (a0, a1, query_tuples)=>{
+                        this.query_tuples = query_tuples
+                    }
+                }
             });
             this.$submitButton = $('input[type=submit]');
             this.$reportType = $('#report_type');
@@ -38,7 +42,7 @@ export class CustomizedReport {
             e.preventDefault();
             this.synchronizeProperties();
             this.synchronizeSelectedCourses();
-            this.synchronizePeriodDates();
+            //this.synchronizePeriodDates();
             setTimeout(async () => {
                 const json = await this.submit()
                 LearningTribes.dialog.show(json.message);
@@ -298,7 +302,9 @@ export class CustomizedReport {
     }
 
     async submit() {
+        //const {query_tuples}=this.state
         let data = {
+            query_tuples2: this.query_tuples.map(p=>pick(p, ['key', 'value'])),
             selected_properties: []
         }
         $('#form-customized-report').serializeArray().forEach(function ({name, value}) {
@@ -332,12 +338,12 @@ export class CustomizedReport {
         $('#course_selected_return').val(courseSelectedValueStr)
     }
 
-    synchronizePeriodDates() {
+    /*synchronizePeriodDates() {
         let from_day = $('#from_day').val()
         let to_day = $('#to_day').val()
         $('#from_day_return').val(from_day)
         $('#to_day_return').val(to_day)
-    }
+    }*/
 
     expandSection(sectionToggleButton) {
         const $toggleButtonChevron = $(sectionToggleButton).children('.fa-chevron-down');
@@ -390,8 +396,9 @@ class ReportTypeAndCourseReport extends React.Component {
         super(props);
 
         this.state = {
+            selectedKeyValues:[],
             hideCourseReportSelect: false,
-            filterData:[{value: 'zzz', text: 'aaa'}]
+            filterData:[{value: '', text: 'loading'}]
         };
 
         $(this.refs.report_type).select2().on('select2:select', this.recreateCourseSelect.bind(this));
@@ -436,12 +443,21 @@ class ReportTypeAndCourseReport extends React.Component {
         }
     }
 
-    filterOnChange(e) {
-        console.log('e', e)
+    filterOnChange(selectedKeyValues) {
+        //query_tuples
+        this.setState({selectedKeyValues}, this.fireOnChange)
+
+        //console.log('e', e)
     }
 
     periodOnChange(e, f) {
         console.log('e', e, f)
+    }
+
+    fireOnChange(){
+        const {onChange}=this.props
+        const {selectedKeyValues} = this.state
+        onChange && onChange('', '', selectedKeyValues)
     }
 
     render() {
@@ -516,7 +532,10 @@ class ReportTypeAndCourseReport extends React.Component {
                         <section class="period-form">
                             <p class="section-label">Select a time range:</p>
                             <div id="period-table">
-                                <DateRange onChange={this.periodOnChange.bind(this)} />
+                                <DateRange onChange={this.periodOnChange.bind(this)}
+                                           //label='Select a time range'
+                                           buttonBegin='Last '
+                                    startDateName='from_day2' endDateName='to_day2'/>
                             </div>
                         </section>
                     </div>
