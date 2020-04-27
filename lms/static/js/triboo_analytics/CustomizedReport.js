@@ -302,9 +302,11 @@ export class CustomizedReport {
     }
 
     async submit() {
-        //const {query_tuples}=this.state
         let data = {
-            query_tuples2: this.query_tuples.map(p=>pick(p, ['key', 'value'])),
+            query_tuples: this.query_tuples.map(p=>{
+                const {value, key} = pick(p, ['key', 'value'])
+                return [value, key]
+            }),
             selected_properties: []
         }
         $('#form-customized-report').serializeArray().forEach(function ({name, value}) {
