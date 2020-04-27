@@ -9,7 +9,7 @@ import CheckboxGroup from "se-react-checkbox-group"
 import Exporter from './Exporter'
 import Properties from './Properties'
 
-export default class Toolbar extends React.Component {
+export class Toolbar extends React.Component {
     constructor(props) {
         super(props);
         this.fireOnChange = this.fireOnChange.bind(this)
