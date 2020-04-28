@@ -1,6 +1,6 @@
 import React from "react";
 
-export class Exporter extends React.Component {
+class Exporter extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state={
@@ -57,3 +57,5 @@ export class Exporter extends React.Component {
         )
     }
 }
+
+export {Exporter}

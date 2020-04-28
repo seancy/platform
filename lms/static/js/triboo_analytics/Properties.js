@@ -1,7 +1,7 @@
 import React from "react";
 import {pick} from "lodash";
 
-export class Properties extends React.Component {
+class Properties extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -27,3 +27,4 @@ export class Properties extends React.Component {
         )
     }
 }
+export {Properties}
