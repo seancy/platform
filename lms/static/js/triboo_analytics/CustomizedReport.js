@@ -322,7 +322,8 @@ export class CustomizedReport {
         console.log('data', data)
         return await $.post({
             url: 'export/',
-            data: data
+            //data: data
+            data: JSON.stringify(data),
         })
         return await response.json()
     }
