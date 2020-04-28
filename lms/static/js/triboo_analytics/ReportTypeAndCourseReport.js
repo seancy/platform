@@ -57,102 +57,116 @@ class ReportTypeAndCourseReport extends React.Component {
         this.setState({selectedKeyValues}, this.fireOnChange)
     }
 
-    periodOnChange(e, f) {
-        console.log('e', e, f)
+    periodOnChange(startDate, endDate) {
+        this.setState({startDate, endDate}, this.fireOnChange)
     }
 
     fireOnChange(){
         const {onChange}=this.props
-        const {selectedKeyValues} = this.state
-        onChange && onChange('', '', selectedKeyValues)
+        const {selectedKeyValues, startDate, endDate} = this.state
+        onChange && onChange('', '', selectedKeyValues, startDate, endDate)
     }
 
-    stopCollapse(e){
-        if (e.key == 'Enter'){
-            e.preventDefault();
-            e.stopPropagation()
-            return false
-        }
-
+    getReportTypeSection(){
+        const {report_types} = this.props;
+        return <div className="custom-section">
+            <button className="section-button accordion-trigger"
+                    aria-expanded="${ 'false' }"
+                    aria-controls="report_section_contents"
+                    id="report_section">
+                <p className="section-title">Select a report type</p>
+                <span className="fa fa-chevron-down" aria-hidden="true"></span>
+            </button>
+            <div id="report_section_contents" className="section-content">
+                <div className="report-type">
+                    <select name="report_type" id="report_type" ref="report_type"
+                    onChange={this.recreateCourseSelect.bind(this)}>
+                        {report_types.map(({type, title}) => {
+                            return <option key={type} value={type}>{title}</option>
+                        })}
+                    </select>
+                </div>
+            </div>
+            <div id="report_bar" className="reports label-bar is-collapsed"></div>
+        </div>
     }
+    getCourseSection(){
+        const {courses} = this.props;
+        return <div className="custom-section" id="custom_course_section">
+            <button className="section-button accordion-trigger"
+                    aria-expanded="${ 'false' }"
+                    aria-controls="course_section_contents"
+                    id="course_section">
+                <p className="section-title">Select course(s)</p>
+                <span className="fa fa-chevron-down" aria-hidden="true"></span>
+            </button>
+            <div id="course_section_contents" className="section-content is-hidden">
+                <div className={'course-report ' + (this.state.hideCourseReportSelect ? 'hide' : '')}>
+                    <p className="section-label">The enrollments of the courses you have been selected is:
+                        <span id="enrollment_selected">0</span>
+                        . (<span id="enrollment_limit">6</span> at most)
+                    </p>
+                    <select id="course_selected" ref="course_selected">
+                        {courses.map(({cid, course_title, course_enrollments}) => {
+                            return <option key={cid} value={cid}>{course_title} ({course_enrollments} users)</option>
+                        })}
+                    </select>
+                </div>
+            </div>
+            <div id="course_bar" className="courses label-bar is-collapsed"></div>
+        </div>
+    }
+    getFilterSection(){
+        const {selectedKeyValues,startDate, endDate}=this.state
+        return <div className="custom-section" id="filter-section">
+            <button className="section-button accordion-trigger"
+                    aria-expanded="${ 'false' }"
+                    aria-controls="filter_section_contents"
+                    id="filter_section">
+                <p className="section-title">Filter your data</p>
+                <span className="fa fa-chevron-down" aria-hidden="true"></span>
+            </button>
+            <div id="filter_section_contents" className="section-content is-hidden">
+                <section className="filter-form">
+                    <p className="section-label">Select user properties:</p>
+                    <div id="filter-form">
+                        <div className="table-filter-form">
+                            <LabelValue data={this.state.filterData} onChange={this.filterOnChange.bind(this)}
+                                        stopEventSpread={true}/>
+                        </div>
+                    </div>
+                </section>
+                <section className="period-form">
+                    <p className="section-label">Select a time range:</p>
+                    <div id="period-table">
+                        <DateRange onChange={this.periodOnChange.bind(this)}
+                            //label='Select a time range'
+                                   buttonBegin='Last '
+                                   startDateName='from_day' endDateName='to_day'/>
+                    </div>
+                </section>
+            </div>
+            <div id="filter-bar2" className="filters label-bar is-collapsed">
+                {selectedKeyValues.map(({key, value, text})=>(<button className="filter-option option-label">
+                    <span className="query">{`${text}:${value}`}</span>
+                </button>))}
+                {startDate && <button className="filter-option option-label">
+                    <span className="query">{startDate}</span>
+                </button>}
+                {endDate && <button className="filter-option option-label">
+                    <span className="query">{endDate}</span>
+                </button>}
+            </div>
+        </div>
+    }
+
     render() {
-        const {report_types, courses} = this.props;
-
+        const { } = this.props;
         return (
             <React.Fragment>
-                <div className="custom-section">
-                    <button className="section-button accordion-trigger"
-                            aria-expanded="${ 'false' }"
-                            aria-controls="report_section_contents"
-                            id="report_section">
-                        <p className="section-title">Select a report type</p>
-                        <span className="fa fa-chevron-down" aria-hidden="true"></span>
-                    </button>
-                    <div id="report_section_contents" className="section-content">
-                        <div className="report-type">
-                            <select name="report_type" id="report_type" ref="report_type"
-                            onChange={this.recreateCourseSelect.bind(this)}>
-                                {report_types.map(({type, title}) => {
-                                    return <option key={type} value={type}>{title}</option>
-                                })}
-                            </select>
-                        </div>
-                    </div>
-                    <div id="report_bar" className="reports label-bar is-collapsed"></div>
-                </div>
-                <div className="custom-section" id="custom_course_section">
-                    <button className="section-button accordion-trigger"
-                            aria-expanded="${ 'false' }"
-                            aria-controls="course_section_contents"
-                            id="course_section">
-                        <p className="section-title">Select course(s)</p>
-                        <span className="fa fa-chevron-down" aria-hidden="true"></span>
-                    </button>
-                    <div id="course_section_contents" className="section-content is-hidden">
-                        <div className={'course-report ' + (this.state.hideCourseReportSelect ? 'hide' : '')}>
-                            <p className="section-label">The enrollments of the courses you have been selected is:
-                                <span id="enrollment_selected">0</span>
-                                . (<span id="enrollment_limit">6</span> at most)
-                            </p>
-                            <select id="course_selected" ref="course_selected">
-                                {courses.map(({cid, course_title, course_enrollments}) => {
-                                    return <option key={cid} value={cid}>{course_title} ({course_enrollments} users)</option>
-                                })}
-                            </select>
-                        </div>
-                    </div>
-                    <div id="course_bar" className="courses label-bar is-collapsed"></div>
-                </div>
-                <div class="custom-section" id="filter-section">
-                    <button class="section-button accordion-trigger"
-                            aria-expanded="${ 'false' }"
-                            aria-controls="filter_section_contents"
-                            id="filter_section">
-                        <p class="section-title">Filter your data</p>
-                        <span class="fa fa-chevron-down" aria-hidden="true"></span>
-                    </button>
-                    <div id="filter_section_contents" class="section-content is-hidden">
-                        <section class="filter-form">
-                            <p class="section-label">Select user properties:</p>
-                          <div id="filter-form">
-                            <div class="table-filter-form">
-                                <input type="text" className="test3" onKeyDown={this.stopCollapse.bind(this)}/>
-                                <LabelValue data={this.state.filterData} onChange={this.filterOnChange.bind(this)} stopEventSpread={true} />
-                            </div>
-                          </div>
-                        </section>
-                        <section class="period-form">
-                            <p class="section-label">Select a time range:</p>
-                            <div id="period-table">
-                                <DateRange onChange={this.periodOnChange.bind(this)}
-                                           //label='Select a time range'
-                                           buttonBegin='Last '
-                                    startDateName='from_day' endDateName='to_day'/>
-                            </div>
-                        </section>
-                    </div>
-                    <div id="filter-bar" class="filters is-collapsed"></div>
-                </div>
+                {this.getReportTypeSection()}
+                {this.getCourseSection()}
+                {this.getFilterSection()}
             </React.Fragment>
         )
     }
