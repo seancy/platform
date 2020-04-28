@@ -160,10 +160,11 @@ class ReportTypeAndCourseReport extends React.Component {
                 {selectedKeyValues.map(({key, value, text})=>(<button className="filter-option option-label">
                     <span className="query">{`${text}:${value}`}</span>
                 </button>))}
-                {startDate && <button className="filter-option option-label">
+                {startDate && <button className="filter-option option-label start-date">
                     <span className="query">{startDate}</span>
                 </button>}
-                {endDate && <button className="filter-option option-label">
+                {(startDate && endDate) ? <span>-</span> :''}
+                {endDate && <button className="filter-option option-label end-date">
                     <span className="query">{endDate}</span>
                 </button>}
             </div>
