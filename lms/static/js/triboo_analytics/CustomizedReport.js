@@ -354,7 +354,7 @@ export class CustomizedReport {
         const $toggleButtonChevron = $(sectionToggleButton).children('.fa-chevron-down');
         const $contentPanel = $(document.getElementById(sectionToggleButton.getAttribute('aria-controls')));
 
-        $contentPanel.slideDown();
+        //$contentPanel.slideDown();
         $contentPanel.removeClass('is-hidden');
         $toggleButtonChevron.addClass('fa-rotate-180');
         sectionToggleButton.setAttribute('aria-expanded', 'true');
@@ -364,7 +364,7 @@ export class CustomizedReport {
         const $toggleButtonChevron = $(sectionToggleButton).children('.fa-chevron-down');
         const $contentPanel = $(document.getElementById(sectionToggleButton.getAttribute('aria-controls')));
 
-        $contentPanel.slideUp();
+        //$contentPanel.slideUp();
         $contentPanel.addClass('is-hidden');
         $toggleButtonChevron.removeClass('fa-rotate-180');
         sectionToggleButton.setAttribute('aria-expanded', 'false');
