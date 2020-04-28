@@ -668,3 +668,73 @@ msgstr ""
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "The learner's session has been changed."
 msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Choose your PDF"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "or Drag here"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Size limit: "
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This name appears in the horizontal navigation at the top of the page."
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF URL"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This URL will be automatically updated after you upload a file."
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Or you can paste here the URL you copied in Files & Uploads."
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF Download Allowed"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Display a download button for this PDF."
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document button text"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Default: Download the source document"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document URL"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Add the source document of your PDF (Powerpoint file, ...)"
+msgstr ""

@@ -30227,6 +30227,96 @@ msgstr ""
 msgid "Completed by gradebook edit"
 msgstr "Completado por la edición del libro de calificaciones"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure that you want to unenroll these learners?"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your changes have been taken into account."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner has been unenrolled."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's session has been changed."
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Choose your PDF"
+msgstr "Elija su archivo PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "or Drag here"
+msgstr "o arrastre aquí"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Size limit: "
+msgstr "Límite de tamaño: "
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "Copie la URL de Studio de un archivo PDF ya cargado en <a href={course_url} target='_blank'>Archivos y Cargas</a>"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This name appears in the horizontal navigation at the top of the page."
+msgstr "Este nombre aparece en la navegación horizontal en la parte superior de la página."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF URL"
+msgstr "URL de PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This URL will be automatically updated after you upload a file."
+msgstr "Esta URL se actualizará automáticamente después de cargar un archivo."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Or you can paste here the URL you copied in Files & Uploads."
+msgstr "O puede pegar una URL copiada aquí en Archivos y descargas."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF Download Allowed"
+msgstr "Permitir descarga de PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Display a download button for this PDF."
+msgstr "Mostrar un botón de descarga de PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document button text"
+msgstr "Texto del botón del documento fuente"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Default: Download the source document"
+msgstr "Valor predeterminado: descargue el documento fuente"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document URL"
+msgstr "URL del documento fuente"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Add the source document of your PDF (Powerpoint file, ...)"
+msgstr "Agregue el documento fuente de su PDF (archivo de PowerPoint, ...)"
+
 #: master-sitel: cms/templates/settings.html
 msgid "Áreas de desarrollo"
 msgstr "Áreas de desarrollo"
@@ -30249,3 +30339,4 @@ msgstr "Compartir"
 #: master-griky: lms/djangoapps/courseware/tabs.py
 msgid "Prove"
 msgstr "Demostrar"
+

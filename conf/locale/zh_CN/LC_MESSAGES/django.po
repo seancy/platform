@@ -28457,3 +28457,73 @@ msgstr "发展领域"
 #: master-sitel: cms/templates/settings.html
 msgid "Identify the course areas of development here."
 msgstr "在这里定义发展领域"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Choose your PDF"
+msgstr "选择您的 PDF 文件"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "or Drag here"
+msgstr "或拖动到此区域"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Size limit: "
+msgstr "大小限制："
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "复制您之前在 <a href={course_url} target='_blank'>文件 & 上传</a> 中上传的 PDF 中的 Studio URL 地址"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This name appears in the horizontal navigation at the top of the page."
+msgstr "该名字会出现在页面顶端的水平导航栏中"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF URL"
+msgstr "PDF 地址"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This URL will be automatically updated after you upload a file."
+msgstr "该地址会在您上传文件后自动更新，"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Or you can paste here the URL you copied in Files & Uploads."
+msgstr "您也可以将您在“文件 & 上传”中复制来的地址粘贴到此处"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF Download Allowed"
+msgstr "是否允许下载 PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Display a download button for this PDF."
+msgstr "为此 PDF 显示一个下载按钮"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document button text"
+msgstr "源文档按钮文本"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Default: Download the source document"
+msgstr "默认：下载源文档"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document URL"
+msgstr "源文档地址"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Add the source document of your PDF (Powerpoint file, ...)"
+msgstr "为您的 PDF 添加源文档（PPT 文件，……）"

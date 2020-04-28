@@ -30995,3 +30995,73 @@ msgstr "Axes de Développement"
 #: master-sitel: cms/templates/settings.html
 msgid "Identify the course areas of development here."
 msgstr "Identifiez les axes de développement du cours ici."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Choose your PDF"
+msgstr "Choisissez votre fichier PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "or Drag here"
+msgstr "ou glissez-déposez ici"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Size limit: "
+msgstr "Taille limite : "
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "Copiez l’URL Studio d’un fichier PDF déjà chargé dans <a href={course_url} target='_blank'>Fichiers & téléchargements</a>"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This name appears in the horizontal navigation at the top of the page."
+msgstr "Ce nom apparaît dans la navigation horizontale en haut de page."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF URL"
+msgstr "URL du PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This URL will be automatically updated after you upload a file."
+msgstr "Cette URL sera automatiquement mise à jour après upload d’un fichier."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Or you can paste here the URL you copied in Files & Uploads."
+msgstr "Ou bien, vous pouvez coller ici une URL copiée dans Fichiers & téléchargements."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF Download Allowed"
+msgstr "Autoriser le téléchargment du PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Display a download button for this PDF."
+msgstr "Afficher un bouton de téléchargement du PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document button text"
+msgstr "Texte du bouton du document source"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Default: Download the source document"
+msgstr "Défaut : Télécharger le document source"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document URL"
+msgstr "URL du document source"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Add the source document of your PDF (Powerpoint file, ...)"
+msgstr "Ajoutez le document source de votre PDF (fichier Powerpoint, …)"
