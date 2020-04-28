@@ -5,7 +5,6 @@ import { pick, get } from 'lodash'
 
 import DateRange from 'se-react-date-range'
 import LabelValue from 'sec-react-label-value'
-import CheckboxGroup from "se-react-checkbox-group"
 import {Exporter} from './Exporter'
 import {Properties} from './Properties'
 

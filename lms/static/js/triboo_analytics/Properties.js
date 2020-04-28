@@ -1,5 +1,6 @@
 import React from "react";
 import {pick} from "lodash";
+import CheckboxGroup from "se-react-checkbox-group"
 
 class Properties extends React.Component {
 
