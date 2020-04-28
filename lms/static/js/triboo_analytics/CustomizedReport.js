@@ -314,7 +314,7 @@ export class CustomizedReport {
         }
         $('#form-customized-report').serializeArray().forEach(function ({name, value}) {
             if (name == 'selected_properties') {
-                data['selected_properties'].push({name: value})
+                data['selected_properties'].push(value)
             } else {
                 data[name] = value
             }

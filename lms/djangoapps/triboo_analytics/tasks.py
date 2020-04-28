@@ -190,7 +190,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         table, _ = get_transcript_table(_task_input['report_args']['orgs'],
                                         _task_input['report_args']['user_id'],
                                         datetime.strptime(_task_input['report_args']['last_update'], datetime_format))
-    else:
+    elif _task_input['report_name'] == "summary_report_multiple":
         date_time = _task_input['report_args'].get('date_time', None)
         # customized course summary report
         if date_time:
@@ -200,6 +200,8 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
             course_filter = Q()
             for course_key in course_keys:
                 course_filter |= Q(**{'course_id': course_key})
+            if kwargs.get('date_time', None):
+                kwargs.pop('date_time')
             filters = Q(**{'created': day}) & Q(**kwargs) & course_filter
             report_cls = getattr(models, _task_input['report_args']['report_cls'])
             table_cls = getattr(tables, _task_input['report_args']['table_cls'])
@@ -220,6 +222,8 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
                              content,
                              _task_input['report_args']['username'])
     else:
+        if _task_input['report_name'] == 'summary_report_multiple':
+            _task_input['report_name'] = 'summary_report'
         upload_file_to_store(_task_input['user_id'],
                              course_id,
                              _task_input['report_name'],

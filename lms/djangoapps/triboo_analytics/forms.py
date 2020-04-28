@@ -108,8 +108,6 @@ class UserPropertiesForm(forms.Form):
     page = forms.CharField(widget=forms.HiddenInput(), required=False)
     query_string = forms.CharField(widget=forms.HiddenInput(), required=False)
     queried_field = forms.CharField(widget=forms.HiddenInput(), required=False)
-    ##from_day = forms.CharField(widget=forms.HiddenInput(), required=False)
-    ##to_day = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, data=None, choices=[], initial={}):
         super(UserPropertiesForm, self).__init__(data, initial={'selected_properties': initial})
