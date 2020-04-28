@@ -36,7 +36,8 @@
         <%include file="banner_nav.html" args="active_page='customized'" />
         <section class="analytics-wrapper customized">
             <div class="report-wrapper">
-                <form id="form-customized-report" action="${reverse('analytics_customized_export')}" method="post">
+                ##  action="${reverse('analytics_customized_export')}" method="post"
+                <form id="form-customized-report">
                     <div class="analytics-header" id="customized_header">
                         <h2 id="customized_report_title">${_("Custom Export")}</h2>
                         <p>Customize your report by configuring each section.</p>
