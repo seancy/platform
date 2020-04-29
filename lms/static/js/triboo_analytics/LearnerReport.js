@@ -31,7 +31,9 @@ export class LearnerReport extends BaseReport {
 
         return {...{
             fields: [
-                {name: 'Name', fieldName: 'Name'},
+                {name: 'Name', fieldName: 'Name', render:(value)=>{
+                    return <div dangerouslySetInnerHTML={{__html: value}} />
+                }},
                 ...propertiesFields,
 
                 {name: 'Enrollments', fieldName: 'Enrollments'},
