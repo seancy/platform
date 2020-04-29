@@ -26748,6 +26748,11 @@ msgstr ""
 msgid "The learner's session has been changed."
 msgstr ""
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's request has been accepted."
+msgstr ""
+
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Select the learners you want to enroll and click on 'enroll'. You will receive a confirmation by email."
 msgstr ""

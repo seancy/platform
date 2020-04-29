@@ -1,0 +1,156 @@
+<%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
+<%!
+  from django.utils.translation import ugettext as _
+  from django.utils.translation import ungettext
+  from django.core.urlresolvers import reverse
+  from django.template import Template, Context
+  from triboo_analytics.models import CourseStatus, format_time_spent, ANALYTICS_LIMITED_ACCESS_GROUP
+%>
+
+<%block name="pagetitle">${_("Analytics - Learner Transcript")}</%block>
+<%block name="bodyclass">view-in-analytics</%block>
+
+<%block name="head_extra">
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+</%block>
+
+<style type="text/css">
+  @media print {
+    @page {
+      size: landscape;
+    }
+    span {
+        -webkit-print-color-adjust: exact !important;
+    }
+    .finished {
+        color: #009f25 !important;
+    }
+    .failed {
+        color: #ed202f !important;
+    }
+    .in-progress {
+        color: #f8931f !important;
+    }
+    .not-started {
+        color: #7b7b7b !important;
+    }
+  }
+</style>
+
+<main id="main-pdf" aria-label="Content" tabindex="-1">
+    <div class="main-container">
+        <div class="print-page">
+            <button id="print-button" onclick="window.print()">
+                <i class="far fa-print"></i>
+                ${_("Print")}
+            </button>
+        </div>
+
+        <section class="analytics-wrapper transcript">
+          <div class="report-wrapper">
+              <div class="logo">
+                  <img class="logo-image" src="${static.url("images/logo.png")}"/>
+              </div>
+            <div class="analytics-header">
+              % if error_message:
+                <h2>${_("Learning Transcript")}</h2>
+                <div class="analytics-summary">
+                    <p class="error">${error_message}</p>
+                </div>
+              % else:
+                <h2>${_("Learning Transcript of")} ${user_profile_name}</h2>
+              % endif
+            </div>
+
+            % if learner_report_enrollments:
+              <div class="analytics-basic-wrapper">
+                  <div class="analytics-float-wrapper">
+                      <div class="analytics-basic-wrapper">
+                          <div class="analytics-widget-24 analytics-figure">
+                              <p class="figure">${learner_report_enrollments}</p>
+                              <p class="title">${ungettext("Enrollment", "Enrollments", learner_report_enrollments)}</p>
+                          </div>
+                          <div class="analytics-widget-24 analytics-figure">
+                              <p class="figure">${format_time_spent(learner_report_total_time_spent)}</p>
+                              <p class="title">${_("Time spent on the platform")}</p>
+                          </div>
+                      </div>
+                      <div class="analytics-basic-wrapper">
+                          <div class="analytics-widget-24 analytics-figure">
+                              <p class="figure">${learner_report_average_final_score}&nbsp;%</p>
+                              <p class="title">${_("Average Final Score")}</p>
+                          </div>
+                          <div class="analytics-widget-24 analytics-figure">
+                              <p class="figure">${learner_report_posts}</p>
+                              <p class="title">${ungettext("Post", "Posts", learner_report_posts)}</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="analytics-float-wrapper">
+                    <div class="analytics-widget-24 analytics-piechart">
+                        <div id="pieChart">
+                            <svg></svg>
+                        </div>
+                        <div class="legend">
+                          <p><span class="finished">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.finished])}</p>
+                          <p><span class="failed">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.failed])}</p>
+                          <p><span class="in-progress">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</p>
+                          <p><span class="not-started">&#9679;</span> ${_(CourseStatus.verbose_names[CourseStatus.not_started])}</p>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+              <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
+              ${Template(tpl).render(Context({'learner_course_table': learner_course_table, 'request': request}))}
+
+              <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
+            % endif
+          </div>
+        </section>
+    </div>
+</main>
+
+% if learner_report_enrollments:
+  <!-- load the d3.js library -->
+  <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+  <script type="text/javascript" src="${static.url('js/triboo_analytics/charts.js')}"></script>
+
+
+  <!-- the script -->
+  <script type="text/javascript">
+    var pieChartData = [
+    {
+      color       : 'green',
+      value       : ${learner_report_finished},
+      percent     : ${learner_report_finished} / ${learner_report_enrollments}
+    },
+    {
+      color       : 'red',
+      value       : ${learner_report_failed},
+      percent     : ${learner_report_failed} / ${learner_report_enrollments}
+    },
+    {
+      color       : 'orange',
+      value       : ${learner_report_in_progress},
+      percent     : ${learner_report_in_progress} / ${learner_report_enrollments}
+    },
+    {
+      color       : 'gray',
+      value       : ${learner_report_not_started},
+      percent     : ${learner_report_not_started} / ${learner_report_enrollments}
+    }
+    ];
+
+    drawPieChart('pieChart', pieChartData);
+
+    $(window).on("load", function () {
+        $("header").hide();
+        $(".table-export").hide();
+        $("#report-downloads").hide();
+        $(".wrapper-footer").hide();
+    });
+  </script>
+% endif

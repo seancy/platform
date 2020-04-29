@@ -21,3 +21,18 @@ msgstr "Áreas de desarrollo"
 #: master-sitel: cms/templates/settings.html
 msgid "Identify the course areas of development here."
 msgstr "Identifique las áreas de desarrollo del curso aquí."
+
+#: master-griky: cms/templates/edit-tabs.html
+#: master-griky: lms/djangoapps/courseware/tabs.py
+msgid "Learn"
+msgstr "Aprender"
+
+#: master-griky: cms/templates/edit-tabs.html
+#: master-griky: lms/djangoapps/courseware/tabs.py
+msgid "Share"
+msgstr "Compartir"
+
+#: master-griky: cms/templates/edit-tabs.html
+#: master-griky: lms/djangoapps/courseware/tabs.py
+msgid "Prove"
+msgstr "Demostrar"
