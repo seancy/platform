@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^transcript/{}/process-waiver-request/(?P<waiver_id>[0-9]+)'.format(settings.COURSE_ID_PATTERN),
         views.process_waiver_request, name='process_waiver_request'),
 
-    url(r'^learner_transcript/(?P<user_id>\w+)$', views.transcript_view, name='analytics_learner_transcript'),
+    url(r'^learner_transcript/(?P<user_id>\w+)/$', views.transcript_view, name='analytics_learner_transcript'),
     url(r'^learner_transcript/(?P<user_id>\w+)/export/$', views.transcript_export_table, name='analytics_transcript_export'),
 
     url(r'^global/$', views.microsite_view, name='analytics_microsite'),
