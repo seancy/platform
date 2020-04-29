@@ -21,7 +21,7 @@ class Properties extends React.Component {
     render() {
         return (
             <div className="properties-wrapper">
-                <h4>{gettext('Select display properties')}</h4>
+                <h4>{gettext('Select the user properties to display')}</h4>
                 <CheckboxGroup ref={this.myRef} {...pick(this.props, ['data', 'checkedList'])}
                                onChange={this.handleChange.bind(this)}/>
             </div>

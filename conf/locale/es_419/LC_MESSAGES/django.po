@@ -10672,7 +10672,7 @@ msgstr "Campo"
 #: lms/templates/triboo_analytics/course.html:147
 #: lms/templates/triboo_analytics/ilt.html:57
 #: lms/templates/triboo_analytics/learner.html:43
-msgid "Select the user properties you want to display"
+msgid "Select the user properties to display"
 msgstr "Seleccione la biblioteca desde la que desea sacar el contenido."
 
 #: lms/djangoapps/triboo_analytics/models.py:1138

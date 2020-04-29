@@ -83,7 +83,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     aria-expanded="${ 'false' }"
                     aria-controls="report_section_contents"
                     id="report_section">
-                <p className="section-title">Select a report type</p>
+                <p className="section-title">Select a report</p>
                 <span className="fa fa-chevron-down" aria-hidden="true"></span>
             </button>
             <div id="report_section_contents" className="section-content">
@@ -138,12 +138,11 @@ class ReportTypeAndCourseReport extends React.Component {
                     aria-expanded="${ 'false' }"
                     aria-controls="filter_section_contents"
                     id="filter_section">
-                <p className="section-title">Filter your data</p>
+                <p className="section-title">Filter the data</p>
                 <span className="fa fa-chevron-down" aria-hidden="true"></span>
             </button>
             <div id="filter_section_contents" className="section-content is-hidden">
                 <section className="filter-form">
-                    <p className="section-label">Select user properties:</p>
                     <div id="filter-form">
                         <div className="table-filter-form">
                             <LabelValue data={this.state.filterData} onChange={this.filterOnChange.bind(this)}
