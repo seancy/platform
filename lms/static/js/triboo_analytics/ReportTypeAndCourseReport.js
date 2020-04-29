@@ -46,6 +46,15 @@ class ReportTypeAndCourseReport extends React.Component {
             this.setState({
                 hideCourseReportSelect: false
             })
+            if (courseReportType == 'single') {
+                this.setState({
+                    hideCourseReportInfo: true
+                })
+            } else {
+                this.setState({
+                    hideCourseReportInfo: false
+                })
+            }
         } else {
             this.setState({
                 hideCourseReportSelect: true
@@ -102,9 +111,10 @@ class ReportTypeAndCourseReport extends React.Component {
             </button>
             <div id="course_section_contents" className="section-content is-hidden">
                 <div className={'course-report ' + (this.state.hideCourseReportSelect ? 'hide' : '')}>
-                    <p className="section-label">The enrollments of the courses you have been selected is:
+                    <p className={"section-label " + (this.state.hideCourseReportInfo ? 'hide' : '')}>
+                        The enrollments of the courses you have been selected is:
                         <span id="enrollment_selected">0</span>
-                        . (<span id="enrollment_limit">6</span> at most)
+                        . (<span id="enrollment_limit">300000</span> at most)
                     </p>
                     <select id="course_selected" ref="course_selected">
                         {courses.map(({cid, course_title, course_enrollments}) => {

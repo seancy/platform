@@ -161,61 +161,6 @@ class UnsupportedExportFormatError(Exception):
     pass
 
 
-def get_query_dict(request):
-    query_dict = collections.OrderedDict()
-    if request.method == 'POST':
-        data = request.POST.copy()
-        for key, value in data.items():
-            if 'queried_field_' in key or 'query_string_' in key:
-                query_dict[key] = value
-        return query_dict
-    data = request.GET.copy()
-
-    if data.has_key('clear'):
-        return query_dict
-
-    if data.has_key('queried_field'):
-        for key, value in data.items():
-            if 'queried_field_' in key or 'query_string_' in key:
-                query_dict[key] = value
-
-        changed = 0
-        # New query will not be added to old queries. One in old queries will be deleted or updated
-        current_string, current_field = data['query_string'], data['queried_field']
-        for k, v in query_dict.items():
-            if v == current_field:
-                _, i = k.rsplit('_', 1)
-                corresponding_str_key = 'query_string_' + i
-                if data.has_key('delete'):
-                    del query_dict[k]
-                    del query_dict[corresponding_str_key]
-                else:
-                    query_dict[corresponding_str_key] = data['query_string']
-                changed = 1
-                break
-
-        # New query will be added to old queries
-        if changed == 0:
-            query_dict.clear()
-            if data.has_key('queried_field_1'):
-                for key, value in data.items():
-                    if 'queried_field_' in key:
-                        _, i = key.rsplit('_', 1)
-                        new_key = 'queried_field_' + str(int(i) + 1)
-                        new_string_key = 'query_string_' + str(int(i) + 1)
-                        new_string_value = data['query_string_' + i]
-                        query_dict[new_key] = value
-                        query_dict[new_string_key] = new_string_value
-            else:
-                for key, value in data.items():
-                    if 'queried_field_' in key or 'query_string_' in key:
-                        query_dict[key] = value
-            query_dict['queried_field_1'] = data['queried_field']
-            query_dict['query_string_1'] = data['query_string']
-
-    return query_dict
-
-
 def new_request_copy(request_copy):
     if request_copy.has_key('clear') or request_copy.has_key('delete'):
         for k in request_copy.keys():
@@ -283,7 +228,6 @@ def get_kwargs(data):
                 selected_properties.append("user_%s" % prop)
     exclude = set(all_properties) - set(selected_properties)
 
-
     return kwargs, exclude
 
 
@@ -325,11 +269,65 @@ def get_ilt_period_kwargs(data, orgs, as_string=False):
     from_day = data.get('from_day')
     to_day = data.get('to_day')
     if from_day and to_day:
-        from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
-        to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
-        kwargs['start__range'] = (from_date, to_date)
+        kwargs['ilt_period_range'] = json.dumps((from_day, to_day))
 
     return kwargs, exclude
+
+
+# DEPRECATED
+def get_query_dict(request):
+    query_dict = collections.OrderedDict()
+    if request.method == 'POST':
+        data = request.POST.copy()
+        for key, value in data.items():
+            if 'queried_field_' in key or 'query_string_' in key:
+                query_dict[key] = value
+        return query_dict
+    data = request.GET.copy()
+
+    if data.has_key('clear'):
+        return query_dict
+
+    if data.has_key('queried_field'):
+        for key, value in data.items():
+            if 'queried_field_' in key or 'query_string_' in key:
+                query_dict[key] = value
+
+        changed = 0
+        # New query will not be added to old queries. One in old queries will be deleted or updated
+        current_string, current_field = data['query_string'], data['queried_field']
+        for k, v in query_dict.items():
+            if v == current_field:
+                _, i = k.rsplit('_', 1)
+                corresponding_str_key = 'query_string_' + i
+                if data.has_key('delete'):
+                    del query_dict[k]
+                    del query_dict[corresponding_str_key]
+                else:
+                    query_dict[corresponding_str_key] = data['query_string']
+                changed = 1
+                break
+
+        # New query will be added to old queries
+        if changed == 0:
+            query_dict.clear()
+            if data.has_key('queried_field_1'):
+                for key, value in data.items():
+                    if 'queried_field_' in key:
+                        _, i = key.rsplit('_', 1)
+                        new_key = 'queried_field_' + str(int(i) + 1)
+                        new_string_key = 'query_string_' + str(int(i) + 1)
+                        new_string_value = data['query_string_' + i]
+                        query_dict[new_key] = value
+                        query_dict[new_string_key] = new_string_value
+            else:
+                for key, value in data.items():
+                    if 'queried_field_' in key or 'query_string_' in key:
+                        query_dict[key] = value
+            query_dict['queried_field_1'] = data['queried_field']
+            query_dict['query_string_1'] = data['query_string']
+
+    return query_dict
 
 
 # DEPRECATED
@@ -391,7 +389,7 @@ def get_filter_kwargs_with_table_exclude(request):
         else:
             exclude = data['excluded_properties']
 
-    return filter_form, user_properties_form, time_period_form, kwargs, exclude, query_dict
+    return filter_form, user_properties_form, kwargs, exclude, query_dict
 
 
 # DEPRECATED
@@ -518,6 +516,9 @@ def get_ilt_global_table_data(filter_kwargs):
     if filter_kwargs.pop('invalid', False):
         return []
 
+    if filter_kwargs.get('ilt_period_range', False):
+        filter_kwargs.pop('ilt_period_range')
+
     reports = IltSession.objects.filter(**filter_kwargs)
     return IltTable(reports)
 
@@ -530,9 +531,13 @@ def get_ilt_learner_table_data(filter_kwargs, exclude):
     sessions = IltSession.objects.filter(org__in=org_filter)
     module_ids = sessions.values_list('ilt_module_id', flat=True)
 
-    period_filter = filter_kwargs.pop('start__range', None)
-    if period_filter:
-        filter_kwargs['ilt_session__start__range'] = period_filter
+    if filter_kwargs.get('ilt_period_range', None):
+        from_day, to_day = json.loads(filter_kwargs.pop('ilt_period_range', None))
+        if from_day and to_day:
+            from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
+            to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
+            period_filter = (from_date, to_date)
+            filter_kwargs['ilt_session__start__range'] = period_filter
 
     reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
     return IltLearnerTable(reports, exclude=exclude)
@@ -1571,6 +1576,82 @@ def ilt_export_table(request):
         return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
 
 
+def get_customized_kwargs(request_dict):
+    kwargs = {}
+    query_tuples = request_dict.get('query_tuples')
+    for queried_string, field in query_tuples:
+        if queried_string:
+            prop = field.split('_', 1)[1]
+            db_prefix = "user__"
+            if prop not in ['email', 'username', 'date_joined']:
+                db_prefix += "profile__"
+            queried_field = db_prefix + prop
+
+            if queried_field == "user__profile__country":
+                queried_country = queried_string.lower()
+                country_code_by_name = {name.lower(): code for code, name in list(countries)}
+                country_codes = []
+                for country_name in country_code_by_name.keys():
+                    if queried_country in country_name:
+                        country_codes.append(country_code_by_name[country_name])
+                if country_codes:
+                    kwargs['user__profile__country__in'] = country_codes
+                else:
+                    kwargs['invalid'] = True
+            elif queried_field == "user__profile__lt_gdpr":
+                queried_str = queried_string.lower()
+                if queried_str == "true":
+                    kwargs[queried_field] = True
+                elif queried_str == "false":
+                    kwargs[queried_field] = False
+                else:
+                    kwargs['invalid'] = True
+            else:
+                kwargs[queried_field + '__icontains'] = queried_string
+
+    all_properties = ["user_%s" % prop for prop in AVAILABLE_CHOICES.keys()]
+    config_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                        settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+    selected_properties = request_dict.get('selected_properties')
+    if selected_properties:
+        selected_properties += ['user_name']
+    else:
+        selected_properties = ['user_name']
+        for prop in AVAILABLE_CHOICES.keys():
+            if prop in config_properties.keys() and config_properties[prop] == "default":
+                selected_properties.append("user_%s" % prop)
+    exclude = set(all_properties) - set(selected_properties)
+
+    return kwargs, exclude
+
+
+def get_customized_period_kwargs(request_dict, kwargs, course_id=None, as_string=False, with_period_start=False):
+    if course_id:
+        kwargs['course_id'] = "%s" % course_id if as_string else course_id
+
+    from_day = request_dict.get('from_day')
+    to_day = request_dict.get('to_day')
+    if from_day and to_day:
+        from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
+        to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
+        last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
+        if last_reportlog:
+            last_analytics_success = last_reportlog.created
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date,
+                                                                    to_date,
+                                                                    course_id)
+            kwargs.update({
+                'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
+                'user_id__in': user_ids
+            })
+            if with_period_start:
+                period_start_reportlog = ReportLog.get_latest(to_date=from_date)
+                if period_start_reportlog:
+                    period_start = period_start_reportlog.created
+                    kwargs['period_start'] = day2str(period_start) if as_string else period_start
+
+    return kwargs
+
 @transaction.non_atomic_requests
 @analytics_on
 @analytics_member_required
@@ -1582,15 +1663,24 @@ def customized_export_table(request):
     if not orgs:
         return HttpResponseNotFound()
 
-    report_type = request.POST.get('report_type', None)
-    courses_selected = request.POST.get('courses_selected', None)
+    body_data = request.body.decode('utf-8')
+    request_dict = json.loads(body_data)
+    report_type = request_dict.get('report_type', 'course_summary')
+    courses_selected = request_dict.get('courses_selected', None)
+    last_reportlog = ReportLog.get_latest()
+    if not last_reportlog:
+        return None
 
     if report_type == 'course_summary':
         last_reportlog = ReportLog.get_latest()
         if last_reportlog:
-            last_update = last_reportlog.created
+            last_update = last_reportlog.course
             date_time = day2str(last_update)
-            filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+            filter_kwargs, exclude = get_customized_kwargs(request_dict)
+            filter_kwargs = get_customized_period_kwargs(request_dict,
+                                                         filter_kwargs,
+                                                         with_period_start=False,
+                                                         as_string=True)
             report_args = {
                 'report_cls': LearnerCourseDailyReport.__name__,
                 'filter_kwargs': filter_kwargs,
@@ -1599,14 +1689,122 @@ def customized_export_table(request):
                 'table_cls': CustomizedCourseTable.__name__,
                 'exclude': list(exclude)
             }
-            return _export_table(request, CourseKeyField.Empty, 'summary_report', report_args)
+            return _export_table(request, CourseKeyField.Empty, 'summary_report_multiple', report_args)
 
     elif report_type in ['course_progress', 'course_time_spent']:
         try:
             course_key = CourseKey.from_string(courses_selected)
         except InvalidKeyError:
             return JsonResponseBadRequest({"message": _("Invalid course id.")})
-        unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
+
+        last_update = last_reportlog.course
+        with_period_start = True if report_type == "course_time_spent" else False
+        filter_kwargs, exclude = get_customized_kwargs(request_dict)
+        filter_kwargs = get_customized_period_kwargs(request_dict,
+                                                     filter_kwargs,
+                                                     course_id=course_key,
+                                                     with_period_start=with_period_start,
+                                                     as_string=True)
+        report_args = {
+            'filter_kwargs': filter_kwargs,
+            'exclude': list(exclude)
+        }
+        if report_type == "course_progress":
+            return _export_table(request, course_key, 'progress_report', report_args)
+        elif report_type == "course_time_spent":
+            return _export_table(request, course_key, 'time_spent_report', report_args)
+
+    elif report_type == 'learner':
+        last_update = last_reportlog.learner
+        learner_report_org = orgs[0]
+        if len(orgs) > 1:
+            learner_report_org = get_combined_org(orgs)
+        filter_kwargs, exclude = get_customized_kwargs(request_dict)
+        filter_kwargs = get_customized_period_kwargs(request_dict,
+                                                     filter_kwargs,
+                                                     with_period_start=True,
+                                                     as_string=True)
+        filter_kwargs['org'] = learner_report_org
+        if 'date_time' not in filter_kwargs.keys():
+            filter_kwargs['date_time'] = day2str(last_update)
+        report_args = {
+            'report_cls': LearnerDailyReport.__name__,
+            'filter_kwargs': filter_kwargs,
+            'table_cls': LearnerDailyTable.__name__,
+            'exclude': list(exclude)
+        }
+        return _export_table(request, CourseKeyField.Empty, 'learner_report', report_args)
+
+    elif report_type in ['ilt_global', 'ilt_learner']:
+        filter_kwargs, exclude = get_customized_kwargs(request_dict)
+        filter_kwargs['org__in'] = orgs
+        from_day = request_dict.get('from_day')
+        to_day = request_dict.get('to_day')
+        if from_day and to_day:
+            filter_kwargs['ilt_period_range'] = json.dumps((from_day, to_day))
+        report_args = {
+            'filter_kwargs': filter_kwargs,
+            'exclude': list(exclude)
+        }
+
+        if report_type == "ilt_global":
+            return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
+
+        elif report_type == "ilt_learner":
+            return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
+
+
+@transaction.non_atomic_requests
+@analytics_on
+@analytics_member_required
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def customized_export_table_new(request):
+
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+
+    body_data = request.body.decode('utf-8')
+    data = json.loads(body_data)
+    report_type = data.get('report_type', 'course_summary')
+    courses_selected = data.get('courses_selected', None)
+    last_reportlog = ReportLog.get_latest()
+    if not last_reportlog:
+        return None
+
+    if report_type == 'course_summary':
+        last_update = last_reportlog.course
+        date_time = day2str(last_update)
+        filter_kwargs, exclude = get_period_kwargs(data,
+                                                   course_id=None,
+                                                   with_period_start=False,
+                                                   as_string=True)
+        report_args = {
+            'report_cls': LearnerCourseDailyReport.__name__,
+            'filter_kwargs': filter_kwargs,
+            'courses_selected': courses_selected,
+            'date_time': date_time,
+            'table_cls': CustomizedCourseTable.__name__,
+            'exclude': list(exclude)
+        }
+        return _export_table(request, CourseKeyField.Empty, 'summary_report_multiple', report_args)
+
+    elif report_type in ['course_progress', 'course_time_spent']:
+        try:
+            course_key = CourseKey.from_string(courses_selected)
+        except InvalidKeyError:
+            return JsonResponseBadRequest({"message": _("Invalid course id.")})
+
+        with_period_start = True if report_type == "course_time_spent" else False
+        last_update = last_reportlog.course
+        filter_kwargs, exclude = get_period_kwargs(data,
+                                                   course_id=course_key,
+                                                   with_period_start=with_period_start,
+                                                   as_string=True)
+        if 'date_time' not in filter_kwargs.keys():
+            filter_kwargs['date_time'] = day2str(last_update)
+
         report_args = {
             'filter_kwargs': filter_kwargs,
             'exclude': list(exclude)
@@ -1631,22 +1829,23 @@ def customized_export_table(request):
         return learner_export_table(request)
 
     elif report_type in ['ilt_global', 'ilt_learner']:
-        if report_type == "ilt_global":
-            unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request, as_string=True)
-            report_args = {
-                'orgs': orgs,
-                'filter_kwargs': filter_kwargs
-            }
-            return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
-
-        # report_type == "ilt_learner"
-        unused_filter_form, unused_prop_form, unused_period_form, filter_kwargs, exclude, query_dict = get_ilt_table_filters(request, as_string=True)
-        report_args = {
-            'orgs': orgs,
-            'filter_kwargs': filter_kwargs,
-            'exclude': list(exclude)
-        }
-        return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
+        # if report_type == "ilt_global":
+        #     filter_kwargs, exclude = get_ilt_period_kwargs(data, orgs, as_string=True)
+        #     report_args = {
+        #         'orgs': orgs,
+        #         'filter_kwargs': filter_kwargs
+        #     }
+        #     return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
+        #
+        # # report_type == "ilt_learner"
+        # filter_kwargs, exclude = get_ilt_period_kwargs(data, orgs, as_string=True)
+        # report_args = {
+        #     'orgs': orgs,
+        #     'filter_kwargs': filter_kwargs,
+        #     'exclude': list(exclude)
+        # }
+        # return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
+        return ilt_export_table(request)
 
 
 @transaction.non_atomic_requests
