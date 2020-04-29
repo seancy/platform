@@ -322,7 +322,6 @@ class CourseGradeFactory(object):
                                                   trophy['section_url'])
                 badge = Badge.objects.filter(course_id=course_key, badge_hash=badge_hash).first()
                 if trophy['result'] >= trophy['threshold']:
-                    badge = Badge.objects.filter(course_id=course_key, badge_hash=badge_hash).first()
                     if not badge:
                         badge = Badge.objects.update_or_create(course_id=course_key,
                                                        badge_hash=badge_hash,
