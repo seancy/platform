@@ -31,7 +31,9 @@ export class LearnerReport extends BaseReport {
 
         return {...{
             fields: [
-                {name: 'Name', fieldName: 'Name'},
+                {name: 'Name', fieldName: 'Name', render:(value,item)=>{
+                        return <a href={`/analytics/learner_transcript/${item.ID}`}>{value}</a>
+                }},
                 ...propertiesFields,
 
                 {name: 'Enrollments', fieldName: 'Enrollments'},
