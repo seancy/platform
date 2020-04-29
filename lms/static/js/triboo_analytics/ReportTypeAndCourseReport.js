@@ -128,6 +128,11 @@ class ReportTypeAndCourseReport extends React.Component {
     }
     getFilterSection(){
         const {selectedKeyValues,startDate, endDate}=this.state
+        const stopEvent = e => {
+            e.stopPropagation();
+            e.preventDefault();
+            return false
+        }
         return <div className="custom-section" id="filter-section">
             <button className="section-button accordion-trigger"
                     aria-expanded="${ 'false' }"
@@ -157,14 +162,14 @@ class ReportTypeAndCourseReport extends React.Component {
                 </section>
             </div>
             <div id="filter-bar2" className="filters label-bar is-collapsed">
-                {selectedKeyValues.map(({key, value, text})=>(<button className="filter-option option-label">
+                {selectedKeyValues.map(({key, value, text})=>(<button className="filter-option option-label" onClick={stopEvent}>
                     <span className="query">{`${text}:${value}`}</span>
                 </button>))}
-                {startDate && <button className="filter-option option-label start-date">
+                {startDate && <button className="filter-option option-label start-date" onClick={stopEvent}>
                     <span className="query">{startDate}</span>
                 </button>}
                 {(startDate && endDate) ? <span>-</span> :''}
-                {endDate && <button className="filter-option option-label end-date">
+                {endDate && <button className="filter-option option-label end-date" onClick={stopEvent}>
                     <span className="query">{endDate}</span>
                 </button>}
             </div>
