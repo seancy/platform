@@ -138,7 +138,7 @@ for overview in overviews:
                                 block_keys = badges[badge_hash]['sections']
                                 success_date = BlockCompletion.objects.filter(course_key=overview.id,
                                                                user_id=enrollment.user.id,
-                                                               block_key__in=block_keys).aggregate(Max('modified'))
+                                                               block_key__in=block_keys).aggregate(Max('modified')).get('modified__max')
                                 if success_date:
                                     LearnerBadgeSuccess.objects.update_or_create(user=user, badge=badge, defaults={'success_date': success_date})
 
