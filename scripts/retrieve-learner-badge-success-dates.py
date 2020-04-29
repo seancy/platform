@@ -80,7 +80,7 @@ def get_completable_children(outline, section):
 
 
 try:
-    user = User.objects.get(username="Laetitia")
+    user = User.objects.get(username="LaetitiaP")
 except User.DoesNotExist:
     user = User.objects.get(username="edx")
 course_grade_factory = CourseGradeFactory()
