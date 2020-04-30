@@ -39,7 +39,7 @@
                 ##  action="${reverse('analytics_customized_export')}" method="post"
                 <form id="form-customized-report">
                     <div class="analytics-header" id="customized_header">
-                        <h2 id="customized_report_title">${_("Customized Export")}</h2>
+                        <h2 id="customized_report_title">${_("Customized Report")}</h2>
                         <p>Customize your report by configuring each section.</p>
                     </div>
                     <div class="report_type_and_course_selected"><!--Slot will be filled by CustomizedReport.js--></div>
@@ -49,8 +49,9 @@
                                 report_type:'${_("Please select a report:")}',
                                 course:'${_("Please select course(s):")}'
                             },
-                            'report_types':${json.dumps([{'type': item[0], 'title':item[1], 'courseReportType':item[2]} for item in report_types]) | n},
-                            'courses':${json.dumps([{'cid': item[0], 'course_title':item[1], 'course_enrollments':item[2]} for item in courses]) | n}
+                            'limit':'300000',
+                            'report_types':${json.dumps([{'value': item[0], 'text':item[1], 'courseReportType':item[2]} for item in report_types]) | n},
+                            'courses':${json.dumps([{'value': item[0], 'text':item[1], 'course_enrollments':item[2]} for item in courses]) | n}
                         });
                     </%static:webpack>
                     <div class="custom-section table-user-properties-form-customized">

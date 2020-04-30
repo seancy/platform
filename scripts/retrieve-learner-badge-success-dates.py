@@ -79,7 +79,10 @@ def get_completable_children(outline, section):
                 return completable_children
 
 
-user = User.objects.get(username="edx")
+try:
+    user = User.objects.get(username="LaetitiaP")
+except User.DoesNotExist:
+    user = User.objects.get(username="edx")
 course_grade_factory = CourseGradeFactory()
 yesterday = timezone.now() + timezone.timedelta(days=-1)
 overviews = CourseOverview.objects.filter(start__lte=yesterday).only('id')
@@ -108,7 +111,7 @@ for overview in overviews:
 
                     badge = Badge.objects.filter(course_id=overview.id, badge_hash=badge_hash).first()
                     if not badge:
-                        badge = Badge.objects.update_or_create(course_id=overview.id,
+                        badge, _ = Badge.objects.update_or_create(course_id=overview.id,
                                                                badge_hash=badge_hash,
                                                                defaults={'order': i,
                                                                          'grading_rule': section.format,
@@ -135,7 +138,7 @@ for overview in overviews:
                                 block_keys = badges[badge_hash]['sections']
                                 success_date = BlockCompletion.objects.filter(course_key=overview.id,
                                                                user_id=enrollment.user.id,
-                                                               block_key__in=block_keys).aggregate(Max('modified'))
+                                                               block_key__in=block_keys).aggregate(Max('modified')).get('modified__max')
                                 if success_date:
                                     LearnerBadgeSuccess.objects.update_or_create(user=user, badge=badge, defaults={'success_date': success_date})
 

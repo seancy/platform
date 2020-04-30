@@ -47,7 +47,7 @@ export class CustomizedReport {
                 LearningTribes.dialog.show(json.message);
             }, 200)
         })
-        this.$reportType.on('change', () => {
+        /*this.$reportType.on('change', () => {
             let report_text = this.$reportType.find("option:selected").text()
             let report_id = "tag_" + report_text.replace(/\ /g, '_')
             $('#report_bar').empty()
@@ -57,7 +57,7 @@ export class CustomizedReport {
             this.goButtonStatusUpdate()
         })
         this.$courseReport.on('change', () => {
-            let report_val = this.$reportType.find("option:selected").val()
+            let report_val = this.$reportType.val()
             if (report_val == 'course_summary') {
                 let vals = []
                 let texts = []
@@ -115,7 +115,7 @@ export class CustomizedReport {
                 })
             }
             $('#enrollment_selected')[0].innerText = current_num
-        })
+        })*/
         $('#table-export-selection').delegate('label', 'click', () => {
             this.goButtonStatusUpdate()
         })
