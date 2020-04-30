@@ -94,7 +94,7 @@ export class Toolbar extends React.Component {
 
         return [
             {name:'filters', text: gettext('Filters'), icon: 'fa-search', active: false, component: LabelValue, props:{
-                data:propertyData, selectedList:selectedFilterItems,
+                data:propertyData, selectedList:selectedFilterItems,useFontAwesome:true,
                 onChange:(selectedFilterItems)=>this.setState({selectedFilterItems}, this.fireOnChange)
             }},
             {name:'properties', text: gettext('Properties'), icon: 'fa-sliders-h', active: false, component: Properties, props:{
