@@ -23,12 +23,13 @@ class ReportTypeAndCourseReport extends React.Component {
     }
 
     componentDidMount() {
+        const nameList = [{text: 'Name', value: 'user_name'}]
         fetch('/analytics/common/get_properties/json/')
             .then(response=>{
                 return response.json()
             })
             .then(data=>{
-                this.setState({filterData: data.list})
+                this.setState({filterData: [...nameList, ...data.list]})
             })
     }
 
