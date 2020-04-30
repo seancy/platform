@@ -274,137 +274,6 @@ def get_ilt_period_kwargs(data, orgs, as_string=False):
     return kwargs, exclude
 
 
-# DEPRECATED
-def get_query_dict(request):
-    query_dict = collections.OrderedDict()
-    if request.method == 'POST':
-        data = request.POST.copy()
-        for key, value in data.items():
-            if 'queried_field_' in key or 'query_string_' in key:
-                query_dict[key] = value
-        return query_dict
-    data = request.GET.copy()
-
-    if data.has_key('clear'):
-        return query_dict
-
-    if data.has_key('queried_field'):
-        for key, value in data.items():
-            if 'queried_field_' in key or 'query_string_' in key:
-                query_dict[key] = value
-
-        changed = 0
-        # New query will not be added to old queries. One in old queries will be deleted or updated
-        current_string, current_field = data['query_string'], data['queried_field']
-        for k, v in query_dict.items():
-            if v == current_field:
-                _, i = k.rsplit('_', 1)
-                corresponding_str_key = 'query_string_' + i
-                if data.has_key('delete'):
-                    del query_dict[k]
-                    del query_dict[corresponding_str_key]
-                else:
-                    query_dict[corresponding_str_key] = data['query_string']
-                changed = 1
-                break
-
-        # New query will be added to old queries
-        if changed == 0:
-            query_dict.clear()
-            if data.has_key('queried_field_1'):
-                for key, value in data.items():
-                    if 'queried_field_' in key:
-                        _, i = key.rsplit('_', 1)
-                        new_key = 'queried_field_' + str(int(i) + 1)
-                        new_string_key = 'query_string_' + str(int(i) + 1)
-                        new_string_value = data['query_string_' + i]
-                        query_dict[new_key] = value
-                        query_dict[new_string_key] = new_string_value
-            else:
-                for key, value in data.items():
-                    if 'queried_field_' in key or 'query_string_' in key:
-                        query_dict[key] = value
-            query_dict['queried_field_1'] = data['queried_field']
-            query_dict['query_string_1'] = data['query_string']
-
-    return query_dict
-
-
-# DEPRECATED
-def get_filter_kwargs_with_table_exclude(request):
-    kwargs = {}
-    
-    user_properties_helper = UserPropertiesHelper()
-
-    request_copy = request.GET.copy()
-    request_copy = new_request_copy(request_copy)
-    query_dict = get_query_dict(request)
-    if request.method == "POST":
-        request_copy = request.POST.copy()
-        query_dict = request_copy
-    filter_form = TableFilterForm(request_copy, user_properties_helper.get_possible_choices())
-    if filter_form.is_valid():
-        query_tuples = []
-        for key, value in query_dict.items():
-            if 'query_string' in key:
-                suffix = '_' + key.split('_')[-1] if 'query_string_' in key else ''
-                query_field_key = 'queried_field' + suffix
-                query_tuples.append((value, query_dict[query_field_key]))
-
-        for query_string, queried_field in query_tuples:
-            if query_string:
-                if queried_field == "user__profile__country":
-                    queried_country = query_string.lower()
-                    country_code_by_name = {name.lower(): code for code, name in list(countries)}
-                    country_codes = []
-                    for country_name in country_code_by_name.keys():
-                        if queried_country in country_name:
-                            country_codes.append(country_code_by_name[country_name])
-                    if country_codes:
-                        kwargs['user__profile__country__in'] = country_codes
-                    else:
-                        kwargs['invalid'] = True
-                elif queried_field == "user__profile__lt_gdpr":
-                    queried_str = query_string.lower()
-                    if queried_str == "true":
-                        kwargs[queried_field] = True
-                    elif queried_str == "false":
-                        kwargs[queried_field] = False
-                    else:
-                        kwargs['invalid'] = True
-                else:
-                    kwargs[queried_field + '__icontains'] = query_string
-
-    # time_period_form = TimePeriodForm(request_copy)
-
-    exclude = []
-    user_properties_form = UserPropertiesForm(request_copy,
-                                              user_properties_helper.get_possible_choices(False),
-                                              user_properties_helper.get_initial_choices())
-    if user_properties_form.is_valid():
-        data = user_properties_form.cleaned_data
-        if 'user_name' in data['excluded_properties']:
-            new_excluded_properties = list(set(data['excluded_properties']) - {'user_name'})
-            exclude = new_excluded_properties
-        else:
-            exclude = data['excluded_properties']
-
-    return filter_form, user_properties_form, kwargs, exclude, query_dict
-
-
-# DEPRECATED
-def get_ilt_table_filters(request, as_string=False):
-    filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict = get_filter_kwargs_with_table_exclude(request)
-    if time_period_form.period:
-        if as_string:
-            from_date = dt2str(time_period_form.period[0])
-            to_date = dt2str(time_period_form.period[1])
-            filter_kwargs['start__range'] = json.dumps((from_date, to_date))
-        else:
-            filter_kwargs['start__range'] = time_period_form.period
-    return filter_form, user_properties_form, time_period_form, filter_kwargs, exclude, query_dict
-
-
 def get_transcript_table(orgs, user_id, last_update):
     queryset = LearnerCourseDailyReport.objects.none()
     for org in orgs:
@@ -449,19 +318,6 @@ def get_customized_table(report_cls, filter_kwargs, filters, table_cls, exclude)
     row_count = querysets.count()
     table = table_cls(querysets, exclude=exclude)
     return table, row_count
-
-
-def get_query_triples(query_dict):
-    query_triples = []
-    for key, value in query_dict.items():
-        if 'query_string' in key and value:
-            suffix = '_' + key.split('_')[-1] if 'query_string_' in key else ''
-            query_field_key = 'queried_field' + suffix
-            value_key = query_dict[query_field_key]
-            value_choice_key = value_key.split('__')[-1]
-            field_name = AVAILABLE_CHOICES[value_choice_key]
-            query_triples.append((value, field_name, value_key))
-    return query_triples
 
 
 def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=False, html_links=False):
@@ -1097,12 +953,6 @@ def microsite_view(request):
             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'global'}),
         }
     )
-
-
-def get_filters_data(db=True):
-    user_properties_helper = UserPropertiesHelper()
-    filters_data = user_properties_helper.get_possible_choices(db)
-    return filters_data
 
 
 def get_all_courses(request, orgs):
@@ -1956,46 +1806,6 @@ def export_tables(request):
         return transcript_export_table(request, user_id)
 
 
-def get_total_dict(data, report):
-    total_dict = collections.OrderedDict()
-    summary_columns = []
-    if report == "summary_report":
-        summary_columns = ['Progress', 'Current Score', 'Badges', 'Posts', 'Total Time Spent']
-    elif report == "learner_report":
-        summary_columns = ['Enrollments', 'Successful', 'Unsuccessful', 'Not Started', 'Average Final Score', 'Badges', 'Posts', 'Total Time Spent', 'In Progress']
-    for col in summary_columns:
-        if col == 'Badges':
-            values = []
-            for row in data:
-                if row[col]:
-                    split_str = '(/' if '(' in row[col] else '/'
-                    values.append(int(row[col].split(split_str)[0].strip()))
-            total_dict[col] = sum(values)
-        elif col == 'Total Time Spent':
-            values = [str2sec(row[col]) for row in data if row[col]]
-            total_dict[col] = sec2str(sum(values))
-        elif col in ['Progress', 'Current Score', 'Average Final Score']:
-            values = [int(row[col].split('%')[0].strip()) for row in data if row[col]]
-            total_dict[col] = str(sum(values) // len(values)) + '%' if values else '0%'
-        else:
-            values = [row[col] for row in data if row[col] and row[col] != '-']
-            total_dict[col] = sum(values)
-    return total_dict
-
-
-def format_headers(data, formats):
-    response_data = []
-    i = 1
-    for row in data:
-        new_row = collections.OrderedDict(ID=i)
-        for k, v in row.items():
-            key = formats[k] if k in formats.keys() else k
-            new_row[key] = v
-        response_data.append(new_row)
-        i += 1
-    return response_data
-
-
 def str2sec(t):
     h, m, s = t.strip().split(':')
     return int(h) * 3600 + int(m) * 60 + int(s)
@@ -2027,3 +1837,5 @@ def get_properties(request):
             'type': item[2]
         })
     return JsonResponse(jsonData)
+
+    
