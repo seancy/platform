@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^learner_transcript/(?P<user_id>\w+)/export/$', views.transcript_export_table, name='analytics_transcript_export'),
     url(r'^learner_transcript/pdf/(?P<user_id>\w+)$', views.transcript_view_pdf, name='analytics_learner_transcript_pdf'),
 
+    url(r'^transcript/json/$', views.transcript_view_data, name='transcript_course_data'),
+
     url(r'^global/$', views.microsite_view, name='analytics_microsite'),
 
     url(r'^common/get_properties/json/$', views.get_properties, name='analytics_get_properties'),

@@ -543,7 +543,7 @@ def get_ilt_learner_table_data(filter_kwargs, exclude):
     return IltLearnerTable(reports, exclude=exclude)
 
 
-def json_response(table, sort, page, summary_columns=[], column_order=[]):
+def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
     try:
         res = TableExport('json', table).export()
         table_json = json.loads(res)
@@ -595,9 +595,10 @@ def json_response(table, sort, page, summary_columns=[], column_order=[]):
         reverse_flag = True if sort[0] == '-' else False
         table_response = sorted(table_response, key=lambda x: x[sort[1:]], reverse=reverse_flag)
 
-        page_start = (page['no'] - 1) * page['size']
-        page_end = page['no'] * page['size']
-        table_response = table_response[page_start:page_end]
+        if page:
+            page_start = (page['no'] - 1) * page['size']
+            page_end = page['no'] * page['size']
+            table_response = table_response[page_start:page_end]
 
         response = {'list': table_response,
                     'total': total,
@@ -695,6 +696,46 @@ def _transcript_view(user, request, template, report_type):
                 'user_id': user.id,
             }
         )
+
+
+@transaction.non_atomic_requests
+@analytics_on
+@analytics_member_required
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def transcript_view_data(request):
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return JsonResponseBadRequest({"message": _("Response Not Found.")})
+
+    if len(orgs) == 1:
+        org = orgs[0]
+    else:
+        org = get_combined_org(orgs)
+
+    body_data = request.body.decode('utf-8')
+    data = json.loads(body_data)
+    user_id = data.get('user_id', request.user.id)
+
+    table = []
+    summary_columns = []
+    column_order = []
+
+    last_reportlog = ReportLog.get_latest()
+    if last_reportlog:
+        last_update = last_reportlog.created
+
+        learner_course_table, learner_course_reports = get_transcript_table(orgs, user_id, last_update)
+        summary_columns = ['Progress',
+                           'Current Score',
+                           'Badges',
+                           'Total Time Spent']
+
+    return json_response(learner_course_table,
+                         data.get('sort'),
+                         data.get('page', {}),
+                         summary_columns,
+                         column_order)
 
 
 @analytics_on
@@ -1434,7 +1475,8 @@ def _export_table(request, course_key, report_name, report_args):
 def _transcript_export_table(request, user):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
-        return HttpResponseNotFound()
+        # return HttpResponseNotFound()
+        return JsonResponseBadRequest({"message": _("Response Not Found.")})
 
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
@@ -1466,10 +1508,11 @@ def transcript_export_table(request, user_id):
     try:
         user = User.objects.get(id=user_id)
     except (ValueError, User.DoesNotExist):
-        return render_to_response(
-            "triboo_analytics/transcript.html",
-            {'error_message': _("Invalid User ID")}
-        )
+        # return render_to_response(
+        #     "triboo_analytics/transcript.html",
+        #     {'error_message': _("Invalid User ID")}
+        # )
+        return JsonResponseBadRequest({"message": _("Invalid User ID")})
     return _transcript_export_table(request, user)
 
 
@@ -1907,6 +1950,10 @@ def export_tables(request):
 
     elif report_type in ["ilt_global", "ilt_learner"]:
         return ilt_export_table(request)
+
+    elif report_type == 'transcript':
+        user_id = data.get('user_id', request.user.id)
+        return transcript_export_table(request, user_id)
 
 
 def get_total_dict(data, report):
