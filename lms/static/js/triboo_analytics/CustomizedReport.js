@@ -17,8 +17,11 @@ export class CustomizedReport {
                 component: ReportTypeAndCourseReport,
                 selector: '.report_type_and_course_selected',
                 componentName: 'CustomizedReport',
-                props: {...props, onChange: (a0, a1, query_tuples)=>{
+                props: {...props, onChange: (reportTypeValue, selectedCourses, query_tuples)=>{
+                        this.reportTypeValue = reportTypeValue
+                        this.selectedCourses = selectedCourses
                         this.query_tuples = query_tuples
+                        this.goButtonStatusUpdate();
                     }
                 }
             });
@@ -293,9 +296,9 @@ export class CustomizedReport {
     }
 
     checkFieldsSuccess() {
-        const reportTypeVal = this.$reportType.val()
-        const courseReportVal = this.$courseReportSelect2.val()
-        const selectedCoursesNum = courseReportVal ? courseReportVal.length : 0;
+        const reportTypeVal =  this.reportTypeValue //this.$reportType.val()
+        const courseReportVal = this.selectedCourses //this.$courseReportSelect2.val()
+        const selectedCoursesNum = courseReportVal ? (courseReportVal.length || courseReportVal.value) : 0;
         const isFormatChecked = $('#table-export-selection input[name=format]:checked').length;
         if (reportTypeVal == 'learner' || reportTypeVal == 'ilt_global' || reportTypeVal == 'ilt_learner') {
             return reportTypeVal && isFormatChecked
@@ -306,6 +309,8 @@ export class CustomizedReport {
 
     async submit() {
         let data = {
+            report_type:this.reportTypeValue,
+            courses_selected: this.selectedCourses.value || this.selectedCourses.map(p=>p.value).join(','),
             query_tuples: (this.query_tuples || []).map(p=>{
                 const {value, key} = pick(p, ['key', 'value'])
                 return [value, key]

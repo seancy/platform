@@ -8,11 +8,13 @@ class ReportTypeAndCourseReport extends React.Component {
         super(props);
 
         this.state = {
-            reportTypeValue:'',
+            reportType:get(props, ['report_types','0']) || {},
+            reportTypeValue: get(props, ['report_types','0', 'value']) || '',
+            selectedCourses:[],
             selectedCourseValues:[],
             selectedKeyValues:[],
             isMultiple:true,
-            selectedCourses:[],
+
             hideCourseReportSelect: false,
             filterData:[{value: '', text: 'loading'}]
         };
@@ -42,7 +44,7 @@ class ReportTypeAndCourseReport extends React.Component {
         let courseReportType = reportType.courseReportType,
             isMultiple = true, $courseSelected = $(this.refs.course_selected);
         $courseSelected.data('select2') && $courseSelected.select2("destroy")
-        this.setState({reportTypeValue:reportType.value})
+        this.setState({reportType, reportTypeValue:reportType.value}, this.fireOnChange)
         if (courseReportType == 'multiple' || courseReportType == 'single') {
             isMultiple = courseReportType == 'single' ? false : true;
             /*$courseSelected.select2({
@@ -54,7 +56,7 @@ class ReportTypeAndCourseReport extends React.Component {
                 isMultiple,
                 selectedCourses:[],
                 hideCourseReportSelect: false
-            })
+            }, this.fireOnChange)
 
             if (courseReportType == 'single') {
                 this.setState({
@@ -82,13 +84,13 @@ class ReportTypeAndCourseReport extends React.Component {
 
     fireOnChange(){
         const {onChange}=this.props
-        const {selectedKeyValues, startDate, endDate} = this.state
-        onChange && onChange('', '', selectedKeyValues, startDate, endDate)
+        const {reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate} = this.state
+        onChange && onChange(reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate)
     }
 
     getReportTypeSection(){
         const {report_types} = this.props;
-        const {reportTypeValue}=this.state;
+        const {reportTypeValue, reportType}=this.state;
         return <div className="custom-section" id="report_type_section">
             <button className="section-button accordion-trigger"
                     aria-expanded="${ 'false' }"
@@ -113,7 +115,7 @@ class ReportTypeAndCourseReport extends React.Component {
             </div>
             <div id="report_bar" className="reports label-bar is-collapsed">
                 {reportTypeValue && <button className="filter-option option-label">
-                    <span className="query">{reportTypeValue}</span>
+                    <span className="query">{reportType.text}</span>
                 </button>}
             </div>
         </div>
@@ -122,7 +124,7 @@ class ReportTypeAndCourseReport extends React.Component {
 
     getCourseSection(){
         //(this.state.hideCourseReportSelect ? 'hide' : '')
-        const {courses} = this.props, {isMultiple, hideCourseReportSelect}=this.state;
+        const {courses} = this.props, {isMultiple, hideCourseReportSelect, selectedCourses}=this.state;
         const render=(text,item)=>{
             return `${text} (${item.course_enrollments || '0'} users)`
         }
@@ -130,6 +132,9 @@ class ReportTypeAndCourseReport extends React.Component {
             return isMultiple ? this.state.selectedCourses.reduce((prevVal, currVal)=>{
                 return prevVal + currVal.course_enrollments;
             }, 0) : (this.state.selectedCourses.course_enrollments || '0')
+        }
+        const handleCourseSelect = (selectedCourses)=>{
+            this.setState({selectedCourses}, this.fireOnChange)
         }
         return <div className={`custom-section${hideCourseReportSelect?' hidden':''}`} id="custom_course_section">
             <button className="section-button accordion-trigger"
@@ -147,7 +152,7 @@ class ReportTypeAndCourseReport extends React.Component {
                         <span id="enrollment_selected">{getEnrollmentNumber()}</span>
                         . (<span id="enrollment_limit">{this.props.limit || 300000}</span> at most)
                     </p>
-                    <Dropdown data={courses} multiple={isMultiple} optionRender={render} onChange={selectedCourses=>this.setState({selectedCourses})}/>
+                    <Dropdown data={courses} multiple={isMultiple} optionRender={render} onChange={handleCourseSelect}/>
                     {/*<select id="course_selected" ref="course_selected">
                         {courses.map(({cid, course_title, course_enrollments}) => {
                             return <option key={cid} value={cid}>{course_title} ({course_enrollments} users)</option>
@@ -155,7 +160,15 @@ class ReportTypeAndCourseReport extends React.Component {
                     </select>*/}
                 </div>
             </div>
-            <div id="course_bar" className="courses label-bar is-collapsed"></div>
+            <div id="course_bar" className="courses label-bar is-collapsed">
+                {isMultiple && selectedCourses.map(({key, value, text})=>(<button className="filter-option option-label" >
+                    <span className="query">{`${text}`}</span>
+                </button>))}
+                {!isMultiple && selectedCourses.text && <button className="filter-option option-label" >
+                    <span className="query">{`${selectedCourses.text}`}</span>
+                </button>}
+
+            </div>
         </div>
     }
     getFilterSection(){
