@@ -192,7 +192,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     <div id="filter-form">
                         <div className="table-filter-form">
                             <LabelValue data={this.state.filterData} onChange={this.filterOnChange.bind(this)}
-                                        stopEventSpread={true}/>
+                                        useFontAwesome={true} stopEventSpread={true}/>
                         </div>
                     </div>
                 </section>
@@ -201,7 +201,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     <div id="period-table">
                         <DateRange onChange={this.periodOnChange.bind(this)}
                             //label='Select a time range'
-                                   buttonBegin='Last '
+                                   buttonBegin='Last ' useFontAwesome={true}
                                    startDateName='from_day' endDateName='to_day'/>
                     </div>
                 </section>
