@@ -22,6 +22,7 @@ export class CustomizedReport {
                         this.selectedCourses = selectedCourses
                         this.query_tuples = query_tuples
                         this.goButtonStatusUpdate();
+                        this.sectionStatusUpdate();
                     }
                 }
             });
@@ -306,7 +307,17 @@ export class CustomizedReport {
                 this.$submitButton.addClass('disabled')
             }
         }, 200)
+    }
 
+    sectionStatusUpdate() {
+        const reportTypeVal =  this.reportTypeValue
+        if (reportTypeVal == 'ilt_global') {
+            $('.filter-form').hide()
+            $('.table-user-properties-form-customized').hide()
+        } else {
+            $('.filter-form').show()
+            $('.table-user-properties-form-customized').show()
+        }
     }
 
     checkFieldsSuccess() {
