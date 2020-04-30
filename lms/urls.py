@@ -128,6 +128,9 @@ urlpatterns = [
     # LT license API
     url(r'^api/lt_license/', include('openedx.core.djangoapps.lt_license.urls')),
 
+    #LT integration Slack API
+    url(r'^api/integration/', include('integrations.urls')),
+
     # Profile Images API endpoints
     url(r'^api/profile_images/', include('openedx.core.djangoapps.profile_images.urls')),
 

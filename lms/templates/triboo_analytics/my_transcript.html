@@ -363,6 +363,12 @@
 
                     </div>
                   </div>
+                  <div class="table-pdf-view">
+                      <button id="table-pdf-button">
+                          <i class="far fa-print"></i>
+                            ${_("Print")}
+                      </button>
+                  </div>
               </div>
 
               <div class="last-update">
@@ -409,5 +415,10 @@
   ];
 
   drawPieChart('pieChart', pieChartData);
+
+    $('#table-pdf-button').click(function(e){
+        e.preventDefault();
+        window.open("${reverse('analytics_my_transcript_pdf')}");
+    });
   </script>
 % endif

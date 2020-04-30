@@ -1,6 +1,6 @@
 $(function () {
 
-    const descriptionInit = function () {
+    var descriptionInit = function () {
         let p = new Promise(function (resolve) {
             setTimeout(function () {
                 var $courseDescription = $('.course-description');
@@ -18,7 +18,7 @@ $(function () {
         return p
     }
 
-    const skeletonRemove = ()=> {
+    var skeletonRemove = function() {
         return new Promise(function (resolve) {
             setTimeout(function () {
                 $('.container .intro').removeClass('skeleton')
@@ -27,7 +27,7 @@ $(function () {
         })
     }
 
-    const eventInit = () => {
+    var eventInit = function() {
         $('body').delegate('.extend-link', 'click', function (e) {
             var $src = $(e.currentTarget);
             var $courseDescription = $src.parent('.course-description');

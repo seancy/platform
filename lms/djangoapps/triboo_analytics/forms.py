@@ -100,7 +100,7 @@ class UserPropertiesForm(forms.Form):
     selected_properties = forms.MultipleChoiceField(
         required=False,
         widget=forms.CheckboxSelectMultiple,
-        label=_('Select the user properties you want to display')
+        label=_('Select the user properties to display')
     )
 
     course_id = forms.CharField(widget=forms.HiddenInput(), required=False)

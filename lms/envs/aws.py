@@ -35,6 +35,7 @@ import saml2
 from saml2.saml import NAMEID_FORMAT_EMAILADDRESS, NAMEID_FORMAT_UNSPECIFIED
 from saml2.sigver import get_xmlsec_binary
 from xmodule.modulestore.modulestore_settings import convert_module_store_setting_if_needed
+from celery.schedules import crontab
 
 # SERVICE_VARIANT specifies name of the variant used, which decides what JSON
 # configuration files are read during startup.
@@ -105,7 +106,13 @@ CELERY_QUEUES = {
 }
 
 CELERY_ROUTES = "{}celery.Router".format(QUEUE_VARIANT)
-CELERYBEAT_SCHEDULE = {}  # For scheduling tasks, entries can be added to this dict
+CELERYBEAT_SCHEDULE = {
+    'slack-send-default-message': {
+        'task': 'lms.djangoapps.integrations.slack_lt.tasks.default_slack_message',
+        'schedule': crontab(minute=0, hour=0),
+        'options': {'queue': 'edx.lms.message'}
+    },
+}  # For scheduling tasks, entries can be added to this dict
 
 ########################## NON-SECURE ENV CONFIG ##############################
 # Things like server locations, ports, etc.
@@ -1177,6 +1184,11 @@ if "ELASTIC_APM" in ENV_TOKENS:
 if "RAVEN_CONFIG" in ENV_TOKENS:
     INSTALLED_APPS += ('raven.contrib.django.raven_compat',)
     RAVEN_CONFIG = ENV_TOKENS.get('RAVEN_CONFIG')
+
+################### Settings for integration slack ###################
+if "SLACK_CONFIG" in AUTH_TOKENS:
+    INSTALLED_APPS += ('lms.djangoapps.integrations.slack_lt',)
+    SLACK_CONFIG = AUTH_TOKENS.get('SLACK_CONFIG')
 
 ############################### Plugin Settings ###############################
 

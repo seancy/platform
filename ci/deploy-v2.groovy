@@ -17,7 +17,9 @@ def machine = null
 def platform_process = false
 def theme_process = false
 def theme_compile_process = false
+def theme_deploy_process = false
 def platform_with_theme_process = false
+def translation_theme_process = false
 def restart_service_process = false
 def certs_process = false
 def stage_certs_process = false
@@ -145,16 +147,18 @@ pipeline {
                                     if (sub_theme_process == 'compile') {
                                         theme_compile_process = true
                                     } else if (sub_theme_process == 'deploy') {
-                                        theme_compile_process = false
+                                        theme_deploy_process = true
                                     }
                                 } else if (this_environment == 'STAGING') {
                                     theme_compile_process = false
+                                    theme_deploy_process = true
                                     sub_theme_process = input message: "which part to compile", parameters: [choice(name: 'process', choices: ['lms', 'cms'], description: 'which part to compile')]
                                 }
                             } else if (this_process == 'platform&theme') {
                                 platform_process = true
                                 theme_process = true
                                 theme_compile_process = false
+                                theme_deploy_process = true
                                 platform_with_theme_process = true
                                 sub_theme_process = input message: "which app theme to compile", parameters: [choice(name: 'process', choices: ['lms', 'cms'], description: 'which app theme to compile')]
                             } else if (this_process == 'restart serivce') {
@@ -325,6 +329,48 @@ pipeline {
                 }
             }
         }
+        stage("Get run npm install or not") {
+            when {
+                expression { return proceed == true && platform_process == true && stage_auto_proceed == false}
+            }
+            steps {
+                script {
+                    try {
+                        timeout(time:2) {
+                            nodeInstall = input message: "Run 'npm install' command", parameters: [choice(name: 'installl_node', choices: ['no', 'yes'], description: 'Run Install Node')]
+                            println nodeInstall
+                        }
+                    } catch (err) {
+                        println err
+                        proceed = false
+                        throw err
+                    }
+                }
+            }
+        }
+        stage("Get run translation script or not") {
+            when {
+                expression { return proceed == true && platform_process == true && stage_auto_proceed == false}
+            }
+            steps {
+                script {
+                    try {
+                        timeout(time:2) {
+                            runTranslation = input message: "Run translation script", parameters: [choice(name: 'run_translation', choices: ['no', 'yes'], description: 'Run Translation Script')]
+                            println runTranslation
+                        }
+                        if (runTranslation == 'yes') {
+                            theme_process = true
+                            translation_theme_process = true                           
+                        }
+                    } catch (err) {
+                        println err
+                        proceed = false
+                        throw err
+                    }
+                }
+            }
+        }
         stage("Deploy platform") {
             when {
                 expression { return proceed == true && platform_process == true && platform_with_theme_process == false }
@@ -342,24 +388,24 @@ pipeline {
                                         println commit_id
                                         sh """
                                         . /tmp/.venvec2/bin/activate
-                                        ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production-commitid"  -e "edx_platform_commitid=${commit_id}" -e "migrate_lt_db=${dbMigrate}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                        ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production-commitid"  -e "edx_platform_commitid=${commit_id}" -e "migrate_lt_db=${dbMigrate}" -e "run_npm_install=${nodeInstall}" -e "run_trans_script=${runTranslation}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
                                         """
                                     } else {
                                         sh """
                                         . /tmp/.venvec2/bin/activate
-                                        ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production" -e "migrate_lt_db=${dbMigrate}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                        ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production" -e "migrate_lt_db=${dbMigrate}" -e "run_npm_install=${nodeInstall}" -e "run_trans_script=${runTranslation}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
                                         """
                                     }
                                 } else {
                                     sh """
                                     . /tmp/.venvec2/bin/activate
-                                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production" -e "migrate_lt_db=${dbMigrate}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-production" -e "migrate_lt_db=${dbMigrate}" -e "run_npm_install=${nodeInstall}" -e "run_trans_script=${runTranslation}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
                                     """
                                 }                                
                             } else {
                                 sh """
                                 . /tmp/.venvec2/bin/activate
-                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=${dbMigrate}" lt_pipeline_jobs.yml
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=${dbMigrate}" -e "run_npm_install=${nodeInstall}" -e "run_trans_script=${runTranslation}" lt_pipeline_jobs.yml
                                 """
                             }                            
                         } else if (stage_auto_proceed == true) {
@@ -367,7 +413,7 @@ pipeline {
                             tag_restart_service = 'restart-all'
                             sh """
                             . /tmp/.venvec2/bin/activate
-                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=yes" lt_pipeline_jobs.yml
+                            ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=no" -e "run_npm_install=no" -e "run_trans_script=no" lt_pipeline_jobs.yml
                             """
                         }
                     }
@@ -377,7 +423,7 @@ pipeline {
         }
         stage("Get theme folder") {
             when {
-                expression { return proceed == true && theme_process == true && theme_compile_process == true && stage_auto_proceed == false }
+                expression { return proceed == true && theme_process == true && theme_compile_process == true && theme_deploy_process == false && stage_auto_proceed == false }
             }
             steps {
                 script {
@@ -404,7 +450,7 @@ pipeline {
         }
         stage("Set theme folder") {
             when {
-                expression { return proceed == true && theme_process == true && theme_compile_process == false && stage_auto_proceed == false}
+                expression { return proceed == true && theme_process == true && theme_compile_process == false && theme_deploy_process == true && stage_auto_proceed == false }
             }
             steps {
                 script {
@@ -455,7 +501,7 @@ pipeline {
                 dir('configuration/playbooks') {
                     sh """
                     . /tmp/.venvec2/bin/activate
-                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=${dbMigrate}" lt_pipeline_jobs.yml
+                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=${dbMigrate}" -e "run_npm_install=${nodeInstall}" -e "run_trans_script=${runTranslation}" lt_pipeline_jobs.yml
                     """                    
                 }
             }
@@ -469,7 +515,7 @@ pipeline {
                     script {
                         restart_service_process = true
                         tag_restart_service = 'restart-edxapp'
-                        if (stage_auto_proceed == false) {
+                        if (stage_auto_proceed == false && translation_theme_process == false) {
                             if ( lt_user_id == 'yves') {
                                 commit_id = input message: "Input Commit ID", parameters: [string(name:'id:', defaultValue: 'NONE', description: 'Which commit ID to deploy')]
                                 if ( commit_id != 'NONE') {
@@ -490,6 +536,25 @@ pipeline {
                                 ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "${tag_theme}" -e "{'LT_THEME': ${compile_theme}}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
                                 """
                             }                            
+                        } else if (stage_auto_proceed == false && translation_theme_process == true) {
+                            if (this_environment == 'PROD') {
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "all-theme" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                """
+                            } else if (this_environment == 'STAGING') {
+                                if (platform_with_theme_process == false) {
+                                    sh """
+                                    . /tmp/.venvec2/bin/activate
+                                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "all-theme" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                    """
+                                } else if (platform_with_theme_process == true) {
+                                    sh """
+                                    . /tmp/.venvec2/bin/activate
+                                    ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "${tag_theme}" -e "{'LT_THEME': ${compile_theme}}" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                    """
+                                }
+                            }   
                         } else if (stage_auto_proceed == true) {
                             sh """
                             . /tmp/.venvec2/bin/activate

@@ -39,14 +39,14 @@
                 ##  action="${reverse('analytics_customized_export')}" method="post"
                 <form id="form-customized-report">
                     <div class="analytics-header" id="customized_header">
-                        <h2 id="customized_report_title">${_("Custom Export")}</h2>
+                        <h2 id="customized_report_title">${_("Customized Report")}</h2>
                         <p>Customize your report by configuring each section.</p>
                     </div>
                     <div class="report_type_and_course_selected"><!--Slot will be filled by CustomizedReport.js--></div>
                     <%static:webpack entry="CustomizedReport">
                         new CustomizedReport({
                             translation:{
-                                report_type:'${_("Please select a report type:")}',
+                                report_type:'${_("Please select a report:")}',
                                 course:'${_("Please select course(s):")}'
                             },
                             'limit':'300000',
@@ -59,7 +59,7 @@
                                 aria-expanded="${ 'false' }"
                                 aria-controls="user_properties_section_contents"
                                 id="user_properties_section">
-                            <p class="section-title">Select the user properties you want to display</p>
+                            <p class="section-title">Select the user properties to display</p>
                             <span class="fa fa-chevron-down" aria-hidden="true"></span>
                         </button>
                         <div id="user_properties_section_contents" class="section-content is-hidden">
@@ -84,7 +84,7 @@
                                   % for format in export_formats:
                                       <li>
                                           <input type="radio" name="format" id="id-${format}" value="${format}">
-                                          <label for="id-${format}"><code>${format} report</code></label>
+                                          <label for="id-${format}"><code>${format.upper()} report</code></label>
                                       </li>
                                   % endfor
                                 </div>

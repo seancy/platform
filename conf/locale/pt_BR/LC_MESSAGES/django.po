@@ -10708,7 +10708,7 @@ msgstr "àrea"
 #: lms/templates/triboo_analytics/course.html:147
 #: lms/templates/triboo_analytics/ilt.html:57
 #: lms/templates/triboo_analytics/learner.html:43
-msgid "Select the user properties you want to display"
+msgid "Select the user properties to display"
 msgstr "Selecione a biblioteca da qual você deseja extrair o conteúdo."
 
 #: lms/djangoapps/triboo_analytics/models.py:1138
@@ -30054,3 +30054,93 @@ msgstr "Áreas de desenvolvimento"
 #: master-sitel: cms/templates/settings.html
 msgid "Identify the course areas of development here."
 msgstr "Identifique aqui as áreas de desenvolvimento do curso."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Are you sure that you want to unenroll these learners?"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Your changes have been taken into account."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner has been unenrolled."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's session has been changed."
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Choose your PDF"
+msgstr "Escolha seu arquivo PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "or Drag here"
+msgstr "ou arraste e solte aqui"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Size limit: "
+msgstr "Limite de tamanho: "
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "Copie o URL do Studio de um arquivo PDF já carregado em <a href={course_url} target='_blank'>Arquivos e Uploads</a>"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This name appears in the horizontal navigation at the top of the page."
+msgstr "Este nome aparece na navegação horizontal na parte superior da página."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF URL"
+msgstr "URL do PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "This URL will be automatically updated after you upload a file."
+msgstr "Este URL será atualizado automaticamente após o upload de um arquivo."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Or you can paste here the URL you copied in Files & Uploads."
+msgstr "Ou você pode colar um URL copiado aqui em Arquivos e Uploads."
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "PDF Download Allowed"
+msgstr "Permitir download de PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Display a download button for this PDF."
+msgstr "Exibir um botão de download de PDF"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document button text"
+msgstr "Texto do botão do documento de origem"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Default: Download the source document"
+msgstr "Padrão: Faça o download do documento de origem"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Source document URL"
+msgstr "URL do documento de origem"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Add the source document of your PDF (Powerpoint file, ...)"
+msgstr "Adicione o documento de origem do seu PDF (arquivo do Powerpoint,…)"

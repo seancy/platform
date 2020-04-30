@@ -9331,7 +9331,7 @@ msgstr ""
 #: lms/templates/triboo_analytics/course.html:147
 #: lms/templates/triboo_analytics/ilt.html:57
 #: lms/templates/triboo_analytics/learner.html:43
-msgid "Select the user properties you want to display"
+msgid "Select the user properties to display"
 msgstr ""
 
 #: lms/djangoapps/triboo_analytics/models.py:1138
@@ -26746,6 +26746,11 @@ msgstr ""
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "The learner's session has been changed."
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "The learner's request has been accepted."
 msgstr ""
 
 #: lms/templates/courseware/ilt_all_validation_page.html

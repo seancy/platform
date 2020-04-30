@@ -130,12 +130,18 @@ def get_course_outline_block_tree(request, course_id):
         'html',
         'problem',
         'video',
+        'videoalpha',
         'discussion',
         'drag-and-drop-v2',
         'poll',
+        'survey',
         'word_cloud',
         'done',
-        'ilt'
+        'ilt',
+        'scormxblock',
+        'pdf',
+        'library_content',
+        'openassessment'
     ]
     all_blocks = get_blocks(
         request,

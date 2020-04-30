@@ -9,6 +9,7 @@ from . import views
 urlpatterns = [
     url(r'^transcript/$', views.my_transcript_view, name='analytics_my_transcript'),
     url(r'^transcript/export/$', views.my_transcript_export_table, name='analytics_my_transcript_export'),
+    url(r'^transcript/pdf/$', views.my_transcript_view_pdf, name='analytics_my_transcript_pdf'),
 
     url(r'^transcript/waiver-request/$', views.waiver_request_view, name='waiver_request'),
     url(r'^transcript/{}/process-waiver-request/(?P<waiver_id>[0-9]+)'.format(settings.COURSE_ID_PATTERN),
@@ -16,6 +17,7 @@ urlpatterns = [
 
     url(r'^learner_transcript/(?P<user_id>\w+)/$', views.transcript_view, name='analytics_learner_transcript'),
     url(r'^learner_transcript/(?P<user_id>\w+)/export/$', views.transcript_export_table, name='analytics_transcript_export'),
+    url(r'^learner_transcript/pdf/(?P<user_id>\w+)$', views.transcript_view_pdf, name='analytics_learner_transcript_pdf'),
 
     url(r'^global/$', views.microsite_view, name='analytics_microsite'),
 

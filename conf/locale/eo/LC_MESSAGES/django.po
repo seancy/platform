@@ -15818,10 +15818,6 @@ msgid "View this course as:"
 msgstr "Vïéw thïs çöürsé äs: Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, #"
 
 #: lms/templates/preview_menu.html
-msgid "Learner"
-msgstr "Léärnér Ⱡ'σяєм ιρѕυм #"
-
-#: lms/templates/preview_menu.html
 msgid "Specific learner"
 msgstr "Spéçïfïç léärnér Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αм#"
 
@@ -22668,10 +22664,6 @@ msgstr "Mýsélf Ⱡ'σяєм ιρѕυ#"
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html
 msgid "Staff and Administrators"
 msgstr "Stäff änd Àdmïnïsträtörs Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢ση#"
-
-#: lms/templates/instructor/instructor_dashboard_2/send_email.html
-msgid "All Learners"
-msgstr "Àll Léärnérs Ⱡ'σяєм ιρѕυм ∂σłσя ѕ#"
 
 #: lms/templates/instructor/instructor_dashboard_2/send_email.html
 msgid "Cohort: "
