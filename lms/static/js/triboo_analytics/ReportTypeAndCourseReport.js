@@ -3,6 +3,7 @@ import LabelValue from "sec-react-label-value";
 import DateRange from "se-react-date-range";
 import Dropdown from 'se-react-dropdown'
 import {get} from 'lodash'
+
 class ReportTypeAndCourseReport extends React.Component {
     constructor(props) {
         super(props);
@@ -30,7 +31,7 @@ class ReportTypeAndCourseReport extends React.Component {
     }
 
     componentDidMount() {
-        const nameList = [{text:'Name', value:'user_name'}]
+        const nameList = [{text: 'Name', value: 'user_name'}]
         fetch('/analytics/common/get_properties/json/')
             .then(response=>{
                 return response.json()

@@ -1358,12 +1358,12 @@ def customized_view(request):
     report_type = request.GET.get('report_type', None)
     courses_selected = request.GET.get('courses_selected', None)
     report_types = [
-        ('course_summary', 'Course Summary', 'multiple'),
-        ('course_progress', 'Course Progress', 'single'),
-        ('course_time_spent', 'Course Time Spent', 'single'),
-        ('learner', 'Learner', ''),
-        ('ilt_global', 'ILT Global', ''),
-        ('ilt_learner', 'ILT Learner', ''),
+        ('course_summary', 'Course Summary Report', 'multiple'),
+        ('course_progress', 'Course Progress Report', 'single'),
+        ('course_time_spent', 'Course Time Spent Report', 'single'),
+        ('learner', 'Learner Report', ''),
+        ('ilt_global', 'ILT Global Report', ''),
+        ('ilt_learner', 'ILT Learner Report', ''),
     ]
     export_formats = ['csv', 'xls', 'json']
     courses, courses_list = get_all_courses(request, orgs)

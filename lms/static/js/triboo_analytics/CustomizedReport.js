@@ -31,7 +31,7 @@ export class CustomizedReport {
             this.oldCourseValues = []
             this.oldCourseTexts = []
             this.selectedEnrollments = 0
-            this.enrollmentLimit = 6
+            this.enrollmentLimit = 300000
             this.$courseReportSelect2 = this.$courseReport.select2();
             this.$accordingTrigger = $('.accordion-trigger');
             this.eventInit()
@@ -182,15 +182,29 @@ export class CustomizedReport {
         $('#table-export-selection').delegate('input', 'click', (e) => {
             let format_val = $('#table-export-selection input[name=format]:checked')[0].value;
             if (format_val == 'xls') {
-                this.enrollmentLimit = 4
+                if (this.selectedEnrollments > 65000) {
+                    alert('The enrollments of the courses you have been selected is above the limit of xls file. Please remove some of them or you will not be able to see some records in your report.')
+                }
+                this.enrollmentLimit = 65000
             } else {
-                this.enrollmentLimit = 6
+                this.enrollmentLimit = 300000
             }
             $('#enrollment_limit').text(this.enrollmentLimit)
+            $('#format_bar').empty()
             let add_class = "format-option"
             let prop_name = $(e.currentTarget).val();
             let prop_id = "tag_" + prop_name
-            this.addTagToBar('#format_bar', add_class, prop_name, prop_id)
+            $("<button/>", {
+                "id": prop_id,
+                "class": add_class + " option-label"
+            }).appendTo('#format_bar');
+            $("<span/>", {
+                "class": "query",
+                text: prop_name
+            }).appendTo("#" + prop_id);
+        });
+        $('#format_bar').delegate('button', 'click', (e) => {
+            e.preventDefault();
         });
         this.triggerExpand();
         this.reportTypeAndCourseInit();
