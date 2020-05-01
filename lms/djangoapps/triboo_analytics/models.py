@@ -187,7 +187,7 @@ class TrackingLogHelper(object):
             first_log_time = user_logs[user_id][0].time
             try:
                 user = User.objects.get(id=user_id)
-                if user.last_login.date() < first_log_time.date():
+                if user.last_login and user.last_login.date() < first_log_time.date():
                     logger.info("user %d last_login %s should => %s" % (user_id, user.last_login, first_log_time))
                     user.last_login = first_log_time
                     user.save()
