@@ -91,6 +91,7 @@ module.exports = Merge.smart({
         ILTGlobalReport: ['./lms/static/js/triboo_analytics/ILTGlobalReport.js'],
         ILTLearnerReport: ['babel-polyfill','./lms/static/js/triboo_analytics/ILTLearnerReport.js'],
         ILTReport: ['babel-polyfill','./lms/static/js/triboo_analytics/ILTReport.js'],
+        Transcript: ['babel-polyfill','./lms/static/js/triboo_analytics/Transcript.js'],
         CustomizedReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CustomizedReport.js'],
 
         // Common
