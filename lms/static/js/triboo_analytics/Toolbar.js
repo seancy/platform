@@ -7,6 +7,7 @@ import DateRange from 'se-react-date-range'
 import LabelValue from 'sec-react-label-value'
 import {Exporter} from './Exporter'
 import {Properties} from './Properties'
+import {PeriodFilter} from './PeriodFilter'
 
 export class Toolbar extends React.Component {
     constructor(props) {
@@ -101,8 +102,8 @@ export class Toolbar extends React.Component {
                 data:[], checkedList:selectedProperties.map(p => p.value),
                 onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
             }},
-            {name:'period', text: gettext('Period'), icon: 'fa-calendar-alt', active: false, component: DateRange, props:{
-                label:'Select a time range', buttonBegin:'Last ', startDate, endDate, useFontAwesome:true,
+            {name:'period', text: gettext('Period'), icon: 'fa-calendar-alt', active: false, component: PeriodFilter, props:{
+                label:'Select a time range', buttonBegin:'Last ', startDate, endDate, useFontAwesome:true, periodTooltip: this.props.periodTooltip,
                 onChange:(startDate,endDate)=>{
                     this.setState({startDate,endDate}, this.fireOnChange)
                 }

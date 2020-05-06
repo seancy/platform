@@ -53,7 +53,7 @@ module.exports = Merge.smart({
         PortfolioExperimentUpsellModal: ['babel-polyfill','./lms/static/common/js/components/PortfolioExperimentUpsellModal.jsx'],
         EntitlementSupportPage: ['babel-polyfill','./lms/djangoapps/support/static/support/jsx/entitlements/index.jsx'],
         PasswordResetConfirmation: ['babel-polyfill','./lms/static/js/student_account/components/PasswordResetConfirmation.jsx'],
-        QuestionMark: ['babel-polyfill','./lms/static/js/QuestionMark.js'],
+        QuestionMark: ['babel-polyfill','./lms/static/js/triboo_analytics/QuestionMark.js'],
 
         PasswordCreateConfirmation: ['babel-polyfill','./lms/static/js/student_account/components/PasswordCreateConfirmation.jsx'],
         StudentAccountDeletion: ['babel-polyfill','./lms/static/js/student_account/components/StudentAccountDeletion.jsx'],

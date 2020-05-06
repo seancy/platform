@@ -58,7 +58,11 @@ export class LearnerReport extends BaseReport {
                     <Toolbar
                         onChange={this.toolbarDataUpdate.bind(this)}
                              onGo={this.startExport.bind(this)}
-                             onInit={properties=>this.setState({properties})}>
+                             onInit={properties=>this.setState({properties})}
+                             periodTooltip={gettext('Display the state of learners at the end of the selected period '
+                                                 + 'for learners who visited the platform during this period. '
+                                                 + 'The total time spent shows the time learners spent on the platform '
+                                                 + 'during the selected period.')}>
                         <h3>{gettext('Learner Report')}</h3>
                     </Toolbar>
                     <p className="last-update">

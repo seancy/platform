@@ -91,7 +91,9 @@ export default class CourseReportTimeSpent extends BaseReport {
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
                          onGo={this.startExport.bind(this)}
                          {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
-                         onInit={properties=>this.setState({properties})}/>
+                         onInit={properties=>this.setState({properties})}
+                         periodTooltip={gettext('Display the time learners spent in the course during the selected period '
+                                              + 'for learners who visited the course during this period.')}/>
                  {this.props.children}
                 <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}

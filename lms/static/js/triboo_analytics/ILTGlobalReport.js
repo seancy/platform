@@ -62,7 +62,8 @@ export default class ILTGlobalReport extends BaseReport {
                 <Toolbar onChange={this.toolbarDataUpdate.bind(this)} enabledItems={['period','export']}
                      onGo={this.startExport.bind(this)}
                      {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
-                         onInit={properties=>this.setState({properties})}/>
+                     onInit={properties=>this.setState({properties})}
+                     periodTooltip={gettext('Filter the sessions starting in the selected period.')}/>
                  {this.props.children}
                  <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
