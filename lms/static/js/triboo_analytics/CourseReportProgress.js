@@ -28,14 +28,16 @@ export default class CourseReportProgress extends BaseReport {
                 name: p.text,
                 fieldName: p.value
             }))
-        const {data}=this.state;
+        const {data, columns}=this.state;
         let dynamicFields = []
         if (data && data.length > 0){
             const firstRow = data[0]
             const propertiesValues = this.state.properties.map(p=>p.value)
-            dynamicFields = Object.keys(firstRow).filter(key=>{
-                return !propertiesValues.includes(key) && key != 'Name';
-            }).map(key=>({name:key, fieldName:key}));
+            const dynamicKeys = columns.length > 0 ? columns :
+                Object.keys(firstRow).filter(key=>{
+                    return !propertiesValues.includes(key) && key != 'Name';
+                })
+            dynamicFields = dynamicKeys.map(key=>({name:key, fieldName:key}));
         }
 
         return {...{
