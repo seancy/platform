@@ -10,6 +10,7 @@ const ReportType = Object.freeze({
     LEARNER:    'learner',
     ILT_GLOBAL:  'ilt_global',
     ILT_LEARNER:  'ilt_learner',
+    TRAN_SCRIPT:  'transcript',
 })
 
 export {PaginationConfig, ReportType}

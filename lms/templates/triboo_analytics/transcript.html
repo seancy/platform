@@ -5,6 +5,10 @@
   from django.core.urlresolvers import reverse
   from django.template import Template, Context
   from triboo_analytics.models import CourseStatus, format_time_spent, ANALYTICS_LIMITED_ACCESS_GROUP
+
+  import json
+  from openedx.core.djangolib.markup import HTML
+  from webpack_loader.templatetags.webpack_loader import render_bundle
 %>
 
 <%block name="pagetitle">${_("Analytics - Learner Transcript")}</%block>
@@ -157,9 +161,21 @@
                   </div>
               </div>
 
-              <div class="last-update">
-                <span class="fal fa-sync-alt"></span>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-              </div>
+              ${HTML(render_bundle('Transcript'))}
+                ${HTML(render_bundle('ReactRenderer'))}
+                <div id="transcript"></div>
+                <script type="text/javascript">
+                  new ReactRenderer({
+                    component: Transcript,
+                    selector: '#transcript',
+                    componentName: 'Transcript',
+                    props: {
+                        defaultLanguage: '${request.LANGUAGE_CODE}',
+                        last_update: '${last_update}',
+                        token:'${ csrf_token }'
+                      }
+                  });
+                </script>
 
               <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
               ${Template(tpl).render(Context({'learner_course_table': learner_course_table, 'request': request}))}
