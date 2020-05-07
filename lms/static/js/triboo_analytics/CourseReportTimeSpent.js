@@ -22,7 +22,7 @@ export default class CourseReportTimeSpent extends BaseReport {
     }
 
     getDynamicFields(){
-        const {data} = this.state
+        const {data, columns} = this.state
         const propertiesValues = this.state.properties.map(p=>p.value)
 
         let dynamicFields = [], subFields = []
@@ -32,10 +32,9 @@ export default class CourseReportTimeSpent extends BaseReport {
                 .filter(key=>{
                     return !propertiesValues.includes(key) && key != 'Name' // && !key.split('/')[1]
                 })
-            const complexDynamicKeys = dynamicKeys.filter(key=>key.split('/')[1])
+            const complexDynamicKeys = columns.length > 0 ? columns :
+                dynamicKeys.filter(key=>key.split('/')[1])
             const complexDynamicKeysL1 = complexDynamicKeys.map(key=>key.split('/')[0])
-            //const complexDynamicKeysL2 = complexDynamicKeys.map(key=>key.split('/')[1])
-
             const normalDynamicFields = dynamicKeys.filter(key=>!key.split('/')[1])
             const complexDynamicFields = [...new Set(complexDynamicKeys.map(key=>key.split('/')[0]))]
             const countSpan = (key)=>{

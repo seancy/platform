@@ -16,6 +16,7 @@ export default class BaseReport extends React.Component{
 
             //ajax result
             message:'',
+            columns:[],
             data: [],
             totalData: {},
             rowsCount: 0,
@@ -131,6 +132,7 @@ export default class BaseReport extends React.Component{
                         message: json.message,
                         isLoading:false,
                         data: json.list,
+                        columns:json.columns,
                         totalData: json.total, //{email: 'total:', first_name: json.total},
                         rowsCount: json.pagination.rowsCount
                     }
