@@ -185,7 +185,7 @@ such that the value can be defined later than this assignment (file load order).
                     var $revokeBtn, labelTrans;
                     labelTrans = gettext('Revoke access');
 
-                    $revokeBtn = $(_.template('<div class="revoke"><span class="icon fa fa-times-circle" aria-hidden="true"></span> <%- label %></div>')({  // eslint-disable-line max-len
+                    $revokeBtn = $(_.template('<div class="revoke"><span class="icon fal fa-times-circle" aria-hidden="true"></span> <%- label %></div>')({  // eslint-disable-line max-len
                         label: labelTrans
                     }), {
                         class: 'revoke'

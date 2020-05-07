@@ -40,7 +40,7 @@
                 <form id="form-customized-report">
                     <div class="analytics-header" id="customized_header">
                         <h2 id="customized_report_title">${_("Customized Report")}</h2>
-                        <p>Customize your report by configuring each section.</p>
+                        <p>${_("Customize your report by configuring each step.")}</p>
                     </div>
                     <div class="report_type_and_course_selected"><!--Slot will be filled by CustomizedReport.js--></div>
                     <%static:webpack entry="CustomizedReport">
@@ -59,11 +59,11 @@
                                 aria-expanded="${ 'false' }"
                                 aria-controls="user_properties_section_contents"
                                 id="user_properties_section">
-                            <p class="section-title">Select the user properties to display</p>
+                            <p class="section-title">${_("Select the user properties to display")}</p>
                             <span class="fa fa-chevron-down" aria-hidden="true"></span>
                         </button>
                         <div id="user_properties_section_contents" class="section-content is-hidden">
-                            <p class="section-label">Note: If no user properties are selected, it will use the default settings.</p>
+                            <p class="section-label">${_("Note: If no user properties are selected, default properties will be used.")}</p>
                             <div id="user-properties">
                                 ${user_properties_form}
                             </div>
@@ -75,7 +75,7 @@
                                 aria-expanded="${ 'false' }"
                                 aria-controls="format_section_contents"
                                 id="format_section">
-                            <p class="section-title">Choose the export format</p>
+                            <p class="section-title">${_("Choose the export format")}</p>
                             <span class="fa fa-chevron-down" aria-hidden="true"></span>
                         </button>
                         <div id="format_section_contents" class="section-content is-hidden">

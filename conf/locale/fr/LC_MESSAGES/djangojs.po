@@ -10248,6 +10248,111 @@ msgstr "Reprendre une photo"
 msgid "Take Photo"
 msgstr "Prendre une photo"
 
+# ----------analytics----------
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Filters"
+msgstr "Filtres"
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Properties"
+msgstr "Propriétés"
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Period"
+msgstr "Période"
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Export"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Properties.js
+msgid "Select the user properties to display"
+msgstr "Sélectionnez les propriétés utilisateurs à afficher"
+
+#: lms/static/js/triboo_analytics/CourseReport.js
+#: lms/static/js/triboo_analytics/ILTReport.js
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Please, note that these reports are not live. Last update:"
+msgstr "Merci de noter que ces rapports ne sont pas mis à jour en live. Dernière mise à jour :"
+
+#: lms/static/js/triboo_analytics/CourseReport.js
+msgid "Summary"
+msgstr "Résumé"
+
+#: lms/static/js/triboo_analytics/CourseReport.js
+msgid "Progress"
+msgstr "Progression"
+
+#: lms/static/js/triboo_analytics/CourseReport.js
+msgid "Time Spent"
+msgstr "Temps passé"
+
+#: lms/static/js/triboo_analytics/CourseReportSummary.js
+msgid "Display the state of learners at the end of the selected period for learners who visited the course during this period."
+msgstr "Affiche l'état des apprenants à la fin de la période sélectionnée, pour les apprenants ayant visité le cours durant cette période."
+
+#: lms/static/js/triboo_analytics/CourseReportProgress.js
+msgid "Display the progress of learners at the end of the selected period for learners who visited the course during this period."
+msgstr "Affiche la progression des apprenants à la fin de la période sélectionnée, pour les apprenants ayant visité le cours durant cette période."
+
+#: lms/static/js/triboo_analytics/CourseReportTimeSpent.js
+msgid "Display the time learners spent in the course during the selected period for learners who visited the course during this period."
+msgstr "Affiche le temps que les apprenants ont passé dans le cours pendant la période sélectionnée, pour les apprenants ayant visité le cours durant cette période."
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Display the state of learners at the end of the selected period for learners who visited the platform during this period. The total time spent shows the time learners spent on the platform during the selected period."
+msgstr "Affiche l'état des apprenants à la fin de la période sélectionnée, pour les apprenants ayant visité la plateforme durant cette période. Le temps passé total montre le temps que les apprenants ont passé sur la plateforme durant cette période."
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Learner Report"
+msgstr "Rapport des apprenants"
+
+#: lms/static/js/triboo_analytics/ILTReport.js
+msgid "Course Report"
+msgstr "Rapport des cours"
+
+#: lms/static/js/triboo_analytics/ILTReport.js
+msgid "ILT Report"
+msgstr "Rapport ILT"
+
+#: lms/static/js/triboo_analytics/ILTReport.js
+msgid "ILT Global Report"
+msgstr "Rapport ILT global"
+
+#: lms/static/js/triboo_analytics/ILTReport.js
+msgid "ILT Learner Report"
+msgstr "Rapport ILT des apprenants"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Filter the sessions starting in the selected period."
+msgstr "Filtre les sessions dont la date de début est dans la période sélectionnée."
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Page"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "of"
+msgstr "de"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "Select a report"
+msgstr "Sélectionnez un rapport"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "Select course(s)"
+msgstr "Sélectionnez des cours"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "Filter the data"
+msgstr "Filtrez les données"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "Select a time range:"
+msgstr "Sélectionnez une période de temps :"
+
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
 msgstr "Mes Favoris"

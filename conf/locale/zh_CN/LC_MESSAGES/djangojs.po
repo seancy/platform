@@ -9812,6 +9812,111 @@ msgstr "重新拍照"
 msgid "Take Photo"
 msgstr "拍照"
 
+# ----------analytics----------
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Filters"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Properties"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Period"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Export"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Properties.js
+msgid "Select the user properties to display"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReport.js
+#: lms/static/js/triboo_analytics/ILTReport.js
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Please, note that these reports are not live. Last update:"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReport.js
+msgid "Summary"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReport.js
+msgid "Progress"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReport.js
+msgid "Time Spent"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReportSummary.js
+msgid "Display the state of learners at the end of the selected period for learners who visited the course during this period."
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReportProgress.js
+msgid "Display the progress of learners at the end of the selected period for learners who visited the course during this period."
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReportTimeSpent.js
+msgid "Display the time learners spent in the course during the selected period for learners who visited the course during this period."
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Display the state of learners at the end of the selected period for learners who visited the platform during this period. The total time spent shows the time learners spent on the platform during the selected period."
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Learner Report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTReport.js
+msgid "Course Report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTReport.js
+msgid "ILT Report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTReport.js
+msgid "ILT Global Report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTReport.js
+msgid "ILT Learner Report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Filter the sessions starting in the selected period."
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Page"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "of"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "Select a report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "Select course(s)"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "Filter the data"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "Select a time range:"
+msgstr ""
+
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
 msgstr "我的书签"
