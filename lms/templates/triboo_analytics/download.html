@@ -4,24 +4,12 @@
 %>
 <ul class="actions">
     <li class="download-item-container">
-        <a class="download-item" href="#" alt="${_('Admin Space')}" title="${_('Admin Space')}">
+        <a class="download-item" href="#" alt="${_('Reports ready to download')}" title="${_('Reports ready to download')}">
             <i class="fal fa-cloud-download-alt"></i>
         </a>
         <div id="report-file-list" class="dropdown-download-menu" data-endpoint="${ list_table_downloads_url }"></div>
     </li>
 </ul>
-
-##<div id="report-downloads">
-##    <div class="table-download">
-##        <div class="download-item hidden-mobile">
-##            <a href="#" id="toggle-report-file-list">${_("Download")} <i class="fa fa-angle-double-down"></i></a>
-##        </div>
-##        <div id="report-file-list" class="dropdown-download-menu hidden" data-endpoint="${ list_table_downloads_url }">
-##        </div>
-##        <p id="download-notification"></p>
-##        <p id="download-error"></p>
-##    </div>
-##</div>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -30,15 +18,15 @@
             $.ajax(elem.attr('data-endpoint'), {
                 success: function (data) {
                     var links = $.map(data.download, function (f) {
-                        // var icon = $('<i></i>', {class: 'fa fa-download'});
                         var link = $('<a></a>', {href: f[1], text: f[0]});
-                        // link.prepend(icon)
+                        var icon = $('<i></i>', {class: 'fal fa-file-chart-line'});
+                        link.prepend(icon)
                         var div = $('<div></div>', {class: 'dropdown-download-item'});
                         div.html(link);
                         return div;
                     });
                     if (links.length <= 0){
-                        links.push('<div><h3>${_("Download list is empty.")}</h3></div>')
+                        links.push('<div><h3>${_("No reports available")}</h3></div>')
                     }
                     elem.html(links);
                 }

@@ -10770,15 +10770,13 @@ msgstr "Certificado inválido"
 
 #: lms/djangoapps/triboo_analytics/views.py:527
 msgid ""
-"The export report is currently being created. When it's ready, the report "
-"will appear in your report list at the bottom of the page. You will be able "
-"to download the report when it is complete, it can take several minutes to "
-"appear."
+"The report is being exported. Note that this operation can take several minutes. When the report will be ready, it "
+"will appear in the list of reports ready to download under the cloud icon in the menu bar and you will be able "
+"to download it."
 msgstr ""
-"O relatório de exportação está sendo criado no momento. Quando estiver pronto, ele"
-"aparecerá na sua lista de relatórios na parte inferior da página. Você poderá"
-"baixar o relatório quando estiver concluído, pode levar alguns minutos para"
-"aparecer."
+"O relatório está sendo exportado. Observe que esta operação pode levar alguns minutos. "
+"Quando o relatório estiver pronto, ele aparecerá na lista de relatórios prontos para download "
+"sob o ícone da nuvem na barra de menus e você poderá fazer o download."
 
 #: lms/djangoapps/triboo_analytics/views.py:548
 msgid "No report to export."
@@ -24813,12 +24811,10 @@ msgid "Download CSV of Certificates Issued"
 msgstr "Baixar CSV dos certificados emitidos"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:104
-#: lms/templates/triboo_analytics/download.html:6
 msgid "Reports Available for Download"
 msgstr "Relatórios disponíveis para download"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:106
-#: lms/templates/triboo_analytics/download.html:7
 msgid ""
 "The reports listed below are available for download. A link to every report "
 "remains available on this page, identified by the UTC date and time of "
@@ -24844,7 +24840,6 @@ msgstr ""
 "dia."
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:117
-#: lms/templates/triboo_analytics/download.html:9
 msgid ""
 "{strong_start}Note{strong_end}: To keep learner data secure, you cannot save "
 "or email these links for direct access. Copies of links expire within 5 "
@@ -27305,37 +27300,62 @@ msgstr "Analytics - Relatório do Curso"
 msgid "Let's have a look at your learning data"
 msgstr "Vamos dar uma olhada nos seus dados de aprendizado"
 
-#: lms/templates/triboo_analytics/course.html:24
-#: lms/templates/triboo_analytics/ilt.html:24
-#: lms/templates/triboo_analytics/learner.html:23
-#: lms/templates/triboo_analytics/microsite.html:29
-#: lms/templates/triboo_analytics/transcript.html:23
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/microsite.html:28
 msgid "Global Report"
-msgstr "Relatórios Disponíveis"
+msgstr ""
 
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
-#: lms/templates/triboo_analytics/ilt.html:25
-#: lms/templates/triboo_analytics/learner.html:24
-#: lms/templates/triboo_analytics/microsite.html:30
-#: lms/templates/triboo_analytics/transcript.html:24
 msgid "Course Report"
-msgstr "Exportação de curso"
+msgstr ""
 
-#: lms/templates/triboo_analytics/course.html:27
-#: lms/templates/triboo_analytics/ilt.html:27
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Summary Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Progress Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Time Spent Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/learner.html:26
-#: lms/templates/triboo_analytics/microsite.html:32
-#: lms/templates/triboo_analytics/transcript.html:26
 msgid "Learner Report"
-msgstr "Saiba mais"
+msgstr ""
 
-#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/ilt.html:29
-#: lms/templates/triboo_analytics/learner.html:28
-#: lms/templates/triboo_analytics/microsite.html:34
-#: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
-msgstr "ILT Relatórios"
+msgstr "ILT Relatório"
+
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customized Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/download.html
+msgid "Reports ready to download"
+msgstr ""
+
+#: lms/templates/triboo_analytics/download.html
+msgid "No reports available"
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customize your report by configuring each step."
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Note: If no user properties are selected, default properties will be used."
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Choose the export format"
+msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"

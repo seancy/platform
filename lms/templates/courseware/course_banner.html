@@ -46,7 +46,7 @@ from six import string_types
               duration_unit = duration_context[1]
         %>
           <li class="duration">
-            <i class="far fa-clock" aria-hidden="true"></i>
+            <i class="fal fa-clock" aria-hidden="true"></i>
             % if duration_unit.startswith('minute'):
               <span>${ungettext('{num} minute', '{num} minutes', duration).format(num=duration)}</span>
             % elif duration_unit.startswith('hour'):
@@ -56,21 +56,21 @@ from six import string_types
         % endif
         % if course.language:
           <li class="language">
-              <i class="far fa-globe" aria-hidden="true"></i>
+              <i class="fal fa-globe" aria-hidden="true"></i>
               <span class="sr">${_("Language")}</span>
               <span>${_(dict(settings.ALL_LANGUAGES).get(course.language, course.language))}</span>
           </li>
         % endif
         % if course.course_category:
           <li class="course-category">
-            <i class="far fa-folder" aria-hidden="true"></i>
+            <i class="fal fa-folder" aria-hidden="true"></i>
             <span>${_(dict(settings.COURSE_CATEGORIES).get(course.course_category, course.course_category))}</span>
           </li>
         % endif
         % if not course.start_date_is_still_default:
           <% course_start_date = course.advertised_start or course.start %>
           <li class="important-dates">
-            <i class="icon far fa-calendar-alt" aria-hidden="true"></i>
+            <i class="icon fal fa-calendar-alt" aria-hidden="true"></i>
             <span class="sr">${_('Course dates')}</span>
             % if isinstance(course_start_date, string_types):
               <span class="important-dates-item-text start-date">${course_start_date}</span>
@@ -92,7 +92,7 @@ from six import string_types
 
         % if get_course_about_section(request, course, "effort"):
           <li class="effort">
-            <i class="icon fa fa-pencil" aria-hidden="true"></i>
+            <i class="icon fal fa-pencil" aria-hidden="true"></i>
             <span class="sr">${_("Estimated Effort")}</span>
             <span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span>
           </li>
@@ -100,7 +100,7 @@ from six import string_types
 
         % if course_price and (can_add_course_to_cart or is_cosmetic_price_enabled):
           <li class="course-price">
-            <i class="icon fa fa-money" aria-hidden="true"></i>
+            <i class="icon fal fa-money" aria-hidden="true"></i>
             <span class="sr">${_("Price")}</span>
             <span class="important-dates-item-text">${course_price}</span>
           </li>

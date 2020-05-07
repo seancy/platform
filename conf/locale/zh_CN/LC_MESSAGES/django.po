@@ -10154,13 +10154,12 @@ msgstr "无效的导出格式"
 
 #: lms/djangoapps/triboo_analytics/views.py:511
 msgid ""
-"The export report is currently being created. When it's ready, the report "
-"will appear in your report list at the bottom of the page. You will be able "
-"to download the report when it is complete, it can take several minutes to "
-"appear."
+"The report is being exported. Note that this operation can take several minutes. When the report will be ready, it "
+"will appear in the list of reports ready to download under the cloud icon in the menu bar and you will be able "
+"to download it."
 msgstr ""
-"当前正在创建导出报表。准备就绪后，报表将显示在页面底部的报表列表中。完成后，"
-"您将能够下载报告，可能需要几分钟才能显示。"
+"当前正在创建导出报表。 请注意，此操作可能需要几分钟。准备就绪后，它将显示在菜单栏中云图标下准备下载的报告列表中，"
+"您将能够下载报告。"
 
 #: lms/djangoapps/triboo_analytics/views.py:532
 msgid "No report to export."
@@ -19843,12 +19842,10 @@ msgid "Download CSV of Certificates Issued"
 msgstr "下载已颁发证书的 CSV"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:104
-#: lms/templates/triboo_analytics/download.html:6
 msgid "Reports Available for Download"
 msgstr "报告已可供下载"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:106
-#: lms/templates/triboo_analytics/download.html:7
 msgid ""
 "The reports listed below are available for download. A link to every report "
 "remains available on this page, identified by the UTC date and time of "
@@ -19869,7 +19866,6 @@ msgstr ""
 "动后提交的作答将在后续的报告中体现。报告每天生成多次。"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:117
-#: lms/templates/triboo_analytics/download.html:9
 msgid ""
 "{strong_start}Note{strong_end}: To keep learner data secure, you cannot save "
 "or email these links for direct access. Copies of links expire within 5 "
@@ -22172,34 +22168,62 @@ msgstr ""
 msgid "Analytics - Course Report"
 msgstr "分析 - 课程报告"
 
-#: lms/templates/triboo_analytics/course.html:24
-#: lms/templates/triboo_analytics/learner.html:21
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/microsite.html:28
-#: lms/templates/triboo_analytics/transcript.html:23
 msgid "Global Report"
 msgstr "总体报告"
 
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
-#: lms/templates/triboo_analytics/learner.html:22
-#: lms/templates/triboo_analytics/microsite.html:29
-#: lms/templates/triboo_analytics/transcript.html:24
 msgid "Course Report"
 msgstr "课程报告"
 
-#: lms/templates/triboo_analytics/course.html:27
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Summary Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Progress Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Time Spent Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/learner.html:24
-#: lms/templates/triboo_analytics/microsite.html:31
-#: lms/templates/triboo_analytics/transcript.html:26
 msgid "Learner Report"
 msgstr "学员报告"
 
-#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/ilt.html:29
-#: lms/templates/triboo_analytics/learner.html:28
-#: lms/templates/triboo_analytics/microsite.html:34
-#: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
 msgstr "ILT 报告"
+
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customized Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/download.html
+msgid "Reports ready to download"
+msgstr ""
+
+#: lms/templates/triboo_analytics/download.html
+msgid "No reports available"
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customize your report by configuring each step."
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Note: If no user properties are selected, default properties will be used."
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Choose the export format"
+msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"

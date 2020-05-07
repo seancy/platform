@@ -1249,12 +1249,12 @@ def customized_view(request):
     report_type = request.GET.get('report_type', None)
     courses_selected = request.GET.get('courses_selected', None)
     report_types = [
-        ('course_summary', 'Course Summary Report', 'multiple'),
-        ('course_progress', 'Course Progress Report', 'single'),
-        ('course_time_spent', 'Course Time Spent Report', 'single'),
-        ('learner', 'Learner Report', ''),
-        ('ilt_global', 'ILT Global Report', ''),
-        ('ilt_learner', 'ILT Learner Report', ''),
+        ('course_summary', _('Course Summary Report'), 'multiple'),
+        ('course_progress', _('Course Progress Report'), 'single'),
+        ('course_time_spent', _('Course Time Spent Report'), 'single'),
+        ('learner', _('Learner Report'), ''),
+        ('ilt_global', _('ILT Global Report'), ''),
+        ('ilt_learner', _('ILT Learner Report'), ''),
     ]
     export_formats = ['csv', 'xls', 'json']
     courses, courses_list = get_all_courses(request, orgs)
@@ -1315,11 +1315,10 @@ def _export_table(request, course_key, report_name, report_args):
     except AlreadyRunningError:
         return JsonResponse({'message': 'task is already running.'})
 
-    return JsonResponse({"message": _("The export report is currently being created. "
-                                      "When it's ready, the report will appear in your report "
-                                      "list at the bottom of the page. "
-                                      "You will be able to download the report when "
-                                      "it is complete, it can take several minutes to appear.")})
+    return JsonResponse({"message": _("The report is being exported. Note that this operation can take "
+                                      "several minutes. When the report will be ready, it will appear "
+                                      "in the list of reports ready to download under the cloud icon "
+                                      "in the menu bar and you will be able to download it.")})
 
 
 def _transcript_export_table(request, user):

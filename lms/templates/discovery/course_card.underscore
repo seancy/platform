@@ -31,7 +31,7 @@
         <section class="sub-info">
             <div class="badge<%=(!badges && badges !== 0)?' hidden':''%>">
                 <% //if (badges || badges === 0) { %>
-                    <i class="far fa-trophy"></i>
+                    <i class="fal fa-trophy"></i>
                     <span><%- badges %> <%- ngettext("badge", "badges", badges) %></span>
                 <% //} %>
             </div>
@@ -40,7 +40,7 @@
             <% } %>
             <div class="duration<%=(typeof(display_duration) == "undefined")?' hidden':''%>">
                 <% //if (typeof(display_duration) != "undefined") { %>
-                    <i class="far fa-clock"></i>
+                    <i class="fal fa-clock"></i>
                     <span><%- typeof(display_duration) != "undefined"?display_duration:'' %></span>
                 <% //} %>
             </div>

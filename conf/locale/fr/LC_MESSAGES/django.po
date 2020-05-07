@@ -10766,14 +10766,13 @@ msgstr "Le format d'export est invalide."
 
 #: lms/djangoapps/triboo_analytics/views.py:511
 msgid ""
-"The export report is currently being created. When it's ready, the report "
-"will appear in your report list at the bottom of the page. You will be able "
-"to download the report when it is complete, it can take several minutes to "
-"appear."
+"The report is being exported. Note that this operation can take several minutes. When the report will be ready, it "
+"will appear in the list of reports ready to download under the cloud icon in the menu bar and you will be able "
+"to download it."
 msgstr ""
-"Votre rapport est en cours de création. Il apparaitra dans la section "
-"'Mes rapports' en bas de la page quand il sera prêt. La génération peut "
-"prendre quelques minutes."
+"Le rapport est en cours de création. Notez que la génération peut prendre quelques minutes. "
+"Lorsque votre rapport sera prêt, il apparaitra dans la liste des rapports prêts pour le téléchargement sous l'icône "
+"nuage dans la barre de menu et vous pourrez alors le télécharger."
 
 #: lms/djangoapps/triboo_analytics/views.py:532
 msgid "No report to export."
@@ -21181,12 +21180,10 @@ msgid "Download CSV of Certificates Issued"
 msgstr "Télécharger au format CSV une liste des attestations délivrées"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:104
-#: lms/templates/triboo_analytics/download.html:6
 msgid "Reports Available for Download"
 msgstr "Rapports disponibles pour être téléchargés"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:106
-#: lms/templates/triboo_analytics/download.html:7
 msgid ""
 "The reports listed below are available for download. A link to every report "
 "remains available on this page, identified by the UTC date and time of "
@@ -21211,7 +21208,6 @@ msgstr ""
 "un rapport ultérieur. Le rapport est généré plusieurs fois par jour."
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:117
-#: lms/templates/triboo_analytics/download.html:9
 msgid ""
 "{strong_start}Note{strong_end}: To keep learner data secure, you cannot save "
 "or email these links for direct access. Copies of links expire within 5 "
@@ -23698,33 +23694,68 @@ msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:12
 msgid "Analytics - Course Report"
-msgstr "Reporting des cours"
+msgstr "Reporting - Rapport des cours"
 
-#: lms/templates/triboo_analytics/course.html:24
-#: lms/templates/triboo_analytics/learner.html:21
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/microsite.html:28
-#: lms/templates/triboo_analytics/transcript.html:23
 msgid "Global Report"
-msgstr "Reporting global"
+msgstr "Rapport global"
 
-#: lms/templates/triboo_analytics/course.html:27
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/course.html:25
+msgid "Course Report"
+msgstr "Rapport des cours"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Summary Report"
+msgstr "Rapport de cours - Résumé"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Progress Report"
+msgstr "Rapport de cours - Progression"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Time Spent Report"
+msgstr "Rapport de cours - Temps passé"
+
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/learner.html:24
-#: lms/templates/triboo_analytics/microsite.html:31
-#: lms/templates/triboo_analytics/transcript.html:26
 msgid "Learner Report"
-msgstr "Reporting des apprenants"
+msgstr "Rapport des apprenants"
 
-#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/ilt.html:29
-#: lms/templates/triboo_analytics/learner.html:28
-#: lms/templates/triboo_analytics/microsite.html:34
-#: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
-msgstr "Reporting ILT"
+msgstr "Rapport ILT"
+
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customized Report"
+msgstr "Rapport sur mesure"
+
+#: lms/templates/triboo_analytics/download.html
+msgid "Reports ready to download"
+msgstr "Rapports prêts pour le téléchargement"
+
+#: lms/templates/triboo_analytics/download.html
+msgid "No reports available"
+msgstr "Aucun rapport disponible"
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customize your report by configuring each step."
+msgstr "Personnalisez votre report en configurant chaque étape."
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Note: If no user properties are selected, default properties will be used."
+msgstr "Note : si aucune propriété n'est sélectionnée, les propriétés par défaut seront utilisées."
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Choose the export format"
+msgstr "Choisissez le format d'export"
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
-msgstr "Séléctionner un cours pour afficher les données :"
+msgstr "Séléctionnez un cours pour afficher les données :"
 
 #: lms/templates/triboo_analytics/course.html:48
 #: lms/templates/triboo_analytics/course.html:153
@@ -23773,25 +23804,25 @@ msgstr "Temps passé"
 
 #: lms/templates/triboo_analytics/ilt.html:11
 msgid "Analytics - ILT Report"
-msgstr "Reporting ILT"
+msgstr "Reporting - Rapport ILT"
 
 #: lms/templates/triboo_analytics/ilt.html:40
 #: lms/templates/triboo_analytics/ilt.html:52
 msgid "ILT Global Report"
-msgstr "Reporting ILT global"
+msgstr "Rapport ILT global"
 
 #: lms/templates/triboo_analytics/ilt.html:41
 #: lms/templates/triboo_analytics/ilt.html:53
 msgid "ILT Learner Report"
-msgstr "Reporting ILT des apprenants"
+msgstr "Rapport ILT des apprenants"
 
 #: lms/templates/triboo_analytics/learner.html:9
 msgid "Analytics - Learner Report"
-msgstr "Reporting des apprenants "
+msgstr "Reporting - Rapport des apprenants "
 
 #: lms/templates/triboo_analytics/microsite.html:16
 msgid "Analytics - Global Report"
-msgstr "Reporting global"
+msgstr "Reporting - Rapport global"
 
 #: lms/templates/triboo_analytics/microsite.html:38
 msgid "Let's have a look at your learning data"
@@ -23837,7 +23868,7 @@ msgstr "Merci de fournir un motif. Ce champs ne peut être vide !"
 
 #: lms/templates/triboo_analytics/my_transcript.html:121
 msgid "Analytics - Learning Transcript"
-msgstr "Rapport d'activité"
+msgstr "Reporting - Rapport d'activité"
 
 #: lms/templates/triboo_analytics/my_transcript.html:213
 #: lms/templates/triboo_analytics/transcript.html:33
@@ -30549,13 +30580,6 @@ msgstr "Espace Admin"
 #: lms/templates/courseware/course_navigation.html:94
 msgid "Edit the Course"
 msgstr "Éditer le cours"
-
-#: lms/templates/triboo_analytics/course.html:25
-#: lms/templates/triboo_analytics/learner.html:22
-#: lms/templates/triboo_analytics/microsite.html:29
-#: lms/templates/triboo_analytics/transcript.html:24
-msgid "Course Report"
-msgstr "Reporting du cours"
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:190  remove the duplicated one

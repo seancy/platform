@@ -35,7 +35,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
 ##    % if show_dashboard_tabs:
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab dashboard-tab">
           <a class="${'active ' if reverse('dashboard') == request.path else ''}tab-nav-link" title="${_('My Dashboard')}" href="${reverse('dashboard')}">
-            <span class="label"><span class="icon far fa-home-alt" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-home-alt" aria-hidden="true"></span></span>
             ${_("Dashboard")}
           </a>
         </div>
@@ -44,7 +44,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
         and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab catalog-tab">
           <a class="tab-nav-link" href="${marketing_link('COURSES')}" title="${_('Customized course catalog')}">
-            <span class="label"><span class="icon far fa-book-open" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-book-open" aria-hidden="true"></span></span>
             ${_("Explore")}
           </a>
         </div>
@@ -56,7 +56,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
         and EDFLEX_DENIED_GROUP not in [group.name for group in user.groups.all()]):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab edflex-tab">
           <a class="tab-nav-link" target="_blank" href="${reverse('edflex_catalog')}" title="${_('External content catalog')}">
-            <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-caret-circle-right" aria-hidden="true"></span></span>
             ${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}
           </a>
         </div>
@@ -65,7 +65,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
 
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab my-courses-tab">
           <a class="tab-nav-link" href="${reverse('my_courses', kwargs={'tab': 'all-courses'})}" title="${_('Courses I am enrolled in')}">
-            <span class="label"><span class="icon far fa-file-alt" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-file-alt" aria-hidden="true"></span></span>
             ${_("My Courses")}
           </a>
         </div>
@@ -75,7 +75,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
         or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in user.groups.all()])):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab analytics-tab">
           <a class="tab-nav-link" href="${reverse('analytics_microsite')}" title="${_('Tracking learners and courses analytics')}">
-            <span class="label"><span class="icon far fa-analytics" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-analytics" aria-hidden="true"></span></span>
             ${_("Analytics")}
           </a>
         </div>
@@ -84,7 +84,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
       % if studio_access_role(user):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab studio-tab">
           <a class="tab-nav-link" href="//${getattr(settings, 'CMS_BASE')}" target="_blank" title="${_('Built-in authoring tool')}">
-            <span class="label"><span class="icon far fa-edit" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-edit" aria-hidden="true"></span></span>
             ${_("Studio")}
           </a>
         </div>
@@ -93,7 +93,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
       % if ilt_supervisor_role(user) and configuration_helpers.get_value('ILT_FOLLOW_UP_ENABLED', False):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab ilt-request-tab">
           <a class="tab-nav-link" href="${reverse('ilt_validation_list')}" title="${_('ILT request validation page')}">
-            <span class="label"><span class="icon far fa-ballot-check" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-ballot-check" aria-hidden="true"></span></span>
             ${pgettext('tab', "ILT Follow-up")}
           </a>
         </div>

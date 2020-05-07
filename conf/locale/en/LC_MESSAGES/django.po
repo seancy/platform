@@ -21768,12 +21768,10 @@ msgid "Download CSV of Certificates Issued"
 msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:104
-#: lms/templates/triboo_analytics/download.html:6
 msgid "Reports Available for Download"
 msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:106
-#: lms/templates/triboo_analytics/download.html:7
 msgid ""
 "The reports listed below are available for download. A link to every report "
 "remains available on this page, identified by the UTC date and time of "
@@ -21790,7 +21788,6 @@ msgid ""
 msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:117
-#: lms/templates/triboo_analytics/download.html:9
 msgid ""
 "{strong_start}Note{strong_end}: To keep learner data secure, you cannot save "
 "or email these links for direct access. Copies of links expire within 5 "
@@ -24016,29 +24013,63 @@ msgstr ""
 msgid "Let's have a look at your learning data"
 msgstr ""
 
-#: lms/templates/triboo_analytics/course.html:24
-#: lms/templates/triboo_analytics/ilt.html:24
-#: lms/templates/triboo_analytics/learner.html:23
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/microsite.html:29
-#: lms/templates/triboo_analytics/transcript.html:23
 msgid "Global Report"
 msgstr ""
 
-#: lms/templates/triboo_analytics/course.html:27
-#: lms/templates/triboo_analytics/ilt.html:27
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/course.html:25
+msgid "Course Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Summary Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Progress Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Time Spent Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/learner.html:26
-#: lms/templates/triboo_analytics/microsite.html:32
-#: lms/templates/triboo_analytics/transcript.html:26
 msgid "Learner Report"
 msgstr ""
 
-#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/ilt.html:29
-#: lms/templates/triboo_analytics/learner.html:28
-#: lms/templates/triboo_analytics/microsite.html:34
-#: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
 msgstr ""
+
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customized Report"
+msgstr ""
+
+#: lms/templates/triboo_analytics/download.html
+msgid "Reports ready to download"
+msgstr ""
+
+#: lms/templates/triboo_analytics/download.html
+msgid "No reports available"
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customize your report by configuring each step."
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Note: If no user properties are selected, default properties will be used."
+msgstr ""
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Choose the export format"
+msgstr ""
+
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
@@ -26318,16 +26349,6 @@ msgstr ""
 
 #: lms/templates/courseware/course_navigation.html:94
 msgid "Edit the Course"
-msgstr ""
-
-#: lms/templates/triboo_analytics/course.html:25
-#: lms/templates/triboo_analytics/ilt.html:25
-#: lms/templates/triboo_analytics/learner.html:24
-#: lms/templates/triboo_analytics/microsite.html:30
-#: lms/templates/triboo_analytics/transcript.html:24
-#: lms/templates/courseware/course_about.html:146
-#: lms/templates/courseware/course_navigation.html:103
-msgid "Course Report"
 msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27

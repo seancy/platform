@@ -39,6 +39,7 @@ profile_image_url = get_profile_image_urls_for_user(self.real_user)['medium']
     ##% endif
     ##<div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('dashboard')}" role="menuitem">${_("Dashboard")}</a></div>
     ## <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('learner_profile', kwargs={'username': username})}" role="menuitem">${_("Profile")}</a></div>
-    <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('account_settings')}" role="menuitem" title="${_('Account setting')}">${_("Account")}</a></div>
+    <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('analytics_my_transcript')}" role="menuitem" title="${_('Access to my learning experience')}">${_("My Learning Transcript")}</a></div>
+    <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('account_settings')}" role="menuitem" title="${_('Account setting')}">${_("My Account")}</a></div>
     <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem" title="${_('Sign out')}">${_("Sign Out")}</a></div>
 </div>

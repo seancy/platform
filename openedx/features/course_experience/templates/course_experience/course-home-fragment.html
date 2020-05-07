@@ -139,14 +139,14 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           % if is_discussion_enabled(course_key):
           <div class="discussions">
             <a href="${discussion_url}" title="${_('Access to the discussion')}">
-              <i class="far fa-comment-alt"></i>
+              <i class="fal fa-comment-alt"></i>
               ${nb_talks} ${_("posts")}
             </a>
           </div>
           % endif
           <div class="trophies">
             <a href="${progress_url}" title="${_('Access to the badge')}">
-              <i class="far fa-trophy"></i>
+              <i class="fal fa-trophy"></i>
               ${nb_trophies_earned} / ${nb_trophies_possible}
             </a>
           </div>

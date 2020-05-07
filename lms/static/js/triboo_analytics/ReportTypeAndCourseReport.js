@@ -82,7 +82,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     aria-expanded="${ 'false' }"
                     aria-controls="report_section_contents"
                     id="report_section">
-                <p className="section-title">Select a report</p>
+                <p className="section-title">{gettext("Select a report")}</p>
                 <span className="fa fa-chevron-down" aria-hidden="true"></span>
             </button>
             <div id="report_section_contents" className="section-content">
@@ -90,11 +90,18 @@ class ReportTypeAndCourseReport extends React.Component {
                     <Dropdown sign='caret' data={report_types} value={get(report_types, ['0', 'value'])}
                               onChange={this.recreateCourseSelect.bind(this)} />
                     <input type="hidden" id='report_type' value={this.state.reportTypeValue}/>
+
+                    {/*<select name="report_type" id="report_type" ref="report_type"
+                    onChange={this.recreateCourseSelect.bind(this)}>
+                        {report_types.map(({type, title}) => {
+                            return <option key={type} value={type}>{gettext(title)}</option>
+                        })}
+                    </select>*/}
                 </div>
             </div>
             <div id="report_bar" className="reports label-bar is-collapsed">
                 {reportTypeValue && <button className="filter-option option-label">
-                    <span className="query">{reportType.text}</span>
+                    <span className="query">{gettext(reportType.text)}</span>
                 </button>}
             </div>
         </div>
@@ -118,7 +125,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     aria-expanded="${ 'false' }"
                     aria-controls="course_section_contents"
                     id="course_section">
-                <p className="section-title">Select course(s)</p>
+                <p className="section-title">{gettext("Select course(s)")}</p>
                 <span className="fa fa-chevron-down" aria-hidden="true"></span>
             </button>
 
@@ -143,6 +150,7 @@ class ReportTypeAndCourseReport extends React.Component {
             </div>
         </div>
     }
+
     getFilterSection(){
         const {selectedKeyValues,startDate, endDate}=this.state
         const stopEvent = e => {
@@ -155,7 +163,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     aria-expanded="${ 'false' }"
                     aria-controls="filter_section_contents"
                     id="filter_section">
-                <p className="section-title">Filter the data</p>
+                <p className="section-title">{gettext("Filter the data")}</p>
                 <span className="fa fa-chevron-down" aria-hidden="true"></span>
             </button>
             <div id="filter_section_contents" className="section-content is-hidden">
@@ -168,7 +176,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     </div>
                 </section>
                 <section className="period-form">
-                    <p className="section-label">Select a time range:</p>
+                    <p className="section-label">{gettext("Select a time range:")}</p>
                     <div id="period-table">
                         <DateRange onChange={this.periodOnChange.bind(this)}
                             //label='Select a time range'

@@ -19,17 +19,17 @@ from openedx.core.lib.courses import course_image_url
 
   <ul class="board-layer course-primary-info">
       <li id="field-course-number">
-        <i class="far fa-file-alt"></i>
+        <i class="fal fa-file-alt"></i>
         <label for="course-number">${_("Course Number:")}</label>
         <b>${ section_data['course_number']}</b>
       </li>
       <li id="field-course-start-date">
-        <i class="far fa-calendar-alt"></i>
+        <i class="fal fa-calendar-alt"></i>
         <label for="course-start-date">${_("Course Start Date:")}</label>
         <b class="localized-datetime" data-datetime="${section_data['start_date']}" data-timezone="${user_timezone}" data-language="${user_language}"></b>
       </li>
       <li id="field-course-end-date">
-        <i class="far fa-calendar-alt"></i>
+        <i class="fal fa-calendar-alt"></i>
         <label for="course-end-date">${_("Course End Date:")}</label>
         % if course.end is None:
             <b>${_("No end date set")}</b>
@@ -73,12 +73,12 @@ from openedx.core.lib.courses import course_image_url
 
   <div class="board-wrapper">
     <div class="field text is-not-editable half-board-layer" id="field-course-num-sections">
-      <i class="far fa-clipboard-list"></i>
+      <i class="fal fa-clipboard-list"></i>
       <label for="course-num-sections">${_("Number of sections:")}</label>
       <b>${ section_data['num_sections'] }</b>
     </div>
     <div class="field text is-not-editable half-board-layer passing-percent" id="field-grade-cutoffs">
-      <i class="far fa-clipboard-check"></i>
+      <i class="fal fa-clipboard-check"></i>
       <label for="course-grade-cutoffs">${_("Grade Cutoffs:")}</label>
       % if section_data['grade_cutoffs'].startswith("Pass: "):
         <b class="pass">${ "{}{}%".format(section_data['grade_cutoffs'][:6], int(round(float(section_data['grade_cutoffs'][6:])*100))) }</b>
@@ -114,22 +114,22 @@ from openedx.core.lib.courses import course_image_url
       </div>
       <ul class="board-layer detail-enrollments">
           <li>
-            <i class="far fa-calendar-alt"></i>
+            <i class="fal fa-calendar-alt"></i>
             <label>${_("Verified")}</label>
             <b>${modes['verified']}</b>
           </li>
           <li>
-            <i class="far fa-calendar-alt"></i>
+            <i class="fal fa-calendar-alt"></i>
             <label>${_("Audit")}</label>
             <b>${modes['audit']}</b>
           </li>
           <li>
-            <i class="far fa-calendar-alt"></i>
+            <i class="fal fa-calendar-alt"></i>
             <label>${_("Honor")}</label>
             <b>${modes['honor']}</b>
           </li>
           <li>
-            <i class="far fa-calendar-alt"></i>
+            <i class="fal fa-calendar-alt"></i>
             <label>${_("Professional")}</label>
             <b>${modes['professional'] + modes['no-id-professional']}</b>
           </li>
