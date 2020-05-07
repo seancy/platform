@@ -136,12 +136,12 @@ class TranscriptTable(_RenderMixin, tables.Table):
     def __init__(self, data=None, order_by=None, orderable=None, empty_text=None, exclude=None, attrs=None,
                  row_attrs=None, pinned_row_attrs=None, sequence=None, prefix=None, order_by_field=None,
                  page_field=None, per_page_field=None, template=None, default=None, request=None, show_header=None,
-                 show_footer=True, extra_columns=None):
+                 show_footer=True, extra_columns=None, html_links=False):
         super(TranscriptTable, self).__init__(data, order_by, orderable, empty_text, exclude, attrs, row_attrs,
                                               pinned_row_attrs, sequence, prefix, order_by_field, page_field,
                                               per_page_field, template, default, request, show_header, show_footer,
                                               extra_columns)
-
+        self.html_links = html_links
         self.titles = {ov.id: ov.display_name for ov in CourseOverview.objects.all()}
 
 
@@ -151,6 +151,7 @@ class TranscriptTable(_RenderMixin, tables.Table):
 
     def render_course_title(self, record, value, bound_column):
         column = bound_column.column
+
         return column.render_link(
             column.compose_url(record, bound_column),
             record=record,
@@ -158,7 +159,9 @@ class TranscriptTable(_RenderMixin, tables.Table):
         )
 
 
-    def value_course_title(self, record):
+    def value_course_title(self, record, value, bound_column):
+        if self.html_links:
+            return self.render_course_title(record, value, bound_column)
         return self.titles[record.course_id]
 
 
