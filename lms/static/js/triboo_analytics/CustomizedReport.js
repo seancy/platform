@@ -172,7 +172,7 @@ export class CustomizedReport {
                     return parseInt(a) + parseInt(b);
                 })
             }
-            $('#enrollment_selected')[0].innerText = current_num
+            //$('#enrollment_selected')[0].innerText = current_num
         });
         $('#report_bar').delegate('button', 'click', (e) => {
             e.preventDefault();
@@ -415,7 +415,10 @@ export class CustomizedReport {
                 $(button).siblings('.label-bar').removeClass('is-hidden')
             }
             this.expandSection(sectionToggleButton);
-            $(sectionToggleButton).siblings('.label-bar').addClass('is-hidden')
+            const $labelBar = $(sectionToggleButton).siblings('.label-bar')
+            if ($labelBar.attr('id')!= 'course_bar'){
+                $labelBar.addClass('is-hidden')
+            }
           } else if (isExpanded) {
             this.collapseSection(sectionToggleButton);
             $(sectionToggleButton).siblings('.label-bar').removeClass('is-hidden')

@@ -19,15 +19,6 @@ class ReportTypeAndCourseReport extends React.Component {
             hideCourseReportSelect: false,
             filterData:[{value: '', text: 'loading'}]
         };
-
-        //$(this.refs.report_type).select2().on('select2:select', this.recreateCourseSelect.bind(this));
-        setTimeout(() => {
-            $(this.refs.course_selected).select2({
-                multiple: true,
-                width: 'off',
-                placeholder: "Course Name",
-            });
-        }, 300)
     }
 
     componentDidMount() {
@@ -43,16 +34,10 @@ class ReportTypeAndCourseReport extends React.Component {
 
     recreateCourseSelect(reportType) {
         let courseReportType = reportType.courseReportType,
-            isMultiple = true, $courseSelected = $(this.refs.course_selected);
-        $courseSelected.data('select2') && $courseSelected.select2("destroy")
+            isMultiple = true;
         this.setState({reportType, reportTypeValue:reportType.value}, this.fireOnChange)
         if (courseReportType == 'multiple' || courseReportType == 'single') {
             isMultiple = courseReportType == 'single' ? false : true;
-            /*$courseSelected.select2({
-                width: 'off',
-                multiple: isMultiple,
-                placeholder: "Course Name",
-            });*/
             this.setState({
                 isMultiple,
                 selectedCourses:[],
@@ -105,13 +90,6 @@ class ReportTypeAndCourseReport extends React.Component {
                     <Dropdown sign='caret' data={report_types} value={get(report_types, ['0', 'value'])}
                               onChange={this.recreateCourseSelect.bind(this)} />
                     <input type="hidden" id='report_type' value={this.state.reportTypeValue}/>
-
-                    {/*<select name="report_type" id="report_type" ref="report_type"
-                    onChange={this.recreateCourseSelect.bind(this)}>
-                        {report_types.map(({type, title}) => {
-                            return <option key={type} value={type}>{title}</option>
-                        })}
-                    </select>*/}
                 </div>
             </div>
             <div id="report_bar" className="reports label-bar is-collapsed">
@@ -121,10 +99,8 @@ class ReportTypeAndCourseReport extends React.Component {
             </div>
         </div>
     }
-    //<!--is-hidden-->
 
     getCourseSection(){
-        //(this.state.hideCourseReportSelect ? 'hide' : '')
         const {courses} = this.props, {isMultiple, hideCourseReportSelect, selectedCourses}=this.state;
         const render=(text,item)=>{
             return `${text} (${item.course_enrollments || '0'} users)`
@@ -154,11 +130,6 @@ class ReportTypeAndCourseReport extends React.Component {
                         . (<span id="enrollment_limit">{this.props.limit || 300000}</span> at most)
                     </p>
                     <Dropdown data={courses} multiple={isMultiple} optionRender={render} onChange={handleCourseSelect}/>
-                    {/*<select id="course_selected" ref="course_selected">
-                        {courses.map(({cid, course_title, course_enrollments}) => {
-                            return <option key={cid} value={cid}>{course_title} ({course_enrollments} users)</option>
-                        })}
-                    </select>*/}
                 </div>
             </div>
             <div id="course_bar" className="courses label-bar is-collapsed">
