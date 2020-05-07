@@ -43,11 +43,11 @@ class CourseReport extends React.Component {
             {text: gettext('Progress'), value: 'progress', component: Progress, props:common_props},
             {text: gettext('Time Spent'), value: 'time_spent', component: TimeSpent, props:common_props},
         ]
-
-        return (
+        const {last_update}=this.props
+        return (last_update &&
             <Tab activeValue={(new URLSearchParams(location.search)).get('report')} data={data}>
                 <div className="last-update">
-                    <span className="fal fa-sync-alt"></span>{gettext("Please, note that these reports are not live. Last update:")} {this.props.last_update}
+                    <span className="fal fa-sync-alt"></span>{gettext("Please, note that these reports are not live. Last update:")} {last_update}
                 </div>
             </Tab>
         )

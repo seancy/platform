@@ -195,23 +195,22 @@
                 </div>
               % endif
 
-                ${HTML(render_bundle('CourseReport'))}
-                ${HTML(render_bundle('ReactRenderer'))}
-                <div id="course-report"></div>
-                <script type="text/javascript">
-                  new ReactRenderer({
-                    component: CourseReport,
-                    selector: '#course-report',
-                    componentName: 'CourseReport',
-                    props: {
-                        last_update:'${last_update}',
-                        defaultLanguage: '${request.LANGUAGE_CODE}',
-                        token:'${ csrf_token }',
-                      }
-                  });
-                </script>
-
             % endif
+            ${HTML(render_bundle('CourseReport'))}
+            ${HTML(render_bundle('ReactRenderer'))}
+            <div id="course-report"></div>
+            <script type="text/javascript">
+              new ReactRenderer({
+                component: CourseReport,
+                selector: '#course-report',
+                componentName: 'CourseReport',
+                props: {
+                    last_update:'${context.get("last_update", "")}',
+                    defaultLanguage: '${request.LANGUAGE_CODE}',
+                    token:'${ csrf_token }',
+                  }
+              });
+            </script>
           </div>
         </section>
     </div>
