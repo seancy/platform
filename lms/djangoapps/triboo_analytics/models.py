@@ -823,7 +823,9 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             key = res.user.id
             if key not in dataset.keys():
                 dataset[key] = {'user': res.user}
-            dataset[key][res.badge.badge_hash] = {'score': res.score, 'success': res.success, 'success_date': res.success_date}
+            dataset[key]["%s_success" % res.badge.badge_hash] = res.success
+            dataset[key]["%s_score" % res.badge.badge_hash] = res.score
+            dataset[key]["%s_successdate" % res.badge.badge_hash] = res.success_date
         return dataset.values()
 
 

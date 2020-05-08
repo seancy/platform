@@ -48,9 +48,11 @@ class SumFooterColumn(tables.Column):
     def render_footer(self, bound_column, table):
         return get_sum(bound_column, table.data)
 
+
 class TimeSpentFooterColumn(tables.Column):
     def render_footer(self, bound_column, table):
         return format_time_spent(get_sum(bound_column, table.data))
+
 
 class AvgFooterColumn(tables.Column):
     def render_footer(self, bound_column, table):
@@ -310,47 +312,43 @@ class UserBaseTable(tables.Table):
         return queryset, True
 
 
-class ProgressColumn(tables.Column):
+class ProgressSuccessColumn(tables.Column):
     def render(self, value):
-        if value['success']:
-            if value['success_date']:
-                return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%% (%s)" % (
-                    value['score'], dt2str(value['success_date'])))
-            return mark_safe("<span class='trophy-yes fa fa-check'></span> %d%%" % (value['score']))
-        return mark_safe("<span class='trophy-no fa fa-times'></span> %d%%" % (value['score']))
+        if value:
+            return mark_safe("<span class='trophy-yes fa fa-check'></span>")
+        return mark_safe("<span class='trophy-no fa fa-times'></span>")
 
 
     def value(self, value):
-        if value['success']:
-            if value['success_date']:
-                return "Yes: %d%% (%s)" % (value['score'], dt2str(value['success_date']))
-            return "Yes: %d%%" % value['score']
-        return "No: %d%%" % value['score']
+        if value:
+            return "Yes"
+        return "No"
 
 
-    def render_footer(self, bound_column, table):
-        col_avg = 0
-        nb_rows = len(table.data)
-        if nb_rows > 0:
-            try:
-                col_sum = sum(bound_column.accessor.resolve(row)['score'] for row in table.data)
-                col_avg = col_sum / nb_rows
-            except ValueError:
-                pass
-        return "%d%%" % col_avg
+class ProgressSuccessDateColumn(tables.Column):
+    def render(self, value):
+        return dt2str(value) if value else ""
+
+
+    def value(self, value):
+        return dt2str(value) if value else ""
 
 
 def get_progress_table_class(badges):
     attributes = {}
     for badge_hash, grading_rule, section_name in badges:
-        verbose_name = "%s / %s" % (grading_rule.encode('utf-8'), section_name.encode('utf-8'))
-        attributes[badge_hash] = ProgressColumn(verbose_name=verbose_name)
+        verbose_name = "%s ▸ %s" % (grading_rule.encode('utf-8'), section_name.encode('utf-8'))
+        # attributes[badge_hash] = HeaderColumn(verbose_name=verbose_name, colspan=3)
+        attributes["%s_success" % badge_hash] = ProgressSuccessColumn(verbose_name=("%s / Success" % verbose_name))
+        attributes["%s_score" % badge_hash] = AvgFooterColumn(verbose_name=("%s / Score" % verbose_name))
+        attributes["%s_successdate" % badge_hash] = ProgressSuccessDateColumn(verbose_name=("%s / Date" % verbose_name))
 
     def render_user_country(self, value):
         return dict(countries)[value]
     attributes['render_user_country'] = render_user_country
 
     return type("ProgressTable", (UserBaseTable,), attributes)
+
 
 
 class HeaderColumn(tables.Column):

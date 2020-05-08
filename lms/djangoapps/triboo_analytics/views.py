@@ -403,6 +403,7 @@ def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
     try:
         res = TableExport('json', table).export()
         table_json = json.loads(res)
+        print "LAETITIA -- %s" % table_json
         table_response = []
         total = collections.OrderedDict()
         for col in summary_columns:
