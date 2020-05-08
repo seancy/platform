@@ -343,7 +343,7 @@ def get_progress_table_data(course_key, filter_kwargs, exclude):
     _badges = Badge.objects.filter(course_id=course_key).order_by('order')
     badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
     ProgressTable = get_progress_table_class(badges)
-    columns = ["%s / %s" % (b.grading_rule, b.section_name) for b in _badges]
+    columns = ["%s ▸ %s" % (b.grading_rule, b.section_name) for b in _badges]
     return ProgressTable(dataset, exclude=exclude), columns
 
 
