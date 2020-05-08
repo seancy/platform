@@ -3,7 +3,7 @@ import {ReportType} from "./Config";
 import {Toolbar} from "./Toolbar";
 import DataList from "se-react-data-list";
 import React from "react";
-import {LastUpdate} from "./Common"
+import {LastUpdate,StatusRender,PercentRender} from "./Common"
 import {pick} from 'lodash'
 
 export class Transcript extends BaseReport {
@@ -30,13 +30,7 @@ export class Transcript extends BaseReport {
     }
 
     getConfig(){
-        const statusRender = { render:(value)=>{
-                let statusConfig = {'Not Started':'not-started-bg','In Progress':'in-progress-bg','Successful':'finished-bg'}
-                return <span className={statusConfig[value]}>{value}</span>
-            }}, percentRender = { render:value=>{
-                return value && value.indexOf('%') < 0 ? `${value}%` : value
-            }}
-
+        const statusRender = { render:StatusRender}, percentRender = { render:PercentRender}
         return {...{
             enableRowsCount:true,
             fields: [

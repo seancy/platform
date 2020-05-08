@@ -11428,3 +11428,170 @@ msgstr ""
 #: lms/static/js/courseware/ilt_validation.js
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
 msgstr ""
+
+
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Press enter to add"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Select a time range"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Last * days"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "CSV report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "XLS report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "JSON report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "The enrollments of the courses you have been selected is: *. (* at most)"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/BaseReport.js
+msgid "Total: * rows"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Enrollments"
+msgstr ""
+
+msgid "Successful"
+msgstr ""
+
+msgid "Unsuccessful"
+msgstr ""
+
+#msgid "In Progress" already exists
+#msgstr ""
+
+msgid "Not Started"
+msgstr ""
+
+msgid "Average Final Score"
+msgstr ""
+
+msgid "Badges"
+msgstr ""
+
+msgid "Posts"
+msgstr ""
+
+msgid "Total Time Spent"
+msgstr ""
+
+msgid "Last Login"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Geographical area"
+msgstr ""
+
+msgid "Course country"
+msgstr ""
+
+msgid "Zone/Region"
+msgstr ""
+
+msgid "Course tags"
+msgstr ""
+
+msgid "Course code"
+msgstr ""
+
+msgid "Course name"
+msgstr ""
+
+#msgid "Section"  already exists
+#msgstr ""
+
+#msgid "Subsection" already exists
+#msgstr ""
+
+msgid "Session ID"
+msgstr ""
+
+msgid "Start date"
+msgstr ""
+
+msgid "Start time"
+msgstr ""
+
+msgid "End date"
+msgstr ""
+
+msgid "End time"
+msgstr ""
+
+msgid "Duration (in hours)"
+msgstr ""
+
+msgid "Max capacity"
+msgstr ""
+
+msgid "Enrollees"
+msgstr ""
+
+msgid "Attendees"
+msgstr ""
+
+msgid "Attendance sheet"
+msgstr ""
+
+msgid "Location ID"
+msgstr ""
+
+msgid "Location name"
+msgstr ""
+
+msgid "Location address"
+msgstr ""
+
+msgid "Zip code"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Enrollment status"
+msgstr ""
+
+msgid "Outward trips"
+msgstr ""
+
+msgid "Return trips"
+msgstr ""
+
+msgid "Overnight stay"
+msgstr ""
+
+msgid "Overnight stay address"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReportSummary.js
+msgid "Current Score"
+msgstr ""
+
+msgid "Completion Date"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "Go"
+msgstr ""

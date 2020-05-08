@@ -31,21 +31,21 @@ export class LearnerReport extends BaseReport {
 
         return {...{
             fields: [
-                {name: 'Name', fieldName: 'Name', render:(value)=>{
+                {name: gettext('Name'), fieldName: 'Name', render:(value)=>{
                     return <div dangerouslySetInnerHTML={{__html: value}} />
                 }},
                 ...propertiesFields,
 
-                {name: 'Enrollments', fieldName: 'Enrollments'},
-                {name: 'Successful', fieldName: 'Successful'},
-                {name: 'Unsuccessful', fieldName: 'Unsuccessful'},
-                {name: 'In Progress', fieldName: 'In Progress'},
-                {name: 'Not Started', fieldName: 'Not Started'},
-                {name: 'Average Final Score', fieldName: 'Average Final Score'},
-                {name: 'Badges', fieldName: 'Badges'},
-                {name: 'Posts', fieldName: 'Posts'},
-                {name: 'Total Time Spent', fieldName: 'Total Time Spent'},
-                {name: 'Last Login', fieldName: 'Last Login'}
+                {name: gettext('Enrollments'), fieldName: 'Enrollments'},
+                {name: gettext('Successful'), fieldName: 'Successful'},
+                {name: gettext('Unsuccessful'), fieldName: 'Unsuccessful'},
+                {name: gettext('In Progress'), fieldName: 'In Progress'},
+                {name: gettext('Not Started'), fieldName: 'Not Started'},
+                {name: gettext('Average Final Score'), fieldName: 'Average Final Score'},
+                {name: gettext('Badges'), fieldName: 'Badges'},
+                {name: gettext('Posts'), fieldName: 'Posts'},
+                {name: gettext('Total Time Spent'), fieldName: 'Total Time Spent'},
+                {name: gettext('Last Login'), fieldName: 'Last Login'}
             ],
         }, ...this.getBaseConfig()}
     }

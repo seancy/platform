@@ -34,9 +34,9 @@ class Exporter extends React.Component {
 
     render() {
         const EXPORT_TYPES = [
-            {value: 'csv', text: 'CSV report'},
-            {value: 'xls', text: 'XLS report'},
-            {value: 'json', text: 'JSON report'},
+            {value: 'csv', text: gettext('CSV report')},
+            {value: 'xls', text: gettext('XLS report')},
+            {value: 'json', text: gettext('JSON report')},
         ]
         const {onGo}=this.props
         return (
@@ -52,7 +52,7 @@ class Exporter extends React.Component {
                     )
                 })}
                 </ul>
-                <input type="button" value="Go" className={this.state.buttonStatus} onClick={onGo}/>
+                <input type="button" value={gettext("Go")} className={this.state.buttonStatus} onClick={onGo}/>
             </div>
         )
     }

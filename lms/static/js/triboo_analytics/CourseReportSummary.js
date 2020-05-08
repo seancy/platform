@@ -5,6 +5,7 @@ import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
 import {pick} from "lodash";
 import PropTypes from "prop-types";
+import {PercentRender, StatusRender} from "./Common";
 
 export default class CourseReportSummary extends BaseReport {
     constructor(props) {
@@ -27,23 +28,21 @@ export default class CourseReportSummary extends BaseReport {
                 name: p.text,
                 fieldName: p.value
             }))
-        const render=(val)=>{
-            return <span className={val?'in-progress-bg':'not-started-bg'}>{val?'In Progress':'Not Started'}</span>
-        }
+        const statusRender = { render:StatusRender}, percentRender = { render:PercentRender}
         return {...{
             keyField:"ID",
             fields: [
-                {name: 'Name', fieldName: 'Name'},
+                {name: gettext('Name'), fieldName: 'Name'},
                 ...propertiesFields,
 
-                {name: 'Status', fieldName: 'Status', render, className:'status'},
-                {name: 'Progress', fieldName: 'Progress'},
-                {name: 'Current Score', fieldName: 'Current Score'},
-                {name: 'Badges', fieldName: 'Badges'},
-                {name: 'Posts', fieldName: 'Posts'},
-                {name: 'Total Time Spent', fieldName: 'Total Time Spent'},
-                {name: 'Enrollment Date', fieldName: 'Enrollment Date'},
-                {name: 'Completion Date', fieldName: 'Completion Date'},
+                {name: gettext('Status'), fieldName: 'Status', ...statusRender, className:'status'},
+                {name: gettext('Progress'), fieldName: 'Progress', ...percentRender},
+                {name: gettext('Current Score'), fieldName: 'Current Score'},
+                {name: gettext('Badges'), fieldName: 'Badges'},
+                {name: gettext('Posts'), fieldName: 'Posts'},
+                {name: gettext('Total Time Spent'), fieldName: 'Total Time Spent'},
+                {name: gettext('Enrollment Date'), fieldName: 'Enrollment Date'},
+                {name: gettext('Completion Date'), fieldName: 'Completion Date'},
 
             ],
         }, ...this.getBaseConfig()}
