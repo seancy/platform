@@ -43,7 +43,7 @@ export default class CourseReportProgress extends BaseReport {
         return {...{
             keyField:"ID",
             fields:[
-                {name: 'Name', fieldName: 'Name'},
+                {name: gettext('Name'), fieldName: 'Name'},
                 ...propertiesFields,
                 ...dynamicFields
             ],

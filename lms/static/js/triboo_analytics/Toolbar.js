@@ -39,7 +39,7 @@ export class Toolbar extends React.Component {
                 this.setState((prev)=>{
                     let toolbarItems = prev.toolbarItems.map(p=>{
                         if (['filters','properties'].includes(p.name)){
-                            const nameList = p.name == 'filters'?[{text:'Name', value:'user_name'}]:[]
+                            const nameList = p.name == 'filters'?[{text:gettext('Name'), value:'user_name'}]:[]
                             const dataList = [...nameList, ...data.list.map(item=>pick(item, ['text','value']))]
                             return {...p, props:{ ...p.props, data:dataList }}
                         }else{
@@ -95,7 +95,7 @@ export class Toolbar extends React.Component {
 
         return [
             {name:'filters', text: gettext('Filters'), icon: 'fa-search', active: false, component: LabelValue, props:{
-                data:propertyData, selectedList:selectedFilterItems,useFontAwesome:true,
+                data:propertyData, selectedList:selectedFilterItems,useFontAwesome:true, placeholder:gettext('Press enter to add'),
                 onChange:(selectedFilterItems)=>this.setState({selectedFilterItems}, this.fireOnChange)
             }},
             {name:'properties', text: gettext('Properties'), icon: 'fa-sliders-h', active: false, component: Properties, props:{
@@ -103,7 +103,7 @@ export class Toolbar extends React.Component {
                 onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
             }},
             {name:'period', text: gettext('Period'), icon: 'fa-calendar-alt', active: false, component: PeriodFilter, props:{
-                label:'Select a time range', buttonBegin:'Last ', startDate, endDate, useFontAwesome:true, periodTooltip: this.props.periodTooltip,
+                label:gettext('Select a time range'), buttonText:gettext('Last * days'), startDate, endDate, useFontAwesome:true, periodTooltip: this.props.periodTooltip,
                 onChange:(startDate,endDate)=>{
                     this.setState({startDate,endDate}, this.fireOnChange)
                 }

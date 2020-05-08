@@ -22,7 +22,7 @@ class ReportTypeAndCourseReport extends React.Component {
     }
 
     componentDidMount() {
-        const nameList = [{text: 'Name', value: 'user_name'}]
+        const nameList = [{text: gettext('Name'), value: 'user_name'}]
         fetch('/analytics/common/get_properties/json/')
             .then(response=>{
                 return response.json()
@@ -108,7 +108,8 @@ class ReportTypeAndCourseReport extends React.Component {
     }
 
     getCourseSection(){
-        const {courses} = this.props, {isMultiple, hideCourseReportSelect, selectedCourses}=this.state;
+        const {courses,limit} = this.props,
+            {isMultiple, hideCourseReportSelect, selectedCourses}=this.state;
         const render=(text,item)=>{
             return `${text} (${item.course_enrollments || '0'} users)`
         }
@@ -132,9 +133,8 @@ class ReportTypeAndCourseReport extends React.Component {
             <div id="course_section_contents" className="section-content is-hidden">
                 <div className={'course-report'}>
                     <p className={"section-label " + (this.state.hideCourseReportInfo ? 'hide' : '')}>
-                        The enrollments of the courses you have been selected is:
-                        <span id="enrollment_selected">{getEnrollmentNumber()}</span>
-                        . (<span id="enrollment_limit">{this.props.limit || 300000}</span> at most)
+                        {'The enrollments of the courses you have been selected is: *. (* at most)'
+                            .replace('*', getEnrollmentNumber()).replace('*', limit || 300000) }
                     </p>
                     <Dropdown data={courses} multiple={isMultiple} optionRender={render} onChange={handleCourseSelect}/>
                 </div>
@@ -171,16 +171,16 @@ class ReportTypeAndCourseReport extends React.Component {
                     <div id="filter-form">
                         <div className="table-filter-form">
                             <LabelValue data={this.state.filterData} onChange={this.filterOnChange.bind(this)}
-                                        useFontAwesome={true} stopEventSpread={true}/>
+                                        placeholder={gettext('Press enter to add')} useFontAwesome={true} stopEventSpread={true}/>
                         </div>
                     </div>
                 </section>
                 <section className="period-form">
-                    <p className="section-label">{gettext("Select a time range:")}</p>
+                    <p className="section-label">{gettext("Select a time range")+':'}</p>
                     <div id="period-table">
                         <DateRange onChange={this.periodOnChange.bind(this)}
                             //label='Select a time range'
-                                   buttonBegin='Last ' useFontAwesome={true}
+                                   buttonText={gettext('Last * days')} useFontAwesome={true}
                                    startDateName='from_day' endDateName='to_day'/>
                     </div>
                 </section>

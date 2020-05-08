@@ -105,6 +105,7 @@ export default class BaseReport extends React.Component{
                     this.fetchData(pageNo, sort)
             },
             ...pick(this.state, ['isLoading', 'data', 'totalData', 'message']),
+            totalRowsText:gettext('Total: * rows'),
             pagination: {
                 pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,

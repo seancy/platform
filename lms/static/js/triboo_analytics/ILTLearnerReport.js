@@ -28,41 +28,41 @@ export default class ILTLearnerReport extends BaseReport {
         return {...{
             fields: [
 
-                {name: 'Geographical area', fieldName: 'Geographical area'},
-                {name: 'Course country', fieldName: 'Course country'},
-                {name: 'Zone/Region', fieldName: 'Zone/Region'},
-                {name: 'Course tags', fieldName: 'Course tags'},
+                {name: gettext('Geographical area'), fieldName: 'Geographical area'},
+                {name: gettext('Course country'), fieldName: 'Course country'},
+                {name: gettext('Zone/Region'), fieldName: 'Zone/Region'},
+                {name: gettext('Course tags'), fieldName: 'Course tags'},
 
-                {name: 'Course code', fieldName: 'Course code'},
-                {name: 'Course name', fieldName: 'Course name'},
-                {name: 'Section', fieldName: 'Section'},
-                {name: 'Subsection', fieldName: 'Subsection'},
+                {name: gettext('Course code'), fieldName: 'Course code'},
+                {name: gettext('Course name'), fieldName: 'Course name'},
+                {name: gettext('Section'), fieldName: 'Section'},
+                {name: gettext('Subsection'), fieldName: 'Subsection'},
 
-                {name: 'Session ID', fieldName: 'Session ID'},
-                {name: 'Start date', fieldName: 'Start date'},
-                {name: 'Start time', fieldName: 'Start time'},
-                {name: 'End date', fieldName: 'End date'},
+                {name: gettext('Session ID'), fieldName: 'Session ID'},
+                {name: gettext('Start date'), fieldName: 'Start date'},
+                {name: gettext('Start time'), fieldName: 'Start time'},
+                {name: gettext('End date'), fieldName: 'End date'},
 
-                {name: 'End time', fieldName: 'End time'},
-                {name: 'Duration (in hours)', fieldName: 'Duration (in hours)'},
-                {name: 'Location ID', fieldName: 'Location ID'},
-                {name: 'Location name', fieldName: 'Location name'},
+                {name: gettext('End time'), fieldName: 'End time'},
+                {name: gettext('Duration (in hours)'), fieldName: 'Duration (in hours)'},
+                {name: gettext('Location ID'), fieldName: 'Location ID'},
+                {name: gettext('Location name'), fieldName: 'Location name'},
 
-                {name: 'Location address', fieldName: 'Location address'},
-                {name: 'Zip code', fieldName: 'Zip code'},
-                {name: 'City', fieldName: 'City'},
-                {name: 'Name', fieldName: 'Name'},
+                {name: gettext('Location address'), fieldName: 'Location address'},
+                {name: gettext('Zip code'), fieldName: 'Zip code'},
+                {name: gettext('City'), fieldName: 'City'},
+                {name: gettext('Name'), fieldName: 'Name'},
 
                 ...propertiesFields,
 
-                {name: 'Enrollment status', fieldName: 'Enrollment status'},
-                {name: 'Attendee', fieldName: 'Attendee'},
-                {name: 'Outward trips', fieldName: 'Outward trips'},
-                {name: 'Return trips', fieldName: 'Return trips'},
+                {name: gettext('Enrollment status'), fieldName: 'Enrollment status'},
+                {name: gettext('Attendees'), fieldName: 'Attendee'},
+                {name: gettext('Outward trips'), fieldName: 'Outward trips'},
+                {name: gettext('Return trips'), fieldName: 'Return trips'},
 
-                {name: 'Overnight stay', fieldName: 'Overnight stay'},
-                {name: 'Overnight stay address', fieldName: 'Overnight stay address'},
-                {name: 'Comment', fieldName: 'Comment'}
+                {name: gettext('Overnight stay'), fieldName: 'Overnight stay'},
+                {name: gettext('Overnight stay address'), fieldName: 'Overnight stay address'},
+                {name: gettext('Comment'), fieldName: 'Comment'}
             ],
         }, ...this.getBaseConfig()}
     }

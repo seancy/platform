@@ -7,4 +7,16 @@ const LastUpdate = function (props) {
     </p>)
 }
 
-export {LastUpdate}
+const StatusRender = (value) => {
+    let statusConfig = {
+        'Not Started': 'not-started-bg',
+        'In Progress': 'in-progress-bg',
+        'Successful': 'finished-bg'
+    }
+    return <span className={statusConfig[value]}>{value}</span>
+
+}, PercentRender = value => {
+    return value && value.indexOf('%') < 0 ? `${value}%` : value
+
+}
+export {LastUpdate,StatusRender,PercentRender}
