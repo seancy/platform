@@ -106,8 +106,8 @@ for overview in overviews:
                 if section.graded and section.format in grading_rules_dict.keys():
                     i += 1
                     badge_hash = Badge.get_badge_hash(section.format, chapter['url_name'], section.url_name)
-                    print "Badge %d: %s - %s (%s - %s) >= %s" % (i, section.format, section.display_name, chapter['url_name'], section.url_name,
-                        grading_rules_dict[section.format])
+                    # print "Badge %d: %s - %s (%s - %s) >= %s" % (i, section.format, section.display_name, chapter['url_name'], section.url_name,
+                    #     grading_rules_dict[section.format])
 
                     badge = Badge.objects.filter(course_id=overview.id, badge_hash=badge_hash).first()
                     if not badge:
@@ -129,10 +129,10 @@ for overview in overviews:
                 for section in chapter['sections']:
                     if section.graded:
                         badge_hash = Badge.get_badge_hash(section.format, chapter['url_name'], section.url_name)
-                        print "attempted=%s override=%s result=%s threshold=%s" % (section.attempted_graded,
-                                                                                   section.override,
-                                                                                   section.percent_graded,
-                                                                                   badges[badge_hash]['badge'].threshold)
+                        # print "attempted=%s override=%s result=%s threshold=%s" % (section.attempted_graded,
+                        #                                                            section.override,
+                        #                                                            section.percent_graded,
+                        #                                                            badges[badge_hash]['badge'].threshold)
                         if section.attempted_graded or section.override is not None:
                             if (section.percent_graded * 100) >= badges[badge_hash]['badge'].threshold:
                                 block_keys = badges[badge_hash]['sections']
