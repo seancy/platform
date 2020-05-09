@@ -743,9 +743,7 @@ class Badge(models.Model):
     @classmethod
     def get_badge_hash(cls, grading_rule, chapter_url, section_url):
         m = hashlib.md5()
-        badge = "%s-%s-%s" % (grading_rule.encode('utf-8'),
-                              chapter_url.encode('utf-8'),
-                              section_url.encode('utf-8'))
+        badge = "%s-%s-%s" % (grading_rule, chapter_url, section_url)
         m.update(badge)
         return m.hexdigest()
 
