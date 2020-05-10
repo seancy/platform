@@ -87,7 +87,7 @@ course_grade_factory = CourseGradeFactory()
 yesterday = timezone.now() + timezone.timedelta(days=-1)
 overviews = CourseOverview.objects.filter(start__lte=yesterday).only('id')
 for overview in overviews:
-    print "%s -- %s" % (overview.id, overview.display_name)
+    print "%s -- %s" % (overview.id, overview.display_name.encode('utf-8'))
     course = modulestore().get_course(overview.id)
     my_outline = get_outline(overview.id)
     # pretty_print_outline(my_outline)
