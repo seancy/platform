@@ -3668,7 +3668,7 @@ msgstr "Especificar el idioma del curso"
 #: common/lib/xmodule/xmodule/course_module.py:710
 #: cms/templates/settings.html:344
 msgid "Course Country"
-msgstr "El curso se desarrollará en"
+msgstr ""
 
 #: common/lib/xmodule/xmodule/course_module.py:711
 msgid "Specify the country of your course."

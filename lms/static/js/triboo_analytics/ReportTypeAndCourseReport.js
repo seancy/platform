@@ -16,6 +16,7 @@ class ReportTypeAndCourseReport extends React.Component {
             selectedKeyValues:[],
             isMultiple:true,
 
+            limit:300000,
             hideCourseReportSelect: false,
             filterData:[{value: '', text: 'loading'}]
         };
@@ -30,6 +31,25 @@ class ReportTypeAndCourseReport extends React.Component {
             .then(data=>{
                 this.setState({filterData: [...nameList, ...data.list]})
             })
+        this.changeLimitByFormat()
+    }
+
+    changeLimitByFormat() {
+        const {isMultiple, limit} = this.state
+        const getEnrollmentNumber=()=>{
+            return isMultiple ? this.state.selectedCourses.reduce((prevVal, currVal)=>{
+                return prevVal + currVal.course_enrollments;
+            }, 0) : (this.state.selectedCourses.course_enrollments || '0')
+        }
+        $('#table-export-selection').delegate('input', 'click', (e) => {
+            let format_val = $('#table-export-selection input[name=format]:checked')[0].value;
+            if (format_val == 'xls') {
+                let selectedEnrollments = getEnrollmentNumber()
+                this.setState({'limit': 65000})
+            } else {
+                this.setState({'limit': 300000})
+            }
+        });
     }
 
     recreateCourseSelect(reportType) {
@@ -108,15 +128,23 @@ class ReportTypeAndCourseReport extends React.Component {
     }
 
     getCourseSection(){
-        const {courses,limit} = this.props,
-            {isMultiple, hideCourseReportSelect, selectedCourses}=this.state;
+        const {courses} = this.props,
+            {isMultiple, hideCourseReportSelect, selectedCourses, limit}=this.state;
         const render=(text,item)=>{
             return `${text} (${item.course_enrollments || '0'} users)`
         }
         const getEnrollmentNumber=()=>{
-            return isMultiple ? this.state.selectedCourses.reduce((prevVal, currVal)=>{
-                return prevVal + currVal.course_enrollments;
-            }, 0) : (this.state.selectedCourses.course_enrollments || '0')
+            if (isMultiple) {
+                let selectedEnrollments = this.state.selectedCourses.reduce((prevVal, currVal)=>{
+                    return prevVal + currVal.course_enrollments;
+                }, 0)
+                if (selectedEnrollments > limit) {
+                    alert(gettext('The enrollments of the courses you have been selected is above the limit.'))
+                }
+                return selectedEnrollments
+            } else {
+                return this.state.selectedCourses.course_enrollments || '0'
+            }
         }
         const handleCourseSelect = (selectedCourses)=>{
             this.setState({selectedCourses}, this.fireOnChange)
@@ -133,8 +161,9 @@ class ReportTypeAndCourseReport extends React.Component {
             <div id="course_section_contents" className="section-content is-hidden">
                 <div className={'course-report'}>
                     <p className={"section-label " + (this.state.hideCourseReportInfo ? 'hide' : '')}>
-                        {'The enrollments of the courses you have been selected is: *. (* at most)'
-                            .replace('*', getEnrollmentNumber()).replace('*', limit || 300000) }
+                        <p>{gettext('The enrollments of the courses you have been selected is') + ': *.'
+                            .replace('*', getEnrollmentNumber())}</p>
+                        <p>{gettext('(The limit is 300,000 for CSV and JSON, 65,000 for XLS.)')}</p>
                     </p>
                     <Dropdown data={courses} multiple={isMultiple} searchable={true} optionRender={render} onChange={handleCourseSelect}/>
                 </div>
