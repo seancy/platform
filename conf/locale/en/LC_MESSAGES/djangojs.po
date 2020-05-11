@@ -9577,7 +9577,208 @@ msgid "Filter the data"
 msgstr ""
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "Select a time range:"
+msgid "Select a time range"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Press enter to add"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Last * days"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "CSV report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "XLS report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "JSON report"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "The enrollments of the courses you have been selected is: *. (* at most)"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/BaseReport.js
+msgid "Total: * rows"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Enrollments"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Successful"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Unsuccessful"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+#msgid "In Progress" already exists
+#msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Not Started"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Average Final Score"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Badges"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Posts"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Total Time Spent"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Last Login"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Geographical area"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Course country"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Zone/Region"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Course tags"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Course code"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Course name"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+#msgid "Section"  already exists
+#msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+#msgid "Subsection" already exists
+#msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Session ID"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Start date"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Start time"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "End date"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "End time"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Duration (in hours)"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Max capacity"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Enrollees"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Attendees"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Attendance sheet"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Location ID"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Location name"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Location address"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Zip code"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "City"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Enrollment status"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Outward trips"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Return trips"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Overnight stay"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Overnight stay address"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Comment"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReportSummary.js
+msgid "Current Score"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/CourseReportSummary.js
+msgid "Completion Date"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "Go"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "nothing"
 msgstr ""
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
@@ -11439,171 +11640,4 @@ msgstr ""
 
 #: lms/static/js/courseware/ilt_validation.js
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
-msgstr ""
-
-
-
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Press enter to add"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Select a time range"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Last * days"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "CSV report"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "XLS report"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "JSON report"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "The enrollments of the courses you have been selected is: *. (* at most)"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/BaseReport.js
-msgid "Total: * rows"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
-msgid "Enrollments"
-msgstr ""
-
-msgid "Successful"
-msgstr ""
-
-msgid "Unsuccessful"
-msgstr ""
-
-#msgid "In Progress" already exists
-#msgstr ""
-
-msgid "Not Started"
-msgstr ""
-
-msgid "Average Final Score"
-msgstr ""
-
-msgid "Badges"
-msgstr ""
-
-msgid "Posts"
-msgstr ""
-
-msgid "Total Time Spent"
-msgstr ""
-
-msgid "Last Login"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/ILTGlobalReport.js
-msgid "Geographical area"
-msgstr ""
-
-msgid "Course country"
-msgstr ""
-
-msgid "Zone/Region"
-msgstr ""
-
-msgid "Course tags"
-msgstr ""
-
-msgid "Course code"
-msgstr ""
-
-msgid "Course name"
-msgstr ""
-
-#msgid "Section"  already exists
-#msgstr ""
-
-#msgid "Subsection" already exists
-#msgstr ""
-
-msgid "Session ID"
-msgstr ""
-
-msgid "Start date"
-msgstr ""
-
-msgid "Start time"
-msgstr ""
-
-msgid "End date"
-msgstr ""
-
-msgid "End time"
-msgstr ""
-
-msgid "Duration (in hours)"
-msgstr ""
-
-msgid "Max capacity"
-msgstr ""
-
-msgid "Enrollees"
-msgstr ""
-
-msgid "Attendees"
-msgstr ""
-
-msgid "Attendance sheet"
-msgstr ""
-
-msgid "Location ID"
-msgstr ""
-
-msgid "Location name"
-msgstr ""
-
-msgid "Location address"
-msgstr ""
-
-msgid "Zip code"
-msgstr ""
-
-msgid "City"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/ILTLearnerReport.js
-msgid "Enrollment status"
-msgstr ""
-
-msgid "Outward trips"
-msgstr ""
-
-msgid "Return trips"
-msgstr ""
-
-msgid "Overnight stay"
-msgstr ""
-
-msgid "Overnight stay address"
-msgstr ""
-
-msgid "Comment"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/CourseReportSummary.js
-msgid "Current Score"
-msgstr ""
-
-msgid "Completion Date"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "Go"
 msgstr ""
