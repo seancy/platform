@@ -2125,7 +2125,9 @@ def ilt_validation_request_data(request):
     supervised_learners = UserProfile.objects.filter(lt_ilt_supervisor=user.email)
     learners = [i.user for i in supervised_learners]
     learners_id = [i.id for i in learners]
-    course_enrollments = CourseEnrollment.objects.filter(user__in=learners, is_active=True)
+    course_enrollments = CourseEnrollment.objects.filter(user__in=learners, is_active=True).select_related(
+        'user__profile'
+    )
     all_ilt_sessions = XModuleUserStateSummaryField.objects.filter(field_name="sessions")
     date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "YYYY-MM-DD HH:mm")
     result = {"pending_all": [], "approved_all": [], "declined_all": [], "session_info": {},
@@ -2141,9 +2143,11 @@ def ilt_validation_request_data(request):
         try:
             ilt_block = modulestore().get_item(usage_key)
             course = modulestore().get_course(course_key)
+            visible_to_staff_only = ilt_block.visible_to_staff_only
         except:
             continue
         try:
+            request.user.is_staff = True  # guarantee staff access
             response = handle_xblock_callback(
                 request,
                 unicode(course_key),
@@ -2157,7 +2161,7 @@ def ilt_validation_request_data(request):
         for i in range(len(ilt_module_info['sessions'])):
             within_deadline = 'within-deadline' in dropdown_list[i][1]
             ilt_module_info['sessions'][i][1].update({'within_deadline': within_deadline})
-        for ordered_session in ilt_module_info['sessions']:
+        for ordered_session in ilt_module_info['sessions'][:]:
             start_date = ordered_session[1]['start_at']
             expired = datetime.now() - decode_datetime(start_date) > timedelta(days=1)
             if expired:
@@ -2165,9 +2169,15 @@ def ilt_validation_request_data(request):
         sessions_info = json.loads(sessions.value)
         course_name = course.display_name
         module_name = ilt_block.display_name
-        module_course_dict[unicode(usage_key)] = (module_name, unicode(course_key))
-        enrollment_user_list = {str(u.id): {'user_name': u.username, 'full_name': u.profile.name, 'checked': False}
-                                for u in learners}
+        module_course_dict[unicode(usage_key)] = (module_name, unicode(course_key), visible_to_staff_only)
+        enrollment_user_list = {str(i.user.id): {
+            'user_name': i.user.username,
+            'full_name': i.user.profile.name,
+            'checked': False,
+            'is_staff': i.user.is_staff,
+            'previous_enrolled_session': None
+        }
+            for i in enrollment}
         try:
             enrolled_users = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="enrolled_users")
             data = json.loads(enrolled_users.value)
@@ -2181,6 +2191,8 @@ def ilt_validation_request_data(request):
                     if int(user_id) in learners_id:
                         if info['status'] != 'refused':
                             enrollment_user_list.pop(user_id)
+                        else:
+                            enrollment_user_list[user_id]['previous_enrolled_session'] = k
                         learner = User.objects.get(id=user_id)
                         info.update({
                             "start": start_at,

@@ -11323,3 +11323,7 @@ msgstr ""
 #: lms/static/js/courseware/ilt_validation.js
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
 msgstr ""
+
+#: lms/static/js/courseware/ilt_validation.js
+msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
+msgstr ""

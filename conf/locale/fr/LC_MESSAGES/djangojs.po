@@ -12423,6 +12423,10 @@ msgstr "Êtes-vous sûr(e) de vouloir désinscrire cet apprenant ?"
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
 msgstr "L'inscription est confirmée.<br>Vous pouvez changer les information relatives à la demande dans l'onglet \"Sessions à venir\"."
 
+#: lms/static/js/courseware/ilt_validation.js
+msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
+msgstr "Cette unité est visible pour l’équipe pédagogique uniquement. Les apprenants suivants ne font pas partie de l’équipe pédagogique :  <br><br>"
+
 #: master-sitel: #: lms/templates/discovery/facet.underscore
 #: master-sitel: #: cms/templates/discovery/facet.underscore
 msgid "Area of Development"

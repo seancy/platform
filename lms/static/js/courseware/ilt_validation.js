@@ -471,11 +471,22 @@ function iltValidation() {
 
             batch_enroll: function (session_nb, available_seats) {
                 var learners = this.current_enrollment_users,
-                    learner_list = [];
+                    learner_list = [],
+                    visible_to_staff_only = this.module_course_dict[this.enrollment_selected_module][2],
+                    has_non_staff_learner = false,
+                    non_staff_learner_list = [];
                 for (var key in learners) {
                     if (learners[key].checked) {
-                        learner_list.push(key)
+                        learner_list.push(key);
+                        if (!learners[key].is_staff) {
+                            has_non_staff_learner = true;
+                            non_staff_learner_list.push(learners[key].full_name + ' - ' + learners[key].user_name)
+                        }
                     }
+                }
+                if (visible_to_staff_only && has_non_staff_learner) {
+                    LearningTribes.dialog.show(gettext("This unit is visible to staff learner only. The following learners are not staff: <br><br>" + non_staff_learner_list.join('<br>')));
+                    return
                 }
                 if (learner_list.length > 0) {
                     if (learner_list.length > available_seats) {

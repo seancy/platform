@@ -11779,7 +11779,12 @@ msgstr "你确定要取消该学生的注册吗 ？"
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
 msgstr "注册已被确认通过。<br>你可以点击\"即将到来的课程\"来修改与该请求相关的信息。"
 
+#: lms/static/js/courseware/ilt_validation.js
+msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
+msgstr "该单元仅对员工可见。以下学员不是员工： <br><br>"
+
 #: master-sitel: #: lms/templates/discovery/facet.underscore
 #: master-sitel: #: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "发展领域"
+
