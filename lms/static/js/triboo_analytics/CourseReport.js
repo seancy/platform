@@ -1,23 +1,19 @@
 import 'select2'
 import '../../../../node_modules/select2/dist/css/select2.css'
 
-function initSelect() {
-    $('.analytics-header form select').select2();
-}
-
 /* eslint-disable react/no-danger, import/prefer-default-export */
 import React from 'react';
 import Tab from "se-react-tab"
 import Summary from './CourseReportSummary'
 import Progress from './CourseReportProgress'
 import TimeSpent from './CourseReportTimeSpent'
+import Dropdown from 'se-react-dropdown'
 
 import { pick } from 'lodash'
 
 class CourseReport extends React.Component {
     constructor(props) {
         super(props);
-        initSelect()
 
         this.state = {
             activeTabName:'',
@@ -54,4 +50,38 @@ class CourseReport extends React.Component {
     }
 }
 
-export { CourseReport }
+
+class CourseReportDropdown extends React.Component {
+    constructor(props) {
+        super(props);
+
+        const {data}=this.props
+        this.state = {
+            selectedCourse:data?data[0] || '': '',
+        }
+    }
+
+    fireOnChange(){
+
+    }
+
+    go(){
+
+        const {url,token}=this.props
+        const courseID = this.state.selectedCourse.value
+        window.location = `${url}?course_id=${encodeURIComponent(courseID)}&csrfmiddlewaretoken=${token}`
+        console.log(this.state.selectedCourse)
+    }
+
+    render() {
+        const {data,labelText,submitText}=this.props
+        return (<>
+            <label htmlFor="course_id">{labelText}</label>
+            <Dropdown data={data} searchable={true}
+                     onChange={selectedCourse=>this.setState({selectedCourse}, this.fireOnChange)}/>
+            <input type="button" value={submitText} onClick={this.go.bind(this)}/>
+        </>)
+    }
+}
+
+export { CourseReport,CourseReportDropdown }

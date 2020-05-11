@@ -17,27 +17,52 @@
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="main-container">
         <%include file="banner_nav.html" args="active_page='course'" />
+
+        ${HTML(render_bundle('CourseReport'))}
+        ${HTML(render_bundle('ReactRenderer'))}
+
         <section class="analytics-wrapper course">
           <div class="report-wrapper">
               <h3>${_("Course Report")}</h3>
-                <div class="analytics-header">
-                  % if courses:
-                    <form action="${reverse('analytics_course')}" method="get">
-                        <label for="course_id">${_("Please select a course to see your report:")}</label>
-                        <select name="course_id">
-                        % for cid, course_title in courses:
-                          % if cid == course_id:
-                            <option value="${cid}" selected="selected">${course_title}</option>
-                          % else:
-                            <option value="${cid}">${course_title}</option>
-                          % endif
-                        % endfor
-                        </select>
-                        <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
-                        <input type="submit" value="${_("Go")}">
-                    </form>
-                  % endif
+                <div class="analytics-header" id="course-report-dropdown">
+                  ##% if courses:
+                    ##<form action="${reverse('analytics_course')}" method="get">
+                    ##    <label for="course_id">${_("Please select a course to see your report:")}</label>
+                    ##    <select name="course_id">
+                    ##    % for cid, course_title in courses:
+                    ##      % if cid == course_id:
+                    ##        <option value="${cid}" selected="selected">${course_title}</option>
+                    ##      % else:
+                    ##        <option value="${cid}">${course_title}</option>
+                    ##      % endif
+                    ##    % endfor
+                    ##    </select>
+                    ##    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
+                    ##    <input type="submit" value="${_("Go")}">
+                    ##</form>
+                   ##% endif
                 </div>
+                  % if courses:
+                    <script type="text/javascript">
+                      new ReactRenderer({
+                        component: CourseReportDropdown,
+                        selector: '#course-report-dropdown',
+                        componentName: 'CourseReportDropdown',
+                        props: {
+                            'token':'${ csrf_token }',
+                            'submitText':'${_(" Go")}',
+                            'labelText':'${_("Please select a course to see your report:")}',
+
+                            'data':${json.dumps([{'value': item[0], 'text':item[1]} for item in courses]) | n},
+                            'url':'${reverse("analytics_course")}'
+                            ##last_update:'${context.get("last_update", "")}',
+                            ##defaultLanguage: '${request.LANGUAGE_CODE}',
+                            ##token:'${ csrf_token }',
+                          }
+                      });
+                    </script>
+                   % endif
+
                 <div class="analytics-header">
                   % if error_message:
                     <p class="error">${error_message}</p>
@@ -196,8 +221,8 @@
               % endif
 
             % endif
-            ${HTML(render_bundle('CourseReport'))}
-            ${HTML(render_bundle('ReactRenderer'))}
+            ## ${HTML(render_bundle('CourseReport'))}
+            ## ${HTML(render_bundle('ReactRenderer'))}
             <div id="course-report"></div>
             <script type="text/javascript">
               new ReactRenderer({

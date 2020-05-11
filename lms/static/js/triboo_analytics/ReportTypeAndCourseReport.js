@@ -136,15 +136,7 @@ class ReportTypeAndCourseReport extends React.Component {
                         {'The enrollments of the courses you have been selected is: *. (* at most)'
                             .replace('*', getEnrollmentNumber()).replace('*', limit || 300000) }
                     </p>
-                    <Dropdown data={courses} multiple={isMultiple} optionRender={render} onChange={handleCourseSelect}/>
-                </div>
-                <div id="course_bar" className="courses label-bar is-collapsed">
-                    {isMultiple && selectedCourses.map(({key, value, text})=>(<button className="filter-option option-label" >
-                        <span className="query">{`${text}`}</span>
-                    </button>))}
-                    {!isMultiple && selectedCourses.text && <button className="filter-option option-label" >
-                        <span className="query">{`${selectedCourses.text}`}</span>
-                    </button>}
+                    <Dropdown data={courses} multiple={isMultiple} searchable={true} optionRender={render} onChange={handleCourseSelect}/>
                 </div>
             </div>
             <div id="course_bar" className="courses label-bar is-collapsed">
