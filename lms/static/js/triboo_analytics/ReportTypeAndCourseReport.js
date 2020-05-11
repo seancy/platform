@@ -139,7 +139,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     return prevVal + currVal.course_enrollments;
                 }, 0)
                 if (selectedEnrollments > limit) {
-                    alert(gettext('The enrollments of the courses you have been selected is above the limit.'))
+                    alert(gettext('With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses.'))
                 }
                 return selectedEnrollments
             } else {
@@ -161,7 +161,7 @@ class ReportTypeAndCourseReport extends React.Component {
             <div id="course_section_contents" className="section-content is-hidden">
                 <div className={'course-report'}>
                     <p className={"section-label " + (this.state.hideCourseReportInfo ? 'hide' : '')}>
-                        <p>{gettext('The enrollments of the courses you have been selected is') + ': *.'
+                        <p>{gettext('With the selected courses, the report will count * lines.')
                             .replace('*', getEnrollmentNumber())}</p>
                         <p>{gettext('(The limit is 300,000 for CSV and JSON, 65,000 for XLS.)')}</p>
                     </p>

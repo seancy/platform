@@ -10107,7 +10107,7 @@ msgstr "字段"
 #: lms/templates/triboo_analytics/course.html:150
 #: lms/templates/triboo_analytics/learner.html:43
 msgid "Select the user properties to display"
-msgstr "选择您想要展示的用户属性。"
+msgstr "选择您想要展示的用户属性"
 
 #: lms/djangoapps/triboo_analytics/views.py:224
 #: lms/djangoapps/triboo_analytics/views.py:555

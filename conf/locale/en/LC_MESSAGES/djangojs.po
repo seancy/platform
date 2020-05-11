@@ -9580,6 +9580,18 @@ msgstr ""
 msgid "Select a time range:"
 msgstr ""
 
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "With the selected courses, the report will count * lines."
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "(The limit is 300,000 for CSV and JSON, 65,000 for XLS.)"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
+msgstr ""
+
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
 msgstr ""

@@ -9915,7 +9915,19 @@ msgstr "过滤数据"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select a time range:"
-msgstr "选择一个时间范围"
+msgstr "选择一个时间范围："
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "With the selected courses, the report will count * lines."
+msgstr "已选课程生成的报告将有 * 行。"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "(The limit is 300,000 for CSV and JSON, 65,000 for XLS.)"
+msgstr "（CSV 和 JSON 文件行数限制为 300000，XLS 为 65000。）"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
+msgstr "已选课程生成的报告行数已大于行数限制，请移除部分课程。"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
