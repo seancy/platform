@@ -9816,23 +9816,23 @@ msgstr "拍照"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Filters"
-msgstr ""
+msgstr "过滤"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Properties"
-msgstr ""
+msgstr "属性"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Period"
-msgstr ""
+msgstr "时间区间"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Export"
-msgstr ""
+msgstr "导出"
 
 #: lms/static/js/triboo_analytics/Properties.js
 msgid "Select the user properties to display"
-msgstr ""
+msgstr "选择您想要展示的用户属性"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 #: lms/static/js/triboo_analytics/ILTReport.js
@@ -9842,56 +9842,56 @@ msgstr ""
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Summary"
-msgstr ""
+msgstr "概要"
 
 #: lms/static/js/triboo_analytics/CourseReport.js4
 msgid "Progress"
-msgstr ""
+msgstr "进度"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Time Spent"
-msgstr ""
+msgstr "学习时长"
 
 #: lms/static/js/triboo_analytics/CourseReportSummary.js
 msgid "Display the state of learners at the end of the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "在已选时间区间的最后显示在这个区间内访问过该课程的学员的状态。"
 
 #: lms/static/js/triboo_analytics/CourseReportProgress.js
 msgid "Display the progress of learners at the end of the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "在已选时间区间的最后显示在这个时间区间内访问过该课程的学员的进度。"
 
 #: lms/static/js/triboo_analytics/CourseReportTimeSpent.js
 msgid "Display the time learners spent in the course during the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "在已选时间区间的最后显示在这个时间区间内访问过该课程的学员的学习时长。"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Display the state of learners at the end of the selected period for learners who visited the platform during this period. The total time spent shows the time learners spent on the platform during the selected period."
-msgstr ""
+msgstr "在已选时间区间的最后显示在这个时间区间内访问过课程平台的学员的学习时长。总学习时长将显示学员在这个时间区间内于平台上花费的总时间。"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Learner Report"
-msgstr ""
+msgstr "学员报告"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "Course Report"
-msgstr ""
+msgstr "课程报告"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Report"
-msgstr ""
+msgstr "ILT 报告"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Global Report"
-msgstr ""
+msgstr "ILT 整体报告"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Learner Report"
-msgstr ""
+msgstr "ILT 学员报告"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Filter the sessions starting in the selected period."
-msgstr ""
+msgstr "从开始于已选时间区间来过滤数据"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 #msgid "Page" already exists
@@ -9903,19 +9903,19 @@ msgstr ""
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select a report"
-msgstr ""
+msgstr "选择一个报告"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select course(s)"
-msgstr ""
+msgstr "选择课程"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Filter the data"
-msgstr ""
+msgstr "过滤数据"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select a time range:"
-msgstr ""
+msgstr "选择一个时间范围"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
