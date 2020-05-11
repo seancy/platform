@@ -167,6 +167,14 @@ class ReportTypeAndCourseReport extends React.Component {
                     </p>
                     <Dropdown data={courses} multiple={isMultiple} optionRender={render} onChange={handleCourseSelect}/>
                 </div>
+                <div id="course_bar" className="courses label-bar is-collapsed">
+                    {isMultiple && selectedCourses.map(({key, value, text})=>(<button className="filter-option option-label" >
+                        <span className="query">{`${text}`}</span>
+                    </button>))}
+                    {!isMultiple && selectedCourses.text && <button className="filter-option option-label" >
+                        <span className="query">{`${selectedCourses.text}`}</span>
+                    </button>}
+                </div>
             </div>
             <div id="course_bar" className="courses label-bar is-collapsed">
                 {isMultiple && selectedCourses.map(({key, value, text})=>(<button className="filter-option option-label" >

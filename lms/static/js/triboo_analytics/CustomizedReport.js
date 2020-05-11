@@ -416,9 +416,7 @@ export class CustomizedReport {
             }
             this.expandSection(sectionToggleButton);
             const $labelBar = $(sectionToggleButton).siblings('.label-bar')
-            if ($labelBar.attr('id')!= 'course_bar'){
-                $labelBar.addClass('is-hidden')
-            }
+            $labelBar.addClass('is-hidden')
           } else if (isExpanded) {
             this.collapseSection(sectionToggleButton);
             $(sectionToggleButton).siblings('.label-bar').removeClass('is-hidden')
