@@ -3,7 +3,7 @@ import {Toolbar} from "./Toolbar";
 import DataList from "se-react-data-list";
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
-import {pick} from "lodash";
+import {flatten, pick} from "lodash";
 
 export default class CourseReportProgress extends BaseReport {
     constructor(props) {
@@ -21,24 +21,47 @@ export default class CourseReportProgress extends BaseReport {
         dataUrl:'/analytics/course/json/'
     }
 
+    getDynamicFields(){
+        const {data, columns} = this.state
+        const propertiesValues = this.state.properties.map(p=>p.value)
+
+        let dynamicFields = [], subFields = []
+        if (data && data.length > 0){
+            const firstRow = data[0]
+            const dynamicKeys = Object.keys(firstRow)
+                .filter(key=>{
+                    return !propertiesValues.includes(key) && key != 'Name' // && !key.split('/')[1]
+                })
+            const complexDynamicKeys = columns.length > 0 ? columns :
+                dynamicKeys.filter(key=>key.split('/')[1])
+            const complexDynamicKeysL1 = complexDynamicKeys.map(key=>key.split('/')[0])
+            const normalDynamicFields = dynamicKeys.filter(key=>!key.split('/')[1])
+            const complexDynamicFields = [...new Set(complexDynamicKeys.map(key=>key.split('/')[0]))]
+            const countSpan = (key)=>{
+                return complexDynamicKeysL1.filter(l1key=>key==l1key).length
+            }
+
+            dynamicFields = [...normalDynamicFields.map(key=>({name:key,fieldName:key})),
+                ...complexDynamicFields.map(key=>({name:key,fieldName:key, colSpan:countSpan(key)}))]
+            subFields = flatten(complexDynamicFields.map(keyL1=>{
+                return complexDynamicKeys.filter(key=>{
+                    return key.split('/')[0] == keyL1
+                }).map(key=>{
+                    const arr = key.split('/')
+                    const keyL2 = arr[1]
+                    return {name:keyL2,fieldName:key}
+                })
+            }))
+        }
+        return {dynamicFields, subFields}
+    }
+
     getConfig() {
-        //const properties= this.state.properties.filter(p=>p.type == 'default')
-        //const {selectedProperties}=this.state.toolbarData;
         const propertiesFields = this.getOrderedProperties().map(p=>({
                 name: p.text,
                 fieldName: p.value
             }))
-        const {data, columns}=this.state;
-        let dynamicFields = []
-        if (data && data.length > 0){
-            const firstRow = data[0]
-            const propertiesValues = this.state.properties.map(p=>p.value)
-            const dynamicKeys = columns.length > 0 ? columns :
-                Object.keys(firstRow).filter(key=>{
-                    return !propertiesValues.includes(key) && key != 'Name';
-                })
-            dynamicFields = dynamicKeys.map(key=>({name:key, fieldName:key}));
-        }
+        const {dynamicFields, subFields}=this.getDynamicFields()
 
         return {...{
             keyField:"ID",
@@ -46,12 +69,14 @@ export default class CourseReportProgress extends BaseReport {
                 {name: gettext('Name'), fieldName: 'Name'},
                 ...propertiesFields,
                 ...dynamicFields
-            ],
-            cellRender:v=>{
-                if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')) {
-                    const arr = v.split(':')
-                    return (<><span className={"trophy-" + (v.startsWith('Yes')?'yes fa fa-check':'no fa fa-times')}></span> {arr[1]}</> )
-                } else {
+            ],subFields,
+            cellRender:(v, row, item)=>{
+                if (v == 'Yes' || v == 'No') {
+                    //const arr = v.split(':')
+                    return (<><span className={"trophy-" + (v == 'Yes'?'yes fa fa-check':'no fa fa-times')}></span>{v}</> )
+                } else if (item.fieldName.endsWith('Score')) {
+                    return v + '%'
+                } else{
                     return v
                 }
             },

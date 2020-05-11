@@ -107,6 +107,7 @@ class ReportTypeAndCourseReport extends React.Component {
         </div>
     }
 
+
     getCourseSection(){
         const {courses,limit} = this.props,
             {isMultiple, hideCourseReportSelect, selectedCourses}=this.state;
@@ -121,6 +122,16 @@ class ReportTypeAndCourseReport extends React.Component {
         const handleCourseSelect = (selectedCourses)=>{
             this.setState({selectedCourses}, this.fireOnChange)
         }
+        const getLimit = (format, en)=>{
+            if (format_val == 'xls') {
+                if (this.selectedEnrollments > 65000) {
+                    alert('The enrollments of the courses you have been selected is above the limit of xls file. Please remove some of them or you will not be able to see some records in your report.')
+                }
+                this.enrollmentLimit = 65000
+            } else {
+                this.enrollmentLimit = 300000
+            }
+        }
         return <div className={`custom-section${hideCourseReportSelect?' hidden':''}`} id="custom_course_section">
             <button className="section-button accordion-trigger"
                     aria-expanded="${ 'false' }"
@@ -134,7 +145,7 @@ class ReportTypeAndCourseReport extends React.Component {
                 <div className={'course-report'}>
                     <p className={"section-label " + (this.state.hideCourseReportInfo ? 'hide' : '')}>
                         {'The enrollments of the courses you have been selected is: *. (* at most)'
-                            .replace('*', getEnrollmentNumber()).replace('*', limit || 300000) }
+                            .replace('*', getEnrollmentNumber()).replace('*', getXXX(limit) || 300000) }
                     </p>
                     <Dropdown data={courses} multiple={isMultiple} optionRender={render} onChange={handleCourseSelect}/>
                 </div>
