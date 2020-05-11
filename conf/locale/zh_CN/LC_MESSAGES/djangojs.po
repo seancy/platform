@@ -388,44 +388,6 @@ msgstr "在导入新课程到数据库时出现了错误。"
 msgid "Your import has failed."
 msgstr "您的导入操作已失败。"
 
-
-# ----------analytics----------
-
-#: lms/templates/triboo_analytics/course.html:115
-#: lms/templates/triboo_analytics/learner.html:34
-#: lms/templates/triboo_analytics/microsite.html:95
-#: lms/templates/triboo_analytics/my_transcript.html:290
-#: lms/templates/triboo_analytics/transcript.html:78
-msgid "Please, note that these reports are not live. Last update:"
-msgstr "请注意，这些报告不是实时的。上次更新："
-
-# ----------learner report----------
-#: lms/static/js/triboo_analytics/Toolbar.js:167
-msgid "filters"
-msgstr "过滤"
-
-#: lms/static/js/triboo_analytics/Toolbar.js:167
-msgid "properties"
-msgstr "属性"
-
-#: lms/static/js/triboo_analytics/Toolbar.js:167
-msgid "period"
-msgstr "周期"
-
-#: lms/static/js/triboo_analytics/Toolbar.js:167
-msgid "export"
-msgstr "导出"
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
-msgid "Page"
-msgstr "页面"
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
-msgid "of"
-msgstr ""
-
-
-
 #: cms/static/js/features/import/views/import.js:66
 #: common/static/bundles/Import.js:226
 msgid "Your import is in progress; navigating away will abort it."
@@ -9814,37 +9776,45 @@ msgstr "拍照"
 
 # ----------analytics----------
 
+#: lms/static/js/triboo_analytics/CourseReport.js
+#: lms/static/js/triboo_analytics/ILTReport.js
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Please, note that these reports are not live. Last update:"
+msgstr "请注意，这些报告不是实时的。上次更新："
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Page"
+msgstr "页面"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "of"
+msgstr ""
+
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Filters"
-msgstr ""
+msgstr "过滤"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Properties"
-msgstr ""
+msgstr "属性"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Period"
-msgstr ""
+msgstr "周期"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Export"
-msgstr ""
+msgstr "导出"
 
 #: lms/static/js/triboo_analytics/Properties.js
 msgid "Select the user properties to display"
 msgstr ""
 
 #: lms/static/js/triboo_analytics/CourseReport.js
-#: lms/static/js/triboo_analytics/ILTReport.js
-#: lms/static/js/triboo_analytics/LearnerReport.js
-#msgid "Please, note that these reports are not live. Last update:" already exists
-#msgstr ""
-
-#: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Summary"
 msgstr ""
 
-#: lms/static/js/triboo_analytics/CourseReport.js4
+#: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Progress"
 msgstr ""
 
@@ -9914,8 +9884,209 @@ msgid "Filter the data"
 msgstr ""
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "Select a time range:"
-msgstr ""
+msgid "Select a time range"
+msgstr "选择时间范围"
+
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Press enter to add"
+msgstr "按回车添加"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+#: lms/static/js/triboo_analytics/Toolbar.js
+msgid "Last * days"
+msgstr "最后 * 天"
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "CSV report"
+msgstr "CSV 报表"
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "XLS report"
+msgstr "XLS 报表"
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "JSON report"
+msgstr "JSON 报表"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "The enrollments of the courses you have been selected is: *. (* at most)"
+msgstr "你已经选择的课程的入学人数是: *. (* 最大数)"
+
+#: lms/static/js/triboo_analytics/BaseReport.js
+msgid "Total: * rows"
+msgstr "总共 * 行"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Enrollments"
+msgstr "入学人数"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Successful"
+msgstr "成功"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Unsuccessful"
+msgstr "失败"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+#msgid "In Progress" already exists
+#msgstr ""
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Not Started"
+msgstr "未开始"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Average Final Score"
+msgstr "最终平均分数"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Badges"
+msgstr "徽章数"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Posts"
+msgstr "回复数"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Total Time Spent"
+msgstr "总时间花费"
+
+#: lms/static/js/triboo_analytics/LearnerReport.js
+msgid "Last Login"
+msgstr "最后登录"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Geographical area"
+msgstr "地理区域"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Course country"
+msgstr "课程国家"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Zone/Region"
+msgstr "地带/区域"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Course tags"
+msgstr "课程标签"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Course code"
+msgstr "课程编号"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Course name"
+msgstr "课程名"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+#msgid "Section"  already exists
+#msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+#msgid "Subsection" already exists
+#msgstr ""
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Session ID"
+msgstr "会话ID"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Start date"
+msgstr "开始日期"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Start time"
+msgstr "开始时间"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "End date"
+msgstr "结束日期"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "End time"
+msgstr "结束时间"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Duration (in hours)"
+msgstr "时长(小时)"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Max capacity"
+msgstr "最大容量"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Enrollees"
+msgstr "入学人数"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Attendees"
+msgstr "与会者"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Attendance sheet"
+msgstr "考勤表"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Location ID"
+msgstr "位置编号"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Location name"
+msgstr "位置名"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Location address"
+msgstr "所在地地址"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "Zip code"
+msgstr "邮编"
+
+#: lms/static/js/triboo_analytics/ILTGlobalReport.js
+msgid "City"
+msgstr "城市"
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Enrollment status"
+msgstr "入学情况"
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Outward trips"
+msgstr "外游"
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Return trips"
+msgstr "回程"
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Overnight stay"
+msgstr "过夜"
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Overnight stay address"
+msgstr "住宿地址"
+
+#: lms/static/js/triboo_analytics/ILTLearnerReport.js
+msgid "Comment"
+msgstr "评论"
+
+#: lms/static/js/triboo_analytics/CourseReportSummary.js
+msgid "Current Score"
+msgstr "当前分数"
+
+#: lms/static/js/triboo_analytics/CourseReportSummary.js
+msgid "Completion Date"
+msgstr "完成日期"
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "Go"
+msgstr "前往"
+
+#: lms/static/js/triboo_analytics/Exporter.js
+msgid "nothing"
+msgstr "没有数据"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
@@ -11927,173 +12098,3 @@ msgstr "注册已被确认通过。<br>你可以点击\"即将到来的课程\"�
 msgid "Area of Development"
 msgstr "发展领域"
 
-
-
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Press enter to add"
-msgstr "按回车添加"
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Select a time range"
-msgstr "选择时间范围"
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Last * days"
-msgstr "最后 * 天"
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "CSV report"
-msgstr "CSV 报表"
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "XLS report"
-msgstr "XLS 报表"
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "JSON report"
-msgstr "JSON 报表"
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "The enrollments of the courses you have been selected is: *. (* at most)"
-msgstr "你已经选择的课程的入学人数是: *. (* 最大数)"
-
-#: lms/static/js/triboo_analytics/BaseReport.js
-msgid "Total: * rows"
-msgstr "总共 * 行"
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
-msgid "Enrollments"
-msgstr "入学人数"
-
-msgid "Successful"
-msgstr "成功"
-
-msgid "Unsuccessful"
-msgstr "失败"
-
-#msgid "In Progress" already exists
-#msgstr ""
-
-msgid "Not Started"
-msgstr "未开始"
-
-msgid "Average Final Score"
-msgstr "最终平均分数"
-
-msgid "Badges"
-msgstr "徽章数"
-
-msgid "Posts"
-msgstr "回复数"
-
-msgid "Total Time Spent"
-msgstr "总时间花费"
-
-msgid "Last Login"
-msgstr "最后登录"
-
-#: lms/static/js/triboo_analytics/ILTGlobalReport.js
-msgid "Geographical area"
-msgstr "地理区域"
-
-msgid "Course country"
-msgstr "课程国家"
-
-msgid "Zone/Region"
-msgstr "地带/区域"
-
-msgid "Course tags"
-msgstr "课程标签"
-
-msgid "Course code"
-msgstr "课程编号"
-
-msgid "Course name"
-msgstr "课程名"
-
-#msgid "Section"  already exists
-#msgstr ""
-
-#msgid "Subsection" already exists
-#msgstr ""
-
-msgid "Session ID"
-msgstr "会话ID"
-
-msgid "Start date"
-msgstr "开始日期"
-
-msgid "Start time"
-msgstr "开始时间"
-
-msgid "End date"
-msgstr "结束日期"
-
-msgid "End time"
-msgstr "结束时间"
-
-msgid "Duration (in hours)"
-msgstr "时长(小时)"
-
-msgid "Max capacity"
-msgstr "最大容量"
-
-msgid "Enrollees"
-msgstr "入学人数"
-
-msgid "Attendees"
-msgstr "与会者"
-
-msgid "Attendance sheet"
-msgstr "考勤表"
-
-msgid "Location ID"
-msgstr "位置编号"
-
-msgid "Location name"
-msgstr "位置名"
-
-msgid "Location address"
-msgstr "所在地地址"
-
-msgid "Zip code"
-msgstr "邮编"
-
-msgid "City"
-msgstr "城市"
-
-#: lms/static/js/triboo_analytics/ILTLearnerReport.js
-msgid "Enrollment status"
-msgstr "入学情况"
-
-msgid "Outward trips"
-msgstr "外游"
-
-msgid "Return trips"
-msgstr "回程"
-
-msgid "Overnight stay"
-msgstr "过夜"
-
-msgid "Overnight stay address"
-msgstr "住宿地址"
-
-msgid "Comment"
-msgstr "评论"
-
-#: lms/static/js/triboo_analytics/CourseReportSummary.js
-msgid "Current Score"
-msgstr "当前分数"
-
-msgid "Completion Date"
-msgstr "完成日期"
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "Go"
-msgstr "前往"
-
-#:
-msgid "nothing"
-msgstr "没有数据"

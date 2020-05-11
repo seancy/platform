@@ -1665,13 +1665,14 @@ def check_generated_learner_course_reports(last_analytics_success, overviews, se
         for course_id in course_ids_to_check:
             course_id_needs_fix = False
             logger.info("checking %s" % course_id)
+            course = modulestore().get_course(course_id)
             sections = sections_by_course["%s" % course_id]
             enrollments = CourseEnrollment.objects.filter(is_active=True, course_id=course_id, user__is_active=True)
             for enrollment in enrollments:
                 if not LearnerCourseDailyReport.filter_by_day(course_id=course_id, user_id=enrollment.user_id).exists():
                     course_id_needs_fix = True
                     logger.info("missing report for user_id=%d => trying to generate it" % enrollment.user_id)
-                    LearnerCourseDailyReport.generate_enrollment_report(last_analytics_success, course_last_updates[course_id], enrollment, sections)
+                    LearnerCourseDailyReport.generate_enrollment_report(last_analytics_success, course_last_updates[course_id], enrollment, course, sections)
             if course_id_needs_fix:
                 course_ids_nok.append(course_id)
         if len(course_ids_nok) == 0:
