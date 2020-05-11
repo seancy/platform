@@ -343,7 +343,12 @@ def get_progress_table_data(course_key, filter_kwargs, exclude):
     _badges = Badge.objects.filter(course_id=course_key).order_by('order')
     badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
     ProgressTable = get_progress_table_class(badges)
-    columns = ["%s ▸ %s" % (b.grading_rule, b.section_name) for b in _badges]
+    columns = []
+    for b in _badges:
+        badge_name = "%s ▸ %s" % (b.grading_rule, b.section_name)
+        columns.append("%s / Success" % badge_name)
+        columns.append("%s / Score" % badge_name)
+        columns.append("%s / Date" % badge_name)
     return ProgressTable(dataset, exclude=exclude), columns
 
 
@@ -403,7 +408,6 @@ def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
     try:
         res = TableExport('json', table).export()
         table_json = json.loads(res)
-        print "LAETITIA -- %s" % table_json
         table_response = []
         total = collections.OrderedDict()
         for col in summary_columns:

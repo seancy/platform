@@ -743,9 +743,7 @@ class Badge(models.Model):
     @classmethod
     def get_badge_hash(cls, grading_rule, chapter_url, section_url):
         m = hashlib.md5()
-        badge = "%s-%s-%s" % (grading_rule.encode('utf-8'),
-                              chapter_url.encode('utf-8'),
-                              section_url.encode('utf-8'))
+        badge = ("%s-%s-%s" % (grading_rule.encode('utf-8').decode('utf-8'),chapter_url, section_url)).encode('utf-8')
         m.update(badge)
         return m.hexdigest()
 
@@ -760,8 +758,8 @@ class Badge(models.Model):
             for trophy in chapter['trophies']:
                 i += 1
                 badge_hash = cls.get_badge_hash(trophy['section_format'],
-                                            chapter['url'],
-                                            trophy['section_url'])
+                                                chapter['url'],
+                                                trophy['section_url'])
                 hashes.append(badge_hash)
                 cls.objects.update_or_create(course_id=course_key,
                                              badge_hash=badge_hash,
