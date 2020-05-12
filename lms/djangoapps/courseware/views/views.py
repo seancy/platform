@@ -2122,8 +2122,8 @@ def ilt_validation_request_data(request):
         return JsonResponse(status=200)
 
     user = request.user
-    supervised_learners = UserProfile.objects.filter(lt_ilt_supervisor=user.email)
-    learners = [i.user for i in supervised_learners]
+    learners = User.objects.filter(profile__lt_ilt_supervisor=user.email, is_active=True).select_related(
+        "profile").only('id', 'username', 'profile__name', 'profile__lt_employee_id')
     learners_id = [i.id for i in learners]
     course_enrollments = CourseEnrollment.objects.filter(user__in=learners, is_active=True).select_related(
         'user__profile'
@@ -2137,7 +2137,8 @@ def ilt_validation_request_data(request):
     for sessions in all_ilt_sessions:
         usage_key = sessions.usage_id
         course_key = usage_key.course_key
-        enrollment = course_enrollments.filter(course_id=course_key)
+        enrollment = course_enrollments.filter(course_id=course_key).only(
+            "course_id", "user__is_staff", "user__username", "user__profile__name")
         if not enrollment.exists():
             continue
         try:
@@ -2174,8 +2175,7 @@ def ilt_validation_request_data(request):
             'user_name': i.user.username,
             'full_name': i.user.profile.name,
             'checked': False,
-            'is_staff': i.user.is_staff,
-            'previous_enrolled_session': None
+            'is_staff': i.user.is_staff
         }
             for i in enrollment}
         try:
@@ -2190,10 +2190,8 @@ def ilt_validation_request_data(request):
                 for user_id, info in v.items():
                     if int(user_id) in learners_id:
                         if info['status'] != 'refused':
-                            enrollment_user_list.pop(user_id)
-                        else:
-                            enrollment_user_list[user_id]['previous_enrolled_session'] = k
-                        learner = User.objects.get(id=user_id)
+                            enrollment_user_list.pop(user_id, None)
+                        learner = learners.get(id=user_id)
                         info.update({
                             "start": start_at,
                             "employee_id": learner.profile.lt_employee_id,
