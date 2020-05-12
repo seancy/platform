@@ -36,16 +36,12 @@ export class CustomizedReport {
             this.$courseReportSelect2 = this.$courseReport.select2();
             this.$accordingTrigger = $('.accordion-trigger');
             this.eventInit()
-            this.resetValue()
         })
     }
 
     eventInit() {
         this.$submitButton.on('click', (e) => {
             e.preventDefault();
-            // this.synchronizeProperties();
-            // this.synchronizeSelectedCourses();
-            //this.synchronizePeriodDates();
             setTimeout(async () => {
                 const json = await this.submit()
                 LearningTribes.dialog.show(json.message);

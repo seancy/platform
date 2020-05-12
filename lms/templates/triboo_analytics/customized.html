@@ -83,7 +83,7 @@
                                   % for format in export_formats:
                                       <li>
                                           <input type="radio" name="format" id="id-${format}" value="${format}">
-                                          <label for="id-${format}"><code>${_("{format} report".format(format=format.upper()))}</code></label>
+                                          <label for="id-${format}"><code>${_("{format} report").format(format=format.upper())}</code></label>
                                       </li>
                                   % endfor
                                 </div>

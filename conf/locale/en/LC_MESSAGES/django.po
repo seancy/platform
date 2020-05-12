@@ -24070,6 +24070,9 @@ msgstr ""
 msgid "Choose the export format"
 msgstr ""
 
+#: lms/static/js/triboo_analytics/customized.html
+msgid "{format} report"
+msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"

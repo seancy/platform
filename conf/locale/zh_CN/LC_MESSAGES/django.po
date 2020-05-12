@@ -22241,6 +22241,10 @@ msgstr "注意：如果您没有选择任何用户属性，那么使用的将是
 msgid "Choose the export format"
 msgstr "选择导出格式"
 
+#: lms/static/js/triboo_analytics/customized.html
+msgid "{format} report"
+msgstr "{format} 报告"
+
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
 msgstr "选择一个课程查看学习报告："
@@ -22249,7 +22253,7 @@ msgstr "选择一个课程查看学习报告："
 #: lms/templates/triboo_analytics/course.html:153
 #: lms/templates/triboo_analytics/learner.html:46
 msgid "Go"
-msgstr "前往"
+msgstr "完成"
 
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"

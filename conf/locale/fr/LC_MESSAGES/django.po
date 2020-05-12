@@ -23753,6 +23753,10 @@ msgstr "Note : si aucune propriété n'est sélectionnée, les propriétés par 
 msgid "Choose the export format"
 msgstr "Choisissez le format d'export"
 
+#: lms/static/js/triboo_analytics/customized.html
+msgid "{format} report"
+msgstr "Rapport {format}"
+
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
 msgstr "Séléctionnez un cours pour afficher les données :"

@@ -10108,7 +10108,7 @@ msgstr "完成日期"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "Go"
-msgstr "前往"
+msgstr "完成"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "nothing"
@@ -10125,10 +10125,6 @@ msgstr "CSV 和 JSON 文件行数限制为 300000，XLS 为 65000。"
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
 msgstr "已选课程生成的报告行数已大于行数限制，请移除部分课程。"
-
-#: lms/static/js/triboo_analytics/CustomizedReport.js
-msgid "{format} report"
-msgstr "{format} 报告"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
