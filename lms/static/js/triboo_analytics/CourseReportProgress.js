@@ -72,8 +72,7 @@ export default class CourseReportProgress extends BaseReport {
             ],subFields,
             cellRender:(v, row, item)=>{
                 if (v == 'Yes' || v == 'No') {
-                    //const arr = v.split(':')
-                    return (<><span className={"trophy-" + (v == 'Yes'?'yes fa fa-check':'no fa fa-times')}></span>{v}</> )
+                    return (<><span className={"trophy-" + (v == 'Yes'?'yes fa fa-check':'no fa fa-times')}></span></> )
                 } else if (item.fieldName.endsWith('Score')) {
                     return v + '%'
                 } else{
