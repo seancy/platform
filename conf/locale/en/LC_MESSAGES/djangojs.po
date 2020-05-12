@@ -9601,10 +9601,6 @@ msgstr ""
 msgid "JSON report"
 msgstr ""
 
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "The enrollments of the courses you have been selected is: *. (* at most)"
-msgstr ""
-
 #: lms/static/js/triboo_analytics/BaseReport.js
 msgid "Total: * rows"
 msgstr ""
@@ -9786,7 +9782,7 @@ msgid "With the selected courses, the report will count * lines."
 msgstr ""
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "(The limit is 300,000 for CSV and JSON, 65,000 for XLS.)"
+msgid "The limit is 300,000 for CSV and JSON, 65,000 for XLS."
 msgstr ""
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js

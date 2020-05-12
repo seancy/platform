@@ -163,7 +163,7 @@ class ReportTypeAndCourseReport extends React.Component {
                     <p className={"section-label " + (this.state.hideCourseReportInfo ? 'hide' : '')}>
                         <p>{gettext('With the selected courses, the report will count * lines.')
                             .replace('*', getEnrollmentNumber())}</p>
-                        <p>{gettext('(The limit is 300,000 for CSV and JSON, 65,000 for XLS.)')}</p>
+                        <p>{gettext('The limit is 300,000 for CSV and JSON, 65,000 for XLS.')}</p>
                     </p>
                     <Dropdown data={courses} multiple={isMultiple} searchable={true} optionRender={render} onChange={handleCourseSelect}/>
                 </div>

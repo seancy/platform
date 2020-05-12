@@ -9914,20 +9914,8 @@ msgid "Filter the data"
 msgstr "过滤数据"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "Select a time range:"
-msgstr "选择一个时间范围："
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "With the selected courses, the report will count * lines."
-msgstr "已选课程生成的报告将有 * 行。"
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "(The limit is 300,000 for CSV and JSON, 65,000 for XLS.)"
-msgstr "（CSV 和 JSON 文件行数限制为 300000，XLS 为 65000。）"
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
-msgstr "已选课程生成的报告行数已大于行数限制，请移除部分课程。"
+msgid "Select a time range"
+msgstr "选择一个时间范围"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Press enter to add"
@@ -10125,6 +10113,19 @@ msgstr "前往"
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "nothing"
 msgstr "没有数据"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "With the selected courses, the report will count * lines."
+msgstr "已选课程生成的报告将有 * 行。"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "The limit is 300,000 for CSV and JSON, 65,000 for XLS."
+msgstr "CSV 和 JSON 文件行数限制为 300000，XLS 为 65000。"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
+msgstr "已选课程生成的报告行数已大于行数限制，请移除部分课程。"
+
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
@@ -12136,173 +12137,3 @@ msgstr "注册已被确认通过。<br>你可以点击\"即将到来的课程\"�
 msgid "Area of Development"
 msgstr "发展领域"
 
-
-
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Press enter to add"
-msgstr "按回车添加"
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Select a time range"
-msgstr "选择时间范围"
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-#: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Last * days"
-msgstr "最后 * 天"
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "CSV report"
-msgstr "CSV 报表"
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "XLS report"
-msgstr "XLS 报表"
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "JSON report"
-msgstr "JSON 报表"
-
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "The enrollments of the courses you have been selected is: *. (* at most)"
-msgstr "你已经选择的课程的入学人数是: *. (* 最大数)"
-
-#: lms/static/js/triboo_analytics/BaseReport.js
-msgid "Total: * rows"
-msgstr "总共 * 行"
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
-msgid "Enrollments"
-msgstr "入学人数"
-
-msgid "Successful"
-msgstr "成功"
-
-msgid "Unsuccessful"
-msgstr "失败"
-
-#msgid "In Progress" already exists
-#msgstr ""
-
-msgid "Not Started"
-msgstr "未开始"
-
-msgid "Average Final Score"
-msgstr "最终平均分数"
-
-msgid "Badges"
-msgstr "徽章数"
-
-msgid "Posts"
-msgstr "回复数"
-
-msgid "Total Time Spent"
-msgstr "总时间花费"
-
-msgid "Last Login"
-msgstr "最后登录"
-
-#: lms/static/js/triboo_analytics/ILTGlobalReport.js
-msgid "Geographical area"
-msgstr "地理区域"
-
-msgid "Course country"
-msgstr "课程国家"
-
-msgid "Zone/Region"
-msgstr "地带/区域"
-
-msgid "Course tags"
-msgstr "课程标签"
-
-msgid "Course code"
-msgstr "课程编号"
-
-msgid "Course name"
-msgstr "课程名"
-
-#msgid "Section"  already exists
-#msgstr ""
-
-#msgid "Subsection" already exists
-#msgstr ""
-
-msgid "Session ID"
-msgstr "会话ID"
-
-msgid "Start date"
-msgstr "开始日期"
-
-msgid "Start time"
-msgstr "开始时间"
-
-msgid "End date"
-msgstr "结束日期"
-
-msgid "End time"
-msgstr "结束时间"
-
-msgid "Duration (in hours)"
-msgstr "时长(小时)"
-
-msgid "Max capacity"
-msgstr "最大容量"
-
-msgid "Enrollees"
-msgstr "入学人数"
-
-msgid "Attendees"
-msgstr "与会者"
-
-msgid "Attendance sheet"
-msgstr "考勤表"
-
-msgid "Location ID"
-msgstr "位置编号"
-
-msgid "Location name"
-msgstr "位置名"
-
-msgid "Location address"
-msgstr "所在地地址"
-
-msgid "Zip code"
-msgstr "邮编"
-
-msgid "City"
-msgstr "城市"
-
-#: lms/static/js/triboo_analytics/ILTLearnerReport.js
-msgid "Enrollment status"
-msgstr "入学情况"
-
-msgid "Outward trips"
-msgstr "外游"
-
-msgid "Return trips"
-msgstr "回程"
-
-msgid "Overnight stay"
-msgstr "过夜"
-
-msgid "Overnight stay address"
-msgstr "住宿地址"
-
-msgid "Comment"
-msgstr "评论"
-
-#: lms/static/js/triboo_analytics/CourseReportSummary.js
-msgid "Current Score"
-msgstr "当前分数"
-
-msgid "Completion Date"
-msgstr "完成日期"
-
-#: lms/static/js/triboo_analytics/Exporter.js
-msgid "Go"
-msgstr "前往"
-
-#:
-msgid "nothing"
-msgstr "没有数据"
