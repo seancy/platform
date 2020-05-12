@@ -10326,10 +10326,6 @@ msgstr ""
 msgid "JSON report"
 msgstr ""
 
-#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
-msgid "The enrollments of the courses you have been selected is: *. (* at most)"
-msgstr ""
-
 #: lms/static/js/triboo_analytics/BaseReport.js
 msgid "Total: * rows"
 msgstr ""
@@ -10505,6 +10501,18 @@ msgstr ""
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "nothing"
 msgstr "Ningun articulo"
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "With the selected courses, the report will count * lines."
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "The limit is 300,000 for CSV and JSON, 65,000 for XLS."
+msgstr ""
+
+#: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
+msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
+msgstr ""
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
