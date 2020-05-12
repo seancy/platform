@@ -50,7 +50,7 @@
                         componentName: 'CourseReportDropdown',
                         props: {
                             'token':'${ csrf_token }',
-                            'submitText':'${_(" Go")}',
+                            'submitText':'${_("Go")}',
                             'labelText':'${_("Please select a course to see your report:")}',
 
                             'data':${json.dumps([{'value': item[0], 'text':item[1]} for item in courses]) | n},
