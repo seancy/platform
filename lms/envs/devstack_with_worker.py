@@ -24,6 +24,9 @@ else:
 # Require a separate celery worker
 CELERY_ALWAYS_EAGER = False
 
+BROKER_URL = 'django://'
+INSTALLED_APPS += ('kombu.transport.django', )
+CELERY_ACCEPT_CONTENT = ['json']
 # Disable transaction management because we are using a worker. Views
 # that request a task and wait for the result will deadlock otherwise.
 for database_name in DATABASES:

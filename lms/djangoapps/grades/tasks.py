@@ -175,6 +175,10 @@ def recalculate_subsection_grade_v3(self, **kwargs):
     routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
 )
 def update_course_progress(self, **kwargs):
+    """
+    a celery task to batch update learners' course progress,
+    this task is called after gradebook edit
+    """
     users = kwargs.get('users')
     course_id = kwargs.get('course_id')
     course_key = CourseKey.from_string(course_id)
@@ -227,6 +231,26 @@ def send_grade_override_email(self, **kwargs):
                     reason=e
                 )
             )
+
+
+@task(
+    bind=True,
+    base=LoggedPersistOnFailureTask,
+    time_limit=SUBSECTION_GRADE_TIMEOUT_SECONDS,
+    max_retries=2,
+    default_retry_delay=RETRY_DELAY_SECONDS,
+    routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
+)
+def calculate_course_progress(self, **kwargs):
+    """
+    celery task to update course progress for a single learner
+    this task will be called after a BlockCompletion.post_save
+    """
+    course_id = kwargs.get('course_id')
+    user_id = kwargs.get('user_id')
+    course_key = CourseKey.from_string(course_id)
+    user = User.objects.get(id=user_id)
+    CourseGradeFactory().update_course_completion_percentage(course_key, user)
 
 
 def _recalculate_subsection_grade(self, **kwargs):

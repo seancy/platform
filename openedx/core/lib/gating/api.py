@@ -6,6 +6,7 @@ import logging
 import sys
 
 from django.contrib.auth.models import User
+from django.db.models import signals
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
@@ -487,16 +488,24 @@ def get_subsection_completion_percentage_with_gradebook_edit(subsection_usage_ke
         subsection_structure = get_course_blocks(user, subsection_usage_key)
         if any(subsection_structure):
             if completion_waffle.waffle().is_enabled(completion_waffle.ENABLE_COMPLETION_TRACKING):
+                from lms.djangoapps.grades.signals.handlers import recalculate_course_completion_percentage
                 subsection_grade_factory = SubsectionGradeFactory(user, course_structure=subsection_structure)
+
+                # no need to trigger the signal to recalculate progress again, so we disconnect the signals
+                # and reconnect it afterwards
+                signals.post_save.disconnect(receiver=recalculate_course_completion_percentage, sender=BlockCompletion)
                 for block in subsection_structure:
                     if block.block_type == 'problem':
-                        subsection_grade = subsection_grade_factory.update(subsection_structure[block], persist_grade=False)
+                        subsection_grade = subsection_grade_factory.update(
+                            subsection_structure[block], persist_grade=False
+                        )
                         if not subsection_grade.all_total.possible:
                             BlockCompletion.objects.submit_completion(
                                 user=user,
                                 course_key=subsection_usage_key.course_key,
                                 block_key=block,
                                 completion=1.0,)
+                signals.post_save.connect(receiver=recalculate_course_completion_percentage, sender=BlockCompletion)
             completable_blocks = [
                 block for block in subsection_structure
                 if block.block_type not in ['chapter', 'sequential', 'vertical', 'course', 'discussion']
