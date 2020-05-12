@@ -12808,7 +12808,7 @@ msgid "posts"
 msgstr ""
 
 #: lms/templates/dashboard.html:162
-msgid "View my learning transcript"
+msgid "My Learning Transcript"
 msgstr ""
 
 #: lms/templates/dashboard.html:253 lms/templates/my_courses.html:233
