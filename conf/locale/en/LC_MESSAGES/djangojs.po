@@ -9789,6 +9789,10 @@ msgstr ""
 msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
 msgstr ""
 
+#: lms/static/js/triboo_analytics/CustomizedReport.js
+msgid "{format} report"
+msgstr ""
+
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
 msgstr ""

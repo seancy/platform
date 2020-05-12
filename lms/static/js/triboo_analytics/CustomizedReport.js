@@ -43,83 +43,14 @@ export class CustomizedReport {
     eventInit() {
         this.$submitButton.on('click', (e) => {
             e.preventDefault();
-            this.synchronizeProperties();
-            this.synchronizeSelectedCourses();
+            // this.synchronizeProperties();
+            // this.synchronizeSelectedCourses();
             //this.synchronizePeriodDates();
             setTimeout(async () => {
                 const json = await this.submit()
                 LearningTribes.dialog.show(json.message);
             }, 200)
         })
-        /*this.$reportType.on('change', () => {
-            let report_text = this.$reportType.find("option:selected").text()
-            let report_id = "tag_" + report_text.replace(/\ /g, '_')
-            $('#report_bar').empty()
-            this.addTagToBar('#report_bar', 'report-option', report_text, report_id)
-            $('#' + report_id + ' .fa').css('display','none')
-            this.resetCourseSelect()
-            this.goButtonStatusUpdate()
-        })
-        this.$courseReport.on('change', () => {
-            let report_val = this.$reportType.val()
-            if (report_val == 'course_summary') {
-                let vals = []
-                let texts = []
-                let nums = []
-                this.$courseReport.find("option:selected").each(function() {
-                    vals.push($(this).val());
-                    let t = $(this).text();
-                    let split_ind = t.lastIndexOf('(');
-                    let ctext = t.substring(0, split_ind - 1);
-                    let cnum = t.substring(split_ind + 1, t.lastIndexOf('user') - 1);
-                    texts.push(ctext);
-                    nums.push(cnum);
-                })
-                let old_vals = this.oldCourseValues
-                let old_texts = this.oldCourseTexts
-                let diff_val = this.diffElement(old_vals, vals)
-                let diff_text = this.diffElement(old_texts, texts)
-                let sum_nums = 0
-                if (nums.length > 0) {
-                    sum_nums = nums.reduce(function (a, b) {
-                        return parseInt(a) + parseInt(b);
-                    })
-                }
-                if (sum_nums > this.enrollmentLimit) {
-                    alert('The enrollments of the courses you have been selected is above the limit.')
-                    let set_vals = this.oldCourseValues ? this.oldCourseValues : ''
-                    this.$courseReportSelect2.val(set_vals).change();
-                } else if (diff_val) {
-                    let tag_id = 'tag_' + diff_val.split(':')[1].replace(/\+/g, '_');
-                    if (vals.length > old_vals.length){
-                        this.addTagToBar('#course_bar', 'course-option', diff_text, tag_id)
-                    } else {
-                        $("#course_bar button").remove('#' + tag_id);
-                    }
-                    this.oldCourseValues = vals
-                    this.oldCourseTexts = texts
-                    this.selectedEnrollments = nums
-                }
-            } else if (report_val == 'course_progress' || report_val == 'course_time_spent') {
-                let t = this.$courseReport.find("option:selected").text()
-                let val = this.$courseReport.find("option:selected").val()
-                let split_ind = t.lastIndexOf('(');
-                let ctext = t.substring(0, split_ind - 1);
-                let cnum = t.substring(split_ind + 1, t.lastIndexOf('user') - 1);
-                let cid = "tag_" + ctext.replace(/\ /g, '_')
-                $('#course_bar').empty()
-                this.addTagToBar('#course_bar', 'course-option', ctext, cid)
-                $('#' + cid + ' .fa').css('display','none')
-                this.selectedEnrollments.push(cnum)
-            }
-            let current_num = 0
-            if (this.selectedEnrollments.length > 0) {
-                current_num = this.selectedEnrollments.reduce(function (a, b) {
-                    return parseInt(a) + parseInt(b);
-                })
-            }
-            $('#enrollment_selected')[0].innerText = current_num
-        })*/
         $('#table-export-selection').delegate('label', 'click', () => {
             this.goButtonStatusUpdate()
         })
@@ -144,65 +75,11 @@ export class CustomizedReport {
             $(this_button).parent().children('button').remove('#' + input_id);
             $('#' + prop_id).attr("checked", false);
         });
-        $('#course_bar').delegate('button', 'click', (e) => {
-            e.preventDefault();
-            let report_val = this.$reportType.find("option:selected").val()
-            if (report_val == 'course_summary'){
-                let this_button = $(e.currentTarget);
-                let input_id = this_button[0].id;
-                $(this_button).parent().children('button').remove('#' + input_id);
-                let bar_texts = this.getBarTexts('#course_bar');
-                let vals = this.oldCourseValues;
-                let texts = this.oldCourseTexts;
-                let nums = this.selectedEnrollments;
-                let diff_text = this.diffElement(texts, bar_texts);
-                let diff_index = texts.indexOf(diff_text);
-                vals.splice(diff_index, 1);
-                texts.splice(diff_index, 1);
-                nums.splice(diff_index, 1);
-                let set_vals = vals ? vals : ''
-                this.$courseReportSelect2.val(set_vals).change();
-                this.oldCourseValues = vals;
-                this.oldCourseTexts = texts;
-                this.selectedEnrollments = nums;
-            }
-            let current_num = 0
-            if (this.selectedEnrollments.length > 0) {
-                current_num = this.selectedEnrollments.reduce(function (a, b) {
-                    return parseInt(a) + parseInt(b);
-                })
-            }
-            //$('#enrollment_selected')[0].innerText = current_num
-        });
         $('#report_bar').delegate('button', 'click', (e) => {
             e.preventDefault();
         });
         this.$accordingTrigger.on('click', (e) => {
             e.preventDefault();
-        });
-        $('#table-export-selection').delegate('input', 'click', (e) => {
-            let format_val = $('#table-export-selection input[name=format]:checked')[0].value;
-            if (format_val == 'xls') {
-                if (this.selectedEnrollments > 65000) {
-                    alert('The enrollments of the courses you have been selected is above the limit of xls file. Please remove some of them or you will not be able to see some records in your report.')
-                }
-                this.enrollmentLimit = 65000
-            } else {
-                this.enrollmentLimit = 300000
-            }
-            $('#enrollment_limit').text(this.enrollmentLimit)
-            $('#format_bar').empty()
-            let add_class = "format-option"
-            let prop_name = $(e.currentTarget).val();
-            let prop_id = "tag_" + prop_name
-            $("<button/>", {
-                "id": prop_id,
-                "class": add_class + " option-label"
-            }).appendTo('#format_bar');
-            $("<span/>", {
-                "class": "query",
-                text: prop_name
-            }).appendTo("#" + prop_id);
         });
         $('#format_bar').delegate('button', 'click', (e) => {
             e.preventDefault();
@@ -258,45 +135,6 @@ export class CustomizedReport {
         $("<span/>", {
             "class": "fa fa-times"
         }).appendTo("#" + tag_id);
-    }
-
-    resetCourseSelect() {
-        let report_val = this.$reportType.find("option:selected").val()
-        if (report_val == 'course_summary'){
-            $('#course_selected option').remove('#null-option')
-            $('#custom_course_section').removeClass('is-hidden')
-        } else if (report_val == 'course_progress' || report_val == 'course_time_spent') {
-            // <option key='' disabled selected value='' id='null-option'></option>
-            $('#course_selected option').remove('#null-option')
-            $("<option/>", {
-                "id": 'null-option',
-                value: '',
-                key: ''
-            }).prependTo('#course_selected');
-            $('#custom_course_section').removeClass('is-hidden')
-        } else {
-            $('#custom_course_section').addClass('is-hidden')
-        }
-        this.$courseReport.val('').change()
-        $('#course_bar').empty()
-        this.oldCourseValues = []
-        this.oldCourseTexts = []
-        this.selectedEnrollments = []
-    }
-
-    resetValue() {
-        //comes from window.onload event in customized_report.js
-        $("#id_query_string").val("");
-        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected", true)
-
-        //comes from document.ready event in customized_report.js
-        var report_types = $("#report_type > option")
-        var selected_report_type = "";
-        for (var i = 0; i < report_types.length; i++) {
-            if (report_types[i].selected) {
-                selected_report_type = report_types[i].value
-            }
-        }
     }
 
     goButtonStatusUpdate() {
@@ -357,29 +195,6 @@ export class CustomizedReport {
         })
         return await response.json()
     }
-
-    synchronizeProperties() {
-        var fs = $('.active-filters button')
-        var hidden_queries = $('#hidden-queries')
-        var html = ''
-        for (var i = 0; i < fs.length; i++) {
-            html += '<input type="hidden", name="queried_field_' + (i + 1) + '", value=' + fs[i].dataset.type + '>'
-            html += '<input type="hidden", name="query_string_' + (i + 1) + '", value=' + fs[i].dataset.value + '>'
-        }
-        hidden_queries.empty().append(html)
-    }
-
-    synchronizeSelectedCourses() {
-        let courseSelectedValueStr = this.$courseReportSelect2.val();
-        $('#course_selected_return').val(courseSelectedValueStr)
-    }
-
-    /*synchronizePeriodDates() {
-        let from_day = $('#from_day').val()
-        let to_day = $('#to_day').val()
-        $('#from_day_return').val(from_day)
-        $('#to_day_return').val(to_day)
-    }*/
 
     expandSection(sectionToggleButton) {
         const $toggleButtonChevron = $(sectionToggleButton).children('.fa-chevron-down');

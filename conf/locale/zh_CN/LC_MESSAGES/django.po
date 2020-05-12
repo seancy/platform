@@ -10029,6 +10029,18 @@ msgstr "{username}用户未选修与该团队相关的课程。"
 msgid "Date Joined"
 msgstr "加入日期"
 
+#: lms/djangoapps/triboo_analytics/forms.py:13
+msgid "Education"
+msgstr "教育水平"
+
+#: lms/djangoapps/triboo_analytics/forms.py:15
+msgid "Commercial Zone"
+msgstr "商业地带"
+
+#: lms/djangoapps/triboo_analytics/forms.py:16
+msgid "Commercial Region"
+msgstr "商业地区"
+
 #: lms/djangoapps/triboo_analytics/forms.py:15
 msgctxt "user.profile"
 msgid "Address"
@@ -10085,6 +10097,10 @@ msgstr "部门"
 #: lms/djangoapps/triboo_analytics/forms.py:26
 msgid "Supervisor"
 msgstr "主管"
+
+#: lms/djangoapps/triboo_analytics/forms.py:31
+msgid "ILT Supervisor"
+msgstr "ILT 主管"
 
 #: lms/djangoapps/triboo_analytics/forms.py:27
 #: openedx/core/djangoapps/user_api/api.py:969
