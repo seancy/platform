@@ -13796,8 +13796,8 @@ msgid "posts"
 msgstr "发布的帖子"
 
 #: lms/templates/dashboard.html:162
-msgid "View my learning transcript"
-msgstr "查看我的学习报告"
+msgid "My Learning Transcript"
+msgstr "我的学习报告"
 
 #: lms/templates/dashboard.html:168
 msgid "Continue Learning..."

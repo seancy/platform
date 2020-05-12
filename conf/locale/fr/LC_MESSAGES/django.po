@@ -14604,8 +14604,8 @@ msgid "posts"
 msgstr "discussions(s)"
 
 #: lms/templates/dashboard.html:162
-msgid "View my learning transcript"
-msgstr "Afficher mon rapport d'activité"
+msgid "My Learning Transcript"
+msgstr "Mon rapport d'activité"
 
 #: lms/templates/dashboard.html:168
 msgid "Continue Learning..."
