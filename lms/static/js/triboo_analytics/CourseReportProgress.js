@@ -57,10 +57,7 @@ export default class CourseReportProgress extends BaseReport {
     }
 
     getConfig() {
-        const propertiesFields = this.getOrderedProperties().map(p=>({
-                name: p.text,
-                fieldName: p.value
-            }))
+        const propertiesFields = this.getOrderedProperties()
         const {dynamicFields, subFields}=this.getDynamicFields()
 
         return {...{
@@ -72,8 +69,7 @@ export default class CourseReportProgress extends BaseReport {
             ],subFields,
             cellRender:(v, row, item)=>{
                 if (v == 'Yes' || v == 'No') {
-                    //const arr = v.split(':')
-                    return (<><span className={"trophy-" + (v == 'Yes'?'yes fa fa-check':'no fa fa-times')}></span>{v}</> )
+                    return (<><span className={"trophy-" + (v == 'Yes'?'yes fa fa-check':'no fa fa-times')}></span></> )
                 } else if (item.fieldName.endsWith('Score')) {
                     return v + '%'
                 } else{

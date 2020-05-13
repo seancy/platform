@@ -13,7 +13,7 @@ const StatusRender = (value) => {
         'In Progress': 'in-progress-bg',
         'Successful': 'finished-bg'
     }
-    return <span className={statusConfig[value]}>{value}</span>
+    return <span className={statusConfig[value]}>{gettext(value)}</span>
 
 }, PercentRender = value => {
     return value && value.indexOf('%') < 0 ? `${value}%` : value

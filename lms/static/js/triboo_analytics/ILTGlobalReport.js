@@ -21,11 +21,14 @@ export default class ILTGlobalReport extends BaseReport {
     }
 
     getConfig(){
+        const translationRender={
+            render:v=>gettext(v)
+        }
         return {...{
             fields: [
-                {name: gettext('Geographical area'), fieldName: 'Geographical area'},
-                {name: gettext('Course country'), fieldName: 'Course country'},
-                {name: gettext('Zone/Region'), fieldName: 'Zone/Regionn'},
+                {name: gettext('Geographical area'), fieldName: 'Geographical area', ...translationRender},
+                {name: gettext('Course country'), fieldName: 'Course country', ...translationRender},
+                {name: gettext('Zone/Region'), fieldName: 'Zone/Regionn', ...translationRender},
                 {name: gettext('Course tags'), fieldName: 'Course tags'},
 
                 {name: gettext('Course code'), fieldName: 'Course code'},
@@ -43,7 +46,7 @@ export default class ILTGlobalReport extends BaseReport {
                 {name: gettext('Max capacity'), fieldName: 'Max capacity'},
                 {name: gettext('Enrollees'), fieldName: 'Enrollees'},
 
-                {name: gettext('Attendees'), fieldName: 'Attendees'},
+                {name: gettext('Attendees'), fieldName: 'Attendees', ...translationRender},
                 {name: gettext('Attendance sheet'), fieldName: 'Attendance sheet'},
                 {name: gettext('Location ID'), fieldName: 'Location ID'},
                 {name: gettext('Location name'), fieldName: 'Location name'},

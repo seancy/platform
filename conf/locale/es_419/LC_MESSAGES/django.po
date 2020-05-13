@@ -18358,8 +18358,8 @@ msgid "badges obtained"
 msgstr "Certificaciones obtenidas"
 
 #: lms/templates/dashboard.html:162
-msgid "View my learning transcript"
-msgstr "Ver mi transcripción"
+msgid "My Learning Transcript"
+msgstr "Mi transcripción"
 
 #: lms/templates/dashboard.html:161
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:139

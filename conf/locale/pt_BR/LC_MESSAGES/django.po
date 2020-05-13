@@ -18312,8 +18312,8 @@ msgid "posts"
 msgstr "postagens"
 
 #: lms/templates/dashboard.html:164
-msgid "View my learning transcript"
-msgstr "Baixar transcrição"
+msgid "My Learning Transcript"
+msgstr "Minha transcrição"
 
 #: lms/templates/dashboard.html:255 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
