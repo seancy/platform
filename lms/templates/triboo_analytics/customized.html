@@ -49,7 +49,7 @@
                                 report_type:'${_("Please select a report:")}',
                                 course:'${_("Please select course(s):")}'
                             },
-                            'report_types':${json.dumps([{'value': item[0], 'text':item[1].__str__(), 'courseReportType':item[2]} for item in report_types]) | n},
+                            'report_types':${json.dumps([{'value': item[0], 'text':str(item[1]), 'courseReportType':item[2]} for item in report_types]) | n},
                             'courses':${json.dumps([{'value': item[0], 'text':item[1], 'course_enrollments':item[2]} for item in courses]) | n}
                         });
                     </%static:webpack>
