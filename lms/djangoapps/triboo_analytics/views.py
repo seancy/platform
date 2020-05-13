@@ -466,6 +466,9 @@ def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
                 else:
                     total[col] = "0%"
 
+        choices_name_mapping = user_properties_helper.get_name_value_mapping()
+        table_response = change_column_key(table_response, choices_name_mapping)
+
         reverse_flag = True if sort[0] == '-' else False
         table_response = sorted(table_response, key=lambda x: x[sort[1:]], reverse=reverse_flag)
 
@@ -473,9 +476,6 @@ def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
             page_start = (page['no'] - 1) * page['size']
             page_end = page['no'] * page['size']
             table_response = table_response[page_start:page_end]
-
-        choices_name_mapping = user_properties_helper.get_name_value_mapping()
-        table_response = change_column_key(table_response, choices_name_mapping)
 
         response = {'list': table_response,
                     'total': total,
