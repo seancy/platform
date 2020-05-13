@@ -53,6 +53,21 @@ export class Toolbar extends React.Component {
                 const {onInit} = this.props
                 onInit && onInit(data.list)
             })
+            .catch(()=>{
+                this.setState((prev)=>{
+                    let toolbarItems = prev.toolbarItems.map(p=>{
+                        if (['filters','properties'].includes(p.name)){
+                            return {...p, props: {...p.props, data: [{text: 'api: an error raised', value: ''}]}}
+                        }else{
+                            return p
+                        }
+                    })
+                    return {
+                        toolbarItems
+                    }
+                })
+
+            })
     }
 
     export(){
