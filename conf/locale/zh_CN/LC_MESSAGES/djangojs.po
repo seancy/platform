@@ -388,44 +388,6 @@ msgstr "在导入新课程到数据库时出现了错误。"
 msgid "Your import has failed."
 msgstr "您的导入操作已失败。"
 
-
-# ----------analytics----------
-
-#: lms/templates/triboo_analytics/course.html:115
-#: lms/templates/triboo_analytics/learner.html:34
-#: lms/templates/triboo_analytics/microsite.html:95
-#: lms/templates/triboo_analytics/my_transcript.html:290
-#: lms/templates/triboo_analytics/transcript.html:78
-msgid "Please, note that these reports are not live. Last update:"
-msgstr "请注意，这些报告不是实时的。上次更新："
-
-# ----------learner report----------
-#: lms/static/js/triboo_analytics/Toolbar.js:167
-msgid "filters"
-msgstr "过滤"
-
-#: lms/static/js/triboo_analytics/Toolbar.js:167
-msgid "properties"
-msgstr "属性"
-
-#: lms/static/js/triboo_analytics/Toolbar.js:167
-msgid "period"
-msgstr "时间区间"
-
-#: lms/static/js/triboo_analytics/Toolbar.js:167
-msgid "export"
-msgstr "导出"
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
-msgid "Page"
-msgstr "页面"
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
-msgid "of"
-msgstr ""
-
-
-
 #: cms/static/js/features/import/views/import.js:66
 #: common/static/bundles/Import.js:226
 msgid "Your import is in progress; navigating away will abort it."
@@ -9837,8 +9799,8 @@ msgstr "选择您想要展示的用户属性"
 #: lms/static/js/triboo_analytics/CourseReport.js
 #: lms/static/js/triboo_analytics/ILTReport.js
 #: lms/static/js/triboo_analytics/LearnerReport.js
-#msgid "Please, note that these reports are not live. Last update:" already exists
-#msgstr ""
+msgid "Please, note that these reports are not live. Last update:"
+msgstr "请注意，这些报告不是实时的。上次更新："
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Summary"
@@ -9894,12 +9856,12 @@ msgid "Filter the sessions starting in the selected period."
 msgstr "从开始于已选时间区间来过滤数据"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
-#msgid "Page" already exists
-#msgstr ""
+msgid "Page"
+msgstr "页面"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
-#msgid "of" already exists
-#msgstr ""
+msgid "of"
+msgstr ""
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select a report"
@@ -10125,6 +10087,38 @@ msgstr "CSV 和 JSON 文件行数限制为 300000，XLS 为 65000。"
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
 msgstr "已选课程生成的报告行数已大于行数限制，请移除部分课程。"
+
+#: lms/static/js/triboo_analytics/
+msgid "Confirmed"
+msgstr "已确认"
+
+#: lms/static/js/triboo_analytics/
+msgid "Accepted"
+msgstr "已被接受"
+
+#: lms/static/js/triboo_analytics/
+msgid "Pending"
+msgstr "正在验证中"
+
+#: lms/static/js/triboo_analytics/
+msgid "Refused"
+msgstr "已被拒绝"
+
+#: lms/static/js/triboo_analytics/
+msgid "Received"
+msgstr "已收到"
+
+#: lms/static/js/triboo_analytics/
+msgid "Expected"
+msgstr "待接收"
+
+#: lms/static/js/triboo_analytics/
+msgid "Yes"
+msgstr "是"
+
+#: lms/static/js/triboo_analytics/
+msgid "No"
+msgstr "否"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
