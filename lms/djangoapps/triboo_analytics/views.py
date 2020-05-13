@@ -331,7 +331,7 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
     else:
         dataset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
     if html_links:
-        return table_cls(dataset, exclude=exclude, html_links=True)    
+        return table_cls(dataset, exclude=exclude, html_links=True)
     return table_cls(dataset, exclude=exclude)
 
 
@@ -1052,7 +1052,7 @@ def course_view(request):
             unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, None, None)
 
             last_update = dt2str(last_update)
- 
+
         return render_to_response(
             "triboo_analytics/course.html",
             {
@@ -1269,12 +1269,12 @@ def customized_view(request):
     report_type = request.GET.get('report_type', None)
     courses_selected = request.GET.get('courses_selected', None)
     report_types = [
-        ('course_summary', 'Course Summary Report', 'multiple'),
-        ('course_progress', 'Course Progress Report', 'single'),
-        ('course_time_spent', 'Course Time Spent Report', 'single'),
-        ('learner', 'Learner Report', ''),
-        ('ilt_global', 'ILT Global Report', ''),
-        ('ilt_learner', 'ILT Learner Report', ''),
+        ('course_summary', _('Course Summary Report'), 'multiple'),
+        ('course_progress', _('Course Progress Report'), 'single'),
+        ('course_time_spent', _('Course Time Spent Report'), 'single'),
+        ('learner', _('Learner Report'), ''),
+        ('ilt_global', _('ILT Global Report'), ''),
+        ('ilt_learner', _('ILT Learner Report'), ''),
     ]
     export_formats = ['csv', 'xls', 'json']
     courses, courses_list = get_all_courses(request, orgs)
@@ -1857,4 +1857,4 @@ def get_properties(request):
         })
     return JsonResponse(jsonData)
 
-    
+
