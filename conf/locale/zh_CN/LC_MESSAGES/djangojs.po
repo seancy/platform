@@ -10110,7 +10110,7 @@ msgstr "已收到"
 
 #: lms/static/js/triboo_analytics/
 msgid "Expected"
-msgstr "没收到"
+msgstr "待接收"
 
 #: lms/static/js/triboo_analytics/
 msgid "Yes"
