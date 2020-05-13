@@ -57,10 +57,7 @@ export default class CourseReportProgress extends BaseReport {
     }
 
     getConfig() {
-        const propertiesFields = this.getOrderedProperties().map(p=>({
-                name: p.text,
-                fieldName: p.value
-            }))
+        const propertiesFields = this.getOrderedProperties()
         const {dynamicFields, subFields}=this.getDynamicFields()
 
         return {...{

@@ -21,16 +21,16 @@ export default class ILTLearnerReport extends BaseReport {
     }
 
     getConfig(){
-        const propertiesFields = this.getOrderedProperties().map(p=>({
-                name: p.text,
-                fieldName: p.value
-            }))
+        const propertiesFields = this.getOrderedProperties()
+        const translationRender={
+            render:v=>gettext(v)
+        }
         return {...{
             fields: [
 
-                {name: gettext('Geographical area'), fieldName: 'Geographical area'},
-                {name: gettext('Course country'), fieldName: 'Course country'},
-                {name: gettext('Zone/Region'), fieldName: 'Zone/Region'},
+                {name: gettext('Geographical area'), fieldName: 'Geographical area', ...translationRender},
+                {name: gettext('Course country'), fieldName: 'Course country', ...translationRender},
+                {name: gettext('Zone/Region'), fieldName: 'Zone/Region', ...translationRender},
                 {name: gettext('Course tags'), fieldName: 'Course tags'},
 
                 {name: gettext('Course code'), fieldName: 'Course code'},
@@ -55,12 +55,12 @@ export default class ILTLearnerReport extends BaseReport {
 
                 ...propertiesFields,
 
-                {name: gettext('Enrollment status'), fieldName: 'Enrollment status'},
-                {name: gettext('Attendees'), fieldName: 'Attendee'},
+                {name: gettext('Enrollment status'), fieldName: 'Enrollment status', ...translationRender},
+                {name: gettext('Attendees'), fieldName: 'Attendee', ...translationRender},
                 {name: gettext('Outward trips'), fieldName: 'Outward trips'},
                 {name: gettext('Return trips'), fieldName: 'Return trips'},
 
-                {name: gettext('Overnight stay'), fieldName: 'Overnight stay'},
+                {name: gettext('Overnight stay'), fieldName: 'Overnight stay', ...translationRender},
                 {name: gettext('Overnight stay address'), fieldName: 'Overnight stay address'},
                 {name: gettext('Comment'), fieldName: 'Comment'}
             ],

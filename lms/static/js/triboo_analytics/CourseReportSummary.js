@@ -24,10 +24,7 @@ export default class CourseReportSummary extends BaseReport {
     }
 
     getConfig(){
-        const propertiesFields = this.getOrderedProperties().map(p=>({
-                name: p.text,
-                fieldName: p.value
-            }))
+        const propertiesFields = this.getOrderedProperties()
         const statusRender = { render:StatusRender}, percentRender = { render:PercentRender}
         return {...{
             keyField:"ID",

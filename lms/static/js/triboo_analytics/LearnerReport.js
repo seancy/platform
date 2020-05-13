@@ -22,13 +22,7 @@ export class LearnerReport extends BaseReport {
     }
 
     getConfig(){
-        /*const properties=this.state.properties.filter(p=>p.type == 'default')
-        const {selectedProperties}=this.state.toolbarData;*/
-        const propertiesFields = this.getOrderedProperties().map(p=>({
-                name: p.text,
-                fieldName: p.value
-            }))
-
+        const propertiesFields = this.getOrderedProperties()
         return {...{
             fields: [
                 {name: gettext('Name'), fieldName: 'Name', render:(value)=>{

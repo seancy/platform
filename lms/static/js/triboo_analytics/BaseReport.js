@@ -70,7 +70,17 @@ export default class BaseReport extends React.Component{
                     return item || {text:key, value:key}
                 });
         }
-        return orderedProperties.length > 0 ? orderedProperties : properties;
+        const propertiesFieldsToBeTranslate = ['user_country']
+        return (orderedProperties.length > 0 ? orderedProperties : properties)
+            .map(p=>({
+                name: p.text,
+                fieldName: p.value,
+                render:(cellValue, row, item)=>{
+                    let finalVal = (cellValue == null || cellValue === '') ? '—' :
+                        (propertiesFieldsToBeTranslate.includes(item.fieldName) ? gettext(cellValue) : cellValue.toString())
+                    return finalVal
+                }
+            }));
     }
 
     generateParameter(){
