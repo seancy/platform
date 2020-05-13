@@ -18,7 +18,8 @@ from django.db import transaction
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import redirect
 from django.utils import timezone
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import pgettext_lazy
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
@@ -404,6 +405,18 @@ def get_ilt_learner_table_data(filter_kwargs, exclude):
     return IltLearnerTable(reports, exclude=exclude)
 
 
+def change_column_key(table, mapping):
+    new_table = []
+    for i, row in enumerate(table):
+        new_row = dict()
+        for rk, rv in row.items():
+            translated_rk = _(rk) if rk not in ['Location', 'Address'] else pgettext_lazy('user.profile', rk)
+            new_key = mapping.get(translated_rk, rk)
+            new_row[new_key] = rv
+        new_table.append(new_row)
+    return new_table
+
+
 def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
     try:
         res = TableExport('json', table).export()
@@ -460,6 +473,9 @@ def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
             page_start = (page['no'] - 1) * page['size']
             page_end = page['no'] * page['size']
             table_response = table_response[page_start:page_end]
+
+        choices_name_mapping = user_properties_helper.get_name_value_mapping()
+        table_response = change_column_key(table_response, choices_name_mapping)
 
         response = {'list': table_response,
                     'total': total,
@@ -1056,6 +1072,29 @@ def course_view(request):
         )
 
 
+@login_required
+@analytics_on
+@analytics_full_member_required
+@ensure_csrf_cookie
+def learner_view(request):
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+
+    last_update = None
+    last_reportlog = ReportLog.get_latest()
+    if last_reportlog:
+        last_update = dt2str(last_reportlog.learner)
+
+    return render_to_response(
+        "triboo_analytics/learner.html",
+        {
+            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'learner'}),
+            'last_update': last_update
+        }
+    )
+
+
 @transaction.non_atomic_requests
 @analytics_on
 @analytics_member_required
@@ -1074,7 +1113,7 @@ def course_view_data(request):
 
     try:
         course_key = CourseKey.from_string(data.get('course_id', None))
-        
+
     except InvalidKeyError:
         return JsonResponseBadRequest({"message": _("Invalid course id.")})
 
@@ -1112,29 +1151,6 @@ def course_view_data(request):
                          data.get('page'),
                          summary_columns,
                          column_order)
-
-
-@login_required
-@analytics_on
-@analytics_full_member_required
-@ensure_csrf_cookie
-def learner_view(request):
-    orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs:
-        return HttpResponseNotFound()
-
-    last_update = None
-    last_reportlog = ReportLog.get_latest()
-    if last_reportlog:
-        last_update = dt2str(last_reportlog.learner)
-
-    return render_to_response(
-        "triboo_analytics/learner.html",
-        {
-            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'learner'}),
-            'last_update': last_update
-        }
-    )
 
 
 @transaction.non_atomic_requests
