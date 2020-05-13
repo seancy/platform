@@ -58,6 +58,12 @@ class AvgFooterColumn(tables.Column):
     def render_footer(self, bound_column, table):
         return get_avg(bound_column, table.data)
 
+class _OrderMixin(tables.Table):
+    @classmethod
+    def get_field_from_verbose(cls, verbose_name):
+        fields = {col.verbose_name: col_name for col_name, col in cls.base_columns.iteritems()}
+        return fields.get(verbose_name, verbose_name)
+
 
 class _RenderMixin(object):
     ## render_foo methods are used for html rendering
@@ -116,7 +122,7 @@ class _RenderMixin(object):
         return '-' if record.status == CourseStatus.not_started else value
 
 
-class TranscriptTable(_RenderMixin, tables.Table):
+class TranscriptTable(_OrderMixin, _RenderMixin, tables.Table):
     export_formats = EXPORT_FORMATS
     course_title = tables.LinkColumn('info', args=[A('course_id')],
                                      verbose_name='Course Title', empty_values=('', ))
@@ -221,7 +227,7 @@ class UserBaseTable(tables.Table):
         return queryset, True
 
     def order_user_gender(self, queryset, is_descending):
-        queryset = queryset.order_by(('-' if is_descending else '') + 'user__gender')
+        queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__gender')
         return queryset, True
 
     # def render_user_country(self, value):
@@ -347,7 +353,7 @@ def get_progress_table_class(badges):
         return dict(countries)[value]
     attributes['render_user_country'] = render_user_country
 
-    return type("ProgressTable", (UserBaseTable,), attributes)
+    return type("ProgressTable", (_OrderMixin, UserBaseTable,), attributes)
 
 
 
@@ -396,7 +402,7 @@ def get_time_spent_table_class(chapters, sections):
         
     attributes['render_user_country'] = render_user_country
 
-    return type("TimeSpentTable", (UserBaseTable,), attributes)
+    return type("TimeSpentTable", (_OrderMixin, UserBaseTable,), attributes)
 
 
 class LearnerBaseTable(UserBaseTable):
@@ -405,7 +411,7 @@ class LearnerBaseTable(UserBaseTable):
     total_time_spent = TimeSpentFooterColumn()
 
 
-class CourseTable(_RenderMixin, LearnerBaseTable):
+class CourseTable(_OrderMixin, _RenderMixin, LearnerBaseTable):
     current_score = tables.Column(footer=lambda table: "{}%".format(
                          get_avg(None, [r.current_score for r in table.data if r.status != CourseStatus.not_started])))
     progress = tables.Column(footer=lambda table: "{}%".format(
@@ -542,7 +548,7 @@ class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
         return queryset, True
 
 
-class LearnerDailyTable(LearnerBaseTable):
+class LearnerDailyTable(_OrderMixin, LearnerBaseTable):
     user_name = tables.LinkColumn('analytics_learner_transcript', args=[A('user.id')],
                                   verbose_name='Name', text=lambda record: record.user.profile.name)
     enrollments = SumFooterColumn()
@@ -602,6 +608,7 @@ class LearnerDailyTable(LearnerBaseTable):
                     'enrollments', 'finished', 'failed', 'in_progress', 'not_started', 'average_final_score',
                     'badges', 'posts', 'total_time_spent', 'user_last_login')
 
+
     def __init__(self, data=None, order_by=None, orderable=None, empty_text=None, exclude=None, attrs=None,
                  row_attrs=None, pinned_row_attrs=None, sequence=None, prefix=None, order_by_field=None,
                  page_field=None, per_page_field=None, template=None, default=None, request=None, show_header=None,
@@ -611,6 +618,7 @@ class LearnerDailyTable(LearnerBaseTable):
                                               per_page_field, template, default, request, show_header, show_footer,
                                               extra_columns)
         self.html_links = html_links
+
 
     def value_user_name(self, column, bound_column, record, value):
         if self.html_links:
@@ -729,6 +737,37 @@ class IltTable(IltBaseTable):
                       'start_day', 'start_time', 'end_day', 'end_time', 'duration', 'seats',
                       'enrollees', 'attendees', 'location_id', 'location', 'address', 'zip_code', 'city')
 
+
+    @classmethod
+    def get_field_from_verbose(cls, verbose_name):
+        fields = {
+            "Geographical area": "course_area",
+            "Course country": "course_country",
+            "Zone/Region": "area",
+            "Course tags": "course_tags",
+            "Course code": "course_code",
+            "Course name": "course_display_name",
+            "Section": "chapter_display_name",
+            "Subsection": "section_display_name",
+            "Session ID": "session_id",
+            "Start date": "start_day",
+            "Start time": "start_time",
+            "End date": "end_day",
+            "End time": "end_time",
+            "Duration (in hours)": "duration",
+            "Max capacity": "seats",
+            "Enrollees": "enrollees",
+            "Attendees": "attendees",
+            "Attendance sheet": "ack_attendance_sheet",
+            "Location ID": "location_id",
+            "Location name": "location",
+            "Location address": "address",
+            "Zip code": "zip_code",
+            "City": "city"
+        }
+        return fields.get(verbose_name, verbose_name)
+
+
     def order_session_id(self, queryset, is_descending):
         order = '-' if is_descending else ''
         queryset = queryset.order_by(order + 'ilt_module__id', order + 'session_nb')
@@ -821,6 +860,65 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
                       'user_lt_level', 'user_lt_job_code', 'user_lt_job_description', 'user_lt_department', 'user_lt_supervisor',
                       'user_lt_ilt_supervisor', 'user_lt_learning_group', 'user_lt_exempt_status', 'user_lt_comments',
                       'outward_trips', 'return_trips', 'hotel', 'comment')
+
+
+    @classmethod
+    def get_field_from_verbose(cls, verbose_name):
+        fields = {
+            "Geographical area": "course_area",
+            "Course country": "course_country",
+            "Zone/Region": "area",
+            "Course tags": "course_tags",
+            "Course code": "course_code",
+            "Course name": "course_display_name",
+            "Section": "chapter_display_name",
+            "Subsection": "section_display_name",
+            "Session ID": "session_id",
+            "Start date": "start_day",
+            "Start time": "start_time",
+            "End date": "end_day",
+            "End time": "end_time",
+            "Duration (in hours)": "duration",
+            "Location ID": "location_id",
+            "Location name": "location",
+            "Location address": "address",
+            "Zip code": "zip_code",
+            "City": "city",
+            "Name": "user_name",
+            "Email": "user_email",
+            "Username": "user_username",
+            "Date joined": "user_date_joined",
+            "Gender": "user_gender",
+            "Country": "user_country",
+            "Commercial Zone": "user_lt_area",
+            "Commercial Region": "user_lt_sub_area",
+            "City": "user_city",
+            "Location": "user_location",
+            "Address": "user_lt_address",
+            "Address 2": "user_lt_address_2",
+            "Phone Number": "user_lt_phone_number",
+            "GDPR": "user_lt_gdpr",
+            "Company": "user_lt_company",
+            "Employee ID": "user_lt_employee_id",
+            "Hire Date": "user_lt_hire_date",
+            "Level": "user_lt_level",
+            "Job Code": "user_lt_job_code",
+            "Job Description": "user_lt_job_description",
+            "Department": "user_lt_department",
+            "Supervisor": "user_lt_supervisor",
+            "ILT Supervisor": "user_lt_ilt_supervisor",
+            "Learning Group": "user_lt_learning_group",
+            "Exempt Status": "user_lt_exempt_status",
+            "Comments": "user_lt_comments",
+            "Enrollment status": "status",
+            "Attendee": "attendee",
+            "Outward trips": "outward_trips",
+            "Return trips": "return_trips",
+            "Overnight stay": "accommodation",
+            "Overnight stay address": "hotel",
+            "Comment": "comment"
+        }
+        return fields.get(verbose_name, verbose_name)
 
     def order_session_id(self, queryset, is_descending):
         order = '-' if is_descending else ''

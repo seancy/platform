@@ -70,7 +70,7 @@ export default class BaseReport extends React.Component{
                     return item || {text:key, value:key}
                 });
         }
-        const propertiesFieldsToBeTranslate = ['user_country', 'gender']
+        const propertiesFieldsToBeTranslate = ['user_country', 'user_gender']
         return (orderedProperties.length > 0 ? orderedProperties : properties)
             .map(p=>({
                 name: p.text,

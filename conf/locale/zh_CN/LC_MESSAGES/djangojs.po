@@ -10120,6 +10120,15 @@ msgstr "是"
 msgid "No"
 msgstr "否"
 
+#: lms/static/js/triboo_analytics/
+msgid "Female"
+msgstr "女"
+
+#: lms/static/js/triboo_analytics/
+msgid "Male"
+msgstr "男"
+
+
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
 msgstr "我的书签"

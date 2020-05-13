@@ -280,7 +280,8 @@ def get_transcript_table(orgs, user_id, last_update, html_links=False):
     for org in orgs:
         new_queryset = LearnerCourseDailyReport.filter_by_day(date_time=last_update, org=org, user_id=user_id)
         queryset = queryset | new_queryset
-    return TranscriptTable(queryset, html_links=html_links), queryset
+    order_by = get_order_by(TranscriptTable, sort)
+    return TranscriptTable(queryset, html_links=html_links, order_by=order_by), queryset
 
 
 def get_course_sections(course_key):
@@ -321,7 +322,16 @@ def get_customized_table(report_cls, filter_kwargs, filters, table_cls, exclude)
     return table, row_count
 
 
-def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=False, html_links=False):
+def get_order_by(table_cls, sort):
+    if sort:
+        order = "-" if sort[:1] == "-" else ""
+        order_by = sort[1:].encode('utf-8')
+        return "%s%s" % (order, table_cls.get_field_from_verbose(order_by))
+    return None
+
+
+def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=False, html_links=False,
+                   sort=None):
     if filter_kwargs.pop('invalid', False):
         return []
 
@@ -330,12 +340,14 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
         dataset = report_cls.filter_by_period(**filter_kwargs)
     else:
         dataset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
+
+    order_by = get_order_by(table_cls, sort)
     if html_links:
-        return table_cls(dataset, exclude=exclude, html_links=True)    
-    return table_cls(dataset, exclude=exclude)
+        return table_cls(dataset, exclude=exclude, html_links=True, order_by=order_by)    
+    return table_cls(dataset, exclude=exclude, order_by=order_by)
 
 
-def get_progress_table_data(course_key, filter_kwargs, exclude):
+def get_progress_table_data(course_key, filter_kwargs, exclude, sort=None):
     if filter_kwargs.pop('invalid', False):
         return []
     course_filter = filter_kwargs.pop('course_id')
@@ -350,10 +362,11 @@ def get_progress_table_data(course_key, filter_kwargs, exclude):
         columns.append("%s / Success" % badge_name)
         columns.append("%s / Score" % badge_name)
         columns.append("%s / Date" % badge_name)
-    return ProgressTable(dataset, exclude=exclude), columns
+    order_by = get_order_by(ProgressTable, sort)
+    return ProgressTable(dataset, exclude=exclude, order_by=order_by), columns
 
 
-def get_time_spent_table_data(course_key, filter_kwargs, exclude):
+def get_time_spent_table_data(course_key, filter_kwargs, exclude, sort=None):
     if filter_kwargs.pop('invalid', False):
         return []
 
@@ -371,10 +384,11 @@ def get_time_spent_table_data(course_key, filter_kwargs, exclude):
                                    'chapter': chapter_name})
 
     TimeSpentTable = get_time_spent_table_class(ordered_chapters, table_sections)
-    return TimeSpentTable(dataset, exclude=exclude), columns
+    order_by = get_order_by(TimeSpentTable, sort)
+    return TimeSpentTable(dataset, exclude=exclude, order_by=order_by), columns
 
 
-def get_ilt_global_table_data(filter_kwargs):
+def get_ilt_global_table_data(filter_kwargs, sort=None):
     if filter_kwargs.pop('invalid', False):
         return []
 
@@ -382,10 +396,11 @@ def get_ilt_global_table_data(filter_kwargs):
         filter_kwargs.pop('ilt_period_range')
 
     reports = IltSession.objects.filter(**filter_kwargs)
-    return IltTable(reports)
+    order_by = get_order_by(IltTable, sort)
+    return IltTable(reports, order_by=order_by)
 
 
-def get_ilt_learner_table_data(filter_kwargs, exclude):
+def get_ilt_learner_table_data(filter_kwargs, exclude, sort=None):
     if filter_kwargs.pop('invalid', False):
         return []
 
@@ -402,7 +417,8 @@ def get_ilt_learner_table_data(filter_kwargs, exclude):
             filter_kwargs['ilt_session__start__range'] = period_filter
 
     reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
-    return IltLearnerTable(reports, exclude=exclude)
+    order_by = IltLearnerTable(table_cls, sort)
+    return IltLearnerTable(reports, exclude=exclude, order_by=order_by)
 
 
 def change_column_key(table, mapping):
@@ -417,9 +433,22 @@ def change_column_key(table, mapping):
     return new_table
 
 
-def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
+def json_response(table, page={'no': 1, 'size': 50}, summary_columns=[], column_order=[]):
     try:
-        res = TableExport('json', table).export()
+        table_export = TableExport('json', table)
+        rowsCount = len(table_export.dataset)
+        if not rowsCount:
+            return JsonResponse({'list': [],
+                                 'total': 0,
+                                 'pagination': {'rowsCount': 0}})
+
+        row_start = (page['no'] - 1) * page['size']
+        row_stop = page['no'] * page['size']
+        rows = range(row_start, row_stop, 1)
+        dataset = table_export.dataset.subset(rows=rows)
+        table_export.dataset = dataset
+
+        res = table_export.export()
         table_json = json.loads(res)
         table_response = []
         total = collections.OrderedDict()
@@ -469,17 +498,9 @@ def json_response(table, sort, page={}, summary_columns=[], column_order=[]):
         choices_name_mapping = user_properties_helper.get_name_value_mapping()
         table_response = change_column_key(table_response, choices_name_mapping)
 
-        reverse_flag = True if sort[0] == '-' else False
-        table_response = sorted(table_response, key=lambda x: x[sort[1:]], reverse=reverse_flag)
-
-        if page:
-            page_start = (page['no'] - 1) * page['size']
-            page_end = page['no'] * page['size']
-            table_response = table_response[page_start:page_end]
-
         response = {'list': table_response,
                     'total': total,
-                    'pagination': {'rowsCount': len(table_json)}}
+                    'pagination': {'rowsCount': rowsCount}}
         if column_order:
             response['columns'] = column_order
         return JsonResponse(response)
@@ -601,14 +622,17 @@ def transcript_view_data(request):
     if last_reportlog:
         last_update = last_reportlog.created
 
-        learner_course_table, learner_course_reports = get_transcript_table(orgs, user_id, last_update, html_links=True)
+        learner_course_table, learner_course_reports = get_transcript_table(orgs, 
+                                                                            user_id,
+                                                                            last_update,
+                                                                            html_links=True,
+                                                                            sort=data.get('sort'))
         summary_columns = ['Progress',
                            'Current Score',
                            'Badges',
                            'Total Time Spent']
 
     return json_response(learner_course_table,
-                         data.get('sort'),
                          data.get('page', {}),
                          summary_columns,
                          column_order)
@@ -1072,29 +1096,6 @@ def course_view(request):
         )
 
 
-@login_required
-@analytics_on
-@analytics_full_member_required
-@ensure_csrf_cookie
-def learner_view(request):
-    orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs:
-        return HttpResponseNotFound()
-
-    last_update = None
-    last_reportlog = ReportLog.get_latest()
-    if last_reportlog:
-        last_update = dt2str(last_reportlog.learner)
-
-    return render_to_response(
-        "triboo_analytics/learner.html",
-        {
-            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'learner'}),
-            'last_update': last_update
-        }
-    )
-
-
 @transaction.non_atomic_requests
 @analytics_on
 @analytics_member_required
@@ -1133,7 +1134,7 @@ def course_view_data(request):
             filter_kwargs['date_time'] = last_update
 
         if report == "course_summary":
-            table = get_table_data(LearnerCourseDailyReport, CourseTable, filter_kwargs, exclude)
+            table = get_table_data(LearnerCourseDailyReport, CourseTable, filter_kwargs, exclude, sort=data.get('sort'))
             summary_columns = ['Progress',
                                'Current Score',
                                'Badges',
@@ -1141,16 +1142,38 @@ def course_view_data(request):
                                'Total Time Spent']
 
         elif report == "course_progress":
-            table, column_order = get_progress_table_data(course_key, filter_kwargs, exclude)
+            table, column_order = get_progress_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
 
         elif report == "course_time_spent":
-            table, column_order = get_time_spent_table_data(course_key, filter_kwargs, exclude)
+            table, column_order = get_time_spent_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
 
     return json_response(table,
-                         data.get('sort'),
                          data.get('page'),
                          summary_columns,
                          column_order)
+
+
+@login_required
+@analytics_on
+@analytics_full_member_required
+@ensure_csrf_cookie
+def learner_view(request):
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+
+    last_update = None
+    last_reportlog = ReportLog.get_latest()
+    if last_reportlog:
+        last_update = dt2str(last_reportlog.learner)
+
+    return render_to_response(
+        "triboo_analytics/learner.html",
+        {
+            'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'learner'}),
+            'last_update': last_update
+        }
+    )
 
 
 @transaction.non_atomic_requests
@@ -1190,10 +1213,9 @@ def learner_view_data(request):
             filter_kwargs['date_time'] = last_update
 
         table = get_table_data(LearnerDailyReport,LearnerDailyTable, filter_kwargs, exclude,
-                               by_period=True, html_links=True)
+                               by_period=True, html_links=True, sort=data.get('sort'))
 
     return json_response(table,
-                         data.get('sort'),
                          data.get('page'),
                          summary_columns)
 
@@ -1245,13 +1267,12 @@ def ilt_view_data(request):
         filter_kwargs, exclude = get_ilt_period_kwargs(data, orgs)
 
         if report == "ilt_global":
-            table = get_ilt_global_table_data(filter_kwargs)
+            table = get_ilt_global_table_data(filter_kwargs, sort=data.get('sort'))
 
         elif report == "ilt_learner":
-            table = get_ilt_learner_table_data(filter_kwargs, exclude)
+            table = get_ilt_learner_table_data(filter_kwargs, exclude, sort=data.get('sort'))
 
     return json_response(table,
-                         data.get('sort'),
                          data.get('page'),
                          [])
 
@@ -1261,7 +1282,6 @@ def ilt_view_data(request):
 @analytics_full_member_required
 @ensure_csrf_cookie
 def customized_view(request):
-
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return HttpResponseNotFound()
@@ -1344,7 +1364,6 @@ def _export_table(request, course_key, report_name, report_args):
 def _transcript_export_table(request, user):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
-        # return HttpResponseNotFound()
         return JsonResponseBadRequest({"message": _("Response Not Found.")})
 
     last_reportlog = ReportLog.get_latest()
@@ -1377,10 +1396,6 @@ def transcript_export_table(request, user_id):
     try:
         user = User.objects.get(id=user_id)
     except (ValueError, User.DoesNotExist):
-        # return render_to_response(
-        #     "triboo_analytics/transcript.html",
-        #     {'error_message': _("Invalid User ID")}
-        # )
         return JsonResponseBadRequest({"message": _("Invalid User ID")})
     return _transcript_export_table(request, user)
 
@@ -1694,7 +1709,6 @@ def customized_export_table(request):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def customized_export_table_new(request):
-
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return HttpResponseNotFound()
@@ -1749,36 +1763,9 @@ def customized_export_table_new(request):
             return _export_table(request, course_key, 'time_spent_report', report_args)
 
     elif report_type == 'learner':
-        # unused_filter_form, unused_prop_form, filter_kwargs, exclude, unused_update, query_dict = get_learner_table_filters(
-        #                                                                                             request,
-        #                                                                                             orgs,
-        #                                                                                             as_string=True)
-        # report_args = {
-        #     'report_cls': LearnerDailyReport.__name__,
-        #     'filter_kwargs': filter_kwargs,
-        #     'table_cls': LearnerDailyTable.__name__,
-        #     'exclude': list(exclude)
-        # }
-        # return _export_table(request, CourseKeyField.Empty, 'learner_report', report_args)
         return learner_export_table(request)
 
     elif report_type in ['ilt_global', 'ilt_learner']:
-        # if report_type == "ilt_global":
-        #     filter_kwargs, exclude = get_ilt_period_kwargs(data, orgs, as_string=True)
-        #     report_args = {
-        #         'orgs': orgs,
-        #         'filter_kwargs': filter_kwargs
-        #     }
-        #     return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
-        #
-        # # report_type == "ilt_learner"
-        # filter_kwargs, exclude = get_ilt_period_kwargs(data, orgs, as_string=True)
-        # report_args = {
-        #     'orgs': orgs,
-        #     'filter_kwargs': filter_kwargs,
-        #     'exclude': list(exclude)
-        # }
-        # return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
         return ilt_export_table(request)
 
 

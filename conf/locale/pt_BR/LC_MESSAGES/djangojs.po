@@ -10600,6 +10600,14 @@ msgstr "Sim"
 msgid "No"
 msgstr "Não"
 
+#: lms/static/js/triboo_analytics/
+msgid "Female"
+msgstr "Mulher"
+
+#: lms/static/js/triboo_analytics/
+msgid "Male"
+msgstr "Homem"
+
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
 msgstr "Adicionado a favoritos"

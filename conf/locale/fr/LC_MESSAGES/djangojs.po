@@ -10590,6 +10590,14 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
+#: lms/static/js/triboo_analytics/
+msgid "Female"
+msgstr "Femme"
+
+#: lms/static/js/triboo_analytics/
+msgid "Male"
+msgstr "Homme"
+
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
 msgstr "Mes Favoris"

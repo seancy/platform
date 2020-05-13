@@ -126,3 +126,43 @@ msgstr ""
 #: xblock-ilt/ilt/static/js/src/ilt.js:562
 msgid "Please choose the accommodation need"
 msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Confirmed"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Accepted"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Pending"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Refused"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Received"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Expected"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Yes"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "No"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Female"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Male"
+msgstr ""
