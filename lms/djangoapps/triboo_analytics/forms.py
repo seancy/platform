@@ -72,7 +72,7 @@ class UserPropertiesHelper():
             return self.possible_choices_db_prefix
         return self.possible_choices
 
-    def get_possible_choices2(self):
+    def get_possible_choices2(self, db_prefix=True):
         return self.possible_choices2
 
     def get_name_value_mapping(self):
