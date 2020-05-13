@@ -10568,6 +10568,37 @@ msgstr ""
 msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
 msgstr ""
 
+#: lms/static/js/triboo_analytics/
+msgid "Confirmed"
+msgstr "Confirmada"
+
+#: lms/static/js/triboo_analytics/
+msgid "Accepted"
+msgstr "Aceita"
+
+#: lms/static/js/triboo_analytics/
+msgid "Pending"
+msgstr "Pendente"
+
+#: lms/static/js/triboo_analytics/
+msgid "Refused"
+msgstr "Recusada"
+
+#: lms/static/js/triboo_analytics/
+msgid "Received"
+msgstr "Recebida"
+
+#: lms/static/js/triboo_analytics/
+msgid "Expected"
+msgstr "Esperada"
+
+#: lms/static/js/triboo_analytics/
+msgid "Yes"
+msgstr "Sim"
+
+#: lms/static/js/triboo_analytics/
+msgid "No"
+msgstr "Não"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"

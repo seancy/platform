@@ -10558,6 +10558,38 @@ msgstr "La limite est de 300 000 pour les formats CSV et JSON, et 65 000 pour le
 msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
 msgstr "Avec la sélection actuelle de cours, le rapports dépasse le nombre maximum de lignes. Veuillez désélectionner certains cours."
 
+#: lms/static/js/triboo_analytics/
+msgid "Confirmed"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Accepted"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Pending"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Refused"
+msgstr ""
+
+#: lms/static/js/triboo_analytics/
+msgid "Received"
+msgstr "Reçue"
+
+#: lms/static/js/triboo_analytics/
+msgid "Expected"
+msgstr "Attendue"
+
+#: lms/static/js/triboo_analytics/
+msgid "Yes"
+msgstr "Oui"
+
+#: lms/static/js/triboo_analytics/
+msgid "No"
+msgstr "Non"
+
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
 msgstr "Mes Favoris"
