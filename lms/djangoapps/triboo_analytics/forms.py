@@ -67,15 +67,19 @@ class UserPropertiesHelper():
         self.possible_choices2.sort(key=lambda choice: choice[1])
         self.possible_choices_db_prefix.sort(key=lambda choice: choice[1])
 
-
     def get_possible_choices(self, db_prefix=True):
         if db_prefix:
             return self.possible_choices_db_prefix
         return self.possible_choices
 
-    def get_possible_choices2(self, db_prefix=True):
+    def get_possible_choices2(self):
         return self.possible_choices2
 
+    def get_name_value_mapping(self):
+        d = dict()
+        for c in self.possible_choices:
+            d[c[1]] = c[0]
+        return d
 
     def get_initial_choices(self):
         return self.initial_choices
