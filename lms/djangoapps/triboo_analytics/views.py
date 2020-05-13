@@ -142,7 +142,7 @@ def dt2str(daytime):
 
 
 def config_tables(request, *tables):
-    config = RequestConfig(request, paginate={'per_page': 50})
+    config = RequestConfig(request, paginate={'per_page': 20})
     for t in tables:
         config.configure(t)
 
@@ -417,7 +417,7 @@ def get_ilt_learner_table_data(filter_kwargs, exclude, sort=None):
             filter_kwargs['ilt_session__start__range'] = period_filter
 
     reports = IltLearnerReport.objects.filter(ilt_module_id__in=module_ids, **filter_kwargs).prefetch_related('user__profile')
-    order_by = IltLearnerTable(table_cls, sort)
+    order_by = get_order_by(IltLearnerTable, sort)
     return IltLearnerTable(reports, exclude=exclude, order_by=order_by)
 
 
@@ -433,23 +433,25 @@ def change_column_key(table, mapping):
     return new_table
 
 
-def json_response(table, page={'no': 1, 'size': 50}, summary_columns=[], column_order=[]):
+def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_order=[]):
     try:
+        logger.info("STEP 0: in json_response")
         table_export = TableExport('json', table)
         rowsCount = len(table_export.dataset)
         if not rowsCount:
             return JsonResponse({'list': [],
                                  'total': 0,
                                  'pagination': {'rowsCount': 0}})
-
+        logger.info("STEP 1: we have rowsCount")
         row_start = (page['no'] - 1) * page['size']
         row_stop = page['no'] * page['size']
         rows = range(row_start, row_stop, 1)
         dataset = table_export.dataset.subset(rows=rows)
         table_export.dataset = dataset
-
+        logger.info("STEP 2: we have paginated")
         res = table_export.export()
         table_json = json.loads(res)
+        logger.info("STEP 3: json loaded")
         table_response = []
         total = collections.OrderedDict()
         for col in summary_columns:
@@ -503,6 +505,7 @@ def json_response(table, page={'no': 1, 'size': 50}, summary_columns=[], column_
                     'pagination': {'rowsCount': rowsCount}}
         if column_order:
             response['columns'] = column_order
+        logger.info("STEP 4: response ready")
         return JsonResponse(response)
     except Exception as e:
         logger.exception(e)

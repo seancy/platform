@@ -1,6 +1,6 @@
 
 const PaginationConfig = Object.freeze({
-    PageSize:50
+    PageSize:20
 })
 
 const ReportType = Object.freeze({
