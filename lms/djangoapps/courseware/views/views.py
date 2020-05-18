@@ -1980,6 +1980,70 @@ def ilt_batch_enroll(request):
     return JsonResponse(status=200)
 
 
+def get_ilt_module_info(ilt_module, deadline=None):
+    sessions_info = json.loads(ilt_module.value)
+    sessions = sessions_info.items()
+    for k, v in sessions[:]:
+        if k == 'counter':
+            sessions.remove((k, v))
+        else:
+            v['available_seats'] = v['total_seats']
+    sessions.sort(key=lambda itm: decode_datetime(itm[1]['start_at']))
+
+    default_format = "{start_at} - {end_at} | {timezone} | location: {location} | #{nb}"
+    custom_format = configuration_helpers.get_value("ILT_DROPDOWN_LIST_FORMAT", "")
+    if not custom_format:
+        custom_format = default_format
+
+    date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "")
+    if date_format:
+        date_format = date_format.replace("YYYY", "%Y").replace("DD", "%d").replace(
+            "MM", "%m"
+        ).replace("HH", "%H").replace("mm", "%M")
+
+    dropdown_list = []
+
+    if deadline is None:
+        deadline = 0
+    for k, session in sessions[:]:
+        class_list = []
+        if datetime.now() - decode_datetime(session['start_at']) > timedelta(days=1):
+            class_list.append('expire-for-student')
+            sessions.remove((k, session))
+        if datetime.now() - decode_datetime(session['end_at']) > timedelta(days=180):
+            class_list.append('expire-for-admin')
+        if decode_datetime(session['start_at']) - datetime.now() < timedelta(days=deadline):
+            class_list.append('within-deadline')
+            session['within_deadline'] = True
+        else:
+            session['within_deadline'] = False
+
+        extra_class = " ".join(class_list)
+        if date_format:
+            start_at = decode_datetime(session['start_at']).strftime(date_format)
+            end_at = decode_datetime(session['end_at']).strftime(date_format)
+        else:
+            start_at = session['start_at'].replace("T", " ")
+            end_at = session['end_at'].replace("T", " ")
+        session_data = {
+            "start_at": start_at,
+            "end_at": end_at,
+            "duration": session.get("duration", ""),
+            "instructor": session.get("instructor", ""),
+            "area_region": session.get("area_region", ""),
+            "address": session.get("address", ""),
+            "zip_code": session.get("zip_code", ""),
+            "city": session.get("city", ""),
+            "location_id": session.get("location_id", ""),
+            "location": session.get("location", ""),
+            "timezone": session.get("timezone", ""),
+            "nb": k
+        }
+        dropdown_list.append([custom_format.format(**session_data), extra_class, k])
+
+    return {"sessions": sessions, "dropdown_list": dropdown_list, "raw": sessions_info}
+
+
 @login_required
 @csrf_exempt
 def ilt_validation_request_data(request):
@@ -2123,115 +2187,113 @@ def ilt_validation_request_data(request):
 
     user = request.user
     learners = User.objects.filter(profile__lt_ilt_supervisor=user.email, is_active=True).select_related(
-        "profile").only('id', 'username', 'profile__name', 'profile__lt_employee_id')
+        "profile").only('id', 'username', 'profile__name', 'profile__lt_employee_id',
+                        'profile__profile_image_uploaded_at')
     learners_id = [i.id for i in learners]
     course_enrollments = CourseEnrollment.objects.filter(user__in=learners, is_active=True).select_related(
         'user__profile'
-    )
-    all_ilt_sessions = XModuleUserStateSummaryField.objects.filter(field_name="sessions")
+    ).only("course_id", "user__is_staff", "user__username", "user__profile__name")
+    course_keys = list(set([i.course_id for i in course_enrollments]))
     date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "YYYY-MM-DD HH:mm")
     result = {"pending_all": [], "approved_all": [], "declined_all": [], "session_info": {},
               "accommodation": accommodation, "date_format": date_format}
     course_module_dict = {}
     module_course_dict = {}
-    for sessions in all_ilt_sessions:
-        usage_key = sessions.usage_id
-        course_key = usage_key.course_key
-        enrollment = course_enrollments.filter(course_id=course_key).only(
-            "course_id", "user__is_staff", "user__username", "user__profile__name")
-        if not enrollment.exists():
+    ilt_modules_info = {}
+    for course_key in course_keys:
+        ilt_blocks = modulestore().get_items(course_key, qualifiers={'category': 'ilt'})
+        course_name = modulestore().get_items(course_key, qualifiers={'category': 'course'})[0].display_name
+        if not ilt_blocks:
             continue
-        try:
-            ilt_block = modulestore().get_item(usage_key)
-            course = modulestore().get_course(course_key)
-            visible_to_staff_only = ilt_block.visible_to_staff_only
-        except:
-            continue
-        try:
-            request.user.is_staff = True  # guarantee staff access
-            response = handle_xblock_callback(
-                request,
-                unicode(course_key),
-                unicode(usage_key),
-                'student_handler'
-            )
-        except Http404:
-            continue
-        ilt_module_info = json.loads(response.content)
-        dropdown_list = ilt_module_info['dropdown_list']
-        for i in range(len(ilt_module_info['sessions'])):
-            within_deadline = 'within-deadline' in dropdown_list[i][1]
-            ilt_module_info['sessions'][i][1].update({'within_deadline': within_deadline})
-        for ordered_session in ilt_module_info['sessions'][:]:
-            start_date = ordered_session[1]['start_at']
-            expired = datetime.now() - decode_datetime(start_date) > timedelta(days=1)
-            if expired:
-                ilt_module_info['sessions'].remove(ordered_session)
-        sessions_info = json.loads(sessions.value)
-        course_name = course.display_name
-        module_name = ilt_block.display_name
-        module_course_dict[unicode(usage_key)] = (module_name, unicode(course_key), visible_to_staff_only)
+
+        course_module_dict[unicode(course_key)] = {
+            'course_name': course_name,
+            'modules': []
+        }
+        enrollment = course_enrollments.filter(course_id=course_key)
         enrollment_user_list = {str(i.user.id): {
             'user_name': i.user.username,
             'full_name': i.user.profile.name,
             'checked': False,
             'is_staff': i.user.is_staff
-        }
-            for i in enrollment}
-        try:
-            enrolled_users = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="enrolled_users")
-            data = json.loads(enrolled_users.value)
-            for k, v in data.items():
-                start_at = sessions_info[k]['start_at']
-                expired = datetime.now() - decode_datetime(start_at) > timedelta(days=1)
-                if expired:
+        } for i in enrollment}
+        for i in ilt_blocks:
+            module_name = i.display_name
+            ilt_modules_info[i.location] = {
+                "deadline": i.deadline, "sessions": [], "enrollment_user_list": enrollment_user_list.copy(),
+                "module_name": module_name
+            }
+            visible_to_staff_only = i.visible_to_staff_only
+            module_course_dict[unicode(i.location)] = (module_name, unicode(course_key), visible_to_staff_only)
+            course_module_dict[unicode(course_key)]['modules'].append(
+                (module_name, unicode(i.location), ilt_modules_info[i.location]['sessions'],
+                 ilt_modules_info[i.location]['enrollment_user_list'])
+            )
+
+    all_ilt_modules = XModuleUserStateSummaryField.objects.filter(
+        field_name="sessions", usage_id__in=ilt_modules_info
+    ).only("value", "usage_id")
+    all_ilt_enrollments = XModuleUserStateSummaryField.objects.filter(
+        field_name="enrolled_users", usage_id__in=ilt_modules_info
+    ).only("value", "usage_id")
+
+    for module in all_ilt_modules:
+        deadline = ilt_modules_info[module.usage_id]['deadline']
+        info = get_ilt_module_info(module, deadline)
+        ilt_modules_info[module.usage_id]['sessions'].extend(info['sessions'])
+        ilt_modules_info[module.usage_id]['dropdown_list'] = info['dropdown_list']
+        ilt_modules_info[module.usage_id]['raw'] = info['raw']
+
+    for ilt_enrollment in all_ilt_enrollments:
+        data = json.loads(ilt_enrollment.value)
+        course_id = ilt_enrollment.usage_id.course_key
+        module_info = ilt_modules_info[ilt_enrollment.usage_id]
+        user_list = module_info['enrollment_user_list']
+        sessions_info = ilt_modules_info[ilt_enrollment.usage_id]['raw']
+        if unicode(course_id) in result["session_info"]:
+            result["session_info"][unicode(course_id)][unicode(ilt_enrollment.usage_id)] = sessions_info
+        else:
+            result["session_info"][unicode(course_id)] = {unicode(ilt_enrollment.usage_id): sessions_info}
+        for k, v in data.items():
+            start_at = sessions_info[k]['start_at']
+            available_seats = sessions_info[k]['available_seats']
+            expired = datetime.now() - decode_datetime(start_at) > timedelta(days=1)
+            if expired:
+                continue
+
+            for user_id, request_info in v.items():
+                if request_info['status'] != 'refused':
+                    available_seats -= 1
+                if user_id in user_list:
+                    if request_info['status'] != 'refused':
+                        user_list.pop(user_id, None)
+                    learner = learners.get(id=user_id)
+                    request_info.update({
+                        "start": start_at,
+                        "employee_id": learner.profile.lt_employee_id,
+                        "learner_name": learner.profile.name,
+                        "user_name": learner.username,
+                        "user_id": learner.id,
+                        "avatar": get_profile_image_urls_for_user(learner, request=request)["medium"],
+                        "module": module_info['module_name'],
+                        "course": course_module_dict[unicode(course_id)]['course_name'],
+                        "dropdown_list": module_info['dropdown_list'],
+                        "usage_key": unicode(ilt_enrollment.usage_id),
+                        "course_key": unicode(course_id),
+                        "session_id": k,
+                        "is_editing": False,
+                        "action": None
+                    })
+                    if request_info['status'] == "pending":
+                        result["pending_all"].append(request_info)
+                    elif request_info['status'] == "refused":
+                        result["declined_all"].append(request_info)
+                    else:
+                        result["approved_all"].append(request_info)
+                else:
                     continue
 
-                for user_id, info in v.items():
-                    if int(user_id) in learners_id:
-                        if info['status'] != 'refused':
-                            enrollment_user_list.pop(user_id, None)
-                        learner = learners.get(id=user_id)
-                        info.update({
-                            "start": start_at,
-                            "employee_id": learner.profile.lt_employee_id,
-                            "learner_name": learner.profile.name,
-                            "user_name": learner.username,
-                            "user_id": learner.id,
-                            "avatar": get_profile_image_urls_for_user(learner, request=request)["medium"],
-                            "module": module_name,
-                            "course": course_name,
-                            "dropdown_list": ilt_module_info['dropdown_list'],
-                            "usage_key": unicode(usage_key),
-                            "course_key": unicode(course_key),
-                            "session_id": k,
-                            "is_editing": False,
-                            "action": None
-                        })
-                        if info['status'] == "pending":
-                            result["pending_all"].append(info)
-                        elif info['status'] == "refused":
-                            result["declined_all"].append(info)
-                        else:
-                            result["approved_all"].append(info)
-                    else:
-                        continue
-        except XModuleUserStateSummaryField.DoesNotExist:
-            pass
-        if unicode(course_key) in course_module_dict:
-            course_module_dict[unicode(course_key)]['modules'].append(
-                (module_name, unicode(usage_key), ilt_module_info['sessions'], enrollment_user_list)
-            )
-        else:
-            course_module_dict[unicode(course_key)] = {
-                'course_name': course_name,
-                'modules': [(module_name, unicode(usage_key), ilt_module_info['sessions'], enrollment_user_list)]
-            }
-
-        if unicode(course_key) in result["session_info"]:
-            result["session_info"][unicode(course_key)][unicode(usage_key)] = sessions_info
-        else:
-            result["session_info"][unicode(course_key)] = {unicode(usage_key): sessions_info}
+            sessions_info[k]['available_seats'] = available_seats
 
     result.update({
         'course_module_dict': course_module_dict,
