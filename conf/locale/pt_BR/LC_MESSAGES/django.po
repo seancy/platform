@@ -4976,15 +4976,15 @@ msgid ""
 "This subsection is unlocked for learners when they meet the prerequisite "
 "requirements."
 msgstr ""
-"Esta subseção é desbloqueada para alunos quando eles atendem aos pré-requisitos"
+"Esta subseção é um pré-requisito. Você deve concluí-lo para desbloquear conteúdo adicional."
 
 
 #: common/lib/xmodule/xmodule/seq_module.py:320
 msgid ""
-"This section is a prerequisite. You must complete this section in order to "
+"This subsection is a prerequisite. You must complete this subsection in order to "
 "unlock additional content."
 msgstr ""
-"Esta seção é um pré-requisito. Você deve concluir esta seção para"
+"Esta subseção é um pré-requisito. Você deve preencher esta seção para "
 "desbloquear conteúdo adicional."
 
 #: common/lib/xmodule/xmodule/seq_module.py:704

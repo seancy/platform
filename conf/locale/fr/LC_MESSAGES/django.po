@@ -4899,16 +4899,16 @@ msgid ""
 "This subsection is unlocked for learners when they meet the prerequisite "
 "requirements."
 msgstr ""
-"Cette sous-section est déverrouillée aux apprenants quand ils répondent aux "
-"exigences préalables."
+"Cette sous-section est déverrouillée pour les apprenants lorsqu'ils remplissent "
+"les conditions préalables."
 
 #: common/lib/xmodule/xmodule/seq_module.py:320
 msgid ""
-"This section is a prerequisite. You must complete this section in order to "
+"This subsection is a prerequisite. You must complete this subsection in order to "
 "unlock additional content."
 msgstr ""
-"Cette section est un prérequis. Vous devez compléter cette section afin de "
-"déverrouiller le contenu supplémentaire."
+"Cette sous-section est une condition préalable. Vous devez la "
+"réaliser pour déverrouiller du contenu supplémentaire."
 
 #: common/lib/xmodule/xmodule/seq_module.py:704
 msgid ""

@@ -4751,7 +4751,7 @@ msgstr "当学习者满足先决条件要求时，该子部分将被解锁。"
 
 #: common/lib/xmodule/xmodule/seq_module.py:320
 msgid ""
-"This section is a prerequisite. You must complete this section in order to "
+"This subsection is a prerequisite. You must complete this subsection in order to "
 "unlock additional content."
 msgstr "本节是先决条件。 您必须完成此部分才能解锁其他内容。"
 
