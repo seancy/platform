@@ -10258,82 +10258,82 @@ msgstr "Tirar foto"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Filters"
-msgstr ""
+msgstr "Filtros"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Properties"
-msgstr ""
+msgstr "Propriedades"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Period"
-msgstr ""
+msgstr "Período"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Export"
-msgstr ""
+msgstr "Exportar"
 
 #: lms/static/js/triboo_analytics/Properties.js
 msgid "Select the user properties to display"
-msgstr ""
+msgstr "Selecione as propriedades do usuário para exibir"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 #: lms/static/js/triboo_analytics/ILTReport.js
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Please, note that these reports are not live. Last update:"
-msgstr ""
+msgstr "Note que esses relatórios não são em tempo real. Última atualização:"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Summary"
-msgstr ""
+msgstr "Resumo"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Progress"
-msgstr ""
+msgstr "Progresso"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Time Spent"
-msgstr ""
+msgstr "Tempo Gasto"
 
 #: lms/static/js/triboo_analytics/CourseReportSummary.js
 msgid "Display the state of learners at the end of the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "Exibe o estado dos alunos no final do período selecionado para os alunos que visitaram o curso durante esse período."
 
 #: lms/static/js/triboo_analytics/CourseReportProgress.js
 msgid "Display the progress of learners at the end of the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "Exibe o progresso dos alunos no final do período selecionado para os alunos que visitaram o curso durante esse período."
 
 #: lms/static/js/triboo_analytics/CourseReportTimeSpent.js
 msgid "Display the time learners spent in the course during the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "Exibe o tempo que os alunos passaram no curso durante o período selecionado para os alunos que visitaram o curso durante esse período."
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Display the state of learners at the end of the selected period for learners who visited the platform during this period. The total time spent shows the time learners spent on the platform during the selected period."
-msgstr ""
+msgstr "Exiber o estado dos alunos no final do período selecionado para os alunos que visitaram a plataforma durante esse período. O tempo total gasto mostra o tempo que os alunos passaram na plataforma durante o período selecionado."
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Learner Report"
-msgstr ""
+msgstr "Relatório do Aluno"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "Course Report"
-msgstr ""
+msgstr "Relatório do Curso"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Report"
-msgstr ""
+msgstr "Relatório ILT"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Global Report"
-msgstr ""
+msgstr "Relatório ILT Global"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Learner Report"
-msgstr ""
+msgstr "Relatório ILT do Aluno"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Filter the sessions starting in the selected period."
-msgstr ""
+msgstr "Filtra as sessões iniciadas no período selecionado."
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Page"
@@ -10345,44 +10345,44 @@ msgstr "de"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select a report"
-msgstr ""
+msgstr "Selecione um relatório"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select course(s)"
-msgstr ""
+msgstr "Selecione curso(s)"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Filter the data"
-msgstr ""
+msgstr "Filtre a data"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select a time range"
-msgstr ""
+msgstr "Selecione um intervalo de tempo:"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Press enter to add"
-msgstr ""
+msgstr "Pressione Enter para adicionar"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Last * days"
-msgstr ""
+msgstr "Últimos * dias"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "CSV report"
-msgstr ""
+msgstr "Relatório CSV"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "XLS report"
-msgstr ""
+msgstr "Relatório XLS"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "JSON report"
-msgstr ""
+msgstr "Relatório JSON"
 
 #: lms/static/js/triboo_analytics/BaseReport.js
 msgid "Total: * rows"
-msgstr ""
+msgstr "Total: * linhas"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Enrollments"
@@ -10558,15 +10558,15 @@ msgstr "Nenhum item"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "With the selected courses, the report will count * lines."
-msgstr ""
+msgstr "Com os cursos selecionados, o relatório contará * linhas."
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "The limit is 300,000 for CSV and JSON, 65,000 for XLS."
-msgstr ""
+msgstr "O limite é de 300.000 para CSV e JSON, 65.000 para XLS."
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
-msgstr ""
+msgstr "Com os cursos selecionados, o relatório excede o número máximo de linhas. Desmarque alguns cursos."
 
 #: lms/static/js/triboo_analytics/
 msgid "Confirmed"

@@ -27303,29 +27303,29 @@ msgstr "Vamos dar uma olhada nos seus dados de aprendizado"
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/microsite.html:28
 msgid "Global Report"
-msgstr ""
+msgstr "Relatório Global"
 
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
 msgid "Course Report"
-msgstr ""
+msgstr "Relatório do Curso"
 
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Summary Report"
-msgstr ""
+msgstr "Relatório de Resumo do Curso"
 
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Progress Report"
-msgstr ""
+msgstr "Relatório de Progresso do Curso"
 
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Time Spent Report"
-msgstr ""
+msgstr "Relatório de Tempo Gasto do Curso"
 
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/learner.html:26
 msgid "Learner Report"
-msgstr ""
+msgstr "Relatório do Aluno"
 
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/ilt.html:29
@@ -27335,27 +27335,27 @@ msgstr "ILT Relatório"
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/customized.html
 msgid "Customized Report"
-msgstr ""
+msgstr "Relatório Customizado"
 
 #: lms/templates/triboo_analytics/download.html
 msgid "Reports ready to download"
-msgstr ""
+msgstr "Relatórios prontos para download"
 
 #: lms/templates/triboo_analytics/download.html
 msgid "No reports available"
-msgstr ""
+msgstr "Nenhum relatório disponível"
 
 #: lms/templates/triboo_analytics/customized.html
 msgid "Customize your report by configuring each step."
-msgstr ""
+msgstr "Personalize seu relatório configurando cada etapa."
 
 #: lms/templates/triboo_analytics/customized.html
 msgid "Note: If no user properties are selected, default properties will be used."
-msgstr ""
+msgstr "Atenção: Se nenhuma propriedade de usuário estiver selecionada, as propriedades padrão serão usadas."
 
 #: lms/templates/triboo_analytics/customized.html
 msgid "Choose the export format"
-msgstr ""
+msgstr "Escolha o formato de exportação"
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
