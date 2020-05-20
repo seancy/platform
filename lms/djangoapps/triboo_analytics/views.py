@@ -435,23 +435,33 @@ def change_column_key(table, mapping):
 
 def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_order=[]):
     try:
-        logger.info("STEP 0: in json_response")
+        logger.info("in json_response")
+        total = {}
+        for column in table.columns:
+            if column.footer:
+                total[column.verbose_name] = column.footer
+
+        table.paginate(page=page['no'], per_page=page['size'])
+        logger.info("nb paginated_rows = " % len(table.paginated_rows))
+
+        logger.info("about to export")
         table_export = TableExport('json', table)
         rowsCount = len(table_export.dataset)
         if not rowsCount:
             return JsonResponse({'list': [],
                                  'total': 0,
                                  'pagination': {'rowsCount': 0}})
-        logger.info("STEP 1: we have rowsCount")
+
+        logger.info("we have rowsCount")
         row_start = (page['no'] - 1) * page['size']
         row_stop = page['no'] * page['size']
         rows = range(row_start, row_stop, 1)
         dataset = table_export.dataset.subset(rows=rows)
         table_export.dataset = dataset
-        logger.info("STEP 2: we have paginated")
+        logger.info("we have paginated")
         res = table_export.export()
         table_json = json.loads(res)
-        logger.info("STEP 3: json loaded")
+        logger.info("json loaded")
         table_response = []
         total = collections.OrderedDict()
         for col in summary_columns:
@@ -471,41 +481,42 @@ def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_
                 key = user_properties[k] if k in user_properties.keys() else k
                 new_row[key] = v
             table_response.append(new_row)
-            for col in summary_columns:
-                if row[col]:
-                    if col == 'Badges':
-                        split_str = '(/' if '(' in row[col] else '/'
-                        total[col] += int(row[col].split(split_str)[0].strip())
-                    elif col == 'Total Time Spent':
-                        total[col] += str2sec(row[col])
-                    elif col in ['Progress', 'Current Score', 'Average Final Score']:
-                        (val, nb_val) = total[col]
-                        val += int(row[col].split('%')[0].strip())
-                        nb_val += 1
-                        total[col] = (val, nb_val)
-                    else:
-                        if row[col] != '-':
-                            total[col] += row[col]
+            # for col in summary_columns:
+            #     if row[col]:
+            #         if col == 'Badges':
+            #             split_str = '(/' if '(' in row[col] else '/'
+            #             total[col] += int(row[col].split(split_str)[0].strip())
+            #         elif col == 'Total Time Spent':
+            #             total[col] += str2sec(row[col])
+            #         elif col in ['Progress', 'Current Score', 'Average Final Score']:
+            #             (val, nb_val) = total[col]
+            #             val += int(row[col].split('%')[0].strip())
+            #             nb_val += 1
+            #             total[col] = (val, nb_val)
+            #         else:
+            #             if row[col] != '-':
+            #                 total[col] += row[col]
 
-        for col in summary_columns:
-            if col == 'Total Time Spent':
-                total[col] = sec2str(total[col])
-            elif col in ['Progress', 'Current Score', 'Average Final Score']:
-                (val, nb_val) = total[col]
-                if nb_val > 0:
-                    total[col] = "%d%%" % (val / nb_val)
-                else:
-                    total[col] = "0%"
+        # for col in summary_columns:
+        #     if col == 'Total Time Spent':
+        #         total[col] = sec2str(total[col])
+        #     elif col in ['Progress', 'Current Score', 'Average Final Score']:
+        #         (val, nb_val) = total[col]
+        #         if nb_val > 0:
+        #             total[col] = "%d%%" % (val / nb_val)
+        #         else:
+        #             total[col] = "0%"
 
         choices_name_mapping = user_properties_helper.get_name_value_mapping()
         table_response = change_column_key(table_response, choices_name_mapping)
 
+        print "LAETITIA -- total = %s" % total
         response = {'list': table_response,
                     'total': total,
                     'pagination': {'rowsCount': rowsCount}}
         if column_order:
             response['columns'] = column_order
-        logger.info("STEP 4: response ready")
+        logger.info("response ready")
         return JsonResponse(response)
     except Exception as e:
         logger.exception(e)
