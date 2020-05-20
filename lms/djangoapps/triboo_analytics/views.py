@@ -421,102 +421,35 @@ def get_ilt_learner_table_data(filter_kwargs, exclude, sort=None):
     return IltLearnerTable(reports, exclude=exclude, order_by=order_by)
 
 
-def change_column_key(table, mapping):
-    new_table = []
-    for i, row in enumerate(table):
-        new_row = dict()
-        for rk, rv in row.items():
-            translated_rk = _(rk) if rk not in ['Location', 'Address'] else pgettext_lazy('user.profile', rk)
-            new_key = mapping.get(translated_rk, rk)
-            new_row[new_key] = rv
-        new_table.append(new_row)
-    return new_table
-
-
 def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_order=[]):
     try:
-        logger.info("in json_response")
-        total = {}
-        for column in table.columns:
-            if column.footer:
-                total[column.verbose_name] = column.footer
-
-        table.paginate(page=page['no'], per_page=page['size'])
-        logger.info("nb paginated_rows = " % len(table.paginated_rows))
-
-        logger.info("about to export")
-        table_export = TableExport('json', table)
-        rowsCount = len(table_export.dataset)
+        rowsCount = len(table.data)
         if not rowsCount:
             return JsonResponse({'list': [],
                                  'total': 0,
                                  'pagination': {'rowsCount': 0}})
+        total = {}
+        for column in table.columns:
+            if column.footer or column.footer == 0:
+                total[column.verbose_name] = column.footer
 
-        logger.info("we have rowsCount")
-        row_start = (page['no'] - 1) * page['size']
-        row_stop = page['no'] * page['size']
-        rows = range(row_start, row_stop, 1)
-        dataset = table_export.dataset.subset(rows=rows)
-        table_export.dataset = dataset
-        logger.info("we have paginated")
-        res = table_export.export()
-        table_json = json.loads(res)
-        logger.info("json loaded")
+        table.paginate(page=page['no'], per_page=page['size'])
+
         table_response = []
-        total = collections.OrderedDict()
-        for col in summary_columns:
-            if col in ['Progress', 'Current Score', 'Average Final Score']:
-                total[col] = (0, 0)
-            else:
-                total[col] = 0
-
-        user_properties = collections.OrderedDict()
-        user_properties_helper = UserPropertiesHelper()
-        user_properties = { verbose: prop for (prop, verbose) in user_properties_helper.get_possible_choices(False) }
-        i = 0
-        for row in table_json:
-            i += 1
-            new_row = collections.OrderedDict(ID=i)
-            for k, v in row.items():
-                key = user_properties[k] if k in user_properties.keys() else k
-                new_row[key] = v
+        for row in table.page.object_list:
+            new_row = {}
+            for column in table.columns:
+                if column.name.startswith("user_") and column.name != "user_name":
+                    new_row[column.name] = row.get_cell_value(column.name)
+                else:
+                    new_row[column.verbose_name] = row.get_cell_value(column.name)
             table_response.append(new_row)
-            # for col in summary_columns:
-            #     if row[col]:
-            #         if col == 'Badges':
-            #             split_str = '(/' if '(' in row[col] else '/'
-            #             total[col] += int(row[col].split(split_str)[0].strip())
-            #         elif col == 'Total Time Spent':
-            #             total[col] += str2sec(row[col])
-            #         elif col in ['Progress', 'Current Score', 'Average Final Score']:
-            #             (val, nb_val) = total[col]
-            #             val += int(row[col].split('%')[0].strip())
-            #             nb_val += 1
-            #             total[col] = (val, nb_val)
-            #         else:
-            #             if row[col] != '-':
-            #                 total[col] += row[col]
 
-        # for col in summary_columns:
-        #     if col == 'Total Time Spent':
-        #         total[col] = sec2str(total[col])
-        #     elif col in ['Progress', 'Current Score', 'Average Final Score']:
-        #         (val, nb_val) = total[col]
-        #         if nb_val > 0:
-        #             total[col] = "%d%%" % (val / nb_val)
-        #         else:
-        #             total[col] = "0%"
-
-        choices_name_mapping = user_properties_helper.get_name_value_mapping()
-        table_response = change_column_key(table_response, choices_name_mapping)
-
-        print "LAETITIA -- total = %s" % total
         response = {'list': table_response,
                     'total': total,
                     'pagination': {'rowsCount': rowsCount}}
         if column_order:
             response['columns'] = column_order
-        logger.info("response ready")
         return JsonResponse(response)
     except Exception as e:
         logger.exception(e)

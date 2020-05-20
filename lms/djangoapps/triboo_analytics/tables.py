@@ -58,6 +58,10 @@ class AvgFooterColumn(tables.Column):
     def render_footer(self, bound_column, table):
         return get_avg(bound_column, table.data)
 
+class AvgPercentFooterColumn(tables.Column):
+    def render_footer(self, bound_column, table):
+        return "%d%%" % get_avg(bound_column, table.data)
+
 class _OrderMixin(tables.Table):
     @classmethod
     def get_field_from_verbose(cls, verbose_name):
@@ -346,7 +350,7 @@ def get_progress_table_class(badges):
         verbose_name = "%s ▸ %s" % (grading_rule.encode('utf-8'), section_name.encode('utf-8'))
         # attributes[badge_hash] = HeaderColumn(verbose_name=verbose_name, colspan=3)
         attributes["%s_success" % badge_hash] = ProgressSuccessColumn(verbose_name=("%s / Success" % verbose_name))
-        attributes["%s_score" % badge_hash] = AvgFooterColumn(verbose_name=("%s / Score" % verbose_name))
+        attributes["%s_score" % badge_hash] = AvgPercentFooterColumn(verbose_name=("%s / Score" % verbose_name))
         attributes["%s_successdate" % badge_hash] = ProgressSuccessDateColumn(verbose_name=("%s / Date" % verbose_name))
 
     def render_user_country(self, value):
@@ -390,9 +394,9 @@ class CourseSectionColumn(TimeSpentFooterColumn):
 
 def get_time_spent_table_class(chapters, sections):
     attributes = {}
-    for chapter in chapters:
-        attributes[chapter['key']] = HeaderColumn(verbose_name=chapter['name'],
-                                                  colspan=chapter['colspan'])
+    # for chapter in chapters:
+    #     attributes[chapter['key']] = HeaderColumn(verbose_name=chapter['name'],
+    #                                               colspan=chapter['colspan'])
     for section in sections:
         attributes[section['key']] = CourseSectionColumn(verbose_name=section['name'],
                                                          chapter=section['chapter'])
