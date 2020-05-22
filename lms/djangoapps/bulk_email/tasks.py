@@ -7,6 +7,7 @@ import json
 import logging
 import random
 import re
+import io
 from collections import Counter
 from smtplib import SMTPConnectError, SMTPDataError, SMTPException, SMTPServerDisconnected
 from time import sleep
@@ -30,6 +31,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives, get_connection
 from django.core.mail.message import forbid_multi_line_headers
+from django.contrib.staticfiles import finders
 from django.urls import reverse
 from django.utils.translation import override as override_language
 from django.utils.translation import ugettext as _
@@ -37,7 +39,7 @@ from markupsafe import escape
 from six import text_type
 
 import dogstats_wrapper as dog_stats_api
-from bulk_email.models import CourseEmail, Optout
+from bulk_email.models import CourseEmail, CourseEmailTemplate, Optout
 from courseware.courses import get_course
 from lms.djangoapps.instructor_task.models import InstructorTask
 from lms.djangoapps.instructor_task.subtasks import (
@@ -49,6 +51,7 @@ from lms.djangoapps.instructor_task.subtasks import (
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.lib.courses import course_image_url
 from util.date_utils import get_default_time_display
+
 
 log = logging.getLogger('edx.celery.task')
 
@@ -107,12 +110,18 @@ def _get_course_email_context(course):
         course_root
     )
     image_url = u'{}{}'.format(settings.LMS_ROOT_URL, course_image_url(course))
+    logo_image_url = u'{}{}'.format(settings.LMS_ROOT_URL, '/static/hawthorn/images/logo.png')
+    logo_url = configuration_helpers.get_value('logo_image_url')
+    if logo_url:
+        logo_image_url = u'{}{}'.format(settings.LMS_ROOT_URL, '/static/' + logo_url)
+
     email_context = {
         'course_title': course_title,
         'course_root': course_root,
         'course_language': course.language,
         'course_url': course_url,
         'course_image_url': image_url,
+        'logo_image_url': logo_image_url,
         'course_end_date': course_end_date,
         'account_settings_url': '{}{}'.format(settings.LMS_ROOT_URL, reverse('account_settings')),
         'email_settings_url': '{}{}'.format(settings.LMS_ROOT_URL, reverse('dashboard')),
@@ -493,8 +502,20 @@ def _send_course_email(entry_id, email_id, to_list, global_email_context, subtas
     from_addr = course_email.from_addr if course_email.from_addr else \
         _get_source_address(course_email.course_id, course_title, course_language)
 
-    # use the CourseEmailTemplate that was associated with the CourseEmail
-    course_email_template = course_email.get_template()
+    # use default template from template files
+    if course_email.template_name == 'default.template':
+        course_email_template = CourseEmailTemplate()
+        course_email_template.name = 'default.template'
+        html_location = finders.FileSystemFinder().find('templates/emails/bulk_email_html_template.html')
+        plain_location = finders.FileSystemFinder().find('templates/emails/bulk_email_plain_template.txt')
+        with io.open(html_location, 'r', encoding='ascii') as html:
+            course_email_template.html_template = html.read()
+        with io.open(plain_location, 'r', encoding='ascii') as plain:
+            course_email_template.plain_template = plain.read()
+    # or use the CourseEmailTemplate that was associated with the CourseEmail
+    else:
+        course_email_template = course_email.get_template()
+
     try:
         connection = get_connection()
         connection.open()

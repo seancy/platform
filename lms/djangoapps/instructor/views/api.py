@@ -3194,7 +3194,7 @@ def send_email(request, course_id):
         # us to find the correct from address to use here.
         from_addr = from_addr.get(course_overview.display_org_with_default)
 
-    template_name = configuration_helpers.get_value('course_email_template_name')
+    template_name = configuration_helpers.get_value('course_email_template_name', 'default.template')
     if isinstance(template_name, dict):
         # If course_email_template_name is a dict, we are customizing
         # the email template for each organization that has courses
