@@ -1227,7 +1227,7 @@ FEATURES['ENFORCE_PASSWORD_POLICY'] = True
 
 if FEATURES.get('ENABLE_SAML_IDP'):
     INSTALLED_APPS += ('djangosaml2idp',)
-    SAML_IDP_BASE_URL = 'https://stage.learning-tribes.com/idp'
+    SAML_IDP_BASE_URL = 'https://uniminuto.learning-tribes.com/idp'
 
     SAML_IDP_CONFIG = {
         'debug' : DEBUG,
@@ -1251,21 +1251,21 @@ if FEATURES.get('ENABLE_SAML_IDP'):
         },
 
         'metadata': {
-            'remote': [{'url': 'https://sitel.my-mooc.com/fr/saml/metadata.xml'}],
+            'remote': [{'url': 'https://uniminuto.edflex.com/en/saml/metadata.xml'}],
         },
         # Signing
-        'key_file': os.path.abspath('certificates/saml-idp-private.key'),
-        'cert_file': os.path.abspath('certificates/saml-idp-public.cert'),
+        'key_file': os.path.abspath('keys/saml-idp-private.key'),
+        'cert_file': os.path.abspath('keys/saml-idp-public.cert'),
         # Encryption
         'encryption_keypairs': [{
-            'key_file': os.path.abspath('certificates/saml-idp-private.key'),
-            'cert_file': os.path.abspath('certificates/saml-idp-public.cert'),
+            'key_file': os.path.abspath('keys/saml-idp-private.key'),
+            'cert_file': os.path.abspath('keys/saml-idp-public.cert'),
         }],
         'valid_for': 365 * 24,
     }
 
     SAML_IDP_SPCONFIG = {
-        'https://sitel.my-mooc.com': {
+        'https://uniminuto.edflex.com': {
             'processor': 'djangosaml2idp.processors.BaseProcessor',
             'attribute_mapping': {
                 # DJANGO: SAML
