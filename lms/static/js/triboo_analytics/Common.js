@@ -11,7 +11,8 @@ const StatusRender = (value) => {
     let statusConfig = {
         'Not Started': 'not-started-bg',
         'In Progress': 'in-progress-bg',
-        'Successful': 'finished-bg'
+        'Successful': 'finished-bg',
+        'Unsuccessful': 'failed-bg'
     }
     return <span className={statusConfig[value]}>{gettext(value)}</span>
 
