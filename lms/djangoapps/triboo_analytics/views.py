@@ -495,8 +495,7 @@ def _transcript_view(user, request, template, report_type):
         learner_course_table, learner_course_reports = get_transcript_table(orgs,
                                                                             user.id,
                                                                             last_update,
-                                                                            html_links=True,
-                                                                            sort=data.get('sort'))
+                                                                            html_links=True)
         config_tables(request, learner_course_table)
 
         courses = []
