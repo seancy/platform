@@ -360,7 +360,6 @@ def get_progress_table_class(badges):
     return type("ProgressTable", (_OrderMixin, UserBaseTable,), attributes)
 
 
-
 class HeaderColumn(tables.Column):
     def __init__(self, verbose_name=None, accessor=None, default=None,
                  visible=True, orderable=None, attrs=None, order_by=None,
@@ -410,17 +409,18 @@ def get_time_spent_table_class(chapters, sections):
 
 
 class LearnerBaseTable(UserBaseTable):
-    badges = tables.Column(footer=lambda table: get_sum(
+    badges = tables.Column(verbose_name='Badges', footer=lambda table: get_sum(
                 None, [get_badges(row.badges)[0] for row in table.data]))
-    total_time_spent = TimeSpentFooterColumn()
+    total_time_spent = TimeSpentFooterColumn(verbose_name='Total Time Spent')
 
 
 class CourseTable(_OrderMixin, _RenderMixin, LearnerBaseTable):
-    current_score = tables.Column(footer=lambda table: "{}%".format(
+    current_score = tables.Column(verbose_name='Current Score', footer=lambda table: "{}%".format(
                          get_avg(None, [r.current_score for r in table.data if r.status != CourseStatus.not_started])))
-    progress = tables.Column(footer=lambda table: "{}%".format(
+    progress = tables.Column(verbose_name='Progress', footer=lambda table: "{}%".format(
                          get_avg(None, [r.progress for r in table.data])))
-    posts = SumFooterColumn()
+    posts = SumFooterColumn(verbose_name='Posts')
+
 
     class Meta:
         model = LearnerCourseDailyReport
@@ -468,11 +468,11 @@ class CourseTable(_OrderMixin, _RenderMixin, LearnerBaseTable):
 
 
 class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
-    current_score = tables.Column(footer=lambda table: "{}%".format(
+    current_score = tables.Column(verbose_name='Current Score', footer=lambda table: "{}%".format(
                          get_avg(None, [r.current_score for r in table.data if r.status != CourseStatus.not_started])))
-    progress = tables.Column(footer=lambda table: "{}%".format(
+    progress = tables.Column(verbose_name='Progress', footer=lambda table: "{}%".format(
                          get_avg(None, [r.progress for r in table.data])))
-    posts = SumFooterColumn()
+    posts = SumFooterColumn(verbose_name='Posts')
     course_title = tables.LinkColumn('info', args=[A('course_id')],
                                      verbose_name='Course Title', empty_values=('', ))
 
@@ -555,13 +555,13 @@ class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
 class LearnerDailyTable(_OrderMixin, LearnerBaseTable):
     user_name = tables.LinkColumn('analytics_learner_transcript', args=[A('user.id')],
                                   verbose_name='Name', text=lambda record: record.user.profile.name)
-    enrollments = SumFooterColumn()
+    enrollments = SumFooterColumn(verbose_name='Enrollments')
     finished = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.finished])
     failed = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.failed])
     in_progress = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.not_started])
     not_started = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.in_progress])
-    posts = SumFooterColumn()
-    average_final_score = tables.Column(footer=lambda table: "{}%".format(
+    posts = SumFooterColumn(verbose_name='Posts')
+    average_final_score = tables.Column(verbose_name='Average Final Score', footer=lambda table: "{}%".format(
                                     get_avg(None, [r.average_final_score for r in table.data])))
     user_last_login = tables.Column(accessor='user.last_login', verbose_name='Last Login')
 
@@ -636,11 +636,12 @@ class LearnerDailyTable(_OrderMixin, LearnerBaseTable):
         return "{}%".format(value)
 
     def value_user_last_login(self, value):
-        return dt2str(value)
+        result = dt2str(value)
+        return result
 
     def render_user_last_login(self, value):
-        value = self.value_user_last_login(value)
-        return value if value != '' else '-'
+        _value = self.value_user_last_login(value)
+        return _value if _value != '' else '-'
 
     def order_user_last_login(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__last_login')

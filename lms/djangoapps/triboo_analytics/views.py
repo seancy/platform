@@ -439,7 +439,7 @@ def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_
         for row in table.page.object_list:
             new_row = {}
             for column in table.columns:
-                if column.name.startswith("user_") and column.name != "user_name":
+                if column.name.startswith("user_") and column.name not in ("user_name", "user_last_login"):
                     new_row[column.name] = row.get_cell_value(column.name)
                 else:
                     new_row[column.verbose_name] = row.get_cell_value(column.name)
@@ -1164,7 +1164,6 @@ def learner_view_data(request):
 
         table = get_table_data(LearnerDailyReport,LearnerDailyTable, filter_kwargs, exclude,
                                by_period=True, html_links=True, sort=data.get('sort'))
-
     return json_response(table,
                          data.get('page'),
                          summary_columns)

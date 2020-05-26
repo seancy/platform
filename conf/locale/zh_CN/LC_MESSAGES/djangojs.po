@@ -10073,8 +10073,8 @@ msgid "Go"
 msgstr "完成"
 
 #: lms/static/js/triboo_analytics/Exporter.js
-msgid "nothing"
-msgstr "没有数据"
+msgid "No data available"
+msgstr "无可用数据"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "With the selected courses, the report will count * lines."

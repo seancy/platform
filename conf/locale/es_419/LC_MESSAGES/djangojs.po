@@ -10499,8 +10499,8 @@ msgid "Go"
 msgstr ""
 
 #: lms/static/js/triboo_analytics/Exporter.js
-msgid "nothing"
-msgstr "Ningun articulo"
+msgid "No data available"
+msgstr "Datos no disponibles"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "With the selected courses, the report will count * lines."

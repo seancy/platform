@@ -9774,7 +9774,7 @@ msgid "Go"
 msgstr ""
 
 #: lms/static/js/triboo_analytics/Exporter.js
-msgid "nothing"
+msgid "No data available"
 msgstr ""
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
