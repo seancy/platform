@@ -117,7 +117,7 @@ class _RenderMixin(object):
 
     def value_badges(self, record, value):
         x, y = get_badges(value)
-        return "{} (/ {})".format(x, y)
+        return "{} / {}".format(x, y)
 
     def render_badges(self, record, value):
         return '-' if record.status == CourseStatus.not_started else value

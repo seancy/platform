@@ -275,7 +275,7 @@ def get_ilt_period_kwargs(data, orgs, as_string=False):
     return kwargs, exclude
 
 
-def get_transcript_table(orgs, user_id, last_update, html_links=False):
+def get_transcript_table(orgs, user_id, last_update, html_links=False, sort=None):
     queryset = LearnerCourseDailyReport.objects.none()
     for org in orgs:
         new_queryset = LearnerCourseDailyReport.filter_by_day(date_time=last_update, org=org, user_id=user_id)
@@ -492,7 +492,11 @@ def _transcript_view(user, request, template, report_type):
             learner_report_in_progress = learner_report.in_progress
             learner_report_total_time_spent = learner_report.total_time_spent
 
-        learner_course_table, learner_course_reports = get_transcript_table(orgs, user.id, last_update, html_links=True)
+        learner_course_table, learner_course_reports = get_transcript_table(orgs,
+                                                                            user.id,
+                                                                            last_update,
+                                                                            html_links=True,
+                                                                            sort=data.get('sort'))
         config_tables(request, learner_course_table)
 
         courses = []
