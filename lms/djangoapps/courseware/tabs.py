@@ -327,7 +327,11 @@ def get_course_tab_list(request, course):
         # if UNIFIED_COURSE_TAB_FLAG.is_enabled(course.id) and tab.type == 'course_info':
         #         continue
         if tab.type == 'course_info':
-            tab.name = _('Overview')
+            tab.name = _('Learn')
+        elif tab.type == 'discussion':
+            tab.name = _('Share')
+        elif tab.type == 'progress':
+            tab.name = _('Prove')
         if tab.type == 'static_tab' and tab.course_staff_only and \
                 not bool(user and has_access(user, 'staff', course, course.id)):
             continue

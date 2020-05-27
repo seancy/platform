@@ -91,7 +91,15 @@
                             </ul>
 
                         % else:
-                          <h3 class="title">${_(tab.name)}</h3>
+                          % if tab.type == "course_info":
+                            <h3 class="title">${_('Learn')}</h3>
+                          % elif tab.type == "discussion":
+                            <h3 class="title">${_('Share')}</h3>
+                          % elif tab.type == "progress":
+                            <h3 class="title">${_('Prove')}</h3>
+                          % else:
+                            <h3 class="title">${_(tab.name)}</h3>
+                          % endif
                         % endif
                       </div>
 
