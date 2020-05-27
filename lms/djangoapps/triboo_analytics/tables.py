@@ -178,9 +178,8 @@ class TranscriptTable(_OrderMixin, _RenderMixin, tables.Table):
 
 
     def order_course_title(self, queryset, is_descending):
-        new_queryset = [row for row in queryset]
-        new_queryset.sort(key=lambda x: self.titles[x.course_id], reverse=is_descending)
-        return new_queryset, True
+        queryset.order_by(('-' if is_descending else '') + 'course_id')
+        return queryset, True
 
 
 class UserBaseTable(tables.Table):
@@ -549,9 +548,8 @@ class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
 
 
     def order_course_title(self, queryset, is_descending):
-        new_queryset = [row for row in queryset]
-        new_queryset.sort(key=lambda x: self.titles[x.course_id], reverse=is_descending)
-        return new_queryset, True
+        queryset.order_by(('-' if is_descending else '') + 'course_id')
+        return queryset, True
 
 
 class LearnerDailyTable(_OrderMixin, LearnerBaseTable):
