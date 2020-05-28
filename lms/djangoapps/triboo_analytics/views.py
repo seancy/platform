@@ -170,18 +170,6 @@ def new_request_copy(request_copy):
     return request_copy
 
 
-def to_db_tuples(tuples):
-    query_tuples = []
-    for string, field in tuples:
-        prop = field.split('_', 1)[1]
-        db_prefix = "user__"
-        if prop not in ['email', 'username', 'date_joined']:
-            db_prefix += "profile__"
-        db_tuple = (string, db_prefix + prop)
-        query_tuples.append(db_tuple)
-    return query_tuples
-
-
 def get_kwargs(data):
     kwargs = {}
 
@@ -422,6 +410,10 @@ def get_ilt_learner_table_data(filter_kwargs, exclude, sort=None):
 
 
 def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_order=[]):
+    if isinstance(table, list) and len(table) == 0:
+        return JsonResponse({'list': [],
+                             'total': 0,
+                             'pagination': {'rowsCount': 0}})
     try:
         rowsCount = len(table.data)
         if not rowsCount:
@@ -1081,21 +1073,23 @@ def course_view_data(request):
                                                    course_id=course_key,
                                                    with_period_start=with_period_start)
         if 'date_time' not in filter_kwargs.keys():
-            filter_kwargs['date_time'] = last_update
+            if not data.get('from_day'):
+                filter_kwargs['date_time'] = last_update
 
-        if report == "course_summary":
-            table = get_table_data(LearnerCourseDailyReport, CourseTable, filter_kwargs, exclude, sort=data.get('sort'))
-            summary_columns = ['Progress',
-                               'Current Score',
-                               'Badges',
-                               'Posts',
-                               'Total Time Spent']
+        if 'date_time' in filter_kwargs.keys():
+            if report == "course_summary":
+                table = get_table_data(LearnerCourseDailyReport, CourseTable, filter_kwargs, exclude, sort=data.get('sort'))
+                summary_columns = ['Progress',
+                                   'Current Score',
+                                   'Badges',
+                                   'Posts',
+                                   'Total Time Spent']
 
-        elif report == "course_progress":
-            table, column_order = get_progress_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
+            elif report == "course_progress":
+                table, column_order = get_progress_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
 
-        elif report == "course_time_spent":
-            table, column_order = get_time_spent_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
+            elif report == "course_time_spent":
+                table, column_order = get_time_spent_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
 
     return json_response(table,
                          data.get('page'),
@@ -1160,10 +1154,11 @@ def learner_view_data(request):
         filter_kwargs, exclude = get_period_kwargs(data, with_period_start=True)
         filter_kwargs['org'] = learner_report_org
         if 'date_time' not in filter_kwargs.keys():
-            filter_kwargs['date_time'] = last_update
-
-        table = get_table_data(LearnerDailyReport,LearnerDailyTable, filter_kwargs, exclude,
-                               by_period=True, html_links=True, sort=data.get('sort'))
+            if not data.get('from_day'):
+                filter_kwargs['date_time'] = last_update
+        if 'date_time' in filter_kwargs.keys():
+            table = get_table_data(LearnerDailyReport,LearnerDailyTable, filter_kwargs, exclude,
+                                   by_period=True, html_links=True, sort=data.get('sort'))
     return json_response(table,
                          data.get('page'),
                          summary_columns)
@@ -1759,18 +1754,6 @@ def export_tables(request):
     elif report_type == 'transcript':
         user_id = data.get('user_id', request.user.id)
         return transcript_export_table(request, user_id)
-
-
-def str2sec(t):
-    h, m, s = t.strip().split(':')
-    return int(h) * 3600 + int(m) * 60 + int(s)
-
-
-def sec2str(sec):
-    m, s = divmod(sec, 60)
-    h, m = divmod(m, 60)
-    t = "%d:%02d:%02d" % (h, m, s)
-    return t
 
 
 @analytics_on

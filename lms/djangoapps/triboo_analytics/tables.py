@@ -3,6 +3,7 @@ from six import text_type
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django_countries import countries
+from django_countries.fields import Country
 import django_tables2 as tables
 from django_tables2.utils import A
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
@@ -234,8 +235,10 @@ class UserBaseTable(tables.Table):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__gender')
         return queryset, True
 
-    # def render_user_country(self, value):
-    #     return dict(countries)[value]
+    def render_user_country(self, value):
+        if isinstance(value, Country):
+            return dict(countries)[value]
+        return value
 
     def order_user_country(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__country')
@@ -355,6 +358,7 @@ def get_progress_table_class(badges):
 
     def render_user_country(self, value):
         return dict(countries)[value]
+
     attributes['render_user_country'] = render_user_country
 
     return type("ProgressTable", (_OrderMixin, UserBaseTable,), attributes)
