@@ -97,8 +97,8 @@
         this.tiny_mce_textarea = $(".tiny-mce", this.element).tinymce({
           script_url: baseUrl + "/js/vendor/tinymce/js/tinymce/tinymce.full.min.js",
           font_formats: _getFonts(),
-          theme: "modern",
-          skin: 'studio-tmce4',
+          theme: "silver",
+          skin: 'oxide',
           schema: "html5",
 
           /*
@@ -122,19 +122,21 @@
           Disable visual aid on borderless table.
            */
           visual: false,
-          plugins: "textcolor, link, image, codemirror",
-          codemirror: {
+          //, codemirror
+          plugins: "codesample, code, lists, image, textcolor, link",
+          /*codemirror: {
             path: baseUrl + "/js/vendor"
-          },
+          },*/
           image_advtab: true,
 
           /*
           We may want to add "styleselect" when we collect all styles used throughout the LMS
            */
-          toolbar: "formatselect | fontselect | bold italic underline forecolor wrapAsCode | " +
-            "alignleft aligncenter alignright alignjustify | " +
-            "bullist numlist outdent indent blockquote | link unlink " +
-            ((this.new_image_modal ? 'insertImage' : 'image') + " | code"),
+          toolbar: "formatselect fontselect bold italic underline forecolor codesample " +
+            "alignleft aligncenter alignright alignjustify " +
+            "bullist numlist outdent indent blockquote link unlink " +
+            ((this.new_image_modal ? 'insertImage' : 'image') + " code"),
+          toolbar_mode: 'wrap',
           block_formats: interpolate("%(paragraph)s=p;%(preformatted)s=pre;%(heading3)s=h3;%(heading4)s=h4;%(heading5)s=h5;%(heading6)s=h6", {
             paragraph: gettext("Paragraph"),
             preformatted: gettext("Preformatted"),
@@ -1194,26 +1196,41 @@
     }
 
     HTMLEditingDescriptor.prototype.setupTinyMCE = function(ed) {
-      ed.addButton('wrapAsCode', {
+      /*ed.ui.registry.addButton('wrapAsCode', {
 
-        /*
+        /!*
         Translators: this is a toolbar button tooltip from the raw HTML editor displayed in the browser when a user needs to edit HTML
-         */
+         *!/
         title: gettext('Code block'),
         image: baseUrl + "/images/ico-tinymce-code.png",
         onclick: function() {
           return ed.formatter.toggle('code');
         }
-      });
-      ed.addButton('insertImage', {
+      });*/
 
-        /*
+      ed.ui.registry.addButton('wrapAsCode', {
+        //title: gettext('Code block'),
+        image: baseUrl + "/images/ico-tinymce-code.png",
+        onAction: function() {
+          return ed.formatter.toggle('code');
+        }
+      })
+
+      ed.ui.registry.addButton('insertImage', {
+        //text: gettext('Insert/Edit Image'),
+        icon: 'image',
+        onAction: this.openImageModal
+      });
+
+      /*ed.ui.registry.addButton('insertImage', {
+
+        /!*
         Translators: this is a toolbar button tooltip from the raw HTML editor displayed in the browser when a user needs to edit HTML
-         */
+         *!/
         title: gettext('Insert/Edit Image'),
         icon: 'image',
         onclick: this.openImageModal
-      });
+      });*/
       this.visualEditor = ed;
       this.imageModal = $('#edit-image-modal #modalWrapper');
 
