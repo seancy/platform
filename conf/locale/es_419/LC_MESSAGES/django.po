@@ -30340,3 +30340,7 @@ msgstr "Compartir"
 msgid "Prove"
 msgstr "Demostrar"
 
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "Parece que no tiene un plugin de PDF para este navegador o la URL del PDF no es válida."

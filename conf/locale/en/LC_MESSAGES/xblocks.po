@@ -738,3 +738,8 @@ msgstr ""
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr ""

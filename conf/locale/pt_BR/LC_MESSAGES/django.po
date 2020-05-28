@@ -30144,3 +30144,8 @@ msgstr "URL do documento de origem"
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr "Adicione o documento de origem do seu PDF (arquivo do Powerpoint,…)"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "Il semble que vous n’ayez pas de plugin PDF pour ce navigateur ou l’URL du PDF n’est pas valide."

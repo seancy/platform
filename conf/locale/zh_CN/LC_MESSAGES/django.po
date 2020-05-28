@@ -28527,3 +28527,8 @@ msgstr "源文档地址"
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr "为您的 PDF 添加源文档（PPT 文件，……）"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "您似乎没有此浏览器的PDF插件，或者PDF URL无效。"
