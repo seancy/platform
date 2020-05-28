@@ -33,6 +33,7 @@ from fs.errors import ResourceNotFound
 from lms.djangoapps.courseware.courseware_access_exception import CoursewareAccessException
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect
 from opaque_keys.edx.keys import UsageKey
+from opaque_keys.edx.locator import BlockUsageLocator
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from path import Path as path
@@ -673,3 +674,17 @@ def get_displayed_tags(lang, tag):
     if tag in course_tags and lang in course_tags[tag]:
         return course_tags[tag][lang]
     return tag
+
+
+def get_xblock_prop(block_id, prop):
+    """
+    Help method  used for getting prop from specific xblock.
+    """
+    try:
+        block = BlockUsageLocator.from_string(block_id)
+        block_content = modulestore().get_item(block)
+        return getattr(block_content, prop, None)
+    except ItemNotFoundError:
+        log.warning(
+            u"Wrong block id: %s for this subsection.", block_id
+        )

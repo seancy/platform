@@ -1199,6 +1199,7 @@ def create_xblock_info(xblock, data=None, metadata=None, include_ancestor_info=F
         if xblock.category == 'sequential':
             xblock_info.update({
                 'hide_after_due': xblock.hide_after_due,
+                'estimated_time': xblock.estimated_time
             })
         elif xblock.category in ('chapter', 'course'):
             if xblock.category == 'chapter':

@@ -74,6 +74,15 @@ class SequenceFields(object):
         scope=Scope.settings,
     )
 
+    estimated_time = String(
+        display_name=_("Estimated time for subsection"),
+        help=_(
+            "If set, estimated time will show in subsection display area."
+        ),
+        default="0:0",
+        scope=Scope.settings
+    )
+
 
 class ProctoringFields(object):
     """

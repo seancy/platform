@@ -7599,6 +7599,15 @@ msgstr "Activer"
 msgid "Not yet"
 msgstr "Pas encore"
 
+#: cms/static/js/views/modals/course_outline_modals.js:305
+#: cms/static/js/views/modals/course_outline_modals.js:310
+msgid "Subsection Estimated Time"
+msgstr "Durée estimée de la sous-section"
+
+#: cms/templates/js/estimated-time-editor.underscore:12
+msgid "Give learners an estimation of the time they'll need to complete this subsection"
+msgstr "Donnez aux apprenants une estimation du temps dont ils auront besoin pour effectuer cette sous-section"
+
 #: cms/static/js/views/modals/course_outline_modals.js:754
 msgid "All Learners and Staff"
 msgstr "Tous les apprenants et l'équipe pédagogique"
@@ -10869,6 +10878,18 @@ msgstr "Replier/Déplier cette %(xblock_type)s"
 msgid "Display Name"
 msgstr "Nom d'affichage"
 
+#: cms/templates/js/course-outline.underscore:129
+msgid "%(min)s min"
+msgstr "%(min)s min"
+
+#: cms/templates/js/course-outline.underscore:132
+msgid "%(h)s h"
+msgstr "%(h)s h"
+
+#: cms/templates/js/course-outline.underscore:135
+msgid "%(h)s h %(min)s m"
+msgstr "%(h)s h %(min)s"
+
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140
 msgid "Configure"
@@ -12431,3 +12452,8 @@ msgstr "Cette unité est visible pour l’équipe pédagogique uniquement. Les a
 #: master-sitel: #: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "Axe de développement"
+
+#: cms/templates/js/estimated-time-editor.underscore:4
+msgid "Time format HH:MM expected"
+msgstr ""
+

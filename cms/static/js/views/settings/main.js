@@ -143,7 +143,6 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.$el.find('#course-order').val(this.model.get('course_order'));
 
                    this.$el.find('#' + this.fieldToSelectorMap.subtitle).val(this.model.get('subtitle'));
-                   this.$el.find('#' + this.fieldToSelectorMap.duration).val(this.model.get('duration'));
                    if (this.model.get('duration')) {
                        this.$el.find('#' + this.fieldToSelectorMap.course_duration_number).val(Number(this.model.get('duration').split(' ')[0]));
                        this.$el.find('#' + this.fieldToSelectorMap.course_duration_unit).val(this.model.get('duration').split(' ')[1]);

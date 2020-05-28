@@ -17,7 +17,8 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         AbstractEditor, BaseDateEditor,
         ReleaseDateEditor, DueDateEditor, GradingEditor, PublishEditor, AbstractVisibilityEditor,
         StaffLockEditor, UnitAccessEditor, ContentVisibilityEditor, TimedExaminationPreferenceEditor,
-        AccessEditor, ShowCorrectnessEditor, HighlightsEditor, HighlightsEnableXBlockModal, HighlightsEnableEditor;
+        AccessEditor, ShowCorrectnessEditor, HighlightsEditor, HighlightsEnableXBlockModal, HighlightsEnableEditor,
+        EstimatedTimeXBlockModal, EstimatedTimeEditor;
 
     CourseOutlineXBlockModal = BaseModal.extend({
         events: _.extend({}, BaseModal.prototype.events, {
@@ -71,13 +72,19 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
 
         save: function(event) {
             event.preventDefault();
-            var requestData = this.getRequestData();
-            if (!_.isEqual(requestData, {metadata: {}})) {
-                XBlockViewUtils.updateXBlockFields(this.model, requestData, {
-                    success: this.options.onSave
-                });
+            var validationStatus = true;
+            if (this.beforeSave) {
+                validationStatus = this.beforeSave();
             }
-            this.hide();
+            if (validationStatus) {
+                var requestData = this.getRequestData();
+                if (!_.isEqual(requestData, {metadata: {}})) {
+                    XBlockViewUtils.updateXBlockFields(this.model, requestData, {
+                        success: this.options.onSave
+                    });
+                }
+                this.hide();
+            }
         },
 
         /**
@@ -290,6 +297,23 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         addActionButtons: function() {
             this.addActionButton('save', gettext('Enable'), true);
             this.addActionButton('cancel', gettext('Not yet'));
+        }
+    });
+
+    EstimatedTimeXBlockModal = CourseOutlineXBlockModal.extend({
+        beforeSave: function() {
+            return this.options.editors[0].getValidationStatus() !== 'failed';
+        },
+
+        getRequestData: function() {
+            var requestData = _.map(this.options.editors, function(editor) {
+                return editor.getRequestData();
+            });
+            return $.extend.apply(this, [true, {}].concat(requestData));
+        },
+
+        getTitle: function() {
+            return gettext('Subsection Estimated Time');
         }
     });
 
@@ -1026,6 +1050,71 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         }
     });
 
+    EstimatedTimeEditor = AbstractEditor.extend({
+        templateName: 'estimated-time-editor',
+        className: 'edit-estimated-time',
+        validated: '', // represents if the form is validated
+        events: {
+            'keyup input[name=estimated-time]': 'validateValue'
+        },
+        validateValue: function(e) {
+            var val = (e && e.currentTarget.value) || $('#estimated-time-input').val();
+            var reg = /^\d{1,2}:\d{1,2}$/;
+            var warningMessage = '';
+            if (!reg.test(val)) {
+                warningMessage = gettext('Time format HH:MM expected');
+                this.validated = 'failed';
+            } else {
+                this.validated = '';
+            }
+            $('.warning-message', this.el).text(warningMessage);
+        },
+        afterRender: function() {
+            AbstractEditor.prototype.afterRender.call(this);
+            this.setEstimatedTime();
+            this.validateValue();
+        },
+        setEstimatedTime: function() {
+            var estimatedTime = this.model.get('estimated_time');
+            if (estimatedTime) {
+                $('#estimated-time-input').val(this.getFormatTime(estimatedTime));
+            }
+        },
+        getFormatTime: function(time) {
+            var hour = time.split(':')[0];
+            var min = time.split(':')[1];
+            if (hour && hour.length === 1) {
+                hour = '0' + hour;
+            }
+            if (min && min.length === 1) {
+                min = '0' + min;
+            }
+            return hour + ':' + min;
+        },
+        getValidationStatus: function() {
+            return this.validated;
+        },
+        getRequestData: function() {
+            var estimatedTime = $('#estimated-time-input').val();
+            if (estimatedTime) {
+                var hour = estimatedTime.split(':')[0];
+                var min = estimatedTime.split(':')[1];
+                if (hour && hour.length === 2 && hour[0] === '0') {
+                    hour = hour[1];
+                }
+                if (min && min.length === 2 && min[0] === '0') {
+                    min = min[1];
+                }
+                estimatedTime = hour + ':' + min;
+            }
+            return {
+                metadata: {
+                    estimated_time: estimatedTime
+                }
+            };
+        }
+    });
+
     return {
         getModal: function(type, xblockInfo, options) {
             if (type === 'edit') {
@@ -1036,6 +1125,8 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
                 return this.getHighlightsModal(xblockInfo, options);
             } else if (type === 'highlights_enable') {
                 return this.getHighlightsEnableModal(xblockInfo, options);
+            } else if (type === 'estimated_time') {
+                return this.getEstimatedTimeModal(xblockInfo, options);
             } else {
                 return null;
             }
@@ -1118,6 +1209,13 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         getHighlightsEnableModal: function(xblockInfo, options) {
             return new HighlightsEnableXBlockModal($.extend({
                 editors: [HighlightsEnableEditor],
+                model: xblockInfo
+            }, options));
+        },
+
+        getEstimatedTimeModal: function(xblockInfo, options) {
+            return new EstimatedTimeXBlockModal($.extend({
+                editors: [EstimatedTimeEditor],
                 model: xblockInfo
             }, options));
         }

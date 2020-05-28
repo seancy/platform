@@ -61,7 +61,7 @@
                 if (data.content.duration) {
                     var duration = data.content.duration.trim().split(' ');
                     var fmt = '';
-                    if (duration.length > 1 && !_.isNaN(duration[0])) {
+                    if (duration.length > 1 && !_.isEmpty(duration[0])) {
                         if (duration[1].startsWith('minute')) {
                             fmt = ngettext('%(num)s minute', '%(num)s minutes', duration[0]);
                             data.display_duration = interpolate(fmt, {num: duration[0]}, true);

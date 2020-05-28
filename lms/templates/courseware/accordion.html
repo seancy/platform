@@ -5,6 +5,7 @@
     from django.utils.translation import ugettext as _
     from django.conf import settings
     from openedx.core.djangolib.markup import HTML, Text
+    from lms.djangoapps.courseware.courses import get_xblock_prop
 %>
 
 <%def name="make_chapter(chapter)">
@@ -30,7 +31,25 @@ else:
                 <p class="accordion-display-name">${HTML(section['display_name'])} ${Text(_('{span_start}current section{span_end}')).format(
                         span_start=HTML('<span class="sr">'),
                         span_end=HTML('</span>'),
-                    ) if 'active' in section and section['active'] else ''}</p>
+                    ) if 'active' in section and section['active'] else ''}
+                  <%
+                    estimated_time = get_xblock_prop(section['usage_id'], 'estimated_time')
+                    if not estimated_time or estimated_time == '0:0':
+                        display_estimated_time = None
+                    elif estimated_time and estimated_time.split(':')[0] == '0':
+                        display_estimated_time = _('{} min').format(estimated_time.split(':')[1])
+                    elif estimated_time and estimated_time.split(':')[1] == '0':
+                        display_estimated_time = _('{} h').format(estimated_time.split(':')[0])
+                    elif estimated_time:
+                        display_estimated_time = _('{} h {} m').format(estimated_time.split(':')[0], estimated_time.split(':')[1])
+                  %>
+                  % if display_estimated_time:
+                    <span class="time-label">
+                        <i class="icon far fa-stopwatch"></i>
+                        <em>${display_estimated_time}</em>
+                    </span>
+                  % endif
+                </p>
 
                 ## There are behavior differences between
                 ## rendering of sections which have proctoring/timed examinations

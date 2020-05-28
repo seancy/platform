@@ -7284,6 +7284,15 @@ msgstr "启用"
 msgid "Not yet"
 msgstr "还没有"
 
+#: cms/static/js/views/modals/course_outline_modals.js:305
+#: cms/static/js/views/modals/course_outline_modals.js:310
+msgid "Subsection Estimated Time"
+msgstr "子章节预计时间"
+
+#: cms/templates/js/estimated-time-editor.underscore:12
+msgid "Give learners an estimation of the time they'll need to complete this subsection"
+msgstr "让学习者估算完成本小节所需的时间"
+
 #: cms/static/js/views/modals/course_outline_modals.js:754
 msgid "All Learners and Staff"
 msgstr "所有学员和员工"
@@ -10360,6 +10369,18 @@ msgstr "折叠/展开此 %(xblock_type)s"
 msgid "Display Name"
 msgstr "显示名称"
 
+#: cms/templates/js/course-outline.underscore:129
+msgid "%(min)s min"
+msgstr "%(min)s分钟"
+
+#: cms/templates/js/course-outline.underscore:132
+msgid "%(h)s h"
+msgstr "%(h)s小时"
+
+#: cms/templates/js/course-outline.underscore:135
+msgid "%(h)s h %(min)s m"
+msgstr "%(h)s时%(min)s分"
+
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140
 msgid "Configure"
@@ -11787,4 +11808,8 @@ msgstr "该单元仅对员工可见。以下学员不是员工： <br><br>"
 #: master-sitel: #: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "发展领域"
+
+#: cms/templates/js/estimated-time-editor.underscore:4
+msgid "Time format HH:MM expected"
+msgstr "时间格式 HH:MM"
 
