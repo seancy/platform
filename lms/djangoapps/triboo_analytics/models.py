@@ -648,7 +648,10 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                   'enrollment_date': enrollment.created,
                                   'completion_date': enrollment.completed})
 
-            LearnerBadgeDailyReport.update_or_create(course_key, user, progress['trophies_by_chapter'], report_needs_update)
+                    LearnerBadgeDailyReport.update_or_create(course_key, course, user, progress['trophies_by_chapter'], report_needs_update)
+
+            else:
+                LearnerBadgeDailyReport.update_or_create(course_key, course, user, None, report_needs_update)
             return report_needs_update
         return False
 
@@ -794,14 +797,17 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def update_or_create(cls, course_key, user, trophies_by_chapter, needs_update):
+    def update_or_create(cls, course_key, course, user, trophies_by_chapter, needs_update):
         day = timezone.now().date()
         if not needs_update:
             badges = Badge.objects.filter(course_id=course_key)
             reports = cls.objects.filter(created=day, user=user, badge__in=badges)
             if len(badges) == len(reports):
                 return
-        
+        if not trophies_by_chapter:
+            progress = CourseGradeFactory().get_progress(user, course)
+            trophies_by_chapter = progress['trophies_by_chapter']
+            
         _successes = LearnerBadgeSuccess.objects.filter(badge__course_id=course_key, user=user)
         successes = {s.badge.badge_hash: s.success_date for s in _successes}
         for chapter in trophies_by_chapter:
