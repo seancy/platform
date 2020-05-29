@@ -54,10 +54,8 @@
                             'labelText':'${_("Please select a course to see your report:")}',
 
                             'data':${json.dumps([{'value': item[0], 'text':item[1]} for item in courses]) | n},
+                            'value':'${course_id}',
                             'url':'${reverse("analytics_course")}'
-                            ##last_update:'${context.get("last_update", "")}',
-                            ##defaultLanguage: '${request.LANGUAGE_CODE}',
-                            ##token:'${ csrf_token }',
                           }
                       });
                     </script>
