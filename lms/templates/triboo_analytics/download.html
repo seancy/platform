@@ -37,5 +37,14 @@
             clearInterval(inter);
         });
         listDownloads();
+
+        $('.actions .download-item').on('click', function(e){
+            var $obj = $(e.currentTarget)
+            $obj.addClass('showing')
+        })
+
+        $('.actions .dropdown-download-menu').on('mouseleave', function () {
+            $('.actions .download-item').removeClass('showing')
+        })
     });
 </script>
