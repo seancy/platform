@@ -554,8 +554,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     @classmethod
     def generate_enrollment_report(cls, last_analytics_success, course_last_update, enrollment, course, sections):
         updated = cls.update_or_create(last_analytics_success, course_last_update, enrollment, course)
-        if updated:
-            LearnerSectionDailyReport.update_or_create(enrollment, sections)
+        LearnerSectionDailyReport.update_or_create(enrollment, sections, updated)
 
 
     @classmethod
@@ -649,7 +648,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                   'enrollment_date': enrollment.created,
                                   'completion_date': enrollment.completed})
 
-                    LearnerBadgeDailyReport.update_or_create(course_key, user, progress['trophies_by_chapter'])
+            LearnerBadgeDailyReport.update_or_create(course_key, user, progress['trophies_by_chapter'], report_needs_update)
             return report_needs_update
         return False
 
@@ -679,8 +678,17 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
 
 
     @classmethod
-    def update_or_create(cls, enrollment, sections):
+    def update_or_create(cls, enrollment, sections, needs_update):
         day = timezone.now().date()
+        if not needs_update:
+            section_combined_urls = sections.keys()
+            reports = cls.objects.filter(created=day,
+                                         user=enrollment.user,
+                                         course_id=enrollment.course_id,
+                                         section_key__in=section_combined_urls)
+            if len(section_combined_urls) == len(reports):
+                return
+
         yesterday = timezone.now() + timezone.timedelta(days=-1)
         for section_combined_url, section_combined_display_name in sections.iteritems():
             total_time_spent = (TrackingLog.objects.filter(user_id=enrollment.user.id,
@@ -786,8 +794,14 @@ class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def update_or_create(cls, course_key, user, trophies_by_chapter):
+    def update_or_create(cls, course_key, user, trophies_by_chapter, needs_update):
         day = timezone.now().date()
+        if not needs_update:
+            badges = Badge.objects.filter(course_id=course_key)
+            reports = cls.objects.filter(created=day, user=user, badge__in=badges)
+            if len(badges) == len(reports):
+                return
+        
         _successes = LearnerBadgeSuccess.objects.filter(badge__course_id=course_key, user=user)
         successes = {s.badge.badge_hash: s.success_date for s in _successes}
         for chapter in trophies_by_chapter:
