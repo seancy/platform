@@ -4821,6 +4821,14 @@ msgstr ""
 "debe habilitar los exámenes de entrada para que esta configuración de curso "
 "entre en vigor."
 
+#: common/lib/xmodule/xmodule/seq_module.py:78
+msgid "Estimated time for subsection" 
+msgstr "Tiempo estimado de subsección"
+
+#: common/lib/xmodule/xmodule/seq_module.py:80
+msgid "If set, estimated time will show in subsection display area."
+msgstr "Si se establece, el tiempo estimado se mostrará cerca de la subsección."
+
 #: common/lib/xmodule/xmodule/seq_module.py:83
 msgid "Is Time Limited"
 msgstr "Es el tiempo limitado"
@@ -27832,6 +27840,21 @@ msgstr "Requisito previo:"
 msgid "{subsection_format} due {{date}}"
 msgstr "{subsection_format} due {{date}}"
 
+#: lms/templates/courseware/accordion.html:83
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:108
+msgid "{} min"
+msgstr "{} min"
+
+#: lms/templates/courseware/accordion.html:85
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:110
+msgid "{} h"
+msgstr "{} h"
+
+#: lms/templates/courseware/accordion.html:87
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:112
+msgid "{} h {} m"
+msgstr "{} h {}"
+
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:20
 msgid "Learn About Verified Certificates"
 msgstr "Aprenda acerca de los certificados verificados"
@@ -30340,3 +30363,7 @@ msgstr "Compartir"
 msgid "Prove"
 msgstr "Demostrar"
 
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "Parece que no tiene un plugin de PDF para este navegador o la URL del PDF no es válida."

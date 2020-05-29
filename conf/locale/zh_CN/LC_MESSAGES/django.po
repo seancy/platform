@@ -4681,6 +4681,14 @@ msgstr ""
 "标记该课程模块作为入学考试。注意，您必须开启此课程设置的入学考试功能才可生"
 "效。"
 
+#: common/lib/xmodule/xmodule/seq_module.py:78
+msgid "Estimated time for subsection" 
+msgstr "子章节预计时间"
+
+#: common/lib/xmodule/xmodule/seq_module.py:80
+msgid "If set, estimated time will show in subsection display area." 
+msgstr "如果设置，预计时间将显示在子章节相关区域"
+
 #: common/lib/xmodule/xmodule/seq_module.py:83
 msgid "Is Time Limited"
 msgstr "时间是否受限"
@@ -22590,6 +22598,21 @@ msgstr "先决条件："
 msgid "{subsection_format} due {{date}}"
 msgstr "{subsection_format}到期{{date}}"
 
+#: lms/templates/courseware/accordion.html:83
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:108
+msgid "{} min"
+msgstr "{}分钟"
+
+#: lms/templates/courseware/accordion.html:85
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:110
+msgid "{} h"
+msgstr "{}小时"
+
+#: lms/templates/courseware/accordion.html:87
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:112
+msgid "{} h {} m"
+msgstr "{}时{}分"
+
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:20
 msgid "Learn About Verified Certificates"
 msgstr "了解已验证的证书"
@@ -28527,3 +28550,8 @@ msgstr "源文档地址"
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr "为您的 PDF 添加源文档（PPT 文件，……）"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "您似乎没有此浏览器的PDF插件，或者PDF URL无效。"

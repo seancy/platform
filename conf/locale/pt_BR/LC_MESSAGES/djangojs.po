@@ -7620,6 +7620,15 @@ msgstr "Habilitar"
 msgid "Not yet"
 msgstr "Ainda não"
 
+#: cms/static/js/views/modals/course_outline_modals.js:305
+#: cms/static/js/views/modals/course_outline_modals.js:310
+msgid "Subsection Estimated Time"
+msgstr "Tempo estimado da subseção"
+
+#: cms/templates/js/estimated-time-editor.underscore:12
+msgid "Give learners an estimation of the time they'll need to complete this subsection"
+msgstr "Dê aos alunos uma estimativa do tempo necessário para concluir esta subseção"
+
 #: cms/static/js/views/modals/course_outline_modals.js:754
 msgid "All Learners and Staff"
 msgstr "Todos os alunos e equipe"
@@ -10872,6 +10881,18 @@ msgstr "Reduzir/Expandir este %(xblock_type)s"
 #: cms/templates/js/course-outline.underscore:120
 msgid "Display Name"
 msgstr "Exibir Nome"
+
+#: cms/templates/js/course-outline.underscore:129
+msgid "%(min)s min"
+msgstr "%(min)s min"
+
+#: cms/templates/js/course-outline.underscore:132
+msgid "%(h)s h"
+msgstr "%(h)s h"
+
+#: cms/templates/js/course-outline.underscore:135
+msgid "%(h)s h %(min)s m"
+msgstr "%(h)s h %(min)s"
 
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140

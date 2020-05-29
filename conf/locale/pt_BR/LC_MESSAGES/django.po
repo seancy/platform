@@ -4899,6 +4899,14 @@ msgstr ""
 "habilitar o Exame de Admissão para que esta definição tenha efeito para o "
 "curso."
 
+#: common/lib/xmodule/xmodule/seq_module.py:78
+msgid "Estimated time for subsection" 
+msgstr "Tempo estimado para subseção"
+
+#: common/lib/xmodule/xmodule/seq_module.py:80
+msgid "If set, estimated time will show in subsection display area." 
+msgstr "Se definido, o tempo estimado será exibido próximo à subseção."
+
 #: common/lib/xmodule/xmodule/seq_module.py:83
 msgid "Is Time Limited"
 msgstr "Tempo limitado"
@@ -27744,6 +27752,21 @@ msgstr "Prerequisito: "
 msgid "{subsection_format} due {{date}}"
 msgstr "{subsection_format} até {{date}}"
 
+#: lms/templates/courseware/accordion.html:83
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:108
+msgid "{} min"
+msgstr "{} min"
+
+#: lms/templates/courseware/accordion.html:85
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:110
+msgid "{} h"
+msgstr "{} h"
+
+#: lms/templates/courseware/accordion.html:87
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:112
+msgid "{} h {} m"
+msgstr "{} h {}"
+
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:20
 msgid "Learn About Verified Certificates"
 msgstr "Aprender Mais Sobre Certificados Verificados"
@@ -30144,3 +30167,8 @@ msgstr "URL do documento de origem"
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr "Adicione o documento de origem do seu PDF (arquivo do Powerpoint,…)"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "Il semble que vous n’ayez pas de plugin PDF pour ce navigateur ou l’URL du PDF n’est pas valide."

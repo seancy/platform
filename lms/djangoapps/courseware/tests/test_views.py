@@ -205,7 +205,7 @@ class IndexQueryTestCase(ModuleStoreTestCase):
     NUM_PROBLEMS = 20
 
     @ddt.data(
-        (ModuleStoreEnum.Type.mongo, 10, 153),
+        (ModuleStoreEnum.Type.mongo, 12, 153),
         (ModuleStoreEnum.Type.split, 4, 153),
     )
     @ddt.unpack
@@ -945,8 +945,8 @@ class ViewsTestCase(ModuleStoreTestCase):
             follow=True
         )
         test_responses = [
-            '<p class="accordion-display-name">Sequential 1 <span class="sr">current section</span></p>',
-            '<p class="accordion-display-name">Sequential 2 </p>'
+            '<p class="accordion-display-name">Sequential 1 <span class="sr">current section</span>',
+            '<p class="accordion-display-name">Sequential 2'
         ]
         for test in test_responses:
             self.assertContains(response, test)

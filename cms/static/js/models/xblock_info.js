@@ -167,7 +167,11 @@ function(Backbone, _, str, ModuleUtils) {
             highlights_enabled: false,
             highlights_enabled_for_messaging: false,
             highlights_preview_only: true,
-            highlights_doc_url: ''
+            highlights_doc_url: '',
+            /**
+             * Estimated time for subsection xblock.
+             */
+            estimated_time: ''
         },
 
         initialize: function() {

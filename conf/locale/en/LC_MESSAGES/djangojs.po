@@ -7036,6 +7036,15 @@ msgstr ""
 msgid "Not yet"
 msgstr ""
 
+#: cms/static/js/views/modals/course_outline_modals.js:305
+#: cms/static/js/views/modals/course_outline_modals.js:310
+msgid "Subsection Estimated Time"
+msgstr ""
+
+#: cms/templates/js/estimated-time-editor.underscore:12
+msgid "Give learners an estimation of the time they'll need to complete this subsection"
+msgstr ""
+
 #: cms/static/js/views/modals/course_outline_modals.js:754
 msgid "All Learners and Staff"
 msgstr ""
@@ -10047,6 +10056,18 @@ msgstr ""
 msgid "Display Name"
 msgstr ""
 
+#: cms/templates/js/course-outline.underscore:129
+msgid "%(min)s min"
+msgstr ""
+
+#: cms/templates/js/course-outline.underscore:132
+msgid "%(h)s h"
+msgstr ""
+
+#: cms/templates/js/course-outline.underscore:135
+msgid "%(h)s h %(min)s m"
+msgstr ""
+
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140
 msgid "Configure"
@@ -11327,3 +11348,8 @@ msgstr ""
 #: lms/static/js/courseware/ilt_validation.js
 msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
 msgstr ""
+
+#: cms/templates/js/estimated-time-editor.underscore:4
+msgid "Time format HH:MM expected"
+msgstr ""
+
