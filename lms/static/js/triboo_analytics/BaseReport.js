@@ -116,6 +116,7 @@ export default class BaseReport extends React.Component{
             },
             ...pick(this.state, ['isLoading', 'data', 'totalData', 'message']),
             totalRowsText:gettext('Total: * rows'),
+            emptyText:gettext('No data available'),
             pagination: {
                 pageSize: PaginationConfig.PageSize,
                 rowsCount: this.state.rowsCount,

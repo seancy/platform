@@ -74,10 +74,10 @@ class CourseReportDropdown extends React.Component {
     }
 
     render() {
-        const {data,labelText,submitText}=this.props
+        const {data,labelText,submitText, value}=this.props
         return (<>
             <label htmlFor="course_id">{labelText}</label>
-            <Dropdown data={data} searchable={true}
+            <Dropdown data={data} searchable={true} value={value}
                       onChange={selectedCourse=>this.setState({selectedCourse}, this.fireOnChange)}/>
             <input type="button" value={submitText} onClick={this.go.bind(this)}/>
         </>)
