@@ -1000,6 +1000,7 @@ def course_view(request):
                 'triboo_analytics/course.html',
                 {
                     'courses': courses_list,
+                    'course_id': None,
                     'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'course'}),
                 }
             )
