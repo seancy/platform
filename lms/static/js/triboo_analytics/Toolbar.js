@@ -23,6 +23,7 @@ export class Toolbar extends React.Component {
             selectedProperties:[],
             startDate:'',
             endDate:'',
+            activeButton:'',
             exportType:'',
 
             toolbarItems,
@@ -96,7 +97,7 @@ export class Toolbar extends React.Component {
     doFireChange(isExcluded=false){
         this.setState({timer:null})
         const {onChange}=this.props
-        const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate', 'exportType')
+        const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate', 'activeButton', 'exportType')
         onChange && onChange(json, isExcluded);
     }
 
@@ -105,7 +106,7 @@ export class Toolbar extends React.Component {
             {value: '', text: ''},
         ]
         const {
-            selectedFilterItems = [], selectedProperties=[], exportType='',startDate='',endDate='',
+            selectedFilterItems = [], selectedProperties=[], exportType='',startDate='',endDate='', activeButton=''
         } = get(this, 'props.defaultToolbarData', {})
 
         return [
@@ -118,9 +119,9 @@ export class Toolbar extends React.Component {
                 onChange:selectedProperties=>this.setState({selectedProperties}, this.fireOnChange)
             }},
             {name:'period', text: gettext('Period'), icon: 'fa-calendar-alt', active: false, component: PeriodFilter, props:{
-                label:gettext('Select a time range'), buttonText:gettext('Last * days'), startDate, endDate, useFontAwesome:true, periodTooltip: this.props.periodTooltip,
-                onChange:(startDate,endDate)=>{
-                    this.setState({startDate,endDate}, this.fireOnChange)
+                label:gettext('Select a time range'), buttonText:gettext('Last * days'), startDate, endDate, activeButton, useFontAwesome:true, periodTooltip: this.props.periodTooltip,
+                onChange:(startDate,endDate, activeButton)=>{
+                    this.setState({startDate,endDate, activeButton}, this.fireOnChange)
                 }
             }},
             {name:'export', text: gettext('Export'), icon: 'fa-file-download', active: false, component: Exporter, props:{
