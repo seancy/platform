@@ -511,7 +511,9 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                             user=user, course_id=course_key, created__gte=enrollment.created).aggregate(
                                             Sum('time_spent')).get('time_spent__sum') or 0)
 
-                    progress = CourseGradeFactory().get_progress(user, course)
+                    grade_factory = CourseGradeFactory()
+                    grade_factory.update_course_completion_percentage(course_key, user)
+                    progress = grade_factory.get_progress(user, course)
                     progress['progress'] *= 100.0
                     if not progress:
                         logger.warning('course=%s user_id=%d does not have progress info => empty report.' % (

@@ -999,6 +999,155 @@ def course_about(request, course_id):
 
 
 @ensure_csrf_cookie
+@ensure_valid_course_key
+@cache_if_anonymous()
+def course_print(request, course_id):
+    """
+    Display the course's print page.
+    """
+    course_key = CourseKey.from_string(course_id)
+
+    # If a user is not able to enroll in a course then redirect
+    # them away from the print page to the dashboard.
+    # if not can_self_enroll_in_course(course_key):
+    #     return redirect(reverse('dashboard'))
+
+    with modulestore().bulk_operations(course_key):
+        permission = get_permission_for_course_about()
+
+        course = get_course_with_access(request.user, permission, course_key)
+        course_details = CourseDetails.populate(course)
+        modes = CourseMode.modes_for_course_dict(course_key)
+
+        if configuration_helpers.get_value('ENABLE_MKTG_SITE', settings.FEATURES.get('ENABLE_MKTG_SITE', False)):
+            return redirect(reverse(course_home_url_name(course.id), args=[text_type(course.id)]))
+
+        registered = registered_for_course(course, request.user)
+
+        staff_access = bool(has_access(request.user, 'staff', course))
+        studio_url = get_studio_url(course, 'settings/details')
+
+        if has_access(request.user, 'load', course):
+            course_target = get_resume_course_url(request, course)
+        else:
+            course_target = reverse('about_course', args=[text_type(course.id)])
+
+        show_courseware_link = bool(
+            (
+                has_access(request.user, 'load', course)
+            ) or settings.FEATURES.get('ENABLE_LMS_MIGRATION')
+        )
+
+        # Note: this is a flow for payment for course registration, not the Verified Certificate flow.
+        in_cart = False
+        reg_then_add_to_cart_link = ""
+
+        _is_shopping_cart_enabled = is_shopping_cart_enabled()
+        if _is_shopping_cart_enabled:
+            if request.user.is_authenticated:
+                cart = shoppingcart.models.Order.get_cart_for_user(request.user)
+                in_cart = shoppingcart.models.PaidCourseRegistration.contained_in_order(cart, course_key) or \
+                    shoppingcart.models.CourseRegCodeItem.contained_in_order(cart, course_key)
+
+            reg_then_add_to_cart_link = "{reg_url}?course_id={course_id}&enrollment_action=add_to_cart".format(
+                reg_url=reverse('register_user'), course_id=urllib.quote(str(course_id))
+            )
+
+        # If the ecommerce checkout flow is enabled and the mode of the course is
+        # professional or no id professional, we construct links for the enrollment
+        # button to add the course to the ecommerce basket.
+        ecomm_service = EcommerceService()
+        ecommerce_checkout = ecomm_service.is_enabled(request.user)
+        ecommerce_checkout_link = ''
+        ecommerce_bulk_checkout_link = ''
+        professional_mode = None
+        is_professional_mode = CourseMode.PROFESSIONAL in modes or CourseMode.NO_ID_PROFESSIONAL_MODE in modes
+        if ecommerce_checkout and is_professional_mode:
+            professional_mode = modes.get(CourseMode.PROFESSIONAL, '') or \
+                modes.get(CourseMode.NO_ID_PROFESSIONAL_MODE, '')
+            if professional_mode.sku:
+                ecommerce_checkout_link = ecomm_service.get_checkout_page_url(professional_mode.sku)
+            if professional_mode.bulk_sku:
+                ecommerce_bulk_checkout_link = ecomm_service.get_checkout_page_url(professional_mode.bulk_sku)
+
+        registration_price, course_price = get_course_prices(course)
+
+        # Determine which checkout workflow to use -- LMS shoppingcart or Otto basket
+        can_add_course_to_cart = _is_shopping_cart_enabled and registration_price and not ecommerce_checkout_link
+
+        # Used to provide context to message to student if enrollment not allowed
+        can_enroll = bool(has_access(request.user, 'enroll', course))
+        invitation_only = course.invitation_only
+        is_course_full = CourseEnrollment.objects.is_course_full(course)
+
+        # Register button should be disabled if one of the following is true:
+        # - Student is already registered for course
+        # - Course is already full
+        # - Student cannot enroll in course
+        active_reg_button = not (registered or is_course_full or not can_enroll)
+
+        is_shib_course = uses_shib(course)
+
+        # get prerequisite courses display names
+        pre_requisite_courses = get_prerequisite_courses_display(course)
+
+        # Overview
+        overview = CourseOverview.get_from_id(course.id)
+
+        sidebar_html_enabled = course_experience_waffle().is_enabled(ENABLE_COURSE_ABOUT_SIDEBAR_HTML)
+
+        # This local import is due to the circularity of lms and openedx references.
+        # This may be resolved by using stevedore to allow web fragments to be used
+        # as plugins, and to avoid the direct import.
+        from openedx.features.course_experience.views.course_reviews import CourseReviewsModuleFragmentView
+
+        # Embed the course reviews tool
+        reviews_fragment_view = CourseReviewsModuleFragmentView().render_to_fragment(request, course=course)
+
+        outline_fragment = None
+        if request.user.is_authenticated:
+            outline_fragment = CourseOutlineFragmentView().render_to_fragment(
+                                    request, course_id=course_id, check_access=False)
+
+        context = {
+            'course': course,
+            'course_details': course_details,
+            'staff_access': staff_access,
+            'studio_url': studio_url,
+            'registered': registered,
+            'course_target': course_target,
+            'is_cosmetic_price_enabled': settings.FEATURES.get('ENABLE_COSMETIC_DISPLAY_PRICE'),
+            'course_price': course_price,
+            'in_cart': in_cart,
+            'ecommerce_checkout': ecommerce_checkout,
+            'ecommerce_checkout_link': ecommerce_checkout_link,
+            'ecommerce_bulk_checkout_link': ecommerce_bulk_checkout_link,
+            'professional_mode': professional_mode,
+            'reg_then_add_to_cart_link': reg_then_add_to_cart_link,
+            'show_courseware_link': show_courseware_link,
+            'is_course_full': is_course_full,
+            'can_enroll': can_enroll,
+            'invitation_only': invitation_only,
+            'active_reg_button': active_reg_button,
+            'is_shib_course': is_shib_course,
+            # We do not want to display the internal courseware header, which is used when the course is found in the
+            # context. This value is therefor explicitly set to render the appropriate header.
+            'disable_courseware_header': True,
+            'can_add_course_to_cart': can_add_course_to_cart,
+            'cart_link': reverse('shoppingcart.views.show_cart'),
+            'pre_requisite_courses': pre_requisite_courses,
+            'course_image_urls': overview.image_urls,
+            'reviews_fragment_view': reviews_fragment_view,
+            'sidebar_html_enabled': sidebar_html_enabled,
+            'user': request.user,
+            'show_dashboard_tabs': True,
+            'outline_fragment': outline_fragment,
+            'progress': None
+        }
+        return render_to_response('courseware/course_print.html', context)
+
+
+@ensure_csrf_cookie
 @cache_if_anonymous()
 def program_marketing(request, program_uuid):
     """
