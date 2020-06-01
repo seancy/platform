@@ -512,7 +512,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                             Sum('time_spent')).get('time_spent__sum') or 0)
 
                     grade_factory = CourseGradeFactory()
-                    grade_factory.update_course_completion_percentage(course_key, user)
+                    # grade_factory.update_course_completion_percentage(course_key, user)
                     progress = grade_factory.get_progress(user, course)
                     progress['progress'] *= 100.0
                     if not progress:
