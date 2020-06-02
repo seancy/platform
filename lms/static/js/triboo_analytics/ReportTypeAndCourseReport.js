@@ -15,7 +15,7 @@ class ReportTypeAndCourseReport extends React.Component {
             selectedCourseValues:[],
             selectedKeyValues:[],
             isMultiple:true,
-
+            selectedEnrollments:0,
             limit:300000,
             hideCourseReportSelect: false,
             filterData:[{value: '', text: 'loading'}]
@@ -36,18 +36,18 @@ class ReportTypeAndCourseReport extends React.Component {
 
     changeLimitByFormat() {
         const {isMultiple, limit} = this.state
-        const getEnrollmentNumber=()=>{
-            return isMultiple ? this.state.selectedCourses.reduce((prevVal, currVal)=>{
-                return prevVal + currVal.course_enrollments;
-            }, 0) : (this.state.selectedCourses.course_enrollments || '0')
-        }
+        // const getEnrollmentNumber=()=>{
+        //     return isMultiple ? this.state.selectedCourses.reduce((prevVal, currVal)=>{
+        //         return prevVal + currVal.course_enrollments;
+        //     }, 0) : (this.state.selectedCourses.course_enrollments || '0')
+        // }
+        this.getEnrollmentNumber()
         $('#table-export-selection').delegate('input', 'click', (e) => {
             let format_val = $('#table-export-selection input[name=format]:checked')[0].value;
             if (format_val == 'xls') {
-                let selectedEnrollments = getEnrollmentNumber()
-                this.setState({'limit': 65000})
+                this.setState({'limit': 65000}, this.fireOnChange)
             } else {
-                this.setState({'limit': 300000})
+                this.setState({'limit': 300000}, this.fireOnChange)
             }
         });
     }
@@ -90,8 +90,8 @@ class ReportTypeAndCourseReport extends React.Component {
 
     fireOnChange(){
         const {onChange}=this.props
-        const {reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate} = this.state
-        onChange && onChange(reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate)
+        const {reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate, selectedEnrollments, limit} = this.state
+        onChange && onChange(reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate, selectedEnrollments, limit)
     }
 
     getReportTypeSection(){
@@ -99,24 +99,17 @@ class ReportTypeAndCourseReport extends React.Component {
         const {reportTypeValue, reportType}=this.state;
         return <div className="custom-section" id="report_type_section">
             <button className="section-button accordion-trigger"
-                    aria-expanded="${ 'false' }"
+                    aria-expanded="true"
                     aria-controls="report_section_contents"
                     id="report_section">
                 <p className="section-title">{gettext("Select a report")}</p>
-                <span className="fa fa-chevron-down" aria-hidden="true"></span>
+                <span className="fa fa-chevron-down fa-rotate-180" aria-hidden="true"></span>
             </button>
             <div id="report_section_contents" className="section-content">
                 <div className="report-type">
                     <Dropdown sign='caret' data={report_types} value={get(report_types, ['0', 'value'])}
                               onChange={this.recreateCourseSelect.bind(this)} />
                     <input type="hidden" id='report_type' value={this.state.reportTypeValue}/>
-
-                    {/*<select name="report_type" id="report_type" ref="report_type"
-                    onChange={this.recreateCourseSelect.bind(this)}>
-                        {report_types.map(({type, title}) => {
-                            return <option key={type} value={type}>{gettext(title)}</option>
-                        })}
-                    </select>*/}
                 </div>
             </div>
             <div id="report_bar" className="reports label-bar is-collapsed">
@@ -127,31 +120,38 @@ class ReportTypeAndCourseReport extends React.Component {
         </div>
     }
 
+    getEnrollmentNumber(){
+        const {isMultiple, limit, selectedEnrollments}=this.state;
+        let selectedEnrollmentsNum = 0
+        if (isMultiple) {
+            selectedEnrollmentsNum = this.state.selectedCourses.reduce((prevVal, currVal)=>{
+                return prevVal + currVal.course_enrollments;
+            }, 0)
+            if (selectedEnrollmentsNum > limit) {
+                alert(gettext('With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses.'))
+            }
+        } else {
+            selectedEnrollmentsNum = this.state.selectedCourses.course_enrollments || '0'
+        }
+        // this.setState({'selectedEnrollments': selectedEnrollmentsNum})
+        this.state.selectedEnrollments = selectedEnrollmentsNum
+        // console.log('this.state.selectedEnrollments', this.state.selectedEnrollments)
+        return selectedEnrollmentsNum
+    }
+
     getCourseSection(){
         const {courses} = this.props,
-            {isMultiple, hideCourseReportSelect, selectedCourses, limit}=this.state;
+            {isMultiple, hideCourseReportSelect, selectedCourses, limit, selectedEnrollments}=this.state;
         const render=(text,item)=>{
             return `${text} (${item.course_enrollments || '0'} users)`
         }
-        const getEnrollmentNumber=()=>{
-            if (isMultiple) {
-                let selectedEnrollments = this.state.selectedCourses.reduce((prevVal, currVal)=>{
-                    return prevVal + currVal.course_enrollments;
-                }, 0)
-                if (selectedEnrollments > limit) {
-                    alert(gettext('With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses.'))
-                }
-                return selectedEnrollments
-            } else {
-                return this.state.selectedCourses.course_enrollments || '0'
-            }
-        }
+
         const handleCourseSelect = (selectedCourses)=>{
             this.setState({selectedCourses}, this.fireOnChange)
         }
         return <div className={`custom-section${hideCourseReportSelect?' hidden':''}`} id="custom_course_section">
             <button className="section-button accordion-trigger"
-                    aria-expanded="${ 'false' }"
+                    aria-expanded="false"
                     aria-controls="course_section_contents"
                     id="course_section">
                 <p className="section-title">{gettext("Select course(s)")}</p>
@@ -162,7 +162,7 @@ class ReportTypeAndCourseReport extends React.Component {
                 <div className={'course-report'}>
                     <p className={"section-label " + (this.state.hideCourseReportInfo ? 'hide' : '')}>
                         <p>{gettext('With the selected courses, the report will count * lines.')
-                            .replace('*', getEnrollmentNumber())}</p>
+                            .replace('*', this.getEnrollmentNumber())}</p>
                         <p>{gettext('The limit is 300,000 for CSV and JSON, 65,000 for XLS.')}</p>
                     </p>
                     <Dropdown data={courses} multiple={isMultiple} searchable={true} optionRender={render} onChange={handleCourseSelect}/>
@@ -189,7 +189,7 @@ class ReportTypeAndCourseReport extends React.Component {
         }
         return <div className="custom-section" id="filter-section">
             <button className="section-button accordion-trigger"
-                    aria-expanded="${ 'false' }"
+                    aria-expanded="false"
                     aria-controls="filter_section_contents"
                     id="filter_section">
                 <p className="section-title">{gettext("Filter the data")}</p>

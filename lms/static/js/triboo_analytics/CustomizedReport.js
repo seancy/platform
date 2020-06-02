@@ -17,10 +17,18 @@ export class CustomizedReport {
                 component: ReportTypeAndCourseReport,
                 selector: '.report_type_and_course_selected',
                 componentName: 'CustomizedReport',
-                props: {...props, onChange: (reportTypeValue, selectedCourses, query_tuples)=>{
+                props: {...props, onChange: (reportTypeValue,
+                                             selectedCourses,
+                                             query_tuples,
+                                             startDate,
+                                             endDate,
+                                             selectedEnrollments,
+                                             limit) => {
                         this.reportTypeValue = reportTypeValue
                         this.selectedCourses = selectedCourses
                         this.query_tuples = query_tuples
+                        this.selectedEnrollments = selectedEnrollments
+                        this.limit = limit
                         this.goButtonStatusUpdate();
                         this.sectionStatusUpdate();
                     }
@@ -31,8 +39,6 @@ export class CustomizedReport {
             this.$courseReport = $('#course_selected');
             this.oldCourseValues = []
             this.oldCourseTexts = []
-            this.selectedEnrollments = 0
-            this.enrollmentLimit = 300000
             this.$courseReportSelect2 = this.$courseReport.select2();
             this.$accordingTrigger = $('.accordion-trigger');
             this.eventInit()
@@ -159,10 +165,11 @@ export class CustomizedReport {
         const courseReportVal = this.selectedCourses //this.$courseReportSelect2.val()
         const selectedCoursesNum = courseReportVal ? (courseReportVal.length || courseReportVal.value) : 0;
         const isFormatChecked = $('#table-export-selection input[name=format]:checked').length;
+        const isBelowlimit = this.selectedEnrollments <= this.limit
         if (reportTypeVal == 'learner' || reportTypeVal == 'ilt_global' || reportTypeVal == 'ilt_learner') {
-            return reportTypeVal && isFormatChecked
+            return reportTypeVal && isFormatChecked && isBelowlimit
         } else {
-            return reportTypeVal && selectedCoursesNum && isFormatChecked
+            return reportTypeVal && selectedCoursesNum && isFormatChecked && isBelowlimit
         }
     }
 
