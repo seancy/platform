@@ -1222,8 +1222,8 @@ class IltLearnerReport(TimeModel):
 
         if user_session['registration']:
             status = user_session['registration']['status']
-            outward_trips = user_session['registration']['number_of_one_way']
-            return_trips = user_session['registration']['number_of_return']
+            outward_trips = int(user_session['registration']['number_of_one_way']) if user_session['registration']['number_of_one_way'] else 0
+            return_trips = int(user_session['registration']['number_of_return']) if user_session['registration']['number_of_return'] else 0
             if user_session['registration']['accommodation'] == "yes":
                 accommodation = True
             comment = user_session['registration']['comment']
