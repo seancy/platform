@@ -94,6 +94,10 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    // This is used to set WYSIWYG text editor for course overview and desc.
                    tinymce.init({
                        selector: '.tinymce-editor',
+                       base_url: baseUrl + '/js/vendor/tinymce/js/tinymce',
+                       suffix: '.min',
+                       theme: "silver",
+                       skin: 'oxide',
                        statusbar: false,
                        menubar: false,
                        language: options.langCode,
