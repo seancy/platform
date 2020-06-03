@@ -161,13 +161,13 @@ from six import string_types
       % endif
       % if show_courseware_link:
         <div class="main-cta">
+          <a href="${course_print_url}" class="action-print-course" title="${_('Print Course')}" target="_blank">
+            <i class="far fa-print"></i>
+            ${_("Print")}
+          </a>
         % if user.is_authenticated and (registered or staff_access):
           % if registered:
             <span class="sr">${_("You are enrolled in this course")}</span>
-            <a href="${course_print_url}" class="action-print-course" title="${_('Print Course')}">
-              <i class="far fa-print"></i>
-              ${_("Print")}
-            </a>
             <a href="${ resume_course_url if resume_course_url else course_target }" class="action-resume-course" title="${_('Resume Course')}">${_("Resume Course")}</a>
           % else:
             % if in_cart:
