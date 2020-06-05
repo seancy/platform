@@ -70,7 +70,6 @@ KEY_EXPIRATION_IN_SECONDS = 86400
 
 VIDEO_SUPPORTED_FILE_FORMATS = {
     '.mp4': 'video/mp4',
-    '.mov': 'video/quicktime',
 }
 
 VIDEO_UPLOAD_MAX_FILE_SIZE_GB = 5

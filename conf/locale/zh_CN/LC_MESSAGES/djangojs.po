@@ -6948,7 +6948,7 @@ msgid "Maximum file size: {maxFileSize} GB"
 msgstr "最大文件大小： {maxFileSize} GB"
 
 #: cms/static/js/views/active_video_upload_list.js:62
-msgid "Supported file types: {supportedVideoTypes}"
+msgid "Supported file type: {supportedVideoTypes}"
 msgstr "支持的文件类型：  {supportedVideoTypes}"
 
 #: cms/static/js/views/active_video_upload_list.js:155
@@ -6966,7 +6966,7 @@ msgstr "视频 {fileName} 的上载失败"
 
 #: cms/static/js/views/active_video_upload_list.js:383
 msgid ""
-"{filename} is not in a supported file format. Supported file formats are "
+"{filename} is not in a supported file format. Supported file format is "
 "{supportedFileFormats}."
 msgstr ""
 "{filename}不是受支持的文件格式。支持的文件格式为{supportedFileFormats}。"
