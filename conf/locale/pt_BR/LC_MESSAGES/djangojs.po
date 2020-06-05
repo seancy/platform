@@ -7268,9 +7268,8 @@ msgid "Maximum file size: {maxFileSize} GB"
 msgstr "Tamanho máximo do arquivo: {maxFileSize} GB"
 
 #: cms/static/js/views/active_video_upload_list.js:62
-msgid "Supported file types: {supportedVideoTypes}"
-msgstr ""
-"Tipos de arquivos suportados: {supportedVideoTypes}"
+msgid "Supported file type: {supportedVideoTypes}"
+msgstr "Tipo de arquivo suportado: {supportedVideoTypes}"
 
 #: cms/static/js/views/active_video_upload_list.js:155
 msgid "Your video uploads are not complete."
@@ -7287,11 +7286,11 @@ msgstr "Upload falhou para o vídeo {fileName}"
 
 #: cms/static/js/views/active_video_upload_list.js:383
 msgid ""
-"{filename} is not in a supported file format. Supported file formats are "
+"{filename} is not in a supported file format. Supported file format is "
 "{supportedFileFormats}."
 msgstr ""
-"{filename} não está em um formato de arquivo suportado. Os formatos de"
-"arquivos suportados são {supportedFileFormats}."
+"O formato de {filename} não é suportado. O único formato de "
+"arquivo suportado é {supportedFileFormats}."
 
 #: cms/static/js/views/active_video_upload_list.js:390
 msgid "{filename} exceeds maximum size of {maxFileSizeInGB} GB."
