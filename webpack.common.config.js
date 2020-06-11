@@ -118,6 +118,7 @@ module.exports = Merge.smart({
             filename: 'webpack-stats.json'
         }),
         new webpack.ProvidePlugin({
+            'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch',
             _: 'underscore',
             $: 'jquery',
             jQuery: 'jquery',
