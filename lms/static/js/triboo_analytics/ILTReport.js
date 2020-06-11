@@ -35,7 +35,7 @@ export class ILTReport extends React.Component {
             <>
                 <h3>{gettext('ILT Report')}</h3>
                 <Tab activeValue={(new URLSearchParams(location.search)).get('report')}
-                 onChange={console.log} data={data}>
+                 data={data}>
                     <div className="last-update">
                         <span className="fal fa-sync-alt"></span>{gettext("Please, note that these reports are not live. Last update:")} {this.props.last_update}
                     </div>
