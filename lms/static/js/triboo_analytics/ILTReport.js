@@ -4,6 +4,7 @@ import Tab from "se-react-tab"
 import ILTGlobalReport from './ILTGlobalReport'
 import ILTLearnerReport from './ILTLearnerReport'
 import {pick} from "lodash";
+import 'url-search-params-polyfill';
 
 export class ILTReport extends React.Component {
     constructor(props) {

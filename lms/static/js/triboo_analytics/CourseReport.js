@@ -10,6 +10,7 @@ import TimeSpent from './CourseReportTimeSpent'
 import Dropdown from 'se-react-dropdown'
 
 import { pick } from 'lodash'
+import 'url-search-params-polyfill';
 
 class CourseReport extends React.Component {
     constructor(props) {

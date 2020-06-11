@@ -11,7 +11,7 @@ class PeriodFilter extends React.Component {
     render() {
         return (
             <div className="period-wrapper">
-                <div id="id-period-filter" class="question-mark">
+                <div id="id-period-filter" className="question-mark">
                     <QuestionMark tooltip={this.props.periodTooltip} />
                 </div>
                 <DateRange name={this.name}
