@@ -67,11 +67,9 @@ class CourseReportDropdown extends React.Component {
     }
 
     go(){
-
         const {url,token}=this.props
         const courseID = this.state.selectedCourse.value
         window.location = `${url}?course_id=${encodeURIComponent(courseID)}&csrfmiddlewaretoken=${token}`
-        console.log(this.state.selectedCourse)
     }
 
     render() {
