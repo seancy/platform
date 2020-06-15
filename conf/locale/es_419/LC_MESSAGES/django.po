@@ -30367,3 +30367,27 @@ msgstr "Demostrar"
 #: xblock-pdf/pdf/templates/html/pdf_view.html
 msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
 msgstr "Parece que no tiene un plugin de PDF para este navegador o la URL del PDF no es válida."
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:130
+msgid "Open module in a new tab. This option will only apply to users with a compatible browser."
+msgstr "Abra el módulo en una nueva pestaña. Esta opción solo se aplicará a los usuarios con un navegador compatible."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "New Tab"
+msgstr "Nueva pestaña"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Click on the button below to open the module in a new tab."
+msgstr "Haga clic en el botón de abajo para abrir el módulo en una pestaña nueva."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
+msgstr "Su módulo de aprendizaje electrónico se ha abierto en una nueva pestaña. Por favor, cierre la nueva pestaña después de completar el módulo."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Launch"
+msgstr "Comenzar"

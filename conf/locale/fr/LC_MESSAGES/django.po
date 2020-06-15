@@ -30020,6 +30020,10 @@ msgstr ""
 msgid "Aspect ratio of this module"
 msgstr "Format d’affichage de ce module"
 
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:130
+msgid "Open module in a new tab. This option will only apply to users with a compatible browser."
+msgstr "Ouvrez le module dans un nouvel onglet. Cette option s’appliquera uniquement aux utilisateurs disposant d’un navigateur compatible."
+
 #: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 66
 msgid "Display name for this module"
 msgstr "Nom d’affichage de ce module"
@@ -31093,3 +31097,23 @@ msgstr "Ajoutez le document source de votre PDF (fichier Powerpoint, …)"
 #: xblock-pdf/pdf/templates/html/pdf_view.html
 msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
 msgstr "Il semble que vous n’ayez pas de plugin PDF pour ce navigateur ou l’URL du PDF n’est pas valide."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "New Tab"
+msgstr "Nouvel onglet"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Click on the button below to open the module in a new tab."
+msgstr "Cliquez sur le bouton ci-dessous pour ouvrir le module dans un nouvel onglet."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
+msgstr "Votre module e-learning a été ouvert dans un nouvel onglet. Veuillez fermer le nouvel onglet après complétion du module."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Launch"
+msgstr "Commencer"
