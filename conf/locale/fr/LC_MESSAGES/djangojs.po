@@ -11153,6 +11153,10 @@ msgstr "Envoyer une notification vers les applications mobiles"
 msgid "Post"
 msgstr "Poster"
 
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
+msgstr "Par "
+
 #: cms/templates/js/due-date-editor.underscore:3
 msgid "Due Date:"
 msgstr "Date de rendu :"

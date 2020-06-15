@@ -11100,6 +11100,10 @@ msgstr "Enviar notificación a aplicaciones telefónicas"
 msgid "Post"
 msgstr "Publicar"
 
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
+msgstr "Por "
+
 #: cms/templates/js/due-date-editor.underscore:3
 msgid "Due Date:"
 msgstr "Fecha límite:"

@@ -989,7 +989,8 @@ def course_info_handler(request, course_key_string):
                     'updates_url': reverse_course_url('course_info_update_handler', course_key),
                     'handouts_locator': course_key.make_usage_key('course_info', 'handouts'),
                     'base_asset_url': StaticContent.get_base_url_path_for_course_assets(course_module.id),
-                    'push_notification_enabled': push_notification_enabled()
+                    'push_notification_enabled': push_notification_enabled(),
+                    'user_name': request.user.username
                 }
             )
         else:

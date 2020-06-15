@@ -7,25 +7,16 @@
 from django.utils.translation import ugettext as _
 
 from openedx.core.djangolib.markup import HTML
-from openedx.features.course_experience import course_home_page_title
 %>
 
 <%block name="content">
-<div class="course-updates page-content-container" id="course-container">
+<div class="course-updates ${class_name_str}" ${ "id="+ id_str if id_str != '' else ""} >
     <header class="page-header has-secondary">
-        ## Breadcrumb navigation
         <div class="page-header-main">
-            <nav aria-label="${_('Updates')}" class="sr-is-focusable" tabindex="-1">
-                <div class="has-breadcrumbs">
-                    <div class="breadcrumbs">
-                        <span class="nav-item">
-                            <a href="${course_url}">${course_home_page_title(course)}</a>
-                        </span>
-                        <span class="icon fa fa-angle-right" aria-hidden="true"></span>
-                        <span class="nav-item">${_('Updates')}</span>
-                    </div>
-                </div>
-            </nav>
+            <h2>${_('Course Updates')}</h2>
+            % if fragment_page:
+            <a href="${view_more_url}">${_('View more')}</a>
+            % endif
         </div>
     </header>
     <div class="page-content">
@@ -36,11 +27,25 @@ from openedx.features.course_experience import course_home_page_title
                 % if updates:
                     % for index, update in enumerate(updates):
                         <article class="updates-article">
-                            % if not update.get("is_error"):
-                                <div class="date">${update.get("date")}</div>
+                            <div class="article-header">
+                            % if update.get("is_new"):
+                                <span>${_("NEW")}</span>
                             % endif
+                            % if update.get("title"):
+                                <h2>${update.get("title")}</h2>
+                            % endif
+                            </div>
                             <div class="article-content">
                                 ${HTML(update.get("content"))}
+                            </div>
+                            <div class="article-footer">
+                            % if not update.get("is_error"):
+                                <span class="date">${update.get("date")}</span>
+                            % endif
+                            % if update.get("author"):
+                                <small>${_("By ")}</small>
+                                <span>${update.get("author")}</span>
+                            % endif
                             </div>
                         </article>
                     % endfor
@@ -49,6 +54,11 @@ from openedx.features.course_experience import course_home_page_title
                         ${_("This course does not have any updates.")}
                     </div>
                 % endif
+            </div>
+        % endif
+        % if add_more_enabled:
+            <div>
+                <span><i class="far fa-plus"></i><a href="${add_more_url}">${_("Add course update")}</a></span>
             </div>
         % endif
     </div>

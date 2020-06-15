@@ -16,7 +16,9 @@ define(['js/views/baseview', 'js/views/course_info_update', 'js/views/course_inf
                     el: $('body.updates'),
                     collection: this.model.get('updates'),
                     base_asset_url: this.model.get('base_asset_url'),
-                    push_notification_enabled: this.options.push_notification_enabled
+                    push_notification_enabled: this.options.push_notification_enabled,
+                    langCode: this.options.langCode,
+                    user_name: this.options.user_name
                 });
 
                 new CourseInfoHandoutView({

@@ -10312,6 +10312,10 @@ msgstr ""
 msgid "Post"
 msgstr ""
 
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
+msgstr ""
+
 #: cms/templates/js/due-date-editor.underscore:3
 msgid "Due Date:"
 msgstr ""

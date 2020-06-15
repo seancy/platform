@@ -10627,6 +10627,10 @@ msgstr "向移动应用发送通知"
 msgid "Post"
 msgstr "文章"
 
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
+msgstr "来自 "
+
 #: cms/templates/js/due-date-editor.underscore:3
 msgid "Due Date:"
 msgstr "到期日："

@@ -11154,6 +11154,10 @@ msgstr "Enviar notificação para o aplicativo móvel"
 msgid "Post"
 msgstr "Enviar"
 
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
+msgstr "Por "
+
 #: cms/templates/js/due-date-editor.underscore:3
 msgid "Due Date:"
 msgstr "Data de Vencimento"
