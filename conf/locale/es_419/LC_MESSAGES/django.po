@@ -14560,9 +14560,26 @@ msgstr ""
 msgid "Learn more about Course Re-runs"
 msgstr "Aprende más sobre Repetición de cursos"
 
-#: cms/templates/course_info.html:13 cms/templates/course_info.html:41
+#: cms/templates/course_info.html:13 
+#: cms/templates/course_info.html:41
 msgid "Course Updates"
 msgstr "Actualizaciones del curso"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
+msgid "View more"
+msgstr "Ver más"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:32
+msgid "NEW"
+msgstr "NUEVO"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:46
+msgid "By "
+msgstr "Por "
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:61
+msgid "Add course update"
+msgstr "Añadir una noticia"
 
 #: cms/templates/course_info.html:48
 msgid "New Update"

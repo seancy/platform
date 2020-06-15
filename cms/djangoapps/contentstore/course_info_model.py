@@ -64,6 +64,8 @@ def update_course_updates(location, update, passed_id=None, user=None):
         # oldest update at start of list
         if 0 < passed_index <= len(course_update_items):
             course_update_dict = course_update_items[passed_index - 1]
+            course_update_dict["title"] = update["title"]
+            course_update_dict["author"] = user.username if user else None
             course_update_dict["date"] = update["date"]
             course_update_dict["content"] = update["content"]
             course_update_items[passed_index - 1] = course_update_dict
@@ -72,6 +74,8 @@ def update_course_updates(location, update, passed_id=None, user=None):
     else:
         course_update_dict = {
             "id": len(course_update_items) + 1,
+            "title": update["title"],
+            "author": user.username if user else None,
             "date": update["date"],
             "content": update["content"],
             "status": CourseInfoModule.STATUS_VISIBLE
@@ -93,6 +97,8 @@ def _make_update_dict(update):
     """
     return {
         "id": update["id"],
+        "title": update.get("title", None),
+        "author": update.get("author", None),
         "date": update["date"],
         "content": update["content"],
     }

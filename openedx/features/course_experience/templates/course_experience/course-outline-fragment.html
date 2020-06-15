@@ -16,7 +16,7 @@ from openedx.core.djangolib.markup import HTML, Text
 <%
 course_sections = blocks.get('children')
 %>
-<main role="main" class="course-outline" id="main" tabindex="-1">
+<main role="main" class="course-outline" tabindex="-1">
     % if course_sections is not None:
         <div class="course-outline-nav">
             <h2>${_("Course Outline")}</h2>

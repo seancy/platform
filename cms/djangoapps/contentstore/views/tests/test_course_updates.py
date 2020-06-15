@@ -24,13 +24,13 @@ class CourseUpdateTest(CourseTestCase):
     # The do all and end all of unit test cases.
     def test_course_update(self):
         """Go through each interface and ensure it works."""
-        def get_response(content, date):
+        def get_response(content, date, title):
             """
             Helper method for making call to server and returning response.
 
             Does not supply a provided_id.
             """
-            payload = {'content': content, 'date': date}
+            payload = {'content': content, 'date': date, 'title': title}
             url = self.create_update_url()
 
             resp = self.client.ajax_post(url, payload)
@@ -45,7 +45,7 @@ class CourseUpdateTest(CourseTestCase):
 
         init_content = '<iframe width="560" height="315" src="http://www.youtube.com/embed/RocY-Jd93XU" frameborder="0">'
         content = init_content + '</iframe>'
-        payload = get_response(content, 'January 8, 2013')
+        payload = get_response(content, 'January 8, 2013', 'Course Updates')
         self.assertHTMLEqual(payload['content'], content)
 
         first_update_url = self.create_update_url(provided_id=payload['id'])
@@ -66,7 +66,7 @@ class CourseUpdateTest(CourseTestCase):
 
         # now put in an evil update
         content = '<ol/>'
-        payload = get_response(content, 'January 11, 2013')
+        payload = get_response(content, 'January 11, 2013', 'Course Updates')
         self.assertHTMLEqual(content, payload['content'], "self closing ol")
 
         course_update_url = self.create_update_url()
@@ -82,7 +82,7 @@ class CourseUpdateTest(CourseTestCase):
 
         # test an update with text in the tail of the header
         content = 'outside <strong>inside</strong> after'
-        payload = get_response(content, 'June 22, 2000')
+        payload = get_response(content, 'June 22, 2000', 'Course Updates')
         self.assertHTMLEqual(content, payload['content'], "text outside tag")
 
         # now try to update a non-existent update
@@ -96,7 +96,8 @@ class CourseUpdateTest(CourseTestCase):
         # update w/ malformed html
         content = '<garbage tag No closing brace to force <span>error</span>'
         payload = {'content': content,
-                   'date': 'January 11, 2013'}
+                   'date': 'January 11, 2013',
+                   'title': 'Course Updates'}
 
         self.assertContains(
             self.client.ajax_post(course_update_url, payload),
@@ -105,7 +106,7 @@ class CourseUpdateTest(CourseTestCase):
 
         # set to valid html which would break an xml parser
         content = "<p><br><br></p>"
-        payload = get_response(content, 'January 11, 2013')
+        payload = get_response(content, 'January 11, 2013', 'Course Updates')
         self.assertHTMLEqual(content, payload['content'])
 
         # now try to delete a non-existent update
@@ -113,7 +114,7 @@ class CourseUpdateTest(CourseTestCase):
 
         # now delete a real update
         content = 'blah blah'
-        payload = get_response(content, 'January 28, 2013')
+        payload = get_response(content, 'January 28, 2013', 'Course Updates')
         this_id = payload['id']
         self.assertHTMLEqual(content, payload['content'], "single iframe")
         # first count the entries
@@ -149,7 +150,8 @@ class CourseUpdateTest(CourseTestCase):
         course_update_url = self.create_update_url()
         resp = self.client.get_json(course_update_url)
         payload = json.loads(resp.content)
-        self.assertEqual(payload, [{u'date': update_date, u'content': update_content, u'id': 1}])
+        self.assertEqual(payload, [{u'date': update_date, u'content': update_content, u'id': 1, u'title': None,
+                                    u'author': None}])
         self.assertEqual(len(payload), 1)
 
         # test getting single update item
@@ -157,7 +159,8 @@ class CourseUpdateTest(CourseTestCase):
         first_update_url = self.create_update_url(provided_id=payload[0]['id'])
         resp = self.client.get_json(first_update_url)
         payload = json.loads(resp.content)
-        self.assertEqual(payload, {u'date': u'January 23, 2014', u'content': u'Hello world!', u'id': 1})
+        self.assertEqual(payload, {u'date': u'January 23, 2014', u'content': u'Hello world!', u'id': 1,
+                                   u'title': None, u'author': None})
         self.assertHTMLEqual(update_date, payload['date'])
         self.assertHTMLEqual(update_content, payload['content'])
 
@@ -167,26 +170,29 @@ class CourseUpdateTest(CourseTestCase):
         self.assertEqual(course_updates.items, [])
         # now try to update first update item
         update_content = 'Testing'
-        payload = {'content': update_content, 'date': update_date}
+        payload = {'content': update_content, 'date': update_date, 'title': 'Course Updates'}
         resp = self.client.ajax_post(
             course_update_url + '1', payload, HTTP_X_HTTP_METHOD_OVERRIDE="PUT", REQUEST_METHOD="POST"
         )
         self.assertHTMLEqual(update_content, json.loads(resp.content)['content'])
         course_updates = modulestore().get_item(location)
-        self.assertEqual(course_updates.items, [{u'date': update_date, u'content': update_content, u'id': 1}])
+        self.assertEqual(course_updates.items, [{u'date': update_date, u'content': update_content, u'id': 1,
+                                                 u'title': 'Course Updates', u'author': 'testuser'}])
         # course_updates 'data' field should not update automatically
         self.assertEqual(course_updates.data, '')
 
         # test delete course update item (soft delete)
         course_updates = modulestore().get_item(location)
-        self.assertEqual(course_updates.items, [{u'date': update_date, u'content': update_content, u'id': 1}])
+        self.assertEqual(course_updates.items, [{u'date': update_date, u'content': update_content, u'id': 1,
+                                                 u'title': 'Course Updates', u'author': 'testuser'}])
         # now try to delete first update item
         resp = self.client.delete(course_update_url + '1')
         self.assertEqual(json.loads(resp.content), [])
         # confirm that course update is soft deleted ('status' flag set to 'deleted') in db
         course_updates = modulestore().get_item(location)
         self.assertEqual(course_updates.items,
-                         [{u'date': update_date, u'content': update_content, u'id': 1, u'status': 'deleted'}])
+                         [{u'date': update_date, u'content': update_content, u'id': 1, u'status': 'deleted',
+                           u'title': 'Course Updates', u'author': 'testuser'}])
 
         # now try to get deleted update
         resp = self.client.get_json(course_update_url + '1')
@@ -201,7 +207,7 @@ class CourseUpdateTest(CourseTestCase):
                            <pre>&lt;problem>
                                &lt;p>&lt;/p></pre>
                            <div><foo>bar</foo></div>"""
-        payload = {'content': update_content, 'date': update_date}
+        payload = {'content': update_content, 'date': update_date, 'title': 'Course Updates'}
         resp = self.client.ajax_post(
             course_update_url, payload, REQUEST_METHOD="POST"
         )
@@ -223,7 +229,7 @@ class CourseUpdateTest(CourseTestCase):
 
         init_content = '<iframe width="560" height="315" src="http://www.youtube.com/embed/RocY-Jd93XU" frameborder="0">'
         content = init_content + '</iframe>'
-        payload = {'content': content, 'date': 'January 8, 2013'}
+        payload = {'content': content, 'date': 'January 8, 2013', 'title': 'Course Updates'}
 
         course_update_url = self.create_update_url()
         resp = self.client.ajax_post(course_update_url, payload)
@@ -247,7 +253,7 @@ class CourseUpdateTest(CourseTestCase):
         self.client.ajax_post(course_update_url)
 
         content = u"Sample update"
-        payload = {'content': content, 'date': 'January 8, 2013'}
+        payload = {'content': content, 'date': 'January 8, 2013', 'title': 'Course Updates'}
         if send_push_notification:
             payload['push_notification_selected'] = True
         resp = self.client.ajax_post(course_update_url, payload)

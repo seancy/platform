@@ -24231,7 +24231,7 @@ msgstr "Mise à jour ({course_price})"
 
 #: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:49
 msgid "This course does not have any updates."
-msgstr "Ce cours n'a pas été mis à jour."
+msgstr "Ce cours n’a pas d’actualité."
 
 #: openedx/features/course_experience/templates/course_experience/dates-summary.html:9
 msgid "Today is {date}"
@@ -25100,9 +25100,26 @@ msgstr ""
 msgid "Learn more about Course Re-runs"
 msgstr "En savoir plus sur les cours relancés"
 
-#: cms/templates/course_info.html:13 cms/templates/course_info.html:41
+#: cms/templates/course_info.html:13 
+#: cms/templates/course_info.html:41
 msgid "Course Updates"
 msgstr "Actualités du Cours"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
+msgid "View more"
+msgstr "Voir plus"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:32
+msgid "NEW"
+msgstr "NOUVEAU"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:46
+msgid "By "
+msgstr "Par "
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:61
+msgid "Add course update"
+msgstr "Ajouter une actualité"
 
 #: cms/templates/course_info.html:48
 msgid "New Update"

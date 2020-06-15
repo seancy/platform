@@ -23504,6 +23504,22 @@ msgstr "了解更多关于课程重启的信息"
 msgid "Course Updates"
 msgstr "课程更新"
 
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
+msgid "View more"
+msgstr "浏览更多"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:32
+msgid "NEW"
+msgstr "新"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:46
+msgid "By "
+msgstr "来自 "
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:61
+msgid "Add course update"
+msgstr "增加课程更新"
+
 #: cms/templates/course_info.html:48
 msgid "New Update"
 msgstr "新的更新"

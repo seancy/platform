@@ -3,7 +3,7 @@ define([
     'js/models/course_info', 'js/views/course_info_edit'
 ], function($, CourseUpdateCollection, ModuleInfoModel, CourseInfoModel, CourseInfoEditView) {
     'use strict';
-    return function(updatesUrl, handoutsLocator, baseAssetUrl, push_notification_enabled) {
+    return function(updatesUrl, handoutsLocator, baseAssetUrl, push_notification_enabled, langCode, user_name) {
         var course_updates = new CourseUpdateCollection(),
             course_handouts, editor;
 
@@ -19,7 +19,9 @@ define([
                 base_asset_url: baseAssetUrl,
                 handouts: course_handouts
             }),
-            push_notification_enabled: push_notification_enabled
+            push_notification_enabled: push_notification_enabled,
+            langCode: langCode,
+            user_name: user_name
         });
         editor.render();
     };

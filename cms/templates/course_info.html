@@ -28,7 +28,9 @@ from openedx.core.djangolib.js_utils import (
         "${updates_url | n, js_escaped_string}",
         "${handouts_locator | n, js_escaped_string}",
         "${base_asset_url | n, js_escaped_string}",
-        ${push_notification_enabled | n, dump_js_escaped_json}
+        ${push_notification_enabled | n, dump_js_escaped_json},
+        "${LANGUAGE_CODE | n, js_escaped_string}",
+        "${user_name | n, js_escaped_string}"
        );
   });
 </%block>

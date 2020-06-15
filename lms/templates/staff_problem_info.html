@@ -53,9 +53,15 @@ from six import text_type
     </div>
   </div>
 
-  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal staff-modal" id="${element_id}_debug" >
+  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal staff-modal hidden" id="${element_id}_debug" >
+    <div class="close-button-wrapper">
+      <i class="fal fa-times"></i>
+    </div>
     <div class="inner-wrapper">
       <header>
+        <div class="icon-wrapper">
+          <i class="far fa-cog"/>
+        </div>
         <h2>${_('Staff Debug:')} ${dict(fields)['display_name']}</h2>
       </header>
 
@@ -74,23 +80,17 @@ from six import text_type
         </div>
         % endif
         <div data-location="${location | h}" data-location-name="${location.block_id | h}">
-          [
           % if can_reset_attempts:
           <button type="button" class="btn-link staff-debug-reset">${_('Reset Learner\'s Attempts to Zero')}</button>
-          |
           % endif
           <button type="button" class="btn-link staff-debug-sdelete">${_('Delete Learner\'s State')}</button>
           % if can_rescore_problem:
-          |
           <button type="button" class="btn-link staff-debug-rescore">${_('Rescore Learner\'s Submission')}</button>
-          |
           <button type="button" class="btn-link staff-debug-rescore-if-higher">${_('Rescore Only If Score Improves')}</button>
-          |
           % endif
           % if can_override_problem_score:
           <button type="button" class="btn-link staff-debug-override-score">${_('Override Score')}</button>
           % endif
-          ]
         </div>
         <div id="result_${location.block_id | h}"></div>
       </div>
@@ -119,9 +119,15 @@ from six import text_type
     </div>
   </div>
 
-  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal history-modal" id="${element_id}_history">
+  <div aria-hidden="true" role="dialog" tabindex="-1" class="modal history-modal hidden" id="${element_id}_history">
+    <div class="close-button-wrapper">
+      <i class="fal fa-times"></i>
+    </div>
     <div class="inner-wrapper">
       <header>
+        <div class="icon-wrapper">
+          <i class="far fa-history"/>
+        </div>
         <h2>${_("Submission History Viewer")}</h2>
       </header>
       <form id="${element_id}_history_form">

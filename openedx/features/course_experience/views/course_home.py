@@ -38,6 +38,7 @@ from .course_dates import CourseDatesFragmentView
 from .course_home_messages import CourseHomeMessageFragmentView
 from .course_outline import CourseOutlineFragmentView
 from .course_sock import CourseSockFragmentView
+from .course_updates import CourseUpdatesFragmentView
 from .latest_update import LatestUpdateFragmentView
 from .welcome_message import WelcomeMessageFragmentView
 
@@ -126,6 +127,10 @@ class CourseHomeFragmentView(EdxFragmentView):
         }
         if user_access['is_enrolled'] or user_access['is_staff']:
             outline_fragment = CourseOutlineFragmentView().render_to_fragment(request, course_id=course_id, **kwargs)
+            if CourseUpdatesFragmentView.has_updates(request, course):
+                updates_fragment = CourseUpdatesFragmentView().render_to_fragment(request, course_id=course_id, **kwargs)
+            else:
+                updates_fragment = None
             if LATEST_UPDATE_FLAG.is_enabled(course_key):
                 update_message_fragment = LatestUpdateFragmentView().render_to_fragment(
                     request, course_id=course_id, **kwargs
@@ -146,8 +151,7 @@ class CourseHomeFragmentView(EdxFragmentView):
             outline_fragment = None
             update_message_fragment = None
             course_sock_fragment = None
-            # has_visited_course = None
-            # resume_course_url = None
+            updates_fragment = None
 
         # Get the handouts
         handouts_html = self._get_course_handouts(request, course)
@@ -193,10 +197,9 @@ class CourseHomeFragmentView(EdxFragmentView):
             'course': course,
             'course_key': course_key,
             'outline_fragment': outline_fragment,
+            'updates_fragment': updates_fragment,
             'handouts_html': handouts_html,
             'course_home_message_fragment': course_home_message_fragment,
-            # 'has_visited_course': has_visited_course,
-            # 'resume_course_url': resume_course_url,
             'course_tools': course_tools,
             'dates_fragment': dates_fragment,
             'username': request.user.username,
