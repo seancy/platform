@@ -343,6 +343,15 @@ urlpatterns += [
         name='about_course',
     ),
 
+    #Print the course
+    url(
+        r'^courses/{}/course/print$'.format(
+            settings.COURSE_ID_PATTERN,
+        ),
+        courseware_views.course_print,
+        name='print_course',
+    ),
+
     url(
         r'^courses/{}/enroll_staff$'.format(
             settings.COURSE_ID_PATTERN,

@@ -7249,8 +7249,8 @@ msgid "Maximum file size: {maxFileSize} GB"
 msgstr "Taille maximale du fichier : {maxFileSize} GB"
 
 #: cms/static/js/views/active_video_upload_list.js:62
-msgid "Supported file types: {supportedVideoTypes}"
-msgstr "Types de fichiers pris en charge : {supportedVideoTypes}"
+msgid "Supported file type: {supportedVideoTypes}"
+msgstr "Type de fichier pris en charge : {supportedVideoTypes}"
 
 #: cms/static/js/views/active_video_upload_list.js:155
 msgid "Your video uploads are not complete."
@@ -7267,11 +7267,11 @@ msgstr "Téléchargement échoué de la vidéo {fileName}"
 
 #: cms/static/js/views/active_video_upload_list.js:383
 msgid ""
-"{filename} is not in a supported file format. Supported file formats are "
+"{filename} is not in a supported file format. Supported file format is "
 "{supportedFileFormats}."
 msgstr ""
-"{filename} n'est pas parmi les formats de fichier supporté. Les formats de "
-"fichier supporté sont {supportedFileFormats}"
+"Le format de {filename} n’est pas  supporté. Le seul format de "
+"fichier supporté est {supportedFileFormats}."
 
 #: cms/static/js/views/active_video_upload_list.js:390
 msgid "{filename} exceeds maximum size of {maxFileSizeInGB} GB."
@@ -7598,6 +7598,15 @@ msgstr "Activer"
 #: cms/static/js/views/modals/course_outline_modals.js:292
 msgid "Not yet"
 msgstr "Pas encore"
+
+#: cms/static/js/views/modals/course_outline_modals.js:305
+#: cms/static/js/views/modals/course_outline_modals.js:310
+msgid "Subsection Estimated Time"
+msgstr "Durée estimée de la sous-section"
+
+#: cms/templates/js/estimated-time-editor.underscore:12
+msgid "Give learners an estimation of the time they'll need to complete this subsection"
+msgstr "Donnez aux apprenants une estimation du temps dont ils auront besoin pour effectuer cette sous-section"
 
 #: cms/static/js/views/modals/course_outline_modals.js:754
 msgid "All Learners and Staff"
@@ -11219,6 +11228,18 @@ msgstr "Replier/Déplier cette %(xblock_type)s"
 msgid "Display Name"
 msgstr "Nom d'affichage"
 
+#: cms/templates/js/course-outline.underscore:129
+msgid "%(min)s min"
+msgstr "%(min)s min"
+
+#: cms/templates/js/course-outline.underscore:132
+msgid "%(h)s h"
+msgstr "%(h)s h"
+
+#: cms/templates/js/course-outline.underscore:135
+msgid "%(h)s h %(min)s m"
+msgstr "%(h)s h %(min)s"
+
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140
 msgid "Configure"
@@ -11481,6 +11502,10 @@ msgstr "Envoyer une notification vers les applications mobiles"
 #: cms/templates/js/course_info_update.underscore:20
 msgid "Post"
 msgstr "Poster"
+
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
+msgstr "Par "
 
 #: cms/templates/js/due-date-editor.underscore:3
 msgid "Due Date:"
@@ -12773,7 +12798,16 @@ msgstr "Êtes-vous sûr(e) de vouloir désinscrire cet apprenant ?"
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
 msgstr "L'inscription est confirmée.<br>Vous pouvez changer les information relatives à la demande dans l'onglet \"Sessions à venir\"."
 
+#: lms/static/js/courseware/ilt_validation.js
+msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
+msgstr "Cette unité est visible pour l’équipe pédagogique uniquement. Les apprenants suivants ne font pas partie de l’équipe pédagogique :  <br><br>"
+
 #: master-sitel: #: lms/templates/discovery/facet.underscore
 #: master-sitel: #: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "Axe de développement"
+
+#: cms/templates/js/estimated-time-editor.underscore:4
+msgid "Time format HH:MM expected"
+msgstr ""
+

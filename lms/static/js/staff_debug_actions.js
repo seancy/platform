@@ -42,9 +42,9 @@ var StaffDebug = (function() {
             data: pdata,
             success: function(data) {
                 var text = _.template(action.success_msg, {interpolate: /\{(.+?)\}/g})(
-                {user: data.student}
+                {user: `<b>${data.student}</b>`}
             );
-                var html = _.template('<p id="idash_msg" class="success">{text}</p>', {interpolate: /\{(.+?)\}/g})(
+                var html = _.template('<p id="idash_msg" class="success"><i class="fal fa-check"></i><span>{text}</span></p>', {interpolate: /\{(.+?)\}/g})(
                 {text: text}
             );
                 $('#result_' + sanitizeString(action.locationName)).html(html);
@@ -62,7 +62,7 @@ var StaffDebug = (function() {
                         error: gettext(responseJSON)
                     }
             );
-                var html = _.template('<p id="idash_msg" class="error">{text}</p>', {interpolate: /\{(.+?)\}/g})(
+                var html = _.template('<p id="idash_msg" class="error"><i class="fal fa-times"></i><span>{text}</span></p>', {interpolate: /\{(.+?)\}/g})(
                 {text: text}
             );
                 $('#result_' + sanitizeString(action.locationName)).html(html);

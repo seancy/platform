@@ -4899,6 +4899,14 @@ msgstr ""
 "habilitar o Exame de Admissão para que esta definição tenha efeito para o "
 "curso."
 
+#: common/lib/xmodule/xmodule/seq_module.py:78
+msgid "Estimated time for subsection" 
+msgstr "Tempo estimado para subseção"
+
+#: common/lib/xmodule/xmodule/seq_module.py:80
+msgid "If set, estimated time will show in subsection display area." 
+msgstr "Se definido, o tempo estimado será exibido próximo à subseção."
+
 #: common/lib/xmodule/xmodule/seq_module.py:83
 msgid "Is Time Limited"
 msgstr "Tempo limitado"
@@ -4976,15 +4984,15 @@ msgid ""
 "This subsection is unlocked for learners when they meet the prerequisite "
 "requirements."
 msgstr ""
-"Esta subseção é desbloqueada para alunos quando eles atendem aos pré-requisitos"
+"Esta subseção é um pré-requisito. Você deve concluí-lo para desbloquear conteúdo adicional."
 
 
 #: common/lib/xmodule/xmodule/seq_module.py:320
 msgid ""
-"This section is a prerequisite. You must complete this section in order to "
+"This subsection is a prerequisite. You must complete this subsection in order to "
 "unlock additional content."
 msgstr ""
-"Esta seção é um pré-requisito. Você deve concluir esta seção para"
+"Esta subseção é um pré-requisito. Você deve preencher esta seção para "
 "desbloquear conteúdo adicional."
 
 #: common/lib/xmodule/xmodule/seq_module.py:704
@@ -14549,9 +14557,26 @@ msgstr ""
 msgid "Learn more about Course Re-runs"
 msgstr "Aprenda mais sobre reprisar cursos"
 
-#: cms/templates/course_info.html:13 cms/templates/course_info.html:41
+#: cms/templates/course_info.html:13 
+#: cms/templates/course_info.html:41
 msgid "Course Updates"
 msgstr "Atualizações dos cursos"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
+msgid "View more"
+msgstr "Ver mais"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:32
+msgid "NEW"
+msgstr "NOVO"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:46
+msgid "By "
+msgstr "Por "
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:61
+msgid "Add course update"
+msgstr "Adicionar uma notícia"
 
 #: cms/templates/course_info.html:48
 msgid "New Update"
@@ -27764,6 +27789,21 @@ msgstr "Prerequisito: "
 msgid "{subsection_format} due {{date}}"
 msgstr "{subsection_format} até {{date}}"
 
+#: lms/templates/courseware/accordion.html:83
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:108
+msgid "{} min"
+msgstr "{} min"
+
+#: lms/templates/courseware/accordion.html:85
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:110
+msgid "{} h"
+msgstr "{} h"
+
+#: lms/templates/courseware/accordion.html:87
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:112
+msgid "{} h {} m"
+msgstr "{} h {}"
+
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:20
 msgid "Learn About Verified Certificates"
 msgstr "Aprender Mais Sobre Certificados Verificados"
@@ -30164,3 +30204,32 @@ msgstr "URL do documento de origem"
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr "Adicione o documento de origem do seu PDF (arquivo do Powerpoint,…)"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "Il semble que vous n’ayez pas de plugin PDF pour ce navigateur ou l’URL du PDF n’est pas valide."
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:130
+msgid "Open module in a new tab. This option will only apply to users with a compatible browser."
+msgstr "Abra o módulo em uma nova guia. Esta opção se aplica apenas a usuários com um navegador compatível."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "New Tab"
+msgstr "Nova aba"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Click on the button below to open the module in a new tab."
+msgstr "Clique no botão abaixo para abrir o módulo em uma nova aba."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
+msgstr "Seu módulo de e-learning foi aberto em uma nova aba. Por favor, feche a nova aba depois de concluir o módulo."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Launch"
+msgstr "Começar"

@@ -211,9 +211,18 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           </li>
         % endif
 
+        <%
+            visible_update = "visible_update" if updates_fragment else "invisible_update"
+        %>
+        <div id="main" class="outline-and-updates ${visible_update}">
         % if outline_fragment:
           ${HTML(outline_fragment.body_html())}
         % endif
+
+        % if updates_fragment:
+          ${HTML(updates_fragment.body_html())}
+        % endif
+        </div>
 
         % if get_course_about_section(request, course, "overview").strip():
         <div class="inner-wrapper course-overview">

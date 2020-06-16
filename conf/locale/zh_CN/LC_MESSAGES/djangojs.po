@@ -6948,7 +6948,7 @@ msgid "Maximum file size: {maxFileSize} GB"
 msgstr "最大文件大小： {maxFileSize} GB"
 
 #: cms/static/js/views/active_video_upload_list.js:62
-msgid "Supported file types: {supportedVideoTypes}"
+msgid "Supported file type: {supportedVideoTypes}"
 msgstr "支持的文件类型：  {supportedVideoTypes}"
 
 #: cms/static/js/views/active_video_upload_list.js:155
@@ -6966,7 +6966,7 @@ msgstr "视频 {fileName} 的上载失败"
 
 #: cms/static/js/views/active_video_upload_list.js:383
 msgid ""
-"{filename} is not in a supported file format. Supported file formats are "
+"{filename} is not in a supported file format. Supported file format is "
 "{supportedFileFormats}."
 msgstr ""
 "{filename}不是受支持的文件格式。支持的文件格式为{supportedFileFormats}。"
@@ -7283,6 +7283,15 @@ msgstr "启用"
 #: cms/static/js/views/modals/course_outline_modals.js:292
 msgid "Not yet"
 msgstr "还没有"
+
+#: cms/static/js/views/modals/course_outline_modals.js:305
+#: cms/static/js/views/modals/course_outline_modals.js:310
+msgid "Subsection Estimated Time"
+msgstr "子章节预计时间"
+
+#: cms/templates/js/estimated-time-editor.underscore:12
+msgid "Give learners an estimation of the time they'll need to complete this subsection"
+msgstr "让学习者估算完成本小节所需的时间"
 
 #: cms/static/js/views/modals/course_outline_modals.js:754
 msgid "All Learners and Staff"
@@ -10715,6 +10724,18 @@ msgstr "折叠/展开此 %(xblock_type)s"
 msgid "Display Name"
 msgstr "显示名称"
 
+#: cms/templates/js/course-outline.underscore:129
+msgid "%(min)s min"
+msgstr "%(min)s分钟"
+
+#: cms/templates/js/course-outline.underscore:132
+msgid "%(h)s h"
+msgstr "%(h)s小时"
+
+#: cms/templates/js/course-outline.underscore:135
+msgid "%(h)s h %(min)s m"
+msgstr "%(h)s时%(min)s分"
+
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140
 msgid "Configure"
@@ -10960,6 +10981,10 @@ msgstr "向移动应用发送通知"
 #: cms/templates/js/course_info_update.underscore:20
 msgid "Post"
 msgstr "文章"
+
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
+msgstr "来自 "
 
 #: cms/templates/js/due-date-editor.underscore:3
 msgid "Due Date:"
@@ -12134,8 +12159,16 @@ msgstr "你确定要取消该学生的注册吗 ？"
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
 msgstr "注册已被确认通过。<br>你可以点击\"即将到来的课程\"来修改与该请求相关的信息。"
 
+#: lms/static/js/courseware/ilt_validation.js
+msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
+msgstr "该单元仅对员工可见。以下学员不是员工： <br><br>"
+
 #: master-sitel: #: lms/templates/discovery/facet.underscore
 #: master-sitel: #: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "发展领域"
+
+#: cms/templates/js/estimated-time-editor.underscore:4
+msgid "Time format HH:MM expected"
+msgstr "时间格式 HH:MM"
 

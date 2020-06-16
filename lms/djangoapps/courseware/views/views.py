@@ -712,8 +712,7 @@ class CourseTabView(EdxFragmentView):
                 resume_course_url = get_resume_course_url(request, course)
 
                 if not isinstance(request.user, AnonymousUser):
-                    progress = CourseGradeFactory().get_course_completion_percentage(
-                                        request.user, course.id)
+                    progress = CourseGradeFactory().update_course_completion_percentage(course.id, request.user)
                     progress = int(progress * 100)
 
         context = {
@@ -996,6 +995,155 @@ def course_about(request, course_id):
             'progress': None
         }
         return render_to_response('courseware/course_about.html', context)
+
+
+@ensure_csrf_cookie
+@ensure_valid_course_key
+@cache_if_anonymous()
+def course_print(request, course_id):
+    """
+    Display the course's print page.
+    """
+    course_key = CourseKey.from_string(course_id)
+
+    # If a user is not able to enroll in a course then redirect
+    # them away from the print page to the dashboard.
+    # if not can_self_enroll_in_course(course_key):
+    #     return redirect(reverse('dashboard'))
+
+    with modulestore().bulk_operations(course_key):
+        permission = get_permission_for_course_about()
+
+        course = get_course_with_access(request.user, permission, course_key)
+        course_details = CourseDetails.populate(course)
+        modes = CourseMode.modes_for_course_dict(course_key)
+
+        if configuration_helpers.get_value('ENABLE_MKTG_SITE', settings.FEATURES.get('ENABLE_MKTG_SITE', False)):
+            return redirect(reverse(course_home_url_name(course.id), args=[text_type(course.id)]))
+
+        registered = registered_for_course(course, request.user)
+
+        staff_access = bool(has_access(request.user, 'staff', course))
+        studio_url = get_studio_url(course, 'settings/details')
+
+        if has_access(request.user, 'load', course):
+            course_target = get_resume_course_url(request, course)
+        else:
+            course_target = reverse('about_course', args=[text_type(course.id)])
+
+        show_courseware_link = bool(
+            (
+                has_access(request.user, 'load', course)
+            ) or settings.FEATURES.get('ENABLE_LMS_MIGRATION')
+        )
+
+        # Note: this is a flow for payment for course registration, not the Verified Certificate flow.
+        in_cart = False
+        reg_then_add_to_cart_link = ""
+
+        _is_shopping_cart_enabled = is_shopping_cart_enabled()
+        if _is_shopping_cart_enabled:
+            if request.user.is_authenticated:
+                cart = shoppingcart.models.Order.get_cart_for_user(request.user)
+                in_cart = shoppingcart.models.PaidCourseRegistration.contained_in_order(cart, course_key) or \
+                    shoppingcart.models.CourseRegCodeItem.contained_in_order(cart, course_key)
+
+            reg_then_add_to_cart_link = "{reg_url}?course_id={course_id}&enrollment_action=add_to_cart".format(
+                reg_url=reverse('register_user'), course_id=urllib.quote(str(course_id))
+            )
+
+        # If the ecommerce checkout flow is enabled and the mode of the course is
+        # professional or no id professional, we construct links for the enrollment
+        # button to add the course to the ecommerce basket.
+        ecomm_service = EcommerceService()
+        ecommerce_checkout = ecomm_service.is_enabled(request.user)
+        ecommerce_checkout_link = ''
+        ecommerce_bulk_checkout_link = ''
+        professional_mode = None
+        is_professional_mode = CourseMode.PROFESSIONAL in modes or CourseMode.NO_ID_PROFESSIONAL_MODE in modes
+        if ecommerce_checkout and is_professional_mode:
+            professional_mode = modes.get(CourseMode.PROFESSIONAL, '') or \
+                modes.get(CourseMode.NO_ID_PROFESSIONAL_MODE, '')
+            if professional_mode.sku:
+                ecommerce_checkout_link = ecomm_service.get_checkout_page_url(professional_mode.sku)
+            if professional_mode.bulk_sku:
+                ecommerce_bulk_checkout_link = ecomm_service.get_checkout_page_url(professional_mode.bulk_sku)
+
+        registration_price, course_price = get_course_prices(course)
+
+        # Determine which checkout workflow to use -- LMS shoppingcart or Otto basket
+        can_add_course_to_cart = _is_shopping_cart_enabled and registration_price and not ecommerce_checkout_link
+
+        # Used to provide context to message to student if enrollment not allowed
+        can_enroll = bool(has_access(request.user, 'enroll', course))
+        invitation_only = course.invitation_only
+        is_course_full = CourseEnrollment.objects.is_course_full(course)
+
+        # Register button should be disabled if one of the following is true:
+        # - Student is already registered for course
+        # - Course is already full
+        # - Student cannot enroll in course
+        active_reg_button = not (registered or is_course_full or not can_enroll)
+
+        is_shib_course = uses_shib(course)
+
+        # get prerequisite courses display names
+        pre_requisite_courses = get_prerequisite_courses_display(course)
+
+        # Overview
+        overview = CourseOverview.get_from_id(course.id)
+
+        sidebar_html_enabled = course_experience_waffle().is_enabled(ENABLE_COURSE_ABOUT_SIDEBAR_HTML)
+
+        # This local import is due to the circularity of lms and openedx references.
+        # This may be resolved by using stevedore to allow web fragments to be used
+        # as plugins, and to avoid the direct import.
+        from openedx.features.course_experience.views.course_reviews import CourseReviewsModuleFragmentView
+
+        # Embed the course reviews tool
+        reviews_fragment_view = CourseReviewsModuleFragmentView().render_to_fragment(request, course=course)
+
+        outline_fragment = None
+        if request.user.is_authenticated:
+            outline_fragment = CourseOutlineFragmentView().render_to_fragment(
+                                    request, course_id=course_id, check_access=False)
+
+        context = {
+            'course': course,
+            'course_details': course_details,
+            'staff_access': staff_access,
+            'studio_url': studio_url,
+            'registered': registered,
+            'course_target': course_target,
+            'is_cosmetic_price_enabled': settings.FEATURES.get('ENABLE_COSMETIC_DISPLAY_PRICE'),
+            'course_price': course_price,
+            'in_cart': in_cart,
+            'ecommerce_checkout': ecommerce_checkout,
+            'ecommerce_checkout_link': ecommerce_checkout_link,
+            'ecommerce_bulk_checkout_link': ecommerce_bulk_checkout_link,
+            'professional_mode': professional_mode,
+            'reg_then_add_to_cart_link': reg_then_add_to_cart_link,
+            'show_courseware_link': show_courseware_link,
+            'is_course_full': is_course_full,
+            'can_enroll': can_enroll,
+            'invitation_only': invitation_only,
+            'active_reg_button': active_reg_button,
+            'is_shib_course': is_shib_course,
+            # We do not want to display the internal courseware header, which is used when the course is found in the
+            # context. This value is therefor explicitly set to render the appropriate header.
+            'disable_courseware_header': True,
+            'can_add_course_to_cart': can_add_course_to_cart,
+            'cart_link': reverse('shoppingcart.views.show_cart'),
+            'pre_requisite_courses': pre_requisite_courses,
+            'course_image_urls': overview.image_urls,
+            'reviews_fragment_view': reviews_fragment_view,
+            'sidebar_html_enabled': sidebar_html_enabled,
+            'user': request.user,
+            'show_dashboard_tabs': True,
+            'outline_fragment': outline_fragment,
+            'progress': None
+        }
+        return render_to_response('courseware/course_print.html', context)
 
 
 @ensure_csrf_cookie
@@ -1980,6 +2128,70 @@ def ilt_batch_enroll(request):
     return JsonResponse(status=200)
 
 
+def get_ilt_module_info(ilt_module, deadline=None):
+    sessions_info = json.loads(ilt_module.value)
+    sessions = sessions_info.items()
+    for k, v in sessions[:]:
+        if k == 'counter':
+            sessions.remove((k, v))
+        else:
+            v['available_seats'] = v['total_seats']
+    sessions.sort(key=lambda itm: decode_datetime(itm[1]['start_at']))
+
+    default_format = "{start_at} - {end_at} | {timezone} | location: {location} | #{nb}"
+    custom_format = configuration_helpers.get_value("ILT_DROPDOWN_LIST_FORMAT", "")
+    if not custom_format:
+        custom_format = default_format
+
+    date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "")
+    if date_format:
+        date_format = date_format.replace("YYYY", "%Y").replace("DD", "%d").replace(
+            "MM", "%m"
+        ).replace("HH", "%H").replace("mm", "%M")
+
+    dropdown_list = []
+
+    if deadline is None:
+        deadline = 0
+    for k, session in sessions[:]:
+        class_list = []
+        if datetime.now() - decode_datetime(session['start_at']) > timedelta(days=1):
+            class_list.append('expire-for-student')
+            sessions.remove((k, session))
+        if datetime.now() - decode_datetime(session['end_at']) > timedelta(days=180):
+            class_list.append('expire-for-admin')
+        if decode_datetime(session['start_at']) - datetime.now() < timedelta(days=deadline):
+            class_list.append('within-deadline')
+            session['within_deadline'] = True
+        else:
+            session['within_deadline'] = False
+
+        extra_class = " ".join(class_list)
+        if date_format:
+            start_at = decode_datetime(session['start_at']).strftime(date_format)
+            end_at = decode_datetime(session['end_at']).strftime(date_format)
+        else:
+            start_at = session['start_at'].replace("T", " ")
+            end_at = session['end_at'].replace("T", " ")
+        session_data = {
+            "start_at": start_at,
+            "end_at": end_at,
+            "duration": session.get("duration", ""),
+            "instructor": session.get("instructor", ""),
+            "area_region": session.get("area_region", ""),
+            "address": session.get("address", ""),
+            "zip_code": session.get("zip_code", ""),
+            "city": session.get("city", ""),
+            "location_id": session.get("location_id", ""),
+            "location": session.get("location", ""),
+            "timezone": session.get("timezone", ""),
+            "nb": k
+        }
+        dropdown_list.append([custom_format.format(**session_data), extra_class, k])
+
+    return {"sessions": sessions, "dropdown_list": dropdown_list, "raw": sessions_info}
+
+
 @login_required
 @csrf_exempt
 def ilt_validation_request_data(request):
@@ -2122,106 +2334,114 @@ def ilt_validation_request_data(request):
         return JsonResponse(status=200)
 
     user = request.user
-    supervised_learners = UserProfile.objects.filter(lt_ilt_supervisor=user.email)
-    learners = [i.user for i in supervised_learners]
+    learners = User.objects.filter(profile__lt_ilt_supervisor=user.email, is_active=True).select_related(
+        "profile").only('id', 'username', 'profile__name', 'profile__lt_employee_id',
+                        'profile__profile_image_uploaded_at')
     learners_id = [i.id for i in learners]
-    course_enrollments = CourseEnrollment.objects.filter(user__in=learners, is_active=True)
-    all_ilt_sessions = XModuleUserStateSummaryField.objects.filter(field_name="sessions")
+    course_enrollments = CourseEnrollment.objects.filter(user__in=learners, is_active=True).select_related(
+        'user__profile'
+    ).only("course_id", "user__is_staff", "user__username", "user__profile__name")
+    course_keys = list(set([i.course_id for i in course_enrollments]))
     date_format = configuration_helpers.get_value("ILT_DATE_FORMAT", "YYYY-MM-DD HH:mm")
     result = {"pending_all": [], "approved_all": [], "declined_all": [], "session_info": {},
               "accommodation": accommodation, "date_format": date_format}
     course_module_dict = {}
     module_course_dict = {}
-    for sessions in all_ilt_sessions:
-        usage_key = sessions.usage_id
-        course_key = usage_key.course_key
+    ilt_modules_info = {}
+    for course_key in course_keys:
+        ilt_blocks = modulestore().get_items(course_key, qualifiers={'category': 'ilt'})
+        course_name = modulestore().get_items(course_key, qualifiers={'category': 'course'})[0].display_name
+        if not ilt_blocks:
+            continue
+
+        course_module_dict[unicode(course_key)] = {
+            'course_name': course_name,
+            'modules': []
+        }
         enrollment = course_enrollments.filter(course_id=course_key)
-        if not enrollment.exists():
-            continue
-        try:
-            ilt_block = modulestore().get_item(usage_key)
-            course = modulestore().get_course(course_key)
-        except:
-            continue
-        try:
-            response = handle_xblock_callback(
-                request,
-                unicode(course_key),
-                unicode(usage_key),
-                'student_handler'
+        enrollment_user_list = {str(i.user.id): {
+            'user_name': i.user.username,
+            'full_name': i.user.profile.name,
+            'checked': False,
+            'is_staff': i.user.is_staff
+        } for i in enrollment}
+        for i in ilt_blocks:
+            module_name = i.display_name
+            ilt_modules_info[i.location] = {
+                "deadline": i.deadline, "sessions": [], "enrollment_user_list": enrollment_user_list.copy(),
+                "module_name": module_name
+            }
+            visible_to_staff_only = i.visible_to_staff_only
+            module_course_dict[unicode(i.location)] = (module_name, unicode(course_key), visible_to_staff_only)
+            course_module_dict[unicode(course_key)]['modules'].append(
+                (module_name, unicode(i.location), ilt_modules_info[i.location]['sessions'],
+                 ilt_modules_info[i.location]['enrollment_user_list'])
             )
-        except Http404:
-            continue
-        ilt_module_info = json.loads(response.content)
-        dropdown_list = ilt_module_info['dropdown_list']
-        for i in range(len(ilt_module_info['sessions'])):
-            within_deadline = 'within-deadline' in dropdown_list[i][1]
-            ilt_module_info['sessions'][i][1].update({'within_deadline': within_deadline})
-        for ordered_session in ilt_module_info['sessions']:
-            start_date = ordered_session[1]['start_at']
-            expired = datetime.now() - decode_datetime(start_date) > timedelta(days=1)
+
+    all_ilt_modules = XModuleUserStateSummaryField.objects.filter(
+        field_name="sessions", usage_id__in=ilt_modules_info
+    ).only("value", "usage_id")
+    all_ilt_enrollments = XModuleUserStateSummaryField.objects.filter(
+        field_name="enrolled_users", usage_id__in=ilt_modules_info
+    ).only("value", "usage_id")
+
+    for module in all_ilt_modules:
+        deadline = ilt_modules_info[module.usage_id]['deadline']
+        info = get_ilt_module_info(module, deadline)
+        ilt_modules_info[module.usage_id]['sessions'].extend(info['sessions'])
+        ilt_modules_info[module.usage_id]['dropdown_list'] = info['dropdown_list']
+        ilt_modules_info[module.usage_id]['raw'] = info['raw']
+
+    for ilt_enrollment in all_ilt_enrollments:
+        data = json.loads(ilt_enrollment.value)
+        course_id = ilt_enrollment.usage_id.course_key
+        module_info = ilt_modules_info[ilt_enrollment.usage_id]
+        user_list = module_info['enrollment_user_list']
+        sessions_info = ilt_modules_info[ilt_enrollment.usage_id]['raw']
+        if unicode(course_id) in result["session_info"]:
+            result["session_info"][unicode(course_id)][unicode(ilt_enrollment.usage_id)] = sessions_info
+        else:
+            result["session_info"][unicode(course_id)] = {unicode(ilt_enrollment.usage_id): sessions_info}
+        for k, v in data.items():
+            start_at = sessions_info[k]['start_at']
+            available_seats = sessions_info[k]['available_seats']
+            expired = datetime.now() - decode_datetime(start_at) > timedelta(days=1)
             if expired:
-                ilt_module_info['sessions'].remove(ordered_session)
-        sessions_info = json.loads(sessions.value)
-        course_name = course.display_name
-        module_name = ilt_block.display_name
-        module_course_dict[unicode(usage_key)] = (module_name, unicode(course_key))
-        enrollment_user_list = {str(u.id): {'user_name': u.username, 'full_name': u.profile.name, 'checked': False}
-                                for u in learners}
-        try:
-            enrolled_users = XModuleUserStateSummaryField.objects.get(usage_id=usage_key, field_name="enrolled_users")
-            data = json.loads(enrolled_users.value)
-            for k, v in data.items():
-                start_at = sessions_info[k]['start_at']
-                expired = datetime.now() - decode_datetime(start_at) > timedelta(days=1)
-                if expired:
+                continue
+
+            for user_id, request_info in v.items():
+                if request_info['status'] != 'refused':
+                    available_seats -= 1
+                if user_id in user_list:
+                    if request_info['status'] != 'refused':
+                        user_list.pop(user_id, None)
+                    learner = learners.get(id=user_id)
+                    request_info.update({
+                        "start": start_at,
+                        "employee_id": learner.profile.lt_employee_id,
+                        "learner_name": learner.profile.name,
+                        "user_name": learner.username,
+                        "user_id": learner.id,
+                        "avatar": get_profile_image_urls_for_user(learner, request=request)["medium"],
+                        "module": module_info['module_name'],
+                        "course": course_module_dict[unicode(course_id)]['course_name'],
+                        "dropdown_list": module_info['dropdown_list'],
+                        "usage_key": unicode(ilt_enrollment.usage_id),
+                        "course_key": unicode(course_id),
+                        "session_id": k,
+                        "is_editing": False,
+                        "action": None
+                    })
+                    if request_info['status'] == "pending":
+                        result["pending_all"].append(request_info)
+                    elif request_info['status'] == "refused":
+                        result["declined_all"].append(request_info)
+                    else:
+                        result["approved_all"].append(request_info)
+                else:
                     continue
 
-                for user_id, info in v.items():
-                    if int(user_id) in learners_id:
-                        if info['status'] != 'refused':
-                            enrollment_user_list.pop(user_id)
-                        learner = User.objects.get(id=user_id)
-                        info.update({
-                            "start": start_at,
-                            "employee_id": learner.profile.lt_employee_id,
-                            "learner_name": learner.profile.name,
-                            "user_name": learner.username,
-                            "user_id": learner.id,
-                            "avatar": get_profile_image_urls_for_user(learner, request=request)["medium"],
-                            "module": module_name,
-                            "course": course_name,
-                            "dropdown_list": ilt_module_info['dropdown_list'],
-                            "usage_key": unicode(usage_key),
-                            "course_key": unicode(course_key),
-                            "session_id": k,
-                            "is_editing": False,
-                            "action": None
-                        })
-                        if info['status'] == "pending":
-                            result["pending_all"].append(info)
-                        elif info['status'] == "refused":
-                            result["declined_all"].append(info)
-                        else:
-                            result["approved_all"].append(info)
-                    else:
-                        continue
-        except XModuleUserStateSummaryField.DoesNotExist:
-            pass
-        if unicode(course_key) in course_module_dict:
-            course_module_dict[unicode(course_key)]['modules'].append(
-                (module_name, unicode(usage_key), ilt_module_info['sessions'], enrollment_user_list)
-            )
-        else:
-            course_module_dict[unicode(course_key)] = {
-                'course_name': course_name,
-                'modules': [(module_name, unicode(usage_key), ilt_module_info['sessions'], enrollment_user_list)]
-            }
-
-        if unicode(course_key) in result["session_info"]:
-            result["session_info"][unicode(course_key)][unicode(usage_key)] = sessions_info
-        else:
-            result["session_info"][unicode(course_key)] = {unicode(usage_key): sessions_info}
+            sessions_info[k]['available_seats'] = available_seats
 
     result.update({
         'course_module_dict': course_module_dict,

@@ -74,6 +74,15 @@ class SequenceFields(object):
         scope=Scope.settings,
     )
 
+    estimated_time = String(
+        display_name=_("Estimated time for subsection"),
+        help=_(
+            "If set, estimated time will show in subsection display area."
+        ),
+        default="0:0",
+        scope=Scope.settings
+    )
+
 
 class ProctoringFields(object):
     """
@@ -317,7 +326,7 @@ class SequenceModule(SequenceFields, ProctoringFields, XModule):
                 # check if prerequisite has been met
                 prereq_met, prereq_meta_info = self._compute_is_prereq_met(True)
         if prereq_met and not self._is_gate_fulfilled():
-            banner_text = _('This section is a prerequisite. You must complete this section in order to unlock additional content.')
+            banner_text = _('This subsection is a prerequisite. You must complete this subsection in order to unlock additional content.')
 
         fragment = Fragment()
         params = {

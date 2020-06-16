@@ -59,7 +59,7 @@ define([
                     }
                 );
                 this.supportedVideosText = edx.StringUtils.interpolate(
-                    gettext('Supported file types: {supportedVideoTypes}'),
+                    gettext('Supported file type: {supportedVideoTypes}'),
                     {
                         supportedVideoTypes: this.videoSupportedFileFormats.join(', ')
                     }
@@ -381,7 +381,7 @@ define([
                     if (!_.contains(self.videoSupportedFileFormats, fileType)) {
                         error = gettext(
                             '{filename} is not in a supported file format. ' +
-                            'Supported file formats are {supportedFileFormats}.'
+                            'Supported file format is {supportedFileFormats}.'
                         )
                         .replace('{filename}', fileName)
                         .replace('{supportedFileFormats}', self.videoSupportedFileFormats.join(' and '));

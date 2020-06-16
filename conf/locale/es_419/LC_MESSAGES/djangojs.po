@@ -7249,8 +7249,8 @@ msgid "Maximum file size: {maxFileSize} GB"
 msgstr "Tamaño máximo de archivo: {maxFileSize} GB "
 
 #: cms/static/js/views/active_video_upload_list.js:62
-msgid "Supported file types: {supportedVideoTypes}"
-msgstr "Tipos de archivo admitidos: {supportedVideoTypes}"
+msgid "Supported file type: {supportedVideoTypes}"
+msgstr "Tipo de archivo admitido: {supportedVideoTypes}"
 
 #: cms/static/js/views/active_video_upload_list.js:155
 msgid "Your video uploads are not complete."
@@ -7267,11 +7267,11 @@ msgstr "Error al subir el video {fileName}"
 
 #: cms/static/js/views/active_video_upload_list.js:383
 msgid ""
-"{filename} is not in a supported file format. Supported file formats are "
+"{filename} is not in a supported file format. Supported file format is "
 "{supportedFileFormats}."
 msgstr ""
-"{filename} no está en un formato compatible. Los formatos admitidos son"
-"{supportFileFormats}."
+"El formato de {filename} no es compatible. El único formato de archivo "
+"compatible es {supportFileFormats}."
 
 #: cms/static/js/views/active_video_upload_list.js:390
 msgid "{filename} exceeds maximum size of {maxFileSizeInGB} GB."
@@ -7594,6 +7594,15 @@ msgstr "Habilitar"
 #: cms/static/js/views/modals/course_outline_modals.js:292
 msgid "Not yet"
 msgstr "Aún no"
+
+#: cms/static/js/views/modals/course_outline_modals.js:305
+#: cms/static/js/views/modals/course_outline_modals.js:310
+msgid "Subsection Estimated Time"
+msgstr "Tiempo estimado de subsección"
+
+#: cms/templates/js/estimated-time-editor.underscore:12
+msgid "Give learners an estimation of the time they'll need to complete this subsection"
+msgstr "Ofrezca a los alumnos una estimación del tiempo que necesitarán para completar esta subsección"
 
 #: cms/static/js/views/modals/course_outline_modals.js:754
 msgid "All Learners and Staff"
@@ -11172,6 +11181,18 @@ msgstr "Contraer/Expandir este %(xblock_type)s"
 msgid "Display Name"
 msgstr "Nombre para mostrar"
 
+#: cms/templates/js/course-outline.underscore:129
+msgid "%(min)s min"
+msgstr "%(min)s min"
+
+#: cms/templates/js/course-outline.underscore:132
+msgid "%(h)s h"
+msgstr "%(h)s h"
+
+#: cms/templates/js/course-outline.underscore:135
+msgid "%(h)s h %(min)s m"
+msgstr "%(h)s h %(min)s"
+
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140
 msgid "Configure"
@@ -11432,6 +11453,10 @@ msgstr "Enviar notificación a aplicaciones telefónicas"
 #: cms/templates/js/course_info_update.underscore:20
 msgid "Post"
 msgstr "Publicar"
+
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
+msgstr "Por "
 
 #: cms/templates/js/due-date-editor.underscore:3
 msgid "Due Date:"

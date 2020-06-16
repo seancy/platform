@@ -16,6 +16,7 @@ from six import string_types
 
 <%
    banner_img_url = course_image_url(course, image_key="banner_image")
+   course_print_url = settings.LMS_ROOT_URL + "/courses/" + str(course.id) + "/course/print"
 %>
 
 % if banner_img_url != settings.STATIC_URL + settings.DEFAULT_COURSE_ABOUT_IMAGE_URL:
@@ -160,6 +161,10 @@ from six import string_types
       % endif
       % if show_courseware_link:
         <div class="main-cta">
+          <a href="${course_print_url}" class="action-print-course" title="${_('Print Course')}" target="_blank">
+            <i class="far fa-print"></i>
+            ${_("Print")}
+          </a>
         % if user.is_authenticated and (registered or staff_access):
           % if registered:
             <span class="sr">${_("You are enrolled in this course")}</span>

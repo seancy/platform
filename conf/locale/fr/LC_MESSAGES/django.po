@@ -4823,6 +4823,14 @@ msgstr ""
 "activer le paramètre d'examen d'entrée pour ce cours afin que ceci prenne "
 "effet."
 
+#: common/lib/xmodule/xmodule/seq_module.py:78
+msgid "Estimated time for subsection" 
+msgstr "Durée estimée de la sous-section"
+
+#: common/lib/xmodule/xmodule/seq_module.py:80
+msgid "If set, estimated time will show in subsection display area." 
+msgstr "S’il est défini, le temps estimé s’affichera au niveau des sous-sections."
+
 #: common/lib/xmodule/xmodule/seq_module.py:83
 msgid "Is Time Limited"
 msgstr "Est limité dans le temps"
@@ -4899,16 +4907,16 @@ msgid ""
 "This subsection is unlocked for learners when they meet the prerequisite "
 "requirements."
 msgstr ""
-"Cette sous-section est déverrouillée aux apprenants quand ils répondent aux "
-"exigences préalables."
+"Cette sous-section est déverrouillée pour les apprenants lorsqu'ils remplissent "
+"les conditions préalables."
 
 #: common/lib/xmodule/xmodule/seq_module.py:320
 msgid ""
-"This section is a prerequisite. You must complete this section in order to "
+"This subsection is a prerequisite. You must complete this subsection in order to "
 "unlock additional content."
 msgstr ""
-"Cette section est un prérequis. Vous devez compléter cette section afin de "
-"déverrouiller le contenu supplémentaire."
+"Cette sous-section est une condition préalable. Vous devez la "
+"réaliser pour déverrouiller du contenu supplémentaire."
 
 #: common/lib/xmodule/xmodule/seq_module.py:704
 msgid ""
@@ -24154,6 +24162,21 @@ msgstr "Prérequis :"
 msgid "{subsection_format} due {{date}}"
 msgstr "{subsection_format} pour le {{date}}"
 
+#: lms/templates/courseware/accordion.html:83
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:108
+msgid "{} min"
+msgstr "{} min"
+
+#: lms/templates/courseware/accordion.html:85
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:110
+msgid "{} h"
+msgstr "{} h"
+
+#: lms/templates/courseware/accordion.html:87
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:112
+msgid "{} h {} m"
+msgstr "{} h {}"
+
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:20
 msgid "Learn About Verified Certificates"
 msgstr "En savoir plus sur les Certificats vérifiés"
@@ -24243,7 +24266,7 @@ msgstr "Mise à jour ({course_price})"
 
 #: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:49
 msgid "This course does not have any updates."
-msgstr "Ce cours n'a pas été mis à jour."
+msgstr "Ce cours n’a pas d’actualité."
 
 #: openedx/features/course_experience/templates/course_experience/dates-summary.html:9
 msgid "Today is {date}"
@@ -25112,9 +25135,26 @@ msgstr ""
 msgid "Learn more about Course Re-runs"
 msgstr "En savoir plus sur les cours relancés"
 
-#: cms/templates/course_info.html:13 cms/templates/course_info.html:41
+#: cms/templates/course_info.html:13 
+#: cms/templates/course_info.html:41
 msgid "Course Updates"
 msgstr "Actualités du Cours"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
+msgid "View more"
+msgstr "Voir plus"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:32
+msgid "NEW"
+msgstr "NOUVEAU"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:46
+msgid "By "
+msgstr "Par "
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:61
+msgid "Add course update"
+msgstr "Ajouter une actualité"
 
 #: cms/templates/course_info.html:48
 msgid "New Update"
@@ -30032,6 +30072,10 @@ msgstr ""
 msgid "Aspect ratio of this module"
 msgstr "Format d’affichage de ce module"
 
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:130
+msgid "Open module in a new tab. This option will only apply to users with a compatible browser."
+msgstr "Ouvrez le module dans un nouvel onglet. Cette option s’appliquera uniquement aux utilisateurs disposant d’un navigateur compatible."
+
 #: XBlock: edx_xblock_scorm/scormxblock/static/scormxblock.py: 66
 msgid "Display name for this module"
 msgstr "Nom d’affichage de ce module"
@@ -31024,6 +31068,37 @@ msgstr "Axes de Développement"
 msgid "Identify the course areas of development here."
 msgstr "Identifiez les axes de développement du cours ici."
 
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolledsubject.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "You have been enrolled in the training"
+msgstr "vous avez été inscrit à la Formation"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "Type of training: "
+msgstr "Type de Formation :"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "Modality of training: "
+msgstr "Modalité de déploiement :"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "Duration: "
+msgstr "Durée :"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "The Knowledge Management Team wish an excellent training!"
+msgstr "L’équipe Management des Connaissances vous souhaite une excellente formation !"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "Please <b>DO NOT TRANSFER THIS INVITATION</b> as it is addressed to you personally."
+msgstr "Nous vous remercions de <b>NE PAS TRANSFÉRER CETTE INVITATION</b> qui est vous est personnellement adressée"
+
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Choose your PDF"
@@ -31093,3 +31168,28 @@ msgstr "URL du document source"
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr "Ajoutez le document source de votre PDF (fichier Powerpoint, …)"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "Il semble que vous n’ayez pas de plugin PDF pour ce navigateur ou l’URL du PDF n’est pas valide."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "New Tab"
+msgstr "Nouvel onglet"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Click on the button below to open the module in a new tab."
+msgstr "Cliquez sur le bouton ci-dessous pour ouvrir le module dans un nouvel onglet."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
+msgstr "Votre module e-learning a été ouvert dans un nouvel onglet. Veuillez fermer le nouvel onglet après complétion du module."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Launch"
+msgstr "Commencer"

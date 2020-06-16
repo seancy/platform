@@ -6713,7 +6713,7 @@ msgid "Maximum file size: {maxFileSize} GB"
 msgstr ""
 
 #: cms/static/js/views/active_video_upload_list.js:62
-msgid "Supported file types: {supportedVideoTypes}"
+msgid "Supported file type: {supportedVideoTypes}"
 msgstr ""
 
 #: cms/static/js/views/active_video_upload_list.js:155
@@ -6731,7 +6731,7 @@ msgstr ""
 
 #: cms/static/js/views/active_video_upload_list.js:383
 msgid ""
-"{filename} is not in a supported file format. Supported file formats are "
+"{filename} is not in a supported file format. Supported file format is "
 "{supportedFileFormats}."
 msgstr ""
 
@@ -7034,6 +7034,15 @@ msgstr ""
 
 #: cms/static/js/views/modals/course_outline_modals.js:292
 msgid "Not yet"
+msgstr ""
+
+#: cms/static/js/views/modals/course_outline_modals.js:305
+#: cms/static/js/views/modals/course_outline_modals.js:310
+msgid "Subsection Estimated Time"
+msgstr ""
+
+#: cms/templates/js/estimated-time-editor.underscore:12
+msgid "Give learners an estimation of the time they'll need to complete this subsection"
 msgstr ""
 
 #: cms/static/js/views/modals/course_outline_modals.js:754
@@ -10393,6 +10402,18 @@ msgstr ""
 msgid "Display Name"
 msgstr ""
 
+#: cms/templates/js/course-outline.underscore:129
+msgid "%(min)s min"
+msgstr ""
+
+#: cms/templates/js/course-outline.underscore:132
+msgid "%(h)s h"
+msgstr ""
+
+#: cms/templates/js/course-outline.underscore:135
+msgid "%(h)s h %(min)s m"
+msgstr ""
+
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140
 msgid "Configure"
@@ -10635,6 +10656,10 @@ msgstr ""
 
 #: cms/templates/js/course_info_update.underscore:20
 msgid "Post"
+msgstr ""
+
+#: cms/templates/js/course_info_update.underscore:40
+msgid "By "
 msgstr ""
 
 #: cms/templates/js/due-date-editor.underscore:3
@@ -11669,3 +11694,12 @@ msgstr ""
 #: lms/static/js/courseware/ilt_validation.js
 msgid "The enrollment is confirmed.<br>You can change information related to the demand by clicking on the << Upcoming Sessions >> tab."
 msgstr ""
+
+#: lms/static/js/courseware/ilt_validation.js
+msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
+msgstr ""
+
+#: cms/templates/js/estimated-time-editor.underscore:4
+msgid "Time format HH:MM expected"
+msgstr ""
+

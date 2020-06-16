@@ -10,6 +10,7 @@ from django.utils import timezone
 import dogstats_wrapper as dog_stats_api
 from six import text_type
 
+from courseware.models import StudentModule
 from openedx.core.djangoapps.signals.signals import COURSE_GRADE_CHANGED, COURSE_GRADE_NOW_PASSED
 from openedx.core.lib.gating.api import get_subsection_completion_percentage_with_gradebook_edit
 from student.models import CourseEnrollment
@@ -231,7 +232,8 @@ class CourseGradeFactory(object):
         percent_progress = get_subsection_completion_percentage_with_gradebook_edit(
             course_usage_key, user, overrides=overridden_subsection_keys
         )
-        log.info(u'Course Progress Calculate: %s, User: %s', unicode(course_key), user.id)
+        log.info(u'Course Progress Calculate: %s, User: %s, Progress: %s',
+                 unicode(course_key), user.id, percent_progress)
         if not enrollment:
             enrollment = CourseEnrollment.get_enrollment(user, course_key)
         if overrides.exists():
@@ -290,8 +292,12 @@ class CourseGradeFactory(object):
             log.info(u'Course Progress Read: %s, User: %s', unicode(course_key), user.id)
             return persistent_progress.percent_progress
         except PersistentCourseProgress.DoesNotExist:
-            return self.update_course_completion_percentage(
-                course_key, user, course_grade=course_grade, enrollment=enrollment)
+            # check if user ever interacts with course before
+            if StudentModule.objects.filter(student=user, course_id=course_key).exists():
+                return self.update_course_completion_percentage(
+                    course_key, user, course_grade=course_grade, enrollment=enrollment)
+            else:
+                return 0
 
 
     def get_nb_trophies_possible(self, course):

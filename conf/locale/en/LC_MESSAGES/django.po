@@ -4164,6 +4164,14 @@ msgid ""
 "Exams for this course setting to take effect."
 msgstr ""
 
+#: common/lib/xmodule/xmodule/seq_module.py:78
+msgid "Estimated time for subsection" 
+msgstr ""
+
+#: common/lib/xmodule/xmodule/seq_module.py:80
+msgid "If set, estimated time will show in subsection display area." 
+msgstr ""
+
 #: common/lib/xmodule/xmodule/seq_module.py:83
 msgid "Is Time Limited"
 msgstr ""
@@ -4234,7 +4242,7 @@ msgstr ""
 
 #: common/lib/xmodule/xmodule/seq_module.py:320
 msgid ""
-"This section is a prerequisite. You must complete this section in order to "
+"This subsection is a prerequisite. You must complete this subsection in order to "
 "unlock additional content."
 msgstr ""
 
@@ -12832,8 +12840,25 @@ msgstr ""
 msgid "Learn more about Course Re-runs"
 msgstr ""
 
-#: cms/templates/course_info.html:13 cms/templates/course_info.html:41
+#: cms/templates/course_info.html:13 
+#: cms/templates/course_info.html:41
 msgid "Course Updates"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
+msgid "View more"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:32
+msgid "NEW"
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:46
+msgid "By "
+msgstr ""
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:61
+msgid "Add course update"
 msgstr ""
 
 #: cms/templates/course_info.html:48
@@ -24443,6 +24468,21 @@ msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:104
 msgid "{subsection_format} due {{date}}"
+msgstr ""
+
+#: lms/templates/courseware/accordion.html:83
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:108
+msgid "{} min"
+msgstr ""
+
+#: lms/templates/courseware/accordion.html:85
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:110
+msgid "{} h"
+msgstr ""
+
+#: lms/templates/courseware/accordion.html:87
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:112
+msgid "{} h {} m"
 msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:20

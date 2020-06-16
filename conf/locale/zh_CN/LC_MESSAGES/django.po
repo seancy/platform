@@ -4681,6 +4681,14 @@ msgstr ""
 "标记该课程模块作为入学考试。注意，您必须开启此课程设置的入学考试功能才可生"
 "效。"
 
+#: common/lib/xmodule/xmodule/seq_module.py:78
+msgid "Estimated time for subsection" 
+msgstr "子章节预计时间"
+
+#: common/lib/xmodule/xmodule/seq_module.py:80
+msgid "If set, estimated time will show in subsection display area." 
+msgstr "如果设置，预计时间将显示在子章节相关区域"
+
 #: common/lib/xmodule/xmodule/seq_module.py:83
 msgid "Is Time Limited"
 msgstr "时间是否受限"
@@ -4751,7 +4759,7 @@ msgstr "当学习者满足先决条件要求时，该子部分将被解锁。"
 
 #: common/lib/xmodule/xmodule/seq_module.py:320
 msgid ""
-"This section is a prerequisite. You must complete this section in order to "
+"This subsection is a prerequisite. You must complete this subsection in order to "
 "unlock additional content."
 msgstr "本节是先决条件。 您必须完成此部分才能解锁其他内容。"
 
@@ -22634,6 +22642,21 @@ msgstr "先决条件："
 msgid "{subsection_format} due {{date}}"
 msgstr "{subsection_format}到期{{date}}"
 
+#: lms/templates/courseware/accordion.html:83
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:108
+msgid "{} min"
+msgstr "{}分钟"
+
+#: lms/templates/courseware/accordion.html:85
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:110
+msgid "{} h"
+msgstr "{}小时"
+
+#: lms/templates/courseware/accordion.html:87
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:112
+msgid "{} h {} m"
+msgstr "{}时{}分"
+
 #: openedx/features/course_experience/templates/course_experience/course-sock-fragment.html:20
 msgid "Learn About Verified Certificates"
 msgstr "了解已验证的证书"
@@ -23524,6 +23547,22 @@ msgstr "了解更多关于课程重启的信息"
 #: cms/templates/course_info.html:13 cms/templates/course_info.html:41
 msgid "Course Updates"
 msgstr "课程更新"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
+msgid "View more"
+msgstr "浏览更多"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:32
+msgid "NEW"
+msgstr "新"
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:46
+msgid "By "
+msgstr "来自 "
+
+#: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:61
+msgid "Add course update"
+msgstr "增加课程更新"
 
 #: cms/templates/course_info.html:48
 msgid "New Update"
@@ -28571,3 +28610,32 @@ msgstr "源文档地址"
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr "为您的 PDF 添加源文档（PPT 文件，……）"
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr "您似乎没有此浏览器的PDF插件，或者PDF URL无效。"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:130
+msgid "Open module in a new tab. This option will only apply to users with a compatible browser."
+msgstr "在新标签页打开模块。此选项仅适用于具有兼容浏览器的用户。"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "New Tab"
+msgstr "新标签页"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Click on the button below to open the module in a new tab."
+msgstr "单击下面的按钮以在新选项卡中打开模块。"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
+msgstr "您的电子学习模块已在新标签页中打开。 完成模块后，请关闭新标签页。"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Launch"
+msgstr "启动"

@@ -210,6 +210,19 @@ define(['jquery', 'underscore', 'js/views/xblock_outline', 'common/js/components
                 }
             },
 
+            estimatedTimeBlock: function() {
+                var modal = CourseOutlineModalsFactory.getModal('estimated_time', this.model, {
+                    onSave: this.refresh.bind(this),
+                    xblockType: XBlockViewUtils.getXBlockType(
+                        this.model.get('category'), this.parentView.model, true
+                    )
+                });
+
+                if (modal) {
+                    modal.show();
+                }
+            },
+
             addButtonActions: function(element) {
                 XBlockOutlineView.prototype.addButtonActions.apply(this, arguments);
                 element.find('.configure-button').click(function(event) {
@@ -225,6 +238,10 @@ define(['jquery', 'underscore', 'js/views/xblock_outline', 'common/js/components
                         event.preventDefault();
                         this.highlightsXBlock();
                     }
+                }.bind(this));
+                element.find('.estimated-time-button').click(function(event) {
+                    event.preventDefault();
+                    this.estimatedTimeBlock();
                 }.bind(this));
             },
 

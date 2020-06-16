@@ -7,7 +7,6 @@ from logging import getLogger
 import six
 from completion.models import BlockCompletion
 from courseware.model_data import get_score, set_score
-from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from django.dispatch import receiver
@@ -28,7 +27,6 @@ from .signals import (
     SUBSECTION_OVERRIDE_CHANGED,
     GRADE_EDITED
 )
-from ..models import PersistentSubsectionGradeOverride
 from .. import events
 from ..constants import ScoreDatabaseTableEnum
 from ..course_grade_factory import CourseGradeFactory
@@ -36,7 +34,8 @@ from ..scores import weighted_score
 from ..tasks import (
     RECALCULATE_GRADE_DELAY_SECONDS,
     recalculate_subsection_grade_v3,
-    recalculate_course_and_subsection_grades_for_user
+    recalculate_course_and_subsection_grades_for_user,
+    calculate_course_progress
 )
 
 log = getLogger(__name__)
@@ -259,29 +258,7 @@ def recalculate_course_grade_only(sender, course, course_structure, user, **kwar
     Updates a saved course grade, but does not update the subsection
     grades the user has in this course.
     """
-    course_grade = CourseGradeFactory().update(user, course=course, course_structure=course_structure)
-    overrides = PersistentSubsectionGradeOverride.objects.filter(
-        grade__user_id=user.id,
-        grade__course_id=course.id,
-    )
-    if overrides.exists():
-        enrollment = CourseEnrollment.get_enrollment(user, course.id)
-        passed = course_grade.passed
-        try:
-            # in case that it fails to fetch courseenrollment and returns None
-            if passed:
-                if not enrollment.completed:
-                    completion_date = datetime.today()
-                    enrollment.completed = completion_date
-                    enrollment.save()
-                    log.info("Create completion date for user id %d / %s: %s" % (user.id, course.id, completion_date))
-            else:
-                if enrollment.completed:
-                    enrollment.completed = None
-                    enrollment.save()
-                    log.info("Delete completion date for user id %d / %s" % (user.id, course.id))
-        except AttributeError:
-            pass
+    CourseGradeFactory().update(user, course=course, course_structure=course_structure)
 
 
 @receiver(ENROLLMENT_TRACK_UPDATED)
@@ -309,7 +286,12 @@ def recalculate_course_completion_percentage(**kwargs):
     instance = kwargs['instance']
     course_key = instance.course_key
     user = User.objects.get(id=instance.user_id)
-    CourseGradeFactory().update_course_completion_percentage(course_key, user)
+    calculate_course_progress.apply_async(
+        kwargs={
+            'course_id': unicode(course_key),
+            'user_id': user.id
+        }
+    )
 
 
 def enrollment_completed_handler():

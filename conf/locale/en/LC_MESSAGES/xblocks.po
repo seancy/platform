@@ -497,6 +497,10 @@ msgstr ""
 msgid "Aspect ratio of this module"
 msgstr ""
 
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:130
+msgid "Open module in a new tab. This option will only apply to users with a compatible browser."
+msgstr ""
+
 #: edx_xblock_scorm/scormxblock/static/scormxblock.py:66
 msgid "Display name for this module"
 msgstr ""
@@ -738,3 +742,29 @@ msgstr ""
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
 msgid "Add the source document of your PDF (Powerpoint file, ...)"
 msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_view.html
+msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
+msgstr ""
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "New Tab"
+msgstr ""
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Click on the button below to open the module in a new tab."
+msgstr ""
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
+msgstr ""
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "Launch"
+msgstr ""
+

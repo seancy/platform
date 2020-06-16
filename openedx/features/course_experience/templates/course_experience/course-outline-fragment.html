@@ -8,6 +8,7 @@
 from datetime import date
 
 from django.utils.translation import ugettext as _
+from lms.djangoapps.courseware.courses import get_xblock_prop
 from openedx.core.djangolib.js_utils import dump_js_escaped_json
 from openedx.core.djangolib.markup import HTML, Text
 %>
@@ -15,7 +16,7 @@ from openedx.core.djangolib.markup import HTML, Text
 <%
 course_sections = blocks.get('children')
 %>
-<main role="main" class="course-outline" id="main" tabindex="-1">
+<main role="main" class="course-outline" tabindex="-1">
     % if course_sections is not None:
         <div class="course-outline-nav">
             <h2>${_("Course Outline")}</h2>
@@ -64,6 +65,23 @@ course_sections = blocks.get('children')
                                     </span>
                                     <h4 class="subsection-title">
                                         ${ subsection['display_name'] }
+                                            <%
+                                                estimated_time = get_xblock_prop(subsection['id'], 'estimated_time')
+                                                if not estimated_time or estimated_time == '0:0':
+                                                    display_estimated_time = None
+                                                elif estimated_time and estimated_time.split(':')[0] == '0':
+                                                    display_estimated_time = _('{} min').format(estimated_time.split(':')[1])
+                                                elif estimated_time and estimated_time.split(':')[1] == '0':
+                                                    display_estimated_time = _('{} h').format(estimated_time.split(':')[0])
+                                                elif estimated_time:
+                                                    display_estimated_time = _('{} h {} m').format(estimated_time.split(':')[0], estimated_time.split(':')[1])
+                                            %>
+                                            % if display_estimated_time:
+                                                <span class="time-label">
+                                                    <i class="icon far fa-stopwatch"></i>
+                                                    <em>${display_estimated_time}</em>
+                                                </span>
+                                            % endif
                                     </h4>
                                     <div class="details prerequisite">
                                         ${ _("Prerequisite: ") }
@@ -82,6 +100,23 @@ course_sections = blocks.get('children')
                                               aria-hidden="true"></span>
                                         <h4 class="subsection-title">
                                             ${ subsection['display_name'] }
+                                            <%
+                                                estimated_time = get_xblock_prop(subsection['id'], 'estimated_time')
+                                                if not estimated_time or estimated_time == '0:0':
+                                                    display_estimated_time = None
+                                                elif estimated_time and estimated_time.split(':')[0] == '0':
+                                                    display_estimated_time = _('{} min').format(estimated_time.split(':')[1])
+                                                elif estimated_time and estimated_time.split(':')[1] == '0':
+                                                    display_estimated_time = _('{} h').format(estimated_time.split(':')[0])
+                                                elif estimated_time:
+                                                    display_estimated_time = _('{} h {} m').format(estimated_time.split(':')[0], estimated_time.split(':')[1])
+                                            %>
+                                            % if display_estimated_time:
+                                                <span class="time-label">
+                                                    <i class="icon far fa-stopwatch"></i>
+                                                    <em>${display_estimated_time}</em>
+                                                </span>
+                                            % endif
                                         </h4>
                     % if subsection.get('complete'):
                                         <span class="complete-checkmark fal fa-check-circle"></span>

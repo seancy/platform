@@ -1,4 +1,4 @@
-define(['codemirror',
+define(['tinymce',
     'js/utils/modal',
     'js/utils/date_utils',
     'edx-ui-toolkit/js/utils/html-utils',
@@ -7,7 +7,7 @@ define(['codemirror',
     'js/models/course_update',
     'common/js/components/views/feedback_prompt',
     'common/js/components/views/feedback_notification'],
-    function(CodeMirror, ModalUtils, DateUtils, HtmlUtils, CourseInfoHelper, ValidatingView, CourseUpdateModel,
+    function(Tinymce, ModalUtils, DateUtils, HtmlUtils, CourseInfoHelper, ValidatingView, CourseUpdateModel,
              PromptView, NotificationView) {
         'use strict';
         var CourseInfoUpdateView = ValidatingView.extend({
@@ -55,6 +55,7 @@ define(['codemirror',
                             }
                         }
                     });
+                    self.initEditor(this.options.langCode);
                 } else {
                     // If the collection is empty enable the New update button
                     self.$el.find('.new-update-button').removeAttr('disabled');
@@ -125,7 +126,7 @@ define(['codemirror',
 
             onNew: function(event) {
                 // create new obj, insert into collection, and render this one ele overriding the hidden attr
-                var newModel = new CourseUpdateModel();
+                var newModel = new CourseUpdateModel({author: this.options.user_name});
                 event.preventDefault();
 
                 this.collection.add(newModel, {at: 0});
@@ -140,12 +141,7 @@ define(['codemirror',
                 var updateEle = this.$el.find('#course-update-list');
                 $(updateEle).prepend($newForm);
 
-                var $textArea = $newForm.find('.new-update-content').first();
-                this.$codeMirror = CodeMirror.fromTextArea($textArea.get(0), {
-                    mode: 'text/html',
-                    lineNumbers: true,
-                    lineWrapping: true
-                });
+                this.initEditor(this.options.langCode);
 
                 $newForm.addClass('editing');
                 this.$currentPost = $newForm.closest('li');
@@ -161,10 +157,13 @@ define(['codemirror',
             onSave: function(event) {
                 event.preventDefault();
                 var targetModel = this.eventModel(event);
+                var $textArea = this.$currentPost.find('.new-update-content').first();
+                Tinymce.activeEditor.save();
                 targetModel.set({
-                // translate short-form date (for input) into long form date (for display)
+                    title: this.$currentPost.find('.title').val(),
+                    // translate short-form date (for input) into long form date (for display)
                     date: $.datepicker.formatDate('MM d, yy', new Date(this.dateEntry(event).val())),
-                    content: this.$codeMirror.getValue(),
+                    content: $textArea.val(),
                     push_notification_selected: this.push_notification_selected(event)
                 });
             // push change to display, hide the editor, submit the change
@@ -209,7 +208,6 @@ define(['codemirror',
                 this.$currentPost.addClass('editing');
 
                 $(this.editor(event)).show();
-                var $textArea = this.$currentPost.find('.new-update-content').first();
                 var targetModel = this.eventModel(event);
             // translate long-form date (for viewing) into short-form date (for input)
                 if (targetModel.get('date') && targetModel.isValid()) {
@@ -217,8 +215,6 @@ define(['codemirror',
                 } else {
                     $(this.dateEntry(event)).val('MM/DD/YY');
                 }
-                this.$codeMirror = CourseInfoHelper.editWithCodeMirror(
-                targetModel, 'content', self.options.base_asset_url, $textArea.get(0));
 
             // Variable stored for unit test.
                 this.$modalCover = ModalUtils.showModalCover(false,
@@ -289,7 +285,9 @@ define(['codemirror',
                 // close the modal and insert the appropriate data
                     this.$currentPost.removeClass('editing');
                     this.$currentPost.find('.date-display').text(targetModel.get('date'));
-                    this.$currentPost.find('.date').val(targetModel.get('date'));
+                    this.$currentPost.find('.date').text(targetModel.get('date'));
+                    this.$currentPost.find('.title').text(targetModel.get('title'));
+                    this.$currentPost.find('.author').text(targetModel.get('author'));
 
                     content = HtmlUtils.HTML(CourseInfoHelper.changeContentToPreview(
                         targetModel, 'content', this.options.base_asset_url
@@ -302,7 +300,6 @@ define(['codemirror',
                     // ignore but handle rest of page
                     }
                     this.$currentPost.find('form').hide();
-                    this.$currentPost.find('.CodeMirror').remove();
 
                 // hide the push notification checkbox for subsequent edits to the Post
                     var push_notification_ele = this.$currentPost.find('.new-update-push-notification');
@@ -312,7 +309,6 @@ define(['codemirror',
                 }
 
                 ModalUtils.hideModalCover(this.$modalCover);
-                this.$codeMirror = null;
             },
 
         // Dereferencing from events to screen elements
@@ -348,6 +344,22 @@ define(['codemirror',
                         return push_notification_checkbox.is(':checked');
                     }
                 }
+            },
+
+            // This is used to set WYSIWYG text editor for course updates content.
+            initEditor: function(langCode) {
+                Tinymce.init({
+                    selector: '.tinymce-editor',
+                    base_url: '/static/studio/js/vendor/tinymce/js/tinymce',
+                    suffix: '.min',
+                    theme: 'silver',
+                    skin: 'oxide',
+                    statusbar: false,
+                    plugins: 'link, image, code',
+                    menubar: false,
+                    language: langCode,
+                    toolbar: 'bold italic forecolor bullist numlist link unlink code image'
+                });
             }
         });
 

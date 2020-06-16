@@ -112,15 +112,37 @@ if (is_proctored_exam) {
         <% } else { %>
             <h3 class="<%- xblockType %>-header-details">
         <% } %>
-                <% if (xblockInfo.isVertical()) { %>
-                    <span class="unit-title item-title">
-                        <a href="<%- xblockInfo.get('studio_url') %>"><%- xblockInfo.get('display_name') %></a>
+            <% if (xblockInfo.isVertical()) { %>
+                <span class="unit-title item-title">
+                    <a href="<%- xblockInfo.get('studio_url') %>"><%- xblockInfo.get('display_name') %></a>
+                </span>
+            <% } else { %>
+                <span class="wrapper-<%- xblockType %>-title wrapper-xblock-field incontext-editor is-editable" data-field="display_name" data-field-display-name="<%- gettext("Display Name") %>">
+                    <span class="<%- xblockType %>-title item-title xblock-field-value incontext-editor-value"><%-
+                    xblockInfo.get('display_name') %>
                     </span>
-                <% } else { %>
-                    <span class="wrapper-<%- xblockType %>-title wrapper-xblock-field incontext-editor is-editable" data-field="display_name" data-field-display-name="<%- gettext("Display Name") %>">
-                        <span class="<%- xblockType %>-title item-title xblock-field-value incontext-editor-value"><%- xblockInfo.get('display_name') %></span>
-                    </span>
+                </span>
+                <% if (xblockInfo.isSequential() && !_.isEmpty(xblockInfo.get('estimated_time'))) { %>
+                    <% if (xblockInfo.get('estimated_time') !== '0:0') { %>
+                        <span class="estimated-time-marker">
+                            <i class="icon far fa-stopwatch"></i>
+                            <em>
+                                <% if (xblockInfo.get('estimated_time').split(':')[0] === '0') { %>
+                                    <%- interpolate(gettext('%(min)s min'), {min: xblockInfo.get
+                                    ('estimated_time').split(':')[1]}, true) %>
+                                <% } else if (xblockInfo.get('estimated_time').split(':')[1] === '0') { %>
+                                    <%- interpolate(gettext('%(h)s h'), {h: xblockInfo.get('estimated_time')
+                                    .split(':')[0]}, true) %>
+                                <% } else { %>
+                                    <%- interpolate(gettext('%(h)s h %(min)s m'), {h: xblockInfo.get
+                                    ('estimated_time').split(':')[0], min: xblockInfo.get('estimated_time')
+                                    .split(':')[1]}, true) %>
+                                <% } %>
+                            </em>
+                        </span>
+                    <% } %>
                 <% } %>
+            <% } %>
             </h3>
 
         <div class="<%- xblockType %>-header-actions">
@@ -130,6 +152,14 @@ if (is_proctored_exam) {
                         <a href="#" data-tooltip="<%- gettext('Publish') %>" class="publish-button action-button">
                             <span class="icon fa fa-upload" aria-hidden="true"></span>
                             <span class="sr action-button-text"><%- gettext('Publish') %></span>
+                        </a>
+                    </li>
+                <% } %>
+                <% if (xblockInfo.isSequential()) { %>
+                    <li class="action-item action-estimated-time">
+                        <a href="#" data-tooltip="<%- gettext('Subsection Estimated Time') %>" class="estimated-time-button action-button">
+                            <span class="icon far fa-stopwatch" aria-hidden="true"></span>
+                            <span class="sr action-button-text"><%- gettext('Subsection Estimated Time') %></span>
                         </a>
                     </li>
                 <% } %>
