@@ -57,6 +57,12 @@ def create_analytics_worker():
     profile.save()
 
 
+def dt2key(cls, date_time=None):
+    if not date_time:
+        date_time = timezone.now()
+    return date_time.strftime('%Y-%m-%d')
+
+
 def get_day_limits(day=None, offset=0):
     day = (day or timezone.now()) + timezone.timedelta(days=offset)
     day_start = day.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -287,6 +293,7 @@ class ReportMixin(object):
         day = date_time.date() if date_time else timezone.now().date()
         return cls.objects.filter(created=day, **kwargs)
 
+
     @classmethod
     def get_by_day(cls, date_time=None, **kwargs):
         day = date_time.date() if date_time else timezone.now().date()
@@ -454,6 +461,271 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         else:
             reports = cls.objects.filter(created__gte=from_date, created__lte=to_date, user__is_active=True,)
         return [result['user'] for result in reports.values('user').distinct()]
+
+class LearnerCourseDailyReportMockup(object):
+    def __init__(self, learner_course_json_report, key_day):
+        self.user = learner_course_json_report.user
+        self.course_id = learner_course_json_report.course_id
+        self.org = learner_course_json_report.org
+        if key_day:
+            if key_day in learner_course_json_report.records.keys():
+                self.status = learner_course_json_report.records[key_day]['status']
+                self.progress = learner_course_json_report.records[key_day]['progress']
+                self.badges = learner_course_json_report.records[key_day]['badges']
+                self.current_score = learner_course_json_report.records[key_day]['current_score']
+                self.posts = learner_course_json_report.records[key_day]['posts']
+                self.total_time_spent = learner_course_json_report.records[key_day]['total_time_spent']
+                self.enrollment_date = learner_course_json_report.records[key_day]['enrollment_date']
+                self.completion_date = learner_course_json_report.records[key_day]['completion_date']
+            else:
+                self.status = 0
+                self.progress = 0
+                self.badges = 0
+                self.current_score = 0
+                self.posts = 0
+                self.total_time_spent = 0
+                self.enrollment_date = learner_course_json_report.enrollment_date
+                self.completion_date = None
+        else:
+            self.status = learner_course_json_report.status
+            self.progress = learner_course_json_report.progress
+            self.badges = learner_course_json_report.badges
+            self.current_score = learner_course_json_report.current_score
+            self.posts = learner_course_json_report.posts
+            self.total_time_spent = learner_course_json_report.total_time_spent
+            self.enrollment_date = learner_course_json_report.enrollment_date
+            self.completion_date = learner_course_json_report.completion_date
+
+
+
+class LearnerCourseJsonReport(TimeStampedModel):
+    class Meta(object):
+        app_label = "triboo_analytics"
+        unique_together = ('user', 'course_id')
+        index_together = (['user', 'course_id'])
+
+    user = models.ForeignKey(User, null=False)
+    course_id = CourseKeyField(max_length=255, db_index=True, null=False)
+    org = models.CharField(max_length=255, db_index=True, null=False)
+    status = models.PositiveSmallIntegerField(help_text="not started: 0; in progress: 1; finished: 2; failed: 3; ",
+                                              default=0)
+    progress = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
+    badges = models.CharField(max_length=20, default="0 / 0")
+    current_score = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(100)])
+    posts = models.PositiveIntegerField(default=0)
+    total_time_spent = models.PositiveIntegerField(default=0)
+    enrollment_date = models.DateTimeField(default=None, null=True, blank=True)
+    completion_date = models.DateTimeField(default=None, null=True, blank=True)
+    records = models.JSONField(default=None, null=True)
+
+
+   @classmethod
+    def generate_today_reports(cls, last_analytics_success, overviews, sections_by_course, multi_process=False):
+        analytics_worker = User.objects.get(username=ANALYTICS_WORKER_USER)
+
+        nb_processes = 2 * multiprocessing.cpu_count() if multi_process else 1
+
+        nb_courses = len(overviews)
+        i = 0
+        for overview in overviews:
+            i += 1
+            course_id = overview.id
+            course_last_update = overview.modified.date()
+            course_id_str = "%s" % course_id
+            course = modulestore().get_course(course_id)
+            if not course:
+                logger.error("course_id=%s returned Http404" % course_id)
+                continue
+            Badge.refresh(course_id, course, analytics_worker)
+
+            sections = sections_by_course[course_id_str]
+            
+            enrollments = CourseEnrollment.objects.filter(is_active=True,
+                                                          course_id=course_id,
+                                                          user__is_active=True)
+            nb_enrollments = len(enrollments)
+
+            logger.info("learner course report for course_id=%s (%d / %d): %d enrollments" % (
+                        course_id, i, nb_courses, nb_enrollments))
+
+            if (not multi_process
+                and (nb_enrollments > 10000)
+                and (not last_analytics_success or (course_last_update >= last_analytics_success.date()))):
+                multi_process = True
+                logger.info("force multiprocessing")
+
+            if multi_process:
+                enrollment_ids = [e_id for e_id in enrollments.values_list('id', flat=True)]
+
+                enrollments_by_process = []
+                for j in range(0, nb_processes):
+                    enrollments_by_process.append([])
+
+                j = 0
+                for enrollment_id in enrollment_ids:
+                    enrollments_by_process[j].append(enrollment_id)
+                    j += 1
+                    if j == nb_processes:
+                        j = 0
+
+                connections.close_all()
+                processes = []
+                for process_enrollments in enrollments_by_process:
+                    process = multiprocessing.Process(target=cls.process_generate_today_reports,
+                                                      args=(last_analytics_success, course_last_update, process_enrollments, course, sections,))
+                    process.start()
+                    processes.append(process)
+                [process.join() for process in processes]
+
+            else:
+                enrollments = enrollments.prefetch_related('user')
+                for enrollment in enrollments:
+                    cls.generate_enrollment_report(course_last_update, enrollment, course, sections)
+
+
+    @classmethod
+    def process_generate_today_reports(cls, last_analytics_success, course_last_update, enrollment_ids, course, sections):
+        for enrollment_id in enrollment_ids:
+            enrollment = CourseEnrollment.objects.get(id=enrollment_id)
+            cls.generate_enrollment_report(last_analytics_success, course_last_update, enrollment, course, sections)
+
+
+    @classmethod
+    def generate_enrollment_report(cls, last_analytics_success, course_last_update, enrollment, course, sections):
+        updated = cls.update_or_create(last_analytics_success, course_last_update, enrollment, course)
+        LearnerSectionJsonReport.update_or_create(last_analytics_success, enrollment, sections, updated)
+
+
+    @classmethod
+    def update_or_create(cls, last_analytics_success, course_last_update, enrollment, course):
+        course_key = enrollment.course_id
+        user = enrollment.user
+
+        if user.is_active:
+            report_needs_update = True
+            report = None
+            try:
+                report = cls.objects.get(course_id=course_key, user_id=user.id)
+            except cls.DoesNotExist:
+                    pass
+            if report:
+                if ((not enrollment.gradebook_edit or enrollment.gradebook_edit.date() < report.modified.date())
+                    and (not user.last_login or user.last_login.date() < report.modified.date())
+                    and course_last_update < report.modified.date()
+                    and enrollment.completed == report.completion_date):
+                    report_needs_update = False
+                    report.records[dt2key()] = report.records[dt2key(last_analytics_success)]
+                    report.save()
+
+            if report_needs_update:
+                with modulestore().bulk_operations(course_key):
+                    total_time_spent = (LearnerVisitsDailyReport.objects.filter(
+                                            user=user, course_id=course_key, created__gte=enrollment.created).aggregate(
+                                            Sum('time_spent')).get('time_spent__sum') or 0)
+
+                    grade_factory = CourseGradeFactory()
+                    # grade_factory.update_course_completion_percentage(course_key, user)
+                    progress = grade_factory.get_progress(user, course)
+                    progress['progress'] *= 100.0
+                    if not progress:
+                        logger.warning('course=%s user_id=%d does not have progress info => empty report.' % (
+                            course_key, user.id))
+
+                        cls.objects.update_or_create(
+                            # created=day,
+                            user=user,
+                            course_id=course_key,
+                            defaults={'org': course_key.org,
+                                      'status': CourseStatus.not_started,
+                                      'progress': 0,
+                                      'badges': 0,
+                                      'current_score': 0,
+                                      'posts': 0,
+                                      'total_time_spent': 0,
+                                      'enrollment_date': enrollment.created,
+                                      'completion_date': None})
+                        return
+
+                    if progress['progress'] == 100:
+                        status = CourseStatus.failed
+
+                        if progress['nb_trophies_possible'] == 0 or progress['is_course_passed']:
+                            status = CourseStatus.finished
+
+                    else:
+                        # by gradebook edit a user could have a progress > 0 while total_time_spent = 0
+                        if total_time_spent > 0 or progress['progress'] > 0:
+                            status = CourseStatus.in_progress
+                        else:
+                            status = CourseStatus.not_started
+
+                    posts = 0
+                    try:
+                        cc_user = cc.User(id=user.id, course_id=course_key).to_dict()
+                        posts = cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
+                    except (cc.CommentClient500Error, cc.CommentClientRequestError, ConnectionError):
+                        pass
+
+                    record = {"status": status,
+                              "progress": progress['progress'],
+                              "badges": format_badges(progress['nb_trophies_earned'], progress['nb_trophies_possible']),
+                              "current_score": progress['current_score'],
+                              "posts": posts,
+                              "total_time_spent": total_time_spent,
+                              "enrollment_date": enrollment.created,
+                              "completion_date": enrollment.completed}
+                    if report:
+                        report.status = record['status']
+                        report.progress = record['progress']
+                        report.badges = record['badges']
+                        report.current_score = record['current_score']
+                        report.posts = record['posts']
+                        report.total_time_spent = record['total_time_spent']
+                        report.enrollment_date = record['enrollment_date']
+                        report.completion_date = record['completion_date']
+                        report.records[dt2key()] = record
+                        report.save()
+
+                    else:
+                        cls.objects.update_or_create(user=user,
+                                                     course_id=course_key,
+                                                     defaults={'org': course_key.org,
+                                                               'status': record['status'],
+                                                               'progress': record['progress'],
+                                                               'badges': record['badges']
+                                                               'current_score': record['current_score'],
+                                                               'posts': record['posts'],
+                                                               'total_time_spent': record['total_time_spent'],
+                                                               'enrollment_date': record['enrollment_date'],
+                                                               'completion_date': record['completion_date'],
+                                                               'records': {dt2key(): record}})
+
+                    LearnerBadgeDailyReport.update_or_create(course_key, course, user, progress['trophies_by_chapter'], report_needs_update)
+
+            else:
+                LearnerBadgeDailyReport.update_or_create(course_key, course, user, None, report_needs_update)
+            return report_needs_update
+        return False
+
+
+    @classmethod
+    def filter_by_day(cls, date_time=None, **kwargs):
+        key_day = dt2key(date_time) if date_time else None
+        reports = cls.objects.filter(**kwargs)
+        results = []
+        for r in reports:
+            results.append(LearnerCourseDailyReportMockup(r, key_day))
+        return results
+
+
+    @classmethod
+    def get_by_day(cls, date_time=None, **kwargs):
+        day = dt2key(date_time) if date_time else None
+        try:
+            r = cls.objects.get(**kwargs)
+            return LearnerCourseDailyReportMockup(r, key_day)
+        except cls.DoesNotExist:
+            return None
 
 
 class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
@@ -659,12 +931,121 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
 class LearnerSectionDailyReportMockup(object):
-    def __init__(self, learner_section_daily_report, total_time_spent):
-        self.course_id = learner_section_daily_report.course_id
-        self.user = learner_section_daily_report.user
-        self.section_key = learner_section_daily_report.section_key
-        self.section_name = learner_section_daily_report.section_name
-        self.total_time_spent = total_time_spent
+    def __init__(self, learner_section_json_report, key_day, total_time_spent=None):
+        self.user = learner_section_json_report.user
+        self.course_id = learner_section_json_report.course_id
+        self.section_key = learner_section_json_report.section_key
+        self.section_name = learner_section_json_report.section_name
+        if total_time_spent:
+            self.total_time_spent = total_time_spent
+        elif key_day:
+            if key_day in learner_section_json_report.records.keys():
+                self.total_time_spent = learner_section_json_report.records[key_day]['total_time_spent']
+            else:
+                self.total_time_spent = 0
+        else:
+            self.total_time_spent = learner_section_json_report.total_time_spent
+
+
+class LearnerSectionJsonReport(TimeStampedModel):
+    class Meta(object):
+        app_label = "triboo_analytics"
+        unique_together = ('user', 'course_id', 'section_key')
+        index_together = (['user', 'course_id', 'section_key'])
+
+    user = models.ForeignKey(User, null=False)
+    course_id = CourseKeyField(max_length=255, db_index=True, null=False)
+    section_key = models.CharField(max_length=100, null=False)
+    section_name = models.CharField(max_length=512, null=False)
+    total_time_spent = models.PositiveIntegerField(default=0)
+    records = models.JSONField(default=None, null=True)
+
+
+    @classmethod
+    def update_or_create(cls, last_analytics_success, enrollment, sections, needs_update):
+        for section_combined_url, section_combined_display_name in sections.iteritems():
+            report = None
+            try:
+                report = cls.objects.get(user=enrollment.user,
+                                         course_id=enrollment.course_id,
+                                         section_key=section_combined_url)
+            except cls.DoesNotExist:
+                pass
+
+            if needs_update or not report:
+                total_time_spent = (TrackingLog.objects.filter(user_id=enrollment.user.id,
+                                                           section=section_combined_url,
+                                                           time__gte=enrollment.created).aggregate(
+                                                               Sum('time_spent')).get('time_spent__sum') or 0)
+                total_time_spent = int(round(total_time_spent))
+                record = {"total_time_spent": total_time_spent}
+                if report:
+                    report.section_name = section_combined_display_name
+                    report.total_time_spent = record['total_time_spent']
+                    report.records[dt2key()] = record
+                    report.save()
+                else:
+                    cls.objects.update_or_create(user=enrollment.user,
+                                                 course_id=enrollment.course_id,
+                                                 section_key=section_combined_url,
+                                                 defaults={'section_name': section_combined_display_name,
+                                                           'total_time_spent': record['total_time_spent'],
+                                                           'records': {dt2key(): record}})
+            else:
+                report.records[dt2key()] = report.records[dt2key(last_analytics_success)]
+
+
+    @classmethod
+    def filter_by_day(cls, date_time=None, **kwargs):
+        key_day = dt2key(date_time) if date_time else None
+        reports = cls.objects.filter(**kwargs)
+        results = []
+        for r in reports:
+            results.append(LearnerSectionDailyReportMockup(r, key_day))
+        return results
+
+
+    @classmethod
+    def get_by_day(cls, date_time=None, **kwargs):
+        day = dt2key(date_time) if date_time else None
+        try:
+            r = cls.objects.get(**kwargs)
+            return LearnerSectionDailyReportMockup(r, key_day)
+        except cls.DoesNotExist:
+            return None
+
+
+    @classmethod
+    def filter_by_period(cls, course_id, date_time=None, period_start=None, **kwargs):
+        key_day = dt2key(date_time) if date_time else None
+        reports = cls.objects.filter(course_id=course_id, **kwargs)
+        results = []
+        for r in reports:
+            if period_start:
+                key_period_start = dt2key(period_start)
+                old_time_spent = 0
+                if key_period_start in r.records.keys():
+                    old_time_spent = r.records[key_period_start]['total_time_spent']
+                new_time_spent = r.total_time_spent
+                if key_day:
+                    if key_day in r.records.keys():
+                        new_time_spent = r.records[dt2key(date_time)]['total_time_spent']
+                    else:
+                        new_time_spent = 0
+                results.append(LearnerSectionDailyReportMockup(r, None, (new_time_spent - old_time_spent)))
+            else:
+                results.append(LearnerSectionDailyReportMockup(r, key_day))
+
+        dataset = {}
+        sections = {}
+        for res in results:
+            key = res.user.id
+            if key not in dataset.keys():
+                dataset[key] = {'user': res.user}
+            dataset[key][res.section_key] = res.total_time_spent
+            sections[res.section_key] = res.section_name
+
+        return dataset.values(), sections
 
 
 class LearnerSectionDailyReport(TimeModel, ReportMixin):
@@ -694,7 +1075,6 @@ class LearnerSectionDailyReport(TimeModel, ReportMixin):
             if len(section_combined_urls) == len(reports):
                 return
 
-        yesterday = timezone.now() + timezone.timedelta(days=-1)
         for section_combined_url, section_combined_display_name in sections.iteritems():
             total_time_spent = (TrackingLog.objects.filter(user_id=enrollment.user.id,
                                                            section=section_combined_url,
@@ -782,6 +1162,122 @@ class Badge(models.Model):
                                                        'threshold': (trophy['threshold'] * 100)})
 
         course_badges = cls.objects.filter(course_id=course_key).exclude(badge_hash__in=hashes).delete()
+
+class LearnerBadgeDailyReportMockup(object):
+    def __init__(self, learner_badge_json_report, key_day):
+        self.user = learner_badge_json_report.user
+        self.badge = learner_badge_json_report.badge
+        if key_day:
+            if key_day in learner_badge_json_report.records .keys():
+                self.score = learner_badge_json_report.records[key_day]['score']
+                self.success = learner_badge_json_report.records[key_day]['success']
+                self.success_date = learner_badge_json_report.records[key_day]['success_date']
+            else:
+                self.score = 0
+                self.success = 0
+                self.success_date = None
+        else:
+            self.score = learner_badge_json_report.score
+            self.success = learner_badge_json_report.success
+            self.success_date = learner_badge_json_report.success_date
+
+
+
+class LearnerBadgeJsonReport(UnicodeMixin, TimeStampedModel):
+    class Meta(object):
+       app_label = "triboo_analytics"
+       unique_together = ['user', 'badge']
+       index_together = ['user', 'badge']
+
+    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
+    badge = models.ForeignKey(Badge, null=False, on_delete=models.CASCADE)
+    score = models.FloatField(default=0, null=True, blank=True)
+    success = models.BooleanField(default=False)
+    success_date = models.DateTimeField(default=None, null=True, blank=True)
+    records = models.JSONField(default=None, null=True)
+
+
+    @classmethod
+    def update_or_create(cls, last_analytics_success, course_key, course, user, trophies_by_chapter, needs_update):
+        if not trophies_by_chapter:
+            progress = CourseGradeFactory().get_progress(user, course)
+            trophies_by_chapter = progress['trophies_by_chapter']
+
+        _successes = LearnerBadgeSuccess.objects.filter(badge__course_id=course_key, user=user)
+        successes = {s.badge.badge_hash: s.success_date for s in _successes}
+        for chapter in trophies_by_chapter:
+            for trophy in chapter['trophies']:
+                badge_hash = Badge.get_badge_hash(trophy['section_format'],
+                                                  chapter['url'],
+                                                  trophy['section_url'])
+                try:
+                    badge = Badge.objects.get(course_id=course_key, badge_hash=badge_hash)
+                except Badge.DoesNotExist:
+                    logger.error("user_id=%d - course=%s - progress trophy %s (%s %s) does not exist in Badge" % (
+                        user.id, course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
+                    continue
+
+                report = None
+                try:
+                    report = cls.objects.get(user=user, badge=badge)
+                except cls.DoesNotExist:
+                    pass
+
+                if needs_update or not report:
+                    score = trophy['result'] * 100
+                    success = True if score >= badge.threshold else False
+                    success_date = successes[badge_hash] if badge_hash in successes.keys() else None
+                    record = {"score": score,
+                              "success": success,
+                              "success_date": success_date}
+                    if report:
+                        report.score = record['score']
+                        report.success = record['success']
+                        report.success_date = record['success_date']
+                        report.records[dt2key()] = record
+                        report.save()
+                    else:
+                        cls.objects.update_or_create(user=user,
+                                                     badge=badge,
+                                                     defaults={'score': score,
+                                                               'success': success,
+                                                               'success_date': success_date
+                                                               'records': {dt2key(): record}})
+                else:
+                    report.records[dt2key()] = report.records[dt2key(last_analytics_success)]
+
+    @classmethod
+    def filter_by_day(cls, date_time=None, **kwargs):
+        key_day = dt2key(date_time) if date_time else None
+        reports = cls.objects.filter(**kwargs)
+        results = []
+        for r in reports:
+            results.append(LearnerBadgeDailyReportMockup(r, key_day))
+        return results
+
+
+    @classmethod
+    def get_by_day(cls, date_time=None, **kwargs):
+        day = dt2key(date_time) if date_time else None
+        try:
+            r = cls.objects.get(**kwargs)
+            return LearnerBadgeDailyReportMockup(r, key_day)
+        except cls.DoesNotExist:
+            return None
+            
+
+    @classmethod
+    def list_filter_by_day(cls, date_time=None, **kwargs):
+        results = cls.filter_by_day(date_time, **kwargs)
+        dataset = {}
+        for res in results:
+            key = res.user.id
+            if key not in dataset.keys():
+                dataset[key] = {'user': res.user}
+            dataset[key]["%s_success" % res.badge.badge_hash] = res.success
+            dataset[key]["%s_score" % res.badge.badge_hash] = res.score
+            dataset[key]["%s_successdate" % res.badge.badge_hash] = res.success_date
+        return dataset.values()
 
 
 class LearnerBadgeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
@@ -1624,7 +2120,7 @@ def generate_today_reports(multi_process=False):
     last_analytics_success = None
     last_reportlog = ReportLog.get_latest()
     if last_reportlog:
-        last_analytics_success = last_reportlog.created.date()
+        last_analytics_success = last_reportlog.created
 
     if last_analytics_success:
         LearnerSectionDailyReport.filter_by_day(timezone.now()).delete()
@@ -1702,6 +2198,6 @@ def check_generated_learner_course_reports(last_analytics_success, overviews, se
         else:
             course_ids_to_check = course_ids_nok
 
-
+    ReportLog.update_or_create(learner_course=timezone.now())
 
 
