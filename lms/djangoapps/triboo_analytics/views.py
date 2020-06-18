@@ -77,10 +77,10 @@ from models import (
     CourseDailyReport,
     IltLearnerReport,
     IltSession,
-    LearnerBadgeDailyReport,
-    LearnerCourseDailyReport,
+    LearnerBadgeJsonReport,
+    LearnerCourseJsonReport,
     LearnerDailyReport,
-    LearnerSectionDailyReport,
+    LearnerSectionJsonReport,
     LearnerVisitsDailyReport,
     MicrositeDailyReport,
     ReportLog,
@@ -264,9 +264,9 @@ def get_ilt_period_kwargs(data, orgs, as_string=False):
 
 
 def get_transcript_table(orgs, user_id, last_update, html_links=False, sort=None):
-    queryset = LearnerCourseDailyReport.objects.none()
+    queryset = []
     for org in orgs:
-        new_queryset = LearnerCourseDailyReport.filter_by_day(date_time=last_update, org=org, user_id=user_id)
+        new_queryset = LearnerCourseJsonReport.filter_by_day(date_time=last_update, org=org, user_id=user_id)
         queryset = queryset | new_queryset
     order_by = get_order_by(TranscriptTable, sort)
     return TranscriptTable(queryset, html_links=html_links, order_by=order_by), queryset
@@ -340,7 +340,7 @@ def get_progress_table_data(course_key, filter_kwargs, exclude, sort=None):
         return []
     course_filter = filter_kwargs.pop('course_id')
     filter_kwargs['badge__course_id'] = course_filter
-    dataset = LearnerBadgeDailyReport.list_filter_by_day(**filter_kwargs)
+    dataset = LearnerBadgeJsonReport.list_filter_by_day(**filter_kwargs)
     _badges = Badge.objects.filter(course_id=course_key).order_by('order')
     badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
     ProgressTable = get_progress_table_class(badges)
@@ -358,7 +358,7 @@ def get_time_spent_table_data(course_key, filter_kwargs, exclude, sort=None):
     if filter_kwargs.pop('invalid', False):
         return []
 
-    dataset, sections = LearnerSectionDailyReport.filter_by_period(**filter_kwargs)
+    dataset, sections = LearnerSectionJsonReport.filter_by_period(**filter_kwargs)
 
     ordered_chapters, ordered_sections = get_course_sections(course_key)
     table_sections = []
@@ -1079,7 +1079,7 @@ def course_view_data(request):
 
         if 'date_time' in filter_kwargs.keys():
             if report == "course_summary":
-                table = get_table_data(LearnerCourseDailyReport, CourseTable, filter_kwargs, exclude, sort=data.get('sort'))
+                table = get_table_data(LearnerCourseJsonReport, CourseTable, filter_kwargs, exclude, sort=data.get('sort'))
                 summary_columns = ['Progress',
                                    'Current Score',
                                    'Badges',
@@ -1387,7 +1387,7 @@ def course_export_table(request):
 
     if report == "course_summary":
         report_args.update({
-            'report_cls': LearnerCourseDailyReport.__name__,
+            'report_cls': LearnerCourseJsonReport.__name__,
             'table_cls': CourseTable.__name__
         })
         return _export_table(request, course_key, 'summary_report', report_args)
@@ -1576,7 +1576,7 @@ def customized_export_table(request):
                                                          with_period_start=False,
                                                          as_string=True)
             report_args = {
-                'report_cls': LearnerCourseDailyReport.__name__,
+                'report_cls': LearnerCourseJsonReport.__name__,
                 'filter_kwargs': filter_kwargs,
                 'courses_selected': courses_selected,
                 'date_time': date_time,
@@ -1674,7 +1674,7 @@ def customized_export_table_new(request):
                                                    with_period_start=False,
                                                    as_string=True)
         report_args = {
-            'report_cls': LearnerCourseDailyReport.__name__,
+            'report_cls': LearnerCourseJsonReport.__name__,
             'filter_kwargs': filter_kwargs,
             'courses_selected': courses_selected,
             'date_time': date_time,
