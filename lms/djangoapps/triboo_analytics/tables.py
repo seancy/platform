@@ -12,7 +12,7 @@ from .models import (
     CourseStatus,
     format_time_spent,
     get_badges,
-    LearnerCourseDailyReportMockup,
+    LearnerCourseJsonReport,
     LearnerDailyReport,
     IltSession,
     IltLearnerReport
@@ -133,7 +133,7 @@ class TranscriptTable(_OrderMixin, _RenderMixin, tables.Table):
                                      verbose_name='Course Title', empty_values=('', ))
 
     class Meta:
-        model = LearnerCourseDailyReportMockup
+        model = LearnerCourseJsonReport
         template = 'django_tables2/bootstrap.html'
         fields = ('course_title',
                   'status',
@@ -427,7 +427,7 @@ class CourseTable(_OrderMixin, _RenderMixin, LearnerBaseTable):
 
 
     class Meta:
-        model = LearnerCourseDailyReportMockup
+        model = LearnerCourseJsonReport
         template = 'django_tables2/bootstrap.html'
         fields = ('user_name',
                   'user_email',
@@ -481,7 +481,7 @@ class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
                                      verbose_name='Course Title', empty_values=('', ))
 
     class Meta:
-        model = LearnerCourseDailyReportMockup
+        model = LearnerCourseJsonReport
         template = 'django_tables2/bootstrap.html'
         fields = ('course_title',
                   'course_id',
