@@ -31088,8 +31088,8 @@ msgstr "Taille limite : "
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
-msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
-msgstr "Copiez l’URL Studio d’un fichier PDF déjà chargé dans <a href={course_url} target='_blank'>Fichiers & téléchargements</a>"
+msgid "Copy the Web URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "Copiez l’URL Web d’un fichier PDF déjà chargé dans <a href={course_url} target='_blank'>Fichiers & téléchargements</a>"
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
