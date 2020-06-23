@@ -28514,8 +28514,8 @@ msgstr "大小限制："
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
-msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
-msgstr "复制您之前在 <a href={course_url} target='_blank'>文件 & 上传</a> 中上传的 PDF 中的 Studio URL 地址"
+msgid "Copy the Web URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "复制您之前在 <a href={course_url} target='_blank'>文件 & 上传</a> 中上传的 PDF 中的 Web URL 地址"
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
