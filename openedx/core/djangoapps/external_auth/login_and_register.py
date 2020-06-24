@@ -64,7 +64,7 @@ def login(request):
         # SSL login doesn't require a view, so redirect
         # branding and allow that to process the login if it
         # is enabled and the header is in the request.
-        response = openedx.core.djangoapps.external_auth.views.redirect_with_get('branding_index', request.GET)
+        response = openedx.core.djangoapps.external_auth.views.redirect_with_get('root', request.GET)
     elif settings.FEATURES.get('AUTH_USE_CAS'):
         # If CAS is enabled, redirect auth handling to there
         response = redirect(reverse('cas-login'))
@@ -95,5 +95,5 @@ def register(request):
     if settings.FEATURES.get('AUTH_USE_CERTIFICATES_IMMEDIATE_SIGNUP'):
         # Redirect to branding to process their certificate if SSL is enabled
         # and registration is disabled.
-        response = openedx.core.djangoapps.external_auth.views.redirect_with_get('branding_index', request.GET)
+        response = openedx.core.djangoapps.external_auth.views.redirect_with_get('root', request.GET)
     return response

@@ -19,6 +19,7 @@ from branding.views import index
 from courseware.tests.helpers import LoginEnrollmentTestCase
 from edxmako.shortcuts import render_to_response
 from openedx.core.djangoapps.site_configuration.tests.mixins import SiteMixin
+from openedx.core.djangoapps.site_configuration.tests.test_util import with_site_configuration
 from util.milestones_helpers import set_prerequisite_courses
 from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
 from xmodule.modulestore.tests.factories import CourseFactory
@@ -61,26 +62,27 @@ class AnonymousIndexPageTest(ModuleStoreTestCase):
         test as it solves the issue in a different way
         """
         self.client.logout()
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FEATURES=FEATURES_WITH_STARTDATE)
     def test_anon_user_with_startdate_index(self):
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
     @override_settings(FEATURES=FEATURES_WO_STARTDATE)
     def test_anon_user_no_startdate_index(self):
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
+    @with_site_configuration(configuration={"ENABLE_BRANDING_PAGE": True})
     def test_allow_x_frame_options(self):
         """
         Check the x-frame-option response header
         """
 
         # check to see that the default setting is to ALLOW iframing
-        resp = self.client.get(reverse('branding_index'))
+        resp = self.client.get('/')
         self.assertEquals(resp['X-Frame-Options'], 'ALLOW')
 
     @override_settings(X_FRAME_OPTIONS='DENY')
@@ -90,15 +92,16 @@ class AnonymousIndexPageTest(ModuleStoreTestCase):
         """
 
         # check to see that the override value is honored
-        resp = self.client.get(reverse('branding_index'))
+        resp = self.client.get('/')
         self.assertEquals(resp['X-Frame-Options'], 'DENY')
 
+    @with_site_configuration(configuration={"ENABLE_BRANDING_PAGE": True})
     def test_edge_redirect_to_login(self):
         """
         Test edge homepage redirect to lms login.
         """
 
-        request = self.factory.get(reverse('branding_index'))
+        request = self.factory.get('/')
         request.user = AnonymousUser()
 
         # HTTP Host changed to edge.
@@ -150,7 +153,7 @@ class PreRequisiteCourseCatalog(ModuleStoreTestCase, LoginEnrollmentTestCase, Mi
         )
         set_prerequisite_courses(course.id, pre_requisite_courses)
 
-        resp = self.client.get(reverse('branding_index'))
+        resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
 
         # make sure both courses are visible in the catalog
@@ -205,7 +208,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         Asserts that the Course Discovery UI elements follow the
         feature flag settings
         """
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         # assert that the course discovery UI is not present
         self.assertNotIn('Search for a course', response.content)
@@ -226,12 +229,13 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
     @patch('courseware.views.views.render_to_response', RENDER_MOCK)
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': True})
     @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
+    @with_site_configuration(configuration={"ENABLE_BRANDING_PAGE": True})
     def test_course_discovery_on(self):
         """
         Asserts that the Course Discovery UI elements follow the
         feature flag settings
         """
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         # assert that the course discovery UI is not present
         self.assertIn('Search for a course', response.content)
@@ -253,7 +257,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': False})
     @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_course_cards_sorted_by_default_sorting(self):
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         ((template, context), _) = RENDER_MOCK.call_args  # pylint: disable=unpacking-non-sequence
         self.assertEqual(template, 'index.html')
@@ -282,7 +286,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
     @patch.dict('django.conf.settings.FEATURES', {'ENABLE_COURSE_DISCOVERY': False})
     @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_course_cards_sorted_by_start_date_disabled(self):
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         ((template, context), _) = RENDER_MOCK.call_args  # pylint: disable=unpacking-non-sequence
         self.assertEqual(template, 'index.html')
@@ -314,7 +318,7 @@ class IndexPageProgramsTests(SiteMixin, ModuleStoreTestCase):
     @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
     def test_get_programs_with_type_called(self):
         with patch('student.views.get_programs_with_type') as mock_get_programs_with_type:
-            response = self.client.get(reverse('branding_index'))
+            response = self.client.get('/')
             self.assertEqual(response.status_code, 200)
             mock_get_programs_with_type.assert_called_once()
 

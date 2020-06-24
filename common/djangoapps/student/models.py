@@ -1713,6 +1713,8 @@ class CourseEnrollment(models.Model):
 
     @classmethod
     def enrollments_for_user(cls, user):
+        if not user.is_authenticated:
+            return []
         return cls.objects.filter(user=user, is_active=1).select_related('user')
 
     @classmethod

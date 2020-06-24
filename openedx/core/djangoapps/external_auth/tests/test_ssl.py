@@ -41,7 +41,7 @@ CACHES_ENABLE_GENERAL = copy.deepcopy(settings.CACHES)
 CACHES_ENABLE_GENERAL['general']['BACKEND'] = 'django.core.cache.backends.locmem.LocMemCache'
 
 
-@override_settings(FEATURES=FEATURES_WITH_SSL_AUTH)
+@override_settings(FEATURES=FEATURES_WITH_SSL_AUTH, ENABLE_BRANDING_PAGE=True)
 @override_settings(CACHES=CACHES_ENABLE_GENERAL)
 class SSLClientTest(ModuleStoreTestCase):
     """

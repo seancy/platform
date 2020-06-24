@@ -11,6 +11,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.test import TestCase
+from django.test.utils import override_settings
 
 from branding.models import BrandingApiConfig
 from openedx.core.djangoapps.dark_lang.models import DarkLangConfig
@@ -303,13 +304,14 @@ class TestIndex(SiteMixin, TestCase):
 
     def test_index_does_not_redirect_without_site_override(self):
         """ Test index view does not redirect if MKTG_URLS['ROOT'] is not set """
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
+    @override_settings(ENABLE_BRANDING_PAGE=True)
     def test_index_redirects_to_marketing_site_with_site_override(self):
         """ Test index view redirects if MKTG_URLS['ROOT'] is set in SiteConfiguration """
         self.use_site(self.site_other)
-        response = self.client.get(reverse('branding_index'))
+        response = self.client.get('/')
         self.assertRedirects(
             response,
             self.site_configuration_other.values["MKTG_URLS"]["ROOT"],
