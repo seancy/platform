@@ -173,9 +173,9 @@ from xmodule.modulestore.django import modulestore
               <h2 class="header-last-activity">${_("Continue Learning...")}</h2>
             </header>
             <ul class="listing-last-activity">
-              % for course in last_activity_enrollments:
+              % for enrollment in last_activity_enrollments:
                 <%include file='dashboard/_dashboard_last_activity.html'
-                args='course=course, progress_summaries=progress_summaries'/>
+                args='enrollment=enrollment, progress_summaries=progress_summaries'/>
               % endfor
             </ul>
           </div>

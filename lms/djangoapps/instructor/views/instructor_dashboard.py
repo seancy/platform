@@ -42,7 +42,7 @@ from django_comment_client.utils import available_division_schemes, has_forum_ac
 from django_comment_common.models import FORUM_ROLE_ADMINISTRATOR, CourseDiscussionSettings
 from edxmako.shortcuts import render_to_response
 from lms.djangoapps.courseware.module_render import get_module_by_usage_id
-from lms.djangoapps.courseware.views.views import get_resume_course_url
+from lms.djangoapps.courseware.views.views import get_last_accessed_courseware
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from openedx.core.djangoapps.course_groups.cohorts import DEFAULT_COHORT_NAME, get_course_cohorts, is_course_cohorted
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
@@ -317,7 +317,7 @@ def instructor_dashboard_2(request, course_id):
 
     certificate_invalidations = CertificateInvalidation.get_certificate_invalidations(course_key)
 
-    resume_course_url = get_resume_course_url(request, course)
+    resume_course_url = get_last_accessed_courseware(request, course)
 
     progress = CourseGradeFactory().get_course_completion_percentage(
                                         request.user, course.id)

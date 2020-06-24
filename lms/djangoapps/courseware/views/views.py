@@ -340,16 +340,40 @@ def jump_to(_request, course_id, location):
     return redirect(redirect_url)
 
 
-def get_resume_course_url(request, course):
-    resume_course_url = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
-    if not isinstance(request.user, AnonymousUser):
-        course_outline_root_block = get_course_outline_block_tree(request, text_type(course.id))
-        resume_block = get_resume_block(course_outline_root_block) if course_outline_root_block else None
-        if resume_block:
-            resume_course_url = resume_block['lms_web_url']
-        elif course_outline_root_block:
-            resume_course_url = course_outline_root_block['lms_web_url']
-    return resume_course_url
+# def get_resume_course_url(request, course):
+#     resume_course_url = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
+#     if not isinstance(request.user, AnonymousUser):
+#         course_outline_root_block = get_course_outline_block_tree(request, text_type(course.id))
+#         resume_block = get_resume_block(course_outline_root_block) if course_outline_root_block else None
+#         if resume_block:
+#             resume_course_url = resume_block['lms_web_url']
+#         elif course_outline_root_block:
+#             resume_course_url = course_outline_root_block['lms_web_url']
+#     return resume_course_url
+
+
+def get_last_accessed_courseware(request, course, user=None):
+    """
+    Returns the courseware module URL that the user last accessed, or None if it cannot be found.
+    """
+    user = user if user else request.user
+    field_data_cache = FieldDataCache.cache_for_descriptor_descendents(
+        course.id, user, course, depth=2
+    )
+    course_module = get_module_for_descriptor(
+        user, request, course, field_data_cache, course.id, course=course
+    )
+    chapter_module = get_current_child(course_module)
+    if chapter_module is not None:
+        section_module = get_current_child(chapter_module)
+        if section_module is not None:
+            url = reverse('courseware_section', kwargs={
+                'course_id': text_type(course.id),
+                'chapter': chapter_module.url_name,
+                'section': section_module.url_name
+            })
+            return url
+    return reverse(course_home_url_name(course.id), args=[text_type(course.id)])
 
 
 @ensure_csrf_cookie
@@ -361,29 +385,6 @@ def course_info(request, course_id):
 
     Assumes the course_id is in a valid format.
     """
-    # TODO: LEARNER-611: This can be deleted with Course Info removal.  The new
-    #    Course Home is using its own processing of last accessed.
-    def get_last_accessed_courseware(course, request, user):
-        """
-        Returns the courseware module URL that the user last accessed, or None if it cannot be found.
-        """
-        field_data_cache = FieldDataCache.cache_for_descriptor_descendents(
-            course.id, request.user, course, depth=2
-        )
-        course_module = get_module_for_descriptor(
-            user, request, course, field_data_cache, course.id, course=course
-        )
-        chapter_module = get_current_child(course_module)
-        if chapter_module is not None:
-            section_module = get_current_child(chapter_module)
-            if section_module is not None:
-                url = reverse('courseware_section', kwargs={
-                    'course_id': text_type(course.id),
-                    'chapter': chapter_module.url_name,
-                    'section': section_module.url_name
-                })
-                return url
-        return None
 
     course_key = CourseKey.from_string(course_id)
 
@@ -491,7 +492,7 @@ def course_info(request, course_id):
         context['resume_course_url'] = None
         # TODO: LEARNER-611: Remove enable_course_home_improvements
         if SelfPacedConfiguration.current().enable_course_home_improvements:
-            context['resume_course_url'] = get_last_accessed_courseware(course, request, user)
+            context['resume_course_url'] = get_last_accessed_courseware(request, course, user=user)
 
         if not check_course_open_for_learner(user, course):
             # Disable student view button if user is staff and
@@ -544,7 +545,7 @@ class StaticCourseTabView(EdxFragmentView):
             )
 
             if show_courseware_link:
-                resume_course_url = get_resume_course_url(request, course)
+                resume_course_url = get_last_accessed_courseware(request, course)
 
                 if not isinstance(request.user, AnonymousUser):
                     progress = CourseGradeFactory().get_course_completion_percentage(
@@ -709,7 +710,7 @@ class CourseTabView(EdxFragmentView):
             )
 
             if show_courseware_link:
-                resume_course_url = get_resume_course_url(request, course)
+                resume_course_url = get_last_accessed_courseware(request, course)
 
                 if not isinstance(request.user, AnonymousUser):
                     progress = CourseGradeFactory().update_course_completion_percentage(course.id, request.user)
@@ -878,7 +879,7 @@ def course_about(request, course_id):
         studio_url = get_studio_url(course, 'settings/details')
 
         if has_access(request.user, 'load', course):
-            course_target = get_resume_course_url(request, course)
+            course_target = get_last_accessed_courseware(request, course)
         else:
             course_target = reverse('about_course', args=[text_type(course.id)])
 
@@ -1027,7 +1028,7 @@ def course_print(request, course_id):
         studio_url = get_studio_url(course, 'settings/details')
 
         if has_access(request.user, 'load', course):
-            course_target = get_resume_course_url(request, course)
+            course_target = get_last_accessed_courseware(request, course)
         else:
             course_target = reverse('about_course', args=[text_type(course.id)])
 
@@ -1252,7 +1253,7 @@ def _progress(request, course_key, student_id):
     )
 
     if has_access(request.user, 'load', course):
-        course_target = get_resume_course_url(request, course)
+        course_target = get_last_accessed_courseware(request, course)
     else:
         course_target = reverse('about_course', args=[text_type(course.id)])
 

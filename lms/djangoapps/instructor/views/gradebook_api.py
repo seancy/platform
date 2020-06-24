@@ -12,7 +12,7 @@ from django.views.decorators.cache import cache_control
 from opaque_keys.edx.keys import CourseKey
 
 from courseware.courses import get_course_with_access
-from courseware.views.views import get_resume_course_url
+from courseware.views.views import get_last_accessed_courseware
 from edxmako.shortcuts import render_to_response
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from lms.djangoapps.instructor.views.api import require_level
@@ -142,7 +142,7 @@ def spoc_gradebook(request, course_id):
             else:
                 page_url = page_url + '?'
 
-        resume_course_url = get_resume_course_url(request, course)
+        resume_course_url = get_last_accessed_courseware(request, course)
         progress = CourseGradeFactory().get_course_completion_percentage(
                                         request.user, course.id)
         progress = int(progress * 100)
