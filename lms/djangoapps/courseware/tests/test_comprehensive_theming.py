@@ -7,6 +7,7 @@ from django.urls import reverse
 from path import Path
 
 import edxmako
+from openedx.core.djangoapps.site_configuration.tests.test_util import with_site_configuration
 from openedx.core.djangoapps.theming.tests.test_util import with_comprehensive_theme
 from openedx.core.lib.tempdir import create_symlink, delete_symlink, mkdtemp_clean
 
@@ -22,17 +23,19 @@ class TestComprehensiveTheming(TestCase):
         staticfiles.finders.get_finder.cache_clear()
 
     @with_comprehensive_theme('red-theme')
+    @with_site_configuration(configuration={"ENABLE_BRANDING_PAGE": True})
     def test_red_footer(self):
         """
         Tests templates from theme are rendered if available.
         `red-theme` has header.html and footer.html so this test
         asserts presence of the content from header.html and footer.html
         """
-        resp = self.client.get(reverse('branding_index'))
+        resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
         # This string comes from footer.html
         self.assertContains(resp, "super-ugly")
 
+    @with_site_configuration(configuration={"ENABLE_BRANDING_PAGE": True})
     def test_theme_outside_repo(self):
         # Need to create a temporary theme, and defer decorating the function
         # until it is done, which leads to this strange nested-function style
@@ -54,7 +57,7 @@ class TestComprehensiveTheming(TestCase):
         @with_comprehensive_theme(tmp_theme)
         def do_the_test(self):
             """A function to do the work so we can use the decorator."""
-            resp = self.client.get(reverse('branding_index'))
+            resp = self.client.get('/')
             self.assertEqual(resp.status_code, 200)
             self.assertContains(resp, "TEMPORARY THEME")
 

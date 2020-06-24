@@ -544,6 +544,6 @@ class TestInstructorDashboardPerformance(ModuleStoreTestCase, LoginEnrollmentTes
 
         # check MongoDB calls count
         url = reverse('spoc_gradebook', kwargs={'course_id': self.course.id})
-        with check_mongo_calls(26):
+        with check_mongo_calls(27):
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)

@@ -520,21 +520,21 @@ def sort_by_last_block_completed(user, course_enrollments):
     return sorted(last_activity_enrollments, key=sort_order, reverse=True)
 
 
-def get_course_resume_url(user, course_enrollment):
-    """
-    Get the resume url for courseware.
-    """
-    try:
-        block_key = get_key_to_last_completed_course_block(
-            user, course_enrollment.course_id)
-        url_to_block = reverse('jump_to',
-                               kwargs={
-                                   'course_id': course_enrollment.course_id,
-                                   'location': block_key
-                               })
-    except UnavailableCompletionData:
-        url_to_block = ''
-    return url_to_block
+# def get_course_resume_url(user, course_enrollment):
+#     """
+#     Get the resume url for courseware.
+#     """
+#     try:
+#         block_key = get_key_to_last_completed_course_block(
+#             user, course_enrollment.course_id)
+#         url_to_block = reverse('jump_to',
+#                                kwargs={
+#                                    'course_id': course_enrollment.course_id,
+#                                    'location': block_key
+#                                })
+#     except UnavailableCompletionData:
+#         url_to_block = ''
+#     return url_to_block
 
 
 def get_cms_course_link(course, page='course'):

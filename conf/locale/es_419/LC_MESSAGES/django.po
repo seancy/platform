@@ -21996,7 +21996,7 @@ msgstr "Moneda"
 
 #: lms/templates/courseware/program_marketing.html:116
 msgid "Start Learning"
-msgstr "Empezar Aprendizaje"
+msgstr "Iniciar Aprendizaje"
 
 #: lms/templates/courseware/program_marketing.html:124
 msgid "Play"
@@ -30408,3 +30408,75 @@ msgstr "Su módulo de aprendizaje electrónico se ha abierto en una nueva pesta�
 #: scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "Comenzar"
+
+# master-griky: lms/templates/header/navbar-not-authenticated.html
+msgid "What is Griky?"
+msgstr "¿Qué es Griky?"
+
+# master-griky: lms/templates/header/navbar-not-authenticated.html
+msgid "Create an Account"
+msgstr "CREAR UNA CUENTA"
+
+# master-griky: lms/templates/index.html
+msgid "Learn new skills, pursue your interests, advance your career."
+msgstr "Aprende nuevas habilidades, persigue tus intereses, avanza en tu carrera."
+
+# master-griky: lms/templates/index.html
+msgid "Join millions of apprentices and Grikys on the largest online learning platform in Latin America."
+msgstr "Únete a millones de aprendices y Grikys en la plataforma en línea de aprendizaje más grande de América Latina."
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "TO LEARN YOU HAVE TO INVEST"
+msgstr "PARA APRENDER HAY QUE INVERTIR"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "But not so much!"
+msgstr "¡Pero no tanto!"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "We understand that you want to educate yourself to improve your income, therefore <b>we design a payment system that does not imply going into debt for years or sacrificing all your money.</b>"
+msgstr "Entendemos que quieres educarte para mejorar tus ingresos, por lo tanto <b>diseñamos un sistema de pago que no implica endeudarte por años ni sacrificar todo tu dinero.</b>"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Basic courses"
+msgstr "Cursos básicos"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Unlimited programs"
+msgstr "Programas ilimitados"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Interact with teachers and peers"
+msgstr "Interactúa con profesores y compañeros"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "One (1) program of your choice"
+msgstr "Un (1) programa a tu elección"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to 5 basic courses"
+msgstr "Acceso a 5 cursos básicos"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Premium programs"
+msgstr "Programas premium"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "A password reset email has been sent to the email address you provided."
+msgstr "Se ha enviado un correo electrónico de restablecimiento de contraseña a la dirección de correo electrónico que proporcionó."
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Hello {full_name}, you have successfully subscribed to the {plan_name} plan."
+msgstr "Hola {full_name}, te has suscrito con éxito al plan {plan_name}."
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Subscription ID"
+msgstr "ID de suscripción"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Chargebee Account"
+msgstr "Cuenta Chargebee"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Update Plan"
+msgstr "Plan de actualización"

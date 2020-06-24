@@ -528,14 +528,15 @@ def _get_urls_for_resume_buttons(user, enrollments):
     '''
     resume_button_urls = []
     for enrollment in enrollments:
-        try:
-            block_key = get_key_to_last_completed_course_block(user, enrollment.course_id)
-            url_to_block = reverse(
-                'jump_to',
-                kwargs={'course_id': enrollment.course_id, 'location': block_key}
-            )
-        except UnavailableCompletionData:
-            url_to_block = ''
+        # try:
+        #     block_key = get_key_to_last_completed_course_block(user, enrollment.course_id)
+        #     url_to_block = reverse(
+        #         'jump_to',
+        #         kwargs={'course_id': enrollment.course_id, 'location': block_key}
+        #     )
+        # except UnavailableCompletionData:
+        #     url_to_block = ''
+        url_to_block = reverse('openedx.course_experience.course_home', args=[enrollment.course_id])
         resume_button_urls.append(url_to_block)
     return resume_button_urls
 

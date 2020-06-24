@@ -106,7 +106,7 @@ class EmbargoMiddlewareAccessTests(UrlResetMixin, ModuleStoreTestCase):
 
         # Check that access is enforced
         response = self.client.get(
-            reverse('branding_index'),
+            '/',
             HTTP_X_FORWARDED_FOR=request_ip,
             REMOTE_ADDR=request_ip
         )
