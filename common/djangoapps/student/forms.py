@@ -128,6 +128,9 @@ class PasswordCreateResetFormNoActive(PasswordResetForm):
         Generates a one-use only link for resetting password and sends to the
         user.
         """
+
+        from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
+
         # This import is here because we are copying and modifying the .save from Django 1.4.5's
         # django.contrib.auth.forms.PasswordResetForm directly, which has this import in this place.
         # from django.core.mail import send_mail
@@ -148,7 +151,7 @@ class PasswordCreateResetFormNoActive(PasswordResetForm):
                 'request': request,  # Used by google_analytics_tracking_pixel
                 # TODO: This overrides `platform_name` from `get_base_template_context` to make the tests passes
                 'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
-                'email_from_alias': configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS),
+                'email_from_alias': from_alias,
                 'user_email': user.email,
                 'course_name': self.course_name,
                 'language': get_user_email_language(user),

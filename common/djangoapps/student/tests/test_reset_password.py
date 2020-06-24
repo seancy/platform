@@ -142,6 +142,8 @@ class ResetPasswordTests(EventTestMixin, CacheIsolationTestCase):
         self.assertIn('e-mailed you instructions for setting your password', obj['value'])
 
         from_email = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
+        from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
+        from_email = "{alias} <{email}>".format(alias=from_alias, email=from_email)
         sent_message = mail.outbox[0]
 
         bodies = {
@@ -256,7 +258,10 @@ class ResetPasswordTests(EventTestMixin, CacheIsolationTestCase):
         self.assert_event_emitted(
             SETTING_CHANGE_INITIATED, user_id=self.user.id, setting=u'password', old=None, new=None
         )
-        self.assertEqual(sent_message.from_email, "no-reply@fakeuniversity.com")
+
+        from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
+        from_email = "{alias} <{email}>".format(alias=from_alias, email="no-reply@fakeuniversity.com")
+        self.assertEqual(sent_message.from_email, from_email)
 
     @ddt.data(
         ('invalidUid', 'invalid_token'),
