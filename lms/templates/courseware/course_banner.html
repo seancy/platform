@@ -39,11 +39,11 @@ from six import string_types
               duration_availability = False
               if course_duration:
                   duration_context = course_duration.strip().split(' ')
-                  duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
+                  duration_availability = len(duration_context) == 2
         %>
         % if duration_availability:
         <%
-              duration = int(duration_context[0])
+              duration = duration_context[0]
               duration_unit = duration_context[1]
         %>
           <li class="duration">
