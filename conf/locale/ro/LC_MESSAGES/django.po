@@ -15600,6 +15600,7 @@ msgid_plural "{num} minutes"
 msgstr[0] ""
 msgstr[1] ""
 
+
 #: lms/templates/courseware/course_banner.html:30
 #: lms/templates/dashboard/_dashboard_course_listing.html:226
 msgid "{num} hour"

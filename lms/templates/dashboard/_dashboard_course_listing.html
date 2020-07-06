@@ -225,7 +225,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
             %>
             % if duration_availability:
             <%
-                  duration = duration_context[0]
+                  duration = float(duration_context[0]) if '.' in duration_context[0] else int(duration_context[0])
                   duration_unit = duration_context[1]
             %>
             <div class="duration">
