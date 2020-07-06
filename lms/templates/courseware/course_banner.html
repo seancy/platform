@@ -43,7 +43,7 @@ from six import string_types
         %>
         % if duration_availability:
         <%
-              duration = duration_context[0]
+              duration = float(duration_context[0]) if '.' in duration_context[0] else int(duration_context[0])
               duration_unit = duration_context[1]
         %>
           <li class="duration">
