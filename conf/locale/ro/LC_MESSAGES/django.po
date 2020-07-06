@@ -15597,8 +15597,9 @@ msgstr ""
 #: lms/templates/dashboard/_dashboard_course_listing.html:224
 msgid "{num} minute"
 msgid_plural "{num} minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{num} minute"
+msgstr[1] "{num} minutes"
+
 
 #: lms/templates/courseware/course_banner.html:30
 #: lms/templates/dashboard/_dashboard_course_listing.html:226
