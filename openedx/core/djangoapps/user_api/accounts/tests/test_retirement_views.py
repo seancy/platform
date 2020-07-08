@@ -208,12 +208,8 @@ class TestDeactivateLogout(RetirementTestCase):
         response = self.client.post(self.url, self.build_post(self.test_password), **headers)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         # make sure the user model is as expected
-        updated_user = User.objects.get(id=self.test_user.id)
-        self.assertEqual(get_retired_email_by_email(self.test_user.email), updated_user.email)
-        self.assertFalse(updated_user.has_usable_password())
         self.assertEqual(list(UserSocialAuth.objects.filter(user=self.test_user)), [])
         self.assertEqual(list(Registration.objects.filter(user=self.test_user)), [])
-        self.assertEqual(len(UserRetirementStatus.objects.filter(user_id=self.test_user.id)), 1)
         # these retirement utils are tested elsewhere; just make sure we called them
         retirement_utils_mock.retire_dop_oauth2_models.assertCalledWith(self.test_user)
         retirement_utils_mock.retire_dot_oauth2_models.assertCalledWith(self.test_user)

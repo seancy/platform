@@ -14,6 +14,7 @@ from django.contrib.auth import authenticate, get_user_model, logout
 from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.db import transaction
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 from edx_ace import ace
 from edx_ace.recipient import Recipient
@@ -33,6 +34,7 @@ from wiki.models import ArticleRevision
 from wiki.models.pluginbase import RevisionPluginRevision
 
 from entitlements.models import CourseEntitlement
+from lms.djangoapps.grades.models import PersistentCourseGrade, PersistentCourseProgress, PersistentSubsectionGrade
 from openedx.core.djangoapps.ace_common.template_context import get_base_template_context
 from openedx.core.djangoapps.api_admin.models import ApiAccessRequest
 from openedx.core.djangoapps.credit.models import CreditRequirementStatus, CreditRequest
@@ -61,6 +63,7 @@ from student.models import (
     is_username_retired
 )
 from student.views.login import AuthFailedError, LoginFailures
+from track.backends.django import TrackingLog
 
 from ..errors import AccountUpdateError, AccountValidationError, UserNotAuthorized, UserNotFound
 from ..models import (
@@ -430,17 +433,18 @@ class DeactivateLogoutView(APIView):
                 # Unlink LMS social auth accounts
                 UserSocialAuth.objects.filter(user_id=request.user.id).delete()
                 # Change LMS password & email
-                user_email = request.user.email
-                request.user.email = get_retired_email_by_email(request.user.email)
-                request.user.save()
-                _set_unusable_password(request.user)
+                user = request.user
+                user_email = user.email
+                user.email = get_retired_email_by_email(user.email)
+                user.save()
+                _set_unusable_password(user)
                 # TODO: Unlink social accounts & change password on each IDA.
                 # Remove the activation keys sent by email to the user for account activation.
-                Registration.objects.filter(user=request.user).delete()
+                Registration.objects.filter(user=user).delete()
                 # Add user to retirement queue.
                 # Delete OAuth tokens associated with the user.
-                retire_dop_oauth2_models(request.user)
-                retire_dot_oauth2_models(request.user)
+                retire_dop_oauth2_models(user)
+                retire_dot_oauth2_models(user)
 
                 try:
                     # Send notification email to user
@@ -459,6 +463,12 @@ class DeactivateLogoutView(APIView):
 
                 # Log the user out.
                 logout(request)
+
+                try:
+                    _delete_user(user)
+                except Exception as e:
+                    log.exception('Error deleting user account')
+                    raise
             return Response(status=status.HTTP_204_NO_CONTENT)
         except KeyError:
             return Response(u'Username not specified.', status=status.HTTP_404_NOT_FOUND)
@@ -508,6 +518,22 @@ class DeactivateLogoutView(APIView):
             LoginFailures.increment_lockout_counter(user)
 
         raise AuthFailedError(_('Email or password is incorrect.'))
+
+
+def _delete_user(user):
+    course_grades = PersistentCourseGrade.objects.filter(user_id=user.id)
+    course_progresses = PersistentCourseProgress.objects.filter(user_id=user.id)
+    subsection_grades = PersistentSubsectionGrade.objects.filter(user_id=user.id)
+    course_grades.delete()
+    course_progresses.delete()
+    subsection_grades.delete()
+    user.delete()
+    TrackingLog.objects.create(
+        username=user.username,
+        event="user_deletion",
+        time=timezone.now(),
+        event_source="server"
+    )
 
 
 def _set_unusable_password(user):
