@@ -30418,12 +30418,12 @@ msgid "Create an Account"
 msgstr "CREAR UNA CUENTA"
 
 # master-griky: lms/templates/index.html
-msgid "Learn new skills, pursue your interests, advance your career."
-msgstr "Aprende nuevas habilidades, persigue tus intereses, avanza en tu carrera."
+msgid "Give play to your learning!"
+msgstr "¡Dale play a tu aprendizaje!"
 
 # master-griky: lms/templates/index.html
-msgid "Join millions of apprentices and Grikys on the largest online learning platform in Latin America."
-msgstr "Únete a millones de aprendices y Grikys en la plataforma en línea de aprendizaje más grande de América Latina."
+msgid "May your learning never stop! Join Griky today and enjoy content playlists created for YOU. Learn at your own pace and from anywhere."
+msgstr "¡Que tu aprendizaje no se detenga nunca! Únete a Griky hoy y disfruta de playlists de contenido creados para TI. Aprende a tu ritmo y desde cualquier lugar."
 
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "TO LEARN YOU HAVE TO INVEST"
