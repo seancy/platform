@@ -27,21 +27,20 @@ def setup():
     config_body = {
         "settings": {
             "analysis": {
-                "filter": {
-                    "partword_filter": {
-                        "type": "nGram",
-                        "min_gram": 2,
-                        "max_gram": 50
-                    }
-                },
                 "analyzer": {
                     "partword": {
                         "type": "custom",
-                        "tokenizer": "standard",
+                        "tokenizer": "partword_tokenizer",
                         "filter": [
-                            "lowercase",
-                            "partword_filter"
+                            "lowercase"
                         ]
+                    }
+                },
+                "tokenizer": {
+                    "partword_tokenizer": {
+                        "type": "nGram",
+                        "min_gram": 1,
+                        "max_gram": 50
                     }
                 }
             }
