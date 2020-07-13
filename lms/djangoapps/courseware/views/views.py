@@ -2387,11 +2387,16 @@ def ilt_validation_request_data(request):
     ).only("value", "usage_id")
 
     for module in all_ilt_modules:
+        course_id = module.usage_id.course_key
         deadline = ilt_modules_info[module.usage_id]['deadline']
         info = get_ilt_module_info(module, deadline)
         ilt_modules_info[module.usage_id]['sessions'].extend(info['sessions'])
         ilt_modules_info[module.usage_id]['dropdown_list'] = info['dropdown_list']
         ilt_modules_info[module.usage_id]['raw'] = info['raw']
+        if unicode(course_id) in result["session_info"]:
+            result["session_info"][unicode(course_id)][unicode(module.usage_id)] = info['raw']
+        else:
+            result["session_info"][unicode(course_id)] = {unicode(module.usage_id): info['raw']}
 
     for ilt_enrollment in all_ilt_enrollments:
         data = json.loads(ilt_enrollment.value)
@@ -2399,10 +2404,6 @@ def ilt_validation_request_data(request):
         module_info = ilt_modules_info[ilt_enrollment.usage_id]
         user_list = module_info['enrollment_user_list']
         sessions_info = ilt_modules_info[ilt_enrollment.usage_id]['raw']
-        if unicode(course_id) in result["session_info"]:
-            result["session_info"][unicode(course_id)][unicode(ilt_enrollment.usage_id)] = sessions_info
-        else:
-            result["session_info"][unicode(course_id)] = {unicode(ilt_enrollment.usage_id): sessions_info}
         for k, v in data.items():
             start_at = sessions_info[k]['start_at']
             available_seats = sessions_info[k]['available_seats']

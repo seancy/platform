@@ -40,11 +40,13 @@ from openedx.features.course_experience.views.course_sock import CourseSockFragm
 from openedx.features.enterprise_support.api import data_sharing_consent_required
 from shoppingcart.models import CourseRegistrationCode
 from student.views import is_course_blocked
+from triboo_analytics.models import LeaderBoard
 from util.views import ensure_valid_course_key
 from xmodule.modulestore.django import modulestore
 from xmodule.vertical_block import VerticalBlock
 from xmodule.x_module import STUDENT_VIEW
 from .views import CourseTabView
+from ..models import StudentModule
 from ..access import has_access
 from ..access_utils import check_course_open_for_learner
 from ..courses import get_course_with_access, get_current_child, get_studio_url
@@ -114,6 +116,18 @@ class CoursewareIndex(View):
         try:
             set_custom_metrics_for_course_key(self.course_key)
             self._clean_position()
+            if request.user.is_authenticated and not StudentModule.objects.filter(student=request.user).exists():
+                leader_board, _ = LeaderBoard.objects.update_or_create(
+                    defaults={"first_course_opened": True},
+                    user=request.user
+                )
+                log.info(
+                    "updated first_course_opened of leaderboard score "
+                    "for user: {user_id}, course_id: {course_id}".format(
+                        user_id=request.user.id,
+                        course_id=course_id
+                    )
+                )
             with modulestore().bulk_operations(self.course_key):
                 self.course = get_course_with_access(
                     request.user, 'load', self.course_key,

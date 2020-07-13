@@ -15,15 +15,11 @@ from six import text_type
 from course_modes.models import CourseMode
 from django_comment_common.models import assign_default_role
 from django_comment_common.utils import seed_permissions_roles
-from lms.djangoapps.triboo_analytics.models import (
-    LearnerCourseDailyReport,
-    LearnerSectionReport,
-    CourseDailyReport
-)
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 from student import auth
 from student.models import CourseEnrollment
 from student.roles import CourseInstructorRole, CourseStaffRole
+from util.course import remove_course_reports
 from xmodule.modulestore import ModuleStoreEnum
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError
@@ -83,15 +79,6 @@ def remove_all_instructors(course_key):
     staff_role.remove_users(*staff_role.users_with_role())
     instructor_role = CourseInstructorRole(course_key)
     instructor_role.remove_users(*instructor_role.users_with_role())
-
-
-def remove_course_reports(course_key):
-    """
-    Delete all reports related to the course.
-    """
-    LearnerCourseDailyReport.objects.filter(course_id=course_key).delete()
-    LearnerSectionReport.objects.filter(course_id=course_key).delete()
-    CourseDailyReport.objects.filter(course_id=course_key).delete()
 
 
 def delete_course(course_key, user_id, keep_instructors=False, **kwargs):

@@ -59,7 +59,7 @@ class SubmitCompletionTestCase(CompletionSetUpMixin, TestCase):
         self.set_up_completion()
 
     def test_changed_value(self):
-        with self.assertNumQueries(4):  # Get, update, 2 * savepoints
+        with self.assertNumQueries(8):  # Get, update, 2 * savepoints
             completion, isnew = models.BlockCompletion.objects.submit_completion(
                 user=self.user,
                 course_key=self.block_key.course_key,
@@ -98,7 +98,7 @@ class SubmitCompletionTestCase(CompletionSetUpMixin, TestCase):
 
     def test_new_block(self):
         newblock = UsageKey.from_string(u'block-v1:edx+test+run+type@video+block@puppers')
-        with self.assertNumQueries(4):  # Get, update, 2 * savepoints
+        with self.assertNumQueries(8):  # Get, update, 2 * savepoints
             _, isnew = models.BlockCompletion.objects.submit_completion(
                 user=self.user,
                 course_key=newblock.course_key,

@@ -1,0 +1,85 @@
+<%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
+<%!
+  from django.utils.translation import ugettext as _, ungettext, gettext
+  from django.core.urlresolvers import reverse
+  from django.template import Template, Context
+  from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+  from openedx.core.djangolib.markup import HTML
+  from webpack_loader.templatetags.webpack_loader import render_bundle
+%>
+
+<%block name="pagetitle">${_("LeaderBoard")}</%block>
+<%block name="bodyclass">view-in-analytics</%block>
+
+${HTML(render_bundle('LeaderBoard'))}
+${HTML(render_bundle('ReactRenderer'))}
+<div id="leader-board"></div>
+<script type="text/javascript">
+  const leaderBoardData = {
+    missionConfig: {
+      first_login: {
+          times: 10,
+          message: gettext('Logging into Triboo, for the first time')
+      },
+      everyday_least_30: {
+          times: 5,
+          message: gettext('Logging into Triboo everyday, for at least 30 minutes')
+      },
+      answering_non_graded: {
+          times: 1,
+          message: gettext('Answering non-graded activity')
+      },
+      answering_graded: {
+          times: 3,
+          message: gettext('Answering graded activity')
+      },
+      unit_completed: {
+          times: 1,
+          message: gettext('Awarded points on completion of each unit')
+      },
+      accessing_first_course: {
+          times: 5,
+          message: gettext('Accessing the first course')
+      },
+      course_completed: {
+          times: 15,
+          message: gettext('Completion of each course')
+      },
+    },
+
+    //data
+    lastUpdate: '2044-11-21 21:30:00',
+    totalUser: 1200,
+    mission:{
+      /*first_login: true,
+      everyday_least_30: 12,
+      answering_non_graded: 15,
+      answering_graded: 2,
+      unit_completed: 30,
+      accessing_first_course: true,
+      course_completed: false,*/
+    },
+    list:[
+     /* { DateStr:'2020-02-10', Points:1000, Name:'John Doe', Portrait:'aa.png', OrderStatus:'up' },
+      { DateStr:'2020-02-10', Points:900, Name:'Serenity Lane', Portrait:'aa.png', OrderStatus:'down' },
+      { DateStr:'2020-02-10', Points:800, Name:'Devon Black', Portrait:'aa.png', OrderStatus:'eq' },
+      { DateStr:'2020-02-10', Points:700, Name:'Francisco Cooper', Portrait:'aa.png' },
+      { DateStr:'2020-02-10', Points:500, Name:'Victoria Hawkins', Portrait:'aa.png' },
+      { DateStr:'2020-02-10', Points:499, Name:'Lily Richards', Portrait:'aa.png' },
+      { DateStr:'2020-02-10', Points:300, Name:'Bernard Wilson', Portrait:'aa.png' },
+      { DateStr:'2020-02-10', Points:200, Name:'Devon Black', Portrait:'aa.png' },
+      { DateStr:'2020-02-10', Points:100, Name:'Courtney Simmmons', Portrait:'aa.png' },
+      { DateStr:'2020-02-10', Points:10, Name:'Brandie Mckinney', Portrait:'aa.png' },
+      { DateStr:'2020-02-10', Points:1, Name:'Randall Edwards', Portrait:'aa.png', Active:true },*/
+    ]
+  }
+  new ReactRenderer({
+    component: LeaderBoard,
+    selector: '#leader-board',
+    componentName: 'LeaderBoard',
+    props: {
+      ...leaderBoardData
+    }
+  });
+</script>

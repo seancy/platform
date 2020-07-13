@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import functools
 import json
 import logging
@@ -50,6 +53,7 @@ from django_comment_common.signals import (
 from django_comment_common.utils import ThreadContext
 import eventtracking
 from lms.djangoapps.courseware.exceptions import CourseAccessRedirect
+from triboo_analytics.models import LeaderBoard
 from util.file import store_uploaded_file
 
 log = logging.getLogger(__name__)
@@ -322,6 +326,21 @@ def create_thread(request, course_id, commentable_id):
 
     track_thread_created_event(request, course, thread, follow)
 
+    leader_board, created = LeaderBoard.objects.get_or_create(
+        defaults={"non_graded_completed": 1},
+        user=request.user
+    )
+    if not created:
+        leader_board.non_graded_completed = leader_board.non_graded_completed + 1
+        leader_board.save()
+    log.info(
+        "updated non_graded activity of leaderboard score for user: {user_id}, activity: "
+        "created thread, course_id: {course_id}, commentable_id: {commentable_id}".format(
+            user_id=user.id,
+            course_id=course_id,
+            commentable_id=commentable_id
+        ))
+
     if request.is_ajax():
         return ajax_content_response(request, course_key, data)
     else:
@@ -423,6 +442,22 @@ def _create_comment(request, course_key, thread_id=None, parent_id=None):
         cc_user.follow(comment.thread)
 
     track_comment_created_event(request, course, comment, comment.thread.commentable_id, followed)
+
+    leader_board, created = LeaderBoard.objects.get_or_create(
+        defaults={"non_graded_completed": 1},
+        user=request.user
+    )
+    if not created:
+        leader_board.non_graded_completed = leader_board.non_graded_completed + 1
+        leader_board.save()
+    log.info(
+        "updated non_graded activity of leaderboard score for user: {user_id}, activity: "
+        "comment reply, course_id: {course_id}, thread_id: {thread_id}, parent_id: {parent_id}".format(
+            user_id=user.id,
+            course_id=course_key,
+            thread_id=thread_id,
+            parent_id=parent_id
+        ))
 
     if request.is_ajax():
         return ajax_content_response(request, course_key, comment.to_dict())

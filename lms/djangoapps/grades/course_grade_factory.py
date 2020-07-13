@@ -221,6 +221,7 @@ class CourseGradeFactory(object):
         return course_grade
 
     def update_course_completion_percentage(self, course_key, user, course_grade=None, enrollment=None):
+        from triboo_analytics.models import LeaderBoard
         course_usage_key = modulestore().make_course_usage_key(course_key)
         overrides = PersistentSubsectionGradeOverride.objects.filter(
             grade__user_id=user.id,
@@ -248,11 +249,32 @@ class CourseGradeFactory(object):
                         enrollment.save()
                         log.info(
                             "Create completion date for user id %d / %s: %s" % (user.id, course_key, completion_date))
+                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                        leader_board.course_completed = leader_board.course_completed + 1
+                        leader_board.save()
+                        log.info(
+                            "updated course completed of leaderboard score "
+                            "for user: {user_id}, course_id: {course_id}".format(
+                                user_id=user.id,
+                                course_id=course_key
+                            )
+                        )
                 else:
                     if enrollment.completed:
                         enrollment.completed = None
                         enrollment.save()
                         log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
+                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                        if leader_board.course_completed > 0:
+                            leader_board.course_completed = leader_board.course_completed - 1
+                            leader_board.save()
+                        log.info(
+                            "updated course completed (-1) of leaderboard score "
+                            "for user: {user_id}, course_id: {course_id}".format(
+                                user_id=user.id,
+                                course_id=course_key
+                            )
+                        )
             except AttributeError:
                 pass
         else:
@@ -265,11 +287,31 @@ class CourseGradeFactory(object):
                         enrollment.save()
                         log.info("Create completion date for user id %d / %s: %s" % (
                             user.id, course_key, completion_date))
+                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                        leader_board.course_completed = leader_board.course_completed + 1
+                        leader_board.save()
+                        log.info(
+                            "updated course completed of leaderboard score "
+                            "for user: {user_id}, course_id: {course_id}".format(
+                                user_id=user.id,
+                                course_id=course_key
+                            )
+                        )
                 else:
                     if enrollment.completed:
                         enrollment.completed = None
                         enrollment.save()
                         log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
+                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                        leader_board.course_completed = leader_board.course_completed - 1
+                        leader_board.save()
+                        log.info(
+                            "updated course completed (-1) of leaderboard score "
+                            "for user: {user_id}, course_id: {course_id}".format(
+                                user_id=user.id,
+                                course_id=course_key
+                            )
+                        )
             except AttributeError:
                 pass
         if should_persist_grades(course_key):
