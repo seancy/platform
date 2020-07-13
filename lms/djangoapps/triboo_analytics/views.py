@@ -126,7 +126,7 @@ def analytics_full_member_required(func):
 
 
 def day2str(day):
-    return day.strftime("NUMBERIC_SHORT_DATE")
+    return day.strftime("%Y-%m-%d")
 
 
 def dt2str(daytime):
