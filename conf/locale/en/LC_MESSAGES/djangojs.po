@@ -11357,3 +11357,76 @@ msgstr ""
 msgid "Time format HH:MM expected"
 msgstr ""
 
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Leaderboard"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Show more"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Position"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Points"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Ranking"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Missions"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
+msgstr ""
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "All"
+msgstr ""
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Week"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Month"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "You have won ${value} point(s)."
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo, for the first time"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering non-graded activity"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering graded activity"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Awarded points on completion of each unit"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Accessing the first course"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Completion of each course"
+msgstr ""

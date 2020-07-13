@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^learner/export/$', views.learner_export_table, name='analytics_learner_export'),
     url(r'^course/export/$', views.course_export_table, name='analytics_course_export'),
 
+    url(r'^leaderboard/json/$', views.leaderboard_data, name='analytics_leaderboard_data'),
     url(r'^ilt/$', views.ilt_view, name='analytics_ilt'),
     url(r'^ilt/export/$', views.ilt_export_table, name='analytics_ilt_export'),
+    url(r'^leaderboard/$', views.leaderboard_view, name='analytics_leaderboard'),
 ]

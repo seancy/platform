@@ -12461,3 +12461,76 @@ msgstr "Axe de développement"
 msgid "Time format HH:MM expected"
 msgstr ""
 
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Leaderboard"
+msgstr "Leaderboard"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Show more"
+msgstr "Voir plus"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Position"
+msgstr "Position"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Points"
+msgstr "Points"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Ranking"
+msgstr "Classement"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Missions"
+msgstr "Missions"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
+msgstr "Il y a au total ${totalUser} utilisateurs dans ce classement. Dernière mise à jour: ${lastUpdate}."
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "All"
+msgstr "Classement total"
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Week"
+msgstr "Semaine"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Month"
+msgstr "Mois"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "You have won ${value} point(s)."
+msgstr "Vous avez gagné ${value} point(s)."
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo, for the first time"
+msgstr "Connexion à la plateforme pour la première fois"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgstr "Connexion quotidienne successive pendant 30 minutes"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering non-graded activity"
+msgstr "Complétion d'un quiz d'entrainement"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering graded activity"
+msgstr "Obtention d'un badge"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Awarded points on completion of each unit"
+msgstr "Point bonus de complétion d'une unité"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Accessing the first course"
+msgstr "Accès à un cours"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Completion of each course"
+msgstr "Complétion d'un cours"

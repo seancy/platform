@@ -52,7 +52,11 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
         % endif
     </div>
     <div class="mobile-menu hidden" aria-label=${_("More Options")} role="menu" id="mobile-menu"></div>
+    % if configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
+    <div class="userinfo-mobile-menu leaderboard-nav"></div>
+    % else:
     <div class="userinfo-mobile-menu"></div>
+    % endif
 </header>
 
 % if course:

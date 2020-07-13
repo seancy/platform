@@ -24,11 +24,20 @@ from openedx.core.djangolib.markup import HTML, Text
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
 from student.models import CourseEnrollment
 from xmodule.modulestore.django import modulestore
+
+## import json
+from openedx.core.djangolib.markup import HTML
+from webpack_loader.templatetags.webpack_loader import render_bundle
+##import urlparse
 %>
 
 <%
   cert_name_short = settings.CERT_NAME_SHORT
   cert_name_long = settings.CERT_NAME_LONG
+  enable_leaderboard = configuration_helpers.get_value("ENABLE_LEADERBOARD", False)
+  enable_last_activity = configuration_helpers.get_value('ENABLE_LAST_ACTIVITY', settings.FEATURES.get('ENABLE_LAST_ACTIVITY', False))
+  courses_are_browsable = configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False))
+  can_discover_courses = settings.FEATURES.get('ENABLE_COURSE_DISCOVERY')
 %>
 
 
@@ -162,13 +171,12 @@ from xmodule.modulestore.django import modulestore
               <p>${_("posts")}</p>
             </div>
             % endif
-
-            <a class="flat-button view-transcript" href="${reverse('analytics_my_transcript')}" title="${_('Access to my learning experience')}"><i class="far fa-analytics"></i>${_("View my learning transcript")}</a>
           </section>
         </section>
 
-        % if last_activity_enrollments:
-          <div class="last-activity skeleton">
+        <section class="last-activity-and-leader-board">
+          % if last_activity_enrollments:
+            <div class="last-activity skeleton">
             <header class="wrapper-header-last-activity">
               <h2 class="header-last-activity">${_("Continue Learning...")}</h2>
             </header>
@@ -179,7 +187,66 @@ from xmodule.modulestore.django import modulestore
               % endfor
             </ul>
           </div>
-        % endif
+          % elif enable_leaderboard:
+            <div class="last-activity skeleton">
+              <header class="wrapper-header-last-activity">
+                <h2 class="header-last-activity">${_("Continue Learning...")}</h2>
+              </header>
+              <div class="no-activity">
+                <div class="text-wrapper">
+                  <p>${_("No Activity")}</p>
+                  % if enable_last_activity:
+                    <h2>${_("It's your first time here,")}</h2>
+                  % endif
+                  <h2>${_("Let's start a lesson")}</h2>
+                  % if can_discover_courses and courses_are_browsable:
+                    <a class="start-explore" href="/courses">${_("Let's start")}</a>
+                  %endif
+                </div>
+              </div>
+            </div>
+          % endif
+
+          % if enable_leaderboard:
+          ${HTML(render_bundle('LeaderBoard'))}
+          ${HTML(render_bundle('ReactRenderer'))}
+          <div id="leader-side-board"></div>
+          <script type="text/javascript">
+            const leaderBoardData = {
+              list: [
+                {
+                    Name:'Sabrina Doe',
+                    Points:103
+                },
+                {
+                    Name:'Madeleine Richard',
+                    Points:101
+                },
+                {
+                    Name:'Pierre-Emile',
+                    Points:98
+                },
+                {
+                    Name:'Jacques',
+                    Points:96
+                },
+                {
+                    Name:'Celine',
+                    Points:90
+                },
+              ]
+            }
+            new ReactRenderer({
+              component: LeaderSideBoard,
+              selector: '#leader-side-board',
+              componentName: 'LeaderSideBoard',
+              props: {
+                ...leaderBoardData
+                }
+            });
+          </script>
+          % endif
+        </section>
 
         <div class="my-courses swiper-container" id="my-courses">
           % if display_dashboard_courses:
@@ -271,8 +338,7 @@ from xmodule.modulestore.django import modulestore
                 % if empty_dashboard_message:
                   <p class="custom-message">${empty_dashboard_message | n, decode.utf8}</p>
                 %endif
-                % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
-                  and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+                % if courses_are_browsable and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]:
                   <a class="btn btn-primary" href="${marketing_link('COURSES')}">
                     ${_("Explore courses")}
                   </a>
@@ -318,6 +384,81 @@ from xmodule.modulestore.django import modulestore
             <div class="swiper-pagination"></div>
           % endif
         </div>
+
+        <script type="text/javascript">
+            var slidesNumber = $('.my-courses > .listing-courses > .course-item').length;
+            var slidesNumberBookmark = $('.my-bookmarks > .listing-bookmarks > .bookmark-item').length;
+
+            function shouldInit(number) {
+              return ((document.body.offsetWidth < 768) && (number > 1))
+                    || ((document.body.offsetWidth < 992) && (number > 2))
+                    || ((document.body.offsetWidth < 1200) && (number > 3))
+                    || ((document.body.offsetWidth >= 1200))
+            }
+
+            if (shouldInit(slidesNumber)) {
+              courseSwiperInit();
+            }
+
+            if (shouldInit(slidesNumberBookmark)) {
+              bookmarkSwiperInit();
+            }
+
+            function courseSwiperInit(){
+              new Swiper('.my-courses', {
+                  slidesPerView: 'auto',
+                  spaceBetween: 13,
+                  slidesOffsetAfter:160,
+
+                  navigation: {
+                    nextEl: '.my-courses .swiper-button-next',
+                    prevEl: '.my-courses .swiper-button-prev',
+                  },
+                  pagination: {
+                    el: '.my-courses .swiper-pagination',
+                    clickable: true,
+                  },
+              });
+            }
+
+            function bookmarkSwiperInit(){
+                new Swiper('.my-bookmarks', {
+                  slidesPerView: 'auto',
+                  spaceBetween: 13,
+                  slidesOffsetAfter: 160,
+
+                  navigation: {
+                    nextEl: '.my-bookmarks .swiper-button-next',
+                    prevEl: '.my-bookmarks .swiper-button-prev',
+                  },
+                  pagination: {
+                    el: '.my-bookmarks .swiper-pagination',
+                    clickable: true,
+                  },
+              });
+            }
+
+            $(".my-courses .swiper-button-next").on("click",function(){
+                var courseSwiper = document.querySelector('.my-courses').swiper
+                var width = courseSwiper.slides.outerWidth()
+                var index = courseSwiper.realIndex
+                var translate = courseSwiper.translate
+                console.log('wid', width, 'index', index, 'translate', translate)
+            })
+
+            $(".my-bookmarks .swiper-button-next").on("click",function(){
+                var bookmarkSwiper = document.querySelector('.my-bookmarks').swiper
+                var space_between = bookmarkSwiper.params.spaceBetween
+                var width = bookmarkSwiper.slides.outerWidth()
+                var index = bookmarkSwiper.activeIndex
+                var translate = bookmarkSwiper.translate
+                var border_left = parseInt($('.bookmark-item').css("border-left-width"))
+                var border_right = parseInt($('.bookmark-item').css("border-right-width"))
+                console.log('width', width, 'index', index, 'translate', translate)
+            })
+
+        </script>
+
 
         % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
           <div class="ilt-calendar" id="ilt-calendar">

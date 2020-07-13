@@ -27,6 +27,7 @@ module.exports = Merge.smart(commonConfig, {
                 test: /(.scss|.css)$/,
                 include: [
                     /paragon/,
+                    /node_modules/,
                     /font-awesome/,
                     /lms\/static/
                 ],
@@ -35,6 +36,7 @@ module.exports = Merge.smart(commonConfig, {
                     {
                         loader: 'css-loader',
                         options: {
+                            url: false,
                             sourceMap: true,
                             localIdentName: '[name]__[local]'
                         }

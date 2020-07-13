@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.urlresolvers import reverse
 from django.db import transaction
+from django.db.models import Max
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import redirect
 from django.utils import timezone
@@ -28,6 +29,7 @@ from opaque_keys.edx.keys import CourseKey, UsageKey
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.content.course_structures.api.v0 import api
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
 from courseware.courses import get_course_by_id
 from courseware.module_render import toc_for_course
 from lms.djangoapps.grades.constants import ScoreDatabaseTableEnum
@@ -72,7 +74,9 @@ from models import (
     MicrositeDailyReport,
     CountryDailyReport,
     IltSession,
-    IltLearnerReport
+    IltLearnerReport,
+    LeaderBoard,
+    LeaderBoardView
 )
 from tasks import generate_export_table as generate_export_table_task, links_for, \
     send_waiver_request_email
@@ -86,6 +90,10 @@ from tables import (
     IltLearnerTable,
     UserBaseTable
 )
+from util.date_utils import strftime_localized
+
+DEFAULT_LEADERBOARD_TOP = 10
+LEADERBOARD_DASHBOARD_TOP = 5
 
 logger = logging.getLogger('triboo_analytics')
 
@@ -118,7 +126,7 @@ def analytics_full_member_required(func):
 
 
 def day2str(day):
-    return day.strftime("%Y-%m-%d")
+    return day.strftime("NUMBERIC_SHORT_DATE")
 
 
 def dt2str(daytime):
@@ -1264,3 +1272,97 @@ def ilt_export_table(request):
     return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
 
 
+@login_required
+@require_GET
+def leaderboard_data(request):
+    if not configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
+        return JsonResponse(status=404)
+    data = {}
+    top_list = []
+    period = request.GET.get('period')
+    top = int(request.GET.get('top', DEFAULT_LEADERBOARD_TOP))
+    query_set = LeaderBoardView.objects.all().select_related('user__profile')
+    total_user = query_set.count()
+    if period in ['week', 'month']:
+        order_by = '-current_{}_score'.format(period)
+        query_set = query_set.order_by(order_by)
+    else:
+        query_set = query_set.order_by('-total_score')
+
+    result_set = query_set[:top] if top <= total_user else query_set
+    if top == LEADERBOARD_DASHBOARD_TOP:
+        for i in result_set:
+            detail = {"Points": i.total_score, "Name": i.user.profile.name or i.user.username,
+                      "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
+                      "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_DATE_TIME")}
+            top_list.append(detail)
+        return JsonResponse({"list": top_list})
+    else:
+        request_user_included = False
+        real_time_rank = 0
+        for i in result_set:
+            status = None
+            real_time_rank += 1
+            if period == "month":
+                point = i.current_month_score
+                if i.last_month_rank == 0 or i.last_month_rank > real_time_rank:
+                    status = "up"
+                elif i.last_month_rank == real_time_rank:
+                    status = "eq"
+                else:
+                    status = "down"
+            elif period == "week":
+                point = i.current_week_score
+                if i.last_week_rank == 0 or i.last_week_rank > real_time_rank:
+                    status = "up"
+                elif i.last_week_rank == real_time_rank:
+                    status = "eq"
+                else:
+                    status = "down"
+            else:
+                point = i.total_score
+            detail = {"Points": point, "Name": i.user.profile.name or i.user.username, "Rank": real_time_rank,
+                      "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
+                      "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE")}
+            if status and real_time_rank <= 3:
+                detail["OrderStatus"] = status
+            if i.user == request.user:
+                detail["Active"] = True
+                data["mission"] = i.get_leaderboard_detail()
+                request_user_included = True
+            top_list.append(detail)
+        if not request_user_included and top < total_user:
+            personal_rank = top
+            for i in query_set[top:]:
+                personal_rank += 1
+                if i.user == request.user:
+                    if period == "month":
+                        point = i.current_month_score
+                    elif period == "week":
+                        point = i.current_week_score
+                    else:
+                        point = i.total_score
+                    detail = {"Points": point, "Name": i.user.profile.name or i.user.username,
+                              "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
+                              "Active": True, "Rank": personal_rank,
+                              "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE")}
+                    top_list.append(detail)
+                    data["mission"] = i.get_leaderboard_detail()
+                    break
+
+    last_updated = query_set.aggregate(Max("last_updated"))
+
+    data.update({
+        "list": top_list,
+        "lastUpdate": strftime_localized(last_updated['last_updated__max'], "NUMBERIC_DATE_TIME"),
+        "totalUser": total_user
+    })
+    return JsonResponse(data)
+
+
+@login_required
+def leaderboard_view(request):
+    if not configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
+        raise Http404
+    data = {}
+    return render_to_response("triboo_analytics/leaderboard.html", data)
