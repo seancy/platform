@@ -1,4 +1,4 @@
-CREATE ALGORITHM=UNDEFINED DEFINER=`learning-customer2_admin`@`%` SQL SECURITY DEFINER VIEW `triboo_analytics_leaderboardview` AS
+CREATE VIEW `triboo_analytics_leaderboardview` AS
   SELECT
     `triboo_analytics_leaderboard`.`id` AS `id`,
     `triboo_analytics_leaderboard`.`user_id` AS `user_id`,
