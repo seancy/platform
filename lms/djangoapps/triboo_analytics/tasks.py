@@ -200,7 +200,7 @@ def generate_export_table(entry_id, xmodule_instance_args):
     return run_main_task(entry_id, task_fn, action_name)
 
 
-@receiver(post_save, sender=BlockCompletion)
+# @receiver(post_save, sender=BlockCompletion)
 def handle_leader_board_activity(sender, instance, **kwargs):
     if not instance.completion:
         return
