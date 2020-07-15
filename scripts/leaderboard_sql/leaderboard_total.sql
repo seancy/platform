@@ -1,4 +1,4 @@
-CREATE ALGORITHM=UNDEFINED DEFINER=`learning-customer2_admin`@`%` SQL SECURITY DEFINER VIEW `triboo_analytics_leaderboard_total` AS
+CREATE VIEW `triboo_analytics_leaderboard_total` AS
 SELECT
   `tl`.`user_id` AS `user_id`,
   `tl`.`first_login` * 10 + `tl`.`first_course_opened` * 5 + `tl`.`stayed_online` * 5 + `tl`.`non_graded_completed` + `tl`.`graded_completed` * 3 + `tl`.`unit_completed` + `tl`.`course_completed` * 15 AS `total_score`

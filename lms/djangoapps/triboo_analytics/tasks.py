@@ -12,6 +12,7 @@ from completion.models import BlockCompletion
 from course_blocks.api import get_course_blocks
 from six import text_type
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -26,7 +27,7 @@ from lms.djangoapps.instructor_task.models import ReportStore
 from lms.djangoapps.instructor_task.tasks_base import BaseInstructorTask, TASK_LOG
 from lms.djangoapps.instructor_task.tasks_helper.runner import run_main_task
 from lms.djangoapps.instructor_task.tasks_helper.utils import REPORT_REQUESTED_EVENT_NAME
-from opaque_keys.edx.keys import CourseKey
+from opaque_keys.edx.keys import CourseKey, UsageKey
 from student.models import CourseEnrollment
 from track.backends.django import TrackingLog
 from util.file import course_filename_prefix_generator
@@ -200,14 +201,14 @@ def generate_export_table(entry_id, xmodule_instance_args):
 
 
 @receiver(post_save, sender=BlockCompletion)
-def handle_leader_board_activity(**kwargs):
-    instance = kwargs['instance']
+def handle_leader_board_activity(sender, instance, **kwargs):
     if not instance.completion:
         return
     else:
         update_leader_board_activity.apply_async(
             kwargs={
-                "completion_id": instance.id
+                "block_id": unicode(instance.block_key),
+                "user_id": instance.user_id
             }
         )
 
@@ -216,79 +217,88 @@ def handle_leader_board_activity(**kwargs):
     bind=True,
     base=LoggedPersistOnFailureTask,
     time_limit=300,
-    max_retries=2,
+    max_retries=3,
     default_retry_delay=40,
     routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
 )
 def update_leader_board_activity(self, **kwargs):
-    completion_id = kwargs.get('completion_id')
-    instance = BlockCompletion.objects.get(id=completion_id)
-    logger.info("#### {} #####".format(instance.block_key))
-    user = instance.user
-    block = modulestore().get_item(instance.block_key)
-    vertical_block = modulestore().get_item(block.parent)
+    logger.info("#### {} #####".format(kwargs.get('block_id')))
+    block_key = UsageKey.from_string(kwargs.get('block_id'))
+    user = User.objects.get(id=kwargs.get('user_id'))
+    block = modulestore().get_item(block_key)
     leader_board = None
-    if instance.block_type in ['survey', 'poll', 'word_cloud']:
+    if block_key.block_type in ['survey', 'poll', 'word_cloud']:
         leader_board, _ = models.LeaderBoard.objects.get_or_create(user=user)
         leader_board.non_graded_completed = leader_board.non_graded_completed + 1
         logger.info("updated non_graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
             user_id=user.id,
-            block_id=instance.block_key
+            block_id=block_key
         ))
         leader_board.save()
-    elif instance.block_type == 'problem':
+    elif block_key.block_type == 'problem':
         leader_board, _ = models.LeaderBoard.objects.get_or_create(user=user)
-        if block.weight == 0:
+        if not block.graded:
             leader_board.non_graded_completed = leader_board.non_graded_completed + 1
             logger.info(
                 "updated non_graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
                     user_id=user.id,
-                    block_id=instance.block_key
+                    block_id=block_key
                 ))
         else:
-            sequential = vertical_block.parent
-            subsection_structure = get_course_blocks(user, sequential)
-            subsection_data = subsection_structure[sequential]
-            if subsection_data.fields['format'] is None:
+            if block.weight == 0:
                 leader_board.non_graded_completed = leader_board.non_graded_completed + 1
                 logger.info(
                     "updated non_graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
                         user_id=user.id,
-                        block_id=instance.block_key
+                        block_id=block_key
                     ))
             else:
-                subsection_grade_factory = SubsectionGradeFactory(user, course_structure=subsection_structure)
+                course_structure = get_course_blocks(user, block_key)
+                subsection_grade_factory = SubsectionGradeFactory(user, course_structure=course_structure)
                 subsection_grade = subsection_grade_factory.update(
-                    subsection_structure[instance.block_key], persist_grade=False
+                    course_structure[block_key], persist_grade=False
                 )
                 if subsection_grade.all_total.possible == 0:
                     leader_board.non_graded_completed = leader_board.non_graded_completed + 1
                     logger.info(
-                        "updated non_graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
+                        "updated non_graded activity of leaderboard score for user: {user_id}, "
+                        "block_id: {block_id}".format(
                             user_id=user.id,
-                            block_id=instance.block_key
+                            block_id=block_key
                         ))
                 else:
                     leader_board.graded_completed = leader_board.graded_completed + 1
                     logger.info(
                         "updated graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
                             user_id=user.id,
-                            block_id=instance.block_key
+                            block_id=block_key
                         )
                     )
+
         leader_board.save()
+
+    vertical_block = modulestore().get_item(block.parent)
+    if block.parent.block_type == "library_content":
+        vertical_block = modulestore().get_item(vertical_block.parent)
 
     unit_completion_event = TrackingLog.objects.filter(
         username=user.username,
-        event_type=unicode(block.parent),
+        event_type=unicode(vertical_block.location),
         event="unit_completion"
     )
     if not unit_completion_event.exists():
+        course_block_completions = BlockCompletion.get_course_completions(user, block_key.course_key)
         children = vertical_block.children
-        course_block_completions = BlockCompletion.get_course_completions(user, instance.block_key.course_key)
-        completed = True
+        for child in children[:]:
+            if child.block_type == 'library_content':
+                lib_content_block = modulestore().get_item(child)
+                children.extend(lib_content_block.children)
+        if children:
+            completed = True
+        else:
+            completed = False
         for child in children:
-            if child.block_type == 'discussion':
+            if child.block_type in ['discussion', 'library_content']:
                 continue
             completion = course_block_completions.get(child, None)
             if not completion:
@@ -303,13 +313,14 @@ def update_leader_board_activity(self, **kwargs):
                     leader_board, _ = models.LeaderBoard.objects.get_or_create(user=user)
                 leader_board.unit_completed = leader_board.unit_completed + 1
                 leader_board.save()
-                logger.info("updated unit completed of leaderboard score for user: {user_id}, block_id: {block_id}".format(
-                    user_id=user.id,
-                    block_id=block.parent
-                ))
+                logger.info("updated unit completed of leaderboard score for user: {user_id}, "
+                            "block_id: {block_id}".format(
+                                user_id=user.id,
+                                block_id=vertical_block.location
+                            ))
                 TrackingLog.objects.create(
                     username=user.username,
-                    event_type=unicode(block.parent),
+                    event_type=unicode(vertical_block.location),
                     event="unit_completion",
                     time=timezone.now(),
                     event_source="server"
@@ -317,10 +328,10 @@ def update_leader_board_activity(self, **kwargs):
             else:
                 logger.info("user: {user_id}, cache key is found; unit is already completed, {key}".format(
                     user_id=user.id,
-                    key=instance.block_key
+                    key=vertical_block.location
                 ))
     else:
         logger.info("user: {user_id}, unit is already completed, {key}".format(
             user_id=user.id,
-            key=instance.block_key
+            key=vertical_block.location
         ))

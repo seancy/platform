@@ -268,13 +268,13 @@ class CourseGradeFactory(object):
                         if leader_board.course_completed > 0:
                             leader_board.course_completed = leader_board.course_completed - 1
                             leader_board.save()
-                        log.info(
-                            "updated course completed (-1) of leaderboard score "
-                            "for user: {user_id}, course_id: {course_id}".format(
-                                user_id=user.id,
-                                course_id=course_key
+                            log.info(
+                                "updated course completed (-1) of leaderboard score "
+                                "for user: {user_id}, course_id: {course_id}".format(
+                                    user_id=user.id,
+                                    course_id=course_key
+                                )
                             )
-                        )
             except AttributeError:
                 pass
         else:
@@ -303,15 +303,16 @@ class CourseGradeFactory(object):
                         enrollment.save()
                         log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
                         leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
-                        leader_board.course_completed = leader_board.course_completed - 1
-                        leader_board.save()
-                        log.info(
-                            "updated course completed (-1) of leaderboard score "
-                            "for user: {user_id}, course_id: {course_id}".format(
-                                user_id=user.id,
-                                course_id=course_key
+                        if leader_board.course_completed > 0:
+                            leader_board.course_completed = leader_board.course_completed - 1
+                            leader_board.save()
+                            log.info(
+                                "updated course completed (-1) of leaderboard score "
+                                "for user: {user_id}, course_id: {course_id}".format(
+                                    user_id=user.id,
+                                    course_id=course_key
+                                )
                             )
-                        )
             except AttributeError:
                 pass
         if should_persist_grades(course_key):
