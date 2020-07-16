@@ -1345,6 +1345,25 @@ def check_generated_learner_course_reports(last_analytics_success, overviews, se
             course_ids_to_check = course_ids_nok
 
 
+class LeaderboardActivityLog(TimeStampedModel):
+    """
+    We use this model to track leaderboard activities instead of TrackingLog.
+    Event type could be 'unit_completion', 'online_check'.
+    """
+    user_id = models.PositiveIntegerField(db_index=True)
+    event_type = models.CharField(max_length=512)
+    event_time = models.DateTimeField(db_index=True)
+    block_key = UsageKeyField(max_length=255, blank=True, null=True)
+    course_key = CourseKeyField(max_length=255, blank=True, null=True, db_index=True)
+
+    class Meta(object):
+        app_label = "triboo_analytics"
+        index_together = [
+            ('user_id', 'event_type'),
+            ('user_id', 'event_type', 'block_key')
+        ]
+
+
 class LeaderBoard(TimeStampedModel):
     user = models.OneToOneField(User, db_index=True, on_delete=models.CASCADE)
     first_login = models.BooleanField(default=False)
@@ -1467,22 +1486,22 @@ class LeaderBoard(TimeStampedModel):
                             completed = False
                     if completed:
                         unit_completed += 1
-                        unit_completion_event = TrackingLog.objects.filter(
-                            username=user.username,
-                            event_type=unicode(block_id),
-                            event="unit_completion"
+                        unit_completion_event = LeaderboardActivityLog.objects.filter(
+                            user_id=user.id,
+                            event_type="unit_completion",
+                            block_key=block_id
                         )
                         if unit_completion_event.exists():
                             logger.warn(
                                 "unit already completed before. "
                                 "user: {user_id}, block_id: {block_id}".format(user_id=user.id, block_id=block_id))
                         else:
-                            TrackingLog.objects.create(
-                                username=user.username,
-                                event_type=unicode(block_id),
-                                event="unit_completion",
-                                time=timezone.now(),
-                                event_source="server"
+                            LeaderboardActivityLog.objects.create(
+                                user_id=user.id,
+                                event_type="unit_completion",
+                                block_key=block_id,
+                                course_key=course_key,
+                                event_time=timezone.now()
                             )
                             logger.info(
                                 "updated unit completed of leaderboard score for "
@@ -1498,13 +1517,16 @@ class LeaderBoard(TimeStampedModel):
             last_online_check = query["modified__max"]
         else:
             last_online_check = ReportLog.objects.latest().learner_visit
-        TrackingLog.objects.update_or_create(defaults={
-            "username": user.username,
-            "event_type": "online_check",
-            "event": "online_check",
-            "time": last_online_check,
-            "event_source": "server"
-        }, username=user.username, event_type="online_check")
+
+        LeaderboardActivityLog.objects.update_or_create(
+            user_id=user.id,
+            event_type="online_check",
+            defaults={
+                "user_id": user.id,
+                "event_type": "online_check",
+                "event_time": last_online_check
+            }
+        )
         logger.info("online_check updated for user: {user_id}, last_check: {last}".format(
             user_id=user.id,
             last=last_online_check
@@ -1550,11 +1572,12 @@ class LeaderBoard(TimeStampedModel):
     def update_stayed_online(cls):
         users = User.objects.filter(is_active=True)
         for user in users:
-            tracking_log = TrackingLog.objects.filter(
-                username=user.username, event_type="online_check"
+            tracking_log = LeaderboardActivityLog.objects.filter(
+                user_id=user.id,
+                event_type="online_check"
             )
             if tracking_log:
-                last_check = tracking_log.last().time
+                last_check = tracking_log.last().event_time
                 new_reports = LearnerVisitsDailyReport.objects.filter(
                     user=user, modified__gt=last_check, org__isnull=False
                 )
@@ -1570,13 +1593,15 @@ class LeaderBoard(TimeStampedModel):
             else:
                 last_online_check = ReportLog.objects.latest().learner_visit
 
-            TrackingLog.objects.update_or_create(defaults={
-                "username": user.username,
-                "event_type": "online_check",
-                "event": "online_check",
-                "time": last_online_check,
-                "event_source": "server"
-            }, username=user.username, event_type="online_check")
+            LeaderboardActivityLog.objects.update_or_create(
+                user_id=user.id,
+                event_type="online_check",
+                defaults={
+                    "user_id": user.id,
+                    "event_type": "online_check",
+                    "event_time": last_online_check
+                }
+            )
             logger.info("online_check updated for user: {user_id}, last_check: {last}".format(
                 user_id=user.id,
                 last=last_online_check
