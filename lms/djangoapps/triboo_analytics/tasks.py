@@ -29,7 +29,6 @@ from lms.djangoapps.instructor_task.tasks_helper.runner import run_main_task
 from lms.djangoapps.instructor_task.tasks_helper.utils import REPORT_REQUESTED_EVENT_NAME
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from student.models import CourseEnrollment
-from track.backends.django import TrackingLog
 from util.file import course_filename_prefix_generator
 from xmodule.modulestore.django import modulestore
 import models
@@ -200,7 +199,7 @@ def generate_export_table(entry_id, xmodule_instance_args):
     return run_main_task(entry_id, task_fn, action_name)
 
 
-# @receiver(post_save, sender=BlockCompletion)
+@receiver(post_save, sender=BlockCompletion)
 def handle_leader_board_activity(sender, instance, **kwargs):
     if not instance.completion:
         return
@@ -281,10 +280,10 @@ def update_leader_board_activity(self, **kwargs):
     if block.parent.block_type == "library_content":
         vertical_block = modulestore().get_item(vertical_block.parent)
 
-    unit_completion_event = TrackingLog.objects.filter(
-        username=user.username,
-        event_type=unicode(vertical_block.location),
-        event="unit_completion"
+    unit_completion_event = models.LeaderboardActivityLog.objects.filter(
+        user_id=user.id,
+        event_type="unit_completion",
+        block_key=vertical_block.location
     )
     if not unit_completion_event.exists():
         course_block_completions = BlockCompletion.get_course_completions(user, block_key.course_key)
@@ -318,12 +317,12 @@ def update_leader_board_activity(self, **kwargs):
                                 user_id=user.id,
                                 block_id=vertical_block.location
                             ))
-                TrackingLog.objects.create(
-                    username=user.username,
-                    event_type=unicode(vertical_block.location),
-                    event="unit_completion",
-                    time=timezone.now(),
-                    event_source="server"
+                models.LeaderboardActivityLog.objects.create(
+                    user_id=user.id,
+                    event_type="unit_completion",
+                    event_time=timezone.now(),
+                    block_key=vertical_block.location,
+                    course_key=block_key.course_key
                 )
             else:
                 logger.info("user: {user_id}, cache key is found; unit is already completed, {key}".format(
