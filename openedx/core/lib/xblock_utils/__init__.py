@@ -132,12 +132,26 @@ def wrap_xblock(
     if block.name:
         data['name'] = block.name
 
+    block_label = None
+    if hasattr(block, 'label') and frag.content.find('hd hd-2') == -1:
+        block_label = block.label
+
+    block_title = None
+    if hasattr(block, 'title') and frag.content.find('hd hd-2') == -1:
+        block_title = block.title
+
+    frag_content = frag.content
+    if block_label and block_title:
+        frag_content = '<hr class="sep-line">' + frag_content
+
     template_context = {
-        'content': block.display_name if display_name_only else frag.content,
+        'content': block.display_name if display_name_only else frag_content,
         'classes': css_classes,
         'display_name': block.display_name_with_default_escaped,
         'data_attributes': u' '.join(u'data-{}="{}"'.format(markupsafe.escape(key), markupsafe.escape(value))
                                      for key, value in data.iteritems()),
+        'label': block_label,
+        'title': block_title,
     }
 
     if hasattr(frag, 'json_init_args') and frag.json_init_args is not None:
