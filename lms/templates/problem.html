@@ -5,11 +5,22 @@ from openedx.core.djangolib.markup import HTML
 %>
 
 <%namespace name='static' file='static_content.html'/>
-<h3 class="hd hd-3 problem-header" id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
-  ${ problem['name'] }
-</h3>
+<div class="block-header-wrapper problem-header-wrapper">
+    <h3 class="hd hd-3 block-header problem-header" id="${ short_id }-problem-title" aria-describedby="${ id }-problem-progress" tabindex="-1">
+      ${_(problem['name'])}
+    </h3>
+    <div class="problem-progress-wrapper">
+        <span class="fal fa-bullseye-pointer"></span>
+        <div class="problem-progress" id="${ id }-problem-progress"></div>
+    </div>
+</div>
 
-<span class="far fa-clipboard-list"></span><div class="problem-progress" id="${ id }-problem-progress"></div>
+<div class="block-label problem-label">
+    <span class="fal fa-clipboard-list ${ problem['name'] }-icon block-label-icon"></span>
+    <span class="${ problem['name'] } block-label-text">${_('Quiz')}</span>
+</div>
+
+<hr class="sep-line">
 
 <div class="problem">
   ${ HTML(problem['html']) }

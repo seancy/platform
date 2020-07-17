@@ -150,6 +150,13 @@
         Problem.prototype.bind = function() {
             var problemPrefix,
                 that = this;
+
+            // Add label
+            var header = this.$('.problem-header').text().trim();
+            header = header.replace(/\s+/g, '-');
+            header = header.replace(/[(|)]/g, '');
+            this.el.addClass(header.toLowerCase());
+
             if (typeof MathJax !== 'undefined' && MathJax !== null) {
                 this.el.find('.problem > div').each(function(index, element) {
                     return MathJax.Hub.Queue(['Typeset', MathJax.Hub, element]);
@@ -200,6 +207,7 @@
             if (this.submitButton.length) {
                 this.submitAnswersAndSubmitButton(true);
             }
+
             Collapsible.setCollapsibles(this.el);
             this.$('input.math').keyup(this.refreshMath);
             if (typeof MathJax !== 'undefined' && MathJax !== null) {
@@ -760,6 +768,9 @@
                 that.el.find('.show').attr('disabled', 'disabled');
                 that.updateProgress(response);
                 that.clear_all_notifications();
+                that.el.find('.problem').css('padding-bottom', '20px');
+                that.el.find('.submit-attempt-container').css('bottom', '-40px');
+                that.el.find('.problem-action-buttons-wrapper').css('bottom', '-40px');
                 that.showAnswerNotification.show();
                 that.focus_on_notification('show-answer');
             });
@@ -778,6 +789,9 @@
                 edx.HtmlUtils.HTML(msg)
             );
             this.clear_all_notifications();
+            this.el.find('.problem').css('padding-bottom', '20px');
+            this.el.find('.submit-attempt-container').css('bottom', '-40px');
+            this.el.find('.problem-action-buttons-wrapper').css('bottom', '-40px');
             this.gentleAlertNotification.show();
             this.gentleAlertNotification.focus();
         };
@@ -802,6 +816,9 @@
                     );
                     that.clear_all_notifications();
                     that.el.find('.wrapper-problem-response .message').hide();
+                    that.el.find('.problem').css('padding-bottom', '20px');
+                    that.el.find('.submit-attempt-container').css('bottom', '-40px');
+                    that.el.find('.problem-action-buttons-wrapper').css('bottom', '-40px');
                     that.saveNotification.show();
                     that.focus_on_save_notification();
                 } else {

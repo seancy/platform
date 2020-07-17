@@ -6,9 +6,19 @@
     class="${element_class}"
     data-ajax-url="${ajax_url}"
 >
-    % if display_name:
-    <h3 class="hd hd-3" id="word_cloud_${element_id}_heading">${display_name}</h3>
-    % endif
+
+    <div class="block-header-wrapper word_could-header-wrapper">
+        % if display_name:
+        <h3 class="hd hd-3" id="word_cloud_${element_id}_heading">${display_name}</h3>
+        % endif
+    </div>
+
+    <div class="block-label">
+      <span class="fal fa-file-word block-label-icon"></span>
+      <span class="block-label-text">${_('Word cloud')}</span>
+    </div>
+
+    <hr class="sep-line">
 
     % if instructions is not None:
     <div class="input_cloud_section" role="group" aria-labelledby="word_cloud_${element_id}_instructions">
