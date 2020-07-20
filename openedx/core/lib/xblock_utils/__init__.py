@@ -148,7 +148,7 @@ def wrap_xblock(
         <div class="block-header-wrapper html-header-wrapper">
             <h3 class="block-header html-header">{display_name}</h3>
         </div>
-        '''.format(display_name=display_name)
+        '''.format(display_name=display_name.encode('utf-8'))
 
     frag_content = frag.content
     if block_label and block_title:
