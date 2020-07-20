@@ -134,11 +134,21 @@ def wrap_xblock(
 
     block_label = None
     if hasattr(block, 'label') and frag.content.find('hd hd-2') == -1:
-        block_label = block.label
+        block_label = '''
+        <div class="block-label">
+            <span class="fal fa-clipboard-list"></span>
+            <span class="block-label-text">{display_name}</span>
+        </div>
+        '''.format(display_name=block.name)
 
     block_title = None
     if hasattr(block, 'title') and frag.content.find('hd hd-2') == -1:
-        block_title = block.title
+        display_name = block.display_name if block.display_name != block.name else ' '
+        block_title = '''
+        <div class="block-header-wrapper html-header-wrapper">
+            <h3 class="block-header html-header">{display_name}</h3>
+        </div>
+        '''.format(display_name=display_name)
 
     frag_content = frag.content
     if block_label and block_title:
