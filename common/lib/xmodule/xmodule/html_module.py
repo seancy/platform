@@ -118,17 +118,8 @@ class HtmlModuleMixin(HtmlBlock, XModule):
     js_module_name = "HTMLModule"
     css = {'scss': [resource_string(__name__, 'css/html/display.scss')]}
     name = _("Text")
-    title = '''
-    <div class="block-header-wrapper html-header-wrapper">
-        <h3 class="block-header html-header">{display_name}</h3>
-    </div>
-    '''.format(display_name=name)
-    label = '''
-    <div class="block-label">
-        <span class="fal fa-clipboard-list"></span>
-        <span class="block-label-text">{display_name}</span>
-    </div>
-    '''.format(display_name=name)
+    title = 'title'
+    label = 'label'
 
 
 @edxnotes

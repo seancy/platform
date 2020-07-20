@@ -1319,6 +1319,9 @@ def generate_today_reports(multi_process=False):
     logger.info("start ILT reports")
     IltSession.generate_today_reports()
 
+    logger.info("start Leaderboard daily update")
+    LeaderBoard.update_stayed_online()
+
 
 def check_generated_learner_course_reports(last_analytics_success, overviews, sections_by_course):
     all_good = False
@@ -1602,15 +1605,11 @@ class LeaderBoard(TimeStampedModel):
                     "event_time": last_online_check
                 }
             )
-            logger.info("online_check updated for user: {user_id}, last_check: {last}".format(
-                user_id=user.id,
-                last=last_online_check
-            ))
 
             leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
             leader_board.stayed_online = leader_board.stayed_online + stayed_online
             leader_board.save()
-            logger.info("online_check updated for user: {user_id}, last_check: {last}".format(
+            logger.debug("online_check updated for user: {user_id}, last_check: {last}".format(
                 user_id=user.id,
                 last=last_online_check
             ))
