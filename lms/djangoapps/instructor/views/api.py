@@ -350,7 +350,7 @@ def csv_student_fields_validation(first_name, last_name, username, email, passwo
             if (username_length < USERNAME_MIN_LENGTH
                 or username_length > USERNAME_MAX_LENGTH):
                 row_errors.append({'response': _(
-                    'Row #{row_num}: {error_msg}').format(error_msg=USERNAME_BAD_LENGTH_MSG)})
+                    'Row #{row_num}: {error_msg}').format(row_num=row_num, error_msg=USERNAME_BAD_LENGTH_MSG)})
             else:
                 valid_username = True
     else:
