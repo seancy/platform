@@ -722,7 +722,7 @@
                 // replace explanations
                 xml = xml.replace(/\[explanation\]\n?([^\]]*)\[\/?explanation\]/gmi, function(match, p1) {
                     return '<solution>\n<div class="detailed-solution">\n' +
-                        gettext('Explanation') + '\n\n' + p1 + '\n</div>\n</solution>';
+                        'Explanation' + '\n\n' + p1 + '\n</div>\n</solution>';
                 });
 
                 // replace code blocks

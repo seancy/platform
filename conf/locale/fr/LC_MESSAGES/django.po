@@ -3244,7 +3244,7 @@ msgstr ""
 "Entrez vrai ou faux. Si vrai, les apprenants peuvent proposer des "
 "contributions aux discussions qui sont vues comme anonymes par les autres "
 "apprenants. Ce paramètre ne rend pas les messages anonymes pour l'équipe "
-"enseignante."
+"pédagogique."
 
 #: common/lib/xmodule/xmodule/course_module.py:435
 #: common/lib/xmodule/xmodule/library_root_xblock.py:34
@@ -3860,11 +3860,11 @@ msgstr "Spécifiez ce que les apprenants peuvent apprendre dans le cours. "
 
 #: common/lib/xmodule/xmodule/course_module.py:883
 msgid "Course Instructor"
-msgstr "Enseignant du cours"
+msgstr "Instructeur du cours"
 
 #: common/lib/xmodule/xmodule/course_module.py:884
 msgid "Enter the details for Course Instructor"
-msgstr "Saisir les détails sur l'enseignant du cours"
+msgstr "Saisir les détails pour l'instructeur du cours"
 
 #: common/lib/xmodule/xmodule/course_module.py:891
 msgid "Add Unsupported Problems and Tools"
@@ -4134,7 +4134,7 @@ msgstr ""
 #: common/lib/xmodule/xmodule/textannotation_module.py:80
 #: common/lib/xmodule/xmodule/videoannotation_module.py:72
 msgid "Email for 'Instructor' Annotations"
-msgstr "Email pour les annotations \"Enseignant\""
+msgstr "Email pour les annotations \"Instructeur\""
 
 #: common/lib/xmodule/xmodule/imageannotation_module.py:79
 #: common/lib/xmodule/xmodule/textannotation_module.py:81
@@ -4144,7 +4144,7 @@ msgid ""
 "found in 'Instructor' tab."
 msgstr ""
 "Email de l'utilisateur qui sera joint à toutes les annotations qui se "
-"trouveront dans l'onglet «Enseignant»."
+"trouveront dans l'onglet « Instructeur »."
 
 #: common/lib/xmodule/xmodule/imageannotation_module.py:84
 #: common/lib/xmodule/xmodule/textannotation_module.py:86
@@ -4158,7 +4158,7 @@ msgstr "Mode de l'outil d'annotation"
 msgid ""
 "Type in number corresponding to following modes:  'instructor' or 'everyone'"
 msgstr ""
-"Tapez le numéro correspondant aux modes suivants : «enseignant» ou «tous»"
+"Tapez le numéro correspondant aux modes suivants : « instructeur » ou « tous »"
 
 #: common/lib/xmodule/xmodule/imageannotation_module.py:119
 #: common/lib/xmodule/xmodule/textannotation_module.py:114
@@ -7320,7 +7320,7 @@ msgstr "# équipe pédagogique"
 
 #: lms/djangoapps/dashboard/sysadmin.py:536
 msgid "instructors"
-msgstr "Enseignants"
+msgstr "instructeurs"
 
 #: lms/djangoapps/dashboard/sysadmin.py:537
 msgid "Enrollment information for all courses"
@@ -8467,7 +8467,7 @@ msgstr ""
 #: lms/templates/emails/ilt_enrolled_email_message.txt:35
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:39
 msgid "Instructor"
-msgstr "Enseignant"
+msgstr "Instructeur"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py:225
 #, python-brace-format
@@ -13335,7 +13335,7 @@ msgid ""
 "Dashboard."
 msgstr ""
 "Les groupes de cette configuration peuvent être répartis en cohortes sur le "
-"Tableau de bord enseignant"
+"Tableau de bord instructeur"
 
 #: cms/djangoapps/contentstore/course_group_config.py:27
 #: cms/templates/group_configurations.html:95
@@ -15037,7 +15037,7 @@ msgstr ""
 
 #: lms/templates/imageannotation.html:37
 msgid "Note: only instructors may annotate."
-msgstr "Note : seuls les enseignants sont autorisés à annoter. "
+msgstr "Note : seuls les instructeurs sont autorisés à annoter."
 
 #: lms/templates/index.html:26 lms/templates/index.html:27
 #: lms/templates/courseware/courses.html:55
@@ -16908,17 +16908,17 @@ msgid ""
 "notice of such claim, action or demand."
 msgstr ""
 "Dans toute la mesure permise par la législation applicable, vous acceptez de "
-"défendre, et dégager de toute responsabilité et d’indemniser {platform_name} "
+"défendre, et dégager de toute responsabilité et d'indemniser {platform_name} "
 "et les Participants {platform_name}, ainsi que leurs succursales, filiales, "
-"agents, enseignants, apprenants, confrères, membres du conseil "
-"d’administration, agents et employés, contre toute revendication, action en "
-"justice ou demande de tiers étant le résultat, la cause, ou liée d’une "
-"quelconque façon à l’utilisation des API et de tout Contenu des API, y "
-"compris pour l’ensemble des responsabilités ou frais découlant d’une "
+"agents, instructeurs, apprenants, confrères, membres du conseil "
+"d'administration, employés, contre toute revendication, action en "
+"justice ou demande de tiers étant le résultat, la cause, ou liée d'une "
+"quelconque façon à l'utilisation des API et de tout Contenu des API, y "
+"compris pour l'ensemble des responsabilités ou frais découlant d'une "
 "quelconque plainte, pertes, dommages (réels ou consécutifs), procès, "
-"jugements, coûts de litige et honoraires d’avocats, de quelque nature que ce "
-"soit. En pareil cas, {platform_name} ou l’un des Participants "
-"{platform_name} vous fournira un avis écrit dans l’éventualité d’une telle "
+"jugements, coûts de litige et honoraires d'avocats, de quelque nature que ce "
+"soit. En pareil cas, {platform_name} ou l'un des Participants "
+"{platform_name} vous fournira un avis écrit dans l'éventualité d'une telle "
 "plainte, action en justice ou demande."
 
 #: lms/templates/api_admin/terms_of_service.html:98
@@ -18323,7 +18323,7 @@ msgstr "Voir les Cours"
 
 #: lms/templates/courseware/program_marketing.html:145
 msgid "Meet the Instructors"
-msgstr "À propos des enseignants"
+msgstr "À propos des instructeurs"
 
 #: lms/templates/courseware/program_marketing.html:150
 #: lms/templates/courseware/program_marketing.html:401
@@ -19752,8 +19752,8 @@ msgid ""
 msgid_plural ""
 "You will be automatically re-enrolled in this course after {re_enroll_time} "
 "months after completion."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Vous serez automatiquement réinscrit à ce cours dans {re_enroll_time} mois après sa finalisation."
+msgstr[1] "Vous serez automatiquement réinscrit à ce cours dans {re_enroll_time} mois après sa finalisation."
 
 #: lms/templates/emails/course_re_enroll_email_message.txt:34
 #: lms/templates/emails/course_reminder_email_message.txt:46
@@ -19763,8 +19763,8 @@ msgid ""
 msgid_plural ""
 "You will be automatically re-enrolled in this course after {re_enroll_time} "
 "years after completion."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Vous serez automatiquement réinscrit à ce cours dans {re_enroll_time} an après sa finalisation."
+msgstr[1] "Vous serez automatiquement réinscrit à ce cours dans {re_enroll_time} ans après sa finalisation."
 
 #: lms/templates/emails/course_re_enroll_email_message.txt:43
 #: lms/templates/emails/course_reminder_email_message.txt:55
@@ -21847,7 +21847,7 @@ msgstr "Bulletin de notes"
 #: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:25
 #: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:107
 msgid "Instructor Dashboard"
-msgstr "Tableau de bord enseignant"
+msgstr "Tableau de bord instructeur"
 
 #: lms/templates/instructor/instructor_dashboard_2/gradebook.html:63
 msgid "Search learners"
@@ -22913,7 +22913,7 @@ msgid ""
 "asked to score them yourself."
 msgstr ""
 "Nous allons vous montrer un jeu d'exercices de test déjà notés par un "
-"enseignant, et nous allons vous demander de les noter à votre tour."
+"instructeur, et nous allons vous demander de les noter à votre tour."
 
 #: lms/templates/peer_grading/peer_grading_problem.html:82
 msgid ""
@@ -22921,7 +22921,7 @@ msgid ""
 "to grade your peers."
 msgstr ""
 "Lorsque vous noterez les exercices de test de manière similaire à un "
-"enseignant, vous serez prêt à noter vos pairs."
+"instructeur, vous serez prêt à noter vos pairs."
 
 #: lms/templates/peer_grading/peer_grading_problem.html:83
 msgid "Start learning to grade"
@@ -22983,7 +22983,7 @@ msgstr ""
 
 #: lms/templates/provider/authorize.html:38
 msgid "Read the list of courses in which you are an instructor."
-msgstr "Voir la liste des cours pour lesquels vous êtes un enseignant."
+msgstr "Voir la liste des cours pour lesquels vous êtes un instructeur."
 
 #: lms/templates/provider/authorize.html:40
 msgid "To see if you are a global staff user"
@@ -26908,8 +26908,7 @@ msgid ""
 "Add components to your library for use in courses, using Add New Component "
 "at the bottom of this page."
 msgstr ""
-"Ajouter des composants à votre bibliothèques afin de les utilisers dans les "
-"cours en utilisant ajoutez nouveau composant au bas de cette page."
+"Ajoutez des composants à votre bibliothèque afin de les utiliser dans les cours via « Ajouter un nouveau composant » au bas de cette page."
 
 #: cms/templates/library.html:92
 msgid ""
@@ -27486,7 +27485,7 @@ msgstr "Choisissez la catégorie du cours ici."
 msgid ""
 "Sort the courses to display on dashboard in ascending order. The order is "
 "from 0 to 99."
-msgstr "Trier les cours pour les afficher dans l'ordre ascendant sur la page de cours. L'ordre"
+msgstr "Trier les cours pour les afficher dans l'ordre ascendant sur la page de cours. L'ordre "
 "est de 0 à 99."
 
 #: cms/templates/settings.html:370
@@ -27623,7 +27622,7 @@ msgid ""
 "image is 400px wide by 310px tall, in JPEG format)"
 msgstr ""
 "Veuillez fournir un chemin et un nom valide à l'illustration de votre cours "
-"(attention : seuls les formats JPEG et PNG sont supportés et la taille doit"
+"(attention : seuls les formats JPEG et PNG sont supportés et la taille doit "
 "être 400x310 pixels)"
 
 #: cms/templates/settings.html:477
@@ -27723,11 +27722,11 @@ msgstr "Ajouter un résultat d'apprentissage"
 
 #: cms/templates/settings.html:592
 msgid "Add details about the instructors for this course"
-msgstr "Ajouter des détails à propos des enseignants de ce cours"
+msgstr "Ajouter des détails à propos des instructeurs de ce cours"
 
 #: cms/templates/settings.html:599
 msgid "Add Instructor"
-msgstr "Ajouter un enseignant"
+msgstr "Ajouter un instructeur"
 
 #: cms/templates/settings.html:611
 msgid "Expectations of the learners taking this course"
@@ -30023,7 +30022,7 @@ msgstr "En ligne"
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
 msgid "ILT"
-msgstr "Présentielle"
+msgstr "Présentiel"
 
 #: lms/templates/courseware/courses.html
 #: lms/templates/courseware/course_banner.html
@@ -31179,3 +31178,18 @@ msgstr "Votre module e-learning a été ouvert dans un nouvel onglet. Veuillez f
 #: scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "Commencer"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr "En résumé"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr "avis"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr "avis utilisateur"

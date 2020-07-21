@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 """Implements basics of Capa, including class CapaModule."""
+from __future__ import unicode_literals
 import cgi
 import copy
 import datetime
@@ -1017,9 +1019,15 @@ class CapaMixin(ScorableXBlockMixin, CapaFields):
         # answers (eg <solution>) may have embedded images
         #   but be careful, some problems are using non-string answer dicts
         new_answers = dict()
+        _ = self.runtime.service(self, "i18n").ugettext
         for answer_id in answers:
             try:
                 answer_content = self.runtime.replace_urls(answers[answer_id])
+                if "<p>Explanation</p>" in answer_content:
+                    answer_content = answer_content.replace(
+                        "<p>Explanation</p>",
+                        "<p>{}</p>".format(_("Explanation"))
+                    )
                 if self.runtime.replace_jump_to_id_urls:
                     answer_content = self.runtime.replace_jump_to_id_urls(answer_content)
                 new_answer = {answer_id: answer_content}

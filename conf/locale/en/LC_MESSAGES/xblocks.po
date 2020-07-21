@@ -767,3 +767,18 @@ msgstr ""
 #: scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr ""
