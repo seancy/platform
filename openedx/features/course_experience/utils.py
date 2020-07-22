@@ -96,6 +96,8 @@ def get_course_outline_block_tree(request, course_id):
             if len([child['complete'] for child in block['children']
                     if child['complete']]) == len(completable_blocks):
                 block['complete'] = True
+            else:
+                block['complete'] = False
 
     def mark_last_accessed(user, course_key, block):
         """

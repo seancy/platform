@@ -1459,8 +1459,9 @@ class LeaderBoard(TimeStampedModel):
                         completed = False
                     for child in children[:]:
                         if child.block_type == 'library_content':
-                            lib_block_children = block_relations[child].children
-                            children.extend(lib_block_children)
+                            lib_content_block = get_course_blocks(user, child)
+                            extra_children = [i for i in lib_content_block if i.block_type != 'library_content']
+                            children.extend(extra_children)
                     for child in children:
                         if child.block_type in ['discussion', 'library_content']:
                             continue
