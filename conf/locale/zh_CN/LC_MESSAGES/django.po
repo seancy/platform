@@ -28609,3 +28609,18 @@ msgstr "您的电子学习模块已在新标签页中打开。 完成模块后�
 #: scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "启动"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr "关于内容"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr "评价"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr "用户评价"

@@ -290,8 +290,9 @@ def update_leader_board_activity(self, **kwargs):
         children = vertical_block.children
         for child in children[:]:
             if child.block_type == 'library_content':
-                lib_content_block = modulestore().get_item(child)
-                children.extend(lib_content_block.children)
+                lib_content_block = get_course_blocks(user, child)
+                extra_children = [i for i in lib_content_block if i.block_type != 'library_content']
+                children.extend(extra_children)
         if children:
             completed = True
         else:

@@ -30227,3 +30227,18 @@ msgstr "Seu módulo de e-learning foi aberto em uma nova aba. Por favor, feche a
 #: scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "Começar"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr "Sobre o conteúdo"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr "avaliações"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr "comentários de usuários"

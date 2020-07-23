@@ -30494,3 +30494,18 @@ msgstr "Cuenta Chargebee"
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Update Plan"
 msgstr "Plan de actualización"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr "Sobre el contenido"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr "comentarios"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr "comentarios de los usuarios"

@@ -9256,7 +9256,7 @@ msgid "Support education research by providing additional information"
 msgstr "通过提供其他信息支持教育研究"
 
 #: lms/templates/student_account/register.underscore:80
-msgid "Already have an {platformName} account?"
+msgid "Already have an account on {platformName}?"
 msgstr "已经拥有 {platformName}帐户？"
 
 #: lms/templates/student_account/register.underscore:81
@@ -11817,6 +11817,60 @@ msgstr "发展领域"
 msgid "Time format HH:MM expected"
 msgstr "时间格式 HH:MM"
 
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "in total"
+msgstr "总数"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hour"
+msgstr "小时"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hours"
+msgstr "小时"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "day"
+msgstr "天"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "days"
+msgstr "天"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "week"
+msgstr "周"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "weeks"
+msgstr "周"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "month"
+msgstr "月"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "months"
+msgstr "月"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "year"
+msgstr "年"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "years"
+msgstr "年"
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
 msgstr "排行榜"
