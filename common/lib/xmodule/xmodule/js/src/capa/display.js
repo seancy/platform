@@ -768,9 +768,9 @@
                 that.el.find('.show').attr('disabled', 'disabled');
                 that.updateProgress(response);
                 that.clear_all_notifications();
-                that.el.find('.problem').css('padding-bottom', '20px');
-                that.el.find('.submit-attempt-container').css('bottom', '-40px');
-                that.el.find('.problem-action-buttons-wrapper').css('bottom', '-40px');
+                that.el.find('.problem').css('padding-bottom', '40px');
+                that.el.find('.submit-attempt-container').css('bottom', '-60px');
+                that.el.find('.problem-action-buttons-wrapper').css('bottom', '-60px');
                 that.showAnswerNotification.show();
                 that.focus_on_notification('show-answer');
             });
@@ -789,9 +789,9 @@
                 edx.HtmlUtils.HTML(msg)
             );
             this.clear_all_notifications();
-            this.el.find('.problem').css('padding-bottom', '20px');
-            this.el.find('.submit-attempt-container').css('bottom', '-40px');
-            this.el.find('.problem-action-buttons-wrapper').css('bottom', '-40px');
+            this.el.find('.problem').css('padding-bottom', '40px');
+            this.el.find('.submit-attempt-container').css('bottom', '-60px');
+            this.el.find('.problem-action-buttons-wrapper').css('bottom', '-60px');
             this.gentleAlertNotification.show();
             this.gentleAlertNotification.focus();
         };
@@ -816,9 +816,9 @@
                     );
                     that.clear_all_notifications();
                     that.el.find('.wrapper-problem-response .message').hide();
-                    that.el.find('.problem').css('padding-bottom', '20px');
-                    that.el.find('.submit-attempt-container').css('bottom', '-40px');
-                    that.el.find('.problem-action-buttons-wrapper').css('bottom', '-40px');
+                    that.el.find('.problem').css('padding-bottom', '40px');
+                    that.el.find('.submit-attempt-container').css('bottom', '-60px');
+                    that.el.find('.problem-action-buttons-wrapper').css('bottom', '-60px');
                     that.saveNotification.show();
                     that.focus_on_save_notification();
                 } else {
