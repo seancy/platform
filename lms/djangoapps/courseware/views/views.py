@@ -2848,6 +2848,7 @@ class CourseReminder():
         """
         course_enrollment.created = timezone.now()
         course_enrollment.completed = None
+        course_enrollment.gradebook_edit = None
         course_enrollment.save()
         student_modules = StudentModule.objects.filter(
             course_id=course_enrollment.course_id,
@@ -2927,6 +2928,7 @@ class CourseReminder():
                                                        reason=e
                                                        ))
 
+    @transaction.atomic
     def send_re_enroll_email(self, course_enrollment):
         """
         send email to student who is automatically re-enrolled in the course
@@ -3053,6 +3055,12 @@ class CourseReminder():
         send email to students
         """
         for enrollment in self.get_course_enrollment().get('finished'):
-            self.send_re_enroll_email(enrollment)
+            try:
+                self.send_re_enroll_email(enrollment)
+            except Exception as e:
+                reminder_log.info("course re-enroll failed for user: {user_id}, course_id: {course_id}".format(
+                    user_id=enrollment.user_id,
+                    course_id=enrollment.course_id
+                ))
         for enrollment in self.get_course_enrollment().get('unfinished'):
             self.send_reminder_email(enrollment)
