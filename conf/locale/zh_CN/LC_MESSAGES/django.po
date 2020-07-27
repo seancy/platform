@@ -16777,10 +16777,10 @@ msgstr ""
 "{end_tag}后重试选课按钮。请访问{start_help_tag}帮助页面{end_tag}了解可能的解"
 "决方案。"
 
-#: lms/templates/courseware/course_about.html:130
-#: lms/templates/courseware/course_navigation.html:86
-msgid "View Instructor Page"
-msgstr "教师面板"
+#: lms/templates/courseware/course_about.html:131
+#: lms/templates/courseware/course_navigation.html:62
+msgid "View Instructor Dashboard"
+msgstr "浏览教师面板"
 
 #: lms/templates/courseware/course_about.html:138
 #: lms/templates/courseware/course_navigation.html:95

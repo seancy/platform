@@ -226,7 +226,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 
         % if get_course_about_section(request, course, "overview").strip():
         <div class="inner-wrapper course-overview">
-          <h2 class="course-overview-title">Course Overview</h2>
+          <h2 class="course-overview-title">${_("Course Overview")}</h2>
           <div class="course-overview-container">
             ${HTML(get_course_about_section(request, course, "overview"))}
           </div>
@@ -236,7 +236,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
         <% course_instructors = CourseDetails.fetch(course.id).instructor_info['instructors'] %>
         % if course_instructors:
         <div class="instructor-wrapper">
-          <h2 class="instructor-title">Instructors</h2>
+          <h2 class="instructor-title">${_("Instructors")}</h2>
           <ul class="instructors">
 
             % for instructor in course_instructors:

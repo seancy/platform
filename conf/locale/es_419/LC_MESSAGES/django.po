@@ -21594,10 +21594,10 @@ msgstr ""
 "Por favor visite la {start_help_tag}página de ayuda{end_tag} para una "
 "posible solución."
 
-#: lms/templates/courseware/course_about.html:130
-#: lms/templates/courseware/course_navigation.html:86
-msgid "View Instructor Page"
-msgstr "Vea la Página de Instructor"
+#: lms/templates/courseware/course_about.html:131
+#: lms/templates/courseware/course_navigation.html:62
+msgid "View Instructor Dashboard"
+msgstr "Ver panel del instructor"
 
 #: lms/templates/courseware/course_about.html:138
 #: lms/templates/courseware/course_navigation.html:95
@@ -29914,12 +29914,11 @@ msgid "Course wiki"
 msgstr "Wiki del curso"
 
 #: lms/templates/courseware/course_banner.html:159
-#: lms/templates/courseware/info.html:75 remove the duplicated one
+#: lms/templates/courseware/info.html:75
 msgid "Resume Course"
 msgstr "Reanudar Curso"
 
-#: lms/templates/footer.html:121 remove the duplicated one
-#: lms/templates/courseware/course_navigation.html:86
+#: lms/templates/footer.html:121
 msgid "Admin Space"
 msgstr "Administración"
 
@@ -29939,7 +29938,6 @@ msgstr "Exporte el curso"
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:190
-#: remove the duplicated one
 msgid "Expand All"
 msgstr "Expandir todo"
 
@@ -29949,13 +29947,11 @@ msgstr "Contraer todas las secciones"
 
 #: lms/templates/courseware/course_about.html:186
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:180
-#: remove the duplicated one
 msgid "Read more"
 msgstr "Lea más"
 
 #: lms/templates/courseware/course_about.html:187
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:181
-#: remove the duplicated one
 msgid "Read less"
 msgstr "Lea menos"
 
