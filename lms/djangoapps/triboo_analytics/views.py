@@ -84,6 +84,7 @@ from tables import (
     get_progress_table_class,
     get_time_spent_table_class,
     TranscriptTable,
+    TranscriptTableWithGradeLink,
     LearnerDailyTable,
     CourseTable,
     IltTable,
@@ -139,15 +140,18 @@ def config_tables(request, *tables):
         config.configure(t)
 
 
-def get_transcript_table(orgs, user_id, last_update):
+def get_transcript_table(orgs, user_id, last_update, with_gradebook_link):
     queryset = LearnerCourseDailyReport.objects.none()
     for org in orgs:
         new_queryset = LearnerCourseDailyReport.filter_by_day(date_time=last_update, org=org, user_id=user_id)
         queryset = queryset | new_queryset
-    return TranscriptTable(queryset), queryset
+    if with_gradebook_link == False:
+        return TranscriptTable(queryset), queryset
+    else:
+        return TranscriptTableWithGradeLink(queryset), queryset
 
 
-def _transcript_view(user, request, template, report_type):
+def _transcript_view(user, request, template, report_type, with_gradebook_link=False):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return HttpResponseNotFound()
@@ -185,7 +189,7 @@ def _transcript_view(user, request, template, report_type):
             learner_report_in_progress = learner_report.in_progress
             learner_report_total_time_spent = learner_report.total_time_spent
 
-        learner_course_table, learner_course_reports = get_transcript_table(orgs, user.id, last_update)
+        learner_course_table, learner_course_reports = get_transcript_table(orgs, user.id, last_update, with_gradebook_link)
         config_tables(request, learner_course_table)
 
         courses = []
@@ -259,7 +263,7 @@ def transcript_view(request, user_id):
                 "triboo_analytics/transcript.html",
                 {"error_message": _("Invalid User ID")}
             )
-    return _transcript_view(user, request, "triboo_analytics/transcript.html", "transcript")
+    return _transcript_view(user, request, "triboo_analytics/transcript.html", "transcript", with_gradebook_link=True)
 
 
 @analytics_on
