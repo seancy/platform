@@ -127,7 +127,7 @@ from student.roles import studio_access_role
       <ul class="actions">
         % if InstructorDashboardTab.is_enabled(course, request.user):
           <li>
-            <a class="instructor-info-action" href="${reverse('instructor_dashboard', kwargs={'course_id': unicode(course.id)})}" alt="${_('View Instructor Page')}">
+            <a class="instructor-info-action" href="${reverse('instructor_dashboard', kwargs={'course_id': unicode(course.id)})}" title="${_('View Instructor Dashboard')}">
               <i class="far fa-cog"></i>
             </a>
           </li>
@@ -143,7 +143,7 @@ from student.roles import studio_access_role
         and (ANALYTICS_ACCESS_GROUP in [group.name for group in user.groups.all()] \
         or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in user.groups.all()])):
           <li>
-            <a class="instructor-info-action" href="${"%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course.id}))}" alt="${_('View Course Report Page')}">
+            <a class="instructor-info-action" href="${"%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course.id}))}" title="${_('View Course Report Page')}">
               <i class="far fa-analytics"></i>
             </a>
           </li>
@@ -224,7 +224,7 @@ from student.roles import studio_access_role
 
         % if len(get_course_about_section(request, course, "overview").strip()):
         <div class="inner-wrapper course-overview">
-          <h2 class="course-overview-title">Course Overview</h2>
+          <h2 class="course-overview-title">${_("Course Overview")}</h2>
           <div class="course-overview-container">
             ${HTML(get_course_about_section(request, course, "overview"))}
           </div>
@@ -234,7 +234,7 @@ from student.roles import studio_access_role
         <% course_instructors = course_details.instructor_info['instructors'] %>
         % if len(course_instructors) > 0:
         <div class="instructor-wrapper">
-          <h2 class="instructor-title">Instructors</h2>
+          <h2 class="instructor-title">${_("Instructors")}</h2>
           <ul class="instructors">
 
             % for instructor in course_instructors:

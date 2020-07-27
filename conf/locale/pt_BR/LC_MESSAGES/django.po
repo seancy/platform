@@ -21510,10 +21510,10 @@ msgstr ""
 "tentar novamente o botão para registrar-se. Por favor visite a "
 "{start_help_tag}página de ajuda{end_tag} para uma possível solução."
 
-#: lms/templates/courseware/course_about.html:130
-#: lms/templates/courseware/course_navigation.html:86
-msgid "View Instructor Page"
-msgstr "Ritmo definido pelo instrutor"
+#: lms/templates/courseware/course_about.html:131
+#: lms/templates/courseware/course_navigation.html:62
+msgid "View Instructor Dashboard"
+msgstr "Exibir painel do instrutor"
 
 #: lms/templates/courseware/course_about.html:138
 #: lms/templates/courseware/course_navigation.html:95

@@ -111,7 +111,7 @@ class TestInstructorDashboard(ModuleStoreTestCase, LoginEnrollmentTestCase, XssT
             self.client.login(username=user.username, password="test")
             response = self.client.get(self.url)
             for line in response.content.split('\n'):
-                if 'alt="Admin Space"' in line:
+                if 'title="View Instructor Dashboard"' in line:
                     return True
             return False
 

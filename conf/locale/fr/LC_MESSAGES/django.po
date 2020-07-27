@@ -14255,8 +14255,10 @@ msgstr "Date de fin du cours"
 
 #: cms/templates/settings.html:591
 #: lms/templates/courseware/program_marketing.html:348
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:239
+#: #: lms/templates/courseware/course_about.html:237
 msgid "Instructors"
-msgstr "Enseignants"
+msgstr "Instructeurs"
 
 #: cms/templates/settings.html:610
 #: lms/templates/courseware/course_about.html:206
@@ -17869,10 +17871,10 @@ msgstr ""
 "plaît visiter la {start_help_tag}page d'aide{end_tag} pour une solution "
 "possible."
 
-#: lms/templates/courseware/course_about.html:130
-#: lms/templates/courseware/course_navigation.html:86
-msgid "View Instructor Page"
-msgstr "Voir l'espace formateur"
+#: lms/templates/courseware/course_about.html:131
+#: lms/templates/courseware/course_navigation.html:62
+msgid "View Instructor Dashboard"
+msgstr "Voir le Tableau de bord instructeur"
 
 #: lms/templates/courseware/course_about.html:138
 #: lms/templates/courseware/course_navigation.html:95
@@ -27561,6 +27563,8 @@ msgstr ""
 "le nom du cours. Limité à ~150 caractères. "
 
 #: cms/templates/settings.html:423
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:229
+#: lms/templates/courseware/course_about.html:227
 msgid "Course Overview"
 msgstr "Présentation du cours"
 
@@ -30594,12 +30598,11 @@ msgid "Course wiki"
 msgstr "Wiki au sein du cours"
 
 #: lms/templates/courseware/course_banner.html:159
-#: lms/templates/courseware/info.html:75 remove the duplicated one
+#: lms/templates/courseware/info.html:75
 msgid "Resume Course"
 msgstr "Reprendre le cours"
 
 #: lms/templates/footer.html:121
-#: lms/templates/courseware/course_navigation.html:86 remove the duplicated one
 msgid "Admin Space"
 msgstr "Espace Admin"
 
@@ -30615,7 +30618,7 @@ msgid "Course Report"
 msgstr "Reporting du cours"
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27
-#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:190  remove the duplicated one
+#: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:190
 msgid "Expand All"
 msgstr "Déplier le menu"
 
@@ -30624,12 +30627,12 @@ msgid "Collapse All"
 msgstr "Replier le menu"
 
 #: lms/templates/courseware/course_about.html:186
-#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:180  remove the duplicated one
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:180
 msgid "Read more"
 msgstr "En savoir plus"
 
 #: lms/templates/courseware/course_about.html:187
-#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:181  remove the duplicated one
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:181
 msgid "Read less"
 msgstr "En savoir moins"
 
@@ -30654,7 +30657,7 @@ msgstr "Administration des discussions"
 msgid "Quiz administration"
 msgstr "Administration des quiz"
 
-#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:109  remove the duplicated one
+#: lms/templates/instructor/instructor_dashboard_2/instructor_dashboard_2.html:109
 msgid "Data download"
 msgstr "Téléchargement des données"
 
