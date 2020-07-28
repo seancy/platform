@@ -1285,7 +1285,7 @@ def leaderboard_data(request):
     top_list = []
     period = request.GET.get('period')
     top = int(request.GET.get('top', DEFAULT_LEADERBOARD_TOP))
-    query_set = LeaderBoardView.objects.all().select_related('user__profile')
+    query_set = LeaderBoardView.objects.filter(user__is_staff=False).select_related('user__profile')
     total_user = query_set.count()
     if period in ['week', 'month']:
         order_by = '-current_{}_score'.format(period)
