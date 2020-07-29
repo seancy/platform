@@ -1,6 +1,7 @@
 <%! from django.utils.translation import ugettext as _ %>
 <%! from django.conf import settings %>
 <%! from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers %>
+<%! from util.string_utils import is_str_url %>
 <%!
     platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
     accommodation_enabled = configuration_helpers.get_value("ILT_ACCOMMODATION_ENABLED", False)
@@ -39,7 +40,11 @@ ${_("NEW SCHEDULE:")}
 ${_("LOCATION OF THE TRAINING:")}
 <br>
 <br>
+% if is_str_url(session_info['location']):
+<a href="${ session_info['location'] }" target="_blank">${ session_info['location'] }</a>
+% else:
 ${ session_info['location'] }
+% endif
 <br>
 % if 'address' in session_info:
 ${ session_info['address'] }

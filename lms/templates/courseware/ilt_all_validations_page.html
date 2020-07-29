@@ -54,7 +54,10 @@
                     <div class="time-location-wrapper">
                         <p class="time">{{ combineDate(current_pending_sessions[r_idx].start_at, current_pending_sessions[r_idx].end_at) }}</p>
                         <div class="location-wrapper">
-                            <p class="location">{{ current_pending_sessions[r_idx].location }}</p>
+                            <p class="location" v-if="is_url_location(current_pending_sessions[r_idx].location)">
+                                <a class="location-link" :href="current_pending_sessions[r_idx].location" target="_blank">{{ current_pending_sessions[r_idx].location }}</a>
+                            </p>
+                            <p class="location" v-else>{{ current_pending_sessions[r_idx].location }}</p>
                             <p class="address">{{ current_pending_sessions[r_idx].address }}</p>
                             <p class="city-zip">{{ current_pending_sessions[r_idx].zip_code }} <b>{{ current_pending_sessions[r_idx].city }}</b></p>
                         </div>
@@ -168,7 +171,10 @@
                     <div class="time-location-wrapper">
                         <p class="time">{{ combineDate(current_approved_sessions_return[r_idx].start_at, current_approved_sessions_return[r_idx].end_at) }}</p>
                         <div class="location-wrapper">
-                            <p class="location">{{ current_approved_sessions_return[r_idx].location }}</p>
+                            <p class="location" v-if="is_url_location(current_approved_sessions_return[r_idx].location)">
+                                <a class="location-link" :href="current_approved_sessions_return[r_idx].location" target="_blank">{{ current_approved_sessions_return[r_idx].location }}</a>
+                            </p>
+                            <p class="location" v-else>{{ current_approved_sessions_return[r_idx].location }}</p>
                             <p class="address">{{ current_approved_sessions_return[r_idx].address }}</p>
                             <p class="city-zip">{{ current_approved_sessions_return[r_idx].city }}, {{ current_approved_sessions_return[r_idx].zip_code }}</p>
                         </div>
@@ -245,7 +251,10 @@
                     <div class="time-location-wrapper">
                         <p class="time">{{ combineDate(current_declined_sessions[r_idx].start_at, current_declined_sessions[r_idx].end_at) }}</p>
                         <div class="location-wrapper">
-                            <p class="location">{{ current_declined_sessions[r_idx].location }}</p>
+                            <p class="location" v-if="is_url_location(current_declined_sessions[r_idx].location)">
+                                <a class="location-link" :href="current_declined_sessions[r_idx].location" target="_blank">{{ current_declined_sessions[r_idx].location }}</a>
+                            </p>
+                            <p class="location" v-else>{{ current_declined_sessions[r_idx].location }}</p>
                             <p class="address">{{ current_declined_sessions[r_idx].address }}</p>
                             <p class="city-zip">{{ current_declined_sessions[r_idx].city }}, {{ current_declined_sessions[r_idx].zip_code }}</p>
                         </div>
