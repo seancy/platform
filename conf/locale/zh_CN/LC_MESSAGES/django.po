@@ -28631,3 +28631,21 @@ msgstr "评价"
 #: edflex/static/html/edflex.html
 msgid "users’ reviews"
 msgstr "用户评价"
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr "测验"
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr "词云"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr "投票"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr "调查"

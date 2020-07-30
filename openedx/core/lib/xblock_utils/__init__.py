@@ -129,29 +129,29 @@ def wrap_xblock(
     data['usage-id'] = usage_id_serializer(block.scope_ids.usage_id)
     data['request-token'] = request_token
 
-    if block.name:
-        data['name'] = block.name
-
     block_label = None
-    if hasattr(block, 'label') and frag.content.find('hd hd-2') == -1:
-        block_label = '''
-        <div class="block-label">
-            <span class="fal fa-clipboard-list"></span>
-            <span class="block-label-text">{display_name}</span>
-        </div>
-        '''.format(display_name=block.name)
-
     block_title = None
-    if hasattr(block, 'title') and frag.content.find('hd hd-2') == -1:
-        display_name = block.display_name if block.display_name != block.name else ' '
-        block_title = '''
-        <div class="block-header-wrapper html-header-wrapper">
-            <h3 class="block-header html-header">{display_name}</h3>
-        </div>
-        '''.format(display_name=display_name.encode('utf-8'))
-
     frag_content = frag.content
-    if block_label and block_title:
+
+    if hasattr(block, 'label') and frag.content.find('hd hd-2') == -1:
+        if block.display_name not in ['Text', 'Raw HTML']:
+            block_label = '''
+            <div class="block-label">
+                <span class="fal fa-clipboard-list"></span>
+                <span class="block-label-text">{display_name}</span>
+            </div>
+            '''.format(display_name=block.type)
+
+    if hasattr(block, 'title') and frag.content.find('hd hd-2') == -1:
+        if block.display_name not in ['Text', 'Raw HTML']:
+            display_name = block.display_name
+            block_title = '''
+            <div class="block-header-wrapper html-header-wrapper">
+                <h3 class="block-header html-header">{display_name}</h3>
+            </div>
+            '''.format(display_name=display_name.encode('utf-8'))
+
+    if hasattr(block, 'label') and hasattr(block, 'title') and frag.content.find('hd hd-2') == -1:
         frag_content = '<hr class="sep-line">' + frag_content
 
     template_context = {

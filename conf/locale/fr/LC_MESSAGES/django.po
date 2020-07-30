@@ -31203,3 +31203,21 @@ msgstr "avis"
 #: edflex/static/html/edflex.html
 msgid "users’ reviews"
 msgstr "avis utilisateur"
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr "Quiz"
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr "Nuage de mots"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr "Sondage"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr "Enquête"

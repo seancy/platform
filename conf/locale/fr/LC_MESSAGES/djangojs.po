@@ -12600,3 +12600,13 @@ msgstr "Oui"
 #: master-cofidis: lms/static/js/views/login_role_check.js
 msgid "No"
 msgstr "Non"
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag and Drop"
+msgstr "Glisser-déposer"
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag & Drop"
+msgstr "Glisser-déposer"

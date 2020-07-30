@@ -789,3 +789,13 @@ msgstr ""
 #: edflex/static/html/edflex.html
 msgid "users’ reviews"
 msgstr ""
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr ""
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr ""
