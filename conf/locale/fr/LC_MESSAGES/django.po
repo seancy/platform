@@ -31085,7 +31085,7 @@ msgstr "L’équipe Management des Connaissances vous souhaite une excellente fo
 #: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
 #: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
 msgid "Please <b>DO NOT TRANSFER THIS INVITATION</b> as it is addressed to you personally."
-msgstr "Nous vous remercions de <b>NE PAS TRANSFÉRER CETTE INVITATION</b> qui est vous est personnellement adressée"
+msgstr "Nous vous remercions de <b>NE PAS TRANSFÉRER CETTE INVITATION</b> qui vous est personnellement adressée"
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
