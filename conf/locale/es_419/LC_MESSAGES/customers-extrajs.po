@@ -14,7 +14,19 @@ msgstr ""
 "Generated-By: Babel 1.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: master-sitel: #: lms/templates/discovery/facet.underscore
-#: master-sitel: #: cms/templates/discovery/facet.underscore
+#: master-sitel: lms/templates/discovery/facet.underscore
+#: master-sitel: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "Área de desarrollo"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Are you a manager?"
+msgstr "¿Eres gerente?"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Yes"
+msgstr "Sí"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "No"
+msgstr "No"

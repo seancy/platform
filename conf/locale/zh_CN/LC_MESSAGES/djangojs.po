@@ -11808,8 +11808,8 @@ msgstr "注册已被确认通过。<br>你可以点击\"即将到来的课程\"�
 msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
 msgstr "该单元仅对员工可见。以下学员不是员工： <br><br>"
 
-#: master-sitel: #: lms/templates/discovery/facet.underscore
-#: master-sitel: #: cms/templates/discovery/facet.underscore
+#: master-sitel: lms/templates/discovery/facet.underscore
+#: master-sitel: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "发展领域"
 
@@ -11944,3 +11944,15 @@ msgstr "打开第一门课"
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Completion of each course"
 msgstr "完成每一门课"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Are you a manager?"
+msgstr "你是管理员吗？"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Yes"
+msgstr "是"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "No"
+msgstr "否"
