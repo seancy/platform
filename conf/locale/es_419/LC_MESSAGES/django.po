@@ -30512,3 +30512,25 @@ msgstr "comentarios"
 #: edflex/static/html/edflex.html
 msgid "users’ reviews"
 msgstr "comentarios de los usuarios"
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr "Examen"
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr "Nube de palabras"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr "Votación"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr "Encuesta"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:119
+msgid "SCORM module"
+msgstr "Módulo SCORM"

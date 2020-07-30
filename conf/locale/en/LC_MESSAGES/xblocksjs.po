@@ -181,3 +181,13 @@ msgstr ""
 #: edflex/static/js/src/parse_duration.js
 msgid "years"
 msgstr ""
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag and Drop"
+msgstr ""
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag & Drop"
+msgstr ""

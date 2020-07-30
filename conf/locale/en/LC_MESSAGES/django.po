@@ -26818,3 +26818,11 @@ msgstr ""
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "Completed by gradebook edit"
 msgstr ""
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr ""
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr ""

@@ -30249,3 +30249,21 @@ msgstr "avaliações"
 #: edflex/static/html/edflex.html
 msgid "users’ reviews"
 msgstr "comentários de usuários"
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr "Questionário"
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr "Nuvem de palavras"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr "Votação"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr "Pesquisa"
