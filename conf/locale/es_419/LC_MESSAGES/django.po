@@ -30401,6 +30401,13 @@ msgstr "Abra el módulo en una nueva pestaña. Esta opción solo se aplicará a 
 
 #: XBlock: scormxblock
 #: scormxblock/static/html/scormxblock.html
+msgid "%(num_points)s point possible"
+msgid_plural "%(num_points)s points possible"
+msgstr[0] "%(num_points)s posible punto"
+msgstr[1] "%(num_points)s posibles puntos"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr "Nueva pestaña"
 
