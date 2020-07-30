@@ -31085,7 +31085,7 @@ msgstr "L’équipe Management des Connaissances vous souhaite une excellente fo
 #: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
 #: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
 msgid "Please <b>DO NOT TRANSFER THIS INVITATION</b> as it is addressed to you personally."
-msgstr "Nous vous remercions de <b>NE PAS TRANSFÉRER CETTE INVITATION</b> qui est vous est personnellement adressée"
+msgstr "Nous vous remercions de <b>NE PAS TRANSFÉRER CETTE INVITATION</b> qui vous est personnellement adressée"
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
@@ -31161,6 +31161,13 @@ msgstr "Ajoutez le document source de votre PDF (fichier Powerpoint, …)"
 #: xblock-pdf/pdf/templates/html/pdf_view.html
 msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."
 msgstr "Il semble que vous n’ayez pas de plugin PDF pour ce navigateur ou l’URL du PDF n’est pas valide."
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
+msgid "%(num_points)s point possible"
+msgid_plural "%(num_points)s points possible"
+msgstr[0] "%(num_points)s point possible"
+msgstr[1] "%(num_points)s points possible"
 
 #: XBlock: scormxblock
 #: scormxblock/static/html/scormxblock.html

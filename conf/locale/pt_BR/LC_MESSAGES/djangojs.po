@@ -12363,8 +12363,8 @@ msgstr "Spaniola"
 #~ msgid "Starts: %(start_date)s"
 #~ msgstr "Início: %(start_date)s"
 
-#: master-sitel: #: lms/templates/discovery/facet.underscore
-#: master-sitel: #: cms/templates/discovery/facet.underscore
+#: master-sitel: lms/templates/discovery/facet.underscore
+#: master-sitel: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "Área de Desenvolvimento"
 
@@ -12496,3 +12496,15 @@ msgstr "Acessando o primeiro curso"
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Completion of each course"
 msgstr "Conclusão de cada curso"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Are you a manager?"
+msgstr "Você é gerente?"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Yes"
+msgstr "Sim"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "No"
+msgstr "Não"

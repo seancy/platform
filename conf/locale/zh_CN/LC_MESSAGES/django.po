@@ -28592,6 +28592,13 @@ msgstr "在新标签页打开模块。此选项仅适用于具有兼容浏览器
 
 #: XBlock: scormxblock
 #: scormxblock/static/html/scormxblock.html
+msgid "%(num_points)s point possible"
+msgid_plural "%(num_points)s points possible"
+msgstr[0] "%(num_points)s 可能的分数"
+msgstr[1] "%(num_points)s 可能的分数"
+
+#: XBlock: scormxblock
+#: scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr "新标签页"
 
