@@ -12610,3 +12610,13 @@ msgstr "Glisser-déposer"
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag & Drop"
 msgstr "Glisser-déposer"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll_results.handlebars
+msgid "Poll"
+msgstr "Sondage"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/survey_results.handlebars
+msgid "Survey"
+msgstr "Enquête"

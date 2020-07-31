@@ -28,6 +28,7 @@ from xmodule.vertical_block import VerticalBlock
 from xmodule.x_module import shim_xmodule_js, XModuleDescriptor, XModule, PREVIEW_VIEWS, STUDIO_VIEW
 import webpack_loader.utils
 from student.roles import studio_access_role
+from django.utils.translation import gettext as _
 
 
 log = logging.getLogger(__name__)
@@ -140,7 +141,7 @@ def wrap_xblock(
                 <span class="fal fa-clipboard-list"></span>
                 <span class="block-label-text">{display_name}</span>
             </div>
-            '''.format(display_name=block.type)
+            '''.format(display_name=_(block.type))
 
     if hasattr(block, 'title') and frag.content.find('hd hd-2') == -1:
         if block.display_name not in ['Text', 'Raw HTML']:
