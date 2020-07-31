@@ -2765,14 +2765,28 @@ def process_ilt_validation_check_email():
         try:
             usage_id = s.usage_id
             ilt_block = modulestore().get_item(usage_id)
+            sessions_summary = XModuleUserStateSummaryField.objects.get(field_name="sessions", usage_id=usage_id)
+            sessions_info = json.loads(sessions_summary.value)
             enrolled_user_info = json.loads(s.value)
+            require_save = False
             for session_id, users in enrolled_user_info.items():
-                for user_id, v in users.items():
-                    if v['status'] == 'pending':
-                        user = User.objects.get(id=user_id)
-                        email = user.profile.lt_ilt_supervisor
-                        if email and email not in ilt_supervisor_list:
-                            ilt_supervisor_list.append(email)
+                end_at = sessions_info[session_id]['end_at']
+                expired = datetime.now() > decode_datetime(end_at)
+                if expired:
+                    for user_id, v in users.items():
+                        if v['status'] == 'pending':
+                            v['status'] = 'refused'
+                            require_save = True
+                else:
+                    for user_id, v in users.items():
+                        if v['status'] == 'pending':
+                            user = User.objects.get(id=user_id)
+                            email = user.profile.lt_ilt_supervisor
+                            if email and email not in ilt_supervisor_list:
+                                ilt_supervisor_list.append(email)
+            if require_save:
+                s.value = json.dumps(enrolled_user_info)
+                s.save()
         except ItemNotFoundError:
             ilt_validation_log.error("ilt block: {usage_id} does not exist.".format(usage_id=usage_id))
 
