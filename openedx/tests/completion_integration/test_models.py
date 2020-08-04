@@ -86,7 +86,7 @@ class SubmitCompletionTestCase(CompletionSetUpMixin, TestCase):
 
     def test_new_user(self):
         newuser = UserFactory()
-        with self.assertNumQueries(4):  # Get, update, 2 * savepoints
+        with self.assertNumQueries(7):  # Get, update, 2 * savepoints
             _, isnew = models.BlockCompletion.objects.submit_completion(
                 user=newuser,
                 course_key=self.block_key.course_key,
