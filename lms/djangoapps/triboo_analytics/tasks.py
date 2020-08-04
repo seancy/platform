@@ -207,15 +207,14 @@ def generate_export_table(entry_id, xmodule_instance_args):
 
 @receiver(post_save, sender=BlockCompletion)
 def handle_leader_board_activity(sender, instance, **kwargs):
-    if not instance.completion:
-        return
-    else:
-        update_leader_board_activity.apply_async(
-            kwargs={
-                "block_id": unicode(instance.block_key),
-                "user_id": instance.user_id
-            }
-        )
+
+    update_leader_board_activity.apply_async(
+        kwargs={
+            "block_id": unicode(instance.block_key),
+            "user_id": instance.user_id,
+            "completion": instance.completion
+        }
+    )
 
 
 @task(
@@ -232,30 +231,41 @@ def update_leader_board_activity(self, **kwargs):
     user = User.objects.get(id=kwargs.get('user_id'))
     block = modulestore().get_item(block_key)
     leader_board = None
+    completion = kwargs.get('completion')
+    if completion == 1:
+        offset = 1
+    else:
+        offset = -1
     if block_key.block_type in ['survey', 'poll', 'word_cloud']:
         leader_board, _ = models.LeaderBoard.objects.get_or_create(user=user)
-        leader_board.non_graded_completed = leader_board.non_graded_completed + 1
-        logger.info("updated non_graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
-            user_id=user.id,
-            block_id=block_key
-        ))
+        leader_board.non_graded_completed = leader_board.non_graded_completed + offset
+        logger.info("updated non_graded activity of leaderboard score by ({offset}) for user: {user_id}, "
+                    "block_id: {block_id}".format(
+                        user_id=user.id,
+                        block_id=block_key,
+                        offset=offset
+                    ))
         leader_board.save()
     elif block_key.block_type == 'problem':
         leader_board, _ = models.LeaderBoard.objects.get_or_create(user=user)
         if not block.graded:
-            leader_board.non_graded_completed = leader_board.non_graded_completed + 1
+            leader_board.non_graded_completed = leader_board.non_graded_completed + offset
             logger.info(
-                "updated non_graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
+                "updated non_graded activity of leaderboard score by ({offset}) for user: {user_id}, "
+                "block_id: {block_id}".format(
                     user_id=user.id,
-                    block_id=block_key
+                    block_id=block_key,
+                    offset=offset
                 ))
         else:
             if block.weight == 0:
-                leader_board.non_graded_completed = leader_board.non_graded_completed + 1
+                leader_board.non_graded_completed = leader_board.non_graded_completed + offset
                 logger.info(
-                    "updated non_graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
+                    "updated non_graded activity of leaderboard score by ({offset}) for user: {user_id}, "
+                    "block_id: {block_id}".format(
                         user_id=user.id,
-                        block_id=block_key
+                        block_id=block_key,
+                        offset=offset
                     ))
             else:
                 course_structure = get_course_blocks(user, block_key)
@@ -264,19 +274,22 @@ def update_leader_board_activity(self, **kwargs):
                     course_structure[block_key], persist_grade=False
                 )
                 if subsection_grade.all_total.possible == 0:
-                    leader_board.non_graded_completed = leader_board.non_graded_completed + 1
+                    leader_board.non_graded_completed = leader_board.non_graded_completed + offset
                     logger.info(
-                        "updated non_graded activity of leaderboard score for user: {user_id}, "
+                        "updated non_graded activity of leaderboard score by ({offset}) for user: {user_id}, "
                         "block_id: {block_id}".format(
                             user_id=user.id,
-                            block_id=block_key
+                            block_id=block_key,
+                            offset=offset
                         ))
                 else:
-                    leader_board.graded_completed = leader_board.graded_completed + 1
+                    leader_board.graded_completed = leader_board.graded_completed + offset
                     logger.info(
-                        "updated graded activity of leaderboard score for user: {user_id}, block_id: {block_id}".format(
+                        "updated graded activity of leaderboard score by ({offset}) for user: {user_id}, "
+                        "block_id: {block_id}".format(
                             user_id=user.id,
-                            block_id=block_key
+                            block_id=block_key,
+                            offset=offset
                         )
                     )
 
@@ -292,6 +305,10 @@ def update_leader_board_activity(self, **kwargs):
         block_key=vertical_block.location
     )
     if not unit_completion_event.exists():
+        # if the block completion is reset to 0 and parent block was not completed before
+        # then just do nothing, just return, else we need to reset the unit completion
+        if completion == 0:
+            return 
         course_block_completions = BlockCompletion.get_course_completions(user, block_key.course_key)
         children = vertical_block.children
         for child in children[:]:
@@ -337,7 +354,17 @@ def update_leader_board_activity(self, **kwargs):
                     key=vertical_block.location
                 ))
     else:
-        logger.info("user: {user_id}, unit is already completed, {key}".format(
-            user_id=user.id,
-            key=vertical_block.location
-        ))
+        if completion == 0:
+            unit_completion_event.delete()
+            leader_board.unit_completed = leader_board.unit_completed - 1
+            leader_board.save()
+            logger.info("remove unit completion for user: {user_id}, "
+                        "block_id: {block_id}".format(
+                            user_id=user.id,
+                            block_id=vertical_block.location
+                        ))
+        else:
+            logger.info("user: {user_id}, unit is already completed, {key}".format(
+                user_id=user.id,
+                key=vertical_block.location
+            ))

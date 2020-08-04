@@ -1296,7 +1296,11 @@ def leaderboard_data(request):
     result_set = query_set[:top] if top <= total_user else query_set
     if top == LEADERBOARD_DASHBOARD_TOP:
         for i in result_set:
-            detail = {"Points": i.total_score, "Name": i.user.profile.name or i.user.username,
+            try:
+                name = i.user.profile.name or i.user.username
+            except:
+                name = i.user.username
+            detail = {"Points": i.total_score, "Name": name,
                       "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
                       "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_DATE_TIME")}
             top_list.append(detail)
@@ -1325,7 +1329,12 @@ def leaderboard_data(request):
                     status = "down"
             else:
                 point = i.total_score
-            detail = {"Points": point, "Name": i.user.profile.name or i.user.username, "Rank": real_time_rank,
+
+            try:
+                name = i.user.profile.name or i.user.username
+            except:
+                name = i.user.username
+            detail = {"Points": point, "Name": name, "Rank": real_time_rank,
                       "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
                       "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE")}
             if status and real_time_rank <= 3:
@@ -1346,7 +1355,12 @@ def leaderboard_data(request):
                         point = i.current_week_score
                     else:
                         point = i.total_score
-                    detail = {"Points": point, "Name": i.user.profile.name or i.user.username,
+
+                    try:
+                        name = i.user.profile.name or i.user.username
+                    except:
+                        name = i.user.username
+                    detail = {"Points": point, "Name": name,
                               "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
                               "Active": True, "Rank": personal_rank,
                               "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE")}
