@@ -18,7 +18,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from datetime import datetime
-import pytz
 from django_tables2.export import TableExport
 from eventtracking import tracker
 from lms.djangoapps.grades.subsection_grade_factory import SubsectionGradeFactory

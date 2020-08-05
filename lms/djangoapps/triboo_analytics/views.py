@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from functools import wraps
 import hashlib
 import json
 import logging
@@ -100,6 +101,7 @@ logger = logging.getLogger('triboo_analytics')
 
 
 def analytics_on(func):
+    @wraps(func)
     def wrapper(request, *args, **kwargs):
         if not configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)):
             raise Http404
@@ -109,6 +111,7 @@ def analytics_on(func):
 
 
 def analytics_member_required(func):
+    @wraps(func)
     def wrapper(request, *args, **kwargs):
         user_groups = [group.name for group in request.user.groups.all()]
         if (ANALYTICS_ACCESS_GROUP in user_groups or ANALYTICS_LIMITED_ACCESS_GROUP in user_groups):
@@ -118,6 +121,7 @@ def analytics_member_required(func):
 
 
 def analytics_full_member_required(func):
+    @wraps(func)
     def wrapper(request, *args, **kwargs):
         if not ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()]:
             raise PermissionDenied
@@ -140,15 +144,14 @@ def config_tables(request, *tables):
         config.configure(t)
 
 
-def get_transcript_table(orgs, user_id, last_update, with_gradebook_link):
+def get_transcript_table(orgs, user_id, last_update, with_gradebook_link=False):
     queryset = LearnerCourseDailyReport.objects.none()
     for org in orgs:
         new_queryset = LearnerCourseDailyReport.filter_by_day(date_time=last_update, org=org, user_id=user_id)
         queryset = queryset | new_queryset
-    if with_gradebook_link == False:
-        return TranscriptTable(queryset), queryset
-    else:
+    if with_gradebook_link:
         return TranscriptTableWithGradeLink(queryset), queryset
+    return TranscriptTable(queryset), queryset      
 
 
 def _transcript_view(user, request, template, report_type, with_gradebook_link=False):
@@ -794,6 +797,7 @@ def learner_view(request):
 
     row_count = 0
     learner_table = None
+    query_triples = None
     filter_form, user_properties_form, filter_kwargs, exclude, last_update, query_dict = get_learner_table_filters(request, orgs)
     if last_update:
         learner_table, row_count = get_table(LearnerDailyReport, filter_kwargs, LearnerDailyTable, exclude)
@@ -987,6 +991,8 @@ def course_view(request):
         user_properties_form = None
         row_count = 0
         last_update = None
+        query_dict = None
+        query_triples = None
 
         last_reportlog = ReportLog.get_latest()
         if last_reportlog:
