@@ -1289,3 +1289,6 @@ FEATURES['ENABLE_DASHBOARD_BOOKMARKS'] = False
 
 ################ Enable Video auto-advance in video player control ####################
 FEATURES['ENABLE_AUTOADVANCE_VIDEOS'] = True
+
+# Learnlight catalog API
+LEARNLIGHT_AUTH_KEY = AUTH_TOKENS.get("LEARNLIGHT_AUTH_KEY", "")

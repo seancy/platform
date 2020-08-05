@@ -332,6 +332,9 @@ urlpatterns += [
     # view of edflex catalog
     url(r'^courses/edflex_catalog$', branding_views.edflex_catalog, name='edflex_catalog'),
 
+    # view of learnlight catalog
+    url(r'^courses/learnlight_catalog$', branding_views.learnlight_catalog, name='learnlight_catalog'),
+    
     #About the course
     url(
         r'^courses/{}/about$'.format(

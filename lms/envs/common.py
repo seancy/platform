@@ -3569,3 +3569,6 @@ SAML_IDP_SPCONFIG = {}
 
 ############# Allow if course catalog visibility do ES searh ###########################
 ALLOW_CATALOG_VISIBILITY_FILTER = True
+
+# Learnlight catalog API
+LEARNLIGHT_URL = "https://griky.learnlight.com/"

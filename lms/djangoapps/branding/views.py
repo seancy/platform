@@ -25,6 +25,10 @@ from student_account.views import login_and_registration_form
 from util.cache import cache_if_anonymous
 from util.json_request import JsonResponse
 
+from datetime import datetime
+from pytz import UTC
+from hashlib import sha1
+
 log = logging.getLogger(__name__)
 
 CATALOG_DENIED_GROUP = "Catalog Denied Users"
@@ -351,3 +355,22 @@ def edflex_catalog(request):
         return render_to_response('courseware/edflex_catalog.html', context)
     else:
         raise Http404
+
+@ensure_csrf_cookie
+@login_required
+@cache_if_anonymous()
+def learnlight_catalog(request):
+    learnlight_url = settings.LEARNLIGHT_URL
+    user_email = urllib.quote(request.user.email)
+    datetime_now = datetime.now(UTC)
+    date = datetime_now.strftime('%Y%m%d')
+    auth_key = settings.LEARNLIGHT_AUTH_KEY
+    token = sha1(user_email+date+auth_key).hexdigest()
+    auth_source = 'griky'
+    query_string = '?authSource={auth_source}&authUser={user_email}&authToken={token}'.format(
+        auth_source=auth_source,
+        user_email=user_email,
+        token=token,
+    )
+    learnlight_url += query_string
+    return redirect(learnlight_url)
