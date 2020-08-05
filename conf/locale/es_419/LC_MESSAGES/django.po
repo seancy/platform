@@ -30499,6 +30499,111 @@ msgid "Update Plan"
 msgstr "Plan de actualización"
 
 #: XBlock: edflex
+#: edflex/edflex.py
+msgid "External Resource"
+msgstr "Recurso Externo"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html
+msgid "Use External Content component"
+msgstr "Usa componente de contenido externo"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html
+msgid "Add resources to your course, curated by Edflex technology. Choose from a selection of MOOCs, Videos, Podcasts, Books, and Articles to accompany and enhance the creation of your trainings!"
+msgstr "Agrega recursos a tu curso, curados con la tecnología Edflex. ¡Elije entre una selección de MOOCs, videos, podcasts, libros y artículos para acompañar y mejorar la creación de tus entrenamientos!"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html
+msgid "You are now ready"
+msgstr "Ahora estas listo"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html
+msgid "Integrate external content to enrich your course!"
+msgstr "¡Integra contenido externo para enriquecer tu curso!"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "How it works?"
+msgstr "¿Cómo funciona?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Select the format of content you want to add"
+msgstr "Selecciona el formato de contenido que deseas agregar"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a category for your learning content"
+msgstr "Elije una categoría para su contenido de aprendizaje"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Then a language"
+msgstr "A continuación, un idioma"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Pick the content you want to use"
+msgstr "Elige el contenido que quiere usar"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "No content available? Then change one of the parameters you previously selected."
+msgstr "¿No hay contenido disponible? Cambia entonces uno de los parámetros que seleccionaste previamente."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Which format of content do you need?"
+msgstr "¿En qué formato necesitas el contenido?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a format. It is mandatory."
+msgstr "Elige un formato. Es obligatorio."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Select one of the category below"
+msgstr "Selecciona una de las categorías a continuación"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a category."
+msgstr "Elige una categoría."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Which language for the content?"
+msgstr "¿Qué idioma para el contenido?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a language."
+msgstr "Elige un idioma."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Select the title of the content"
+msgstr "Selecciona el título del contenido."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a content."
+msgstr "Elige un contenido."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Relative weight in this course section"
+msgstr "El peso relativo de esta sección del curso"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Add this content"
+msgstr "Agrega este contenido"
+
+#: XBlock: edflex
 #: edflex/static/html/edflex.html
 msgid "About the content"
 msgstr "Sobre el contenido"

@@ -12327,6 +12327,11 @@ msgstr "año"
 msgid "years"
 msgstr "años"
 
+#: XBlock: edflex
+#: edflex/static/js/src/studio_edit.js
+msgid "Select the content of your choice"
+msgstr "Selecciona el contenido que prefieres"
+
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
 msgstr "Tabla de clasificación"
