@@ -678,7 +678,13 @@ class TestCourseEmailContext(SharedModuleStoreTestCase):
         """
         This test tests that the bulk email context uses http urls
         """
-        email_context = _get_course_email_context(self.course)
+        dummy_logo_url = settings.LMS_ROOT_URL + '/static/hawthorn/images/logo.png'
+        platform_name = u'\xe9dX'
+        contexts = {
+            'logo_url': dummy_logo_url,
+            'platform_name': platform_name,
+        }
+        email_context = _get_course_email_context(self.course, contexts)
         self.verify_email_context(email_context, 'http')
 
     @override_settings(LMS_ROOT_URL="https://edx.org")
@@ -686,5 +692,11 @@ class TestCourseEmailContext(SharedModuleStoreTestCase):
         """
         This test tests that the bulk email context uses https urls
         """
-        email_context = _get_course_email_context(self.course)
+        dummy_logo_url = settings.LMS_ROOT_URL + '/static/hawthorn/images/logo.png'
+        platform_name = u'\xe9dX'
+        contexts = {
+            'logo_url': dummy_logo_url,
+            'platform_name': platform_name,
+        }
+        email_context = _get_course_email_context(self.course, contexts)
         self.verify_email_context(email_context, 'https')
