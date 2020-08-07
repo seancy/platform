@@ -45,6 +45,8 @@ from lms.djangoapps.instructor_task.tasks import (
 )
 from util import milestones_helpers
 from xmodule.modulestore.django import modulestore
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from django.conf import settings
 
 
 class SpecificStudentIdMissingError(Exception):
@@ -313,10 +315,17 @@ def submit_bulk_course_email(request, course_key, email_id):
         "{} {}".format(count, target)
         for target, count in targets.iteritems()
     ]
+    logo_url = configuration_helpers.get_value('logo_image_url', 'images/logo.png')
+    platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
 
     task_type = 'bulk_course_email'
     task_class = send_bulk_course_email
-    task_input = {'email_id': email_id, 'to_option': targets}
+    task_input = {
+        'email_id': email_id,
+        'to_option': targets,
+        'logo_url': logo_url,
+        'platform_name': platform_name,
+    }
     task_key_stub = str(email_id)
     # create the key value by using MD5 hash:
     task_key = hashlib.md5(task_key_stub).hexdigest()

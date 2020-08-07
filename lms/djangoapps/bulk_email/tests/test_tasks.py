@@ -97,7 +97,14 @@ class TestBulkEmailInstructorTask(InstructorTaskCourseTestCase):
         course_email = CourseEmail.create(
             course_id, self.instructor, targets, "Test Subject", "<p>This is a test message</p>"
         )
+        dummy_logo_url = settings.LMS_ROOT_URL + '/static/hawthorn/images/logo.png'
+        platform_name = 'edx'
+        contexts = {
+            'logo_url': dummy_logo_url,
+            'platform_name': platform_name,
+        }
         task_input = {'email_id': course_email.id}
+        task_input.update(contexts)
         task_id = str(uuid4())
         instructor_task = InstructorTaskFactory.create(
             course_id=course_id,
@@ -434,7 +441,13 @@ class TestBulkEmailInstructorTask(InstructorTaskCourseTestCase):
             self._test_run_with_task(send_bulk_course_email, 'emailed', num_emails, num_emails)
 
     def test_get_course_email_context_has_correct_keys(self):
-        result = _get_course_email_context(self.course)
+        dummy_logo_url = settings.LMS_ROOT_URL + '/static/hawthorn/images/logo.png'
+        platform_name = 'edx'
+        contexts = {
+            'logo_url': dummy_logo_url,
+            'platform_name': platform_name,
+        }
+        result = _get_course_email_context(self.course, contexts)
         self.assertIn('course_title', result)
         self.assertIn('course_root', result)
         self.assertIn('course_language', result)
