@@ -7769,6 +7769,10 @@ msgstr ""
 "Fileira #{row_num}: Existe uma conta com o e-mail {email} mas o nome de usuário fornecido "
 "{username} é diferente. Matricular mesmo assim com {email}."
 
+#: lms/djangoapps/instructor/views/api.py:512
+msgid "Row #{row_num}: Invalid utf-8 characters"
+msgstr "Fileira #{row_num}: Caracteres utf-8 inválidos"
+
 #: lms/djangoapps/instructor/views/api.py:510
 #: lms/djangoapps/instructor/views/api.py:706
 #: lms/djangoapps/instructor/views/api.py:911

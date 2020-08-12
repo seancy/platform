@@ -7746,6 +7746,10 @@ msgstr ""
 "Ligne #{row_num} : Un compte avec l'email {email} existe mais le nom d'utilisateur {username} "
 "communiqué est différent. Cet utilisateur est malgré tout inscrit avec l'adresse {email}. "
 
+#: lms/djangoapps/instructor/views/api.py:512
+msgid "Row #{row_num}: Invalid utf-8 characters"
+msgstr "Ligne #{row_num} :  caractères utf-8 invalides"
+
 #: lms/djangoapps/instructor/views/api.py:506
 #: lms/djangoapps/instructor/views/api.py:702
 #: lms/djangoapps/instructor/views/api.py:907
