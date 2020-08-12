@@ -6752,6 +6752,10 @@ msgid ""
 "username {username} is different."
 msgstr ""
 
+#: lms/djangoapps/instructor/views/api.py:512
+msgid "Row #{row_num}: Invalid utf-8 characters"
+msgstr ""
+
 #: lms/djangoapps/instructor/views/api.py:510
 #: lms/djangoapps/instructor/views/api.py:706
 #: lms/djangoapps/instructor/views/api.py:911

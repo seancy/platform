@@ -7609,54 +7609,54 @@ msgstr ""
 #: lms/djangoapps/instructor/views/api.py:333
 #, python-brace-format
 msgid "Row #{row_num}: A first name is required."
-msgstr "Colonne #{row_num}: merci d'indiquer un prénom."
+msgstr "Ligne #{row_num} : merci d'indiquer un prénom."
 
 #: lms/djangoapps/instructor/views/api.py:336
 #, python-brace-format
 msgid "Row #{row_num}: A last name is required."
-msgstr "Colonne #{row_num}: merci d'indiquer un nom."
+msgstr "Ligne #{row_num} : merci d'indiquer un nom."
 
 #: lms/djangoapps/instructor/views/api.py:344
 #: lms/djangoapps/instructor/views/api.py:669
 #, python-brace-format
 msgid "Row #{row_num}: Invalid username."
-msgstr "Colonne #{row_num}: nom d'utilisateur invalide"
+msgstr "Ligne #{row_num} : nom d'utilisateur invalide"
 
 #: lms/djangoapps/instructor/views/api.py:349
 #, python-brace-format
 msgid "Row #{row_num}: {error_msg}"
-msgstr "Colonne #{row_num}: {error_msg}"
+msgstr "Ligne #{row_num} : {error_msg}"
 
 #: lms/djangoapps/instructor/views/api.py:353
 #, python-brace-format
 msgid "Row #{row_num}: A username is required."
-msgstr "Colonne #{row_num}: merci d'indiquer un nom d'utilisateur."
+msgstr "Ligne #{row_num} : merci d'indiquer un nom d'utilisateur."
 
 #: lms/djangoapps/instructor/views/api.py:360
 #: lms/djangoapps/instructor/views/api.py:652
 #, python-brace-format
 msgid "Row #{row_num}: Invalid email address."
-msgstr "Entrer une adresse mail valide."
+msgstr "Ligne #{row_num} : Entrer une adresse mail valide."
 
 #: lms/djangoapps/instructor/views/api.py:364
 #, python-brace-format
 msgid "Row #{row_num}: An email address is required."
-msgstr "Merci d'indiquer une adresse mail."
+msgstr "Ligne #{row_num} : Merci d'indiquer une adresse mail."
 
 #: lms/djangoapps/instructor/views/api.py:367
 #, python-brace-format
 msgid "Row #{row_num}: A password is required."
-msgstr "Un mot de passe valide est requis"
+msgstr "Ligne #{row_num} : Un mot de passe valide est requis"
 
 #: lms/djangoapps/instructor/views/api.py:370
 #, python-brace-format
 msgid "Row #{row_num}: Genders must be 'm', 'f' or 'o'."
-msgstr "Colonne #{row_num}: le genre doit être au format 'm', 'f' ou 'o'."
+msgstr "Ligne #{row_num} : le genre doit être au format 'm', 'f' ou 'o'."
 
 #: lms/djangoapps/instructor/views/api.py:378
 #, python-brace-format
 msgid "Row #{row_num}: Invalid year of birth (expected format: YYYY)."
-msgstr "colonne #{row_num}: le format de la date de naissance est invalide (format: AAAA)."
+msgstr "Ligne #{row_num} : le format de la date de naissance est invalide (format: AAAA)."
 
 #: lms/djangoapps/instructor/views/api.py:382
 #, python-brace-format
@@ -7664,7 +7664,7 @@ msgid ""
 "Row #{row_num}: Missing language, a language code is expected (e.g. en, fr, "
 "zh, pt)."
 msgstr ""
-"Colonne #{row_num}: merci d'indiquer le code de la langue (ex: en, fr, "
+"Ligne #{row_num} : merci d'indiquer le code de la langue (ex: en, fr, "
 "zh, pt)."
 
 #: lms/djangoapps/instructor/views/api.py:388
@@ -7673,7 +7673,7 @@ msgid ""
 "Row #{row_num}: Invalid language, a language code is expected (e.g. en, fr, "
 "zh, pt)."
 msgstr ""
-"Colonne #{row_num}: le code de la langue n'est pas valide."
+"Ligne #{row_num} : le code de la langue n'est pas valide."
 
 #: lms/djangoapps/instructor/views/api.py:394
 #, python-brace-format
@@ -7681,31 +7681,31 @@ msgid ""
 "Row #{row_num}: Missing country, a 2-character country code is expected (e."
 "g. FR, CN, US, BR)."
 msgstr ""
-"Colonne #{row_num}: le code du pays est manquant (format: FR, CN, US…)."
+"Ligne #{row_num} : le code du pays est manquant (format: FR, CN, US…)."
 
 #: lms/djangoapps/instructor/views/api.py:400
 #, python-brace-format
 msgid ""
 "Row #{row_num}: Invalid country, a 2-character country code is expected (e."
 "g. FR, CN, US, BR)."
-msgstr "Colonne #{row_num}: le code du pays est invalide (format: FR, US, CN…)."
+msgstr "Ligne #{row_num} : le code du pays est invalide (format: FR, US, CN…)."
 
 #: lms/djangoapps/instructor/views/api.py:405
 #, python-brace-format
 msgid "Row #{row_num}: A company is required."
-msgstr "Colonne #{row_num}: le champs company est requis."
+msgstr "Ligne #{row_num} : le champs company est requis."
 
 #: lms/djangoapps/instructor/views/api.py:411
 #, python-brace-format
 msgid "Row #{row_num}: Invalid hire date (expected format: YYYY-MM-DD)."
-msgstr "Colonne #{row_num}: la date d'embauche est invalide (format: AAAA-MM-JJ)."
+msgstr "Ligne #{row_num} : la date d'embauche est invalide (format: AAAA-MM-JJ)."
 
 #: lms/djangoapps/instructor/views/api.py:451
 #: lms/djangoapps/instructor/views/api.py:741
 #,
 msgid "Make sure that the file you upload is in CSV format."
 msgstr ""
-"Vérifier que le fichier importé est au format CSV et qu'il"
+"Vérifiez que le fichier importé est au format CSV et qu'il"
 "ne comporte pas d'en-têtes."
 
 #: lms/djangoapps/instructor/views/api.py:454
@@ -7723,7 +7723,7 @@ msgid ""
 "name, last name, username, email, password, gender, year of birth, language, "
 "country, city, location, company, employee id, hire date, job code, "
 "department, supervisor, learning group, comments)."
-msgstr "Colonne #{row_num}: le fichier doit comporter {expected_length} colonnes."
+msgstr "Ligne #{row_num} : le fichier doit comporter {expected_length} colonnes."
 
 #: lms/djangoapps/instructor/views/api.py:495
 #: lms/djangoapps/instructor/views/api.py:662
@@ -7732,7 +7732,7 @@ msgid ""
 "Row #{row_num}: An account with username {username} exists but the provided "
 "email {email} is different."
 msgstr ""
-"Colonne #{row_num}: Un compte avec le nom d'utilisateur {username} existe mais l'adresse mail {email} "
+"Ligne #{row_num} : Un compte avec le nom d'utilisateur {username} existe mais l'adresse mail {email} "
 "communiquée est différente. Cet utilisateur est malgré tout inscrit."
 
 #: lms/djangoapps/instructor/views/api.py:501
@@ -7743,8 +7743,12 @@ msgid ""
 "Row #{row_num}: An account with email {email} exists but the provided "
 "username {username} is different."
 msgstr ""
-"Un compte avec l'email {email} existe mais le nom d'utilisateur {username} "
+"Ligne #{row_num} : Un compte avec l'email {email} existe mais le nom d'utilisateur {username} "
 "communiqué est différent. Cet utilisateur est malgré tout inscrit avec l'adresse {email}. "
+
+#: lms/djangoapps/instructor/views/api.py:512
+msgid "Row #{row_num}: Invalid utf-8 characters"
+msgstr "Ligne #{row_num} :  caractères utf-8 invalides"
 
 #: lms/djangoapps/instructor/views/api.py:506
 #: lms/djangoapps/instructor/views/api.py:702
@@ -7759,7 +7763,7 @@ msgid ""
 "Make sure that the file you upload is in CSV format with no extraneous "
 "characters or rows."
 msgstr ""
-"Vérifier que le fichier importé est au format CSV et sans lignes ou "
+"Vérifiez que le fichier importé est au format CSV et sans lignes ou "
 "caractères supplémentaires."
 
 #: lms/djangoapps/instructor/views/api.py:635
@@ -7767,26 +7771,26 @@ msgstr ""
 msgid ""
 "Row #{row_num}: User with username {username} is now enrolled in this course."
 msgstr ""
-"Colonne #{row_num}: l'utilisateur {username} est maintenant inscrit au cours."
+"Ligne #{row_num} : l'utilisateur {username} est maintenant inscrit au cours."
 
 #: lms/djangoapps/instructor/views/api.py:641
 #, python-brace-format
 msgid ""
 "Row #{row_num}: User with username {username} was already enrolled in this "
 "course so nothing has changed."
-msgstr "Colonne #{row_num}: l'utilisateur {username} est déjà inscrit dans ce "
-"cours donc rien à changé."
+msgstr "Ligne #{row_num} : l'utilisateur {username} est déjà inscrit dans ce "
+"cours donc rien n'a changé."
 
 #: lms/djangoapps/instructor/views/api.py:694
 #, python-brace-format
 msgid "Row #{row_num}: {username} / {email}"
-msgstr "Colonne #{row_num}: {username} / {email}"
+msgstr "Ligne #{row_num} : {username} / {email}"
 
 #: lms/djangoapps/instructor/views/api.py:699
 #: lms/djangoapps/instructor/views/api.py:879
 #, python-brace-format
 msgid "Row #{row_num}: {ex}"
-msgstr "Colonne #{row_num}: {ex}"
+msgstr "Ligne #{row_num} : {ex}"
 
 #: lms/djangoapps/instructor/views/api.py:756
 #, python-brace-format
@@ -7795,59 +7799,59 @@ msgid ""
 "username, old email, first name, last name, username, email, password, "
 "gender, year of birth, language, country, city, location, company, employee "
 "id, hire date, job code, department, supervisor, learning group, comments)."
-msgstr "Colonne #{row_num}: le fichier doit impérativement comporter {expected_length}"
+msgstr "Ligne #{row_num} : le fichier doit impérativement comporter {expected_length}"
 "colonnes."
 
 #: lms/djangoapps/instructor/views/api.py:779
 #,python-brace-format
 msgid "Row #{row_num}: An old username is required."
-msgstr "Colonne #{row_num}: le nom d'utilisateur initial est requis."
+msgstr "Ligne #{row_num} : le nom d'utilisateur initial est requis."
 
 #: lms/djangoapps/instructor/views/api.py:783
 #, python-brace-format
 msgid "Row #{row_num}: An old email address is required."
-msgstr "Colonne #{row_num}: l'adresse mail initiale est requise"
+msgstr "Ligne #{row_num} : l'adresse mail initiale est requise"
 
 #: lms/djangoapps/instructor/views/api.py:788
 #, python-brace-format
 msgid "Row #{row_num}: Invalid old email address."
-msgstr "Colonne #{row_num}: l'adresse mail initiale est non valide {email_address}."
+msgstr "Ligne #{row_num} : l'adresse mail initiale est non valide {email_address}."
 
 #: lms/djangoapps/instructor/views/api.py:794
 #, python-brace-format
 msgid "Row #{row_num}: Invalid old username."
-msgstr "Colonne #{row_num}: le nom d'utilisateur initial est invalide."
+msgstr "Ligne #{row_num} : le nom d'utilisateur initial est invalide."
 
 #: lms/djangoapps/instructor/views/api.py:831
 #, python-brace-format
 msgid "Row #{row_num}: An other account with email {email} already exists."
-msgstr "Colonne #{row_num}: un compte avec l'email '{email}' existe déjà."
+msgstr "Ligne #{row_num} : un compte avec l'email '{email}' existe déjà."
 
 #: lms/djangoapps/instructor/views/api.py:836
 #, python-brace-format
 msgid "Row #{row_num}: Invalid new email address."
-msgstr "Colonne #{row_num}: l'adresse email est non valide {email_address}."
+msgstr "Ligne #{row_num} : l'adresse email est non valide {email_address}."
 
 #: lms/djangoapps/instructor/views/api.py:841
 #, python-brace-format
 msgid ""
 "Row #{row_num}: An other account with username {username} already exists."
-msgstr "Colonne #{row_num}: un compte avec le même nom d'utilisateur '{username}' existe déjà."
+msgstr "Ligne #{row_num} : un compte avec le même nom d'utilisateur '{username}' existe déjà."
 
 #: lms/djangoapps/instructor/views/api.py:846
 #, python-brace-format
 msgid "Row #{row_num}: Invalid new username."
-msgstr "Colonne #{row_num}: nom d'utilisateur invalide."
+msgstr "Ligne #{row_num} : nom d'utilisateur invalide."
 
 #: lms/djangoapps/instructor/views/api.py:885
 #, python-brace-format
 msgid "Row #{row_num}: user {old} (now: {new}) successfully updated."
-msgstr "Colonne #{row_num}: l'utilisateur {old} (maintenant: {new}) a été mis à jour."
+msgstr "Ligne #{row_num} : l'utilisateur {old} (maintenant: {new}) a été mis à jour."
 
 #: lms/djangoapps/instructor/views/api.py:890
 #, python-brace-format
 msgid "Row #{row_num}: user {old} successfully updated."
-msgstr "Colonne #{row_num}: l'utilisateur {old} a été mis à jour."
+msgstr "Ligne #{row_num} : l'utilisateur {old} a été mis à jour."
 
 #: lms/djangoapps/instructor/views/api.py:897
 #, python-brace-format
@@ -7855,7 +7859,7 @@ msgid ""
 "Row #{row_num}: An account with username {username} exits but the provided "
 "email {email} is different."
 msgstr ""
-"Un compte avec le nom d'utilisateur {username} existe mais l'adresse mail {email} "
+"Ligne #{row_num} : Un compte avec le nom d'utilisateur {username} existe mais l'adresse mail {email} "
 "communiquée est différente. L'utilisateur est inscrit via le compte {username}."
 
 #: lms/djangoapps/instructor/views/api.py:902
@@ -7863,7 +7867,7 @@ msgstr ""
 msgid ""
 "Row #{row_num}: No account was found with the provided username and email."
 msgstr ""
-"Colonne #{row_num}: aucun compte n'a été trouvé avec ce nom d'utisateur ou mail."
+"Ligne #{row_num} : aucun compte n'a été trouvé avec ce nom d'utisateur ou mail."
 
 #: lms/djangoapps/instructor/views/api.py:1070
 #, python-brace-format
