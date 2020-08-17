@@ -77,7 +77,7 @@ from six import string_types
               <span class="important-dates-item-text start-date">${course_start_date}</span>
             % else:
               <% course_date_string = course_start_date.strftime('%Y-%m-%dT%H:%M:%S%z') %>
-              <span class="important-dates-item-text start-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></span>
+              <span class="important-dates-item-text start-date localized_datetime" data-format="shortDate" data-language="${LANGUAGE_CODE}" data-datetime="${course_date_string}"></span>
             % endif
             % if course.end:
                 &nbsp;-&nbsp;
@@ -85,7 +85,7 @@ from six import string_types
                   <span class="important-dates-item-text final-date">${course.end}</span>
                 % else:
                   <% course_date_string = course.end.strftime('%Y-%m-%dT%H:%M:%S%z') %>
-                  <span class="important-dates-item-text final-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></span>
+                  <span class="important-dates-item-text final-date localized_datetime" data-format="shortDate" data-language="${LANGUAGE_CODE}" data-datetime="${course_date_string}"></span>
                 % endif
             % endif
           </li>
