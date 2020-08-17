@@ -534,7 +534,6 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                     grade_factory = CourseGradeFactory()
                     # grade_factory.update_course_completion_percentage(course_key, user)
                     progress = grade_factory.get_progress(user, course)
-                    progress['progress'] *= 100.0
                     if not progress:
                         logger.warning('course=%s user_id=%d does not have progress info => empty report.' % (
                             course_key, user.id))
@@ -553,6 +552,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                       'completion_date': None})
                         return
 
+                    progress['progress'] *= 100.0
                     if progress['progress'] == 100:
                         status = CourseStatus.failed
 
