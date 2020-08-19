@@ -8,8 +8,6 @@ import logging
 import json
 from collections import defaultdict
 
-from completion.exceptions import UnavailableCompletionData
-from completion.utilities import get_key_to_last_completed_course_block
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -600,76 +598,33 @@ def student_dashboard(request):
     # understanding of usage patterns on prod.
     monitoring_utils.accumulate('num_courses', len(course_enrollments))
 
-    # Sort the enrollment pairs by the enrollment date
-    course_enrollments.sort(key=lambda x: x.created, reverse=True)
-
-    # sort the enrollment by course_order
-    def is_unordered(enrollment):
-        """
-        This helper function is created to avoid NoneType error raised in test.
-        In production, it will return a CourseDescriptor object when we call
-        modulestore().get_course
-        """
-        course = modulestore().get_course(enrollment.course_id)
-        if course:
-            return course.course_order is None
-        return False
-
-    def order(enrollment):
-        """
-        This helper function is created to avoid NoneType error raised in test.
-        In production, it will return a CourseDescriptor object when we call
-        modulestore().get_course
-        """
-        course = modulestore().get_course(enrollment.course_id)
-        if course:
-            if course.course_order is None:
-                return 999
-            else:
-                return course.course_order
-        return 999
-
-    no_order_enrollments = filter(is_unordered, course_enrollments)
-    ordered_enrollments = [n for n in course_enrollments if n not in no_order_enrollments]
-    ordered_enrollments.sort(key=order)
-    course_enrollments = ordered_enrollments + no_order_enrollments
-
-    # get progress summary of each courses
-    progress_summaries = {}
+    # Get all badges earned and posts for all courses with this user.
     nb_badges_obtained = 0
     nb_posts = 0
     for c in course_enrollments:
         course_descriptor = modulestore().get_course(c.course_id)
         if course_descriptor:
-            is_mandatory = course_descriptor.course_mandatory_enabled
-            course_category = course_descriptor.course_category
-            course_language = course_descriptor.language
-            progress_summary = CourseGradeFactory().get_progress(user, course_descriptor)
-            nb_trophies_possible = progress_summary['nb_trophies_possible']
-            nb_trophies_earned = progress_summary['nb_trophies_earned']
-            progress = int(progress_summary['progress'] * 100)
-        else:
-            is_mandatory = False
-            course_category = None
-            nb_trophies_possible = 0
-            nb_trophies_earned = 0
-            progress = 0
-            course_language = ''
-        summary = {
-            "is_mandatory": is_mandatory,
-            "course_category": course_category,
-            "nb_trophies_possible": nb_trophies_possible,
-            "nb_trophies_earned": nb_trophies_earned,
-            "progress": progress,
-            "course_language": course_language
-        }
-        progress_summaries.update({c.course_id: summary})
-        nb_badges_obtained += nb_trophies_earned
+            nb_badges_obtained += CourseGradeFactory().get_nb_trophies_earned(user, course_descriptor)
         try:
             cc_user = cc.User(id=user.id, course_id=c.course_id).to_dict()
             nb_posts += cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
         except (CommentClientMaintenanceError, CommentClientRequestError):
             pass
+
+    # Sort the enrollment pairs by the enrollment date
+    course_enrollments.sort(key=lambda x: x.created, reverse=True)
+
+    def order(course_enrollment):
+        """
+        This helper function is created to avoid NoneType error raised in test.
+        In production, it will return a CourseDescriptor object when we call
+        modulestore().get_course
+        """
+        course_desc = modulestore().get_course(course_enrollment.course_id)
+        return course_desc.course_order if course_desc and course_desc.course_order else 999
+
+    # Sort the enrollment by course_order
+    course_enrollments.sort(key=order)
 
     # filter completed courses and not completed
     completed_courses = [c for c in course_enrollments if c.completed]
@@ -679,9 +634,8 @@ def student_dashboard(request):
     started_courses = [c for c in uncompleted_courses if StudentModule.objects.filter(course_id=c.course_id).exists()]
     not_started_courses = [c for c in uncompleted_courses if c not in started_courses]
 
-    # the ordered courses on dashboard, limited to 12
     course_enrollments = started_courses + not_started_courses + completed_courses
-    last_activity_enrollments = [e for e in course_enrollments if not e.completed]
+    # the ordered courses on dashboard, limited to 12
     if len(course_enrollments) > 12:
         course_enrollments = course_enrollments[:12]
 
@@ -879,7 +833,7 @@ def student_dashboard(request):
             'ENABLE_LAST_ACTIVITY',
             settings.FEATURES.get('ENABLE_LAST_ACTIVITY', False)):
         last_activity_enrollments = sort_by_last_block_completed(
-            user, last_activity_enrollments)
+            user, uncompleted_courses)
         max_display = settings.FEATURES.get('LAST_ACTIVITY_COURSES_NUM', 3)
         if len(last_activity_enrollments) > max_display:
             last_activity_enrollments = last_activity_enrollments[:max_display]
@@ -939,7 +893,6 @@ def student_dashboard(request):
         'nb_completed_courses': len(completed_courses),
         'nb_badges_obtained': nb_badges_obtained,
         'nb_posts': nb_posts,
-        'progress_summaries': progress_summaries,
         'last_activity_enrollments': last_activity_enrollments,
         'bookmarks': bookmarks,
     }
@@ -981,36 +934,17 @@ def my_courses(request, tab="all-courses"):
     site_org_whitelist, site_org_blacklist = get_org_black_and_whitelist_for_site()
     course_enrollments = list(get_course_enrollments(user, site_org_whitelist, site_org_blacklist))
 
+    def order(course_enrollment):
+        """
+        This helper function is created to avoid NoneType error raised in test.
+        In production, it will return a CourseDescriptor object when we call
+        modulestore().get_course
+        """
+        course_desc = modulestore().get_course(course_enrollment.course_id)
+        return course_desc.course_order if course_desc and course_desc.course_order else 999
+
     # sort the enrollment by course_order
-    def is_unordered(enrollment):
-        """
-        This helper function is created to avoid NoneType error raised in test.
-        In production, it will return a CourseDescriptor object when we call
-        modulestore().get_course
-        """
-        course = modulestore().get_course(enrollment.course_id)
-        if course:
-            return course.course_order is None
-        return False
-
-    def order(enrollment):
-        """
-        This helper function is created to avoid NoneType error raised in test.
-        In production, it will return a CourseDescriptor object when we call
-        modulestore().get_course
-        """
-        course = modulestore().get_course(enrollment.course_id)
-        if course:
-            if course.course_order is None:
-                return 999
-            else:
-                return course.course_order
-        return 999
-
-    no_order_enrollments = filter(is_unordered, course_enrollments)
-    ordered_enrollments = [n for n in course_enrollments if n not in no_order_enrollments]
-    ordered_enrollments.sort(key=order)
-    course_enrollments = ordered_enrollments + no_order_enrollments
+    course_enrollments.sort(key=order)
 
     # Retrieve the course modes for each course
     enrolled_course_ids = [enrollment.course_id for enrollment in course_enrollments]
