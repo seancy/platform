@@ -350,6 +350,32 @@ class CourseGradeFactory(object):
             nb_trophies_possible += rule.get('min_count', 0)
         return nb_trophies_possible
 
+    def get_nb_trophies_earned(self, user, course, grade_summary=None):
+        """
+        Get the specific course's badges earned for the user.
+        """
+        if not grade_summary:
+            grade_summary = self.read(user, course)
+        if not grade_summary:
+            return
+
+        nb_trophies_earned = 0
+        grading_rules_dict = {}
+        grading_rules = course.raw_grader
+        for rule in grading_rules:
+            if not rule.get('threshold'):
+                rule['threshold'] = 1
+            grading_rules_dict.update({
+                rule.get('type'): rule
+            })
+
+        for subsection_grade in grade_summary.grader_result['section_breakdown']:
+            grade_type = subsection_grade['category']
+            if subsection_grade['percent'] >= grading_rules_dict[grade_type]['threshold']:
+                nb_trophies_earned += 1
+
+        return nb_trophies_earned
+
     def get_progress(self, user, course, progress=None, grade_summary=None, enrollment=None):
         course_key = course.id
         if not grade_summary:
