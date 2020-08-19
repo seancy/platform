@@ -114,7 +114,7 @@ pipeline {
                 script {
                     try {
                         timeout(time: 2) {
-                            this_environment = input message: "which environment to run", parameters: [choice(name: 'environment', choices: ['PROD', 'STAGING'], description: 'which environment to run')]
+                            this_environment = input message: "which environment to run", parameters: [choice(name: 'environment', choices: ['PROD', 'STAGING', 'PREPROD'], description: 'which environment to run')]
                         }
                     } catch (err) {
                         println err
@@ -137,6 +137,8 @@ pipeline {
                                 this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'restart serivce', 'xblock', 'certs', 'config file'], description: 'which process to run')]
                             } else if (this_environment == 'STAGING') {
                                 this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'platform&theme', 'restart serivce', 'xblock', 'certs', 'config file'], description: 'which process to run')]
+                            } else if (this_environment == 'PREPROD') {
+                                this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'restart serivce', 'xblock', 'certs', 'config file'], description: 'which process to run')]
                             }
                             if (this_process == 'platform') {
                                 platform_process = true
@@ -149,7 +151,7 @@ pipeline {
                                     } else if (sub_theme_process == 'deploy') {
                                         theme_deploy_process = true
                                     }
-                                } else if (this_environment == 'STAGING') {
+                                } else if (this_environment in ['STAGING', 'PREPROD']) {
                                     theme_compile_process = false
                                     theme_deploy_process = true
                                     sub_theme_process = input message: "which part to compile", parameters: [choice(name: 'process', choices: ['lms', 'cms'], description: 'which part to compile')]
@@ -173,12 +175,12 @@ pipeline {
                                 }
                             } else if (this_process == 'certs') {
                                 certs_process = true
-                                if (this_environment == 'STAGING') {
+                                if (this_environment in ['STAGING', 'PREPROD']) {
                                     stage_certs_process = true
                                 }
                             } else if (this_process == 'xblock') {
                                 xblock_process = true
-                                if (this_environment == 'STAGING') {
+                                if (this_environment in ['STAGING', 'PREPROD']) {
                                     stage_xblock_process = true
                                 }
                             } else if (this_process == 'config file') {
@@ -199,7 +201,7 @@ pipeline {
                 } 
             }
         }
-        stage('Set tenant host') {
+        stage('Set stage tenant host') {
             when {
                 expression { return proceed == true && this_environment == 'STAGING' }
             }
@@ -210,9 +212,20 @@ pipeline {
                 }
             }
         }
+        stage('Set preprod tenant host') {
+            when {
+                expression { return proceed == true && this_environment == 'PREPROD' }
+            }
+            steps {
+                script {
+                    instance_ip = '52.212.106.25,'
+                    ec2_location = 'eu-west-1'
+                }
+            }
+        }
         stage('Set platform branch name') {
             when {
-                expression { return proceed == true && this_environment == 'STAGING' && platform_process == true && stage_auto_proceed == false}
+                expression { return proceed == true && this_environment in ['STAGING', 'PREPROD'] && platform_process == true && stage_auto_proceed == false}
             }
             steps {
                 script {
@@ -470,7 +483,7 @@ pipeline {
                                 }
                             }
                             println compile_theme
-                            if (this_environment == 'STAGING') {
+                            if (this_environment in ['STAGING', 'PREPROD']) {
                                 if (sub_theme_process == 'lms') {
                                     tag_theme = 'stage-theme-lms'
                                 } else if (sub_theme_process == 'cms') {
@@ -542,7 +555,7 @@ pipeline {
                                 . /tmp/.venvec2/bin/activate
                                 ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "all-theme" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
                                 """
-                            } else if (this_environment == 'STAGING') {
+                            } else if (this_environment in ['STAGING', 'PREPROD']) {
                                 if (platform_with_theme_process == false) {
                                     sh """
                                     . /tmp/.venvec2/bin/activate
@@ -620,7 +633,7 @@ pipeline {
                                 . /tmp/.venvec2/bin/activate
                                 ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy-certs" -e '@${env.WORKSPACE}/inventory/group_vars/tenants/certs-vars.yml' lt_pipeline_jobs.yml
                                 """   
-                            } else if (this_environment == 'STAGING') {
+                            } else if (this_environment in ['STAGING', 'PREPROD']) {
                                 sh """
                                 . /tmp/.venvec2/bin/activate
                                 ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "stage-deploy-certs" -e '@${env.WORKSPACE}/inventory/group_vars/tenants/certs-vars.yml' -e "{'branch_name':${certs_branch_name}}" lt_pipeline_jobs.yml
@@ -711,7 +724,7 @@ pipeline {
                                 ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" --tags "deploy-xblock" lt_pipeline_jobs.yml
                                 """
                             }
-                            else if ( this_environment == 'STAGING' ) {
+                            else if ( this_environment in ['STAGING', 'PREPROD'] ) {
                                 sh """
                                 . /tmp/.venvec2/bin/activate
                                 ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" -e "{'xblock_name':${xblock_name}}" -e "{'branch_name': ${xblock_branch_name}}" --tags "stage-deploy-xblock" lt_pipeline_jobs.yml
