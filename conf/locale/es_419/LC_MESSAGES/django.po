@@ -30643,3 +30643,67 @@ msgstr "Encuesta"
 #: edx_xblock_scorm/scormxblock/static/scormxblock.py:119
 msgid "SCORM module"
 msgstr "Módulo SCORM"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "CUSTOM PLANS"
+msgstr "PLANES PERSONALIZADOS"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Full catalog and personalized learning lists"
+msgstr "Acceso a catálogo de contenido Griky y diseño de listas de aprendizaje personalizadas"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Implementation and expert guidance"
+msgstr "Implementación y acompañamiento de expertos"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to a strong pool of candidates"
+msgstr "Acceso a candidatos para sus vacantes"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Certifications and university partnerships"
+msgstr "Certificación propia y posibilidad de titulación de usuarios con reconocidas universidades"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "PROFESSIONAL"
+msgstr "PROFESIONAL"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "{price} USD / MONTH"
+msgstr "{price} USD / MES"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to all courses (1000+ courses and 9+ career areas)"
+msgstr "Acceso a todos los cursos ( +1000 cursos y +9 carreras)"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Certifications"
+msgstr "Certificación"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Personalized mentoring"
+msgstr "Mentoría personalizada"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Employment support: Access to new job opportunities"
+msgstr "Apoyo laboral: Acceso a nuevas oportunidades de trabajo"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "BASIC"
+msgstr "BÁSICO"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "FREE"
+msgstr "GRATIS"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to a community of 10,000+ active members"
+msgstr "Acceso a la comunidad +10,000 usuarios"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Personalized learning lists, updated weekly"
+msgstr "Actualización constante de listas de aprendizaje personalizadas"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Learning in the flow of life - anytime, anywhere"
+msgstr "Aprendizaje en el flow 24/7, en cualquier momento y lugar"

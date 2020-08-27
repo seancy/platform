@@ -282,7 +282,7 @@ msgstr "Identifiez les axes de développement du cours ici."
 #: master-verisure:lms/templates/emails/enroll_email_enrolledsubject.txt
 #: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
 msgid "You have been enrolled in the training"
-msgstr "vous avez été inscrit à la Formation"
+msgstr "Vous avez été inscrit à la Formation"
 
 #: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
 #: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
