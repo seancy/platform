@@ -749,30 +749,35 @@ msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is
 msgstr ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "%(num_points)s point possible"
 msgid_plural "%(num_points)s points possible"
 msgstr[0] ""
 msgstr[1] ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Click on the button below to open the module in a new tab."
 msgstr ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
 msgstr ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Launch"
+msgstr ""
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "SCORM"
 msgstr ""
 
 #: XBlock: edflex

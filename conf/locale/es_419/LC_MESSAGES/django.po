@@ -30404,31 +30404,36 @@ msgid "Open module in a new tab. This option will only apply to users with a com
 msgstr "Abra el módulo en una nueva pestaña. Esta opción solo se aplicará a los usuarios con un navegador compatible."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "%(num_points)s point possible"
 msgid_plural "%(num_points)s points possible"
 msgstr[0] "%(num_points)s posible punto"
 msgstr[1] "%(num_points)s posibles puntos"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr "Nueva pestaña"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Click on the button below to open the module in a new tab."
 msgstr "Haga clic en el botón de abajo para abrir el módulo en una pestaña nueva."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
 msgstr "Su módulo de aprendizaje electrónico se ha abierto en una nueva pestaña. Por favor, cierre la nueva pestaña después de completar el módulo."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "Comenzar"
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "SCORM"
+msgstr "Módulo SCORM"
 
 # master-griky: lms/templates/header/navbar-not-authenticated.html
 msgid "What is Griky?"
