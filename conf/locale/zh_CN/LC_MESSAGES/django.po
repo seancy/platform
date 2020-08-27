@@ -28595,31 +28595,36 @@ msgid "Open module in a new tab. This option will only apply to users with a com
 msgstr "在新标签页打开模块。此选项仅适用于具有兼容浏览器的用户。"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "%(num_points)s point possible"
 msgid_plural "%(num_points)s points possible"
 msgstr[0] "%(num_points)s 可能的分数"
 msgstr[1] "%(num_points)s 可能的分数"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr "新标签页"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Click on the button below to open the module in a new tab."
 msgstr "单击下面的按钮以在新选项卡中打开模块。"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
 msgstr "您的电子学习模块已在新标签页中打开。 完成模块后，请关闭新标签页。"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "启动"
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "SCORM"
+msgstr ""
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html
