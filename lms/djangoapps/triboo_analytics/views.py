@@ -1350,7 +1350,7 @@ def leaderboard_data(request):
                 data["mission"] = i.get_leaderboard_detail()
                 request_user_included = True
             top_list.append(detail)
-        if not request_user_included and top < total_user:
+        if not request_user_included and top < total_user and not request.user.is_staff:
             personal_rank = top
             for i in query_set[top:]:
                 personal_rank += 1
@@ -1373,6 +1373,11 @@ def leaderboard_data(request):
                     top_list.append(detail)
                     data["mission"] = i.get_leaderboard_detail()
                     break
+        elif request.user.is_staff:
+            staff_leaderboard = LeaderBoardView.objects.filter(user=request.user)
+            if staff_leaderboard.exists():
+                staff_leaderboard = staff_leaderboard.first()
+                data['mission'] = staff_leaderboard.get_leaderboard_detail()
 
     last_updated = query_set.aggregate(Max("last_updated"))
 
