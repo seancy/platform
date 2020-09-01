@@ -10,6 +10,7 @@ import dogstats_wrapper as dog_stats_api
 from six import text_type
 
 from courseware.models import StudentModule
+from lms.djangoapps.certificates.models import GeneratedCertificate
 from openedx.core.djangoapps.signals.signals import COURSE_GRADE_CHANGED, COURSE_GRADE_NOW_PASSED
 from openedx.core.lib.gating.api import get_subsection_completion_percentage_with_gradebook_edit
 from student.models import CourseEnrollment
@@ -275,6 +276,12 @@ class CourseGradeFactory(object):
                                     course_id=course_key
                                 )
                             )
+                        cert = GeneratedCertificate.objects.filter(
+                            user=user, course_id=course_key, status='downloadable'
+                        )
+                        if cert.exists():
+                            cert.delete()
+
             except AttributeError:
                 pass
         else:
@@ -313,6 +320,11 @@ class CourseGradeFactory(object):
                                     course_id=course_key
                                 )
                             )
+                        cert = GeneratedCertificate.objects.filter(
+                            user=user, course_id=course_key, status='downloadable'
+                        )
+                        if cert.exists():
+                            cert.delete()
             except AttributeError:
                 pass
         if should_persist_grades(course_key):
