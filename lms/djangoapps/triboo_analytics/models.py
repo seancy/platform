@@ -553,7 +553,7 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                         return
 
                     progress['progress'] *= 100.0
-                    if progress['progress'] == 100:
+                    if enrollment.completed:
                         status = CourseStatus.failed
 
                         if progress['nb_trophies_possible'] == 0 or progress['is_course_passed']:
