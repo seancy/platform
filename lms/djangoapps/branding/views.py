@@ -366,7 +366,7 @@ def learnlight_catalog(request):
     date = datetime_now.strftime('%Y%m%d')
     auth_key = settings.LEARNLIGHT_AUTH_KEY
     token = sha1(user_email+date+auth_key).hexdigest()
-    auth_source = 'griky'
+    auth_source = 'GLT'
     query_string = '?authSource={auth_source}&authUser={user_email}&authToken={token}'.format(
         auth_source=auth_source,
         user_email=user_email,
