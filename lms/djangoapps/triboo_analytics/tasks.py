@@ -35,8 +35,6 @@ import tables
 
 logger = logging.getLogger('triboo_analytics')
 
-ANALYTICS_EXPORT_TIMEOUT_SECONDS = 3600  # 1 hour
-
 @task(routing_key=settings.HIGH_PRIORITY_QUEUE)
 def send_waiver_request_email(users, kwargs):
     for user in users:
@@ -190,8 +188,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
 
 @task(
     base=BaseInstructorTask,
-    routing_key=settings.HIGH_PRIORITY_QUEUE,
-    time_limit=ANALYTICS_EXPORT_TIMEOUT_SECONDS
+    routing_key=settings.HIGH_PRIORITY_QUEUE
 )  # pylint: disable=not-callable
 def generate_export_table(entry_id, xmodule_instance_args):
     action_name = 'triboo_analytics_exported'
