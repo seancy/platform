@@ -27,6 +27,12 @@ from student.roles import studio_access_role, ilt_supervisor_role
     help_link = support_link
   else:
     help_link = doc_link
+
+  user_groups = [group.name for group in user.groups.all()]
+  if ANALYTICS_ACCESS_GROUP in user_groups:
+    analytics_href = reverse('analytics_microsite')
+  elif ANALYTICS_LIMITED_ACCESS_GROUP in user_groups:
+    analytics_href = reverse('analytics_course')
 %>
 
 <div class="nav-links">
@@ -41,7 +47,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
         </div>
 
       % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
-        and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+        and CATALOG_DENIED_GROUP not in user_groups):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab catalog-tab">
           <a class="tab-nav-link" href="${marketing_link('COURSES')}" title="${_('Customized course catalog')}">
             <span class="label"><span class="icon far fa-book-open" aria-hidden="true"></span></span>
@@ -53,7 +59,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
   ##  % if show_explore_courses:
       % if (configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG', settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False)) \
         and configuration_helpers.get_value('EDFLEX_URL', None) \
-        and EDFLEX_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+        and EDFLEX_DENIED_GROUP not in user_groups):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab edflex-tab">
           <a class="tab-nav-link" target="_blank" href="${reverse('edflex_catalog')}" title="${_('External content catalog')}">
             <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
@@ -71,10 +77,9 @@ from student.roles import studio_access_role, ilt_supervisor_role
         </div>
 
       % if (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
-        and (ANALYTICS_ACCESS_GROUP in [group.name for group in user.groups.all()] \
-        or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in user.groups.all()])):
+        and (ANALYTICS_ACCESS_GROUP in user_groups or ANALYTICS_LIMITED_ACCESS_GROUP in user_groups)):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab analytics-tab">
-          <a class="tab-nav-link" href="${reverse('analytics_microsite')}" title="${_('Tracking learners and courses analytics')}">
+          <a class="tab-nav-link" href="${analytics_href}" title="${_('Tracking learners and courses analytics')}">
             <span class="label"><span class="icon far fa-analytics" aria-hidden="true"></span></span>
             ${_("Analytics")}
           </a>

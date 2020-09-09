@@ -1120,7 +1120,7 @@ def course_export_table(request):
 
 @analytics_on
 @login_required
-@analytics_member_required
+@analytics_full_member_required
 @ensure_csrf_cookie
 def microsite_view(request):
     orgs = configuration_helpers.get_current_site_orgs()
@@ -1201,7 +1201,7 @@ def get_ilt_learner_report_table(orgs, filter_kwargs, exclude):
 
 @analytics_on
 @login_required
-@analytics_member_required
+@analytics_full_member_required
 @ensure_csrf_cookie
 def ilt_view(request):
     report = request.GET.get('report', "global")
