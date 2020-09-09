@@ -1078,6 +1078,7 @@ def my_courses(request, tab="all-courses"):
 @login_required
 @ensure_csrf_cookie
 def get_enrolled_ilt(request):
+
     user = request.user
 
     site_org_whitelist, site_org_blacklist = get_org_black_and_whitelist_for_site()
@@ -1088,27 +1089,34 @@ def get_enrolled_ilt(request):
     # get ilt xblocks data
     ilt_sessions = []
 
+    ilt_session_dict = {}
+
     for n in enrolled_course_ids:
-        ilt_summaries = XModuleUserStateSummaryField.objects.filter(
-            usage_id__contains=unicode(n).replace('course', 'block', 1) + '+type@ilt+block',
-        )
-        for summary in ilt_summaries.filter(field_name='enrolled_users'):
-            try:
-                ilt_block = modulestore().get_item(summary.usage_id)
-                value = json.loads(summary.value)
-                for k, v in value.items():
-                    if str(request.user.id) in v:
-                        sessions = ilt_summaries.get(field_name='sessions',
-                                                     usage_id=summary.usage_id)
-                        sessions_data = json.loads(sessions.value)
-                        if k in sessions_data:
-                            enrolled_session = sessions_data[k]
-                            section_id = ilt_block.get_parent().parent.block_id
-                            chapter_id = ilt_block.get_parent().get_parent().parent.block_id
-                            url = reverse('courseware_section', args=[unicode(n), chapter_id, section_id])
-                            enrolled_session.update({'title': ilt_block.tooltip_title, 'url': url})
-                            ilt_sessions.append(enrolled_session)
-                            break
-            except ItemNotFoundError, AttributeError:
-                pass
+        ilt_blocks = modulestore().get_items(n, qualifiers={'category': 'ilt'})
+        ilt_session_dict.update({i.location: i for i in ilt_blocks})
+
+    all_enrolled_summaries = XModuleUserStateSummaryField.objects.filter(
+        usage_id__in=ilt_session_dict, field_name='enrolled_users'
+    ).only("value", "usage_id")
+
+    for summary in all_enrolled_summaries:
+        value = json.loads(summary.value)
+        for k, v in value.items():
+            if str(request.user.id) in v:
+                sessions = XModuleUserStateSummaryField.objects.get(field_name='sessions', usage_id=summary.usage_id)
+                sessions_data = json.loads(sessions.value)
+
+                if k in sessions_data:
+                    enrolled_session = sessions_data[k]
+                    ilt_block = ilt_session_dict[summary.usage_id]
+                    course = modulestore().get_course(ilt_block.course_id)
+                    section_id = ilt_block.get_parent().parent.block_id
+                    chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+                    url = reverse('courseware_section', args=[unicode(ilt_block.course_id), chapter_id, section_id])
+                    enrolled_session.update(
+                        {'title': ilt_block.display_name, 'url': url, 'course': course.display_name}
+                    )
+                    ilt_sessions.append(enrolled_session)
+                    break
+
     return JsonResponse({'ilt_sessions': ilt_sessions})

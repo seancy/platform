@@ -105,7 +105,8 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
   <%static:webpack entry="Dashboard">Dashboard()</%static:webpack>
 
   % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
-    <script src="${static.url('js/ilt_calendar.js')}"></script>
+    <script src="${static.url('js/dashboard/ics.deps.min.js')}"></script>
+    <script src="${static.url('js/dashboard/ilt_calendar.js')}"></script>
   % endif
 </%block>
 
@@ -467,16 +468,33 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
         </script>
 
 
-        % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
+        % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False) and len(course_enrollments) > 0:
           <div class="ilt-calendar" id="ilt-calendar">
             <div class="events-header">
                 <h2>${_("My upcoming ILT sessions")}</h2>
             </div>
-            <div class="ilt-calendar-wrapper">
+            <div class="ilt-calendar-wrapper no-upcoming-session">
               <div id="calendar"></div>
-              <div id="ilt-events">
-                  <div class="ilt-events-list"></div>
+              <div class="ilt-events-wrapper mobile-events">
+                <div id="ilt-events" class="swiper-container">
+                  <p class="back-to-calendar">
+                    <i class="far fa-chevron-left"></i>
+                    ${_("Back to Calendar")}
+                  </p>
+                  <p class="upcoming-session">${_("Upcoming Session")}</p>
+                  <div class="no-event-text">
+                      <p>${_("No upcoming sessions planned")}</p>
+                      <h2>${_("Sign up for an ILT session.")}</h2>
+                      <h2>${_("It will appear in your calendar.")}</h2>
+                      <a href="/my_courses" target="_blank">${_("Let's start")}</a>
+                  </div>
+                  <div class="ilt-events-list swiper-wrapper"></div>
+                  <!-- Add Pagination -->
+                </div>
+                <div class="swiper-pagination"></div>
               </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
             </div>
           </div>
         % endif

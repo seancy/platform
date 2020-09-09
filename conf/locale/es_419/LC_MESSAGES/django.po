@@ -23682,7 +23682,7 @@ msgid ""
 "You have been enrolled to the ILT session '{ilt_name}' in the course "
 "{course_name} on the {platform_name} platform."
 msgstr ""
-"Te has inscrito en la sesión ILT '{ilt_name}' en el curso{course_name} en la "
+"Te has inscrito en la sesión ILT '{ilt_name}' en el curso {course_name} en la "
 "plataforma {platform_name}."
 
 #: lms/templates/emails/ilt_confirmed_email_message.txt:41
@@ -23708,7 +23708,7 @@ msgid ""
 "{course_name} on the {platform_name} platform. For more information about "
 "the session, please click on the link below:"
 msgstr ""
-"Se ha inscrito en una sesión ILT '{ilt_name}' en curso{course_name} en la "
+"Se ha inscrito en una sesión ILT '{ilt_name}' en curso {course_name} en la "
 "plataforma {platform_name}. Para obtener más información sobrela sesión, "
 "haga clic en el siguiente enlace:"
 
@@ -23765,7 +23765,7 @@ msgid ""
 "The hotel information of the ILT session '{ilt_name}' in course "
 "{course_name} on the {platform_name} platform has been updated."
 msgstr ""
-"La información del hotel de la sesión ILT '{ilt_name}' en curso{course_name} "
+"La información del hotel de la sesión ILT '{ilt_name}' en curso {course_name} "
 "en la plataforma {platform_name} se ha actualizado."
 
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:14
@@ -23853,7 +23853,7 @@ msgid ""
 "{platform_name} platform. For more information about the session, please "
 "click on the link below:"
 msgstr ""
-"Se le ha dado de baja de la sesión ILT '{ilt_name}' en el{platform_name} "
+"Se le ha dado de baja de la sesión ILT '{ilt_name}' en el {platform_name} "
 "plataforma. Para obtener más información sobre la sesión, por favorHaga clic "
 "en el enlace de abajo:"
 
@@ -23864,7 +23864,7 @@ msgid ""
 "validate the request:"
 msgstr ""
 "Un alumno ({name}) ha enviado una solicitud para inscribirse en la sesión "
-"ILT'{ilt_name}' en la plataforma {platform_name}. Haga clic en el enlace a "
+"ILT '{ilt_name}' en la plataforma {platform_name}. Haga clic en el enlace a "
 "continuación paravalidar la solicitud:"
 
 #: lms/templates/emails/ilt_validate_email_subject.txt:2
@@ -30712,3 +30712,27 @@ msgstr "Actualización constante de listas de aprendizaje personalizadas"
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Learning in the flow of life - anytime, anywhere"
 msgstr "Aprendizaje en el flow 24/7, en cualquier momento y lugar"
+
+#: lms/templates/dashboard.html
+msgid "Back to Calendar"
+msgstr "Volver al calendario"
+
+#: lms/templates/dashboard.html
+msgid "Upcoming Session"
+msgstr "Próxima sesión"
+
+#: lms/templates/dashboard.html
+msgid "No upcoming sessions planned"
+msgstr "No hay próximas sesiones planificadas"
+
+#: lms/templates/dashboard.html
+msgid "Sign up for an ILT session."
+msgstr "Regístrate en una sesión con instrucción guiada"
+
+#: lms/templates/dashboard.html
+msgid "It will appear in your calendar."
+msgstr "Aparecerá en su calendario."
+
+#: lms/templates/dashboard.html
+msgid "Let's start"
+msgstr "Comenzar"

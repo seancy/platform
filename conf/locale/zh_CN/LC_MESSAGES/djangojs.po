@@ -11976,3 +11976,11 @@ msgstr "投票"
 #: xblock-poll/poll/public/html/survey_results.handlebars
 msgid "Survey"
 msgstr "调查"
+
+#: lms/templates/dashboard.html
+msgid "No sessions available"
+msgstr "没有注册课程"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Add to Calendar"
+msgstr "添加到日历"
