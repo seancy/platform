@@ -28658,3 +28658,27 @@ msgstr "投票"
 #: xblock-poll/poll/public/html/poll.html
 msgid "Survey"
 msgstr "调查"
+
+#: lms/templates/dashboard.html
+msgid "Back to Calendar"
+msgstr "回到日历"
+
+#: lms/templates/dashboard.html
+msgid "Upcoming Session"
+msgstr "即将到来的课程"
+
+#: lms/templates/dashboard.html
+msgid "No upcoming sessions planned"
+msgstr "没有计划的课程"
+
+#: lms/templates/dashboard.html
+msgid "Sign up for an ILT session."
+msgstr "注册一个ILT课程"
+
+#: lms/templates/dashboard.html
+msgid "It will appear in your calendar."
+msgstr "它将出现在你的日历中"
+
+#: lms/templates/dashboard.html
+msgid "Let's start"
+msgstr "开始"

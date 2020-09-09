@@ -31230,3 +31230,27 @@ msgstr "Sondage"
 #: xblock-poll/poll/public/html/poll.html
 msgid "Survey"
 msgstr "Enquête"
+
+#: lms/templates/dashboard.html
+msgid "Back to Calendar"
+msgstr "Retour au calendrier"
+
+#: lms/templates/dashboard.html
+msgid "Upcoming Session"
+msgstr "Session à venir"
+
+#: lms/templates/dashboard.html
+msgid "No upcoming sessions planned"
+msgstr "Aucune session à venir programmée"
+
+#: lms/templates/dashboard.html
+msgid "Sign up for an ILT session."
+msgstr "Inscrivez-vous à une session présentielle."
+
+#: lms/templates/dashboard.html
+msgid "It will appear in your calendar."
+msgstr "Elle apparaîtra dans votre calendrier."
+
+#: lms/templates/dashboard.html
+msgid "Let's start"
+msgstr "Commencer"

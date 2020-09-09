@@ -26830,3 +26830,27 @@ msgstr ""
 #: lms/templates/word_cloud.html
 msgid "Word cloud"
 msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Back to Calendar"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Upcoming Session"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "No upcoming sessions planned"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Sign up for an ILT session."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "It will appear in your calendar."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Let's start"
+msgstr ""

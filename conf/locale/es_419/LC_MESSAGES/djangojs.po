@@ -12437,3 +12437,11 @@ msgstr "Votación"
 #: xblock-poll/poll/public/html/survey_results.handlebars
 msgid "Survey"
 msgstr "Encuesta"
+
+#: lms/templates/dashboard.html
+msgid "No sessions available"
+msgstr "No hay sesiones disponibles"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Add to Calendar"
+msgstr "Añadir al Calendario"
