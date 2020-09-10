@@ -1180,8 +1180,8 @@ def settings_handler(request, course_key_string):
                         }
                     )
 
-            # check user permission who can delete the course.
-            if GlobalStaff().has_user(request.user) or CourseInstructorRole(course_key).has_user(request.user):
+            # check user permission who can delete the course, only platform staff can delete course
+            if GlobalStaff().has_user(request.user):
                 settings_context.update(
                     {
                         'enable_delete_course': True
