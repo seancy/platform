@@ -126,7 +126,6 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 
   })(this)
   </script>
-
   <script src="${static.url('js/course_info.js')}"></script>
   <script src="${static.url('js/courseware/course_overview.js')}"></script>
 </%block>
@@ -253,6 +252,10 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           </ul>
         </div>
 
+        % endif
+
+        % if not course.course_mandatory_enabled:
+        <a class="learner-unroll-button" type="button" data-course_id="${course.id}">${_("Unenroll")}</a>
         % endif
 
     <div class="course-sidebar">
