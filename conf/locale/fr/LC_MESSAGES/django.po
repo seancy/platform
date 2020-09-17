@@ -31254,3 +31254,7 @@ msgstr "Elle apparaîtra dans votre calendrier."
 #: lms/templates/dashboard.html
 msgid "Let's start"
 msgstr "Commencer"
+
+# lms/templates/courses_list.html
+msgid "Show more"
+msgstr "Voir plus"

@@ -172,3 +172,15 @@ msgstr "Actualización constante de listas de aprendizaje personalizadas"
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Learning in the flow of life - anytime, anywhere"
 msgstr "Aprendizaje en el flow 24/7, en cualquier momento y lugar"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Virtual Academy of Languages"
+msgstr "Academia Virtual de Idiomas"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Graduation: Connection with universities with which you can graduate"
+msgstr "Graduación: Conexión con universidades con las que podrás graduarte"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Unlimited users and communities"
+msgstr "Usuarios y comunidades ilimitadas"
