@@ -28682,3 +28682,7 @@ msgstr "它将出现在你的日历中"
 #: lms/templates/dashboard.html
 msgid "Let's start"
 msgstr "开始"
+
+# lms/templates/courses_list.html
+msgid "Show more"
+msgstr "显示更多"

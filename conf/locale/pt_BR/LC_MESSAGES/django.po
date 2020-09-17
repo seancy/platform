@@ -30303,3 +30303,7 @@ msgstr "Ele aparecerá no seu calendário."
 #: lms/templates/dashboard.html
 msgid "Let's start"
 msgstr "Iniciar"
+
+# lms/templates/courses_list.html
+msgid "Show more"
+msgstr "Ver mais"

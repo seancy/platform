@@ -30736,3 +30736,19 @@ msgstr "Aparecerá en su calendario."
 #: lms/templates/dashboard.html
 msgid "Let's start"
 msgstr "Comenzar"
+
+# lms/templates/courses_list.html
+msgid "Show more"
+msgstr "Mostrar más"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Virtual Academy of Languages"
+msgstr "Academia Virtual de Idiomas"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Graduation: Connection with universities with which you can graduate"
+msgstr "Graduación: Conexión con universidades con las que podrás graduarte"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Unlimited users and communities"
+msgstr "Usuarios y comunidades ilimitadas"
