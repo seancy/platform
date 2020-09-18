@@ -254,7 +254,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 
         % endif
 
-        % if not course.course_mandatory_enabled:
+        % if not course.course_mandatory_enabled and configuration_helpers.get_value("ALLOW_LEARNER_UNENROLL", False):
         <a class="learner-unroll-button" type="button" data-course_id="${course.id}">${_("Unenroll")}</a>
         % endif
 
