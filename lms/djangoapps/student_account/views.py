@@ -247,8 +247,10 @@ def password_change_request_handler(request):
                     language=settings.LANGUAGE_CODE,
                     user_context=message_context,
                 )
-
-                ace.send(msg)
+                # if email service is disabled, do nothing
+                email_service_enabled = configuration_helpers.get_value('ENABLE_EMAIL_SERVICE', True)
+                if email_service_enabled:
+                    ace.send(msg)
         except UserAPIInternalError as err:
             log.exception('Error occured during password change for user {email}: {error}'
                           .format(email=email, error=err))

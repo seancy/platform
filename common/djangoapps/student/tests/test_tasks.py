@@ -22,7 +22,7 @@ class SendActivationEmailTestCase(TestCase):
 
     @mock.patch('time.sleep', mock.Mock(return_value=None))
     @mock.patch('student.tasks.log')
-    @mock.patch('django.core.mail.send_mail', mock.Mock(side_effect=NoAuthHandlerFound))
+    @mock.patch('util.email_utils.send_mail', mock.Mock(side_effect=NoAuthHandlerFound))
     def test_send_email(self, mock_log):
         """
         Tests retries when the activation email doesn't send

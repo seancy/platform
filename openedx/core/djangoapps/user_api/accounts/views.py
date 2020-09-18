@@ -40,6 +40,7 @@ from openedx.core.djangoapps.api_admin.models import ApiAccessRequest
 from openedx.core.djangoapps.credit.models import CreditRequirementStatus, CreditRequest
 from openedx.core.djangoapps.course_groups.models import UnregisteredLearnerCohortAssignments
 from openedx.core.djangoapps.profile_images.images import remove_profile_images
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_names, set_has_profile_image
 from openedx.core.djangolib.oauth2_retirement_utils import retire_dot_oauth2_models, retire_dop_oauth2_models
 from openedx.core.lib.api.authentication import (
@@ -456,7 +457,10 @@ class DeactivateLogoutView(APIView):
                         language=request.user.profile.language,
                         user_context=notification_context,
                     )
-                    ace.send(notification)
+                    # if email service is disabled, do nothing
+                    email_service_enabled = configuration_helpers.get_value('ENABLE_EMAIL_SERVICE', True)
+                    if email_service_enabled:
+                        ace.send(notification)
                 except Exception as exc:
                     log.exception('Error sending out deletion notification email')
                     raise

@@ -21,6 +21,7 @@ from openedx.core.djangoapps.monitoring_utils import set_custom_metric
 from openedx.core.djangoapps.schedules import message_types
 from openedx.core.djangoapps.schedules.models import Schedule, ScheduleConfig
 from openedx.core.djangoapps.schedules import resolvers
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.lib.celery.task_utils import emulate_http_request
 
 LOG = logging.getLogger(__name__)
@@ -204,7 +205,10 @@ def _schedule_send(msg_str, site_id, delivery_config_var, log_prefix):
         with emulate_http_request(site=site, user=user):
             _annonate_send_task_for_monitoring(msg)
             LOG.debug('%s: Sending message = %s', log_prefix, msg_str)
-            ace.send(msg)
+            # if email service is disabled, do nothing
+            email_service_enabled = configuration_helpers.get_value('ENABLE_EMAIL_SERVICE', True)
+            if email_service_enabled:
+                ace.send(msg)
             _track_message_sent(site, user, msg)
 
 
