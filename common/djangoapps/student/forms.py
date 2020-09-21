@@ -64,6 +64,10 @@ class PasswordResetFormNoActive(PasswordResetForm):
         Generates a one-use only link for resetting password and sends to the
         user.
         """
+        # if email service is disabled, do nothing
+        email_service_enabled = configuration_helpers.get_value('ENABLE_EMAIL_SERVICE', True)
+        if not email_service_enabled:
+            return
         for user in self.users_cache:
             site = get_current_site()
             message_context = get_base_template_context(site)
@@ -131,6 +135,10 @@ class PasswordCreateResetFormNoActive(PasswordResetForm):
 
         from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
 
+        # if email service is disabled, do nothing
+        email_service_enabled = configuration_helpers.get_value('ENABLE_EMAIL_SERVICE', True)
+        if not email_service_enabled:
+            return
         # This import is here because we are copying and modifying the .save from Django 1.4.5's
         # django.contrib.auth.forms.PasswordResetForm directly, which has this import in this place.
         # from django.core.mail import send_mail

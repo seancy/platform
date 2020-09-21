@@ -10,6 +10,10 @@ def send_mail_with_alias(*args, **kwargs):
     eg. Support <triboo@example.com>
     """
     args_list = list(args)
+    # if email service is disabled, do nothing
+    email_service_enabled = configuration_helpers.get_value('ENABLE_EMAIL_SERVICE', True)
+    if not email_service_enabled:
+        return
     try:
         from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
         args_list[2] = "{0} <{1}>".format(from_alias, args_list[2])

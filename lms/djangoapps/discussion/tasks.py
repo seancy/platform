@@ -24,6 +24,7 @@ import lms.lib.comment_client as cc
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.ace_common.template_context import get_base_template_context
 from openedx.core.djangoapps.ace_common.message import BaseMessageType
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.lib.celery.task_utils import emulate_http_request
 
 
@@ -71,7 +72,11 @@ def send_ace_message(context):
                 message_context
             )
             log.info('Sending forum comment email notification with context %s', message_context)
-            ace.send(message)
+
+            # if email service is disabled, do nothing
+            email_service_enabled = configuration_helpers.get_value('ENABLE_EMAIL_SERVICE', True)
+            if email_service_enabled:
+                ace.send(message)
             _track_notification_sent(message, context)
 
 

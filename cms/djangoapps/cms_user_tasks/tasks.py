@@ -7,7 +7,7 @@ from celery.exceptions import MaxRetriesExceededError
 from celery.task import task
 from celery.utils.log import get_task_logger
 from django.conf import settings
-from django.core import mail
+from util.email_utils import send_mail_with_alias as send_mail
 
 from edxmako.shortcuts import render_to_string
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
@@ -41,7 +41,7 @@ def send_task_complete_email(self, task_name, task_state_text, dest_addr, detail
     )
 
     try:
-        mail.send_mail(subject, message, from_address, [dest_addr], fail_silently=False)
+        send_mail(subject, message, from_address, [dest_addr], fail_silently=False)
         LOGGER.info("Task complete email has been sent to User %s", dest_addr)
     except NoAuthHandlerFound:
         LOGGER.info(
