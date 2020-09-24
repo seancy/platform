@@ -102,7 +102,7 @@ class TestComprehensiveThemeLMS(TestCase):
         resp = self.client.get(dashboard_url)
         self.assertEqual(resp.status_code, 200)
         # This string comes from the default dashboard.html template.
-        self.assertContains(resp, "Explore courses")
+        # self.assertContains(resp, "Explore courses")
 
     @with_comprehensive_theme("test-theme")
     @patch.dict(settings.FEATURES, {'COURSES_ARE_BROWSABLE': True})
