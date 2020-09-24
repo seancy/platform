@@ -26858,3 +26858,27 @@ msgstr ""
 # lms/templates/courses_list.html
 msgid "Show more"
 msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Find here, soon, your last activity on training courses."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Let's do it!"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Hmm, it's looking a bit empty, so let's start a new course right now."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Go!"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Are you ready to start a course?"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Let's start!"
+msgstr ""

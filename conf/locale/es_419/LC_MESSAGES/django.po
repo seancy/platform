@@ -30752,3 +30752,27 @@ msgstr "Graduación: Conexión con universidades con las que podrás graduarte"
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Unlimited users and communities"
 msgstr "Usuarios y comunidades ilimitadas"
+
+#: lms/templates/dashboard.html
+msgid "Find here, soon, your last activity on training courses."
+msgstr "Aquí encontrarás tus actividades más recientes"
+
+#: lms/templates/dashboard.html
+msgid "Let's do it!"
+msgstr "Comencemos!"
+
+#: lms/templates/dashboard.html
+msgid "Hmm, it's looking a bit empty, so let's start a new course right now."
+msgstr "Mmmm, Este se ve vacio. ¿Porqué no agregamos un curso?"
+
+#: lms/templates/dashboard.html
+msgid "Go!"
+msgstr "Vamos!"
+
+#: lms/templates/dashboard.html
+msgid "Are you ready to start a course?"
+msgstr "Estas listo para comenzar el curso"
+
+#: lms/templates/dashboard.html
+msgid "Let's start!"
+msgstr "Vamos a empezar"

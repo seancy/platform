@@ -28686,3 +28686,27 @@ msgstr "开始"
 # lms/templates/courses_list.html
 msgid "Show more"
 msgstr "显示更多"
+
+#: lms/templates/dashboard.html
+msgid "Find here, soon, your last activity on training courses."
+msgstr "不久后您将会在这里看到您培训课程的近期活动"
+
+#: lms/templates/dashboard.html
+msgid "Let's do it!"
+msgstr "开始！"
+
+#: lms/templates/dashboard.html
+msgid "Hmm, it's looking a bit empty, so let's start a new course right now."
+msgstr "这里看起来有点空，让我们现在开始一个新课程吧"
+
+#: lms/templates/dashboard.html
+msgid "Go!"
+msgstr "开始！"
+
+#: lms/templates/dashboard.html
+msgid "Are you ready to start a course?"
+msgstr "您准备好开始一门课程了吗？"
+
+#: lms/templates/dashboard.html
+msgid "Let's start!"
+msgstr "开始！"

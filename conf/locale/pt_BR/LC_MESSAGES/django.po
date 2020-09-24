@@ -30307,3 +30307,27 @@ msgstr "Iniciar"
 # lms/templates/courses_list.html
 msgid "Show more"
 msgstr "Ver mais"
+
+#: lms/templates/dashboard.html
+msgid "Find here, soon, your last activity on training courses."
+msgstr "Encontre aqui, em breve, suas últimas atividades em cursos de capacitação."
+
+#: lms/templates/dashboard.html
+msgid "Let's do it!"
+msgstr "Vamos fazer isso!"
+
+#: lms/templates/dashboard.html
+msgid "Hmm, it's looking a bit empty, so let's start a new course right now."
+msgstr "Hmm, parece um pouco vazio aqui, então vamos começar um novo curso agora."
+
+#: lms/templates/dashboard.html
+msgid "Go!"
+msgstr "Ir!"
+
+#: lms/templates/dashboard.html
+msgid "Are you ready to start a course?"
+msgstr "Você está pronto para começar um curso?"
+
+#: lms/templates/dashboard.html
+msgid "Let's start!"
+msgstr "Vamos começar!"
