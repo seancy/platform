@@ -37,7 +37,13 @@ LOGFIELDS = [
 ]
 
 EVENT_TYPE_BLACK_LIST = [
-    '/analytics/list_table_downloads/'
+    '/analytics/list_table_downloads/',
+    '/media/',
+    '/xblock/resources/',
+    'edx.',
+    'xblock.',
+    'showanswer',
+    'problem_check'
 ]
 
 
