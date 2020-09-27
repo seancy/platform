@@ -1508,6 +1508,11 @@ COURSE_CATEGORIES = (
     ('offline', 'ILT'),
     ('live_session', 'Virtual classroom'),
     ('session_recorded', 'Blended learning'),
+    ('microlearning', 'Microlearning'),
+)
+MANDATORY_OPTIONS = (
+    ('false', 'No'),
+    ('true', 'Yes'),
 )
 
 ############################# Persistent Grades ####################################

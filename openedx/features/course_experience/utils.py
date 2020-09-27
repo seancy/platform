@@ -143,7 +143,8 @@ def get_course_outline_block_tree(request, course_id):
         'scormxblock',
         'pdf',
         'library_content',
-        'openassessment'
+        'openassessment',
+        'iframe',
     ]
     all_blocks = get_blocks(
         request,
