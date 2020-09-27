@@ -103,6 +103,7 @@
 -e git+https://github.com/Learningtribes/xblock-drag-and-drop-v2@hawthorn#egg=xblock-drag-and-drop-v2
 -e git+http://github.com/Learningtribes/edx_xblock_scorm@hawthorn#egg=scormxblock_xblock
 -e git+http://github.com/Learningtribes/xblock-pdf@hawthorn#egg=xblock-pdf
+-e git+http://github.com/Learningtribes/iframe-id-xblock@hawthorn#egg=iframe-id-xblock
 
 # Third Party XBlocks
 
