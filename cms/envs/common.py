@@ -1510,6 +1510,10 @@ COURSE_CATEGORIES = (
     ('session_recorded', 'Blended learning'),
     ('microlearning', 'Microlearning'),
 )
+MANDATORY_OPTIONS = (
+    ('false', 'No'),
+    ('true', 'Yes'),
+)
 
 ############################# Persistent Grades ####################################
 

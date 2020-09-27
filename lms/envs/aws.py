@@ -1111,7 +1111,8 @@ COURSE_DISCOVERY_MEANINGS = {
         'name': 'Tag'
     },
     'course_mandatory_enabled': {
-        'name': 'Mandatory'
+        'name': 'Mandatory',
+        'terms': dict(MANDATORY_OPTIONS),
     },
     'course_country': {
         'name': 'Country'

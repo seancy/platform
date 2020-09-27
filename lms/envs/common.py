@@ -3484,6 +3484,10 @@ COURSE_CATEGORIES = (
     ('session_recorded', 'Blended learning'),
     ('microlearning', 'Microlearning'),
 )
+MANDATORY_OPTIONS = (
+    ('false', 'No'),
+    ('true', 'Yes'),
+)
 
 ############## Settings for CourseGraph ############################
 COURSEGRAPH_JOB_QUEUE = LOW_PRIORITY_QUEUE
