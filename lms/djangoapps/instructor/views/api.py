@@ -1067,7 +1067,8 @@ def lt_update_profile(profile, first_name, last_name,
     profile.location = location
     profile.lt_company = lt_company
     profile.lt_employee_id = lt_employee_id
-    profile.lt_hire_date = lt_hire_date
+    if lt_hire_date != '':
+        profile.lt_hire_date = lt_hire_date
     profile.lt_job_code = lt_job_code
     profile.lt_department = lt_department
     profile.lt_supervisor = lt_supervisor
