@@ -3482,6 +3482,7 @@ COURSE_CATEGORIES = (
     ('offline', 'ILT'),
     ('live_session', 'Virtual classroom'),
     ('session_recorded', 'Blended learning'),
+    ('microlearning', 'Microlearning'),
 )
 
 ############## Settings for CourseGraph ############################
