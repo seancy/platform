@@ -100,6 +100,7 @@
 -e git+https://github.com/edx/xblock-lti-consumer.git@v1.1.8#egg=lti_consumer-xblock==1.1.8
 -e git+https://github.com/Learningtribes/edx-search.git@lt-master#egg=edx-search
 -e git+https://github.com/Learningtribes/xblock-poll@hawthorn#egg=xblock-poll
+-e git+https://github.com/Learningtribes/xblock-certificate.git@hawthorn#egg=xblock-certificate
 -e git+https://github.com/Learningtribes/xblock-drag-and-drop-v2@hawthorn#egg=xblock-drag-and-drop-v2
 -e git+http://github.com/Learningtribes/edx_xblock_scorm@hawthorn#egg=scormxblock_xblock
 -e git+http://github.com/Learningtribes/xblock-pdf@hawthorn#egg=xblock-pdf
