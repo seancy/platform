@@ -30394,6 +30394,10 @@ msgstr "Compartir"
 msgid "Prove"
 msgstr "Demostrar"
 
+# master-corona: lms/templates/header/navbar-authenticated.html
+msgid "Languages"
+msgstr "Idiomas"
+
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_view.html
 msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is invalid."

@@ -37,6 +37,10 @@ msgstr "Compartir"
 msgid "Prove"
 msgstr "Demostrar"
 
+# master-corona: lms/templates/header/navbar-authenticated.html
+msgid "Languages"
+msgstr "Idiomas"
+
 # master-griky: lms/templates/header/navbar-not-authenticated.html
 msgid "What is Griky?"
 msgstr "¿Qué es Griky?"
