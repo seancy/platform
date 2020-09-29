@@ -154,7 +154,6 @@ from .tools import (
 
 from student.forms import PasswordCreateResetFormNoActive
 
-
 log = logging.getLogger(__name__)
 
 TASK_SUBMISSION_OK = 'created'
@@ -3483,6 +3482,35 @@ def generate_example_certificates(request, course_id=None):  # pylint: disable=u
 
 @require_global_staff
 @require_POST
+def generate_intermediate_certificates(request, course_id=None):  # pylint: disable=unused-argument
+    """Start generating a set of intermediate certificates.
+
+    Intermediate certificates are used to verify that certificates have
+    been configured correctly for the course.
+
+    """
+    from six import text_type
+    from edxmako.shortcuts import render_to_response
+    cert_url_list = []
+    cert_url = '{base_url}{cert}'.format(
+        base_url=configuration_helpers.get_value('SITE_NAME', settings.SITE_NAME),
+        cert=reverse('intermediate_certificate_display',
+                             kwargs={
+                                 'course_id': text_type(course_id),
+                                 'user_id': '2',
+                                 'badge_type': 'Homework',
+                             })
+    )
+    cert_url_list.append(cert_url)
+    context = dict(
+        cert_urls=cert_url_list,
+    )
+    # '{}{}'.format(settings.LMS_ROOT_URL, reverse('account_settings'))
+    return render_to_response('instructor/instructor_dashboard_2/intermediate-certificates.html', context)
+
+
+@require_global_staff
+@require_POST
 def enable_certificate_generation(request, course_id=None):
     """Enable/disable self-generated certificates for a course.
 
@@ -4093,14 +4121,62 @@ def certificates_export(request, course_id):
     return JsonResponse(context)
 
 
+@transaction.non_atomic_requests
+@require_POST
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+@require_level('staff')
+# @require_post_params(identifiers="stringified list of emails and/or usernames")
+def intermediate_certificates_export(request, course_id):
+    """
+    This is the api for generating certificates zip file.
+    In the front end, we input list of users name/email,
+    it will imediately return list of users that don't get
+    the certificates, and also the reason.
+    Meanwhile, it creates a background task to generate the
+    zip file.
+    """
+    xqueue = XQueueCertInterface()
+    #if request.is_secure():
+    #    xqueue.use_https = True
+    #else:
+    #    xqueue.use_https = False
+    course_key = CourseKey.from_string(course_id)
+    identifiers_raw = request.POST.get('identifiers')
+    identifiers = _split_input_list(identifiers_raw)
+    context = {"fail": [], "success": []}
+    certs = []
+    for identifier in identifiers:
+        try:
+            user = get_student_from_identifier(identifier)
+            cert = xqueue.add_cert(user, course_key, site=request.site)
+            if not (cert.status == 'generating' or cert.status == 'downloadable'):
+                context["fail"].append(u'<li>{identifier}: {result}</li>'.format(
+                    identifier=identifier,
+                    result=cert.status
+                ))
+            else:
+                certs.append(cert.id)
+        except User.DoesNotExist:
+            context["fail"].append(u'<li>{identifier}: {result}</li>'.format(
+                    identifier=identifier,
+                    result='User does not exist'
+                ))
+
+    # if there are valid certificates, we submit a background task to generate zip file
+    if certs:
+        lms.djangoapps.instructor_task.api.submit_cert_zip_gen_task(request, course_key, certs)
+    return JsonResponse(context)
+
+
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @require_level('staff')
 def list_cert_zip_gen_tasks(request, course_id):
     """
-    This is the api to get the list of certificates zip files.
+    This is the api to get the list of intermediate certificates.
 
-    In the front end we call this api every 30 seconds
+    In the front end we call this api
     """
     task_type = 'generate_certificates_zip_file'
     course_key = CourseKey.from_string(course_id)
@@ -4114,6 +4190,24 @@ def list_cert_zip_gen_tasks(request, course_id):
         file=urllib.unquote(json.loads(task.task_output).get('download_url').split('certs-zip/')[-1])
     )
         for task in tasks if task.task_output != 'null' and json.loads(task.task_output).has_key('download_url')]
+    context = {"links": links}
+    return JsonResponse(context)
+
+
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+@require_level('staff')
+def list_ic_certs(request, course_id):
+    """
+    This is the api to get the list of intermediate certificates.
+    """
+    users_raw = request.POST.get('users')
+    users = users_raw.split(', ')
+    links = ['<li><a href="intermediate_certificate/2/Homework">{user_name}: Homework</a></li>'.format(
+        href=user,
+        user_name=user
+    )
+        for user in users]
     context = {"links": links}
     return JsonResponse(context)
 

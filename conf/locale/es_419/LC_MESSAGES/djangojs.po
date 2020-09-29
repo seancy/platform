@@ -12438,6 +12438,9 @@ msgstr "Votación"
 msgid "Survey"
 msgstr "Encuesta"
 
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
+msgstr "El número de certificados para ser exportada sea superior a 1.000. Por favor limite su selección."
 #: lms/templates/dashboard.html
 msgid "No sessions available"
 msgstr "No hay sesiones disponibles"

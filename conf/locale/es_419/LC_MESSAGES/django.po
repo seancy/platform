@@ -24462,6 +24462,22 @@ msgstr "Porcentaje de descuento"
 msgid "Add expiration date"
 msgstr "Fecha de caducidad"
 
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Intermediate Certificates"
+msgstr "Certificados intermedios"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Certificate Title"
+msgstr "Título del certificado"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date after"
+msgstr "Fecha de emisión después de"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date before"
+msgstr "Fecha de emisión antes de"
+
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:21
 msgid "Example Certificates"
 msgstr "Certificados de ejemplo"

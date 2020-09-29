@@ -5,8 +5,10 @@ Instructor Dashboard Views
 import datetime
 import logging
 import uuid
+import json
 
 import pytz
+import re
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -15,13 +17,14 @@ from django.utils.html import escape
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_noop
 from django.views.decorators.cache import cache_control
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.views.decorators.http import require_POST
 from mock import patch
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
 from xblock.field_data import DictFieldData
 from xblock.fields import ScopeIds
+from six import text_type
 
 from bulk_email.models import BulkEmailFlag
 from django_comment_client.utils import is_discussion_enabled
@@ -44,7 +47,7 @@ from edxmako.shortcuts import render_to_response
 from lms.djangoapps.courseware.module_render import get_module_by_usage_id
 from lms.djangoapps.courseware.views.views import get_last_accessed_courseware
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
-from openedx.core.djangoapps.course_groups.cohorts import DEFAULT_COHORT_NAME, get_course_cohorts, is_course_cohorted
+from openedx.core.djangoapps.course_groups.cohorts import DEFAULT_COHORT_NAME, get_course_cohorts, is_course_cohorted, get_cohort_by_id
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.verified_track_content.models import VerifiedTrackCohortedCourse
 from openedx.core.djangolib.markup import HTML, Text
@@ -57,6 +60,12 @@ from util.json_request import JsonResponse
 from xmodule.html_module import HtmlDescriptor
 from xmodule.modulestore.django import modulestore
 from xmodule.tabs import CourseTab
+from courseware.models import XModuleUserStateSummaryField
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+from static_replace.models import AssetBaseUrlConfig, AssetExcludedExtensionsConfig
+from xmodule.contentstore.content import StaticContent
+
 
 from .tools import get_units_with_due_date, title_or_url
 
@@ -457,6 +466,22 @@ def _section_certificates(course):
         for certificate in GeneratedCertificate.get_unique_statuses(course_key=course.id)
     }
 
+    cohorts = get_course_cohorts(course)
+    users = CourseEnrollment.objects.users_enrolled_in(course.id)
+    grade_types = [type for subgrader, type, weight in course.grader.subgraders]
+    interficate_certificate_args = dict(
+        grade_types=grade_types,
+        users=users,
+        cohorts=cohorts,
+    )
+
+    blocks = modulestore().get_items(course.id)
+    intermediate_certificates_display = False
+    for b in blocks:
+        if b.category == 'icxblock':
+            intermediate_certificates_display = True
+            break
+
     return {
         'section_key': 'certificates',
         'section_display_name': _('Certificates'),
@@ -471,6 +496,8 @@ def _section_certificates(course):
         'status': CertificateStatuses,
         'certificate_generation_history':
             CertificateGenerationHistory.objects.filter(course_id=course.id).order_by("-created"),
+        'interficate_certificate': interficate_certificate_args,
+        'intermediate_certificates_display': intermediate_certificates_display,
         'urls': {
             'generate_example_certificates': reverse(
                 'generate_example_certificates',
@@ -498,6 +525,14 @@ def _section_certificates(course):
             ),
             'list_cert_zip_gen_tasks': reverse(
                 'list_cert_zip_gen_tasks',
+                kwargs={'course_id': course.id}
+            ),
+            'generate_intermediate_certificates': reverse(
+                'generate_intermediate_certificates',
+                kwargs={'course_id': course.id}
+            ),
+            'list_ic_certs': reverse(
+                'list_ic_certs',
                 kwargs={'course_id': course.id}
             ),
         }
@@ -895,3 +930,192 @@ def is_ecommerce_course(course_key):
     """
     sku_count = len([mode.sku for mode in CourseMode.modes_for_course(course_key) if mode.sku])
     return sku_count > 0
+
+
+def get_block_html(course_id, user_id, certificate_title, start_date, end_date):
+    course_key = CourseKey.from_string(course_id)
+    course = modulestore().get_course(course_key)
+    user_id_key = str(user_id)
+    certs = XModuleUserStateSummaryField.objects.filter(
+        field_name="intermediate_certificate"
+    )
+    start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
+    end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d")
+    block_key = None
+    for cert in certs:
+        cert_dict = json.loads(cert.value)
+        if cert_dict.get(user_id_key, None) and cert_dict[user_id_key]['success']:
+            block_cert_title = cert_dict[user_id_key]['title'].replace(' ', '_')
+            issue_date = cert_dict[user_id_key]['issue_date']
+            issue_date = datetime.datetime.strptime(issue_date, "%m-%d-%Y")
+            if block_cert_title == certificate_title and start_date <= issue_date and end_date >= issue_date:
+                block_key = cert.usage_id
+
+    if block_key is None:
+        return ''
+
+    block = modulestore().get_item(block_key)
+    user = User.objects.prefetch_related("groups").get(id=user_id)
+    html = block.get_report_html(user, course)
+
+    # # replace image address to its asset address
+    # base_url = AssetBaseUrlConfig.get_base_url()
+    # excluded_exts = AssetExcludedExtensionsConfig.get_excluded_extensions()
+    # static_addrs = re.findall('"/static.*"', html)
+    # static_addrs_set = set(static_addrs)
+    # static_addrs_dict = dict()
+    # for addr in static_addrs_set:
+    #     path = addr[1:-1]
+    #     url = StaticContent.get_canonicalized_asset_path(course_key, path, base_url, excluded_exts)
+    #     static_addrs_dict[path] = url
+    # for static, asset in static_addrs_dict.items():
+    #     html = re.sub(static, asset, html)
+
+    return html
+
+
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def intermediate_certificate_display(request, course_id, user_id, certificate_title, start_date, end_date):
+    """
+    This is the api to get the list of intermediate certificates.
+    """
+    html = get_block_html(course_id, user_id, certificate_title, start_date, end_date)
+    return HttpResponse(html)
+
+
+def get_ic_url(course_id, user_id, certificate_title, start_date, end_date):
+    cert_url = reverse('intermediate_certificate_display',
+                             kwargs={
+                                 'course_id': text_type(course_id),
+                                 'user_id': str(user_id),
+                                 'certificate_title': certificate_title,
+                                 'start_date': start_date,
+                                 'end_date': end_date,
+                             })
+    return cert_url
+
+
+def get_cert_html_list(args, course_id):
+    course_key = CourseKey.from_string(course_id)
+    course = modulestore().get_course(course_key)
+    certificate_title = args['certificate_title'].replace(' ', '_')
+    user_id = int(args['user_id'])
+    cohort_id = int(args['cohort_id'])
+    start_date = args['date_start'] if args['date_start'] else '1970-01-01'
+    end_date = args['date_end'] if args['date_end'] else datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
+
+    cert_url_list = []
+    cert_html_list = []
+
+    # user != 'All'
+    if user_id != -1:
+        selected_user = User.objects.get(id=user_id)
+        cert_url = get_ic_url(course_id, selected_user.id, certificate_title, start_date, end_date)
+        cert_url_list.append(cert_url)
+        cert_html = get_block_html(course_id, selected_user.id, certificate_title, start_date, end_date)
+        cert_html_list.append(cert_html)
+    # user == 'All' and cohort != 'All'
+    elif cohort_id != -1:
+        selected_cohort = get_cohort_by_id(course_key, cohort_id)
+        cohort_users = selected_cohort.users.all()
+        for user in cohort_users:
+            cert_url = get_ic_url(course_id, user.id, certificate_title, start_date, end_date)
+            cert_url_list.append(cert_url)
+            cert_html = get_block_html(course_id, user.id, certificate_title, start_date, end_date)
+            cert_html_list.append(cert_html)
+    # user == 'All' and cohort == 'All'
+    else:
+        all_users = CourseEnrollment.objects.users_enrolled_in(course.id)
+        for user in all_users:
+            cert_url = get_ic_url(course_id, user.id, certificate_title, start_date, end_date)
+            cert_url_list.append(cert_url)
+            cert_html = get_block_html(course_id, user.id, certificate_title, start_date, end_date)
+            cert_html_list.append(cert_html)
+
+    new_cert_html_list = []
+    for cert_html in cert_html_list:
+        if cert_html:
+            new_cert_html_list.append(cert_html)
+    return new_cert_html_list
+
+
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def intermediate_certificates(request, course_id):
+    """
+    This is the api to get the list of intermediate certificates.
+    """
+    args = request.POST.copy()
+    cert_html_list = get_cert_html_list(args, course_id)
+    cert_concat_html = '\n'.join(cert_html_list)
+    context = dict(
+        cert_concat_html=cert_concat_html,
+    )
+    return render_to_response('instructor/instructor_dashboard_2/intermediate-certificates.html', context)
+
+
+@login_required
+@csrf_exempt
+def intermediate_certificates_count(request, course_id):
+    """
+    This is the api to get the list of intermediate certificates.
+    """
+    args = json.loads(request.body)
+    cert_html_list = get_cert_html_list(args, course_id)
+    count = len(cert_html_list)
+    return JsonResponse(count, status=200)
+
+
+@login_required
+def intermediate_certificates_data(request, course_id):
+    """
+    This is the api to get the list of intermediate certificates data.
+    """
+    course_key = CourseKey.from_string(course_id)
+    course = modulestore().get_course(course_key)
+    certificate_titles = set()
+    certs = XModuleUserStateSummaryField.objects.filter(
+        field_name="intermediate_certificate"
+    )
+    for cert in certs:
+        cert_dict = json.loads(cert.value)
+        for uid, dic in cert_dict.items():
+            if dic.get('course_id', None) == course_id:
+                certificate_titles.add(dic['title'])
+    users = CourseEnrollment.objects.users_enrolled_in(course.id)
+    cohorts = get_course_cohorts(course)
+
+    user_list = []
+    for u in users:
+        ud = dict(
+            id=u.id,
+            text=u.profile.name if u.profile.name else u.username,
+        )
+        user_list.append(ud)
+
+    cohort_list = []
+    cohort_user_mapping = {}
+    for c in cohorts:
+        cohort_users = c.users.all()
+        cd = dict(
+            id=c.id,
+            text=c.name,
+        )
+        cu_list = []
+        for u in cohort_users:
+            ud = dict(
+                id=u.id,
+                text=u.profile.name if u.profile.name else u.username,
+            )
+            cu_list.append(ud)
+        cohort_user_mapping[str(c.id)] = cu_list,
+        cohort_list.append(cd)
+
+    result = dict(
+        certificate_titles=list(certificate_titles),
+        users=user_list,
+        cohorts=cohort_list,
+        cohort_users=cohort_user_mapping,
+    )
+    return JsonResponse(result, status=200)
