@@ -11431,6 +11431,10 @@ msgstr ""
 msgid "Completion of each course"
 msgstr ""
 
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
+msgstr ""
+
 #: lms/templates/dashboard.html
 msgid "No sessions available"
 msgstr ""

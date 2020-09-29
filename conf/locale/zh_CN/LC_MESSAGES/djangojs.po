@@ -11977,6 +11977,10 @@ msgstr "投票"
 msgid "Survey"
 msgstr "调查"
 
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
+msgstr "要导出的证书数量超过了 1000，请缩小查找范围。"
+
 #: lms/templates/dashboard.html
 msgid "No sessions available"
 msgstr "没有注册课程"

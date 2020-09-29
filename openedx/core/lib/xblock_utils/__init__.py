@@ -134,7 +134,7 @@ def wrap_xblock(
     block_title = None
     frag_content = frag.content
 
-    if hasattr(block, 'label') and frag.content.find('hd hd-2') == -1:
+    if block.category == 'html' and frag.content.find('hd hd-2') == -1:
         if block.display_name not in ['Text', 'Raw HTML']:
             block_label = '''
             <div class="block-label">
@@ -143,7 +143,7 @@ def wrap_xblock(
             </div>
             '''.format(display_name=_(block.type))
 
-    if hasattr(block, 'title') and frag.content.find('hd hd-2') == -1:
+    if block.category == 'html' and frag.content.find('hd hd-2') == -1:
         if block.display_name not in ['Text', 'Raw HTML']:
             display_name = block.display_name
             block_title = '''
@@ -152,7 +152,7 @@ def wrap_xblock(
             </div>
             '''.format(display_name=display_name.encode('utf-8'))
 
-    if hasattr(block, 'label') and hasattr(block, 'title') and frag.content.find('hd hd-2') == -1:
+    if block.category == 'html' and frag.content.find('hd hd-2') == -1:
         frag_content = '<hr class="sep-line">' + frag_content
 
     template_context = {
