@@ -135,25 +135,20 @@ def wrap_xblock(
     frag_content = frag.content
 
     if block.category == 'html' and frag.content.find('hd hd-2') == -1:
+        frag_content = '<hr class="sep-line">' + frag_content
         if block.display_name not in ['Text', 'Raw HTML']:
             block_label = '''
-            <div class="block-label">
-                <span class="fal fa-clipboard-list"></span>
-                <span class="block-label-text">{display_name}</span>
-            </div>
-            '''.format(display_name=_(block.type))
-
-    if block.category == 'html' and frag.content.find('hd hd-2') == -1:
-        if block.display_name not in ['Text', 'Raw HTML']:
+                        <div class="block-label">
+                            <span class="fal fa-clipboard-list"></span>
+                            <span class="block-label-text">{display_name}</span>
+                        </div>
+                        '''.format(display_name=_("Text"))
             display_name = block.display_name
             block_title = '''
-            <div class="block-header-wrapper html-header-wrapper">
-                <h3 class="block-header html-header">{display_name}</h3>
-            </div>
-            '''.format(display_name=display_name.encode('utf-8'))
-
-    if block.category == 'html' and frag.content.find('hd hd-2') == -1:
-        frag_content = '<hr class="sep-line">' + frag_content
+                        <div class="block-header-wrapper html-header-wrapper">
+                            <h3 class="block-header html-header">{display_name}</h3>
+                        </div>
+                        '''.format(display_name=display_name.encode('utf-8'))
 
     template_context = {
         'content': block.display_name if display_name_only else frag_content,
