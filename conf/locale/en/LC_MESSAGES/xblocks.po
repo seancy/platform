@@ -38,6 +38,31 @@ msgstr ""
 msgid "Preview Certificate"
 msgstr ""
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You successfully completed the {type} badge with a score of {score}%."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking on the button below."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is not available."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to obtain the {type}."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Intermediate Certificate"
+msgstr ""
+
 #: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
 msgid "View results"
 msgstr ""
