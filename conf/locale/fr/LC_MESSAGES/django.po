@@ -29762,6 +29762,31 @@ msgstr "Votre score de {score}% n'est pas suffisant afin d'obtenir le badge {typ
 msgid "Preview Certificate"
 msgstr "Visualiser le certificat"
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You successfully completed the {type} badge with a score of {score}%."
+msgstr "Vous avez réussi avec succès le {type} avec un score de {score}%."
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking on the button below."
+msgstr "Vous pouvez télécharger votre {title} en cliquant sur le bouton ci-dessous."
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is not available."
+msgstr "{title} est non disponible."
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to obtain the {type}."
+msgstr "Votre score de {score}% n'est pas suffisant pour obtenir le {type}."
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Intermediate Certificate"
+msgstr "Certificat intermédiaire"
+
 #: XBlock: xblock-poll
 #: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
 msgid "View results"

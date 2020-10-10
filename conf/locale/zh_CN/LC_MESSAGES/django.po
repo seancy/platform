@@ -27812,6 +27812,31 @@ msgstr "您的分数 {score}% 不足以获得{type} 徽章。"
 msgid "Preview Certificate"
 msgstr "预览证书"
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You successfully completed the {type} badge with a score of {score}%."
+msgstr "您已成功完成 {type} 徽章，分数为 {score}%。"
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking on the button below."
+msgstr "您可以通过单击下面的按钮下载您的 {title}。"
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is not available."
+msgstr "{title} 不可用。"
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to obtain the {type}."
+msgstr "您的分数 {score}% 不足以获得 {type} 徽章。"
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Intermediate Certificate"
+msgstr "中级证书"
+
 #: XBlock: xblock-poll /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
 msgid "View results"
 msgstr "查看结果"
