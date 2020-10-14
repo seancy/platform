@@ -28735,6 +28735,11 @@ msgstr "开始"
 msgid "Show more"
 msgstr "显示更多"
 
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr "SCORM 模块超过了 %(limit)s MB 的大小限制"
+
 #: lms/templates/dashboard.html
 msgid "Find here, soon, your last activity on training courses."
 msgstr "不久后您将会在这里看到您培训课程的近期活动"

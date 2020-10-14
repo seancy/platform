@@ -30776,6 +30776,11 @@ msgstr "Graduación: Conexión con universidades con las que podrás graduarte"
 msgid "Unlimited users and communities"
 msgstr "Usuarios y comunidades ilimitadas"
 
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr "El módulo SCORM excede el tamaño máximo de %(limit)s MB."
+
 #: lms/templates/dashboard.html
 msgid "Find here, soon, your last activity on training courses."
 msgstr "Aquí encontrarás tus actividades más recientes"

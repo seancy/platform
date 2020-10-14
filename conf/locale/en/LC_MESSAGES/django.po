@@ -26907,6 +26907,11 @@ msgstr ""
 msgid "Show more"
 msgstr ""
 
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr ""
+
 #: lms/templates/dashboard.html
 msgid "Find here, soon, your last activity on training courses."
 msgstr ""

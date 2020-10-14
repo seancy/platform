@@ -30356,6 +30356,11 @@ msgstr "Iniciar"
 msgid "Show more"
 msgstr "Ver mais"
 
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr "O módulo SCORM excede o tamanho máximo de %(limit)s MB."
+
 #: lms/templates/dashboard.html
 msgid "Find here, soon, your last activity on training courses."
 msgstr "Encontre aqui, em breve, suas últimas atividades em cursos de capacitação."
