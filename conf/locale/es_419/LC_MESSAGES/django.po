@@ -30804,3 +30804,8 @@ msgstr "Estas listo para comenzar el curso"
 #: lms/templates/dashboard.html
 msgid "Let's start!"
 msgstr "Vamos a empezar"
+
+#: XBlock: iframe
+#: iframe-id-xblock/iframe/iframe.py
+msgid "Don't forget the leading protocol (http:// or https://) and the path, https://yoururl.com/path is correct, for example."
+msgstr "No olvide el protocolo principal (http: // o https: //) y la ruta. El siguiente ejemplo es correcto: https://yoururl.com/path"

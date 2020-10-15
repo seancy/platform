@@ -21663,6 +21663,10 @@ msgstr ""
 msgid "Grade Cutoffs:"
 msgstr ""
 
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html:83
+msgid "Pass: "
+msgstr ""
+
 #. Translators: git is a version-control system; see http://git-scm.com/about
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:91
 msgid ""

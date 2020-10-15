@@ -18370,6 +18370,10 @@ msgstr "postagens"
 msgid "View my learning transcript"
 msgstr "Baixar transcrição"
 
+#: lms/templates/dashboard.html:168
+msgid "Continue Learning..."
+msgstr "Continue aprendendo..."
+
 #: lms/templates/dashboard.html:255 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
 msgid "You are not enrolled in any courses yet."
@@ -30383,4 +30387,4 @@ msgstr "Você está pronto para começar um curso?"
 
 #: lms/templates/dashboard.html
 msgid "Let's start!"
-msgstr "Vamos começar!"
+msgstr "Iniciar!"

@@ -14269,7 +14269,7 @@ msgstr "Date de fin du cours"
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:239
 #: #: lms/templates/courseware/course_about.html:237
 msgid "Instructors"
-msgstr "Instructeurs"
+msgstr "Equipe pédagogique"
 
 #: cms/templates/settings.html:610
 #: lms/templates/courseware/course_about.html:206
@@ -21026,6 +21026,10 @@ msgstr "Nombre de sections :"
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:77
 msgid "Grade Cutoffs:"
 msgstr "Seuils de notation :"
+
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html:83
+msgid "Pass: "
+msgstr "Réussite :"
 
 #. Translators: git is a version-control system; see http://git-scm.com/about
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:91
@@ -31335,3 +31339,15 @@ msgstr "Êtes-vous prêts à commencer un parcours ?"
 #: lms/templates/dashboard.html
 msgid "Let's start!"
 msgstr "Let's go!"
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
+#, python-format
+msgid ""
+"\n"
+"                    This assignment has several steps. In the first step, you'll provide a response to the prompt. The other steps appear below the %(start_tag)sYour Response%(end_tag)s field.\n"
+"                "
+msgstr ""
+"\n"
+"                    Ce type d'évaluation comporte plusieurs étapes. Dans la première étape, vous répondrez à la consigne, puis les autres étapes apparaîtront sous le champ %(start_tag)s\"Votre réponse\"%(end_tag)s\n"
+"                "
