@@ -496,13 +496,21 @@ def sort_by_last_block_completed(user, course_enrollments):
     """
     Sort courses according each course's last completed block time.
     """
-    def has_last_block_completed(course_enrollment):
+    def has_last_block_completed_and_course_access(course_enrollment):
         """
         Check if the course has any block completed.
         """
         last_completed_block = BlockCompletion.get_latest_block_completed(
             user, course_enrollment.course_id)
-        return True if last_completed_block else False
+        course = get_course_by_id(course_enrollment.course_id, 0)
+        if last_completed_block:
+            try:
+                check_course_access(course, user, 'load', False, False)
+                return True
+            except (CourseAccessRedirect, CoursewareAccessException):
+                return False
+        else:
+            return False
 
     def sort_order(course_enrollment):
         """
@@ -516,7 +524,7 @@ def sort_by_last_block_completed(user, course_enrollments):
             log.exception("Can't get modified time of last completed block: " +
                           str(course_enrollment.course_id))
 
-    last_activity_enrollments = filter(has_last_block_completed, course_enrollments)
+    last_activity_enrollments = filter(has_last_block_completed_and_course_access, course_enrollments)
     return sorted(last_activity_enrollments, key=sort_order, reverse=True)
 
 
