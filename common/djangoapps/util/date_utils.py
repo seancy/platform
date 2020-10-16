@@ -100,6 +100,7 @@ DEFAULT_TIME_FORMAT = "%I:%M:%S %p"
 DEFAULT_DATE_TIME_FORMAT = "%b %d, %Y at %H:%M"
 DEFAULT_DAY_AND_TIME_FORMAT = "%A at %-I%P"
 DEFAULT_NUMBERIC_SHORT_DATE_FORMAT = "%Y-%m-%d"
+DEFAULT_NUMBERIC_SHORT_DATE_SLASH_FORMAT = "%Y/%m/%d"
 DEFAULT_NUMBERIC_DATE_TIME_FORMAT = "%Y-%m-%d %H:%M:%S %Z"
 
 
@@ -159,6 +160,11 @@ def strftime_localized(dtime, format):      # pylint: disable=redefined-builtin
         format = ugettext("NUMBERIC_SHORT_DATE")
         if format == "NUMBERIC_SHORT_DATE":
             format = DEFAULT_NUMBERIC_SHORT_DATE_FORMAT
+
+    elif format == "NUMBERIC_SHORT_DATE_SLASH":
+        format = ugettext("NUMBERIC_SHORT_DATE_SLASH")
+        if format == "NUMBERIC_SHORT_DATE_SLASH":
+            format = DEFAULT_NUMBERIC_SHORT_DATE_SLASH_FORMAT
 
     elif format == "NUMBERIC_DATE_TIME":
         format = ugettext("NUMBERIC_DATE_TIME")

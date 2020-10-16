@@ -1433,6 +1433,13 @@ msgstr "TIME_FORMAT"
 msgid "NUMBERIC_SHORT_DATE"
 msgstr "NUMBERIC_SHORT_DATE"
 
+#. Translators: the translation for "NUMBERIC_SHORT_DATE_SLASH" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y/%m/%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE_SLASH"
+msgstr "NUMBERIC_SHORT_DATE_SLASH"
+
 #. Translators: the translation for "NUMBERIC_DATE_TIME" must be a format
 #. string for formatting times.  For example, the American English
 #. form is "%Y-%m-%d %H:%M:%S %Z". See http://strftime.org for details.
@@ -28727,6 +28734,11 @@ msgstr "开始"
 # lms/templates/courses_list.html
 msgid "Show more"
 msgstr "显示更多"
+
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr "SCORM 模块超过了 %(limit)s MB 的大小限制"
 
 #: lms/templates/dashboard.html
 msgid "Find here, soon, your last activity on training courses."

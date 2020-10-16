@@ -105,6 +105,7 @@
 -e git+http://github.com/Learningtribes/edx_xblock_scorm@hawthorn#egg=scormxblock_xblock
 -e git+http://github.com/Learningtribes/xblock-pdf@hawthorn#egg=xblock-pdf
 -e git+http://github.com/Learningtribes/iframe-id-xblock@hawthorn#egg=iframe-id-xblock
+-e git+http://github.com/Learningtribes/edx-ora2@hawthorn#egg=edx-ora2
 
 # Third Party XBlocks
 

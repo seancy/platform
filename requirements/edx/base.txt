@@ -38,6 +38,7 @@ git+https://github.com/edx/RecommenderXBlock.git@1.3.3#egg=recommender-xblock==1
 -e git+https://github.com/Learningtribes/xblock-drag-and-drop-v2@hawthorn#egg=xblock-drag-and-drop-v2
 -e git+http://github.com/Learningtribes/edx_xblock_scorm@hawthorn#egg=scormxblock_xblock
 -e git+http://github.com/Learningtribes/xblock-pdf@hawthorn#egg=xblock-pdf
+-e git+http://github.com/Learningtribes/edx-ora2@hawthorn#egg=edx-ora2
 -e git+https://github.com/edx-solutions/xblock-google-drive.git@138e6fa0bf3a2013e904a085b9fed77dab7f3f21#egg=xblock-google-drive
 -e git+https://github.com/Learningtribes/xblock-poll@hawthorn#egg=xblock-poll
 -e git+https://github.com/Learningtribes/xblock-certificate.git@hawthorn#egg=xblock-certificate

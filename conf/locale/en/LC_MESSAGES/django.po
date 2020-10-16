@@ -1096,6 +1096,13 @@ msgstr ""
 msgid "NUMBERIC_SHORT_DATE"
 msgstr ""
 
+#. Translators: the translation for "NUMBERIC_SHORT_DATE_SLASH" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y/%m/%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE_SLASH"
+msgstr ""
+
 #. Translators: the translation for "NUMBERIC_DATE_TIME" must be a format
 #. string for formatting times.  For example, the American English
 #. form is "%Y-%m-%d %H:%M:%S %Z". See http://strftime.org for details.
@@ -21656,6 +21663,10 @@ msgstr ""
 msgid "Grade Cutoffs:"
 msgstr ""
 
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html:83
+msgid "Pass: "
+msgstr ""
+
 #. Translators: git is a version-control system; see http://git-scm.com/about
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:91
 msgid ""
@@ -26898,6 +26909,11 @@ msgstr ""
 
 # lms/templates/courses_list.html
 msgid "Show more"
+msgstr ""
+
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
 msgstr ""
 
 #: lms/templates/dashboard.html
