@@ -17,8 +17,7 @@ from xmodule.modulestore.django import modulestore
     nb_of_badges_earned = CourseGradeFactory().get_nb_trophies_earned(user, course_descriptor)
     nb_of_badges_possible = CourseGradeFactory().get_nb_trophies_possible(course_descriptor)
     progress = int(CourseGradeFactory().get_course_completion_percentage(user, enrollment.course_id)*100)
-    course = get_course_with_access(request.user, 'load', enrollment.course_id)
-    course_url = get_last_accessed_courseware(request, course)
+    course_url = get_last_accessed_courseware(request, course_descriptor)
     if not course_url:
         course_url = reverse(course_home_url_name(course_overview.id), args=[unicode(course_overview.id)])
 %>
