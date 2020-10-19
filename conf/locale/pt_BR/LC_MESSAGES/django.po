@@ -29497,7 +29497,11 @@ msgstr "Visualizar crédito"
 
 #: lbmdonexblock.html
 msgid "Done"
-msgstr "Feito"
+msgstr "lição concluída"
+
+#: lbmdonexblock.html
+msgid "Completion"
+msgstr "Conclusão"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "INSTRUCTOR LED TRAINING"

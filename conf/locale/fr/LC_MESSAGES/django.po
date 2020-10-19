@@ -29818,7 +29818,12 @@ msgstr "Voir les résultats"
 #: XBlock: xblock-done
 #: lbmdonexblock.html
 msgid "Done"
-msgstr "Complété"
+msgstr "Effectuée"
+
+#: XBlock: xblock-done
+#: lbmdonexblock.html
+msgid "Completion"
+msgstr "Réussite"
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
