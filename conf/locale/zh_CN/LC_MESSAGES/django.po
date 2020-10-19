@@ -27852,6 +27852,10 @@ msgstr "查看结果"
 msgid "Done"
 msgstr "完成"
 
+#: XBlock: xblock-done lbmdonexblock.html
+msgid "Completion"
+msgstr "完成"
+
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "INSTRUCTOR LED TRAINING"
 msgstr "讲师引导式培训"

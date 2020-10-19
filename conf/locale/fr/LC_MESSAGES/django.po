@@ -19374,6 +19374,18 @@ msgstr "par maximum d'activité"
 msgid "by most votes"
 msgstr "par maximum de votes"
 
+#: lms/templates/discussion/_thread_list_template.html:53
+msgid "Subject"
+msgstr "Sujet"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Topic"
+msgstr "Thématique"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Author"
+msgstr "Auteur"
+
 #: lms/templates/edxnotes/edxnotes.html:13
 msgid "Learner Notes"
 msgstr "Notes"
@@ -29806,7 +29818,12 @@ msgstr "Voir les résultats"
 #: XBlock: xblock-done
 #: lbmdonexblock.html
 msgid "Done"
-msgstr "Complété"
+msgstr "Effectuée"
+
+#: XBlock: xblock-done
+#: lbmdonexblock.html
+msgid "Completion"
+msgstr "Réussite"
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html

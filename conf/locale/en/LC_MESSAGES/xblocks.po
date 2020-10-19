@@ -71,6 +71,10 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
+#: lbmdonexblock.html
+msgid "Completion"
+msgstr ""
+
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "INSTRUCTOR LED TRAINING"

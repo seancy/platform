@@ -29576,6 +29576,10 @@ msgstr "Mostrar resultados"
 msgid "Done"
 msgstr "Terminado"
 
+#: lbmdonexblock.html
+msgid "Completion"
+msgstr ""
+
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "INSTRUCTOR LED TRAINING"
 msgstr "INSTRUCCION PRESENCIAL"

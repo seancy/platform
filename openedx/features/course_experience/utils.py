@@ -145,6 +145,7 @@ def get_course_outline_block_tree(request, course_id):
         'library_content',
         'openassessment',
         'iframe',
+        'lbmdonexblock',
     ]
     all_blocks = get_blocks(
         request,
