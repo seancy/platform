@@ -14,7 +14,12 @@ from django.utils.translation import ugettext as _ %>
     </section>
     <section class="container about">
         <p>
-            <%block name="pagecontent">${page_content or _("This page left intentionally blank. Feel free to add your own content.")}</%block>
+            Autorizo el tratamiento de mis datos personales a el Politécnico Indoamericano, según lo establecido en la Resolución Rectoral 001 del 16 de septiembre de 2020 para las siguientes finalidades: seguimiento del proceso de inscripción al programa de interés, informar sobre la oferta académica de pregrado y educación continua, invitaciones para participar en actividades académicas y culturales de la institución, envío de comunicaciones físicas y electrónicas como puede ser correos electrónicos, mensajería instantánea, mensajes de textos, entre otros, así como dar a conocer noticias de interés. Tengo presente que la la información personal que suministro, se utilizará solo para los fines autorizados por mi y se encuentra almacenada en los servidores del Politécnico Indoamericano y en servidores externos de terceros, contando con todas las medidas de seguridad físicas, técnicas y administrativas para evitar su perdida, adulteración, uso fraudulento o no adecuado por lo anterior. Autorizo la transmisión internacional de sus datos personales a países que se encuentran en la lista de países seguros de la Superintendencia de Industria y Comercio. Declaro que el Politécnico Indoamericano ha puesto en mi conocimiento, el derecho que poseo como titular de la información entregada, de recibir en cualquier momento información acerca del tratamiento dado a los datos entregados y/o de solicitar la actualización, rectificación y/o supresión de los datos personales recolectados o la revocatoria de la autorización otorgada, solicitudes que podrán ser dirigidas al correo habeasdata@politecnicoindoamericano.edu.co
+        </p>
+        <br>
+        <br>
+        <p>
+            Ver detalle de la Política de Tratamiento de Datos del Politécnico Indoamericano
         </p>
         <hr>
         <form class="tos-form" action="${reverse('confirm_tos')}" method="post">

@@ -12946,7 +12946,7 @@ msgstr ""
 
 #: openedx/core/djangoapps/user_api/api.py:924
 msgid "Phone number"
-msgstr "{num} numero"
+msgstr "número celular"
 
 #: openedx/core/djangoapps/user_api/api.py:929
 msgid ""

@@ -12448,3 +12448,7 @@ msgstr "No hay sesiones disponibles"
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"
 msgstr "Añadir al Calendario"
+
+#: lms/templates/student_account/login.underscore
+msgid "Sign up"
+msgstr "Regístrate"
