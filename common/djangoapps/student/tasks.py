@@ -7,20 +7,20 @@ from boto.exception import NoAuthHandlerFound
 from celery.exceptions import MaxRetriesExceededError
 from celery.task import task  # pylint: disable=no-name-in-module, import-error
 from django.conf import settings
-from util.email_utils import send_mail_with_alias as send_mail
+from django.core import mail
 
 log = logging.getLogger('edx.celery.task')
 
 
 @task(bind=True)
-def send_activation_email(self, subject, message, from_address, dest_addr):
+def send_activation_email(self, subject, message, from_address, dest_addr, html_message=None):
     """
     Sending an activation email to the user.
     """
     max_retries = settings.RETRY_ACTIVATION_EMAIL_MAX_ATTEMPTS
     retries = self.request.retries
     try:
-        send_mail(subject, message, from_address, [dest_addr], fail_silently=False)
+        mail.send_mail(subject, message, from_address, [dest_addr], fail_silently=False, html_message=html_message)
         # Log that the Activation Email has been sent to user without an exception
         log.info("Activation Email has been sent to User {user_email}".format(
             user_email=dest_addr
