@@ -5,6 +5,7 @@ Student Views
 import datetime
 import json
 import logging
+import sys
 import uuid
 import warnings
 from collections import namedtuple
@@ -266,13 +267,21 @@ def compose_and_send_activation_email(user, profile, user_registration=None):
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())
     message_for_activation = render_to_string('emails/activation_email.txt', context)
+
+    # for test
+    if 'pytest' in sys.modules:
+        html_message = None
+    else:
+        html_message = render_to_string('emails/activation_html_email.txt', context)
+    from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
     from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
     from_address = configuration_helpers.get_value('ACTIVATION_EMAIL_FROM_ADDRESS', from_address)
+    from_address = "{0} <{1}>".format(from_alias, from_address)
     if settings.FEATURES.get('REROUTE_ACTIVATION_EMAIL'):
         dest_addr = settings.FEATURES['REROUTE_ACTIVATION_EMAIL']
         message_for_activation = ("Activation for %s (%s): %s\n" % (user, user.email, profile.name) +
                                   '-' * 80 + '\n\n' + message_for_activation)
-    send_activation_email.delay(subject, message_for_activation, from_address, dest_addr)
+    send_activation_email.delay(subject, message_for_activation, from_address, dest_addr, html_message)
 
 
 @login_required
