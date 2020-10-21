@@ -2089,7 +2089,7 @@ class RegistrationViewTest(ThirdPartyAuthTestMixin, UserAPITestCase):
             u"Action Required: Activate your {platform} account".format(platform=settings.PLATFORM_NAME)
         )
         self.assertIn(
-            u"high-quality {platform} courses".format(platform=settings.PLATFORM_NAME),
+            u"Para el Polit",
             sent_email.body
         )
 

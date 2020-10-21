@@ -101,12 +101,9 @@ class ActivationEmailTests(CacheIsolationTestCase):
     # Text fragments we expect in the body of an email
     # sent from an OpenEdX installation.
     OPENEDX_FRAGMENTS = [
-        u"high-quality {platform} courses".format(platform=settings.PLATFORM_NAME),
+        u"Para el Polit",
         "http://edx.org/activate/",
-        (
-            "please use our web form at "
-            u"{support_url} ".format(support_url=settings.SUPPORT_SITE_LINK)
-        )
+        u"Hoy empieza tu nuevo camino de"
     ]
 
     def test_activation_email(self):
