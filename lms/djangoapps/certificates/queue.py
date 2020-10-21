@@ -490,6 +490,7 @@ class XQueueCertInterface(object):
         contents = {
             'action': 'create',
             'username': student.username,
+            'employee_id': student.profile.lt_employee_id,
             'course_id': course_id,
             'course_name': course.display_name or course_id,
             'name': cert.name,
@@ -609,6 +610,7 @@ class XQueueCertInterface(object):
             # Note that the username is *not* displayed on the certificate;
             # it is used only to identify the certificate task in the queue.
             'username': example_cert.uuid,
+            'employee_id': "employee_id",
 
             # We send this extra parameter to differentiate
             # example certificates from other certificates.
