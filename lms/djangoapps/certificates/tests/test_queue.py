@@ -346,6 +346,7 @@ class XQueueCertInterfaceExampleCertificateTest(TestCase):
         expected_body = {
             'action': 'create',
             'username': cert.uuid,
+            'employee_id': "employee_id",
             'name': u'John Doë',
             'course_id': unicode(self.COURSE_KEY),
             'course_name': unicode(self.COURSE_KEY),
