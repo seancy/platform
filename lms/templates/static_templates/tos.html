@@ -21,11 +21,5 @@ from django.utils.translation import ugettext as _ %>
         <p>
             Ver detalle de la Política de Tratamiento de Datos del Politécnico Indoamericano
         </p>
-        <hr>
-        <form class="tos-form" action="${reverse('confirm_tos')}" method="post">
-            <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}">
-            <button class="tos-form-button" type="submit" name="accept-tos">ACCEPT</button>
-            <button class="tos-form-button" type="submit" name="dissagree-tos">DO NOT ACCEPT</button>
-        </form>
     </section>
 </main>
