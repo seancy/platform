@@ -12857,7 +12857,7 @@ msgstr "Este nombre se utilizará en los certificados que consigas."
 #: themes/stanford-style/lms/templates/register-form.html:89
 #: themes/stanford-style/lms/templates/register-shib.html:118
 msgid "Public Username"
-msgstr "Identificador público de usuario "
+msgstr "usuario "
 
 #. Translators: These instructions appear on the registration form,
 #. immediately
