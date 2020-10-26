@@ -7963,7 +7963,7 @@ msgstr "Identificador de usuario"
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html:53
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html:66
 msgid "Email"
-msgstr "Correo electrónico"
+msgstr "Correo"
 
 #: lms/djangoapps/instructor/views/api.py:1872
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py:105
@@ -10389,7 +10389,7 @@ msgstr "Estado/Provincia/Ciudad"
 #: openedx/core/djangoapps/user_api/api.py:685
 #: openedx/core/djangoapps/user_api/api.py:941
 msgid "Company"
-msgstr "Compañia"
+msgstr "Razon Social"
 
 #. Translators: This label appears above a field on the registration form
 #. which allows the user to input the Job Title
@@ -10624,11 +10624,11 @@ msgstr "Ubicación"
 
 #: lms/djangoapps/triboo_analytics/forms.py:15
 msgid "Commercial Zone"
-msgstr "No comercial"
+msgstr "Zona Comercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:16
 msgid "Commercial Region"
-msgstr "No comercial"
+msgstr "Región Comercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:19
 msgctxt "user.profile"
@@ -10642,7 +10642,7 @@ msgstr "Domicilio 2"
 
 #: lms/djangoapps/triboo_analytics/forms.py:21
 msgid "Phone Number"
-msgstr "Código del curso"
+msgstr "Celular"
 
 #: lms/djangoapps/triboo_analytics/forms.py:22
 msgid "GDPR"
@@ -10664,7 +10664,7 @@ msgstr "Nivel"
 #: lms/djangoapps/triboo_analytics/forms.py:27
 #: openedx/core/djangoapps/user_api/api.py:948
 msgid "Job Code"
-msgstr "Código de Honor"
+msgstr "Código de Trabajo"
 
 #: lms/djangoapps/triboo_analytics/forms.py:28
 #: openedx/core/djangoapps/user_api/api.py:955
@@ -10674,7 +10674,7 @@ msgstr "Descripción"
 #: lms/djangoapps/triboo_analytics/forms.py:29
 #: openedx/core/djangoapps/user_api/api.py:962
 msgid "Department"
-msgstr "Pagar"
+msgstr "Division"
 
 #: lms/djangoapps/triboo_analytics/forms.py:30
 msgid "Supervisor"
