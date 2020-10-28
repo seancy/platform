@@ -17606,9 +17606,8 @@ msgid ""
 "Thank you for signing up for {studio_name}! To activate your account, please "
 "copy and paste this address into your web browser's address bar:"
 msgstr ""
-"¡Gracias por inscribirte en {studio_name}! Para activar tu cuenta, por "
-"favor, copia y pega esta dirección en la barra de direcciones de tu "
-"navegador:"
+"¡Gracias por registrarte en {studio_name}! Para activar tu cuenta, "
+"copia y pega esta dirección en la barra de direcciones de tu navegador:"
 
 #: cms/templates/emails/activation_email.txt:11
 msgid ""
@@ -17616,42 +17615,39 @@ msgid ""
 "any more email from us. Please do not reply to this e-mail; if you require "
 "assistance, check the help section of the {studio_name} web site."
 msgstr ""
-"Si no solicitaste esto, no hace falta que hagas nada; no recibirás más "
-"correos electrónicos por nuestra parte. Por favor, no contestes a este "
-"correo electrónico; si necesitas asistencia, comprueba la sección de ayuda "
-"de la página web de {studio_name}."
+"Si no solicitaste este registro, no necesitas hacer nada; no recibirás más "
+"correos electrónicos de nuestra parte. Por favor no respondas a este email. "
+"Si necesitas ayuda, consulta la sección de soporte dentro del sitio web de {studio_name}."
 
 #: cms/templates/emails/activation_email_subject.txt:2
 msgid "Your account for {studio_name}"
-msgstr "Tu cuenta para {studio_name}"
+msgstr "Sobre tu cuenta de {studio_name}"
 
 #: cms/templates/emails/course_creator_admin_subject.txt:2
 msgid "{email} has requested {studio_name} course creator privileges on edge"
 msgstr ""
-"{email} ha solicitado privilegios de creador de curso en {studio_name} edge"
+"{email} ha solicitado privilegios de creador de cursos para {studio_name}"
 
 #: cms/templates/emails/course_creator_admin_user_pending.txt:2
 msgid ""
 "User '{user}' with e-mail {email} has requested {studio_name} course creator "
 "privileges on edge."
 msgstr ""
-"El usuario '{user}' con correo electrónico {email} ha solicitado privilegios "
-"de creador de curso en {studio_name} edge."
+"El usuario '{user}' con el correo electrónico {email} ha solicitado privilegios "
+"de creador de cursos para {studio_name}."
 
 #: cms/templates/emails/course_creator_admin_user_pending.txt:5
 msgid "To grant or deny this request, use the course creator admin table."
 msgstr ""
-"Para conceder o denegar esta solicitud, utiliza la tabla de administración "
-"de creador del curso."
+"Para aprobar o rechazar esta solicitud, utiliza el tablero de administración de creadores de cursos."
 
 #: cms/templates/emails/course_creator_denied.txt:3
 msgid ""
 "Your request for course creation rights to {studio_name} have been denied. "
 "If you believe this was in error, please contact {email}"
 msgstr ""
-"Tu solicitud para obtener derechos de creación de cursos en {studio_name} ha "
-"sido denegada. Si crees que esto ha sido un error, por favor, contacta con "
-"{email}"
+"Tu solicitud de permisos para creación de cursos en {studio_name} ha "
+"sido rechazada. Si crees que se trata de un error, ponte en contacto con {email}."
 
 #: cms/templates/emails/course_creator_granted.txt:3
 msgid ""
@@ -17660,8 +17656,8 @@ msgid ""
 "\n"
 "{url}"
 msgstr ""
-"Tu solicitud para obtener derechos de creación de cursos en {studio_name} ha "
-"sido aceptada. Para crear tu primer curso, visita\n"
+"Tu solicitud de permisos para creación de cursos en {studio_name} ha "
+"sido aprobada. Para crear tu primer curso visita\n"
 "\n"
 "{url}"
 
@@ -17670,33 +17666,33 @@ msgid ""
 "Your course creation rights to {studio_name} have been revoked. If you "
 "believe this was in error, please contact {email}"
 msgstr ""
-"Tus derechos de creación de cursos en {studio_name} han sido revocados. Si "
-"crees que esto ha sido un error, por favor, contacta con {email}."
+"Tus permisos para crear cursos en {studio_name} han sido revocados. Si "
+"crees que fue un error por favor contacta a {email}"
 
 #: cms/templates/emails/course_creator_subject.txt:2
 msgid "Your course creator status for {studio_name}"
-msgstr "Tu estado de creador de curso en {studio_name}"
+msgstr "Este es tu  estado de cuenta como creador de cursos {studio_name}"
 
 #: cms/templates/emails/user_task_complete_email.txt:5
 msgid ""
 "Your {task_name} task has completed with the status '{task_status}'. Use "
 "this URL to view task details or download any files created: {detail_url}"
 msgstr ""
-"Su tarea {nombre_tarea} se ha completado con el estado '{task_status}'. "
-"Useeste URL para ver detalles de la tarea o descargar cualquier archivo "
-"creado: {detail_url}"
+"La tarea {task_name} se completó con el estado '{task_status}'. "
+"Utiliza esta URL para ver los detalles de la tarea o descargar los "
+"archivos cargados: {detail_url}"
 
 #: cms/templates/emails/user_task_complete_email.txt:9
 msgid ""
 "Your {task_name} task has completed with the status '{task_status}'. Sign in "
 "to view the details of your task or download any files created."
 msgstr ""
-"Tu {task_name} tarea se ha completado con el estado '{task_status}'. Inicia "
-"sesión para ver los detalles de tu tarea o descargar los archivos creados."
+"La tarea de {task_name} se completó con el estado '{task_status}'. Inicia "
+"sesión para ver los detalles de la tarea o descargar los archivos cargados."
 
 #: cms/templates/emails/user_task_complete_email_subject.txt:2
 msgid "{platform_name} {studio_name}: Task Status Update"
-msgstr "{platform_name} {studio_name}: Actualización del estado de la tarea"
+msgstr "{platform_name} {studio_name}: Actualización del estado de la Tarea"
 
 #: cms/templates/maintenance/_force_publish_course.html:12
 msgid "Required data to force publish course."
@@ -23166,9 +23162,9 @@ msgid ""
 "engaging, high-quality {platform_name} courses. Note that you will not be "
 "able to log back into your account until you have activated it."
 msgstr ""
-"¡Ya casi está! Usa el enlace para activar tu cuenta y acceder a los "
-"atractivos cursos y de gran calidad de {platform_name}. Ten en cuenta que no "
-"podrás iniciar sesión en tu cuenta hasta que no la hayas activado."
+"¡Ya casi estás listo! Utiliza el enlace para activar tu cuenta y acceder a los "
+"cursos de {platform_name} los cuales son atractivos y de alta calidad. Ten en cuenta que no "
+"podrás volver a iniciar sesión en tu cuenta hasta que la hayas activado."
 
 #: lms/templates/emails/activation_email.txt:12
 msgid "Enjoy learning with {platform_name}."
@@ -23193,7 +23189,7 @@ msgstr ""
 
 #: lms/templates/emails/activation_email_subject.txt:2
 msgid "Action Required: Activate your {platform_name} account"
-msgstr "Acción requerida: active su cuenta {platform_name}."
+msgstr "Acción requerida: Active su cuenta de {platform_name}"
 
 #: lms/templates/emails/add_beta_tester_email_message.txt:3
 #: lms/templates/emails/course_re_enroll_email_message.txt:9
