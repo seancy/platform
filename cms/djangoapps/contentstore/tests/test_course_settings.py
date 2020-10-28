@@ -119,7 +119,7 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
         details = CourseDetails.fetch(self.course.id)
 
         # resp s/b json from here on
-        url = get_url(self.course.id)
+        url = get_url(self.course.id, handler_name='settings_update_handler')
         resp = self.client.get_json(url)
         self.compare_details_with_encoding(json.loads(resp.content), details.__dict__, "virgin get")
 
@@ -185,10 +185,10 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
         self.assertFalse(milestones_helpers.any_unfulfilled_milestones(self.course.id, self.user.id),
                          msg='The initial empty state should be: no prerequisite courses')
 
-        url = get_url(self.course.id)
+        url = get_url(self.course.id, handler_name='settings_update_handler')
         resp = self.client.get_json(url)
         course_detail_json = json.loads(resp.content)
-        # assert pre_requisite_courses is initialized
+        # To assert pre_requisite_courses is initialized
         self.assertEqual([], course_detail_json['pre_requisite_courses'])
 
         # update pre requisite courses with a new course keys
@@ -218,7 +218,7 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
 
     @mock.patch.dict("django.conf.settings.FEATURES", {'ENABLE_PREREQUISITE_COURSES': True})
     def test_invalid_pre_requisite_course(self):
-        url = get_url(self.course.id)
+        url = get_url(self.course.id, handler_name='settings_update_handler')
         resp = self.client.get_json(url)
         course_detail_json = json.loads(resp.content)
 
@@ -296,7 +296,7 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
         self.assertFalse(milestones_helpers.any_unfulfilled_milestones(self.course.id, self.user.id),
                          msg='The initial empty state should be: no entrance exam')
 
-        settings_details_url = get_url(self.course.id)
+        settings_details_url = get_url(self.course.id, handler_name='settings_update_handler')
         data = {
             'entrance_exam_enabled': 'true',
             'entrance_exam_minimum_score_pct': '60',
@@ -354,7 +354,7 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
         test that creating an entrance exam should store the default value, if key missing in json request
         or entrance_exam_minimum_score_pct is an empty string
         """
-        settings_details_url = get_url(self.course.id)
+        settings_details_url = get_url(self.course.id, handler_name='settings_update_handler')
         test_data_1 = {
             'entrance_exam_enabled': 'true',
             'syllabus': 'none',

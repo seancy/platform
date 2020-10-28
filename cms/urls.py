@@ -137,6 +137,8 @@ urlpatterns = [
         name='tabs_handler'),
     url(r'^settings/details/{}$'.format(settings.COURSE_KEY_PATTERN), contentstore.views.settings_handler,
         name='settings_handler'),
+    url(r'^settings_update/details/{}$'.format(settings.COURSE_KEY_PATTERN), contentstore.views.settings_update_handler,
+        name='settings_update_handler'),
     url(r'^settings/grading/{}(/)?(?P<grader_index>\d+)?$'.format(settings.COURSE_KEY_PATTERN),
         contentstore.views.grading_handler, name='grading_handler'),
     url(r'^settings/advanced/{}$'.format(settings.COURSE_KEY_PATTERN), contentstore.views.advanced_settings_handler,
