@@ -114,6 +114,7 @@ __all__ = ['course_info_handler', 'course_handler', 'course_listing',
            'course_info_update_handler', 'course_search_index_handler',
            'course_rerun_handler',
            'settings_handler',
+           'settings_update_handler',
            'grading_handler',
            'advanced_settings_handler',
            'course_notifications_handler',
@@ -1054,6 +1055,86 @@ def course_info_update_handler(request, course_key_string, provided_id=None):
 @ensure_csrf_cookie
 @require_http_methods(("GET", "PUT", "POST", "DELETE"))
 @expect_json
+def settings_update_handler(request, course_key_string):
+    if not 'application/json' in request.META.get('HTTP_ACCEPT', ''):
+        return HttpResponseBadRequest("Only supports json requests")
+
+    course_key = CourseKey.from_string(course_key_string)
+    course_module = get_course_and_check_access(course_key, request.user)
+    with modulestore().bulk_operations(course_key):
+        if request.method == 'GET':
+            course_details = CourseDetails.fetch(course_key)
+            return JsonResponse(
+                course_details,
+                # encoder serializes dates, old locations, and instances
+                encoder=CourseSettingsEncoder
+            )
+        elif request.method == 'DELETE':
+            try:
+                delete_course(course_key, ModuleStoreEnum.UserID.mgmt_command, remove_course_reports=True,
+                              remove_course_search_index=True)
+            except Exception as err:
+                log.exception(text_type(err))
+                return JsonResponseBadRequest({'error': "Can't delete course due to internal reason."})
+            return JsonResponse()
+        # For every other possible method type submitted by the caller...
+        else:
+            # if pre-requisite course feature is enabled set pre-requisite course
+            if is_prerequisite_courses_enabled():
+                prerequisite_course_keys = request.json.get('pre_requisite_courses', [])
+                if prerequisite_course_keys:
+                    if not all(is_valid_course_key(course_key) for course_key in prerequisite_course_keys):
+                        return JsonResponseBadRequest({"error": _("Invalid prerequisite course key")})
+                    set_prerequisite_courses(course_key, prerequisite_course_keys)
+                else:
+                    # None is chosen, so remove the course prerequisites
+                    course_milestones = milestones_api.get_course_milestones(course_key=course_key,
+                                                                             relationship="requires")
+                    for milestone in course_milestones:
+                        remove_prerequisite_course(course_key, milestone)
+
+            # If the entrance exams feature has been enabled, we'll need to check for some
+            # feature-specific settings and handle them accordingly
+            # We have to be careful that we're only executing the following logic if we actually
+            # need to create or delete an entrance exam from the specified course
+            if is_entrance_exams_enabled():
+                course_entrance_exam_present = course_module.entrance_exam_enabled
+                entrance_exam_enabled = request.json.get('entrance_exam_enabled', '') == 'true'
+                ee_min_score_pct = request.json.get('entrance_exam_minimum_score_pct', None)
+                # If the entrance exam box on the settings screen has been checked...
+                if entrance_exam_enabled:
+                    # Load the default minimum score threshold from settings, then try to override it
+                    entrance_exam_minimum_score_pct = float(settings.ENTRANCE_EXAM_MIN_SCORE_PCT)
+                    if ee_min_score_pct:
+                        entrance_exam_minimum_score_pct = float(ee_min_score_pct)
+                    if entrance_exam_minimum_score_pct.is_integer():
+                        entrance_exam_minimum_score_pct = entrance_exam_minimum_score_pct / 100
+                    # If there's already an entrance exam defined, we'll update the existing one
+                    if course_entrance_exam_present:
+                        exam_data = {
+                            'entrance_exam_minimum_score_pct': entrance_exam_minimum_score_pct
+                        }
+                        update_entrance_exam(request, course_key, exam_data)
+                    # If there's no entrance exam defined, we'll create a new one
+                    else:
+                        create_entrance_exam(request, course_key, entrance_exam_minimum_score_pct)
+
+                # If the entrance exam box on the settings screen has been unchecked,
+                # and the course has an entrance exam attached...
+                elif not entrance_exam_enabled and course_entrance_exam_present:
+                    delete_entrance_exam(request, course_key)
+
+            # Perform the normal update workflow for the CourseDetails model
+            return JsonResponse(
+                CourseDetails.update_from_json(course_key, request.json, request.user),
+                encoder=CourseSettingsEncoder
+            )
+
+
+@studio_login_required
+@ensure_csrf_cookie
+@require_http_methods(("GET",))
+@expect_json
 def settings_handler(request, course_key_string):
     """
     Course settings for dates and about pages
@@ -1093,7 +1174,6 @@ def settings_handler(request, course_key_string):
                 settings.FEATURES.get('EDITABLE_SHORT_DESCRIPTION', True)
             )
             sidebar_html_enabled = course_experience_waffle().is_enabled(ENABLE_COURSE_ABOUT_SIDEBAR_HTML)
-            # self_paced_enabled = SelfPacedConfiguration.current().enabled
 
             country_options = ['All countries']
             if configuration_helpers.get_value('COURSE_COUNTRIES', []):
@@ -1106,7 +1186,7 @@ def settings_handler(request, course_key_string):
                 'course_image_url': course_image_url(course_module, 'course_image'),
                 'banner_image_url': course_image_url(course_module, 'banner_image'),
                 'video_thumbnail_image_url': course_image_url(course_module, 'video_thumbnail_image'),
-                'details_url': reverse_course_url('settings_handler', course_key),
+                'details_url': reverse_course_url('settings_update_handler', course_key),
                 'about_page_editable': about_page_editable,
                 'short_description_editable': short_description_editable,
                 'sidebar_html_enabled': sidebar_html_enabled,
@@ -1159,26 +1239,25 @@ def settings_handler(request, course_key_string):
                     courses, __ = _process_courses_list(courses, in_process_course_actions)
                 settings_context.update({'possible_pre_requisite_courses': list(courses)})
 
-            if credit_eligibility_enabled:
-                if is_credit_course(course_key):
-                    # get and all credit eligibility requirements
-                    credit_requirements = get_credit_requirements(course_key)
-                    # pair together requirements with same 'namespace' values
-                    paired_requirements = {}
-                    for requirement in credit_requirements:
-                        namespace = requirement.pop("namespace")
-                        paired_requirements.setdefault(namespace, []).append(requirement)
+            if credit_eligibility_enabled and is_credit_course(course_key):
+                # get and all credit eligibility requirements
+                credit_requirements = get_credit_requirements(course_key)
+                # pair together requirements with same 'namespace' values
+                paired_requirements = {}
+                for requirement in credit_requirements:
+                    namespace = requirement.pop("namespace")
+                    paired_requirements.setdefault(namespace, []).append(requirement)
 
-                    # if 'minimum_grade_credit' of a course is not set or 0 then
-                    # show warning message to course author.
-                    show_min_grade_warning = False if course_module.minimum_grade_credit > 0 else True
-                    settings_context.update(
-                        {
-                            'is_credit_course': True,
-                            'credit_requirements': paired_requirements,
-                            'show_min_grade_warning': show_min_grade_warning,
-                        }
-                    )
+                # if 'minimum_grade_credit' of a course is not set or 0 then
+                # show warning message to course author.
+                show_min_grade_warning = False if course_module.minimum_grade_credit > 0 else True
+                settings_context.update(
+                    {
+                        'is_credit_course': True,
+                        'credit_requirements': paired_requirements,
+                        'show_min_grade_warning': show_min_grade_warning,
+                    }
+                )
 
             # check user permission who can delete the course, only platform staff can delete course
             if GlobalStaff().has_user(request.user):
@@ -1189,73 +1268,8 @@ def settings_handler(request, course_key_string):
                 )
 
             return render_to_response('settings.html', settings_context)
-        elif 'application/json' in request.META.get('HTTP_ACCEPT', ''):
-            if request.method == 'GET':
-                course_details = CourseDetails.fetch(course_key)
-                return JsonResponse(
-                    course_details,
-                    # encoder serializes dates, old locations, and instances
-                    encoder=CourseSettingsEncoder
-                )
-            elif request.method == 'DELETE':
-                try:
-                    delete_course(course_key, ModuleStoreEnum.UserID.mgmt_command, remove_course_reports=True,
-                                  remove_course_search_index=True)
-                except Exception as err:
-                    log.exception(text_type(err))
-                    return JsonResponseBadRequest({'error': "Can't delete course due to internal reason."})
-                return JsonResponse()
-            # For every other possible method type submitted by the caller...
-            else:
-                # if pre-requisite course feature is enabled set pre-requisite course
-                if is_prerequisite_courses_enabled():
-                    prerequisite_course_keys = request.json.get('pre_requisite_courses', [])
-                    if prerequisite_course_keys:
-                        if not all(is_valid_course_key(course_key) for course_key in prerequisite_course_keys):
-                            return JsonResponseBadRequest({"error": _("Invalid prerequisite course key")})
-                        set_prerequisite_courses(course_key, prerequisite_course_keys)
-                    else:
-                        # None is chosen, so remove the course prerequisites
-                        course_milestones = milestones_api.get_course_milestones(course_key=course_key, relationship="requires")
-                        for milestone in course_milestones:
-                            remove_prerequisite_course(course_key, milestone)
-
-                # If the entrance exams feature has been enabled, we'll need to check for some
-                # feature-specific settings and handle them accordingly
-                # We have to be careful that we're only executing the following logic if we actually
-                # need to create or delete an entrance exam from the specified course
-                if is_entrance_exams_enabled():
-                    course_entrance_exam_present = course_module.entrance_exam_enabled
-                    entrance_exam_enabled = request.json.get('entrance_exam_enabled', '') == 'true'
-                    ee_min_score_pct = request.json.get('entrance_exam_minimum_score_pct', None)
-                    # If the entrance exam box on the settings screen has been checked...
-                    if entrance_exam_enabled:
-                        # Load the default minimum score threshold from settings, then try to override it
-                        entrance_exam_minimum_score_pct = float(settings.ENTRANCE_EXAM_MIN_SCORE_PCT)
-                        if ee_min_score_pct:
-                            entrance_exam_minimum_score_pct = float(ee_min_score_pct)
-                        if entrance_exam_minimum_score_pct.is_integer():
-                            entrance_exam_minimum_score_pct = entrance_exam_minimum_score_pct / 100
-                        # If there's already an entrance exam defined, we'll update the existing one
-                        if course_entrance_exam_present:
-                            exam_data = {
-                                'entrance_exam_minimum_score_pct': entrance_exam_minimum_score_pct
-                            }
-                            update_entrance_exam(request, course_key, exam_data)
-                        # If there's no entrance exam defined, we'll create a new one
-                        else:
-                            create_entrance_exam(request, course_key, entrance_exam_minimum_score_pct)
-
-                    # If the entrance exam box on the settings screen has been unchecked,
-                    # and the course has an entrance exam attached...
-                    elif not entrance_exam_enabled and course_entrance_exam_present:
-                        delete_entrance_exam(request, course_key)
-
-                # Perform the normal update workflow for the CourseDetails model
-                return JsonResponse(
-                    CourseDetails.update_from_json(course_key, request.json, request.user),
-                    encoder=CourseSettingsEncoder
-                )
+        else:
+            return HttpResponseBadRequest("Only supports html requests")
 
 
 @studio_login_required
