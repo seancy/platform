@@ -26031,7 +26031,7 @@ msgid "CHOOSE A SESSION TO ENROLL"
 msgstr ""
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
+msgid "NO SESSIONS AVAILABLE"
 msgstr ""
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html

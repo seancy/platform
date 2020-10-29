@@ -29589,7 +29589,7 @@ msgid "CHOOSE A SESSION TO ENROLL"
 msgstr "ELIGE UNA SESIÓN PARA INSCRIBIRTE"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
+msgid "NO SESSIONS AVAILABLE"
 msgstr "NO HAY SESIONES DISPONIBLES"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
