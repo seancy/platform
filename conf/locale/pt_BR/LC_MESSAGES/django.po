@@ -29516,12 +29516,12 @@ msgid "CHOOSE A SESSION TO ENROLL"
 msgstr "ESCOLHER SEÇÃO PARA SE INSCREVER"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
-msgstr "SEM SEÇÃO AVALIÁVEL"
+msgid "NO SESSIONS AVAILABLE"
+msgstr "NENHUMA SESSÃO DISPONÍVEL"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "ADMIN MANAGEMENT TOOL"
-msgstr "FERRAMANDA DE ADMINISTRAÇÃO"
+msgstr "FERRAMENTA DE ADMINISTRAÇÃO"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "CLASS MANAGEMENT"
@@ -29602,7 +29602,7 @@ msgid ""
 "Create or delete your ILT sessions below. Learners will be notified by email "
 "if a session is modified or deleted."
 msgstr ""
-"Crie ou exclua suas sessões de ILT abaixo. Os alunos serão notificados por email"
+"Crie ou exclua suas sessões de ILT abaixo. Os alunos serão notificados por e-mail "
 "se uma sessão for modificada ou excluída."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
