@@ -188,3 +188,23 @@ msgstr "Graduación: Conexión con universidades con las que podrás graduarte"
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Unlimited users and communities"
 msgstr "Usuarios y comunidades ilimitadas"
+
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.html
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
+msgid "Hello!"
+msgstr "¡Hola!"
+
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.html
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
+msgid "We are Griky, the comprehensive digital education system that intelligently selects, organizes and shares content and we want to welcome you to your new learning path."
+msgstr "Somos Griky, el sistema integral de educación digital que selecciona, organiza y comparte el contenido de forma inteligente y queremos darte la bienvenida a tu nuevo camino de aprendizaje."
+
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.html
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
+msgid "We are happy that you have chosen us as the solution that will help you fulfill your dreams and train you to grow professionally."
+msgstr "Estamos felices que nos hayas elegido como la solución que te ayudará a cumplir tus sueños y formarte para crecer profesionalmente."
+
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.html
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
+msgid "Start making the most of your Griky experience!"
+msgstr "¡Empieza a aprovechar de tu experiencia Griky al máximo! "
