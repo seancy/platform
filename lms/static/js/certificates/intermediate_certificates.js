@@ -26,7 +26,7 @@ function intermediate_certificates_init() {
 
     var h = window.location.href
     var pre_url = h.substring(0, h.lastIndexOf('/'))
-    console.log('pre_url', pre_url)
+    // console.log('pre_url', pre_url)
     const data_url = pre_url + "/intermediate_certificates_data"
     const certificate_count_url = pre_url + '/intermediate_certificates_count'
 
@@ -55,9 +55,9 @@ function intermediate_certificates_init() {
                 var cohort_option = $('select#id_select_cohort.select2-hidden-accessible')
                 var cohort_value = cohort_option.val()
                 var user_option = $('select#id_select_user.select2-hidden-accessible')
-                console.log('cohort_value: ', cohort_value)
-                console.log('cohort_users: ', this.cohort_users)
-                console.log('all_users: ', this.all_users)
+                // console.log('cohort_value: ', cohort_value)
+                // console.log('cohort_users: ', this.cohort_users)
+                // console.log('all_users: ', this.all_users)
                 var current_user_list = this.all_users.slice(0)
                 if (cohort_value != -1) {
                     current_user_list = this.cohort_users[cohort_value][0]
@@ -65,7 +65,7 @@ function intermediate_certificates_init() {
                 if (current_user_list[current_user_list.length - 1].id != -1) {
                     current_user_list.push({'id': -1, 'text': 'All'})
                 }
-                console.log('current_user_list: ', current_user_list)
+                // console.log('current_user_list: ', current_user_list)
                 user_option.empty()
                     .select2({
                         data: current_user_list,
@@ -129,10 +129,21 @@ function intermediate_certificates_init() {
             }).val(0).change()
         user_option.empty()
             .select2({
-                data: IntermediateCertificate.user_list,
+                ajax: {
+                    url: data_url,
+                    data: function (params) {
+                      var query = {
+                        search: params.users,
+                        page: params.page || 1
+                      }
+                      // Query parameters will be ?search=[users]&page=[page]
+                      return query;
+                    }
+                },
+                // data: IntermediateCertificate.user_list,
                 placeholder: user_option[0].dataset.ph
             }).val(0).change()
-        console.log('reset: ', user_option)
+        // console.log('reset: ', user_option)
     }
 
     function fetchData(resp) {
@@ -150,12 +161,14 @@ function intermediate_certificates_init() {
     }
 
     function getICData() {
+        IntermediateCertificate.switchShow = true;
         Vue.http.get(data_url).then(function (resp) {
+            IntermediateCertificate.switchShow = false;
             fetchData(resp)
         })
     }
 
     // initialize
     getICData()
-    console.log('intermediate_certificates_init')
+    // console.log('intermediate_certificates_init')
 }
