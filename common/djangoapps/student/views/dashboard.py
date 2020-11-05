@@ -623,9 +623,6 @@ def student_dashboard(request):
         course_desc = modulestore().get_course(course_enrollment.course_id)
         return course_desc.course_order if course_desc and course_desc.course_order else 999
 
-    # Sort the enrollment by course_order
-    course_enrollments.sort(key=order)
-
     # filter completed courses and not completed
     completed_courses = [c for c in course_enrollments if c.completed]
     uncompleted_courses = [c for c in course_enrollments if c not in completed_courses]
@@ -638,6 +635,9 @@ def student_dashboard(request):
     # the ordered courses on dashboard, limited to 12
     if len(course_enrollments) > 12:
         course_enrollments = course_enrollments[:12]
+
+    # Sort the enrollment by course_order
+    course_enrollments.sort(key=order)
 
     # Retrieve the course modes for each course
     enrolled_course_ids = [enrollment.course_id for enrollment in course_enrollments]
