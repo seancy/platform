@@ -67,10 +67,10 @@ class CertificatesInstructorDashTest(SharedModuleStoreTestCase):
         # Enable the certificate generation feature
         CertificateGenerationConfiguration.objects.create(enabled=True)
 
-    def test_visible_only_to_global_staff(self):
-        # Instructors don't see the certificates section
+    def test_visible_access(self):
+        # Now Instructors can see the certificates section
         self.client.login(username=self.instructor.username, password="test")
-        self._assert_certificates_visible(False)
+        self._assert_certificates_visible(True)
 
         # Global staff can see the certificates section
         self.client.login(username=self.global_staff.username, password="test")
