@@ -28,7 +28,9 @@ function intermediate_certificates_init() {
     var pre_url = h.substring(0, h.lastIndexOf('/'))
     // console.log('pre_url', pre_url)
     const data_url = pre_url + "/intermediate_certificates_data"
+    const user_data_url = pre_url + "/intermediate_certificates_user_data"
     const certificate_count_url = pre_url + '/intermediate_certificates_count'
+    const certificate_form_url = pre_url + '/intermediate_certificates'
 
     var IntermediateCertificate = new Vue({
         el: '#intermediate_certificate_container',
@@ -37,18 +39,18 @@ function intermediate_certificates_init() {
             selected_cohort: '',
             title_list: [],
             cohort_list: [],
-            user_list: [],
-            cohort_users: {},
-            all_users: [],
+            // user_list: [],
+            // cohort_users: {},
+            // all_users: [],
             switchShow: false,
         },
         computed: {
             current_cohorts: function () {
                 return this.cohort_list
             },
-            current_users: function () {
-                return this.user_list
-            },
+            // current_users: function () {
+            //     return this.user_list
+            // },
         },
         methods: {
             changeUsers: function () {
@@ -69,12 +71,48 @@ function intermediate_certificates_init() {
                 user_option.empty()
                     .select2({
                         data: current_user_list,
-                        placeholder: user_option[0].dataset.ph
+                        placeholder: user_option[0].dataset.ph,
+                        minimumInputLength: 2,
                     }).val(0).change()
                 checkAndEnableSubmitBtn()
             },
             checkSubmit: function () {
                 checkAndEnableSubmitBtn()
+            },
+            submitFrom: function () {
+                var certificate_form = $('#generate-intermediate-certificate')
+                var self = IntermediateCertificate;
+                var title_option = $('select#id_select_title.select2-hidden-accessible')
+                var cohort_option = $('select#id_select_cohort.select2-hidden-accessible')
+                var user_option = $('select#id_select_user.select2-hidden-accessible')
+                var submit_button = $('#generate-intermediate-certificates-submit')
+                var data = {};
+                data.certificate_title = title_option.val();
+                data.cohort_id = cohort_option.val();
+                data.user_id = user_option.val();
+                data.date_start = $('#ic_date_start').val();
+                data.date_end = $('#ic_date_end').val();
+                if (data.certificate_title) {
+                    self.switchShow = true;
+                    submit_button[0].disabled = true;
+                    Vue.http.post(certificate_count_url, data).then(function (resp) {
+                        // console.log('resp', resp)
+                        resp.json().then(function (data) {
+                            // console.log('data', data)
+                            var cert_count = data;
+                            // console.log('summaryCount', cert_count)
+                            self.switchShow = false;
+                            if (cert_count == 0) {
+                                alert(gettext("No intermediate certificates match your search criteria."));
+                            } else if (cert_count > 1000) {
+                                alert(gettext('The number of certificates to export exceeds 1,000. Please narrow your search.'));
+                            } else {
+                                certificate_form.submit();
+                            }
+                        });
+                    });
+                }
+                submit_button[0].disabled = false;
             },
         },
     });
@@ -91,25 +129,28 @@ function intermediate_certificates_init() {
         data.user_id = user_option.val();
         data.date_start = $('#ic_date_start').val();
         data.date_end = $('#ic_date_end').val();
-        if (data.certificate_title && data.cohort_id && data.user_id) {
-            self.switchShow = true;
-            submit_button[0].disabled = true;
-            Vue.http.post(certificate_count_url, data).then(function (resp) {
-                // console.log('resp', resp)
-                resp.json().then(function (data) {
-                    // console.log('summaryCount', data)
-                    self.switchShow = false;
-                    var cert_count = data;
-                    if (cert_count > 1000) {
-                        alert(gettext('The number of certificates to export exceeds 1,000. Please narrow your search.'));
-                        submit_button[0].disabled = true;
-                    } else {
-                        submit_button[0].disabled = false;
-                    }
-                });
-            });
-        } else {
-            submit_button[0].disabled = true;
+        // if (data.certificate_title && data.user_id) {
+        //     self.switchShow = true;
+        //     submit_button[0].disabled = true;
+        //     Vue.http.post(certificate_count_url, data).then(function (resp) {
+        //         // console.log('resp', resp)
+        //         resp.json().then(function (data) {
+        //             // console.log('summaryCount', data)
+        //             self.switchShow = false;
+        //             var cert_count = data;
+        //             if (cert_count > 1000) {
+        //                 alert(gettext('The number of certificates to export exceeds 1,000. Please narrow your search.'));
+        //                 submit_button[0].disabled = true;
+        //             } else {
+        //                 submit_button[0].disabled = false;
+        //             }
+        //         });
+        //     });
+        // } else {
+        //     submit_button[0].disabled = true;
+        // }
+        if (data.certificate_title) {
+            submit_button[0].disabled = false;
         }
     }
 
@@ -120,28 +161,38 @@ function intermediate_certificates_init() {
         title_option.empty()
             .select2({
                 data: IntermediateCertificate.title_list,
-                placeholder: title_option[0].dataset.ph
+                placeholder: title_option[0].dataset.ph,
+                allowClear: true,
             }).val(0).change()
         cohort_option.empty()
             .select2({
                 data: IntermediateCertificate.cohort_list,
-                placeholder: cohort_option[0].dataset.ph
+                placeholder: cohort_option[0].dataset.ph,
+                allowClear: true,
             }).val(0).change()
         user_option.empty()
             .select2({
                 ajax: {
-                    url: data_url,
+                    url: user_data_url,
                     data: function (params) {
-                      var query = {
-                        search: params.users,
-                        page: params.page || 1
-                      }
-                      // Query parameters will be ?search=[users]&page=[page]
-                      return query;
+                        var query = {
+                            search: params.term,
+                            cohort: cohort_option.val(),
+                        }
+                        // Query parameters will be ?search=[term]&page=[page]
+                        return query;
+                    },
+                    processResults: function (data) {
+                        // Transforms the top-level key of the response object from 'items' to 'results'
+                        return {
+                            results: data.users
+                        };
                     }
                 },
                 // data: IntermediateCertificate.user_list,
-                placeholder: user_option[0].dataset.ph
+                placeholder: user_option[0].dataset.ph,
+                minimumInputLength: 2,
+                allowClear: true,
             }).val(0).change()
         // console.log('reset: ', user_option)
     }
@@ -152,10 +203,10 @@ function intermediate_certificates_init() {
             IntermediateCertificate.title_list = data.certificate_titles;
             IntermediateCertificate.cohort_list = data.cohorts;
             IntermediateCertificate.cohort_list.push(all_option);
-            IntermediateCertificate.all_users = data.users.slice(0);
-            IntermediateCertificate.user_list = data.users;
-            IntermediateCertificate.user_list.push(all_option);
-            IntermediateCertificate.cohort_users = data.cohort_users;
+            // IntermediateCertificate.all_users = data.users.slice(0);
+            // IntermediateCertificate.user_list = data.users;
+            // IntermediateCertificate.user_list.push(all_option);
+            // IntermediateCertificate.cohort_users = data.cohort_users;
             initOptions()
         })
     }

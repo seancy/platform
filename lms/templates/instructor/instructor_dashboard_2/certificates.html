@@ -26,19 +26,19 @@ from util.date_utils import strftime_localized
     % if section_data['intermediate_certificates_display']:
     <div class="intermediate-certificate-container" id="intermediate_certificate_container">
         <h3 class="hd hd-3"> ${_("Intermediate Certificates")} </h3>
-        <form id="generate-intermediate-certificate" method="post" action="intermediate_certificates" target="_blank">
+        <form id="generate-intermediate-certificate" @submit.prevent="submitFrom" method="post" action="intermediate_certificates" target="_blank">
             <div class="ic-sel">
                 <select2 name="certificate_title" v-model="selected_title" id="id_select_title" :options="title_list" data-ph="${_('Certificate Title')}" @change="checkSubmit">
                     <option disabled value="0" style="display:none"></option>
                 </select2>
             </div>
             <div class="ic-sel">
-                <select2 name="cohort_id" v-model="selected_cohort" id="id_select_cohort" :options="cohort_list" data-ph="${_('Cohort')}" @change="changeUsers">
+                <select2 name="cohort_id" v-model="selected_cohort" id="id_select_cohort" :options="cohort_list" data-ph="${_('Cohort')}">
                     <option disabled value="0" style="display:none"></option>
                 </select2>
             </div>
             <div class="ic-sel">
-                <select2 name="user_id" v-model="selected_user" id="id_select_user" :options="user_list" data-ph="${_('User')}" @change="checkSubmit">
+                <select2 name="user_id" v-model="selected_user" id="id_select_user" :options="user_list" data-ph="${_('User')}">
                     <option disabled value="0" style="display:none"></option>
                 </select2>
             </div>
