@@ -19,6 +19,7 @@ from django.utils.translation import ugettext_noop
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 from mock import patch
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey
@@ -1014,8 +1015,8 @@ def get_cert_html_list(args, course_id):
     course_key = CourseKey.from_string(course_id)
     course = modulestore().get_course(course_key)
     certificate_title = args['certificate_title'].replace(' ', '_')
-    user_id = int(args['user_id'])
-    cohort_id = int(args['cohort_id'])
+    user_id = int(args['user_id']) if args.has_key('user_id') and args['user_id'] else -1
+    cohort_id = int(args['cohort_id']) if args.has_key('cohort_id') and args['cohort_id'] else -1
     start_date = args['date_start'] if args['date_start'] else '1970-01-01'
     end_date = args['date_end'] if args['date_end'] else datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
 
@@ -1082,29 +1083,29 @@ def intermediate_certificates_count(request, course_id):
 
 
 @login_required
-def intermediate_certificates_data(request, course_id):
-    """
-    This is the api to get the list of intermediate certificates data.
-    """
+def intermediate_certificates_user_data(request, course_id):
+
+    query = request.GET.get('search', '')
+    cohort = request.GET.get('cohort', '')
+    cohort_id = int(cohort) if cohort else -1
+
     course_key = CourseKey.from_string(course_id)
-    certificate_titles = set()
-    certs = XModuleUserStateSummaryField.objects.filter(
-        field_name="intermediate_certificate"
-    )
-    for cert in certs:
-        cert_dict = json.loads(cert.value)
-        for uid, dic in cert_dict.items():
-            if dic.get('course_id', None) == course_id:
-                certificate_titles.add(dic['title'])
-    # users = CourseEnrollment.objects.users_enrolled_in(course.id)
-    users = User.objects.filter(
-        courseenrollment__course_id=course_key,
-        courseenrollment__is_active=True
-    ).select_related('profile')
-    cohorts = CourseUserGroup.objects.filter(
-        course_id=course_key,
-        group_type=CourseUserGroup.COHORT
-    )
+
+    selected_users = []
+    if cohort_id != -1:
+        selected_cohort = get_cohort_by_id(course_key, cohort_id)
+        selected_users = selected_cohort.users.all()
+
+    user_filter = Q(is_active=True) & \
+                Q(courseenrollment__course_id=course_key) & \
+                Q(courseenrollment__is_active=True) & \
+                (Q(profile__name__icontains=query) | Q(username__icontains=query))
+
+    if selected_users:
+        users = selected_users.prefetch_related('profile').filter(user_filter)
+    else:
+        users = User.objects.select_related('profile').filter(user_filter)
+
 
     user_list = []
     for u in users:
@@ -1114,33 +1115,73 @@ def intermediate_certificates_data(request, course_id):
         )
         user_list.append(ud)
 
+    result = dict(
+        users=user_list
+    )
+    return JsonResponse(result, status=200)
+
+
+@login_required
+def intermediate_certificates_data(request, course_id):
+    """
+    This is the api to get the list of intermediate certificates data.
+    """
+    course_key = CourseKey.from_string(course_id)
+    # users = User.objects.filter(
+    #     is_active=True,
+    #     courseenrollment__course_id=course_key,
+    #     courseenrollment__is_active=True
+    # ).select_related('profile')
+
+    certificate_titles = set()
+    certs = XModuleUserStateSummaryField.objects.filter(
+        field_name="intermediate_certificate"
+    )
+    for cert in certs:
+        cert_dict = json.loads(cert.value)
+        for uid, dic in cert_dict.items():
+            if dic.get('course_id', None) == course_id:
+                certificate_titles.add(dic['title'])
+    cohorts = CourseUserGroup.objects.filter(
+        course_id=course_key,
+        group_type=CourseUserGroup.COHORT
+    )
+
+    # user_list = []
+    # for u in users:
+    #     ud = dict(
+    #         id=u.id,
+    #         text=u.profile.name if u.profile.name else u.username,
+    #     )
+    #     user_list.append(ud)
+    #
+    # cohort_user_mapping = {}
+    # cohort_user_mapping['pagination'] = {
+    #     "more": True
+    # }
     cohort_list = []
-    cohort_user_mapping = {}
-    cohort_user_mapping['pagination'] = {
-        "more": True
-    }
     for c in cohorts:
-        cohort_users = c.users.all().prefetch_related('profile')
         cd = dict(
             id=c.id,
             text=c.name,
         )
-        cu_list = []
-        for u in cohort_users:
-            ud = dict(
-                id=u.id,
-                text=u.profile.name if u.profile.name else u.username,
-            )
-            cu_list.append(ud)
-        cohort_user_mapping[str(c.id)] = cu_list,
         cohort_list.append(cd)
+    #     cohort_users = c.users.all().prefetch_related('profile')
+    #     cu_list = []
+    #     for u in cohort_users:
+    #         ud = dict(
+    #             id=u.id,
+    #             text=u.profile.name if u.profile.name else u.username,
+    #         )
+    #         cu_list.append(ud)
+    #     cohort_user_mapping[str(c.id)] = cu_list,
 
     result = dict(
         certificate_titles=list(certificate_titles),
-        users=user_list,
         cohorts=cohort_list,
-        cohort_users=cohort_user_mapping,
-        pagination=True,
+        # users=user_list,
+        # cohort_users=cohort_user_mapping,
+        # pagination=True,
     )
     return JsonResponse(result, status=200)
 

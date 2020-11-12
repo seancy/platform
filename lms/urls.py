@@ -543,6 +543,13 @@ urlpatterns += [
         name='intermediate_certificates_data',
     ),
     url(
+        r'^courses/{course_id}/intermediate_certificates_user_data$'.format(
+            course_id=settings.COURSE_ID_PATTERN,
+        ),
+        instructor_dashboard_views.intermediate_certificates_user_data,
+        name='intermediate_certificates_user_data',
+    ),
+    url(
         r'^courses/{course_id}/intermediate_certificates_count$'.format(
             course_id=settings.COURSE_ID_PATTERN,
         ),
