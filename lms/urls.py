@@ -515,14 +515,14 @@ urlpatterns += [
         name='instructor_dashboard',
     ),
 
-    # intermediate_certificate
-    url(
-        r'^courses/{course_id}/intermediate_certificate/(?P<user_id>[^/]*)/(?P<certificate_title>[^/]*)/(?P<start_date>[^/]*)/(?P<end_date>[^/]*)$'.format(
-            course_id=settings.COURSE_ID_PATTERN,
-        ),
-        instructor_dashboard_views.intermediate_certificate_display,
-        name='intermediate_certificate_display',
-    ),
+    # # intermediate_certificate
+    # url(
+    #     r'^courses/{course_id}/intermediate_certificate/(?P<user_id>[^/]*)/(?P<certificate_title>[^/]*)/(?P<start_date>[^/]*)/(?P<end_date>[^/]*)$'.format(
+    #         course_id=settings.COURSE_ID_PATTERN,
+    #     ),
+    #     instructor_dashboard_views.intermediate_certificate_display,
+    #     name='intermediate_certificate_display',
+    # ),
 
     # intermediate_certificates
     url(

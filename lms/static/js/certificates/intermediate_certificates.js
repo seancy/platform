@@ -129,6 +129,7 @@ function intermediate_certificates_init() {
         data.user_id = user_option.val();
         data.date_start = $('#ic_date_start').val();
         data.date_end = $('#ic_date_end').val();
+        submit_button[0].disabled = true;
         // if (data.certificate_title && data.user_id) {
         //     self.switchShow = true;
         //     submit_button[0].disabled = true;
@@ -202,7 +203,7 @@ function intermediate_certificates_init() {
             var all_option = {'id': -1, 'text': 'All'}
             IntermediateCertificate.title_list = data.certificate_titles;
             IntermediateCertificate.cohort_list = data.cohorts;
-            IntermediateCertificate.cohort_list.push(all_option);
+            // IntermediateCertificate.cohort_list.push(all_option);
             // IntermediateCertificate.all_users = data.users.slice(0);
             // IntermediateCertificate.user_list = data.users;
             // IntermediateCertificate.user_list.push(all_option);
