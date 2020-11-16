@@ -42,7 +42,6 @@ from util.date_utils import strftime_localized
                     <option disabled value="0" style="display:none"></option>
                 </select2>
             </div>
-            <p class="loading" v-show="switchShow">Loading...</p>
             <div class="ic-date datepair">
                 <div class="ic-sel">
                   <input placeholder="${_('Issued Date after')}" type="text" class="date start" name="date_start" id="ic_date_start" />
@@ -51,6 +50,7 @@ from util.date_utils import strftime_localized
                   <input placeholder="${_('Issued Date before')}" type="text" class="date end" name="date_end" id="ic_date_end" />
                 </div>
             </div>
+            <p class="loading" v-show="switchShow">Loading...</p>
             <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}">
             <button type="submit" class="btn-blue" id="generate-intermediate-certificates-submit" data-endpoint="intermediate_certificates" disabled="true">${_('Generate Intermediate Certificates')}</button>
         </form>
