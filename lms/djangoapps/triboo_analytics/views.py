@@ -854,7 +854,9 @@ def get_course_progress_table(course_key, enrollments, filter_kwargs, exclude):
     for enrollment in enrollments:
         course_descriptor = modulestore().get_course(course_key)
         if course_descriptor:
-            progress_summary = CourseGradeFactory().get_progress(enrollment.user, course_descriptor)
+            progress_summary = CourseGradeFactory().get_progress(
+                enrollment.user, course_descriptor, clear_request_cache=True
+            )
             progress_row = {'user': enrollment.user}
             for chapter in progress_summary['trophies_by_chapter']:
                 for trophy in chapter['trophies']:

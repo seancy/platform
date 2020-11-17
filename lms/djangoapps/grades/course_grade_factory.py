@@ -11,6 +11,7 @@ from six import text_type
 
 from courseware.models import StudentModule
 from lms.djangoapps.certificates.models import GeneratedCertificate
+from openedx.core.djangoapps.request_cache import clear_cache
 from openedx.core.djangoapps.signals.signals import COURSE_GRADE_CHANGED, COURSE_GRADE_NOW_PASSED
 from openedx.core.lib.gating.api import get_subsection_completion_percentage_with_gradebook_edit
 from student.models import CourseEnrollment
@@ -22,6 +23,7 @@ from .course_grade import CourseGrade, ZeroCourseGrade
 from .models import PersistentCourseGrade, PersistentCourseProgress, PersistentSubsectionGradeOverride, prefetch
 
 log = getLogger(__name__)
+CACHE_NAMESPACE = u"grades.models.VisibleBlocks"
 
 
 class CourseGradeFactory(object):
@@ -38,6 +40,7 @@ class CourseGradeFactory(object):
             course_structure=None,
             course_key=None,
             create_if_needed=True,
+            clear_request_cache=False
     ):
         """
         Returns the CourseGrade for the given user in the course.
@@ -68,6 +71,7 @@ class CourseGradeFactory(object):
             course_structure=None,
             course_key=None,
             force_update_subsections=False,
+            clear_request_cache=False,
     ):
         """
         Computes, updates, and returns the CourseGrade for the given
@@ -80,7 +84,8 @@ class CourseGradeFactory(object):
         return self._update(
             user,
             course_data,
-            force_update_subsections=force_update_subsections
+            force_update_subsections=force_update_subsections,
+            clear_request_cache=clear_request_cache
         )
 
     def iter(
@@ -90,6 +95,7 @@ class CourseGradeFactory(object):
             collected_block_structure=None,
             course_key=None,
             force_update=False,
+            clear_request_cache=False
     ):
         """
         Given a course and an iterable of students (User), yield a GradeResult
@@ -111,15 +117,16 @@ class CourseGradeFactory(object):
         stats_tags = [u'action:{}'.format(course_data.course_key)]
         for user in users:
             with dog_stats_api.timer('lms.grades.CourseGradeFactory.iter', tags=stats_tags):
-                yield self._iter_grade_result(user, course_data, force_update)
+                yield self._iter_grade_result(user, course_data, force_update, clear_request_cache)
 
-    def _iter_grade_result(self, user, course_data, force_update):
+    def _iter_grade_result(self, user, course_data, force_update, clear_request_cache=False):
         try:
             kwargs = {
                 'user': user,
                 'course': course_data.course,
                 'collected_block_structure': course_data.collected_structure,
-                'course_key': course_data.course_key
+                'course_key': course_data.course_key,
+                'clear_request_cache': clear_request_cache
             }
             if force_update:
                 kwargs['force_update_subsections'] = True
@@ -167,7 +174,7 @@ class CourseGradeFactory(object):
         )
 
     @staticmethod
-    def _update(user, course_data, force_update_subsections=False):
+    def _update(user, course_data, force_update_subsections=False, clear_request_cache=False):
         """
         Computes, saves, and returns a CourseGrade object for the
         given user and course.
@@ -218,6 +225,9 @@ class CourseGradeFactory(object):
             u'Grades: Update, %s, User: %s, %s, persisted: %s',
             course_data.full_string(), user.id, course_grade, should_persist,
         )
+
+        if clear_request_cache:
+            clear_cache(CACHE_NAMESPACE)
 
         return course_grade
 
@@ -388,10 +398,10 @@ class CourseGradeFactory(object):
 
         return nb_trophies_earned
 
-    def get_progress(self, user, course, progress=None, grade_summary=None, enrollment=None):
+    def get_progress(self, user, course, progress=None, grade_summary=None, enrollment=None, clear_request_cache=False):
         course_key = course.id
         if not grade_summary:
-            grade_summary = self.read(user, course)
+            grade_summary = self.read(user, course, clear_request_cache=clear_request_cache)
         if not grade_summary:
             return
 
