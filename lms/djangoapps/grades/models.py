@@ -178,6 +178,7 @@ class VisibleBlocks(models.Model):
         """
         prefetched = get_cache(cls._CACHE_NAMESPACE).get(cls._cache_key(user_id, blocks.course_key))
         if prefetched is not None:
+            log.info("============== using cache ==============")
             model = prefetched.get(blocks.hash_value)
             if not model:
                 # We still have to do a get_or_create, because
@@ -188,10 +189,12 @@ class VisibleBlocks(models.Model):
                 )
                 cls._update_cache(user_id, blocks.course_key, [model])
         else:
+            log.info("============== not using cache ==============")
             model, _ = cls.objects.get_or_create(
                 hashed=blocks.hash_value,
                 defaults={u'blocks_json': blocks.json_value, u'course_id': blocks.course_key},
             )
+            # cls._update_cache(user_id, blocks.course_key, [model])
         return model
 
     @classmethod
