@@ -309,3 +309,6 @@ msgstr "L’équipe Management des Connaissances vous souhaite une excellente fo
 msgid "Please <b>DO NOT TRANSFER THIS INVITATION</b> as it is addressed to you personally."
 msgstr "Nous vous remercions de <b>NE PAS TRANSFÉRER CETTE INVITATION</b> qui vous est personnellement adressée"
 
+#: master-cofidis:lms/djangoapps/instructor/views/instructor_dashboard.py
+msgid "more than {threshold}"
+msgstr "plus de {threshold}"
