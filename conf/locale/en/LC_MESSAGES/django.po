@@ -26939,3 +26939,7 @@ msgstr ""
 #: lms/templates/dashboard.html
 msgid "Let's start!"
 msgstr ""
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py
+msgid "more than {threshold}"
+msgstr ""
