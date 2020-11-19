@@ -31368,3 +31368,8 @@ msgstr ""
 "\n"
 "                    Ce type d'évaluation comporte plusieurs étapes. Dans la première étape, vous répondrez à la consigne, puis les autres étapes apparaîtront sous le champ %(start_tag)s\"Votre réponse\"%(end_tag)s\n"
 "                "
+
+
+#: master-cofidis:lms/djangoapps/instructor/views/instructor_dashboard.py
+msgid "more than {threshold}"
+msgstr "plus de {threshold}"
