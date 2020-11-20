@@ -8,7 +8,7 @@
         return Backbone.Collection.extend({
 
             model: CourseItem,
-            pageSize: 1000,
+            pageSize: 1500,
             totalCount: 0,
             latestModelsCount: 0,
             searchTerm: '',
