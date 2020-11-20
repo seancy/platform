@@ -4,8 +4,7 @@
         'js/discovery/views/search_form', 'js/discovery/views/courses_listing',
         'js/discovery/views/filter_bar', 'js/discovery/views/refine_sidebar'],
         function(Backbone, _, SearchState, Filters, SearchForm, CoursesListing, FilterBar, RefineSidebar) {
-            return function(meanings, titleMeanings, preFacetFilters, transForTags,
-                            searchQuery, userLanguage, userTimezone) {
+            return function(meanings, titleMeanings, transForTags, searchQuery, userLanguage, userTimezone) {
                 var dispatcher = _.extend({}, Backbone.Events);
                 var search = new SearchState();
                 var filters = new Filters();
@@ -38,22 +37,6 @@
 
                 function quote(string) {
                     return '"' + string + '"';
-                }
-
-                function performPreFilterSearch(preFilters) {
-                    form.showLoadingIndicator();
-                    filters.reset();
-                    _.each(preFilters, function(queries, type) {
-                        _.each(queries, function(query) {
-                            filters.add({
-                                id: type + '-' + query,
-                                type: type,
-                                query: query,
-                                name: query
-                            });
-                        });
-                    });
-                    search.refineSearch(preFilters);
                 }
 
                 dispatcher.listenTo(form, 'search', function(query) {
@@ -110,11 +93,7 @@
                 });
 
                 // kick off search on page refresh
-                if (!_.isEmpty(preFacetFilters)) {
-                    performPreFilterSearch(preFacetFilters);
-                } else {
-                    form.doSearch(searchQuery);
-                }
+                form.doSearch(searchQuery);
             };
         });
 }(define || RequireJS.define));

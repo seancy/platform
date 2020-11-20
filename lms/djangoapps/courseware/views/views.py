@@ -253,22 +253,6 @@ def courses(request):
     # Add marketable programs to the context.
     programs_list = get_programs_with_type(request.site, include_hidden=False)
 
-    pre_facet_filters = {}
-    if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
-                                       settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
-        settings.COURSE_DISCOVERY_FILTERS.append('course_country')
-        pre_facet_filters['course_country'] = ['All countries']
-
-        user = UserProfile.objects.get(user=request.user)
-        user_country = user.country if user else None
-        if user_country:
-            country_mapping = configuration_helpers.get_value('COURSE_COUNTRY_MAPPING', settings.COURSE_COUNTRY_MAPPING)
-            if user_country in country_mapping:
-                user_country = country_mapping[user_country]
-            else:
-                user_country = dict(countries)[user_country]
-            pre_facet_filters['course_country'].append(user_country)
-
     trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
 
     return render_to_response(
@@ -278,7 +262,6 @@ def courses(request):
             'course_discovery_meanings': course_discovery_meanings,
             'programs_list': programs_list,
             'show_dashboard_tabs': True,
-            'pre_facet_filters': pre_facet_filters,
             'trans_for_tags': trans_for_tags
         }
     )

@@ -70,6 +70,10 @@ msgstr ""
 msgid "Mandatory"
 msgstr ""
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr ""
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr ""

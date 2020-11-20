@@ -12347,6 +12347,10 @@ msgstr "Catégorie"
 msgid "Mandatory"
 msgstr "Obligatoire"
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr "Groupe apprenants"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "Oui"
