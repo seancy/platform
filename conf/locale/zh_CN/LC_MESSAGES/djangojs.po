@@ -11727,6 +11727,10 @@ msgstr "课程类型"
 msgid "Mandatory"
 msgstr "必修课"
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr "学习小组"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "是"

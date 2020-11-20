@@ -12242,6 +12242,10 @@ msgstr "Categoria"
 msgid "Mandatory"
 msgstr "Signatário"
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr "Grupo de aprendizagem"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "Sim"

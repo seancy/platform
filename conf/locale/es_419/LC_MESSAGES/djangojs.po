@@ -12213,6 +12213,10 @@ msgstr "Categoria"
 msgid "Mandatory"
 msgstr "Obligatorio"
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr "Aprendiendo a calificar"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "verdad"

@@ -660,6 +660,9 @@ COURSE_DISCOVERY_MEANINGS = {
     },
     'course_country': {
         'name': 'Country'
+    },
+    'enrollment_learning_groups': {
+        'name': 'Learning Group'
     }
 }
 

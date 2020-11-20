@@ -1113,19 +1113,11 @@ COURSE_DISCOVERY_MEANINGS = {
     'course_mandatory_enabled': {
         'name': 'Mandatory',
         'terms': dict(MANDATORY_OPTIONS),
-    },
-    'course_country': {
-        'name': 'Country'
     }
 }
 
 # Max search page size for LMS Catalog
 SEARCH_MAX_PAGE_SIZE = 1000
-
-# Empty by default, set this value in site configuration.
-COURSE_COUNTRY_MAPPING = {
-    # user.profile.country: course.country
-}
 
 SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
 

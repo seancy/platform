@@ -561,6 +561,9 @@ def course_listing(request):
 
     orgs = SiteConfiguration.get_all_orgs()
     pre_facet_filters = {}
+    if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
+                                       settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
+        settings.COURSE_DISCOVERY_FILTERS.extend(['course_country', 'enrollment_learning_groups'])
 
     trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
 

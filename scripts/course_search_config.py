@@ -28,6 +28,9 @@ def setup():
         "settings": {
             "analysis": {
                 "analyzer": {
+                    "default": {
+                        "type": "keyword"
+                    },
                     "partword": {
                         "type": "custom",
                         "tokenizer": "partword_tokenizer",
