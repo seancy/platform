@@ -7273,6 +7273,112 @@ msgstr "Curso añadido"
 msgid "Course Name"
 msgstr "Nombre del curso"
 
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr "Puntaje Insignia"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Badges"
+msgstr "Insignias"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Posts"
+msgstr "Publicaciones"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr "Tiempo total invertido"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr "Fecha de terminación"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr "Cursos matriculados"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr "Último acceso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr "Ubicación geográfica"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course country"
+msgstr "País del curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr "Zona/Región"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr "Etiquetas del curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr "Código del curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "Nombre del curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr "ID de sesión"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr "Fecha de inicio"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr "Tiempo de inicio"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr "Fecha de finalización"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr "Hora de finalización"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr "Duración (en horas)"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr "Capacidad Máxima"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr "Inscritos"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr "Asistentes"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr "Registro de asistencia"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr "Nombre de ubicación"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "Dirección de ubicación"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "Código postal"
+
+
+
 #: lms/djangoapps/dashboard/sysadmin.py:436
 msgid "Directory/ID"
 msgstr "Directorio/ID"
@@ -10268,7 +10374,7 @@ msgstr "Dólares reembolsados"
 
 #: lms/djangoapps/shoppingcart/reports.py:263
 msgid "Number of Transactions"
-msgstr "Número de transacciones"
+msgstr "Número de ingresos"
 
 #: lms/djangoapps/shoppingcart/reports.py:264
 msgid "Total Payments Collected"
@@ -18107,6 +18213,12 @@ msgstr "Elije idioma"
 msgid "Account"
 msgstr "Cuenta"
 
+msgid "Leaderboard"
+msgstr "Tabla de clasificación"
+
+msgid "My learning transcript"
+msgstr "Mi experiencia de aprendizaje"
+
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
@@ -23049,6 +23161,33 @@ msgstr "en todos los grupos"
 msgid "Sort:"
 msgstr "Ordenar:"
 
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:40
+msgid "by recent activity"
+msgstr "actividad reciente mayor actividad"
+
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:42
+msgid "by most activity"
+msgstr "por mayor actividad"
+
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "by most votes"
+msgstr "La más votada"
+
+#: lms/templates/discussion/_thread_list_template.html:53
+msgid "Subject"
+msgstr "Asunto"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Topic"
+msgstr "Tema"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Author"
+msgstr "Autor"
+
 #: lms/templates/registration/password_create_complete.html:43
 msgid "Password Creation Complete"
 msgstr "Contraseña restablecida."
@@ -23060,11 +23199,6 @@ msgid ""
 msgstr ""
 "Tu contraseña ha sido restablecida. {start_link}Inicia sesión en tu cuenta."
 "{end_link}"
-
-#. Translators: This is a menu option for sorting forum threads
-#: lms/templates/discussion/_thread_list_template.html:42
-msgid "by most activity"
-msgstr "por mayor actividad"
 
 #: lms/templates/registration/password_create_confirm.html:47
 msgid "Invalid Password Creation Link"
@@ -25289,7 +25423,7 @@ msgstr "Numero de asientos"
 #: lms/templates/instructor/instructor_dashboard_2/executive_summary.html:51
 #: lms/templates/triboo_analytics/course.html:100
 msgid "Number of Enrollments"
-msgstr "Número de matriculados"
+msgstr "Número de ingresos"
 
 #: lms/templates/instructor/instructor_dashboard_2/executive_summary.html:59
 msgid "Gross Revenue Collected"
@@ -27498,7 +27632,7 @@ msgstr "Informe del usuario"
 #: lms/templates/triboo_analytics/microsite.html:34
 #: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
-msgstr "Informes de Intruccion Presencial"
+msgstr "Informe de Instrucción Presencial"
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
@@ -29610,7 +29744,7 @@ msgstr "GESTIÓN DE SESIONES"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "ENROLLMENT MANAGEMENT"
-msgstr "ESTIÓN DE INSCRIPCIÓN"
+msgstr "GESTIONAR INSCRIPCIONES"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "ACCOMMODATION MANAGEMENT"
@@ -29961,7 +30095,7 @@ msgstr "Edite el Curso"
 #: lms/templates/courseware/course_about.html:146
 #: lms/templates/courseware/course_navigation.html:103
 msgid "Course Report"
-msgstr "Exporte el curso"
+msgstr "Informe de Curso"
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:190

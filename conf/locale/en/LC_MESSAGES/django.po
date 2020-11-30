@@ -15890,6 +15890,12 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
+msgid "Leaderboard"
+msgstr ""
+
+msgid "My learning transcript"
+msgstr ""
+
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
