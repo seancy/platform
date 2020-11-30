@@ -18064,6 +18064,12 @@ msgstr "Escolha o idioma"
 msgid "Account"
 msgstr "Conta"
 
+msgid "Leaderboard"
+msgstr "Entre os melhores"
+
+msgid "My learning transcript"
+msgstr "Minha transcrição de aprendizagem"
+
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78

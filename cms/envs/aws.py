@@ -674,7 +674,7 @@ COURSE_COUNTRY_MAPPING = {
 SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
 
 # Max search page size for Studio home page
-SEARCH_MAX_PAGE_SIZE = 1000
+SEARCH_MAX_PAGE_SIZE = 1500
 
 ########## Enable Video auto-advance to let course staff to set this feature in Advanced Settings ###############
 FEATURES['ENABLE_AUTOADVANCE_VIDEOS'] = True
