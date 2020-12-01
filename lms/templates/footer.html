@@ -121,7 +121,7 @@
             <h6>${_('Admin Space')}</h6>
             <ol>
               % if can_see_studio_link:
-                <li><a href="//${getattr(settings, 'CMS_BASE')}" target="_blank">${_('Studio')}</a></li>
+                <li><a href="//${configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.CMS_BASE)}" target="_blank">${_('Studio')}</a></li>
               % endif
               % if can_see_analytics_link:
                 <li><a href="${reverse('analytics_microsite')}">${_("Analytics")}</a></li>

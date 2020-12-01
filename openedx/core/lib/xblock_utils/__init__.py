@@ -29,6 +29,7 @@ from xmodule.x_module import shim_xmodule_js, XModuleDescriptor, XModule, PREVIE
 import webpack_loader.utils
 from student.roles import studio_access_role
 from django.utils.translation import gettext as _
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 
 log = logging.getLogger(__name__)
@@ -347,7 +348,7 @@ def add_staff_markup(needs_staff_markup, user, disable_staff_debug_info, block, 
         edit_link = ""
         if is_studio_course:
             # build edit link to unit in CMS. Can't use reverse here as lms doesn't load cms's urls.py
-            edit_link = "//" + settings.CMS_BASE + '/container/' + text_type(block.location)
+            edit_link = "//" + configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.CMS_BASE) + '/container/' + text_type(block.location)
 
         # return edit link in rendered HTML for display
         return wrap_fragment(
