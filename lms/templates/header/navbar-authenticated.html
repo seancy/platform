@@ -94,7 +94,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
 
       % if studio_access_role(user):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab studio-tab">
-          <a class="tab-nav-link" href="//${getattr(settings, 'CMS_BASE')}" target="_blank" title="${_('Built-in authoring tool')}">
+          <a class="tab-nav-link" href="//${configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.CMS_BASE)}" target="_blank" title="${_('Built-in authoring tool')}">
             <span class="label"><span class="icon far fa-edit" aria-hidden="true"></span></span>
             ${_("Studio")}
           </a>

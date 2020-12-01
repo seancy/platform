@@ -23,6 +23,7 @@ from student.roles import (
 )
 
 from .. import USE_BOOTSTRAP_FLAG
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 STATUS_VISIBLE = 'visible'
 STATUS_DELETED = 'deleted'
@@ -123,7 +124,7 @@ class CourseUpdatesFragmentView(EdxFragmentView):
 
         add_more_enabled = True if GlobalStaff().has_user(request.user) or CourseInstructorRole(course_key).has_user(
             request.user) else False
-        add_more_url = u"//{cms_base}/course_info/{course_key}".format(cms_base=getattr(settings, 'CMS_BASE'),
+        add_more_url = u"//{cms_base}/course_info/{course_key}".format(cms_base=configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.CMS_BASE),
                                                                        course_key=course_id)
         view_more_url = reverse('openedx.course_experience.course_updates', kwargs={'course_id': course_id})
 

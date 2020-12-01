@@ -47,6 +47,7 @@ from student.roles import studio_login_required
 from xmodule.modulestore.django import modulestore
 
 from .course import get_course_and_check_access
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 __all__ = [
     'videos_handler',
@@ -806,7 +807,7 @@ def videos_post(course, request):
         })
 
         if hasattr(settings, 'VIDEO_PIPELINE_LOCAL'):
-            upload_url = 'https://' + settings.ENV_TOKENS['CMS_BASE'] + '/api/upload_local/' + edx_video_id
+            upload_url = 'https://' + configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.CMS_BASE) + '/api/upload_local/' + edx_video_id
             metadata_dict = {}
             for metadata_name, value in metadata_list:
                 metadata_dict[metadata_name] = value

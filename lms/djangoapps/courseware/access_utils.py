@@ -14,6 +14,7 @@ from courseware.masquerade import is_masquerading_as_student
 from openedx.features.course_experience import COURSE_PRE_START_ACCESS_FLAG
 from student.roles import CourseBetaTesterRole
 from xmodule.util.django import get_current_request_hostname
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 DEBUG_ACCESS = False
 log = getLogger(__name__)
@@ -80,7 +81,7 @@ def in_preview_mode():
     Returns whether the user is in preview mode or not.
     """
     hostname = get_current_request_hostname()
-    preview_lms_base = settings.FEATURES.get('PREVIEW_LMS_BASE', None)
+    preview_lms_base = configuration_helpers.get_value('SITE_PREVIEW_LMS_DOMAIN_NAME', settings.FEATURES.get('PREVIEW_LMS_BASE', None))
     return bool(preview_lms_base and hostname and hostname.split(':')[0] == preview_lms_base.split(':')[0])
 
 
