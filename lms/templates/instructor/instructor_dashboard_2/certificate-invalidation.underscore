@@ -2,21 +2,19 @@
  <%- gettext("To invalidate a certificate for a particular learner, add the username or email address below.") %>
 </p>
 
-<div class="add-certificate-invalidation">
+<form class="add-certificate-invalidation">
     <div>
-        <label for="certificate-invalidation-user"><%- gettext('Username or email address') %></label>
-        <input class="student-username-or-email" id="certificate-invalidation-user" type="text">
+        <!--<label for="certificate-invalidation-user"><%- gettext('Username or email address') %></label>-->
     </div>
     <div>
-        <label for="certificate-invalidation-notes"><%- gettext('Add notes about this learner') %></label>
-        <textarea class="notes-field" id="certificate-invalidation-notes" rows="10"></textarea>
+        <!--<label for="certificate-invalidation-notes"><%- gettext('Add notes about this learner') %></label>-->
     </div>
-    <br/>
-    
-    <button type="button" class="btn-blue" id="invalidate-certificate"><%- gettext('Invalidate Certificate') %></button>
-</div>
+    <input class="student-username-or-email" id="certificate-invalidation-user" type="text" placeholder="<%- gettext('Username or email address') %>">
+    <textarea class="notes-field" id="certificate-invalidation-notes" rows="10" placeholder="<%- gettext('Add notes about this learner') %>"></textarea>
+    <div class="actions"><button type="button" class="btn-blue" id="invalidate-certificate"><%- gettext('Invalidate Certificate') %></button></div>
+</form>
 
-<div class="message hidden"></div>
+<div class="message error hidden"></div>
 
 <div class="invalidation-history">
     <% if (certificate_invalidations.length === 0) { %>
