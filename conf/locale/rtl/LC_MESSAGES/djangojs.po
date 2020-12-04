@@ -5450,7 +5450,7 @@ msgstr "سخذهشم وثيهش مهرنس"
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
 "Optionally, link your personal accounts to the social media icons on your "
-"edX profile."
+"{platform_name} profile."
 msgstr ""
 "خحفهخرشممغ, مهرن غخعق حثقسخرشم شذذخعرفس فخ فاث سخذهشم وثيهش هذخرس خر غخعق "
 "ثيط حقخبهمث."
