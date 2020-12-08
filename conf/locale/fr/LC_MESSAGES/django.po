@@ -1208,6 +1208,17 @@ msgstr ""
 "page d’inscription immédiatement après s’être authentifiés auprès du tiers "
 "au lieu de la page de connexion."
 
+#: common/djangoapps/third_party_auth/models.py:188
+msgid ""
+"If this option is selected, we'll try to create a new user account when the identity "
+"provider authenticated the user but there's no matching user accounts. Otherwise, "
+"an error message will be displayed instead."
+msgstr ""
+"Si cette option est sélectionnée, nous essaierons de créer un nouveau compte "
+"utilisateur lorsque le fournisseur d’identité a authentifié l’utilisateur, "
+"mais qu’aucun compte utilisateur ne correspond. Sinon, un message d’erreur "
+"s’affichera à la place."
+
 #: common/djangoapps/third_party_auth/models.py:195
 msgid ""
 "Synchronize user profile data received from the identity provider with the "
@@ -31373,3 +31384,11 @@ msgstr ""
 #: master-cofidis:lms/djangoapps/instructor/views/instructor_dashboard.py
 msgid "more than {threshold}"
 msgstr "plus de {threshold}"
+
+#: lms/templates/registration/sso_failure.html:50
+msgid "Sorry, we can't find your account. Please contact your IT administrator for support."
+msgstr "Désolé, nous ne trouvons pas votre compte. Veuillez contacter votre administrateur informatique pour obtenir de l’aide."
+
+#: lms/templates/registration/sso_failure.html:54
+msgid "Back to login"
+msgstr "Retour à la page de connexion"

@@ -540,6 +540,18 @@ def login_oauth_token(request, backend):
     raise Http404
 
 
+def sso_failure(request):
+    from django.shortcuts import resolve_url
+    from django.template.response import TemplateResponse
+    template_name = 'registration/sso_failure.html'
+    context = {
+        'login_url': resolve_url(settings.LOGIN_URL),
+        'title': _('SSO login failed'),
+    }
+
+    return TemplateResponse(request, template_name, context)
+
+
 @ensure_csrf_cookie
 def signin_user(request):
     """Deprecated. To be replaced by :class:`student_account.views.login_and_registration_form`."""

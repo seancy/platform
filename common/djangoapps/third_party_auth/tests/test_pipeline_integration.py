@@ -310,7 +310,8 @@ class EnsureUserInformationTestCase(testutil.TestCase, test.TestCase):
 
     @ddt.data(
         (True, '/register'),
-        (False, '/login')
+        # (False, '/login'),
+        (False, '/sso_failure'),
     )
     @ddt.unpack
     def test_provider_settings_redirect_to_registration(self, send_to_registration_first, expected_redirect_url):

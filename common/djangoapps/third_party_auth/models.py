@@ -185,8 +185,9 @@ class ProviderConfig(ConfigurationModel):
     send_to_registration_first = models.BooleanField(
         default=False,
         help_text=_(
-            "If this option is selected, users will be directed to the registration page "
-            "immediately after authenticating with the third party instead of the login page."
+            "If this option is selected, we'll try to create a new user account when the identity "
+            "provider authenticated the user but there's no matching user accounts. Otherwise, "
+            "an error message will be displayed instead."
         ),
     )
     sync_learner_profile_data = models.BooleanField(
