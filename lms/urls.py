@@ -1066,6 +1066,8 @@ if settings.FEATURES.get('ENABLE_THIRD_PARTY_AUTH'):
         # NOTE: The following login_oauth_token endpoint is DEPRECATED.
         # Please use the exchange_access_token endpoint instead.
         url(r'^login_oauth_token/(?P<backend>[^/]+)/$', student_views.login_oauth_token),
+        # SSO failure page
+        url(r'^sso_failure/', student_views.sso_failure),
     ]
 
 # Enterprise

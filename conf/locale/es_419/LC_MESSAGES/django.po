@@ -1214,6 +1214,16 @@ msgstr ""
 "registro inmediatamente después de la autenticación con el tercero en lugar "
 "de la página de inicio de sesión."
 
+#: common/djangoapps/third_party_auth/models.py:188
+msgid ""
+"If this option is selected, we'll try to create a new user account when the identity "
+"provider authenticated the user but there's no matching user accounts. Otherwise, "
+"an error message will be displayed instead."
+msgstr ""
+"Si se selecciona esta opción, intentaremos crear una nueva cuenta de usuario cuando "
+"el proveedor de identidad haya autenticado al usuario pero no haya cuentas de "
+"usuario coincidentes. De lo contrario, se mostrará un mensaje de error."
+
 #: common/djangoapps/third_party_auth/models.py:195
 msgid ""
 "Synchronize user profile data received from the identity provider with the "
@@ -30967,3 +30977,11 @@ msgstr "Estamos felices que nos hayas elegido como la solución que te ayudará 
 #: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
 msgid "Start making the most of your Griky experience!"
 msgstr "¡Empieza a aprovechar de tu experiencia Griky al máximo! "
+
+#: lms/templates/registration/sso_failure.html:50
+msgid "Sorry, we can't find your account. Please contact your IT administrator for support."
+msgstr "Lo sentimos, no podemos encontrar su cuenta. Comuníquese con su administrador de TI para obtener asistencia."
+
+#: lms/templates/registration/sso_failure.html:54
+msgid "Back to login"
+msgstr "Volver a la página de inicio de sesión"

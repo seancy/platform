@@ -1370,6 +1370,15 @@ msgstr ""
 "如果选择此选项，则在与第三方而不是登录页面进行身份验证后，将立即将用户定向到"
 "注册页面。"
 
+#: common/djangoapps/third_party_auth/models.py:188
+msgid ""
+"If this option is selected, we'll try to create a new user account when the identity "
+"provider authenticated the user but there's no matching user accounts. Otherwise, "
+"an error message will be displayed instead."
+msgstr ""
+"如果选择此选项，在用户通过身份提供商认证但现在没有对应账户的情况下，我们将尝试新建一个"
+"用户账户，否则，我们会显示一个错误消息页面。"
+
 #: common/djangoapps/third_party_auth/models.py:195
 msgid ""
 "Synchronize user profile data received from the identity provider with the "
@@ -28773,3 +28782,11 @@ msgstr "您准备好开始一门课程了吗？"
 #: lms/templates/dashboard.html
 msgid "Let's start!"
 msgstr "开始！"
+
+#: lms/templates/registration/sso_failure.html:50
+msgid "Sorry, we can't find your account. Please contact your IT administrator for support."
+msgstr "抱歉，我们无法找到您的账户。请联系您的 IT 管理员获取支持。"
+
+#: lms/templates/registration/sso_failure.html:54
+msgid "Back to login"
+msgstr "回到注册页面"

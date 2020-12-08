@@ -1349,6 +1349,16 @@ msgstr ""
 "de registro imediatamente após a autenticação com terceiros, em vez da "
 "página de login. "
 
+#: common/djangoapps/third_party_auth/models.py:188
+msgid ""
+"If this option is selected, we'll try to create a new user account when the identity "
+"provider authenticated the user but there's no matching user accounts. Otherwise, "
+"an error message will be displayed instead."
+msgstr ""
+"Se esta opção for selecionada, tentaremos criar uma nova conta de usuário quando o "
+"provedor de identidade autenticou o usuário, mas não há contas de usuário "
+"correspondentes. Caso contrário, uma mensagem de erro será exibida."
+
 #: common/djangoapps/third_party_auth/models.py:195
 msgid ""
 "Synchronize user profile data received from the identity provider with the "
@@ -30398,3 +30408,11 @@ msgstr "Você está pronto para começar um curso?"
 #: lms/templates/dashboard.html
 msgid "Let's start!"
 msgstr "Iniciar!"
+
+#: lms/templates/registration/sso_failure.html:50
+msgid "Sorry, we can't find your account. Please contact your IT administrator for support."
+msgstr "Não foi possível encontrar sua conta. Entre em contato com seu administrador de TI para obter suporte."
+
+#: lms/templates/registration/sso_failure.html:54
+msgid "Back to login"
+msgstr "Voltar para a página de login"
