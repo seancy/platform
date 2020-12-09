@@ -1370,6 +1370,15 @@ msgstr ""
 "如果选择此选项，则在与第三方而不是登录页面进行身份验证后，将立即将用户定向到"
 "注册页面。"
 
+#: common/djangoapps/third_party_auth/models.py:188
+msgid ""
+"If this option is selected, we'll try to create a new user account when the identity "
+"provider authenticated the user but there's no matching user accounts. Otherwise, "
+"an error message will be displayed instead."
+msgstr ""
+"如果选择此选项，在用户通过身份提供商认证但现在没有对应账户的情况下，我们将尝试新建一个"
+"用户账户，否则，我们会显示一个错误消息页面。"
+
 #: common/djangoapps/third_party_auth/models.py:195
 msgid ""
 "Synchronize user profile data received from the identity provider with the "
@@ -1425,6 +1434,27 @@ msgstr "SHORT_DATE_FORMAT"
 #: common/djangoapps/util/date_utils.py:196
 msgid "TIME_FORMAT"
 msgstr "TIME_FORMAT"
+
+#. Translators: the translation for "NUMBERIC_SHORT_DATE" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE"
+msgstr "NUMBERIC_SHORT_DATE"
+
+#. Translators: the translation for "NUMBERIC_SHORT_DATE_SLASH" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y/%m/%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE_SLASH"
+msgstr "NUMBERIC_SHORT_DATE_SLASH"
+
+#. Translators: the translation for "NUMBERIC_DATE_TIME" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d %H:%M:%S %Z". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_DATE_TIME"
+msgstr "NUMBERIC_DATE_TIME"
 
 #. Translators: This is an AM/PM indicator for displaying times.  It is
 #. used for the %p directive in date-time formats. See http://strftime.org
@@ -7342,6 +7372,10 @@ msgid ""
 msgstr ""
 "第#{row_num}行：电子邮件{email}的帐户已存在但是所提供的用户名{username}是不同"
 "的。"
+
+#: lms/djangoapps/instructor/views/api.py:512
+msgid "Row #{row_num}: Invalid utf-8 characters"
+msgstr "第#{row_num}行: 非法utf-8字符"
 
 #: lms/djangoapps/instructor/views/api.py:506
 #: lms/djangoapps/instructor/views/api.py:702
@@ -13507,6 +13541,12 @@ msgstr "选择语言"
 msgid "Account"
 msgstr "账户"
 
+msgid "Leaderboard"
+msgstr "排行榜"
+
+msgid "My learning transcript"
+msgstr "我的学习成绩单"
+
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
@@ -16778,10 +16818,10 @@ msgstr ""
 "{end_tag}后重试选课按钮。请访问{start_help_tag}帮助页面{end_tag}了解可能的解"
 "决方案。"
 
-#: lms/templates/courseware/course_about.html:130
-#: lms/templates/courseware/course_navigation.html:86
-msgid "View Instructor Page"
-msgstr "教师面板"
+#: lms/templates/courseware/course_about.html:131
+#: lms/templates/courseware/course_navigation.html:62
+msgid "View Instructor Dashboard"
+msgstr "浏览教师面板"
 
 #: lms/templates/courseware/course_about.html:138
 #: lms/templates/courseware/course_navigation.html:95
@@ -19448,6 +19488,22 @@ msgstr "折扣率"
 #: lms/templates/instructor/instructor_dashboard_2/add_coupon_modal.html:57
 msgid "Add expiration date"
 msgstr "添加过期时间"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Intermediate Certificates"
+msgstr "中级证书"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Certificate Title"
+msgstr "证书标题"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date after"
+msgstr "颁发日期晚于"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date before"
+msgstr "颁发日期早于"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:21
 msgid "Example Certificates"
@@ -27822,12 +27878,41 @@ msgstr "您的分数 {score}% 不足以获得{type} 徽章。"
 msgid "Preview Certificate"
 msgstr "预览证书"
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You successfully completed the {type} badge with a score of {score}%."
+msgstr "您已成功完成 {type} 徽章，分数为 {score}%。"
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking on the button below."
+msgstr "您可以通过单击下面的按钮下载您的 {title}。"
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is not available."
+msgstr "{title} 不可用。"
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to obtain the {type}."
+msgstr "您的分数 {score}% 不足以获得 {type} 徽章。"
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Intermediate Certificate"
+msgstr "中级证书"
+
 #: XBlock: xblock-poll /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
 msgid "View results"
 msgstr "查看结果"
 
 #: XBlock: xblock-done lbmdonexblock.html
 msgid "Done"
+msgstr "完成"
+
+#: XBlock: xblock-done lbmdonexblock.html
+msgid "Completion"
 msgstr "完成"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
@@ -28558,8 +28643,8 @@ msgstr "大小限制："
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
-msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
-msgstr "复制您之前在 <a href={course_url} target='_blank'>文件 & 上传</a> 中上传的 PDF 中的 Studio URL 地址"
+msgid "Copy the Web URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "复制您之前在 <a href={course_url} target='_blank'>文件 & 上传</a> 中上传的 PDF 中的 Web URL 地址"
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
@@ -28621,21 +28706,131 @@ msgid "Open module in a new tab. This option will only apply to users with a com
 msgstr "在新标签页打开模块。此选项仅适用于具有兼容浏览器的用户。"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "%(num_points)s point possible"
+msgid_plural "%(num_points)s points possible"
+msgstr[0] "%(num_points)s 可能的分数"
+msgstr[1] "%(num_points)s 可能的分数"
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr "新标签页"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Click on the button below to open the module in a new tab."
 msgstr "单击下面的按钮以在新选项卡中打开模块。"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
 msgstr "您的电子学习模块已在新标签页中打开。 完成模块后，请关闭新标签页。"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "启动"
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "SCORM"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr "关于内容"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr "评价"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr "用户评价"
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr "测验"
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr "词云"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr "投票"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr "调查"
+
+#: lms/templates/dashboard.html
+msgid "Back to Calendar"
+msgstr "回到日历"
+
+#: lms/templates/dashboard.html
+msgid "Upcoming Session"
+msgstr "即将到来的课程"
+
+#: lms/templates/dashboard.html
+msgid "No upcoming sessions planned"
+msgstr "没有计划的课程"
+
+#: lms/templates/dashboard.html
+msgid "Sign up for an ILT session."
+msgstr "注册一个ILT课程"
+
+#: lms/templates/dashboard.html
+msgid "It will appear in your calendar."
+msgstr "它将出现在你的日历中"
+
+#: lms/templates/dashboard.html
+msgid "Let's start"
+msgstr "开始"
+
+# lms/templates/courses_list.html
+msgid "Show more"
+msgstr "显示更多"
+
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr "SCORM 模块超过了 %(limit)s MB 的大小限制"
+
+#: lms/templates/dashboard.html
+msgid "Find here, soon, your last activity on training courses."
+msgstr "不久后您将会在这里看到您培训课程的近期活动"
+
+#: lms/templates/dashboard.html
+msgid "Let's do it!"
+msgstr "开始！"
+
+#: lms/templates/dashboard.html
+msgid "Hmm, it's looking a bit empty, so let's start a new course right now."
+msgstr "这里看起来有点空，让我们现在开始一个新课程吧"
+
+#: lms/templates/dashboard.html
+msgid "Go!"
+msgstr "开始！"
+
+#: lms/templates/dashboard.html
+msgid "Are you ready to start a course?"
+msgstr "您准备好开始一门课程了吗？"
+
+#: lms/templates/dashboard.html
+msgid "Let's start!"
+msgstr "开始！"
+
+#: lms/templates/registration/sso_failure.html:50
+msgid "Sorry, we can't find your account. Please contact your IT administrator for support."
+msgstr "抱歉，我们无法找到您的账户。请联系您的 IT 管理员获取支持。"
+
+#: lms/templates/registration/sso_failure.html:54
+msgid "Back to login"
+msgstr "回到注册页面"

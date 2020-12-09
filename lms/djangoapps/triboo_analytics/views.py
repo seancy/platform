@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from functools import wraps
 import hashlib
 import json
 import logging
@@ -15,6 +16,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.urlresolvers import reverse
 from django.db import transaction
+from django.db.models import Max, Q
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import redirect
 from django.utils import timezone
@@ -28,10 +30,12 @@ from django_tables2 import RequestConfig
 from django_tables2.export import TableExport
 from edxmako.shortcuts import render_to_response
 from opaque_keys import InvalidKeyError
+from opaque_keys.edx.django.models import CourseKeyField
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.content.course_structures.api.v0 import api
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
 from courseware.courses import get_course_by_id
 from courseware.module_render import toc_for_course
 from lms.djangoapps.grades.constants import ScoreDatabaseTableEnum
@@ -59,8 +63,7 @@ from track.event_transaction_utils import (
     set_event_transaction_type
 )
 from util.json_request import JsonResponse, JsonResponseBadRequest
-from util.date_utils import to_timestamp
-from opaque_keys.edx.django.models import CourseKeyField
+from util.date_utils import to_timestamp, strftime_localized
 from xmodule.modulestore.django import modulestore
 from forms import (
     UserPropertiesHelper,
@@ -85,13 +88,14 @@ from models import (
     MicrositeDailyReport,
     ReportLog,
     TrackingLogHelper,
+    LeaderBoard,
+    LeaderBoardView
 )
-from tasks import generate_export_table as generate_export_table_task, links_for_all, \
-    send_waiver_request_email
 from tables import (
     get_progress_table_class,
     get_time_spent_table_class,
     TranscriptTable,
+    TranscriptTableWithGradeLink,
     LearnerDailyTable,
     CourseTable,
     IltTable,
@@ -99,14 +103,18 @@ from tables import (
     CustomizedCourseTable,
     UserBaseTable,
 )
-from django.db.models import Q
-from datetime import datetime
+from tasks import generate_export_table as generate_export_table_task, links_for_all, \
+    send_waiver_request_email
 
+
+DEFAULT_LEADERBOARD_TOP = 10
+LEADERBOARD_DASHBOARD_TOP = 5
 
 logger = logging.getLogger('triboo_analytics')
 
 
 def analytics_on(func):
+    @wraps(func)
     def wrapper(request, *args, **kwargs):
         if not configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)):
             raise Http404
@@ -116,6 +124,7 @@ def analytics_on(func):
 
 
 def analytics_member_required(func):
+    @wraps(func)
     def wrapper(request, *args, **kwargs):
         user_groups = [group.name for group in request.user.groups.all()]
         if (ANALYTICS_ACCESS_GROUP in user_groups or ANALYTICS_LIMITED_ACCESS_GROUP in user_groups):
@@ -125,6 +134,7 @@ def analytics_member_required(func):
 
 
 def analytics_full_member_required(func):
+    @wraps(func)
     def wrapper(request, *args, **kwargs):
         if not ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()]:
             raise PermissionDenied
@@ -263,12 +273,14 @@ def get_ilt_period_kwargs(data, orgs, as_string=False):
     return kwargs, exclude
 
 
-def get_transcript_table(orgs, user_id, last_update, html_links=False, sort=None):
+def get_transcript_table(orgs, user_id, last_update, html_links=False, sort=None, with_gradebook_link=False):
     queryset = []
     for org in orgs:
         new_queryset = LearnerCourseJsonReport.filter_by_day(date_time=last_update, org=org, user_id=user_id)
         queryset = queryset | new_queryset
     order_by = get_order_by(TranscriptTable, sort)
+    if with_gradebook_link:
+        return TranscriptTableWithGradeLink(queryset, html_links=html_links, order_by=order_by), queryset
     return TranscriptTable(queryset, html_links=html_links, order_by=order_by), queryset
 
 
@@ -448,7 +460,7 @@ def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_
         return JsonResponseBadRequest({"message": "Unable to fetch data."})
 
 
-def _transcript_view(user, request, template, report_type):
+def _transcript_view(user, request, template, report_type, with_gradebook_link=False):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return HttpResponseNotFound()
@@ -487,6 +499,7 @@ def _transcript_view(user, request, template, report_type):
         learner_course_table, learner_course_reports = get_transcript_table(orgs,
                                                                             user.id,
                                                                             last_update,
+                                                                            with_gradebook_link,
                                                                             html_links=True)
         config_tables(request, learner_course_table)
 
@@ -605,7 +618,7 @@ def transcript_view(request, user_id):
                 "triboo_analytics/transcript.html",
                 {"error_message": _("Invalid User ID")}
             )
-    return _transcript_view(user, request, "triboo_analytics/transcript.html", "transcript")
+    return _transcript_view(user, request, "triboo_analytics/transcript.html", "transcript", with_gradebook_link=True)
 
 
 @analytics_on
@@ -880,7 +893,7 @@ def create_override(request_user, subsection_grade_model, **override_data):
 
 @analytics_on
 @login_required
-@analytics_member_required
+@analytics_full_member_required
 @ensure_csrf_cookie
 def microsite_view(request):
     orgs = configuration_helpers.get_current_site_orgs()
@@ -1167,7 +1180,7 @@ def learner_view_data(request):
 
 @analytics_on
 @login_required
-@analytics_member_required
+@analytics_full_member_required
 @ensure_csrf_cookie
 def ilt_view(request):
     orgs = configuration_helpers.get_current_site_orgs()
@@ -1777,4 +1790,118 @@ def get_properties(request):
         })
     return JsonResponse(jsonData)
 
-    
+
+@login_required
+@require_GET
+def leaderboard_data(request):
+    if not configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
+        return JsonResponse(status=404)
+    data = {}
+    top_list = []
+    period = request.GET.get('period')
+    top = int(request.GET.get('top', DEFAULT_LEADERBOARD_TOP))
+    query_set = LeaderBoardView.objects.filter(user__is_staff=False).select_related('user__profile')
+    total_user = query_set.count()
+    if period in ['week', 'month']:
+        order_by = '-current_{}_score'.format(period)
+        query_set = query_set.order_by(order_by)
+    else:
+        query_set = query_set.order_by('-total_score')
+
+    result_set = query_set[:top] if top <= total_user else query_set
+    if top == LEADERBOARD_DASHBOARD_TOP:
+        for i in result_set:
+            try:
+                name = i.user.profile.name or i.user.username
+            except:
+                name = i.user.username
+            detail = {"Points": i.total_score, "Name": name,
+                      "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
+                      "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_DATE_TIME")}
+            top_list.append(detail)
+        return JsonResponse({"list": top_list})
+    else:
+        request_user_included = False
+        real_time_rank = 0
+        for i in result_set:
+            status = None
+            real_time_rank += 1
+            if period == "month":
+                point = i.current_month_score
+                if i.last_month_rank == 0 or i.last_month_rank > real_time_rank:
+                    status = "up"
+                elif i.last_month_rank == real_time_rank:
+                    status = "eq"
+                else:
+                    status = "down"
+            elif period == "week":
+                point = i.current_week_score
+                if i.last_week_rank == 0 or i.last_week_rank > real_time_rank:
+                    status = "up"
+                elif i.last_week_rank == real_time_rank:
+                    status = "eq"
+                else:
+                    status = "down"
+            else:
+                point = i.total_score
+
+            try:
+                name = i.user.profile.name or i.user.username
+            except:
+                name = i.user.username
+            detail = {"Points": point, "Name": name, "Rank": real_time_rank,
+                      "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
+                      "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE")}
+            if status and real_time_rank <= 3:
+                detail["OrderStatus"] = status
+            if i.user == request.user:
+                detail["Active"] = True
+                data["mission"] = i.get_leaderboard_detail()
+                request_user_included = True
+            top_list.append(detail)
+        if not request_user_included and top < total_user and not request.user.is_staff:
+            personal_rank = top
+            for i in query_set[top:]:
+                personal_rank += 1
+                if i.user == request.user:
+                    if period == "month":
+                        point = i.current_month_score
+                    elif period == "week":
+                        point = i.current_week_score
+                    else:
+                        point = i.total_score
+
+                    try:
+                        name = i.user.profile.name or i.user.username
+                    except:
+                        name = i.user.username
+                    detail = {"Points": point, "Name": name,
+                              "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
+                              "Active": True, "Rank": personal_rank,
+                              "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE")}
+                    top_list.append(detail)
+                    data["mission"] = i.get_leaderboard_detail()
+                    break
+        elif request.user.is_staff:
+            staff_leaderboard = LeaderBoardView.objects.filter(user=request.user)
+            if staff_leaderboard.exists():
+                staff_leaderboard = staff_leaderboard.first()
+                data['mission'] = staff_leaderboard.get_leaderboard_detail()
+
+    last_updated = query_set.aggregate(Max("last_updated"))
+
+    data.update({
+        "list": top_list,
+        "lastUpdate": strftime_localized(last_updated['last_updated__max'], "NUMBERIC_DATE_TIME"),
+        "totalUser": total_user
+    })
+    return JsonResponse(data)
+
+
+@login_required
+def leaderboard_view(request):
+    if not configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
+        raise Http404
+    data = {}
+    return render_to_response("triboo_analytics/leaderboard.html", data)
+

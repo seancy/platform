@@ -22,7 +22,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from student.models import CourseEnrollment
 from submissions import api as sub_api
 from track.event_transaction_utils import set_event_transaction_id, set_event_transaction_type
-from util.email_utils import send_mail_with_alias as send_mail
+from django.core.mail import send_mail
 from util.date_utils import from_timestamp
 from xmodule.modulestore.django import modulestore
 
@@ -113,7 +113,8 @@ def compute_grades_for_course(course_key, offset, batch_size, **kwargs):  # pyli
     course_key = CourseKey.from_string(course_key)
     enrollments = CourseEnrollment.objects.filter(course_id=course_key).order_by('created')
     student_iter = (enrollment.user for enrollment in enrollments[offset:offset + batch_size])
-    for result in CourseGradeFactory().iter(users=student_iter, course_key=course_key, force_update=True):
+    for result in CourseGradeFactory().iter(
+            users=student_iter, course_key=course_key, force_update=True, clear_request_cache=True):
         if result.error is not None:
             raise result.error
 
@@ -196,10 +197,15 @@ def update_course_progress(self, **kwargs):
     routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
 )
 def send_grade_override_email(self, **kwargs):
+    email_service_enabled = kwargs['email_service_enabled']
+    from_address = kwargs['from_address']
     student_info = kwargs['student_info']
     transcript = kwargs['transcript_link']
     course_name = kwargs['course_name']
     platform_name = kwargs['platform_name']
+
+    if not email_service_enabled:
+        return
 
     from lms.djangoapps.instructor.enrollment import render_message_to_string
     for student in student_info:
@@ -222,8 +228,8 @@ def send_grade_override_email(self, **kwargs):
             log.info(
                 u'Sending course/section - complete email to {email}'.format(email=student['email'])
             )
-            from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
-            send_mail(subject, message, from_address, [student['email']], fail_silently=False)
+            send_mail(
+                subject, message, from_address, [student['email']], fail_silently=False)
         except Exception as e:
             log.error(
                 u'Failed to send email to {email}, Reason: {reason}'.format(

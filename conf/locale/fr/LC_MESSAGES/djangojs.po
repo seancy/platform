@@ -1205,8 +1205,8 @@ msgstr "Répondre à l'annotation"
 #: common/static/bundles/CapaModule.js:350
 msgid "%(num_points)s point possible (graded, results hidden)"
 msgid_plural "%(num_points)s points possible (graded, results hidden)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num_points)s point possible (noté, résultats masqués)"
+msgstr[1] "%(num_points)s points possible (noté, résultats masqués)"
 
 #. Translators: %(num_points)s is the number of points possible (examples: 1,
 #. 3, 10).;
@@ -1214,8 +1214,8 @@ msgstr[1] ""
 #: common/static/bundles/CapaModule.js:354
 msgid "%(num_points)s point possible (ungraded, results hidden)"
 msgid_plural "%(num_points)s points possible (ungraded, results hidden)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num_points)s point possible (non noté, résultats masqués)"
+msgstr[1] "%(num_points)s points possible (non noté, résultats masqués)"
 
 #. Translators: %(num_points)s is the number of points possible (examples: 1,
 #. 3, 10).;
@@ -1223,8 +1223,8 @@ msgstr[1] ""
 #: common/static/bundles/CapaModule.js:362
 msgid "%(num_points)s point possible (graded)"
 msgid_plural "%(num_points)s points possible (graded)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num_points)s point possible (noté)"
+msgstr[1] "%(num_points)s points possibles (noté)"
 
 #. Translators: %(num_points)s is the number of points possible (examples: 1,
 #. 3, 10).;
@@ -1232,8 +1232,8 @@ msgstr[1] ""
 #: common/static/bundles/CapaModule.js:366
 msgid "%(num_points)s point possible (ungraded)"
 msgid_plural "%(num_points)s points possible (ungraded)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(num_points)s point possible (non noté)"
+msgstr[1] "%(num_points)s points possibles (non noté)"
 
 #. Translators: %(earned)s is the number of points earned. %(possible)s is the
 #. total number of points (examples: 0/1, 1/1, 2/3, 5/10). The total number of
@@ -1243,8 +1243,8 @@ msgstr[1] ""
 #: common/static/bundles/CapaModule.js:374
 msgid "%(earned)s/%(possible)s point (graded)"
 msgid_plural "%(earned)s/%(possible)s points (graded)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(earned)s/%(possible)s point (noté)"
+msgstr[1] "%(earned)s/%(possible)s points (noté)"
 
 #. Translators: %(earned)s is the number of points earned. %(possible)s is the
 #. total number of points (examples: 0/1, 1/1, 2/3, 5/10). The total number of
@@ -1254,8 +1254,8 @@ msgstr[1] ""
 #: common/static/bundles/CapaModule.js:379
 msgid "%(earned)s/%(possible)s point (ungraded)"
 msgid_plural "%(earned)s/%(possible)s points (ungraded)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(earned)s/%(possible)s point (noté)"
+msgstr[1] "%(earned)s/%(possible)s points (non noté)"
 
 #: common/lib/xmodule/xmodule/js/src/capa/display.js:347
 #: common/static/bundles/CapaModule.js:447
@@ -4144,7 +4144,7 @@ msgstr "Mes Notes"
 
 #: common/static/js/vendor/ova/catch/js/catch.js:82
 msgid "Instructor"
-msgstr "Enseignant"
+msgstr "Instructeur"
 
 #: common/static/js/vendor/ova/catch/js/catch.js:83
 #: common/static/js/vendor/ova/catch/js/catch.js:93
@@ -5610,7 +5610,7 @@ msgstr ""
 msgid "Error: You cannot remove yourself from the Instructor group!"
 msgstr ""
 "Erreur : Vous ne pouvez pas vous supprimer vous-même du groupe des "
-"enseignants !"
+"instructeurs !"
 
 #: lms/static/js/instructor_dashboard/membership.js:427
 #: lms/static/js/instructor_dashboard/membership.js:431
@@ -9669,7 +9669,7 @@ msgid "Support education research by providing additional information"
 msgstr "Soutenez la recherche pédagogique en fournissant plus d'informations."
 
 #: lms/templates/student_account/register.underscore:80
-msgid "Already have an {platformName} account?"
+msgid "Already have an account on {platformName}?"
 msgstr "Vous possédez déjà un compte sur {platformName} ?"
 
 #: lms/templates/student_account/register.underscore:81
@@ -11103,19 +11103,19 @@ msgstr "Activer maintenant"
 
 #: cms/templates/js/course-instructor-details.underscore:4
 msgid "Instructor Name"
-msgstr "Nom de l'enseignant"
+msgstr "Nom de l'instructeur"
 
 #: cms/templates/js/course-instructor-details.underscore:5
 msgid "Please add the instructor's name"
-msgstr "Veuillez renseigner la nom de l'enseignant"
+msgstr "Veuillez renseigner le nom de l'instructeur"
 
 #: cms/templates/js/course-instructor-details.underscore:10
 msgid "Instructor Title"
-msgstr "Titre de l'enseignant"
+msgstr "Titre de l'instructeur"
 
 #: cms/templates/js/course-instructor-details.underscore:11
 msgid "Please add the instructor's title"
-msgstr "Veuillez renseigner le titre de l'enseignant"
+msgstr "Veuillez renseigner le titre de l'instructeur"
 
 #: cms/templates/js/course-instructor-details.underscore:15
 #: cms/templates/js/signatory-details.underscore:21
@@ -11129,7 +11129,7 @@ msgstr "Nom de l'organisation"
 #: cms/templates/js/course-instructor-details.underscore:17
 msgid "Please add the institute where the instructor is associated"
 msgstr ""
-"S'il vous plaît ajouter l'institution à laquelle l'enseignant est associé"
+"Veuillez renseigner l'institution à laquelle l'instructeur est associé"
 
 #: cms/templates/js/course-instructor-details.underscore:21
 msgid "Biography"
@@ -11137,11 +11137,11 @@ msgstr "Biographie"
 
 #: cms/templates/js/course-instructor-details.underscore:22
 msgid "Instructor Biography"
-msgstr "Biographie de l'enseignant"
+msgstr "Biographie de l'instructeur"
 
 #: cms/templates/js/course-instructor-details.underscore:23
 msgid "Please add the instructor's biography"
-msgstr "Veuillez renseigner la biographie de l'enseignant"
+msgstr "Veuillez renseigner la biographie de l'instructeur"
 
 #: cms/templates/js/course-instructor-details.underscore:27
 msgid "Photo"
@@ -11149,18 +11149,18 @@ msgstr "Photo"
 
 #: cms/templates/js/course-instructor-details.underscore:29
 msgid "Instructor Photo"
-msgstr "Photo de l'enseignant"
+msgstr "Photo de l'instructeur"
 
 #: cms/templates/js/course-instructor-details.underscore:33
 msgid "Instructor Photo URL"
-msgstr "URL de la photo de l'enseignant"
+msgstr "URL de la photo de l'instructeur"
 
 #: cms/templates/js/course-instructor-details.underscore:34
 msgid ""
 "Please add a photo of the instructor (Note: only JPEG or PNG format "
 "supported)"
 msgstr ""
-"Veuillez ajouter la photo de l'enseignant (Note: seuls les formats JPEG et "
+"Veuillez ajouter la photo de l'instructeur (Note: seuls les formats JPEG et "
 "PNG sont supportés)"
 
 #: cms/templates/js/course-instructor-details.underscore:36
@@ -11174,7 +11174,7 @@ msgstr "Conditions prealables: %(prereq_display_name)s"
 
 #: cms/templates/js/course-outline.underscore:48
 msgid "Contains staff only content"
-msgstr "Contient du contenu réservé aux membres de l'équipe enseignante"
+msgstr "Contient du contenu réservé aux membres de l'équipe pédagogique"
 
 #: cms/templates/js/course-outline.underscore:54
 msgid "Unpublished changes to live content"
@@ -12159,10 +12159,10 @@ msgid ""
 "allow additional time for individual learners through the Instructor "
 "Dashboard."
 msgstr ""
-"Utiliser un examen minuté pour limiter le temps alloué aux participants pour "
-"répondre aux exercices de cette sous-section. Les participants doivent "
+"Utilisez un examen minuté pour limiter le temps alloué aux apprenants pour "
+"répondre aux exercices de cette sous-section. Les apprenants doivent "
 "soumettre leurs réponses avant la fin du temps alloué. Vous pouvez allouer "
-"du temps supplémentaire à des participant depuis l'onglet Enseignant."
+"du temps supplémentaire à des apprenants depuis le tableau de bord instructeur."
 
 #: cms/templates/js/timed-examination-preference-editor.underscore:19
 msgid "Proctored"
@@ -12201,9 +12201,9 @@ msgid ""
 "amount of time. You can grant individual learners extra time to complete the "
 "exam through the Instructor Dashboard."
 msgstr ""
-"Choisissez une période de temps pour l'examen. Si c'est plus de 24 heures, "
-"indiquer la quantité de temps. Vous pouvez accorder du temps supplémentaire "
-"à des apprenants individuels via le tableau de bord de l'enseignant afin de "
+"Choisissez une période de temps pour l'examen. Pour une période de plus de 24 heures, "
+"indiquez la quantité de temps. Vous pouvez accorder du temps supplémentaire "
+"à des apprenants individuels via le tableau de bord instructeur afin de "
 "leur permettre de terminer l'examen."
 
 #: cms/templates/js/timed-examination-preference-editor.underscore:41
@@ -12697,6 +12697,10 @@ msgstr "Catégorie"
 msgid "Mandatory"
 msgstr "Obligatoire"
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr "Groupe apprenants"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "Oui"
@@ -12802,8 +12806,8 @@ msgstr "L'inscription est confirmée.<br>Vous pouvez changer les information rel
 msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
 msgstr "Cette unité est visible pour l’équipe pédagogique uniquement. Les apprenants suivants ne font pas partie de l’équipe pédagogique :  <br><br>"
 
-#: master-sitel: #: lms/templates/discovery/facet.underscore
-#: master-sitel: #: cms/templates/discovery/facet.underscore
+#: master-sitel: lms/templates/discovery/facet.underscore
+#: master-sitel: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "Axe de développement"
 
@@ -12811,3 +12815,174 @@ msgstr "Axe de développement"
 msgid "Time format HH:MM expected"
 msgstr ""
 
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "in total"
+msgstr "au total"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hour"
+msgstr "heure"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hours"
+msgstr "heures"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "day"
+msgstr "journée"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "days"
+msgstr "journées"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "week"
+msgstr "la semaine"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "weeks"
+msgstr "semaines"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "month"
+msgstr "mois"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "months"
+msgstr "mois"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "year"
+msgstr "an"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "years"
+msgstr "ans"
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Leaderboard"
+msgstr "Leaderboard"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Show more"
+msgstr "Voir plus"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Position"
+msgstr "Position"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Points"
+msgstr "Points"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Ranking"
+msgstr "Classement"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Missions"
+msgstr "Missions"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
+msgstr "Il y a au total ${totalUser} utilisateurs dans ce classement. Dernière mise à jour: ${lastUpdate}."
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "All"
+msgstr "Classement total"
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Week"
+msgstr "Semaine"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Month"
+msgstr "Mois"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "You have won ${value} point(s)."
+msgstr "Vous avez gagné ${value} point(s)."
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo, for the first time"
+msgstr "Connexion à la plateforme pour la première fois"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgstr "Connexion quotidienne successive pendant 30 minutes"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering non-graded activity"
+msgstr "Complétion d'un quiz d'entrainement"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering graded activity"
+msgstr "Obtention d'un badge"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Awarded points on completion of each unit"
+msgstr "Point bonus de complétion d'une unité"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Accessing the first course"
+msgstr "Accès à un cours"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Completion of each course"
+msgstr "Complétion d'un cours"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Are you a manager?"
+msgstr "Êtes-vous un manager ?"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Yes"
+msgstr "Oui"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "No"
+msgstr "Non"
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag and Drop"
+msgstr "Glisser-déposer"
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag & Drop"
+msgstr "Glisser-déposer"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll_results.handlebars
+msgid "Poll"
+msgstr "Sondage"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/survey_results.handlebars
+msgid "Survey"
+msgstr "Enquête"
+
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
+msgstr "Le nombre de certificats à exporter dépasse 1 000. Veuillez affiner votre sélection."
+
+#: lms/templates/dashboard.html
+msgid "No sessions available"
+msgstr "Pas de session disponible"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Add to Calendar"
+msgstr "Ajouter à mon Calendrier"

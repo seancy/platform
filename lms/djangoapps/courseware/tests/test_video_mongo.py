@@ -173,7 +173,7 @@ class TestVideoNonYouTube(TestVideo):
                 'autoAdvance': False,
                 'saveStateUrl': self.item_descriptor.xmodule_runtime.ajax_url + '/save_user_state',
                 'autoplay': False,
-                'streams': '1.00:3_yD_cEKoCk',
+                'streams': '',
                 'sources': sources,
                 'duration': None,
                 'poster': None,
@@ -230,7 +230,7 @@ class TestGetHtmlMethod(BaseTestXmodule):
             'autoAdvance': False,
             'saveStateUrl': '',
             'autoplay': settings.FEATURES.get('AUTOPLAY_VIDEOS', True),
-            'streams': '1.00:3_yD_cEKoCk',
+            'streams': '',
             'sources': '[]',
             'duration': 111.0,
             'poster': None,
@@ -1075,7 +1075,7 @@ class TestVideoDescriptorInitialization(BaseTestXmodule):
                 'desktop_mp4': 'https://mp4.com/dm.mp4',
                 'desktop_webm': 'https://webm.com/dw.webm',
             },
-            ['https://www.youtube.com/watch?v=3_yD_cEKoCk']
+            ['https://hls.com/hls.m3u8']
         ),
         (
             {
@@ -1084,7 +1084,7 @@ class TestVideoDescriptorInitialization(BaseTestXmodule):
                 'desktop_mp4': None,
                 'desktop_webm': None,
             },
-            ['https://www.youtube.com/watch?v=3_yD_cEKoCk']
+            []
         ),
     )
     @ddt.unpack
@@ -1106,6 +1106,8 @@ class TestVideoDescriptorInitialization(BaseTestXmodule):
                 data='<video display_name="Video" download_video="true" edx_video_id="12345-67890">[]</video>'
             )
             context = self.item_descriptor.get_context()
+        print("----------------- context['transcripts_basic_tab_metadata']['video_url']['value']: ", context['transcripts_basic_tab_metadata']['video_url']['value'])
+        print("----------------- video_url: ", video_url)
         self.assertEqual(context['transcripts_basic_tab_metadata']['video_url']['value'], video_url)
 
     @ddt.data(
@@ -1242,7 +1244,7 @@ class TestEditorSavedMethod(BaseTestXmodule):
         self.MODULESTORE = MODULESTORES[default_store]
         self.initialize_module(metadata=self.metadata)
         item = self.store.get_item(self.item_descriptor.location)
-        self.assertEqual(item.youtube_id_1_0, '3_yD_cEKoCk')
+        self.assertEqual(item.youtube_id_1_0, '')
 
         # Now, modify `edx_video_id` and save should override `youtube_id_1_0`.
         old_metadata = own_metadata(item)

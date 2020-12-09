@@ -1349,6 +1349,16 @@ msgstr ""
 "de registro imediatamente após a autenticação com terceiros, em vez da "
 "página de login. "
 
+#: common/djangoapps/third_party_auth/models.py:188
+msgid ""
+"If this option is selected, we'll try to create a new user account when the identity "
+"provider authenticated the user but there's no matching user accounts. Otherwise, "
+"an error message will be displayed instead."
+msgstr ""
+"Se esta opção for selecionada, tentaremos criar uma nova conta de usuário quando o "
+"provedor de identidade autenticou o usuário, mas não há contas de usuário "
+"correspondentes. Caso contrário, uma mensagem de erro será exibida."
+
 #: common/djangoapps/third_party_auth/models.py:195
 msgid ""
 "Synchronize user profile data received from the identity provider with the "
@@ -1405,6 +1415,27 @@ msgstr "SHORT_DATE_FORMAT"
 #: common/djangoapps/util/date_utils.py:196
 msgid "TIME_FORMAT"
 msgstr "TIME_FORMAT"
+
+#. Translators: the translation for "NUMBERIC_SHORT_DATE" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE"
+msgstr "%d-%m-%Y"
+
+#. Translators: the translation for "NUMBERIC_SHORT_DATE_SLASH" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y/%m/%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE_SLASH"
+msgstr "%d/%m/%Y"
+
+#. Translators: the translation for "NUMBERIC_DATE_TIME" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d %H:%M:%S %Z". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_DATE_TIME"
+msgstr "%d-%m-%Y %H:%M:%S %Z"
 
 #. Translators: This is an AM/PM indicator for displaying times.  It is
 #. used for the %p directive in date-time formats. See http://strftime.org
@@ -7634,24 +7665,24 @@ msgstr "Fileira #{row_num}: Nome de usuário inválido."
 #: lms/djangoapps/instructor/views/api.py:353
 #, python-brace-format
 msgid "Row #{row_num}: {error_msg}"
-msgstr "Row #{row_num}: {error_msg}"
+msgstr "Fileira #{row_num}: {error_msg}"
 
 #: lms/djangoapps/instructor/views/api.py:357
 msgid "Row #{row_num}: A username is required."
-msgstr "Row #{row_num}: O Nome de usuário é obrigatório."
+msgstr "Fileira #{row_num}: O Nome de usuário é obrigatório."
 
 #: lms/djangoapps/instructor/views/api.py:364
 #: lms/djangoapps/instructor/views/api.py:656
 msgid "Row #{row_num}: Invalid email address."
-msgstr "Insira um endereço de e-mail válido."
+msgstr "Fileira #{row_num}: Insira um endereço de e-mail válido."
 
 #: lms/djangoapps/instructor/views/api.py:368
 msgid "Row #{row_num}: An email address is required."
-msgstr "É obrigatório informar o seu endereço"
+msgstr "Fileira #{row_num}: É obrigatório informar o seu endereço"
 
 #: lms/djangoapps/instructor/views/api.py:371
 msgid "Row #{row_num}: A password is required."
-msgstr "É necessária uma senha válida"
+msgstr "Fileira #{row_num}: É necessária uma senha válida"
 
 #: lms/djangoapps/instructor/views/api.py:374
 #, python-brace-format
@@ -7698,14 +7729,15 @@ msgid ""
 msgstr ""
 "Row #{row_num}: País inválido, um código de país de duas letras é esperado (por "
 " exemplo FR, CN, US, BR)."
+
 #: lms/djangoapps/instructor/views/api.py:409
 msgid "Row #{row_num}: A company is required."
-msgstr "É obrigatório informar país"
+msgstr "Fileira #{row_num}: É obrigatório informar país"
 
 #: lms/djangoapps/instructor/views/api.py:415
 #, python-brace-format
 msgid "Row #{row_num}: Invalid hire date (expected format: YYYY-MM-DD)."
-msgstr "Row #{row_num}: Data de admissão inválida (formato esperado: AAAA-MM-DD)."
+msgstr "Fileira #{row_num}: Data de admissão inválida (formato esperado: AAAA-MM-DD)."
 
 #: lms/djangoapps/instructor/views/api.py:455
 #: lms/djangoapps/instructor/views/api.py:745
@@ -7730,7 +7762,7 @@ msgid ""
 "country, city, location, company, employee id, hire date, job code, "
 "department, supervisor, learning group, comments)."
 msgstr ""
-"Row #{row_num}: A informação deve ser exatamente {expected_length} colunas (primeiro "
+"Fileira #{row_num}: A informação deve ser exatamente {expected_length} colunas (primeiro "
 "nome, sobrenome, usuário, e-mail, senha, sexo, nascimento, línguagem, "
 "país, cidade, localização, empresa, id de empregado, data de admissão, código de "
 "trabalho, departmento, supervisor, grupo de aprendizado, comentários)."
@@ -7741,7 +7773,7 @@ msgid ""
 "Row #{row_num}: An account with username {username} exists but the provided "
 "email {email} is different."
 msgstr ""
-"Existe uma conta com o e-mail {email} mas o nome de usuário fornecido "
+"Fileira #{row_num}: Existe uma conta com o e-mail {email} mas o nome de usuário fornecido "
 "{username} é diferente. Matricular mesmo assim com {email}."
 
 #: lms/djangoapps/instructor/views/api.py:505
@@ -7751,8 +7783,12 @@ msgid ""
 "Row #{row_num}: An account with email {email} exists but the provided "
 "username {username} is different."
 msgstr ""
-"Existe uma conta com o e-mail {email} mas o nome de usuário fornecido "
+"Fileira #{row_num}: Existe uma conta com o e-mail {email} mas o nome de usuário fornecido "
 "{username} é diferente. Matricular mesmo assim com {email}."
+
+#: lms/djangoapps/instructor/views/api.py:512
+msgid "Row #{row_num}: Invalid utf-8 characters"
+msgstr "Fileira #{row_num}: Caracteres utf-8 inválidos"
 
 #: lms/djangoapps/instructor/views/api.py:510
 #: lms/djangoapps/instructor/views/api.py:706
@@ -7774,7 +7810,7 @@ msgstr ""
 msgid ""
 "Row #{row_num}: User with username {username} is now enrolled in this course."
 msgstr ""
-"Não existe usuário com este nome ou e-mail {user_name} matriculado neste "
+"Fileira #{row_num}: Não existe usuário com este nome ou e-mail {user_name} matriculado neste "
 "curso."
 
 #: lms/djangoapps/instructor/views/api.py:645
@@ -7783,18 +7819,19 @@ msgid ""
 "Row #{row_num}: User with username {username} was already enrolled in this "
 "course so nothing has changed."
 msgstr ""
-"Linha #{row_num}: Usuário com o nome {username} já foi inscrito neste curso "
+"Fileira #{row_num}: Usuário com o nome {username} já foi inscrito neste curso "
 "então nada mudou."
+
 #: lms/djangoapps/instructor/views/api.py:698
 #, python-brace-format
 msgid "Row #{row_num}: {username} / {email}"
-msgstr "Linha #{row_num}: {username} / {email}"
+msgstr "Fileira #{row_num}: {username} / {email}"
 
 #: lms/djangoapps/instructor/views/api.py:703
 #: lms/djangoapps/instructor/views/api.py:883
 #, python-brace-format
 msgid "Row #{row_num}: {ex}"
-msgstr "Linha #{row_num}: {ex}"
+msgstr "Fileira #{row_num}: {ex}"
 
 #: lms/djangoapps/instructor/views/api.py:760
 #, python-brace-format
@@ -7804,61 +7841,62 @@ msgid ""
 "gender, year of birth, language, country, city, location, company, employee "
 "id, hire date, job code, department, supervisor, learning group, comments)."
 msgstr ""
-"Linha #{row_num}: Data must have exactly {expected_length} columns (old "
+"Fileira #{row_num}: Data must have exactly {expected_length} columns (old "
 "username, old email, first name, last name, username, email, password, "
 "gender, year of birth, language, country, city, location, company, employee "
 "id, hire date, job code, department, supervisor, learning group, comments)."
+
 #: lms/djangoapps/instructor/views/api.py:783
 msgid "Row #{row_num}: An old username is required."
-msgstr "Nome de usuário é obrigatório."
+msgstr "Fileira #{row_num}: Nome de usuário é obrigatório."
 
 #: lms/djangoapps/instructor/views/api.py:787
 msgid "Row #{row_num}: An old email address is required."
-msgstr "É obrigatório informar o seu endereço"
+msgstr "Fileira #{row_num}: É obrigatório informar o seu endereço"
 
 #: lms/djangoapps/instructor/views/api.py:792
 msgid "Row #{row_num}: Invalid old email address."
-msgstr "Email inválido {email_address}."
+msgstr "Fileira #{row_num}: Email inválido {email_address}."
 
 #: lms/djangoapps/instructor/views/api.py:798
 #, python-brace-format
 msgid "Row #{row_num}: Invalid old username."
-msgstr "Linha #{row_num}: Nome de usuário inválido."
+msgstr "Fileira #{row_num}: Nome de usuário inválido."
 
 #: lms/djangoapps/instructor/views/api.py:835
 msgid "Row #{row_num}: An other account with email {email} already exists."
-msgstr "Linha #{row_num}: Já existe uma conta com o e-mail '{email}'."
+msgstr "Fileira #{row_num}: Já existe uma conta com o e-mail '{email}'."
 
 #: lms/djangoapps/instructor/views/api.py:840
 msgid "Row #{row_num}: Invalid new email address."
-msgstr "Email inválido {email_address}."
+msgstr "Fileira #{row_num}: Email inválido {email_address}."
 
 #: lms/djangoapps/instructor/views/api.py:845
 msgid ""
 "Row #{row_num}: An other account with username {username} already exists."
-msgstr "Linha #{row_num}: Já existe uma conta com o nome de usuário público '{username}'."
+msgstr "Fileira #{row_num}: Já existe uma conta com o nome de usuário público '{username}'."
 
 #: lms/djangoapps/instructor/views/api.py:850
 #, python-brace-format
 msgid "Row #{row_num}: Invalid new username."
-msgstr "Row #{row_num}: Nome de usuário inválido."
+msgstr "Fileira #{row_num}: Nome de usuário inválido."
 
 #: lms/djangoapps/instructor/views/api.py:889
 #, python-brace-format
 msgid "Row #{row_num}: user {old} (now: {new}) successfully updated."
-msgstr "Linha #{row_num}: usuário {old} (now: {new}) atualizado com sucesso."
+msgstr "Fileira #{row_num}: Usuário {old} (now: {new}) atualizado com sucesso."
 
 #: lms/djangoapps/instructor/views/api.py:894
 #, python-brace-format
 msgid "Row #{row_num}: user {old} successfully updated."
-msgstr "Linha #{row_num}: usuário {old} atualizado com sucesso"
+msgstr "Linha #{row_num}: Usuário {old} atualizado com sucesso"
 
 #: lms/djangoapps/instructor/views/api.py:901
 msgid ""
 "Row #{row_num}: An account with username {username} exits but the provided "
 "email {email} is different."
 msgstr ""
-"Existe uma conta com o e-mail {email} mas o nome de usuário fornecido "
+"Fileira #{row_num}: Existe uma conta com o e-mail {email} mas o nome de usuário fornecido "
 "{username} é diferente. Matricular mesmo assim com {email}."
 
 #: lms/djangoapps/instructor/views/api.py:906
@@ -7866,7 +7904,7 @@ msgstr ""
 msgid ""
 "Row #{row_num}: No account was found with the provided username and email."
 msgstr ""
-"Row #{row_num}: Nenhuma conta foi encontrada com o usuário ou e-mail fornecido."
+"Fileira #{row_num}: Nenhuma conta foi encontrada com o usuário ou e-mail fornecido."
 
 #: lms/djangoapps/instructor/views/api.py:1123
 #, python-brace-format
@@ -18034,6 +18072,12 @@ msgstr "Escolha o idioma"
 msgid "Account"
 msgstr "Conta"
 
+msgid "Leaderboard"
+msgstr "Entre os melhores"
+
+msgid "My learning transcript"
+msgstr "Minha transcrição de aprendizagem"
+
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
@@ -18339,6 +18383,10 @@ msgstr "postagens"
 #: lms/templates/dashboard.html:164
 msgid "My Learning Transcript"
 msgstr "Minha transcrição"
+
+#: lms/templates/dashboard.html:168
+msgid "Continue Learning..."
+msgstr "Continue aprendendo..."
 
 #: lms/templates/dashboard.html:255 lms/templates/my_courses.html:233
 #: themes/edx.org/lms/templates/dashboard.html:213
@@ -21494,10 +21542,10 @@ msgstr ""
 "tentar novamente o botão para registrar-se. Por favor visite a "
 "{start_help_tag}página de ajuda{end_tag} para uma possível solução."
 
-#: lms/templates/courseware/course_about.html:130
-#: lms/templates/courseware/course_navigation.html:86
-msgid "View Instructor Page"
-msgstr "Ritmo definido pelo instrutor"
+#: lms/templates/courseware/course_about.html:131
+#: lms/templates/courseware/course_navigation.html:62
+msgid "View Instructor Dashboard"
+msgstr "Exibir painel do instrutor"
 
 #: lms/templates/courseware/course_about.html:138
 #: lms/templates/courseware/course_navigation.html:95
@@ -23104,7 +23152,7 @@ msgid ""
 "If you need help, please use our web form at {support_url} or email "
 "{support_email}."
 msgstr ""
-"Se você precisar de ajuda, use nosso formulário da web em {support_url} ou envie um e-mail"
+"Se você precisar de ajuda, use nosso formulário da web em {support_url} ou envie um e-mail "
 "{support_email}."
 
 #: lms/templates/emails/activation_email.txt:20
@@ -24395,6 +24443,22 @@ msgstr "Percentual de desconto"
 #: lms/templates/instructor/instructor_dashboard_2/add_coupon_modal.html:57
 msgid "Add expiration date"
 msgstr "Adicionar data de validade"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Intermediate Certificates"
+msgstr "Certificados intermediários"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Certificate Title"
+msgstr "Título do certificado"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date after"
+msgstr "Data de emissão após de"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date before"
+msgstr "Data de emissão antes de"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:21
 msgid "Example Certificates"
@@ -29438,13 +29502,42 @@ msgstr "Sua pontuação {score}% não é suficiente para obter o emblema {type}.
 msgid "Preview Certificate"
 msgstr "Visualizar Certificado"
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You successfully completed the {type} badge with a score of {score}%."
+msgstr "Você completou com sucesso a medalha {type} com a sua pontuação de {score}%."
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking on the button below."
+msgstr "Você pode baixar o seu {title} clicando no botão abaixo."
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is not available."
+msgstr "{title} não está disponível."
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to obtain the {type}."
+msgstr "Sua pontuação {score}% não é suficiente para obter a medalha {type}."
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Intermediate Certificate"
+msgstr "Certificado intermediário"
+
 #: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
 msgid "View results"
 msgstr "Visualizar crédito"
 
 #: lbmdonexblock.html
 msgid "Done"
-msgstr "Feito"
+msgstr "lição concluída"
+
+#: lbmdonexblock.html
+msgid "Completion"
+msgstr "Conclusão"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "INSTRUCTOR LED TRAINING"
@@ -29459,12 +29552,12 @@ msgid "CHOOSE A SESSION TO ENROLL"
 msgstr "ESCOLHER SEÇÃO PARA SE INSCREVER"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
-msgstr "SEM SEÇÃO AVALIÁVEL"
+msgid "NO SESSIONS AVAILABLE"
+msgstr "NENHUMA SESSÃO DISPONÍVEL"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "ADMIN MANAGEMENT TOOL"
-msgstr "FERRAMANDA DE ADMINISTRAÇÃO"
+msgstr "FERRAMENTA DE ADMINISTRAÇÃO"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "CLASS MANAGEMENT"
@@ -29545,7 +29638,7 @@ msgid ""
 "Create or delete your ILT sessions below. Learners will be notified by email "
 "if a session is modified or deleted."
 msgstr ""
-"Crie ou exclua suas sessões de ILT abaixo. Os alunos serão notificados por email"
+"Crie ou exclua suas sessões de ILT abaixo. Os alunos serão notificados por e-mail "
 "se uma sessão for modificada ou excluída."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
@@ -30152,8 +30245,8 @@ msgstr "Limite de tamanho: "
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
-msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
-msgstr "Copie o URL do Studio de um arquivo PDF já carregado em <a href={course_url} target='_blank'>Arquivos e Uploads</a>"
+msgid "Copy the Web URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "Copie o Web URL de um arquivo PDF já carregado em <a href={course_url} target='_blank'>Arquivos e Uploads</a>"
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
@@ -30215,21 +30308,131 @@ msgid "Open module in a new tab. This option will only apply to users with a com
 msgstr "Abra o módulo em uma nova guia. Esta opção se aplica apenas a usuários com um navegador compatível."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "%(num_points)s point possible"
+msgid_plural "%(num_points)s points possible"
+msgstr[0] "%(num_points)s ponto possível"
+msgstr[1] "%(num_points)s pontos possíveis"
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr "Nova aba"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Click on the button below to open the module in a new tab."
 msgstr "Clique no botão abaixo para abrir o módulo em uma nova aba."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
 msgstr "Seu módulo de e-learning foi aberto em uma nova aba. Por favor, feche a nova aba depois de concluir o módulo."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "Começar"
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "SCORM"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr "Sobre o conteúdo"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr "avaliações"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr "comentários de usuários"
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr "Questionário"
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr "Nuvem de palavras"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr "Votação"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr "Pesquisa"
+
+#: lms/templates/dashboard.html
+msgid "Back to Calendar"
+msgstr "Voltar ao calendário"
+
+#: lms/templates/dashboard.html
+msgid "Upcoming Session"
+msgstr "Próxima sessão"
+
+#: lms/templates/dashboard.html
+msgid "No upcoming sessions planned"
+msgstr "Nenhuma próxima sessão planejada"
+
+#: lms/templates/dashboard.html
+msgid "Sign up for an ILT session."
+msgstr "Registre-se na uma sessão ILT."
+
+#: lms/templates/dashboard.html
+msgid "It will appear in your calendar."
+msgstr "Ele aparecerá no seu calendário."
+
+#: lms/templates/dashboard.html
+msgid "Let's start"
+msgstr "Iniciar"
+
+# lms/templates/courses_list.html
+msgid "Show more"
+msgstr "Ver mais"
+
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr "O módulo SCORM excede o tamanho máximo de %(limit)s MB."
+
+#: lms/templates/dashboard.html
+msgid "Find here, soon, your last activity on training courses."
+msgstr "Encontre aqui, em breve, suas últimas atividades em cursos de capacitação."
+
+#: lms/templates/dashboard.html
+msgid "Let's do it!"
+msgstr "Vamos fazer isso!"
+
+#: lms/templates/dashboard.html
+msgid "Hmm, it's looking a bit empty, so let's start a new course right now."
+msgstr "Hmm, parece um pouco vazio aqui, então vamos começar um novo curso agora."
+
+#: lms/templates/dashboard.html
+msgid "Go!"
+msgstr "Ir!"
+
+#: lms/templates/dashboard.html
+msgid "Are you ready to start a course?"
+msgstr "Você está pronto para começar um curso?"
+
+#: lms/templates/dashboard.html
+msgid "Let's start!"
+msgstr "Iniciar!"
+
+#: lms/templates/registration/sso_failure.html:50
+msgid "Sorry, we can't find your account. Please contact your IT administrator for support."
+msgstr "Não foi possível encontrar sua conta. Entre em contato com seu administrador de TI para obter suporte."
+
+#: lms/templates/registration/sso_failure.html:54
+msgid "Back to login"
+msgstr "Voltar para a página de login"

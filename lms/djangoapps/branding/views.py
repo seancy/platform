@@ -21,6 +21,7 @@ import student.views
 from edxmako.shortcuts import marketing_link, render_to_response
 from openedx.core.djangoapps.lang_pref.api import released_languages
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from student_account.views import login_and_registration_form
 from util.cache import cache_if_anonymous
 from util.json_request import JsonResponse
 
@@ -46,6 +47,9 @@ def index(request):
                 'ALWAYS_REDIRECT_HOMEPAGE_TO_DASHBOARD_FOR_AUTHENTICATED_USER',
                 settings.FEATURES.get('ALWAYS_REDIRECT_HOMEPAGE_TO_DASHBOARD_FOR_AUTHENTICATED_USER', True)):
             return redirect(reverse('dashboard'))
+
+    if not configuration_helpers.get_value("ENABLE_BRANDING_PAGE", getattr(settings, "ENABLE_BRANDING_PAGE", False)):
+        return login_and_registration_form(request, initial_mode="login")
 
     if settings.FEATURES.get('AUTH_USE_CERTIFICATES'):
         from openedx.core.djangoapps.external_auth.views import ssl_login

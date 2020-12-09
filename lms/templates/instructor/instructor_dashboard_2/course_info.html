@@ -81,7 +81,7 @@ from openedx.core.lib.courses import course_image_url
       <i class="fal fa-clipboard-check"></i>
       <label for="course-grade-cutoffs">${_("Grade Cutoffs:")}</label>
       % if section_data['grade_cutoffs'].startswith("Pass: "):
-        <b class="pass">${ "{}{}%".format(section_data['grade_cutoffs'][:6], int(round(float(section_data['grade_cutoffs'][6:])*100))) }</b>
+        <b class="pass">${_("Pass: ")}${ "{}%".format(int(round(float(section_data['grade_cutoffs'][6:])*100))) }</b>
       % else:
         % for grade_cutoffs_piece in section_data['grade_cutoffs'].split(', '):
           <b>${ "{}{}%".format(grade_cutoffs_piece[:3], int(round(float(grade_cutoffs_piece[3:])*100))) }</b>

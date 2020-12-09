@@ -22,7 +22,7 @@ function($, Backbone, _, AbstractEditor, Utils, MessageManager) {
         placeholders: {
             webm: '.webm',
             mp4: 'http://somesite.com/video.mp4',
-            youtube: 'http://youtube.com/'
+            youtube: 'Your video URL'
         },
 
         initialize: function(options) {

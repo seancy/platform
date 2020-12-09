@@ -6518,10 +6518,10 @@ msgstr "Links das Redes Sociais"
 #: lms/static/js/student_account/views/account_settings_factory.js:330
 msgid ""
 "Optionally, link your personal accounts to the social media icons on your "
-"edX profile."
+"{platform_name} profile."
 msgstr ""
 "Opicionalmente, link suas contas pessoais aos ícones de mídia social"
-"no seu perfil edX."
+"no seu perfil {platform_name}."
 
 #: lms/static/js/student_account/views/account_settings_factory.js:341
 msgid "{platform_name} Link"
@@ -9676,7 +9676,7 @@ msgstr ""
 "Apoie a pesquisa educacional fornecendo informações adicionais"
 
 #: lms/templates/student_account/register.underscore:80
-msgid "Already have an {platformName} account?"
+msgid "Already have an account on {platformName}?"
 msgstr "Já tem uma conta {platformName}?"
 
 #: lms/templates/student_account/register.underscore:81
@@ -12596,6 +12596,10 @@ msgstr "Categoria"
 msgid "Mandatory"
 msgstr "Signatário"
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr "Grupo de aprendizagem"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "Sim"
@@ -12717,7 +12721,180 @@ msgstr "Spaniola"
 #~ msgid "Starts: %(start_date)s"
 #~ msgstr "Início: %(start_date)s"
 
-#: master-sitel: #: lms/templates/discovery/facet.underscore
-#: master-sitel: #: cms/templates/discovery/facet.underscore
+#: master-sitel: lms/templates/discovery/facet.underscore
+#: master-sitel: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "Área de Desenvolvimento"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "in total"
+msgstr "no total"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hour"
+msgstr "hora"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hours"
+msgstr "horas"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "day"
+msgstr "dia"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "days"
+msgstr "dias"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "week"
+msgstr "semana"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "weeks"
+msgstr "semanas"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "month"
+msgstr "mês"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "months"
+msgstr "meses"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "year"
+msgstr "ano"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "years"
+msgstr "anos"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Leaderboard"
+msgstr "Painel de gestão"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Show more"
+msgstr "Ver mais"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Position"
+msgstr "Posição"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Points"
+msgstr "Pontos"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Ranking"
+msgstr "Ranking"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Missions"
+msgstr "Missões"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
+msgstr "Atualmente existem ${totalUser} alunos. Última atualização: ${lastUpdate}."
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "All"
+msgstr "Tudo"
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Week"
+msgstr "Semana"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Month"
+msgstr "Mês"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "You have won ${value} point(s)."
+msgstr "Você ganhou ${value} ponto(s)."
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo, for the first time"
+msgstr "Entrando no Triboo pela primeira vez"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgstr "Entrando no Triboo todos os dias, por pelo menos 30 minutos"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering non-graded activity"
+msgstr "Respondendo atividade não classificada"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering graded activity"
+msgstr "Respondendo atividade classificada"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Awarded points on completion of each unit"
+msgstr "Pontos atribuídos pela conclusão de cada unidade"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Accessing the first course"
+msgstr "Acessando o primeiro curso"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Completion of each course"
+msgstr "Conclusão de cada curso"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Are you a manager?"
+msgstr "Você é gerente?"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Yes"
+msgstr "Sim"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "No"
+msgstr "Não"
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag and Drop"
+msgstr "Arraste e solte"
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag & Drop"
+msgstr "Arraste e solte"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll_results.handlebars
+msgid "Poll"
+msgstr "Votação"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/survey_results.handlebars
+msgid "Survey"
+msgstr "Pesquisa"
+
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
+msgstr "O número de certificados a serem exportados ultrapassa 1.000. Restrinja sua seleção."
+
+#: lms/templates/dashboard.html
+msgid "No sessions available"
+msgstr "Sem sessão disponível"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Add to Calendar"
+msgstr "Adicionar Artigo"

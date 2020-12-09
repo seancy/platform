@@ -117,6 +117,9 @@ class HtmlModuleMixin(HtmlBlock, XModule):
     }
     js_module_name = "HTMLModule"
     css = {'scss': [resource_string(__name__, 'css/html/display.scss')]}
+    type = _("Text")
+    title = 'title'
+    label = 'label'
 
 
 @edxnotes

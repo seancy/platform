@@ -316,12 +316,18 @@ class GradebookBulkUpdateView(GradeViewMixin, PaginatedAPIView):
             transcript_link = request.build_absolute_uri(reverse('analytics_my_transcript'))
             course_name = course.display_name_with_default_escaped
             platform_name = configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
+            email_service_enabled = configuration_helpers.get_value('ENABLE_EMAIL_SERVICE', True)
+            from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
+            from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
+            from_address = "{0} <{1}>".format(from_alias, from_address)
             send_grade_override_email.apply_async(
                 kwargs={
                     'student_info': email_list,
                     'transcript_link': transcript_link,
                     'course_name': course_name,
-                    'platform_name': platform_name
+                    'platform_name': platform_name,
+                    'email_service_enabled': email_service_enabled,
+                    'from_address': from_address
                 }
             )
             if course_progress_users:

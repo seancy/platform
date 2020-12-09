@@ -258,8 +258,7 @@ export default class WordCloudMain {
 
     // Actual drawing of word cloud.
     const groupEl = d3.select(`#${cloudSectionEl.attr('id')} .word_cloud`).append('svg')
-    .attr('width', this.width)
-    .attr('height', this.height)
+    .attr('viewBox', `0 0 ${this.width} ${this.height}`)
     .append('g')
     .attr('transform', `translate(${0.5 * this.width},${0.5 * this.height})`)
     .selectAll('text')

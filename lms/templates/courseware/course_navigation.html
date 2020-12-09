@@ -59,7 +59,7 @@ if course is not None:
                         instructor_link_class += " active"
                 %>
                 <li>
-                  <a class="${instructor_link_class}" href="${reverse('instructor_dashboard', kwargs={'course_id': unicode(course.id)})}" alt="${_('Admin Space')}" title="${_('Admin Space')}">
+                  <a class="${instructor_link_class}" href="${reverse('instructor_dashboard', kwargs={'course_id': unicode(course.id)})}" title="${_('View Instructor Dashboard')}">
                     <i class="fal fa-cog"></i>
                   </a>
                 </li>

@@ -65,7 +65,9 @@ class CertificateDisplayTestBase(SharedModuleStoreTestCase):
         CourseEnrollmentFactory.create(
             user=self.user,
             course_id=self.course.id,
-            mode=enrollment_mode)
+            mode=enrollment_mode,
+            completed=datetime.datetime.now()
+        )
         return GeneratedCertificateFactory(
             user=self.user,
             course_id=self.course.id,

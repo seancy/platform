@@ -10,7 +10,7 @@ from opaque_keys.edx.keys import CourseKey
 
 from courseware.access import has_access
 from courseware.courses import get_course_with_access
-from courseware.views.views import get_resume_course_url, registered_for_course
+from courseware.views.views import get_last_accessed_courseware, registered_for_course
 from edxmako.shortcuts import render_to_response
 from notes.utils import notes_enabled_for_course
 from static_replace import replace_static_urls
@@ -128,7 +128,7 @@ def pdf_index(request, course_id, book_index, chapter=None, page=None):
         )
 
         if show_courseware_link:
-            resume_course_url = get_resume_course_url(request, course)
+            resume_course_url = get_last_accessed_courseware(request, course)
 
             if not isinstance(request.user, AnonymousUser):
                 progress = CourseGradeFactory().get_course_completion_percentage(

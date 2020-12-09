@@ -563,6 +563,7 @@ MIDDLEWARE_CLASSES.extend(ENV_TOKENS.get('EXTRA_MIDDLEWARE_CLASSES', []))
 
 # Once a user has watched this percentage of a video, mark it as complete:
 # (0.0 = 0%, 1.0 = 100%)
+COMPLETION_VIDEO_COMPLETE_PERCENTAGE = 0.5
 COMPLETION_VIDEO_COMPLETE_PERCENTAGE = ENV_TOKENS.get(
     'COMPLETION_VIDEO_COMPLETE_PERCENTAGE',
     COMPLETION_VIDEO_COMPLETE_PERCENTAGE,
@@ -654,10 +655,14 @@ COURSE_DISCOVERY_MEANINGS = {
         'name': 'Tag'
     },
     'course_mandatory_enabled': {
-        'name': 'Mandatory'
+        'name': 'Mandatory',
+        'terms': dict(MANDATORY_OPTIONS),
     },
     'course_country': {
         'name': 'Country'
+    },
+    'enrollment_learning_groups': {
+        'name': 'Learning Group'
     }
 }
 
@@ -669,7 +674,7 @@ COURSE_COUNTRY_MAPPING = {
 SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
 
 # Max search page size for Studio home page
-SEARCH_MAX_PAGE_SIZE = 1000
+SEARCH_MAX_PAGE_SIZE = 1500
 
 ########## Enable Video auto-advance to let course staff to set this feature in Advanced Settings ###############
 FEATURES['ENABLE_AUTOADVANCE_VIDEOS'] = True

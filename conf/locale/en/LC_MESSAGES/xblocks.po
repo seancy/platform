@@ -38,12 +38,41 @@ msgstr ""
 msgid "Preview Certificate"
 msgstr ""
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You successfully completed the {type} badge with a score of {score}%."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking on the button below."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is not available."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to obtain the {type}."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Intermediate Certificate"
+msgstr ""
+
 #: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
 msgid "View results"
 msgstr ""
 
 #: lbmdonexblock.html
 msgid "Done"
+msgstr ""
+
+#: lbmdonexblock.html
+msgid "Completion"
 msgstr ""
 
 #: XBlock: xblock-ilt
@@ -690,7 +719,7 @@ msgstr ""
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
-msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgid "Copy the Web URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
 msgstr ""
 
 #: XBlock: xblock-pdf
@@ -749,22 +778,72 @@ msgid "It appears you don't have a PDF plugin for this browser or the PDF URL is
 msgstr ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "%(num_points)s point possible"
+msgid_plural "%(num_points)s points possible"
+msgstr[0] ""
+msgstr[1] ""
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Click on the button below to open the module in a new tab."
 msgstr ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
 msgstr ""
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr ""
 
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "SCORM"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr ""
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr ""
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr ""
+
+#: XBlock: iframe
+#: iframe-id-xblock/iframe/iframe.py
+msgid "Don't forget the leading protocol (http:// or https://) and the path, https://yoururl.com/path is correct, for example."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
+#, python-format
+msgid ""
+"\n"
+"                    This assignment has several steps. In the first step, you'll provide a response to the prompt. The other steps appear below the %(start_tag)sYour Response%(end_tag)s field.\n"
+"                "
+msgstr ""

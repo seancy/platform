@@ -5,6 +5,7 @@ Student Views
 import datetime
 import json
 import logging
+import sys
 import uuid
 import warnings
 from collections import namedtuple
@@ -19,7 +20,6 @@ from django.contrib.auth import login as django_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth.views import password_reset_confirm, password_reset_complete
-from django.core import mail
 from django.urls import reverse
 from django.core.validators import ValidationError, validate_email
 from django.db import transaction
@@ -104,6 +104,7 @@ from third_party_auth import pipeline, provider
 from third_party_auth.saml import SAP_SUCCESSFACTORS_SAML_KEY
 from util.bad_request_rate_limiter import BadRequestRateLimiter
 from util.db import outer_atomic
+from util.email_utils import send_mail_with_alias as send_mail
 from util.json_request import JsonResponse
 from util.password_policy_validators import SecurityPolicyError, validate_password
 
@@ -266,16 +267,21 @@ def compose_and_send_activation_email(user, profile, user_registration=None):
     # Email subject *must not* contain newlines
     subject = ''.join(subject.splitlines())
     message_for_activation = render_to_string('emails/activation_email.txt', context)
+
+    # for test
+    if 'pytest' in sys.modules:
+        html_message = None
+    else:
+        html_message = render_to_string('emails/activation_html_email.txt', context)
+    from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
     from_address = configuration_helpers.get_value('email_from_address', settings.DEFAULT_FROM_EMAIL)
     from_address = configuration_helpers.get_value('ACTIVATION_EMAIL_FROM_ADDRESS', from_address)
-    from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
-    if from_alias:
-        from_address = "%s <%s>" % (from_alias, from_address)
+    from_address = "{0} <{1}>".format(from_alias, from_address)
     if settings.FEATURES.get('REROUTE_ACTIVATION_EMAIL'):
         dest_addr = settings.FEATURES['REROUTE_ACTIVATION_EMAIL']
         message_for_activation = ("Activation for %s (%s): %s\n" % (user, user.email, profile.name) +
                                   '-' * 80 + '\n\n' + message_for_activation)
-    send_activation_email.delay(subject, message_for_activation, from_address, dest_addr)
+    send_activation_email.delay(subject, message_for_activation, from_address, dest_addr, html_message)
 
 
 @login_required
@@ -1389,13 +1395,7 @@ def do_email_change_request(user, new_email, activation_key=None):
         settings.DEFAULT_FROM_EMAIL
     )
     try:
-        from_alias = configuration_helpers.get_value('email_from_alias', settings.DEFAULT_FROM_EMAIL_ALIAS)
-        from_address = "{} <{}>".format(from_alias, from_address)
-    except AttributeError:
-        pass
-
-    try:
-        mail.send_mail(subject, message, from_address, [pec.new_email])
+        send_mail(subject, message, from_address, [pec.new_email])
     except Exception:
         log.error(u'Unable to send email activation link to user from "%s"', from_address, exc_info=True)
         raise ValueError(_('Unable to send email activation link. Please try again later.'))

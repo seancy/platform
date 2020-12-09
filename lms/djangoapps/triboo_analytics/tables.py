@@ -18,6 +18,9 @@ from .models import (
     IltLearnerReport
 )
 
+from instructor.views.instructor_dashboard import InstructorDashboardTab
+from xmodule.modulestore.django import modulestore
+
 
 EXPORT_FORMATS = ['csv', 'xls', 'json']
 
@@ -181,6 +184,47 @@ class TranscriptTable(_OrderMixin, _RenderMixin, tables.Table):
     def order_course_title(self, queryset, is_descending):
         queryset.order_by(('-' if is_descending else '') + 'course_id')
         return queryset, True
+
+
+class TranscriptTableWithGradeLink(TranscriptTable):
+    gradebook_template = '''
+            <a href="/courses/{{ record.course_id }}/instructor/api/gradebook?learner_name={{ record.user }}"
+               title="{{ _('View gradebook') }}">
+                <span class="fal fa-clipboard-list-check"></span>
+            </a>
+        '''
+    gradebook_link = tables.TemplateColumn(gradebook_template, verbose_name='')
+
+    class Meta:
+        model = LearnerCourseDailyReport
+        template = 'django_tables2/bootstrap.html'
+        fields = ('course_title',
+                  'gradebook_link',
+                  'status',
+                  'progress',
+                  'badges',
+                  'current_score',
+                  'total_time_spent',
+                  'enrollment_date',
+                  'completion_date')
+        unlocalize = ('course_title', 'gradebook_link', 'progress', 'badges', 'current_score', 'total_time_spent',
+                      'enrollment_date', 'completion_date')
+
+    def before_render(self, request):
+        self.path = request.path
+        self.request_user = request.user
+
+    def render_gradebook_link(self, record, value, bound_column, bound_row):
+        record_course = modulestore().get_course(record.course_id)
+        column = bound_column.column
+        column_render = column.render(
+            record=record,
+            table=self,
+            value=self.gradebook_template,
+            bound_column=bound_column,
+            bound_row=bound_row
+        )
+        return column_render if InstructorDashboardTab.is_enabled(record_course, self.request_user) else ""
 
 
 class UserBaseTable(tables.Table):

@@ -9,7 +9,6 @@ import zendesk
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.cache import caches
-from django.core.mail import send_mail
 from django.core.validators import ValidationError, validate_email
 from django.http import Http404, HttpResponse, HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseServerError
 from django.views.decorators.csrf import requires_csrf_token
@@ -25,6 +24,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from openedx.features.enterprise_support import api as enterprise_api
 from student.models import CourseEnrollment
 from student.roles import GlobalStaff
+from util.email_utils import send_mail_with_alias as send_mail
 
 log = logging.getLogger(__name__)
 

@@ -1214,6 +1214,16 @@ msgstr ""
 "registro inmediatamente después de la autenticación con el tercero en lugar "
 "de la página de inicio de sesión."
 
+#: common/djangoapps/third_party_auth/models.py:188
+msgid ""
+"If this option is selected, we'll try to create a new user account when the identity "
+"provider authenticated the user but there's no matching user accounts. Otherwise, "
+"an error message will be displayed instead."
+msgstr ""
+"Si se selecciona esta opción, intentaremos crear una nueva cuenta de usuario cuando "
+"el proveedor de identidad haya autenticado al usuario pero no haya cuentas de "
+"usuario coincidentes. De lo contrario, se mostrará un mensaje de error."
+
 #: common/djangoapps/third_party_auth/models.py:195
 msgid ""
 "Synchronize user profile data received from the identity provider with the "
@@ -1271,6 +1281,27 @@ msgstr "%d %b %Y"
 #: common/djangoapps/util/date_utils.py:196
 msgid "TIME_FORMAT"
 msgstr "%H:%M:%S"
+
+#. Translators: the translation for "NUMBERIC_SHORT_DATE" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE"
+msgstr "%d-%m-%Y"
+
+#. Translators: the translation for "NUMBERIC_SHORT_DATE_SLASH" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y/%m/%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE_SLASH"
+msgstr "%d/%m/%Y"
+
+#. Translators: the translation for "NUMBERIC_DATE_TIME" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d %H:%M:%S %Z". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_DATE_TIME"
+msgstr "%d-%m-%Y %H:%M:%S %Z"
 
 #. Translators: This is an AM/PM indicator for displaying times.  It is
 #. used for the %p directive in date-time formats. See http://strftime.org
@@ -7252,6 +7283,112 @@ msgstr "Curso añadido"
 msgid "Course Name"
 msgstr "Nombre del curso"
 
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr "Puntaje Insignia"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Badges"
+msgstr "Insignias"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Posts"
+msgstr "Publicaciones"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr "Tiempo total invertido"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr "Fecha de terminación"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr "Cursos matriculados"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr "Último acceso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr "Ubicación geográfica"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course country"
+msgstr "País del curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr "Zona/Región"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr "Etiquetas del curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr "Código del curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "Nombre del curso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr "ID de sesión"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr "Fecha de inicio"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr "Tiempo de inicio"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr "Fecha de finalización"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr "Hora de finalización"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr "Duración (en horas)"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr "Capacidad Máxima"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr "Inscritos"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr "Asistentes"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr "Registro de asistencia"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr "Nombre de ubicación"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "Dirección de ubicación"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "Código postal"
+
+
+
 #: lms/djangoapps/dashboard/sysadmin.py:436
 msgid "Directory/ID"
 msgstr "Directorio/ID"
@@ -7728,6 +7865,10 @@ msgstr ""
 "Fila #{row_num}: Existe una cuenta con correo electrónico {email} pero el nombre de usuario "
 "{username} es diferente."
 
+#: lms/djangoapps/instructor/views/api.py:512
+msgid "Row #{row_num}: Invalid utf-8 characters"
+msgstr "Fila #{row_num}: Caracteres utf-8 inválidos"
+
 #: lms/djangoapps/instructor/views/api.py:510
 #: lms/djangoapps/instructor/views/api.py:706
 #: lms/djangoapps/instructor/views/api.py:911
@@ -7938,7 +8079,7 @@ msgstr "Identificador de usuario"
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html:53
 #: lms/templates/instructor/instructor_dashboard_2/generate_registarion_codes_modal.html:66
 msgid "Email"
-msgstr "Correo electrónico"
+msgstr "Correo"
 
 #: lms/djangoapps/instructor/views/api.py:1872
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py:105
@@ -10243,7 +10384,7 @@ msgstr "Dólares reembolsados"
 
 #: lms/djangoapps/shoppingcart/reports.py:263
 msgid "Number of Transactions"
-msgstr "Número de transacciones"
+msgstr "Número de ingresos"
 
 #: lms/djangoapps/shoppingcart/reports.py:264
 msgid "Total Payments Collected"
@@ -10364,7 +10505,7 @@ msgstr "Estado/Provincia/Ciudad"
 #: openedx/core/djangoapps/user_api/api.py:685
 #: openedx/core/djangoapps/user_api/api.py:941
 msgid "Company"
-msgstr "Compañia"
+msgstr "Razon Social"
 
 #. Translators: This label appears above a field on the registration form
 #. which allows the user to input the Job Title
@@ -10599,11 +10740,11 @@ msgstr "Ubicación"
 
 #: lms/djangoapps/triboo_analytics/forms.py:15
 msgid "Commercial Zone"
-msgstr "No comercial"
+msgstr "Zona Comercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:16
 msgid "Commercial Region"
-msgstr "No comercial"
+msgstr "Región Comercial"
 
 #: lms/djangoapps/triboo_analytics/forms.py:19
 msgctxt "user.profile"
@@ -10617,7 +10758,7 @@ msgstr "Domicilio 2"
 
 #: lms/djangoapps/triboo_analytics/forms.py:21
 msgid "Phone Number"
-msgstr "Código del curso"
+msgstr "Celular"
 
 #: lms/djangoapps/triboo_analytics/forms.py:22
 msgid "GDPR"
@@ -10639,7 +10780,7 @@ msgstr "Nivel"
 #: lms/djangoapps/triboo_analytics/forms.py:27
 #: openedx/core/djangoapps/user_api/api.py:948
 msgid "Job Code"
-msgstr "Código de Honor"
+msgstr "Código de Trabajo"
 
 #: lms/djangoapps/triboo_analytics/forms.py:28
 #: openedx/core/djangoapps/user_api/api.py:955
@@ -10649,7 +10790,7 @@ msgstr "Descripción"
 #: lms/djangoapps/triboo_analytics/forms.py:29
 #: openedx/core/djangoapps/user_api/api.py:962
 msgid "Department"
-msgstr "Pagar"
+msgstr "Division"
 
 #: lms/djangoapps/triboo_analytics/forms.py:30
 msgid "Supervisor"
@@ -17579,9 +17720,8 @@ msgid ""
 "Thank you for signing up for {studio_name}! To activate your account, please "
 "copy and paste this address into your web browser's address bar:"
 msgstr ""
-"¡Gracias por inscribirte en {studio_name}! Para activar tu cuenta, por "
-"favor, copia y pega esta dirección en la barra de direcciones de tu "
-"navegador:"
+"¡Gracias por registrarte en {studio_name}! Para activar tu cuenta, "
+"copia y pega esta dirección en la barra de direcciones de tu navegador:"
 
 #: cms/templates/emails/activation_email.txt:11
 msgid ""
@@ -17589,42 +17729,39 @@ msgid ""
 "any more email from us. Please do not reply to this e-mail; if you require "
 "assistance, check the help section of the {studio_name} web site."
 msgstr ""
-"Si no solicitaste esto, no hace falta que hagas nada; no recibirás más "
-"correos electrónicos por nuestra parte. Por favor, no contestes a este "
-"correo electrónico; si necesitas asistencia, comprueba la sección de ayuda "
-"de la página web de {studio_name}."
+"Si no solicitaste este registro, no necesitas hacer nada; no recibirás más "
+"correos electrónicos de nuestra parte. Por favor no respondas a este email. "
+"Si necesitas ayuda, consulta la sección de soporte dentro del sitio web de {studio_name}."
 
 #: cms/templates/emails/activation_email_subject.txt:2
 msgid "Your account for {studio_name}"
-msgstr "Tu cuenta para {studio_name}"
+msgstr "Sobre tu cuenta de {studio_name}"
 
 #: cms/templates/emails/course_creator_admin_subject.txt:2
 msgid "{email} has requested {studio_name} course creator privileges on edge"
 msgstr ""
-"{email} ha solicitado privilegios de creador de curso en {studio_name} edge"
+"{email} ha solicitado privilegios de creador de cursos para {studio_name}"
 
 #: cms/templates/emails/course_creator_admin_user_pending.txt:2
 msgid ""
 "User '{user}' with e-mail {email} has requested {studio_name} course creator "
 "privileges on edge."
 msgstr ""
-"El usuario '{user}' con correo electrónico {email} ha solicitado privilegios "
-"de creador de curso en {studio_name} edge."
+"El usuario '{user}' con el correo electrónico {email} ha solicitado privilegios "
+"de creador de cursos para {studio_name}."
 
 #: cms/templates/emails/course_creator_admin_user_pending.txt:5
 msgid "To grant or deny this request, use the course creator admin table."
 msgstr ""
-"Para conceder o denegar esta solicitud, utiliza la tabla de administración "
-"de creador del curso."
+"Para aprobar o rechazar esta solicitud, utiliza el tablero de administración de creadores de cursos."
 
 #: cms/templates/emails/course_creator_denied.txt:3
 msgid ""
 "Your request for course creation rights to {studio_name} have been denied. "
 "If you believe this was in error, please contact {email}"
 msgstr ""
-"Tu solicitud para obtener derechos de creación de cursos en {studio_name} ha "
-"sido denegada. Si crees que esto ha sido un error, por favor, contacta con "
-"{email}"
+"Tu solicitud de permisos para creación de cursos en {studio_name} ha "
+"sido rechazada. Si crees que se trata de un error, ponte en contacto con {email}."
 
 #: cms/templates/emails/course_creator_granted.txt:3
 msgid ""
@@ -17633,8 +17770,8 @@ msgid ""
 "\n"
 "{url}"
 msgstr ""
-"Tu solicitud para obtener derechos de creación de cursos en {studio_name} ha "
-"sido aceptada. Para crear tu primer curso, visita\n"
+"Tu solicitud de permisos para creación de cursos en {studio_name} ha "
+"sido aprobada. Para crear tu primer curso visita\n"
 "\n"
 "{url}"
 
@@ -17643,33 +17780,33 @@ msgid ""
 "Your course creation rights to {studio_name} have been revoked. If you "
 "believe this was in error, please contact {email}"
 msgstr ""
-"Tus derechos de creación de cursos en {studio_name} han sido revocados. Si "
-"crees que esto ha sido un error, por favor, contacta con {email}."
+"Tus permisos para crear cursos en {studio_name} han sido revocados. Si "
+"crees que fue un error por favor contacta a {email}"
 
 #: cms/templates/emails/course_creator_subject.txt:2
 msgid "Your course creator status for {studio_name}"
-msgstr "Tu estado de creador de curso en {studio_name}"
+msgstr "Este es tu  estado de cuenta como creador de cursos {studio_name}"
 
 #: cms/templates/emails/user_task_complete_email.txt:5
 msgid ""
 "Your {task_name} task has completed with the status '{task_status}'. Use "
 "this URL to view task details or download any files created: {detail_url}"
 msgstr ""
-"Su tarea {nombre_tarea} se ha completado con el estado '{task_status}'. "
-"Useeste URL para ver detalles de la tarea o descargar cualquier archivo "
-"creado: {detail_url}"
+"La tarea {task_name} se completó con el estado '{task_status}'. "
+"Utiliza esta URL para ver los detalles de la tarea o descargar los "
+"archivos cargados: {detail_url}"
 
 #: cms/templates/emails/user_task_complete_email.txt:9
 msgid ""
 "Your {task_name} task has completed with the status '{task_status}'. Sign in "
 "to view the details of your task or download any files created."
 msgstr ""
-"Tu {task_name} tarea se ha completado con el estado '{task_status}'. Inicia "
-"sesión para ver los detalles de tu tarea o descargar los archivos creados."
+"La tarea de {task_name} se completó con el estado '{task_status}'. Inicia "
+"sesión para ver los detalles de la tarea o descargar los archivos cargados."
 
 #: cms/templates/emails/user_task_complete_email_subject.txt:2
 msgid "{platform_name} {studio_name}: Task Status Update"
-msgstr "{platform_name} {studio_name}: Actualización del estado de la tarea"
+msgstr "{platform_name} {studio_name}: Actualización del estado de la Tarea"
 
 #: cms/templates/maintenance/_force_publish_course.html:12
 msgid "Required data to force publish course."
@@ -18083,6 +18220,12 @@ msgstr "Elije idioma"
 #: lms/templates/header/user_dropdown.html:42
 msgid "Account"
 msgstr "Cuenta"
+
+msgid "Leaderboard"
+msgstr "Tabla de clasificación"
+
+msgid "My learning transcript"
+msgstr "Mi experiencia de aprendizaje"
 
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
@@ -21578,10 +21721,10 @@ msgstr ""
 "Por favor visite la {start_help_tag}página de ayuda{end_tag} para una "
 "posible solución."
 
-#: lms/templates/courseware/course_about.html:130
-#: lms/templates/courseware/course_navigation.html:86
-msgid "View Instructor Page"
-msgstr "Vea la Página de Instructor"
+#: lms/templates/courseware/course_about.html:131
+#: lms/templates/courseware/course_navigation.html:62
+msgid "View Instructor Dashboard"
+msgstr "Ver panel del instructor"
 
 #: lms/templates/courseware/course_about.html:138
 #: lms/templates/courseware/course_navigation.html:95
@@ -21994,7 +22137,7 @@ msgstr "Moneda"
 
 #: lms/templates/courseware/program_marketing.html:116
 msgid "Start Learning"
-msgstr "Empezar Aprendizaje"
+msgstr "Iniciar Aprendizaje"
 
 #: lms/templates/courseware/program_marketing.html:124
 msgid "Play"
@@ -23026,6 +23169,33 @@ msgstr "en todos los grupos"
 msgid "Sort:"
 msgstr "Ordenar:"
 
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:40
+msgid "by recent activity"
+msgstr "actividad reciente mayor actividad"
+
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:42
+msgid "by most activity"
+msgstr "por mayor actividad"
+
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "by most votes"
+msgstr "La más votada"
+
+#: lms/templates/discussion/_thread_list_template.html:53
+msgid "Subject"
+msgstr "Asunto"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Topic"
+msgstr "Tema"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Author"
+msgstr "Autor"
+
 #: lms/templates/registration/password_create_complete.html:43
 msgid "Password Creation Complete"
 msgstr "Contraseña restablecida."
@@ -23037,11 +23207,6 @@ msgid ""
 msgstr ""
 "Tu contraseña ha sido restablecida. {start_link}Inicia sesión en tu cuenta."
 "{end_link}"
-
-#. Translators: This is a menu option for sorting forum threads
-#: lms/templates/discussion/_thread_list_template.html:42
-msgid "by most activity"
-msgstr "por mayor actividad"
 
 #: lms/templates/registration/password_create_confirm.html:47
 msgid "Invalid Password Creation Link"
@@ -23139,9 +23304,9 @@ msgid ""
 "engaging, high-quality {platform_name} courses. Note that you will not be "
 "able to log back into your account until you have activated it."
 msgstr ""
-"¡Ya casi está! Usa el enlace para activar tu cuenta y acceder a los "
-"atractivos cursos y de gran calidad de {platform_name}. Ten en cuenta que no "
-"podrás iniciar sesión en tu cuenta hasta que no la hayas activado."
+"¡Ya casi estás listo! Utiliza el enlace para activar tu cuenta y acceder a los "
+"cursos de {platform_name} los cuales son atractivos y de alta calidad. Ten en cuenta que no "
+"podrás volver a iniciar sesión en tu cuenta hasta que la hayas activado."
 
 #: lms/templates/emails/activation_email.txt:12
 msgid "Enjoy learning with {platform_name}."
@@ -23166,7 +23331,7 @@ msgstr ""
 
 #: lms/templates/emails/activation_email_subject.txt:2
 msgid "Action Required: Activate your {platform_name} account"
-msgstr "Acción requerida: active su cuenta {platform_name}."
+msgstr "Acción requerida: Active su cuenta de {platform_name}"
 
 #: lms/templates/emails/add_beta_tester_email_message.txt:3
 #: lms/templates/emails/course_re_enroll_email_message.txt:9
@@ -23662,7 +23827,7 @@ msgid ""
 "You have been enrolled to the ILT session '{ilt_name}' in the course "
 "{course_name} on the {platform_name} platform."
 msgstr ""
-"Te has inscrito en la sesión ILT '{ilt_name}' en el curso{course_name} en la "
+"Te has inscrito en la sesión ILT '{ilt_name}' en el curso {course_name} en la "
 "plataforma {platform_name}."
 
 #: lms/templates/emails/ilt_confirmed_email_message.txt:41
@@ -23688,7 +23853,7 @@ msgid ""
 "{course_name} on the {platform_name} platform. For more information about "
 "the session, please click on the link below:"
 msgstr ""
-"Se ha inscrito en una sesión ILT '{ilt_name}' en curso{course_name} en la "
+"Se ha inscrito en una sesión ILT '{ilt_name}' en curso {course_name} en la "
 "plataforma {platform_name}. Para obtener más información sobrela sesión, "
 "haga clic en el siguiente enlace:"
 
@@ -23745,7 +23910,7 @@ msgid ""
 "The hotel information of the ILT session '{ilt_name}' in course "
 "{course_name} on the {platform_name} platform has been updated."
 msgstr ""
-"La información del hotel de la sesión ILT '{ilt_name}' en curso{course_name} "
+"La información del hotel de la sesión ILT '{ilt_name}' en curso {course_name} "
 "en la plataforma {platform_name} se ha actualizado."
 
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:14
@@ -23833,7 +23998,7 @@ msgid ""
 "{platform_name} platform. For more information about the session, please "
 "click on the link below:"
 msgstr ""
-"Se le ha dado de baja de la sesión ILT '{ilt_name}' en el{platform_name} "
+"Se le ha dado de baja de la sesión ILT '{ilt_name}' en el {platform_name} "
 "plataforma. Para obtener más información sobre la sesión, por favorHaga clic "
 "en el enlace de abajo:"
 
@@ -23844,7 +24009,7 @@ msgid ""
 "validate the request:"
 msgstr ""
 "Un alumno ({name}) ha enviado una solicitud para inscribirse en la sesión "
-"ILT'{ilt_name}' en la plataforma {platform_name}. Haga clic en el enlace a "
+"ILT '{ilt_name}' en la plataforma {platform_name}. Haga clic en el enlace a "
 "continuación paravalidar la solicitud:"
 
 #: lms/templates/emails/ilt_validate_email_subject.txt:2
@@ -24441,6 +24606,22 @@ msgstr "Porcentaje de descuento"
 #: lms/templates/instructor/instructor_dashboard_2/add_coupon_modal.html:57
 msgid "Add expiration date"
 msgstr "Fecha de caducidad"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Intermediate Certificates"
+msgstr "Certificados intermedios"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Certificate Title"
+msgstr "Título del certificado"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date after"
+msgstr "Fecha de emisión después de"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date before"
+msgstr "Fecha de emisión antes de"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:21
 msgid "Example Certificates"
@@ -25247,7 +25428,7 @@ msgstr "Numero de asientos"
 #: lms/templates/instructor/instructor_dashboard_2/executive_summary.html:51
 #: lms/templates/triboo_analytics/course.html:100
 msgid "Number of Enrollments"
-msgstr "Número de matriculados"
+msgstr "Número de ingresos"
 
 #: lms/templates/instructor/instructor_dashboard_2/executive_summary.html:59
 msgid "Gross Revenue Collected"
@@ -29563,6 +29744,10 @@ msgstr "Mostrar resultados"
 msgid "Done"
 msgstr "Terminado"
 
+#: lbmdonexblock.html
+msgid "Completion"
+msgstr ""
+
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "INSTRUCTOR LED TRAINING"
 msgstr "INSTRUCCION PRESENCIAL"
@@ -29576,7 +29761,7 @@ msgid "CHOOSE A SESSION TO ENROLL"
 msgstr "ELIGE UNA SESIÓN PARA INSCRIBIRTE"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
+msgid "NO SESSIONS AVAILABLE"
 msgstr "NO HAY SESIONES DISPONIBLES"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
@@ -29597,7 +29782,7 @@ msgstr "GESTIÓN DE SESIONES"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "ENROLLMENT MANAGEMENT"
-msgstr "ESTIÓN DE INSCRIPCIÓN"
+msgstr "GESTIONAR INSCRIPCIONES"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "ACCOMMODATION MANAGEMENT"
@@ -29928,12 +30113,11 @@ msgid "Course wiki"
 msgstr "Wiki del curso"
 
 #: lms/templates/courseware/course_banner.html:159
-#: lms/templates/courseware/info.html:75 remove the duplicated one
+#: lms/templates/courseware/info.html:75
 msgid "Resume Course"
 msgstr "Reanudar Curso"
 
-#: lms/templates/footer.html:121 remove the duplicated one
-#: lms/templates/courseware/course_navigation.html:86
+#: lms/templates/footer.html:121
 msgid "Admin Space"
 msgstr "Administración"
 
@@ -29941,9 +30125,18 @@ msgstr "Administración"
 msgid "Edit the Course"
 msgstr "Edite el Curso"
 
+#: lms/templates/triboo_analytics/course.html:25
+#: lms/templates/triboo_analytics/ilt.html:25
+#: lms/templates/triboo_analytics/learner.html:24
+#: lms/templates/triboo_analytics/microsite.html:30
+#: lms/templates/triboo_analytics/transcript.html:24
+#: lms/templates/courseware/course_about.html:146
+#: lms/templates/courseware/course_navigation.html:103
+msgid "Course Report"
+msgstr "Informe de Curso"
+
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:190
-#: remove the duplicated one
 msgid "Expand All"
 msgstr "Expandir todo"
 
@@ -29953,13 +30146,11 @@ msgstr "Contraer todas las secciones"
 
 #: lms/templates/courseware/course_about.html:186
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:180
-#: remove the duplicated one
 msgid "Read more"
 msgstr "Lea más"
 
 #: lms/templates/courseware/course_about.html:187
 #: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:181
-#: remove the duplicated one
 msgid "Read less"
 msgstr "Lea menos"
 
@@ -30322,8 +30513,8 @@ msgstr "Límite de tamaño: "
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
-msgid "Copy the Studio URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
-msgstr "Copie la URL de Studio de un archivo PDF ya cargado en <a href={course_url} target='_blank'>Archivos y Cargas</a>"
+msgid "Copy the Web URL of a PDF you previously uploaded in <a href={course_url} target='_blank'>Files & Uploads</a>"
+msgstr "Copie la Web URL de un archivo PDF ya cargado en <a href={course_url} target='_blank'>Archivos y Cargas</a>"
 
 #: XBlock: xblock-pdf
 #: xblock-pdf/pdf/templates/html/pdf_edit.html
@@ -30408,21 +30599,413 @@ msgid "Open module in a new tab. This option will only apply to users with a com
 msgstr "Abra el módulo en una nueva pestaña. Esta opción solo se aplicará a los usuarios con un navegador compatible."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "%(num_points)s point possible"
+msgid_plural "%(num_points)s points possible"
+msgstr[0] "%(num_points)s posible punto"
+msgstr[1] "%(num_points)s posibles puntos"
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "New Tab"
 msgstr "Nueva pestaña"
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Click on the button below to open the module in a new tab."
 msgstr "Haga clic en el botón de abajo para abrir el módulo en una pestaña nueva."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Your e-learning module has been opened in a new tab. Please, close the new tab after you completed the module."
 msgstr "Su módulo de aprendizaje electrónico se ha abierto en una nueva pestaña. Por favor, cierre la nueva pestaña después de completar el módulo."
 
 #: XBlock: scormxblock
-#: scormxblock/static/html/scormxblock.html
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
 msgid "Launch"
 msgstr "Comenzar"
+
+#: XBlock: scormxblock
+#: edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+msgid "SCORM"
+msgstr "Módulo SCORM"
+
+# master-griky: lms/templates/header/navbar-not-authenticated.html
+msgid "What is Griky?"
+msgstr "¿Qué es Griky?"
+
+# master-griky: lms/templates/header/navbar-not-authenticated.html
+msgid "Create an Account"
+msgstr "CREAR UNA CUENTA"
+
+# master-griky: lms/templates/index.html
+msgid "Give play to your learning!"
+msgstr "¡Dale play a tu aprendizaje!"
+
+# master-griky: lms/templates/index.html
+msgid "May your learning never stop! Join Griky today and enjoy content playlists created for YOU. Learn at your own pace and from anywhere."
+msgstr "¡Que tu aprendizaje no se detenga nunca! Únete a Griky hoy y disfruta de playlists de contenido creados para TI. Aprende a tu ritmo y desde cualquier lugar."
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "TO LEARN YOU HAVE TO INVEST"
+msgstr "PARA APRENDER HAY QUE INVERTIR"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "But not so much!"
+msgstr "¡Pero no tanto!"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "We understand that you want to educate yourself to improve your income, therefore <b>we design a payment system that does not imply going into debt for years or sacrificing all your money.</b>"
+msgstr "Entendemos que quieres educarte para mejorar tus ingresos, por lo tanto <b>diseñamos un sistema de pago que no implica endeudarte por años ni sacrificar todo tu dinero.</b>"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Basic courses"
+msgstr "Cursos básicos"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Unlimited programs"
+msgstr "Programas ilimitados"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Interact with teachers and peers"
+msgstr "Interactúa con profesores y compañeros"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "One (1) program of your choice"
+msgstr "Un (1) programa a tu elección"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to 5 basic courses"
+msgstr "Acceso a 5 cursos básicos"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Premium programs"
+msgstr "Programas premium"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "A password reset email has been sent to the email address you provided."
+msgstr "Se ha enviado un correo electrónico de restablecimiento de contraseña a la dirección de correo electrónico que proporcionó."
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Hello {full_name}, you have successfully subscribed to the {plan_name} plan."
+msgstr "Hola {full_name}, te has suscrito con éxito al plan {plan_name}."
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Subscription ID"
+msgstr "ID de suscripción"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Chargebee Account"
+msgstr "Cuenta Chargebee"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Update Plan"
+msgstr "Plan de actualización"
+
+#: XBlock: edflex
+#: edflex/edflex.py
+msgid "External Resource"
+msgstr "Recurso Externo"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html
+msgid "Use External Content component"
+msgstr "Usa componente de contenido externo"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html
+msgid "Add resources to your course, curated by Edflex technology. Choose from a selection of MOOCs, Videos, Podcasts, Books, and Articles to accompany and enhance the creation of your trainings!"
+msgstr "Agrega recursos a tu curso, curados con la tecnología Edflex. ¡Elije entre una selección de MOOCs, videos, podcasts, libros y artículos para acompañar y mejorar la creación de tus entrenamientos!"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html
+msgid "You are now ready"
+msgstr "Ahora estas listo"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html
+msgid "Integrate external content to enrich your course!"
+msgstr "¡Integra contenido externo para enriquecer tu curso!"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "How it works?"
+msgstr "¿Cómo funciona?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Select the format of content you want to add"
+msgstr "Selecciona el formato de contenido que deseas agregar"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a category for your learning content"
+msgstr "Elije una categoría para su contenido de aprendizaje"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Then a language"
+msgstr "A continuación, un idioma"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Pick the content you want to use"
+msgstr "Elige el contenido que quiere usar"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "No content available? Then change one of the parameters you previously selected."
+msgstr "¿No hay contenido disponible? Cambia entonces uno de los parámetros que seleccionaste previamente."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Which format of content do you need?"
+msgstr "¿En qué formato necesitas el contenido?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a format. It is mandatory."
+msgstr "Elige un formato. Es obligatorio."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Select one of the category below"
+msgstr "Selecciona una de las categorías a continuación"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a category."
+msgstr "Elige una categoría."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Which language for the content?"
+msgstr "¿Qué idioma para el contenido?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a language."
+msgstr "Elige un idioma."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Select the title of the content"
+msgstr "Selecciona el título del contenido."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Choose a content."
+msgstr "Elige un contenido."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Relative weight in this course section"
+msgstr "El peso relativo de esta sección del curso"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html
+msgid "Add this content"
+msgstr "Agrega este contenido"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "About the content"
+msgstr "Sobre el contenido"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "reviews"
+msgstr "comentarios"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html
+msgid "users’ reviews"
+msgstr "comentarios de los usuarios"
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr "Examen"
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr "Nube de palabras"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Poll"
+msgstr "Votación"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll.html
+msgid "Survey"
+msgstr "Encuesta"
+
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:119
+msgid "SCORM module"
+msgstr "Módulo SCORM"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "CUSTOM PLANS"
+msgstr "PLANES PERSONALIZADOS"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Full catalog and personalized learning lists"
+msgstr "Acceso a catálogo de contenido Griky y diseño de listas de aprendizaje personalizadas"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Implementation and expert guidance"
+msgstr "Implementación y acompañamiento de expertos"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to a strong pool of candidates"
+msgstr "Acceso a candidatos para sus vacantes"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Certifications and university partnerships"
+msgstr "Certificación propia y posibilidad de titulación de usuarios con reconocidas universidades"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "PROFESSIONAL"
+msgstr "PROFESIONAL"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "{price} USD / MONTH"
+msgstr "{price} USD / MES"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to all courses (1000+ courses and 9+ career areas)"
+msgstr "Acceso a todos los cursos ( +1000 cursos y +9 carreras)"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Certifications"
+msgstr "Certificación"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Personalized mentoring"
+msgstr "Mentoría personalizada"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Employment support: Access to new job opportunities"
+msgstr "Apoyo laboral: Acceso a nuevas oportunidades de trabajo"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "BASIC"
+msgstr "BÁSICO"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "FREE"
+msgstr "GRATIS"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to a community of 10,000+ active members"
+msgstr "Acceso a la comunidad +10,000 usuarios"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Personalized learning lists, updated weekly"
+msgstr "Actualización constante de listas de aprendizaje personalizadas"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Learning in the flow of life - anytime, anywhere"
+msgstr "Aprendizaje en el flow 24/7, en cualquier momento y lugar"
+
+#: lms/templates/dashboard.html
+msgid "Back to Calendar"
+msgstr "Volver al calendario"
+
+#: lms/templates/dashboard.html
+msgid "Upcoming Session"
+msgstr "Próxima sesión"
+
+#: lms/templates/dashboard.html
+msgid "No upcoming sessions planned"
+msgstr "No hay próximas sesiones planificadas"
+
+#: lms/templates/dashboard.html
+msgid "Sign up for an ILT session."
+msgstr "Regístrate en una sesión con instrucción guiada"
+
+#: lms/templates/dashboard.html
+msgid "It will appear in your calendar."
+msgstr "Aparecerá en su calendario."
+
+#: lms/templates/dashboard.html
+msgid "Let's start"
+msgstr "Comenzar"
+
+# lms/templates/courses_list.html
+msgid "Show more"
+msgstr "Mostrar más"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Virtual Academy of Languages"
+msgstr "Academia Virtual de Idiomas"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Graduation: Connection with universities with which you can graduate"
+msgstr "Graduación: Conexión con universidades con las que podrás graduarte"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Unlimited users and communities"
+msgstr "Usuarios y comunidades ilimitadas"
+
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr "El módulo SCORM excede el tamaño máximo de %(limit)s MB."
+
+#: lms/templates/dashboard.html
+msgid "Find here, soon, your last activity on training courses."
+msgstr "Aquí encontrarás tus actividades más recientes"
+
+#: lms/templates/dashboard.html
+msgid "Let's do it!"
+msgstr "Comencemos!"
+
+#: lms/templates/dashboard.html
+msgid "Hmm, it's looking a bit empty, so let's start a new course right now."
+msgstr "Mmmm, Este se ve vacio. ¿Porqué no agregamos un curso?"
+
+#: lms/templates/dashboard.html
+msgid "Go!"
+msgstr "Vamos!"
+
+#: lms/templates/dashboard.html
+msgid "Are you ready to start a course?"
+msgstr "Estas listo para comenzar el curso"
+
+#: lms/templates/dashboard.html
+msgid "Let's start!"
+msgstr "Vamos a empezar"
+
+#: XBlock: iframe
+#: iframe-id-xblock/iframe/iframe.py
+msgid "Don't forget the leading protocol (http:// or https://) and the path, https://yoururl.com/path is correct, for example."
+msgstr "No olvide el protocolo principal (http: // o https: //) y la ruta. El siguiente ejemplo es correcto: https://yoururl.com/path"
+
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.html
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
+msgid "Hello!"
+msgstr "¡Hola!"
+
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.html
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
+msgid "We are Griky, the comprehensive digital education system that intelligently selects, organizes and shares content and we want to welcome you to your new learning path."
+msgstr "Somos Griky, el sistema integral de educación digital que selecciona, organiza y comparte el contenido de forma inteligente y queremos darte la bienvenida a tu nuevo camino de aprendizaje."
+
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.html
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
+msgid "We are happy that you have chosen us as the solution that will help you fulfill your dreams and train you to grow professionally."
+msgstr "Estamos felices que nos hayas elegido como la solución que te ayudará a cumplir tus sueños y formarte para crecer profesionalmente."
+
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.html
+#: master-griky: common/templates/student/edx_ace/passwordcreate/email/body.txt
+msgid "Start making the most of your Griky experience!"
+msgstr "¡Empieza a aprovechar de tu experiencia Griky al máximo! "
+
+#: lms/templates/registration/sso_failure.html:50
+msgid "Sorry, we can't find your account. Please contact your IT administrator for support."
+msgstr "Lo sentimos, no podemos encontrar su cuenta. Comuníquese con su administrador de TI para obtener asistencia."
+
+#: lms/templates/registration/sso_failure.html:54
+msgid "Back to login"
+msgstr "Volver a la página de inicio de sesión"

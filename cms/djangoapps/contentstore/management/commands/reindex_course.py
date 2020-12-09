@@ -15,6 +15,50 @@ from xmodule.modulestore.django import modulestore
 from .prompt import query_yes_no
 
 
+# Add fields to this value to be used for term-level queries(don't do analyzed to avoid separting words form strs)
+NOT_ANALYZED_FIELDS = ['vendor', 'course_category', 'course_country', 'enrollment_learning_groups']
+
+
+CONFIG_BODY = {
+    "settings": {
+        "analysis": {
+            "analyzer": {
+                "partword": {
+                    "type": "custom",
+                    "tokenizer": "partword_tokenizer",
+                    "filter": [
+                        "lowercase"
+                    ]
+                }
+            },
+            "tokenizer": {
+                "partword_tokenizer": {
+                    "type": "nGram",
+                    "min_gram": 1,
+                    "max_gram": 50
+                }
+            }
+        }
+    },
+    "mappings": {
+        "course_info": {
+            "properties": {
+                "content": {
+                    "properties": {
+                        "display_name": {
+                            "type": "string",
+                            "analyzer": "partword"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+CONFIG_BODY['mappings']['course_info']['properties'].update({key: {"type": "string", "index": "not_analyzed"} for key in NOT_ANALYZED_FIELDS})
+
+
 class Command(BaseCommand):
     """
     Command to re-index courses
@@ -23,6 +67,7 @@ class Command(BaseCommand):
 
         ./manage.py reindex_course <course_id_1> <course_id_2> ... - reindexes courses with provided keys
         ./manage.py reindex_course --all - reindexes all available courses
+        ./manage.py reindex_course --all --reconfig - reconfigures es index and reindexes all available courses
         ./manage.py reindex_course --setup - reindexes all courses for devstack setup
     """
     help = dedent(__doc__)
@@ -35,6 +80,9 @@ class Command(BaseCommand):
         parser.add_argument('--all',
                             action='store_true',
                             help='Reindex all courses')
+        parser.add_argument('--reconfig',
+                            action='store_true',
+                            help='Do the index configuration')
         parser.add_argument('--setup',
                             action='store_true',
                             help='Reindex all courses on developers stack setup')
@@ -51,6 +99,14 @@ class Command(BaseCommand):
 
         return result
 
+    def config_index(self, index, body):
+        """Reconfig es configuration according config body.
+        """
+        searcher = SearchEngine.get_search_engine(index)
+        searcher._es.indices.close(index)
+        searcher._es.indices.delete(index)
+        searcher._es.indices.create(index, body=body)
+
     def handle(self, *args, **options):
         """
         By convention set by Django developers, this method actually executes command's actions.
@@ -58,6 +114,7 @@ class Command(BaseCommand):
         """
         course_ids = options['course_ids']
         all_option = options['all']
+        reconfig_option = options['reconfig']
         setup_option = options['setup']
         index_all_courses_option = all_option or setup_option
 
@@ -67,8 +124,8 @@ class Command(BaseCommand):
 
         store = modulestore()
 
+        index_name = CoursewareSearchIndexer.INDEX_NAME
         if index_all_courses_option:
-            index_name = CoursewareSearchIndexer.INDEX_NAME
             doc_type = CoursewareSearchIndexer.DOCUMENT_TYPE
             if setup_option:
                 try:
@@ -102,6 +159,9 @@ class Command(BaseCommand):
         else:
             # in case course keys are provided as arguments
             course_keys = map(self._parse_course_key, course_ids)
+
+        if reconfig_option:
+            self.config_index(index_name, CONFIG_BODY)
 
         for course_key in course_keys:
             CoursewareSearchIndexer.do_course_reindex(store, course_key)

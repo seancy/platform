@@ -1221,6 +1221,7 @@ class TestGetTranscript(TestVideo):
     def test_en_with_empty_sub(self):
 
         transcripts = {"transcripts": {}, "sub": ""}
+        self.item.youtube_id_1_0 = 'p2Q6BrNhdh8'
         # no self.sub, self.youttube_1_0 exist, but no file in assets
         with self.assertRaises(NotFoundError):
             self.item.get_transcript(transcripts)

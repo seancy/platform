@@ -31,6 +31,7 @@
       "Trebuchet MS=trebuchet ms,geneva;" +
       "Verdana=verdana,geneva;" +
       "Webdings=webdings;" +
+      "GeogrotesqueSitel=GeogrotesqueSitel;" +
       "Wingdings=wingdings,zapf dingbats";
 
     _getFonts = function() {

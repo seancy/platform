@@ -28,6 +28,8 @@ from xmodule.vertical_block import VerticalBlock
 from xmodule.x_module import shim_xmodule_js, XModuleDescriptor, XModule, PREVIEW_VIEWS, STUDIO_VIEW
 import webpack_loader.utils
 from student.roles import studio_access_role
+from django.utils.translation import gettext as _
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 
 log = logging.getLogger(__name__)
@@ -129,15 +131,34 @@ def wrap_xblock(
     data['usage-id'] = usage_id_serializer(block.scope_ids.usage_id)
     data['request-token'] = request_token
 
-    if block.name:
-        data['name'] = block.name
+    block_label = None
+    block_title = None
+    frag_content = frag.content
+
+    if block.category == 'html' and frag.content.find('hd hd-2') == -1:
+        frag_content = '<hr class="sep-line">' + frag_content
+        if block.display_name not in ['Text', 'Raw HTML']:
+            block_label = '''
+                        <div class="block-label">
+                            <span class="fal fa-clipboard-list"></span>
+                            <span class="block-label-text">{display_name}</span>
+                        </div>
+                        '''.format(display_name=_("Text"))
+            display_name = block.display_name
+            block_title = '''
+                        <div class="block-header-wrapper html-header-wrapper">
+                            <h3 class="block-header html-header">{display_name}</h3>
+                        </div>
+                        '''.format(display_name=display_name.encode('utf-8'))
 
     template_context = {
-        'content': block.display_name if display_name_only else frag.content,
+        'content': block.display_name if display_name_only else frag_content,
         'classes': css_classes,
         'display_name': block.display_name_with_default_escaped,
         'data_attributes': u' '.join(u'data-{}="{}"'.format(markupsafe.escape(key), markupsafe.escape(value))
                                      for key, value in data.iteritems()),
+        'label': block_label,
+        'title': block_title,
     }
 
     if hasattr(frag, 'json_init_args') and frag.json_init_args is not None:
@@ -327,7 +348,7 @@ def add_staff_markup(needs_staff_markup, user, disable_staff_debug_info, block, 
         edit_link = ""
         if is_studio_course:
             # build edit link to unit in CMS. Can't use reverse here as lms doesn't load cms's urls.py
-            edit_link = "//" + settings.CMS_BASE + '/container/' + text_type(block.location)
+            edit_link = "//" + configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.CMS_BASE) + '/container/' + text_type(block.location)
 
         # return edit link in rendered HTML for display
         return wrap_fragment(

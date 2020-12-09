@@ -2,6 +2,9 @@
 Utilities for string manipulation.
 """
 
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+
 
 def str_to_bool(str):
     """
@@ -25,3 +28,12 @@ def _has_non_ascii_characters(data_string):
         return True
 
     return False
+
+
+def is_str_url(text):
+    validator = URLValidator()
+    try:
+        validator(text)
+        return True
+    except ValidationError:
+        return False

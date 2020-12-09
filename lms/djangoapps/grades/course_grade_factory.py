@@ -11,6 +11,8 @@ import dogstats_wrapper as dog_stats_api
 from six import text_type
 
 from courseware.models import StudentModule
+from lms.djangoapps.certificates.models import GeneratedCertificate
+from openedx.core.djangoapps.request_cache import clear_cache
 from openedx.core.djangoapps.signals.signals import COURSE_GRADE_CHANGED, COURSE_GRADE_NOW_PASSED
 from openedx.core.lib.gating.api import get_subsection_completion_percentage_with_gradebook_edit
 from student.models import CourseEnrollment
@@ -22,6 +24,7 @@ from .course_grade import CourseGrade, ZeroCourseGrade
 from .models import PersistentCourseGrade, PersistentCourseProgress, PersistentSubsectionGradeOverride, prefetch
 
 log = getLogger(__name__)
+CACHE_NAMESPACE = u"grades.models.VisibleBlocks"
 
 
 class CourseGradeFactory(object):
@@ -38,6 +41,7 @@ class CourseGradeFactory(object):
             course_structure=None,
             course_key=None,
             create_if_needed=True,
+            clear_request_cache=False
     ):
         """
         Returns the CourseGrade for the given user in the course.
@@ -68,6 +72,7 @@ class CourseGradeFactory(object):
             course_structure=None,
             course_key=None,
             force_update_subsections=False,
+            clear_request_cache=False,
     ):
         """
         Computes, updates, and returns the CourseGrade for the given
@@ -80,7 +85,8 @@ class CourseGradeFactory(object):
         return self._update(
             user,
             course_data,
-            force_update_subsections=force_update_subsections
+            force_update_subsections=force_update_subsections,
+            clear_request_cache=clear_request_cache
         )
 
     def iter(
@@ -90,6 +96,7 @@ class CourseGradeFactory(object):
             collected_block_structure=None,
             course_key=None,
             force_update=False,
+            clear_request_cache=False
     ):
         """
         Given a course and an iterable of students (User), yield a GradeResult
@@ -111,15 +118,16 @@ class CourseGradeFactory(object):
         stats_tags = [u'action:{}'.format(course_data.course_key)]
         for user in users:
             with dog_stats_api.timer('lms.grades.CourseGradeFactory.iter', tags=stats_tags):
-                yield self._iter_grade_result(user, course_data, force_update)
+                yield self._iter_grade_result(user, course_data, force_update, clear_request_cache)
 
-    def _iter_grade_result(self, user, course_data, force_update):
+    def _iter_grade_result(self, user, course_data, force_update, clear_request_cache=False):
         try:
             kwargs = {
                 'user': user,
                 'course': course_data.course,
                 'collected_block_structure': course_data.collected_structure,
-                'course_key': course_data.course_key
+                'course_key': course_data.course_key,
+                'clear_request_cache': clear_request_cache
             }
             if force_update:
                 kwargs['force_update_subsections'] = True
@@ -167,7 +175,7 @@ class CourseGradeFactory(object):
         )
 
     @staticmethod
-    def _update(user, course_data, force_update_subsections=False):
+    def _update(user, course_data, force_update_subsections=False, clear_request_cache=False):
         """
         Computes, saves, and returns a CourseGrade object for the
         given user and course.
@@ -219,9 +227,13 @@ class CourseGradeFactory(object):
             course_data.full_string(), user.id, course_grade, should_persist,
         )
 
+        if clear_request_cache:
+            clear_cache(CACHE_NAMESPACE)
+
         return course_grade
 
     def update_course_completion_percentage(self, course_key, user, course_grade=None, enrollment=None):
+        from triboo_analytics.models import LeaderBoard
         course_usage_key = modulestore().make_course_usage_key(course_key)
         overrides = PersistentSubsectionGradeOverride.objects.filter(
             grade__user_id=user.id,
@@ -249,11 +261,38 @@ class CourseGradeFactory(object):
                         enrollment.save()
                         log.info(
                             "Create completion date for user id %d / %s: %s" % (user.id, course_key, completion_date))
+                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                        leader_board.course_completed = leader_board.course_completed + 1
+                        leader_board.save()
+                        log.info(
+                            "updated course completed of leaderboard score "
+                            "for user: {user_id}, course_id: {course_id}".format(
+                                user_id=user.id,
+                                course_id=course_key
+                            )
+                        )
                 else:
                     if enrollment.completed:
                         enrollment.completed = None
                         enrollment.save()
                         log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
+                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                        if leader_board.course_completed > 0:
+                            leader_board.course_completed = leader_board.course_completed - 1
+                            leader_board.save()
+                            log.info(
+                                "updated course completed (-1) of leaderboard score "
+                                "for user: {user_id}, course_id: {course_id}".format(
+                                    user_id=user.id,
+                                    course_id=course_key
+                                )
+                            )
+                        cert = GeneratedCertificate.objects.filter(
+                            user=user, course_id=course_key, status='downloadable'
+                        )
+                        if cert.exists():
+                            cert.delete()
+
             except AttributeError:
                 pass
         else:
@@ -266,11 +305,37 @@ class CourseGradeFactory(object):
                         enrollment.save()
                         log.info("Create completion date for user id %d / %s: %s" % (
                             user.id, course_key, completion_date))
+                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                        leader_board.course_completed = leader_board.course_completed + 1
+                        leader_board.save()
+                        log.info(
+                            "updated course completed of leaderboard score "
+                            "for user: {user_id}, course_id: {course_id}".format(
+                                user_id=user.id,
+                                course_id=course_key
+                            )
+                        )
                 else:
                     if enrollment.completed:
                         enrollment.completed = None
                         enrollment.save()
                         log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
+                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                        if leader_board.course_completed > 0:
+                            leader_board.course_completed = leader_board.course_completed - 1
+                            leader_board.save()
+                            log.info(
+                                "updated course completed (-1) of leaderboard score "
+                                "for user: {user_id}, course_id: {course_id}".format(
+                                    user_id=user.id,
+                                    course_id=course_key
+                                )
+                            )
+                        cert = GeneratedCertificate.objects.filter(
+                            user=user, course_id=course_key, status='downloadable'
+                        )
+                        if cert.exists():
+                            cert.delete()
             except AttributeError:
                 pass
         if should_persist_grades(course_key):
@@ -312,6 +377,33 @@ class CourseGradeFactory(object):
         return nb_trophies_possible
 
 
+    def get_nb_trophies_earned(self, user, course, grade_summary=None):
+         """
+         Get the specific course's badges earned for the user.
+         """
+         if not grade_summary:
+             grade_summary = self.read(user, course)
+         if not grade_summary:
+             return
+
+         nb_trophies_earned = 0
+         grading_rules_dict = {}
+         grading_rules = course.raw_grader
+         for rule in grading_rules:
+             if not rule.get('threshold'):
+                 rule['threshold'] = 1
+             grading_rules_dict.update({
+                 rule.get('type'): rule
+             })
+
+         for subsection_grade in grade_summary.grader_result['section_breakdown']:
+             grade_type = subsection_grade['category']
+             if subsection_grade['percent'] >= grading_rules_dict[grade_type]['threshold']:
+                 nb_trophies_earned += 1
+
+         return nb_trophies_earned
+
+
     def check_badge_success(self, user, course_key, enrollment):
         from triboo_analytics.models import Badge, LearnerBadgeSuccess
 
@@ -347,10 +439,10 @@ class CourseGradeFactory(object):
                             success.delete()
 
 
-    def get_progress(self, user, course, progress=None, grade_summary=None, enrollment=None):
+    def get_progress(self, user, course, progress=None, grade_summary=None, enrollment=None, clear_request_cache=False):
         course_key = course.id
         if not grade_summary:
-            grade_summary = self.read(user, course)
+            grade_summary = self.read(user, course, clear_request_cache=clear_request_cache)
         if not grade_summary:
             return
 

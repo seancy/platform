@@ -219,7 +219,7 @@ class TestUserTaskStopped(APITestCase):
         """
         Make sure we can succeed on retries
         """
-        with mock.patch('django.core.mail.send_mail') as mock_exception:
+        with mock.patch('util.email_utils.send_mail') as mock_exception:
             mock_exception.side_effect = NoAuthHandlerFound()
 
             with mock.patch('cms_user_tasks.tasks.send_task_complete_email.retry') as mock_retry:

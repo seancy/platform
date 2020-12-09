@@ -277,3 +277,38 @@ msgstr "Axes de Développement"
 #: master-sitel: cms/templates/settings.html
 msgid "Identify the course areas of development here."
 msgstr "Identifiez les axes de développement du cours ici."
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolledsubject.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "You have been enrolled in the training"
+msgstr "Vous avez été inscrit à la Formation"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "Type of training: "
+msgstr "Type de Formation :"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "Modality of training: "
+msgstr "Modalité de déploiement :"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "Duration: "
+msgstr "Durée :"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "The Knowledge Management Team wish an excellent training!"
+msgstr "L’équipe Management des Connaissances vous souhaite une excellente formation !"
+
+#: master-verisure:lms/templates/emails/enroll_email_enrolledmessage.txt
+#: master-verisure:lms/templates/emails/enroll_email_enrolled_html_message.txt
+msgid "Please <b>DO NOT TRANSFER THIS INVITATION</b> as it is addressed to you personally."
+msgstr "Nous vous remercions de <b>NE PAS TRANSFÉRER CETTE INVITATION</b> qui vous est personnellement adressée"
+
+#: master-cofidis:lms/djangoapps/instructor/views/instructor_dashboard.py
+msgid "more than {threshold}"
+msgstr "plus de {threshold}"

@@ -80,7 +80,7 @@ class PasswordResetConfirmation extends React.Component {
     },1000)
     return (
       <section id="password-reset-confirm-anchor" className="form-type">
-        <Aside/>
+        <Aside static_url={this.props.static_url}/>
 
         <article id="password-reset-confirm-form" className="form-wrapper" aria-live="polite">
           <div className="article-inner-wrapper">

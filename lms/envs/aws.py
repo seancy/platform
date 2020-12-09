@@ -1111,20 +1111,13 @@ COURSE_DISCOVERY_MEANINGS = {
         'name': 'Tag'
     },
     'course_mandatory_enabled': {
-        'name': 'Mandatory'
-    },
-    'course_country': {
-        'name': 'Country'
+        'name': 'Mandatory',
+        'terms': dict(MANDATORY_OPTIONS),
     }
 }
 
 # Max search page size for LMS Catalog
-SEARCH_MAX_PAGE_SIZE = 1000
-
-# Empty by default, set this value in site configuration.
-COURSE_COUNTRY_MAPPING = {
-    # user.profile.country: course.country
-}
+SEARCH_MAX_PAGE_SIZE = 1500
 
 SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
 
@@ -1152,6 +1145,7 @@ MIDDLEWARE_CLASSES.extend(ENV_TOKENS.get('EXTRA_MIDDLEWARE_CLASSES', []))
 
 # Once a user has watched this percentage of a video, mark it as complete:
 # (0.0 = 0%, 1.0 = 100%)
+COMPLETION_VIDEO_COMPLETE_PERCENTAGE = 0.5
 COMPLETION_VIDEO_COMPLETE_PERCENTAGE = ENV_TOKENS.get(
     'COMPLETION_VIDEO_COMPLETE_PERCENTAGE',
     COMPLETION_VIDEO_COMPLETE_PERCENTAGE,

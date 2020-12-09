@@ -29,6 +29,8 @@ from xmodule.contentstore.django import contentstore
 from xmodule.modulestore.draft_and_published import BranchSettingMixin
 from xmodule.modulestore.mixed import MixedModuleStore
 from xmodule.util.django import get_current_request_hostname
+#from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+
 
 # We also may not always have the current request user (crum) module available
 try:
@@ -424,6 +426,9 @@ def _get_modulestore_branch_setting():
 
             # compare hostname against the regex expressions set of mappings which will tell us which branch to use
             if mappings:
+                #site_preview_lms_base = configuration_helpers.get_value('SITE_PREVIEW_LMS_DOMAIN_NAME', None)
+                #if site_preview_lms_base:
+                #    mappings[site_preview_lms_base] = 'draft-preferred'
                 for key in mappings.iterkeys():
                     if re.match(key, hostname):
                         return mappings[key]

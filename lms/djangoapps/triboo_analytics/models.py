@@ -10,7 +10,8 @@ import uuid
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
 from django.db import models, connections
-from django.db.models import Sum, Count, Q
+from django.db.models import Sum, Count, Q, Max
+from django.http import Http404
 from datetime import date, datetime
 from django.utils import timezone
 from pytz import UTC
@@ -19,10 +20,14 @@ from django_countries.fields import CountryField
 from model_utils.fields import AutoLastModifiedField
 from model_utils.models import TimeStampedModel
 from requests import ConnectionError
-
+from completion.models import BlockCompletion
+from course_blocks.api import get_course_blocks
+from courseware.courses import get_course_by_id
 from courseware.models import XModuleUserStateSummaryField, StudentModule
 from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
+from lms.djangoapps.grades.subsection_grade_factory import SubsectionGradeFactory
 import lms.lib.comment_client as cc
+from lms.lib.comment_client.utils import CommentClientMaintenanceError, CommentClientRequestError
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.django.models import CourseKeyField, UsageKeyField
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
@@ -55,6 +60,7 @@ def create_analytics_worker():
 
     profile = UserProfile(user=user)
     profile.save()
+    return user
 
 
 def dt2key(date_time=None):
@@ -62,8 +68,10 @@ def dt2key(date_time=None):
         date_time = timezone.now()
     return date_time.strftime('%Y-%m-%d')
 
+
 def dtload(date_time_str):
     return datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f').replace(tzinfo=UTC)
+
 
 def dtdump(date_time):
     return date_time.strftime('%Y-%m-%d %H:%M:%S.%f')
@@ -906,7 +914,6 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                     grade_factory = CourseGradeFactory()
                     # grade_factory.update_course_completion_percentage(course_key, user)
                     progress = grade_factory.get_progress(user, course)
-                    progress['progress'] *= 100.0
                     if not progress:
                         logger.warning('course=%s user_id=%d does not have progress info => empty report.' % (
                             course_key, user.id))
@@ -925,7 +932,8 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                                       'completion_date': None})
                         return
 
-                    if progress['progress'] == 100:
+                    progress['progress'] *= 100.0
+                    if enrollment.completed:
                         status = CourseStatus.failed
 
                         if progress['nb_trophies_possible'] == 0 or progress['is_course_passed']:
@@ -2227,6 +2235,9 @@ def generate_today_reports(multi_process=False):
     logger.info("start ILT reports")
     IltSession.generate_today_reports()
 
+    logger.info("start Leaderboard daily update")
+    LeaderBoard.update_stayed_online()
+
 
 def check_generated_learner_course_reports(last_analytics_success, overviews, sections_by_course):
     all_good = False
@@ -2269,3 +2280,336 @@ def check_generated_learner_course_reports(last_analytics_success, overviews, se
     ReportLog.update_or_create(learner_course=timezone.now())
 
 
+class LeaderboardActivityLog(TimeStampedModel):
+    """
+    We use this model to track leaderboard activities instead of TrackingLog.
+    Event type could be 'unit_completion', 'online_check'.
+    """
+    user_id = models.PositiveIntegerField(db_index=True)
+    event_type = models.CharField(max_length=512)
+    event_time = models.DateTimeField(db_index=True)
+    block_key = UsageKeyField(max_length=255, blank=True, null=True)
+    course_key = CourseKeyField(max_length=255, blank=True, null=True, db_index=True)
+
+    class Meta(object):
+        app_label = "triboo_analytics"
+        index_together = [
+            ('user_id', 'event_type'),
+            ('user_id', 'event_type', 'block_key')
+        ]
+
+
+class LeaderBoard(TimeStampedModel):
+    user = models.OneToOneField(User, db_index=True, on_delete=models.CASCADE)
+    first_login = models.BooleanField(default=False)
+    first_course_opened = models.BooleanField(default=False)
+    stayed_online = models.PositiveIntegerField(default=0)   # number of days the user has more 30 mins online
+    non_graded_completed = models.PositiveIntegerField(default=0)
+    graded_completed = models.PositiveIntegerField(default=0)
+    unit_completed = models.PositiveIntegerField(default=0)
+    course_completed = models.PositiveIntegerField(default=0)
+    # last_time_rank = models.PositiveIntegerField(default=0)
+    last_week_score = models.PositiveIntegerField(default=0)
+    last_week_rank = models.PositiveIntegerField(default=0)
+    last_month_score = models.PositiveIntegerField(default=0)
+    last_month_rank = models.PositiveIntegerField(default=0)
+
+    COURSE_STRUCTURE = {}
+
+    class Meta(object):
+        app_label = "triboo_analytics"
+
+    def __str__(self):
+        return "LeaderBoard detail of user: {user_id}, first_login: {first_login}, first_course_opened: " \
+               "{first_course_opened}, stayed_online: {stayed_online}, non_graded_completed: {non_graded_completed}" \
+               "graded_completed: {graded_completed}, unit_completed: {unit_completed}, course_completed: " \
+               "{course_completed}, last_week_score: {last_week_score}, last_week_rank: {last_week_rank}," \
+               "last_month_score: {last_month_score}, last_month_rank: {last_month_rank}".format(
+                user_id=self.user_id,
+                first_login=self.first_login,
+                first_course_opened=self.first_course_opened,
+                stayed_online=self.stayed_online,
+                non_graded_completed=self.non_graded_completed,
+                graded_completed=self.graded_completed,
+                unit_completed=self.unit_completed,
+                course_completed=self.course_completed,
+                last_week_score=self.last_week_score,
+                last_week_rank=self.last_week_rank,
+                last_month_score=self.last_month_score,
+                last_month_rank=self.last_month_rank
+                )
+
+    @classmethod
+    def init_user(cls, user, worker):
+        non_graded_completed = 0
+        graded_completed = 0
+        unit_completed = 0
+        if user.last_login is not None:
+            first_login = True
+        else:
+            first_login = False
+
+        if StudentModule.objects.filter(student=user).exists():
+            first_course_opened = True
+        else:
+            first_course_opened = False
+
+        enrollments = CourseEnrollment.objects.filter(is_active=True, user=user).values_list(
+            'course_id', 'completed'
+        )
+
+        course_completed = len(enrollments.filter(completed__isnull=False))
+        for course_key, _ in enrollments:
+            try:
+                cc_user = cc.User(id=user.id, course_id=course_key).to_dict()
+                nb_posts = cc_user.get('comments_count', 0) + cc_user.get('threads_count', 0)
+                non_graded_completed += nb_posts
+            except (CommentClientMaintenanceError, CommentClientRequestError):
+                pass
+            if course_key in cls.COURSE_STRUCTURE:
+                subsection_structure = cls.COURSE_STRUCTURE[course_key][0]
+                subsection_grade_factory = cls.COURSE_STRUCTURE[course_key][1]
+            else:
+                logger.info("Read course structure, course_id: {}".format(course_key))
+                course_usage_key = modulestore().make_course_usage_key(course_key)
+                # load course blocks with a staff user
+                subsection_structure = get_course_blocks(worker, course_usage_key)
+                subsection_grade_factory = SubsectionGradeFactory(worker, course_structure=subsection_structure)
+                cls.COURSE_STRUCTURE[course_key] = (subsection_structure, subsection_grade_factory)
+
+            course_block_completions = BlockCompletion.get_course_completions(user, course_key)
+            if len(course_block_completions) == 0:
+                continue
+            block_data_map = subsection_structure._block_data_map
+            block_relations = subsection_structure._block_relations
+            for block_id, block in block_data_map.items():
+                if block_id.block_type == 'vertical':
+                    children = block_relations[block_id].children
+                    if children:
+                        completed = True
+                    else:
+                        completed = False
+                    for child in children[:]:
+                        if child.block_type == 'library_content':
+                            lib_content_block = get_course_blocks(user, child)
+                            extra_children = [i for i in lib_content_block if i.block_type != 'library_content']
+                            children.extend(extra_children)
+                    for child in children:
+                        if child.block_type in ['discussion', 'library_content']:
+                            continue
+                        completion = course_block_completions.get(child, None)
+                        if completion:
+                            if child.block_type in ['survey', 'poll', 'word_cloud']:
+                                non_graded_completed += 1
+                            elif child.block_type == 'problem':
+                                child_data = block_data_map[child].fields
+                                if not child_data['graded']:
+                                    non_graded_completed += 1
+                                else:
+                                    if child_data['weight'] == 0:
+                                        non_graded_completed += 1
+                                    else:
+                                        problem_grade = subsection_grade_factory.update(
+                                            subsection_structure[child], persist_grade=False
+                                        )
+                                        if problem_grade.all_total.possible == 0:
+                                            non_graded_completed += 1
+                                        else:
+                                            graded_completed += 1
+                            else:
+                                pass
+                        else:
+                            completed = False
+                    if completed:
+                        unit_completed += 1
+                        unit_completion_event = LeaderboardActivityLog.objects.filter(
+                            user_id=user.id,
+                            event_type="unit_completion",
+                            block_key=block_id
+                        )
+                        if unit_completion_event.exists():
+                            logger.warn(
+                                "unit already completed before. "
+                                "user: {user_id}, block_id: {block_id}".format(user_id=user.id, block_id=block_id))
+                        else:
+                            LeaderboardActivityLog.objects.create(
+                                user_id=user.id,
+                                event_type="unit_completion",
+                                block_key=block_id,
+                                course_key=course_key,
+                                event_time=timezone.now()
+                            )
+                            logger.info(
+                                "updated unit completed of leaderboard score for "
+                                "user: {user_id}, block_id: {block_id}".format(
+                                    user_id=user.id,
+                                    block_id=block_id
+                                ))
+        reports = LearnerVisitsDailyReport.objects.filter(user=user, org__isnull=False)
+        daily_visit_reports = reports.values("created").annotate(total=Sum("time_spent"))
+        stayed_online = daily_visit_reports.filter(total__gte=1800).count()
+        if reports:
+            query = reports.aggregate(Max("modified"))
+            last_online_check = query["modified__max"]
+        else:
+            last_online_check = ReportLog.objects.latest().learner_visit
+
+        LeaderboardActivityLog.objects.update_or_create(
+            user_id=user.id,
+            event_type="online_check",
+            defaults={
+                "user_id": user.id,
+                "event_type": "online_check",
+                "event_time": last_online_check
+            }
+        )
+        logger.info("online_check updated for user: {user_id}, last_check: {last}".format(
+            user_id=user.id,
+            last=last_online_check
+        ))
+
+        obj, created = cls.objects.update_or_create(
+            user=user,
+            defaults={
+                "first_login": first_login,
+                "first_course_opened": first_course_opened,
+                "stayed_online": stayed_online,
+                "unit_completed": unit_completed,
+                "non_graded_completed": non_graded_completed,
+                "graded_completed": graded_completed,
+                "course_completed": course_completed
+            })
+        if created:
+            logger.info("Created LeaderBoard for user: {}".format(user.id))
+        else:
+            logger.info("Updated LeaderBoard for user: {}".format(user.id))
+
+    @classmethod
+    def init_all(cls):
+        try:
+            analytics_worker = User.objects.get(username=ANALYTICS_WORKER_USER)
+        except User.DoesNotExist:
+            analytics_worker = create_analytics_worker()
+        users = User.objects.filter(is_active=True)
+        total = len(users)
+        counter = 0
+        for user in users:
+            counter += 1
+            try:
+                cls.init_user(user, analytics_worker)
+                if counter % 500 == 0 or counter == total:
+                    logger.info("{x} / {y} finished".format(x=counter, y=total))
+            except Exception as e:
+                logger.error("Error initiating leaderboard for User: {user_id}, reason: {reason}".format(
+                    user_id=user.id, reason=e
+                ))
+
+    @classmethod
+    def update_stayed_online(cls):
+        users = User.objects.filter(is_active=True)
+        for user in users:
+            tracking_log = LeaderboardActivityLog.objects.filter(
+                user_id=user.id,
+                event_type="online_check"
+            )
+            if tracking_log:
+                last_check = tracking_log.last().event_time
+                new_reports = LearnerVisitsDailyReport.objects.filter(
+                    user=user, modified__gt=last_check, org__isnull=False
+                )
+            else:
+                new_reports = LearnerVisitsDailyReport.objects.filter(user=user, org__isnull=False)
+
+            annotation_reports = new_reports.values("created").annotate(total=Sum("time_spent"))
+            stayed_online = annotation_reports.filter(total__gte=1800).count()
+
+            if new_reports:
+                query = new_reports.aggregate(Max("modified"))
+                last_online_check = query["modified__max"]
+            else:
+                last_online_check = ReportLog.objects.latest().learner_visit
+
+            LeaderboardActivityLog.objects.update_or_create(
+                user_id=user.id,
+                event_type="online_check",
+                defaults={
+                    "user_id": user.id,
+                    "event_type": "online_check",
+                    "event_time": last_online_check
+                }
+            )
+
+            leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+            leader_board.stayed_online = leader_board.stayed_online + stayed_online
+            leader_board.save()
+            logger.debug("online_check updated for user: {user_id}, last_check: {last}".format(
+                user_id=user.id,
+                last=last_online_check
+            ))
+
+
+class LeaderBoardView(models.Model):
+    id = models.BigIntegerField(primary_key=True)
+    user = models.OneToOneField(User, db_index=True, on_delete=models.DO_NOTHING)
+    total_score = models.PositiveIntegerField()
+    current_week_score = models.PositiveIntegerField()
+    current_month_score = models.PositiveIntegerField()
+    last_week_rank = models.PositiveIntegerField()
+    last_month_rank = models.PositiveIntegerField()
+    last_updated = models.DateTimeField()
+
+    class Meta(object):
+        app_label = "triboo_analytics"
+        db_table = "triboo_analytics_leaderboardview"
+        managed = False
+
+    def __str__(self):
+        return "LeaderBoardView of user: {user_id}, total_score: {total_score}, current_week_score: " \
+               "{current_week_score}, current_month_score: {current_month_score}, last_week_rank: {last_week_rank}," \
+               "last_month_rank: {last_month_rank}".format(
+                user_id=self.user_id,
+                total_score=self.total_score,
+                current_week_score=self.current_week_score,
+                current_month_score=self.current_month_score,
+                last_week_rank=self.last_week_rank,
+                last_month_rank=self.last_month_rank
+                )
+
+    def get_leaderboard_detail(self):
+        obj = LeaderBoard.objects.get(id=self.id)
+        data = {
+            "first_login": obj.first_login,
+            "everyday_least_30": obj.stayed_online,
+            "answering_non_graded": obj.non_graded_completed,
+            "answering_graded": obj.graded_completed,
+            "unit_completed": obj.unit_completed,
+            "accessing_first_course": obj.first_course_opened,
+            "course_completed": obj.course_completed,
+        }
+        return data
+
+    @classmethod
+    def calculate_last_week_rank(cls):
+        query_set = cls.objects.all()
+        weekly_rank = 0
+        for i in query_set.order_by("-current_week_score"):
+            weekly_rank += 1
+            logger.info("update last week rank of user: {user_id}, from {old_rank} ==> {new_rank}".format(
+                user_id=i.user_id,
+                old_rank=i.last_week_rank,
+                new_rank=weekly_rank
+            ))
+            LeaderBoard.objects.filter(id=i.id).update(last_week_rank=weekly_rank, last_week_score=i.total_score)
+
+    @classmethod
+    def calculate_last_month_rank(cls):
+        query_set = cls.objects.all()
+        monthly_rank = 0
+        for i in query_set.order_by("-current_month_score"):
+            monthly_rank += 1
+            logger.info("update last month rank of user: {user_id}, from {old_rank} ==> {new_rank}".format(
+                user_id=i.user_id,
+                old_rank=i.last_month_rank,
+                new_rank=monthly_rank
+            ))
+            LeaderBoard.objects.filter(id=i.id).update(last_month_rank=monthly_rank, last_month_score=i.total_score)

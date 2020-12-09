@@ -253,22 +253,6 @@ def courses(request):
     # Add marketable programs to the context.
     programs_list = get_programs_with_type(request.site, include_hidden=False)
 
-    pre_facet_filters = {}
-    if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
-                                       settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
-        settings.COURSE_DISCOVERY_FILTERS.append('course_country')
-        pre_facet_filters['course_country'] = ['All countries']
-
-        user = UserProfile.objects.get(user=request.user)
-        user_country = user.country if user else None
-        if user_country:
-            country_mapping = configuration_helpers.get_value('COURSE_COUNTRY_MAPPING', settings.COURSE_COUNTRY_MAPPING)
-            if user_country in country_mapping:
-                user_country = country_mapping[user_country]
-            else:
-                user_country = dict(countries)[user_country]
-            pre_facet_filters['course_country'].append(user_country)
-
     trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
 
     return render_to_response(
@@ -278,7 +262,6 @@ def courses(request):
             'course_discovery_meanings': course_discovery_meanings,
             'programs_list': programs_list,
             'show_dashboard_tabs': True,
-            'pre_facet_filters': pre_facet_filters,
             'trans_for_tags': trans_for_tags
         }
     )
@@ -340,16 +323,40 @@ def jump_to(_request, course_id, location):
     return redirect(redirect_url)
 
 
-def get_resume_course_url(request, course):
-    resume_course_url = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
-    if not isinstance(request.user, AnonymousUser):
-        course_outline_root_block = get_course_outline_block_tree(request, text_type(course.id))
-        resume_block = get_resume_block(course_outline_root_block) if course_outline_root_block else None
-        if resume_block:
-            resume_course_url = resume_block['lms_web_url']
-        elif course_outline_root_block:
-            resume_course_url = course_outline_root_block['lms_web_url']
-    return resume_course_url
+# def get_resume_course_url(request, course):
+#     resume_course_url = reverse(course_home_url_name(course.id), args=[text_type(course.id)])
+#     if not isinstance(request.user, AnonymousUser):
+#         course_outline_root_block = get_course_outline_block_tree(request, text_type(course.id))
+#         resume_block = get_resume_block(course_outline_root_block) if course_outline_root_block else None
+#         if resume_block:
+#             resume_course_url = resume_block['lms_web_url']
+#         elif course_outline_root_block:
+#             resume_course_url = course_outline_root_block['lms_web_url']
+#     return resume_course_url
+
+
+def get_last_accessed_courseware(request, course, user=None):
+    """
+    Returns the courseware module URL that the user last accessed, or None if it cannot be found.
+    """
+    user = user if user else request.user
+    field_data_cache = FieldDataCache.cache_for_descriptor_descendents(
+        course.id, user, course, depth=2
+    )
+    course_module = get_module_for_descriptor(
+        user, request, course, field_data_cache, course.id, course=course
+    )
+    chapter_module = get_current_child(course_module)
+    if chapter_module is not None:
+        section_module = get_current_child(chapter_module)
+        if section_module is not None:
+            url = reverse('courseware_section', kwargs={
+                'course_id': text_type(course.id),
+                'chapter': chapter_module.url_name,
+                'section': section_module.url_name
+            })
+            return url
+    return reverse(course_home_url_name(course.id), args=[text_type(course.id)])
 
 
 @ensure_csrf_cookie
@@ -361,29 +368,6 @@ def course_info(request, course_id):
 
     Assumes the course_id is in a valid format.
     """
-    # TODO: LEARNER-611: This can be deleted with Course Info removal.  The new
-    #    Course Home is using its own processing of last accessed.
-    def get_last_accessed_courseware(course, request, user):
-        """
-        Returns the courseware module URL that the user last accessed, or None if it cannot be found.
-        """
-        field_data_cache = FieldDataCache.cache_for_descriptor_descendents(
-            course.id, request.user, course, depth=2
-        )
-        course_module = get_module_for_descriptor(
-            user, request, course, field_data_cache, course.id, course=course
-        )
-        chapter_module = get_current_child(course_module)
-        if chapter_module is not None:
-            section_module = get_current_child(chapter_module)
-            if section_module is not None:
-                url = reverse('courseware_section', kwargs={
-                    'course_id': text_type(course.id),
-                    'chapter': chapter_module.url_name,
-                    'section': section_module.url_name
-                })
-                return url
-        return None
 
     course_key = CourseKey.from_string(course_id)
 
@@ -491,7 +475,7 @@ def course_info(request, course_id):
         context['resume_course_url'] = None
         # TODO: LEARNER-611: Remove enable_course_home_improvements
         if SelfPacedConfiguration.current().enable_course_home_improvements:
-            context['resume_course_url'] = get_last_accessed_courseware(course, request, user)
+            context['resume_course_url'] = get_last_accessed_courseware(request, course, user=user)
 
         if not check_course_open_for_learner(user, course):
             # Disable student view button if user is staff and
@@ -544,7 +528,7 @@ class StaticCourseTabView(EdxFragmentView):
             )
 
             if show_courseware_link:
-                resume_course_url = get_resume_course_url(request, course)
+                resume_course_url = get_last_accessed_courseware(request, course)
 
                 if not isinstance(request.user, AnonymousUser):
                     progress = CourseGradeFactory().get_course_completion_percentage(
@@ -709,7 +693,7 @@ class CourseTabView(EdxFragmentView):
             )
 
             if show_courseware_link:
-                resume_course_url = get_resume_course_url(request, course)
+                resume_course_url = get_last_accessed_courseware(request, course)
 
                 if not isinstance(request.user, AnonymousUser):
                     progress = CourseGradeFactory().update_course_completion_percentage(course.id, request.user)
@@ -878,7 +862,7 @@ def course_about(request, course_id):
         studio_url = get_studio_url(course, 'settings/details')
 
         if has_access(request.user, 'load', course):
-            course_target = get_resume_course_url(request, course)
+            course_target = get_last_accessed_courseware(request, course)
         else:
             course_target = reverse('about_course', args=[text_type(course.id)])
 
@@ -1027,7 +1011,7 @@ def course_print(request, course_id):
         studio_url = get_studio_url(course, 'settings/details')
 
         if has_access(request.user, 'load', course):
-            course_target = get_resume_course_url(request, course)
+            course_target = get_last_accessed_courseware(request, course)
         else:
             course_target = reverse('about_course', args=[text_type(course.id)])
 
@@ -1252,7 +1236,7 @@ def _progress(request, course_key, student_id):
     )
 
     if has_access(request.user, 'load', course):
-        course_target = get_resume_course_url(request, course)
+        course_target = get_last_accessed_courseware(request, course)
     else:
         course_target = reverse('about_course', args=[text_type(course.id)])
 
@@ -2386,11 +2370,16 @@ def ilt_validation_request_data(request):
     ).only("value", "usage_id")
 
     for module in all_ilt_modules:
+        course_id = module.usage_id.course_key
         deadline = ilt_modules_info[module.usage_id]['deadline']
         info = get_ilt_module_info(module, deadline)
         ilt_modules_info[module.usage_id]['sessions'].extend(info['sessions'])
         ilt_modules_info[module.usage_id]['dropdown_list'] = info['dropdown_list']
         ilt_modules_info[module.usage_id]['raw'] = info['raw']
+        if unicode(course_id) in result["session_info"]:
+            result["session_info"][unicode(course_id)][unicode(module.usage_id)] = info['raw']
+        else:
+            result["session_info"][unicode(course_id)] = {unicode(module.usage_id): info['raw']}
 
     for ilt_enrollment in all_ilt_enrollments:
         data = json.loads(ilt_enrollment.value)
@@ -2398,10 +2387,6 @@ def ilt_validation_request_data(request):
         module_info = ilt_modules_info[ilt_enrollment.usage_id]
         user_list = module_info['enrollment_user_list']
         sessions_info = ilt_modules_info[ilt_enrollment.usage_id]['raw']
-        if unicode(course_id) in result["session_info"]:
-            result["session_info"][unicode(course_id)][unicode(ilt_enrollment.usage_id)] = sessions_info
-        else:
-            result["session_info"][unicode(course_id)] = {unicode(ilt_enrollment.usage_id): sessions_info}
         for k, v in data.items():
             start_at = sessions_info[k]['start_at']
             available_seats = sessions_info[k]['available_seats']
@@ -2763,14 +2748,28 @@ def process_ilt_validation_check_email():
         try:
             usage_id = s.usage_id
             ilt_block = modulestore().get_item(usage_id)
+            sessions_summary = XModuleUserStateSummaryField.objects.get(field_name="sessions", usage_id=usage_id)
+            sessions_info = json.loads(sessions_summary.value)
             enrolled_user_info = json.loads(s.value)
+            require_save = False
             for session_id, users in enrolled_user_info.items():
-                for user_id, v in users.items():
-                    if v['status'] == 'pending':
-                        user = User.objects.get(id=user_id)
-                        email = user.profile.lt_ilt_supervisor
-                        if email and email not in ilt_supervisor_list:
-                            ilt_supervisor_list.append(email)
+                end_at = sessions_info[session_id]['end_at']
+                expired = datetime.now() > decode_datetime(end_at)
+                if expired:
+                    for user_id, v in users.items():
+                        if v['status'] == 'pending':
+                            v['status'] = 'refused'
+                            require_save = True
+                else:
+                    for user_id, v in users.items():
+                        if v['status'] == 'pending':
+                            user = User.objects.get(id=user_id)
+                            email = user.profile.lt_ilt_supervisor
+                            if email and email not in ilt_supervisor_list:
+                                ilt_supervisor_list.append(email)
+            if require_save:
+                s.value = json.dumps(enrolled_user_info)
+                s.save()
         except ItemNotFoundError:
             ilt_validation_log.error("ilt block: {usage_id} does not exist.".format(usage_id=usage_id))
 
@@ -2846,6 +2845,7 @@ class CourseReminder():
         """
         course_enrollment.created = timezone.now()
         course_enrollment.completed = None
+        course_enrollment.gradebook_edit = None
         course_enrollment.save()
         student_modules = StudentModule.objects.filter(
             course_id=course_enrollment.course_id,
@@ -2925,6 +2925,7 @@ class CourseReminder():
                                                        reason=e
                                                        ))
 
+    @transaction.atomic
     def send_re_enroll_email(self, course_enrollment):
         """
         send email to student who is automatically re-enrolled in the course
@@ -3051,6 +3052,12 @@ class CourseReminder():
         send email to students
         """
         for enrollment in self.get_course_enrollment().get('finished'):
-            self.send_re_enroll_email(enrollment)
+            try:
+                self.send_re_enroll_email(enrollment)
+            except Exception as e:
+                reminder_log.info("course re-enroll failed for user: {user_id}, course_id: {course_id}".format(
+                    user_id=enrollment.user_id,
+                    course_id=enrollment.course_id
+                ))
         for enrollment in self.get_course_enrollment().get('unfinished'):
             self.send_reminder_email(enrollment)

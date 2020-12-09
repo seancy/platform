@@ -192,7 +192,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                 % endif
             </span>
             <div class="info-certificate">
-            % if cert_status and cert_status['status'] == 'downloadable':
+            % if enrollment.completed and cert_status and cert_status['status'] == 'downloadable':
                 <a href="${cert_status['download_url']}" title="${_('This link will open/download a PDF document')}" target="_blank">
                     <i class="fas fa-arrow-alt-to-bottom"></i>
                     ${_("Download Certificate")}
@@ -221,11 +221,11 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                   duration_availability = False
                   if course_duration:
                       duration_context = course_duration.strip().split(' ')
-                      duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
+                      duration_availability = len(duration_context) == 2
             %>
             % if duration_availability:
             <%
-                  duration = int(duration_context[0])
+                  duration = float(duration_context[0]) if '.' in duration_context[0] else int(duration_context[0])
                   duration_unit = duration_context[1]
             %>
             <div class="duration">

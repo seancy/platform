@@ -86,6 +86,38 @@ var onCertificatesReady = null;
         setInterval(get_zip_links, 30000);
 
         /**
+         * Intermediate Certificates Export
+         */
+        // $('#generate-intermediate-certificates-submit').click(function(e) {
+        //     e.preventDefault();
+        //     var url = $(this).data('endpoint');
+        //     console.log('url', url);
+        //     // var $cert_list = $(".intermediate-certificates-list")
+        //     // var cert_list_endpoint = $cert_list.data('endpoint')
+        //     // console.log('cert_list_endpoint', cert_list_endpoint)
+        //     window.open(url);
+        //     // $.ajax({
+        //     //     type: "POST",
+        //     //     url: url,
+        //     //     data: {
+        //     //         users: "edx, Yu, audit",
+        //     //     },
+        //     //     success: function (data) {
+        //     //         console.log('list data', data)
+        //     //         var $zip_list = $('.cert-list'),
+        //     //             link_num = data["links"].length;
+        //     //         if (link_num > 0) {
+        //     //             $zip_list.show();
+        //     //             $zip_list.find('ul').empty();
+        //     //             for (var i = 0; i < data["links"].length; i++) {
+        //     //                 $zip_list.find('ul').append(data["links"][i])
+        //     //             }
+        //     //         }
+        //     //     }
+        //     // });
+        // });
+
+        /**
          * Start generating certificates for all students.
          */
         var $section = $('section#certificates');
@@ -145,6 +177,11 @@ var onCertificatesReady = null;
                 });
             })
         });
+
+        // $(".ic-type-sel").select2({
+        //     placeholder: "Select a type",
+        //     allowClear: true
+        // });
     };
 
     // Call onCertificatesReady on document.ready event

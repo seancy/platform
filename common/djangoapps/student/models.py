@@ -471,7 +471,7 @@ class UserProfile(models.Model):
     lt_company = models.CharField(verbose_name='Company', max_length=255, blank=True, null=True)
     lt_employee_id = models.CharField(verbose_name='Employee ID', max_length=255, blank=True, null=True, db_index=True)
     lt_hire_date = models.DateField(verbose_name='Hire Date', blank=True, null=True)
-    lt_level = models.CharField(verbose_name='Level', max_length=20, blank=True, null=True)
+    lt_level = models.CharField(verbose_name='Level', max_length=150, blank=True, null=True)
     lt_job_code = models.CharField(verbose_name='Job Code', max_length=255, blank=True, null=True)
     lt_job_description = models.CharField(verbose_name='Job Description', max_length=255, blank=True, null=True)
     lt_department = models.CharField(verbose_name='Department', max_length=255, blank=True, null=True)
@@ -1713,6 +1713,8 @@ class CourseEnrollment(models.Model):
 
     @classmethod
     def enrollments_for_user(cls, user):
+        if not user.is_authenticated:
+            return []
         return cls.objects.filter(user=user, is_active=1).select_related('user')
 
     @classmethod

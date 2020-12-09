@@ -42,6 +42,7 @@ var optimizedConfig = Merge.smart(commonConfig, {
                     {
                         loader: 'css-loader',
                         options: {
+                            url: false,
                             sourceMap: true,
                             localIdentName: '[name]__[local]'
                         }

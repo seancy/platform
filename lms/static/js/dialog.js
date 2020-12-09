@@ -68,6 +68,11 @@ var edx = edx || {};
                 commonCallback && commonCallback();
             }
         }, this)
+        if (messageIsObject) {
+            const $closingMarkButton = this.$el.find('i');
+            const { hideClosingButton } = message;
+            hideClosingButton && $closingMarkButton.hide();
+        }
         this.$el.find('i').on('click', cancel)
         const $primary = this.$el.find('.btn-primary'),
             $secondary = this.$el.find('.btn-secondary')

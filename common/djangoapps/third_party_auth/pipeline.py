@@ -88,6 +88,10 @@ from lms.djangoapps.verify_student.utils import earliest_allowed_verification_da
 
 from . import provider
 
+import logging
+AUDIT_LOG = logging.getLogger("audit")
+
+
 # These are the query string params you can pass
 # to the URL that starts the authentication process.
 #
@@ -104,6 +108,7 @@ AUTH_REDIRECT_KEY = 'next'
 # The following are various possible values for the AUTH_ENTRY_KEY.
 AUTH_ENTRY_LOGIN = 'login'
 AUTH_ENTRY_REGISTER = 'register'
+AUTH_ENTRY_SSO_FAILURE = 'sso_failure'
 AUTH_ENTRY_ACCOUNT_SETTINGS = 'account_settings'
 
 # Entry modes into the authentication process by a remote API call (as opposed to a browser session).
@@ -137,12 +142,14 @@ def is_api(auth_entry):
 AUTH_DISPATCH_URLS = {
     AUTH_ENTRY_LOGIN: '/login',
     AUTH_ENTRY_REGISTER: '/register',
+    AUTH_ENTRY_SSO_FAILURE: '/sso_failure',
     AUTH_ENTRY_ACCOUNT_SETTINGS: '/account/settings',
 }
 
 _AUTH_ENTRY_CHOICES = frozenset([
     AUTH_ENTRY_LOGIN,
     AUTH_ENTRY_REGISTER,
+    AUTH_ENTRY_SSO_FAILURE,
     AUTH_ENTRY_ACCOUNT_SETTINGS,
     AUTH_ENTRY_LOGIN_API,
     AUTH_ENTRY_REGISTER_API,
@@ -538,11 +545,14 @@ def ensure_user_information(strategy, auth_entry, backend=None, user=None, socia
         """Redirects to the registration page."""
         return redirect(AUTH_DISPATCH_URLS[AUTH_ENTRY_REGISTER])
 
+    def dispatch_to_sso_failure():
+        """Redirects to the sso failure page."""
+        return redirect(AUTH_DISPATCH_URLS[AUTH_ENTRY_SSO_FAILURE])
+
     def should_force_account_creation():
         """ For some third party providers, we auto-create user accounts """
         current_provider = provider.Registry.get_from_pipeline({'backend': current_partial.backend, 'kwargs': kwargs})
-        return (current_provider and
-                (current_provider.skip_email_verification or current_provider.send_to_registration_first))
+        return current_provider and current_provider.send_to_registration_first
 
     if not user:
         if user_exists(details or {}):
@@ -557,7 +567,8 @@ def ensure_user_information(strategy, auth_entry, backend=None, user=None, socia
             # account corresponds to them yet, if any.
             if should_force_account_creation():
                 return dispatch_to_register()
-            return dispatch_to_login()
+            else:
+                return dispatch_to_sso_failure()
         elif auth_entry == AUTH_ENTRY_REGISTER:
             # User has authenticated with the third party provider and now wants to finish
             # creating their edX account.

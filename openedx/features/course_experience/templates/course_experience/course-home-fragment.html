@@ -126,7 +126,6 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 
   })(this)
   </script>
-
   <script src="${static.url('js/course_info.js')}"></script>
   <script src="${static.url('js/courseware/course_overview.js')}"></script>
 </%block>
@@ -226,7 +225,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
 
         % if get_course_about_section(request, course, "overview").strip():
         <div class="inner-wrapper course-overview">
-          <h2 class="course-overview-title">Course Overview</h2>
+          <h2 class="course-overview-title">${_("Course Overview")}</h2>
           <div class="course-overview-container">
             ${HTML(get_course_about_section(request, course, "overview"))}
           </div>
@@ -236,7 +235,7 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
         <% course_instructors = CourseDetails.fetch(course.id).instructor_info['instructors'] %>
         % if course_instructors:
         <div class="instructor-wrapper">
-          <h2 class="instructor-title">Instructors</h2>
+          <h2 class="instructor-title">${_("Instructors")}</h2>
           <ul class="instructors">
 
             % for instructor in course_instructors:
@@ -253,6 +252,10 @@ from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_AC
           </ul>
         </div>
 
+        % endif
+
+        % if not course.course_mandatory_enabled and configuration_helpers.get_value("ALLOW_LEARNER_UNENROLL", False):
+        <a class="learner-unroll-button" type="button" data-course_id="${course.id}">${_("Unenroll")}</a>
         % endif
 
     <div class="course-sidebar">

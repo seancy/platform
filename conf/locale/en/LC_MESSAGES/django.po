@@ -1035,6 +1035,13 @@ msgid ""
 "page."
 msgstr ""
 
+#: common/djangoapps/third_party_auth/models.py:188
+msgid ""
+"If this option is selected, we'll try to create a new user account when the identity "
+"provider authenticated the user but there's no matching user accounts. Otherwise, "
+"an error message will be displayed instead."
+msgstr ""
+
 #: common/djangoapps/third_party_auth/models.py:195
 msgid ""
 "Synchronize user profile data received from the identity provider with the "
@@ -1087,6 +1094,27 @@ msgstr ""
 #. form is "%H:%M:%S". See http://strftime.org for details.
 #: common/djangoapps/util/date_utils.py:196
 msgid "TIME_FORMAT"
+msgstr ""
+
+#. Translators: the translation for "NUMBERIC_SHORT_DATE" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE"
+msgstr ""
+
+#. Translators: the translation for "NUMBERIC_SHORT_DATE_SLASH" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y/%m/%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE_SLASH"
+msgstr ""
+
+#. Translators: the translation for "NUMBERIC_DATE_TIME" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d %H:%M:%S %Z". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_DATE_TIME"
 msgstr ""
 
 #. Translators: This is an AM/PM indicator for displaying times.  It is
@@ -6736,6 +6764,10 @@ msgstr ""
 msgid ""
 "Row #{row_num}: An account with email {email} exists but the provided "
 "username {username} is different."
+msgstr ""
+
+#: lms/djangoapps/instructor/views/api.py:512
+msgid "Row #{row_num}: Invalid utf-8 characters"
 msgstr ""
 
 #: lms/djangoapps/instructor/views/api.py:510
@@ -15865,6 +15897,12 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
+msgid "Leaderboard"
+msgstr ""
+
+msgid "My learning transcript"
+msgstr ""
+
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
@@ -21402,6 +21440,22 @@ msgstr ""
 msgid "Add expiration date"
 msgstr ""
 
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Intermediate Certificates"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Certificate Title"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date after"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html
+msgid "Issued Date before"
+msgstr ""
+
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:21
 msgid "Example Certificates"
 msgstr ""
@@ -21620,6 +21674,10 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:77
 msgid "Grade Cutoffs:"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html:83
+msgid "Pass: "
 msgstr ""
 
 #. Translators: git is a version-control system; see http://git-scm.com/about
@@ -25974,6 +26032,31 @@ msgstr ""
 msgid "Preview Certificate"
 msgstr ""
 
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You successfully completed the {type} badge with a score of {score}%."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "You can download your {title} by clicking on the button below."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "{title} is not available."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Your score {score}% is not enough to obtain the {type}."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: icxblock.html
+msgid "Intermediate Certificate"
+msgstr ""
+
 #: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
 msgid "View results"
 msgstr ""
@@ -25995,7 +26078,7 @@ msgid "CHOOSE A SESSION TO ENROLL"
 msgstr ""
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "NO SESSION AVAILABLE"
+msgid "NO SESSIONS AVAILABLE"
 msgstr ""
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
@@ -26827,4 +26910,81 @@ msgstr ""
 
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html
 msgid "Completed by gradebook edit"
+msgstr ""
+
+#: lms/templates/problem.html
+msgid "Quiz"
+msgstr ""
+
+#: lms/templates/word_cloud.html
+msgid "Word cloud"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Back to Calendar"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Upcoming Session"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "No upcoming sessions planned"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Sign up for an ILT session."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "It will appear in your calendar."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Let's start"
+msgstr ""
+
+# lms/templates/courses_list.html
+msgid "Show more"
+msgstr ""
+
+#: XBlock: utils
+# xblock-utils/xblockutils/templates/studio_edit.html
+msgid "SCORM module exceeds maximum size of %(limit)s MB."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Find here, soon, your last activity on training courses."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Let's do it!"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Hmm, it's looking a bit empty, so let's start a new course right now."
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Go!"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Are you ready to start a course?"
+msgstr ""
+
+#: lms/templates/dashboard.html
+msgid "Let's start!"
+msgstr ""
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py
+msgid "more than {threshold}"
+msgstr ""
+
+#: lms/templates/registration/sso_failure.html:50
+msgid "Sorry, we can't find your account. Please contact your IT administrator for support."
+msgstr ""
+
+#: lms/templates/registration/sso_failure.html:54
+msgid "Back to login"
 msgstr ""

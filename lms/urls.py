@@ -74,9 +74,7 @@ if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
 
 urlpatterns = [
 
-    # url(r'^$', branding_views.index, name='root'),   # Main marketing page, or redirect to courseware
-    url(r'^branding', branding_views.index, name='branding_index'),
-    url(r'^$', student_account_views.login_and_registration_form, name="root"),
+    url(r'^$', branding_views.index, name='root'),  # Main marketing page, or redirect to courseware
 
     url(r'', include('student.urls')),
     # TODO: Move lms specific student views out of common code
@@ -517,6 +515,44 @@ urlpatterns += [
         name='instructor_dashboard',
     ),
 
+    # # intermediate_certificate
+    # url(
+    #     r'^courses/{course_id}/intermediate_certificate/(?P<user_id>[^/]*)/(?P<certificate_title>[^/]*)/(?P<start_date>[^/]*)/(?P<end_date>[^/]*)$'.format(
+    #         course_id=settings.COURSE_ID_PATTERN,
+    #     ),
+    #     instructor_dashboard_views.intermediate_certificate_display,
+    #     name='intermediate_certificate_display',
+    # ),
+
+    # intermediate_certificates
+    url(
+        r'^courses/{course_id}/intermediate_certificates$'.format(
+            course_id=settings.COURSE_ID_PATTERN,
+        ),
+        instructor_dashboard_views.intermediate_certificates,
+        name='intermediate_certificates',
+    ),
+    url(
+        r'^courses/{course_id}/intermediate_certificates_data$'.format(
+            course_id=settings.COURSE_ID_PATTERN,
+        ),
+        instructor_dashboard_views.intermediate_certificates_data,
+        name='intermediate_certificates_data',
+    ),
+    url(
+        r'^courses/{course_id}/intermediate_certificates_user_data$'.format(
+            course_id=settings.COURSE_ID_PATTERN,
+        ),
+        instructor_dashboard_views.intermediate_certificates_user_data,
+        name='intermediate_certificates_user_data',
+    ),
+    url(
+        r'^courses/{course_id}/intermediate_certificates_count$'.format(
+            course_id=settings.COURSE_ID_PATTERN,
+        ),
+        instructor_dashboard_views.intermediate_certificates_count,
+        name='intermediate_certificates_count',
+    ),
 
     url(
         r'^courses/{}/set_course_mode_price$'.format(
@@ -1027,6 +1063,8 @@ if settings.FEATURES.get('ENABLE_THIRD_PARTY_AUTH'):
         # NOTE: The following login_oauth_token endpoint is DEPRECATED.
         # Please use the exchange_access_token endpoint instead.
         url(r'^login_oauth_token/(?P<backend>[^/]+)/$', student_views.login_oauth_token),
+        # SSO failure page
+        url(r'^sso_failure/', student_views.sso_failure),
     ]
 
 # Enterprise

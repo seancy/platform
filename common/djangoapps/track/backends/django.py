@@ -37,7 +37,13 @@ LOGFIELDS = [
 ]
 
 EVENT_TYPE_BLACK_LIST = [
-    '/analytics/list_table_downloads/'
+    '/analytics/list_table_downloads/',
+    '/media/',
+    '/xblock/resources/',
+    'edx.',
+    'xblock.',
+    'showanswer',
+    'problem_check'
 ]
 
 
@@ -46,7 +52,7 @@ class TrackingLog(models.Model):
 
     dtcreated = models.DateTimeField('creation date', auto_now_add=True)
     user_id = models.PositiveIntegerField(default=None, null=True)
-    username = models.CharField(max_length=32, blank=True)
+    username = models.CharField(max_length=150, blank=True)
     ip = models.CharField(max_length=32, blank=True)
     event_source = models.CharField(max_length=32)
     event_type = models.CharField(max_length=512, blank=True)

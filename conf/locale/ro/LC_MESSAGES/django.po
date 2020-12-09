@@ -1074,6 +1074,20 @@ msgstr ""
 msgid "TIME_FORMAT"
 msgstr ""
 
+#. Translators: the translation for "NUMBERIC_SHORT_DATE" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_SHORT_DATE"
+msgstr "%d-%m-%Y"
+
+#. Translators: the translation for "NUMBERIC_DATE_TIME" must be a format
+#. string for formatting times.  For example, the American English
+#. form is "%Y-%m-%d %H:%M:%S %Z". See http://strftime.org for details.
+#: common/djangoapps/util/date_utils.py:196
+msgid "NUMBERIC_DATE_TIME"
+msgstr "%d-%m-%Y %H:%M:%S %Z"
+
 #. Translators: This is an AM/PM indicator for displaying times.  It is
 #. used for the %p directive in date-time formats. See http://strftime.org
 #. for details.
@@ -15599,6 +15613,7 @@ msgid "{num} minute"
 msgid_plural "{num} minutes"
 msgstr[0] ""
 msgstr[1] ""
+
 
 #: lms/templates/courseware/course_banner.html:30
 #: lms/templates/dashboard/_dashboard_course_listing.html:226

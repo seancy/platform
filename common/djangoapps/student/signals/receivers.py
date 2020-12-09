@@ -3,6 +3,7 @@ Signal receivers for the "student" application.
 """
 from __future__ import absolute_import
 
+import sys
 from django.conf import settings
 from django.utils import timezone
 
@@ -16,6 +17,7 @@ from student.models import (
     is_email_retired,
     is_username_retired
 )
+from triboo_analytics.models import LeaderBoard
 
 
 def update_last_login(sender, user, **kwargs):  # pylint: disable=unused-argument
@@ -25,6 +27,15 @@ def update_last_login(sender, user, **kwargs):  # pylint: disable=unused-argumen
     writes to the ``auth_user`` table while running a migration.
     """
     if not waffle().is_enabled(PREVENT_AUTH_USER_WRITES):
+        # if it's the first time that user logs in
+        if user.last_login is None:
+            if 'pytest' in sys.modules:
+                pass
+            else:
+                leader_board, _ = LeaderBoard.objects.update_or_create(
+                    defaults={"first_login": True},
+                    user=user
+                )
         user.last_login = timezone.now()
         user.save(update_fields=['last_login'])
 

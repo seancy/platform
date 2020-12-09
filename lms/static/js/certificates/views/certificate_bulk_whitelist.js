@@ -85,7 +85,7 @@
                         );
                     }
 
-                    // Display success message
+                    // Display success
                     if (data_from_server.success.length) {
                         var success_data = data_from_server.success;
                         generate_div(
@@ -136,9 +136,9 @@
                     function generate_div(group, heading, display_data) {
                         // inner function generate div and display response messages.
                         $('<div/>', {
-                            class: 'message ' + group
+                            class: 'message error'
                         }).appendTo('.bulk-exception-results').prepend(
-                                "<button type='button' id= '" + group + "' class='arrow'> + </button>" + heading
+                                "<button type='button' id= '" + group + "' class='arrow'> + </button>" + "<span>"+heading+"</span>"
                         ).append($('<ul/>', {
                             class: group
                         }));

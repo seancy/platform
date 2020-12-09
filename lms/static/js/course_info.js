@@ -8,4 +8,15 @@ $(document).ready(function() {
         $('.tab').slideUp();
         $(data_class + ':hidden').slideDown();
     });
+
+    $(document).on('click', '.learner-unroll-button', function () {
+        $.ajax({
+          url: "/change_enrollment",
+          type: "POST",
+          data: {enrollment_action: "unenroll", course_id: $(this).data("course_id")},
+          success: function () {
+            location.reload()
+          }
+        })
+      })
 });

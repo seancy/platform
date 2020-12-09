@@ -70,6 +70,10 @@ msgstr ""
 msgid "Mandatory"
 msgstr ""
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr ""
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr ""
@@ -165,4 +169,63 @@ msgstr ""
 
 #: lms/static/js/triboo_analytics/
 msgid "Male"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "in total"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hour"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hours"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "day"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "days"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "week"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "weeks"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "month"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "months"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "year"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "years"
+msgstr ""
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag & Drop"
 msgstr ""

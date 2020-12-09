@@ -6112,10 +6112,10 @@ msgstr "Söçïäl Médïä Lïnks Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт α
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid ""
 "Optionally, link your personal accounts to the social media icons on your "
-"edX profile."
+"{platform_name} profile."
 msgstr ""
 "Öptïönällý, lïnk ýöür pérsönäl äççöünts tö thé söçïäl médïä ïçöns ön ýöür "
-"édX pröfïlé. Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢σηѕє¢#"
+"{platform_name} pröfïlé. Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢σηѕє¢#"
 
 #: lms/static/js/student_account/views/account_settings_factory.js
 msgid " Link"

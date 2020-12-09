@@ -94,14 +94,21 @@
 -e git+https://github.com/solashirai/crowdsourcehinter.git@518605f0a95190949fe77bd39158450639e2e1dc#egg=crowdsourcehinter-xblock==0.1
 -e git+https://github.com/edx/RateXBlock.git@367e19c0f6eac8a5f002fd0f1559555f8e74bfff#egg=rate-xblock
 -e git+https://github.com/edx/DoneXBlock.git@01a14f3bd80ae47dd08cdbbe2f88f3eb88d00fba#egg=done-xblock
--e git+https://github.com/Learningtribes/xblock-utils.git@ec95e5e718c4144dc8a43d116a545f210d929667#egg=xblock-utils
+-e git+https://github.com/Learningtribes/xblock-done.git@hawthorn#egg=xblock-done
+-e git+https://github.com/Learningtribes/xblock-utils.git@hawthorn#egg=xblock-utils
 -e git+https://github.com/Learningtribes/django-pyfs.git@d52e58dc88d755e332bdcc4ab1dd0b004e11ad11#egg=django-pyfs
 -e git+https://github.com/edx-solutions/xblock-google-drive.git@138e6fa0bf3a2013e904a085b9fed77dab7f3f21#egg=xblock-google-drive
 -e git+https://github.com/edx/xblock-lti-consumer.git@v1.1.8#egg=lti_consumer-xblock==1.1.8
 -e git+https://github.com/Learningtribes/edx-search.git@lt-master#egg=edx-search
+-e git+https://github.com/Learningtribes/xblock-poll@hawthorn#egg=xblock-poll
+-e git+https://github.com/Learningtribes/xblock-certificate.git@hawthorn#egg=xblock-certificate
+-e git+https://github.com/Learningtribes/xblock-drag-and-drop-v2@hawthorn#egg=xblock-drag-and-drop-v2
+-e git+http://github.com/Learningtribes/edx_xblock_scorm@hawthorn#egg=scormxblock_xblock
+-e git+http://github.com/Learningtribes/xblock-pdf@hawthorn#egg=xblock-pdf
+-e git+http://github.com/Learningtribes/iframe-id-xblock@hawthorn#egg=iframe-id-xblock
+-e git+http://github.com/Learningtribes/edx-ora2@hawthorn#egg=edx-ora2
 
 # Third Party XBlocks
 
 -e git+https://github.com/mitodl/edx-sga.git@6b2f7aa2a18206023c8407e2c46f86d4b4c3ac96#egg=edx-sga==0.8.0
--e git+https://github.com/open-craft/xblock-poll@add89e14558c30f3c8dc7431e5cd6536fff6d941#egg=xblock-poll==1.5.1
--e git+https://github.com/edx-solutions/xblock-drag-and-drop-v2@v2.1.6#egg=xblock-drag-and-drop-v2==2.1.6
+

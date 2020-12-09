@@ -9256,7 +9256,7 @@ msgid "Support education research by providing additional information"
 msgstr "通过提供其他信息支持教育研究"
 
 #: lms/templates/student_account/register.underscore:80
-msgid "Already have an {platformName} account?"
+msgid "Already have an account on {platformName}?"
 msgstr "已经拥有 {platformName}帐户？"
 
 #: lms/templates/student_account/register.underscore:81
@@ -12082,6 +12082,10 @@ msgstr "课程类型"
 msgid "Mandatory"
 msgstr "必修课"
 
+#: lms/templates/discovery/facet.underscore
+msgid "Learning Group"
+msgstr "学习小组"
+
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
 msgstr "是"
@@ -12163,8 +12167,8 @@ msgstr "注册已被确认通过。<br>你可以点击\"即将到来的课程\"�
 msgid "This unit is visible to staff learner only. The following learners are not staff: <br><br>"
 msgstr "该单元仅对员工可见。以下学员不是员工： <br><br>"
 
-#: master-sitel: #: lms/templates/discovery/facet.underscore
-#: master-sitel: #: cms/templates/discovery/facet.underscore
+#: master-sitel: lms/templates/discovery/facet.underscore
+#: master-sitel: cms/templates/discovery/facet.underscore
 msgid "Area of Development"
 msgstr "发展领域"
 
@@ -12172,3 +12176,174 @@ msgstr "发展领域"
 msgid "Time format HH:MM expected"
 msgstr "时间格式 HH:MM"
 
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "in total"
+msgstr "总数"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hour"
+msgstr "小时"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "hours"
+msgstr "小时"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "day"
+msgstr "天"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "days"
+msgstr "天"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "week"
+msgstr "周"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "weeks"
+msgstr "周"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "month"
+msgstr "月"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "months"
+msgstr "月"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "year"
+msgstr "年"
+
+#: XBlock: edflex
+#: edflex/static/js/src/parse_duration.js
+msgid "years"
+msgstr "年"
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Leaderboard"
+msgstr "排行榜"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Show more"
+msgstr "显示更多"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Position"
+msgstr "名次"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Points"
+msgstr "分数"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Ranking"
+msgstr "排名"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Missions"
+msgstr "任务"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
+msgstr "目前有 ${totalUser} 名学员。上一次更新时间：${lastUpdate}。"
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "All"
+msgstr "总体"
+
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Week"
+msgstr "周"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Month"
+msgstr "月"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "You have won ${value} point(s)."
+msgstr "你赢得了 ${value} 分"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo, for the first time"
+msgstr "第一次登录平台"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgstr "每天登录平台至少30分钟"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering non-graded activity"
+msgstr "回答无评分的问题"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Answering graded activity"
+msgstr "回答有得分的问题"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Awarded points on completion of each unit"
+msgstr "完成每个单元获取的分数"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Accessing the first course"
+msgstr "打开第一门课"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Completion of each course"
+msgstr "完成每一门课"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Are you a manager?"
+msgstr "你是管理员吗？"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "Yes"
+msgstr "是"
+
+#: master-cofidis: lms/static/js/views/login_role_check.js
+msgid "No"
+msgstr "否"
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag and Drop"
+msgstr "拖放"
+
+#: XBlock: drag and drop
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Drag & Drop"
+msgstr "拖放"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/poll_results.handlebars
+msgid "Poll"
+msgstr "投票"
+
+#: XBlock: poll
+#: xblock-poll/poll/public/html/survey_results.handlebars
+msgid "Survey"
+msgstr "调查"
+
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
+msgstr "要导出的证书数量超过了 1000，请缩小查找范围。"
+
+#: lms/templates/dashboard.html
+msgid "No sessions available"
+msgstr "没有注册课程"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Add to Calendar"
+msgstr "添加到日历"

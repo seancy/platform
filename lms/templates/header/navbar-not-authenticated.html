@@ -34,13 +34,13 @@ from six import text_type
       <a href="${marketing_link('SCHOOLS')}">${_("Schools")}</a>
     </div>
   % endif
-  % if allows_login:
-    % if can_discover_courses and courses_are_browsable:
-      <div class="mobile-nav-item hidden-mobile nav-item">
-        <a href="/courses">${_('Explore courses')}</a>
-      </div>
-    %endif
-  % endif
+  ## % if allows_login:
+  ##   % if can_discover_courses and courses_are_browsable:
+  ##     <div class="mobile-nav-item hidden-mobile nav-item">
+  ##       <a href="/courses">${_('Explore courses')}</a>
+  ##     </div>
+  ##   %endif
+  ## % endif
   </div>
   <div class="secondary">
     <div>

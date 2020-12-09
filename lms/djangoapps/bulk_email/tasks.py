@@ -97,7 +97,7 @@ BULK_EMAIL_FAILURE_ERRORS = (
 )
 
 
-def _get_course_email_context(course):
+def _get_course_email_context(course, context):
     """
     Returns context arguments to apply to all emails, independent of recipient.
     """
@@ -110,10 +110,7 @@ def _get_course_email_context(course):
         course_root
     )
     image_url = u'{}{}'.format(settings.LMS_ROOT_URL, course_image_url(course))
-    logo_image_url = u'{}{}'.format(settings.LMS_ROOT_URL, '/static/hawthorn/images/logo.png')
-    logo_url = configuration_helpers.get_value('logo_image_url')
-    if logo_url:
-        logo_image_url = u'{}{}'.format(settings.LMS_ROOT_URL, '/static/' + logo_url)
+    logo_image_url = u'{}{}'.format(settings.LMS_ROOT_URL, '/static/' + context['logo_url'])
 
     email_context = {
         'course_title': course_title,
@@ -125,7 +122,7 @@ def _get_course_email_context(course):
         'course_end_date': course_end_date,
         'account_settings_url': '{}{}'.format(settings.LMS_ROOT_URL, reverse('account_settings')),
         'email_settings_url': '{}{}'.format(settings.LMS_ROOT_URL, reverse('dashboard')),
-        'platform_name': configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME),
+        'platform_name': context['platform_name'],
     }
     return email_context
 
@@ -181,7 +178,9 @@ def perform_delegate_email_batches(entry_id, course_id, task_input, action_name)
 
     # Get arguments that will be passed to every subtask.
     targets = email_obj.targets.all()
-    global_email_context = _get_course_email_context(course)
+
+    # Get Email logo url
+    global_email_context = _get_course_email_context(course, task_input)
 
     recipient_qsets = [
         target.get_users(course_id, user_id)

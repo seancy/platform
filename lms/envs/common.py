@@ -3482,6 +3482,11 @@ COURSE_CATEGORIES = (
     ('offline', 'ILT'),
     ('live_session', 'Virtual classroom'),
     ('session_recorded', 'Blended learning'),
+    ('microlearning', 'Microlearning'),
+)
+MANDATORY_OPTIONS = (
+    ('false', 'No'),
+    ('true', 'Yes'),
 )
 
 ############## Settings for CourseGraph ############################
@@ -3496,7 +3501,7 @@ EDX_PLATFORM_REVISION = 'unknown'
 # Once a user has watched this percentage of a video, mark it as complete:
 # (0.0 = 0%, 1.0 = 100%)
 COMPLETION_VIDEO_COMPLETE_PERCENTAGE = 0.95
-COMPLETION_BY_VIEWING_DELAY_MS = 5000
+COMPLETION_BY_VIEWING_DELAY_MS = 1000
 
 ############### Settings for Django Rate limit #####################
 RATELIMIT_ENABLE = True

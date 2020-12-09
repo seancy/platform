@@ -340,7 +340,7 @@ class EmailChangeRequestTests(EventTestMixin, CacheIsolationTestCase):
         user.save()
         self.assertEqual(self.do_email_validation(self.new_email), 'An account with this e-mail already exists.')
 
-    @patch('django.core.mail.send_mail')
+    @patch('util.email_utils.send_mail')
     @patch('student.views.management.render_to_string', Mock(side_effect=mock_render_to_string, autospec=True))
     def test_email_failure(self, send_mail):
         """
@@ -353,7 +353,7 @@ class EmailChangeRequestTests(EventTestMixin, CacheIsolationTestCase):
         )
         self.assert_no_events_were_emitted()
 
-    @patch('django.core.mail.send_mail')
+    @patch('util.email_utils.send_mail')
     @patch('student.views.management.render_to_string', Mock(side_effect=mock_render_to_string, autospec=True))
     def test_email_success(self, send_mail):
         """

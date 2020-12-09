@@ -4,7 +4,7 @@ function iltValidation() {
         props: ['options', 'value', 'placeholder'],
         template: '<select><slot></slot></select>',
         mounted: function () {
-            var vm = this
+            var vm = this;
             $(this.$el)
             // init select2
                 .select2({
@@ -505,6 +505,12 @@ function iltValidation() {
                         getValidationList()
                     })
                 }
+            },
+
+            is_url_location: function (location) {
+                // if location is a URL, then convert it to <a>location</a>
+                var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+                return regexp.test(location)
             }
         },
     });

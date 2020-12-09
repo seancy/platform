@@ -10,6 +10,7 @@ import logging
 
 from celery.result import AsyncResult
 from celery.states import FAILURE, READY_STATES, REVOKED, SUCCESS
+from django.utils import timezone
 from django.utils.translation import ugettext as _
 from opaque_keys.edx.keys import UsageKey
 from six import text_type
@@ -20,6 +21,7 @@ from lms.djangoapps.instructor_task.models import PROGRESS, InstructorTask
 from util.db import outer_atomic
 from xmodule.modulestore.django import modulestore
 
+ANALYTICS_EXPORT_TIMEOUT_SECONDS = 3600
 log = logging.getLogger(__name__)
 
 
@@ -55,7 +57,16 @@ def _task_is_running(course_id, task_type, task_key):
     # exclude states that are "ready" (i.e. not "running", e.g. failure, success, revoked):
     for state in READY_STATES:
         running_tasks = running_tasks.exclude(task_state=state)
-    return len(running_tasks) > 0
+
+    time_now = timezone.now()
+    length = len(running_tasks)
+    for task in running_tasks:
+        created_time = task.created
+        if (time_now - created_time).seconds > ANALYTICS_EXPORT_TIMEOUT_SECONDS:
+            task.task_state = 'FAILURE'
+            task.save()
+            length = length - 1
+    return length > 0
 
 
 def _reserve_task(course_id, task_type, task_key, task_input, requester):

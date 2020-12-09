@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^learner/json/$', views.learner_view_data, name='analytics_learner_data'),
     url(r'^learner/export/$', views.learner_export_table, name='analytics_learner_export'),
 
+    url(r'^leaderboard/json/$', views.leaderboard_data, name='analytics_leaderboard_data'),
     url(r'^ilt/$', views.ilt_view, name='analytics_ilt'),
     url(r'^ilt/json/$', views.ilt_view_data, name='analytics_ilt_data'),
     url(r'^ilt/export/$', views.ilt_export_table, name='analytics_ilt_export'),
@@ -44,4 +45,6 @@ urlpatterns = [
 
     url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt|global|customized)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
         views.list_table_downloads, name='list_table_downloads'),
+
+    url(r'^leaderboard/$', views.leaderboard_view, name='analytics_leaderboard'),
 ]

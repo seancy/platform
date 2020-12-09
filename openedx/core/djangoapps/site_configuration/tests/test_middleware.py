@@ -64,7 +64,7 @@ class SessionCookieDomainMicrositeOverrideTests(DatabaseMicrositeTestCase):
         """
         with patch('microsite_configuration.microsite.BACKEND',
                    get_backend(site_backend, BaseMicrositeBackend)):
-            response = self.client.get(reverse('branding_index'))
+            response = self.client.get('/')
             self.assertNotIn('test_site.localhost', str(response.cookies['sessionid']))
             self.assertNotIn('Domain', str(response.cookies['sessionid']))
 
@@ -76,7 +76,7 @@ class SessionCookieDomainMicrositeOverrideTests(DatabaseMicrositeTestCase):
         """
         with patch('microsite_configuration.microsite.BACKEND',
                    get_backend(site_backend, BaseMicrositeBackend)):
-            response = self.client.get(reverse('branding_index'), HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
+            response = self.client.get('/', HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
             self.assertIn('test_site.localhost', str(response.cookies['sessionid']))
 
     @ddt.data(*MICROSITE_BACKENDS)
@@ -90,7 +90,7 @@ class SessionCookieDomainMicrositeOverrideTests(DatabaseMicrositeTestCase):
                 mock_get_value.side_effect = side_effect_for_get_value('SESSION_COOKIE_DOMAIN', None)
                 with patch('microsite_configuration.microsite.BACKEND',
                            get_backend(site_backend, BaseMicrositeBackend)):
-                    response = self.client.get(reverse('branding_index'), HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
+                    response = self.client.get('/', HTTP_HOST=settings.MICROSITE_TEST_HOSTNAME)
                     self.assertNotIn('test_site.localhost', str(response.cookies['sessionid']))
                     self.assertNotIn('Domain', str(response.cookies['sessionid']))
 
@@ -128,5 +128,5 @@ class SessionCookieDomainSiteConfigurationOverrideTests(TestCase):
         """
         Makes sure that the cookie being set is for the overridden domain
         """
-        response = self.client.get(reverse('branding_index'), HTTP_HOST=self.site.domain)
+        response = self.client.get('/', HTTP_HOST=self.site.domain)
         self.assertIn(self.site.domain, str(response.cookies['sessionid']))

@@ -39,11 +39,11 @@ from six import string_types
               duration_availability = False
               if course_duration:
                   duration_context = course_duration.strip().split(' ')
-                  duration_availability = len(duration_context) > 1 and duration_context[0].isdigit()
+                  duration_availability = len(duration_context) == 2
         %>
         % if duration_availability:
         <%
-              duration = int(duration_context[0])
+              duration = float(duration_context[0]) if '.' in duration_context[0] else int(duration_context[0])
               duration_unit = duration_context[1]
         %>
           <li class="duration">
@@ -77,7 +77,7 @@ from six import string_types
               <span class="important-dates-item-text start-date">${course_start_date}</span>
             % else:
               <% course_date_string = course_start_date.strftime('%Y-%m-%dT%H:%M:%S%z') %>
-              <span class="important-dates-item-text start-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></span>
+              <span class="important-dates-item-text start-date localized_datetime" data-format="shortDate" data-language="${LANGUAGE_CODE}" data-datetime="${course_date_string}"></span>
             % endif
             % if course.end:
                 &nbsp;-&nbsp;
@@ -85,7 +85,7 @@ from six import string_types
                   <span class="important-dates-item-text final-date">${course.end}</span>
                 % else:
                   <% course_date_string = course.end.strftime('%Y-%m-%dT%H:%M:%S%z') %>
-                  <span class="important-dates-item-text final-date localized_datetime" data-format="shortDate" data-datetime="${course_date_string}"></span>
+                  <span class="important-dates-item-text final-date localized_datetime" data-format="shortDate" data-language="${LANGUAGE_CODE}" data-datetime="${course_date_string}"></span>
                 % endif
             % endif
           </li>
@@ -117,54 +117,8 @@ from six import string_types
     </section>
 
     <section class="course-control">
-      % if progress is not None:
-        <section class="progress-icon">
-            <svg class="progress-ring" data-percent="${progress}">
-                <defs>
-                  <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%" filterUnits="userSpaceOnUse">
-                    <feGaussianBlur in="SourceAlpha" stdDeviation="2"/> <!-- stdDeviation is how much to blur -->
-                    <feOffset dx="5" dy="5" result="offsetblur"/>
-                    <feOffset dx="-5" dy="-5" result="offsetblur"/>
-                    <feMerge>
-                      <feMergeNode/>
-                      <feMergeNode in="SourceGraphic"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                </defs>
-                <circle class="progress-ring__circle-bg" r="16" cx="20" cy="19" style="filter:url(#dropshadow)"/>
-                <circle class="progress-ring__circle" r="16" cx="17" cy="20"/>
-            </svg>
-            <div>
-              <span class="percent">${progress}%</span>
-              <span class="completed">${_('Completed')}</span>
-            </div>
-        </section>
-        <script type="text/javascript">
-          var $progressRing = $('.course-control .progress-ring');
-          var progressRing = $('.progress-ring')[0]
-          percent = $progressRing.data('percent');
-          var circle = $('.progress-ring__circle')[0];
-          var circleBg = $('.progress-ring__circle-bg')[0];
-          var radius = circle.r.baseVal.value;
-          var size = (radius + 6) * 2
-          var circumference = radius * 2 * Math.PI;
-          progressRing.style.height = size + "px";
-          progressRing.style.width = size + "px";
-          progressRing.style.strokeDasharray = circumference + " " + circumference;
-          progressRing.style.strokeDashoffset = circumference;
-          var offset = circumference - percent / 100 * circumference;
-          circle.style.strokeDashoffset = offset;
-          circle.style.transformOrigin = (radius + 2) + "px " + (radius + 2) + "px";
-          circleBg.style.strokeDashoffset = circumference - 100 / 100 * circumference;
-        </script>
-      % endif
       % if show_courseware_link:
         <div class="main-cta">
-          <a href="${course_print_url}" class="action-print-course" title="${_('Print Course')}" target="_blank">
-            <i class="far fa-print"></i>
-            ${_("Print")}
-          </a>
         % if user.is_authenticated and (registered or staff_access):
           % if registered:
             <span class="sr">${_("You are enrolled in this course")}</span>
@@ -229,7 +183,55 @@ from six import string_types
           <a href="${reg_href}" class="${href_class}">${_("Start Course")}</a>
           <div id="register_error"></div>
         % endif
+
+          <a href="${course_print_url}" class="action-print-course" title="${_('Print Course')}" target="_blank">
+            <i class="far fa-print"></i>
+            ${_("Print")}
+          </a>
         </div>
+      % endif
+      % if progress is not None:
+        <section class="progress-icon">
+            <svg class="progress-ring" data-percent="${progress}">
+                ## <defs>
+                ##   <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%" filterUnits="userSpaceOnUse">
+                ##     <feGaussianBlur in="SourceAlpha" stdDeviation="2"/> <!-- stdDeviation is how much to blur -->
+                ##     <feOffset dx="5" dy="5" result="offsetblur"/>
+                ##     <feOffset dx="-5" dy="-5" result="offsetblur"/>
+                ##     <feMerge>
+                ##       <feMergeNode/>
+                ##       <feMergeNode in="SourceGraphic"/>
+                ##       <feMergeNode in="SourceGraphic"/>
+                ##     </feMerge>
+                ##   </filter>
+                ## </defs>
+                ## <circle class="progress-ring__circle-bg" r="16" cx="20" cy="19" style="filter:url(#dropshadow)"/>
+                <circle class="progress-ring__circle-bg" r="16" cx="20" cy="19"/>
+                <circle class="progress-ring__circle" r="16" cx="17" cy="20"/>
+            </svg>
+            <div>
+              <span class="percent">${progress}%</span>
+              <span class="completed">${_('Completed')}</span>
+            </div>
+        </section>
+        <script type="text/javascript">
+          var $progressRing = $('.course-control .progress-ring');
+          var progressRing = $('.progress-ring')[0]
+          percent = $progressRing.data('percent');
+          var circle = $('.progress-ring__circle')[0];
+          var circleBg = $('.progress-ring__circle-bg')[0];
+          var radius = circle.r.baseVal.value;
+          var size = (radius + 6) * 2
+          var circumference = radius * 2 * Math.PI;
+          progressRing.style.height = size + "px";
+          progressRing.style.width = size + "px";
+          progressRing.style.strokeDasharray = circumference + " " + circumference;
+          progressRing.style.strokeDashoffset = circumference;
+          var offset = circumference - percent / 100 * circumference;
+          circle.style.strokeDashoffset = offset;
+          circle.style.transformOrigin = (radius + 2) + "px " + (radius + 2) + "px";
+          circleBg.style.strokeDashoffset = circumference - 100 / 100 * circumference;
+        </script>
       % endif
     </section>
   </nav>

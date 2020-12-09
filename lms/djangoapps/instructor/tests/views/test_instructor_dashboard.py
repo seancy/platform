@@ -111,7 +111,7 @@ class TestInstructorDashboard(ModuleStoreTestCase, LoginEnrollmentTestCase, XssT
             self.client.login(username=user.username, password="test")
             response = self.client.get(self.url)
             for line in response.content.split('\n'):
-                if 'alt="Admin Space"' in line:
+                if 'title="View Instructor Dashboard"' in line:
                     return True
             return False
 
@@ -544,6 +544,6 @@ class TestInstructorDashboardPerformance(ModuleStoreTestCase, LoginEnrollmentTes
 
         # check MongoDB calls count
         url = reverse('spoc_gradebook', kwargs={'course_id': self.course.id})
-        with check_mongo_calls(26):
+        with check_mongo_calls(27):
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)

@@ -469,7 +469,7 @@ class VideoDescriptorImportTestCase(TestCase):
         output = VideoDescriptor.from_xml(xml_data, module_system, Mock())
         self.assert_attributes_equal(output, {
             'youtube_id_0_75': '',
-            'youtube_id_1_0': '3_yD_cEKoCk',
+            'youtube_id_1_0': '',
             'youtube_id_1_25': '',
             'youtube_id_1_5': '',
             'show_captions': True,
@@ -649,7 +649,7 @@ class VideoDescriptorImportTestCase(TestCase):
             self.assertEqual(edx_video_id, 'test_edx_video_id')
             self.assertEqual(static_dir, EXPORT_IMPORT_STATIC_DIR)
             self.assertIsNotNone(resource_fs)
-            self.assertEqual(external_transcripts, {u'en': [u'subs_3_yD_cEKoCk.srt.sjson']})
+            self.assertEqual(external_transcripts, {u'en': []})
             self.assertEqual(course_id, 'test_course_id')
             return edx_video_id
 
@@ -678,7 +678,7 @@ class VideoDescriptorImportTestCase(TestCase):
             edx_video_id,
             module_system.resources_fs,
             EXPORT_IMPORT_STATIC_DIR,
-            {u'en': [u'subs_3_yD_cEKoCk.srt.sjson']},
+            {u'en': []},
             course_id='test_course_id'
         )
 

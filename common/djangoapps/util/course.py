@@ -7,6 +7,11 @@ import urllib
 from django.conf import settings
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from triboo_analytics.models import (
+    LearnerCourseDailyReport,
+    LearnerSectionReport,
+    CourseDailyReport
+)
 
 log = logging.getLogger(__name__)
 
@@ -57,3 +62,12 @@ def get_link_for_about_page(course):
         )
 
     return course_about_url
+
+
+def remove_course_reports(course_key):
+    """
+    Delete all reports related to the course.
+    """
+    LearnerCourseDailyReport.objects.filter(course_id=course_key).delete()
+    LearnerSectionReport.objects.filter(course_id=course_key).delete()
+    CourseDailyReport.objects.filter(course_id=course_key).delete()
