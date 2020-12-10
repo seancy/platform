@@ -618,17 +618,25 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
               </header>
               <ol class="list-input">
                 <li class="field" id="field-course-country">
-                  <label for="course-country">${_("Course Country")}</label>
-                  <select id="course-country">
-                    % for country in country_options:
-                    <option value="${country}">${country}</option>
-                    % endfor
-                  </select>
+                  <label>${_("Course Country")}</label>
                   <span class="tip tip-stacked">${_("Identify the course country here.")}</span>
+                  <ul>
+                    % for country in country_options:
+                    <li>
+                      % if country in selected_countries:
+                      <input type="checkbox" id="course-country-${loop.index}" name="course-country" value="${country}" checked>
+                      % else:
+                      <input type="checkbox" id="course-country-${loop.index}" name="course-country" value="${country}">
+                      % endif
+                      <label for="course-country-${loop.index}">${country}</label>
+                    </li>
+                    % endfor
+                  </ul>
                 </li>
                 % if enrollment_learning_groups:
                 <li class="field" id="field-enrollment-learning-group">
                   <label for="list-learning-groups">${_("Learning Groups")}</label>
+                  <span class="tip tip-stacked">${_("Identify the enrollment learning groups here.")}</span>
                   <ul id="list-learning-groups">
                     % for group in sorted(enrollment_learning_groups):
                     <li>
@@ -642,7 +650,6 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                     </li>
                     % endfor
                   </ul>
-                  <span class="tip tip-stacked">${_("Identify the enrollment learning groups here.")}</span>
                 </li>
                 % endif
               </ol>

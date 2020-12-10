@@ -48,7 +48,7 @@ define([
                 entrance_exam_minimum_score_pct: '50',
                 license: null,
                 language: '',
-                course_country: 'All countries',
+                course_country: [],
                 learning_info: [''],
                 instructor_info: {
                     instructors: [{name: '', title: '', organization: '', image: '', bio: ''}]

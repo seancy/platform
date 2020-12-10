@@ -1073,7 +1073,7 @@ class IltSession(TimeStampedModel):
                         ilt_blocks[block_id] = {
                             'course_id': overview.id,
                             'course_display_name': overview.display_name,
-                            'course_country': course_details.course_country,
+                            'course_country': ", ".join(course_details.course_country),
                             'course_tags': ", ".join(course_details.vendor)
                         }
                     for child in block['children']:

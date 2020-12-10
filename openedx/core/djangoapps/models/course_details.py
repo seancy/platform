@@ -44,7 +44,7 @@ class CourseDetails(object):
         self.run = run
         self.language = None
         self.course_category = None
-        self.course_country = "All countries"
+        self.course_country = []
         self.vendor = []
         self.start_date = None  # 'start'
         self.end_date = None  # 'end'
