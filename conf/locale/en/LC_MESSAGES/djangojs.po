@@ -4060,7 +4060,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: lms/djangoapps/support/static/support/js/views/certificates.js:51
-msgid "An unexpected error occurred.  Please try again."
+msgid "An error occurred. Please try again later."
 msgstr ""
 
 #: lms/djangoapps/support/static/support/js/views/enrollment.js:15
@@ -11433,6 +11433,10 @@ msgstr ""
 
 # lms/static/js/certificates/intermediate_certificates.js
 msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
+msgstr ""
+
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds {upper_bound}. Please narrow your search."
 msgstr ""
 
 #: lms/templates/dashboard.html

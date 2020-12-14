@@ -4346,8 +4346,8 @@ msgstr[0] "Esse comentário já foi marcado %(count)s vez."
 msgstr[1] "Esse comentário já foi marcado %(count)s vezes."
 
 #: lms/djangoapps/support/static/support/js/views/certificates.js:51
-msgid "An unexpected error occurred.  Please try again."
-msgstr "Ocorreu um erro inesperado. Tente novamente."
+msgid "An error occurred. Please try again later."
+msgstr "Ocorreu um erro. Por favor, tente novamente mais tarde."
 
 #: lms/djangoapps/support/static/support/js/views/enrollment.js:15
 msgid "Financial Assistance"
@@ -12536,6 +12536,10 @@ msgstr "Pesquisa"
 # lms/static/js/certificates/intermediate_certificates.js
 msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
 msgstr "O número de certificados a serem exportados ultrapassa 1.000. Restrinja sua seleção."
+
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds {upper_bound}. Please narrow your search."
+msgstr "O número de certificados a serem exportados ultrapassa {upper_bound}. Restrinja sua seleção."
 
 #: lms/templates/dashboard.html
 msgid "No sessions available"

@@ -30981,3 +30981,23 @@ msgstr "Lo sentimos, no podemos encontrar su cuenta. Comuníquese con su adminis
 #: lms/templates/registration/sso_failure.html:54
 msgid "Back to login"
 msgstr "Volver a la página de inicio de sesión"
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py:1006
+msgid "No intermediate certificates match your search criteria."
+msgstr "Ningún certificado intermedio coincide con sus criterios de búsqueda."
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py:1011
+msgid "The number of certificates to export exceeds {upper_bound}. Please narrow your search."
+msgstr "El número de certificados para ser exportada sea superior a {upper_bound}. Por favor limite su selección."
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:41
+msgid "Partner Code"
+msgstr "Código de socio"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:58
+msgid "Loading..."
+msgstr "Cargando…"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:61
+msgid "Generate Intermediate Certificates"
+msgstr "Generar los certificados intermedios"

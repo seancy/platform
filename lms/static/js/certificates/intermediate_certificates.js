@@ -1,5 +1,7 @@
 function intermediate_certificates_init() {
 
+    var lang = $('html')[0].lang;
+
     Vue.component('select2', {
         props: ['options', 'value', 'placeholder'],
         template: '<select><slot></slot></select>',
@@ -9,7 +11,8 @@ function intermediate_certificates_init() {
             // init select2
                 .select2({
                     data: this.options,
-                    placeholder: this.placeholder
+                    placeholder: this.placeholder,
+                    language: lang,
                 })
                 .val(this.value)
                 .trigger('change')
@@ -71,6 +74,7 @@ function intermediate_certificates_init() {
                         data: current_user_list,
                         placeholder: user_option[0].dataset.ph,
                         minimumInputLength: 2,
+                        language: lang,
                     }).val(0).change()
                 checkAndEnableSubmitBtn()
             },
@@ -142,12 +146,14 @@ function intermediate_certificates_init() {
                 data: IntermediateCertificate.title_list,
                 placeholder: title_option[0].dataset.ph,
                 allowClear: true,
+                language: lang,
             }).val(0).change()
         cohort_option.empty()
             .select2({
                 data: IntermediateCertificate.cohort_list,
                 placeholder: cohort_option[0].dataset.ph,
                 allowClear: true,
+                language: lang,
             }).val(0).change()
         user_option.empty()
             .select2({
@@ -172,6 +178,7 @@ function intermediate_certificates_init() {
                 placeholder: user_option[0].dataset.ph,
                 minimumInputLength: 2,
                 allowClear: true,
+                language: lang,
             }).val(0).change()
         // console.log('reset: ', user_option)
     }
