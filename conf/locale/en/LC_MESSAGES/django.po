@@ -26548,7 +26548,7 @@ msgid "Bookmark a course content"
 msgstr ""
 
 #: lms/templates/seq_module.html:85
-msgid "Go back on the previous page"
+msgid "Go back to the previous page"
 msgstr ""
 
 #: lms/templates/seq_module.html:89

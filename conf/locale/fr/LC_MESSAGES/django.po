@@ -30796,7 +30796,7 @@ msgid "Bookmark a course content"
 msgstr "Ajouter aux favoris"
 
 #: lms/templates/seq_module.html:85
-msgid "Go back on the previous page"
+msgid "Go back to the previous page"
 msgstr "Aller à la page précédente"
 
 #: lms/templates/seq_module.html:89
