@@ -1087,7 +1087,7 @@ class IltSession(TimeStampedModel):
                     chapter = outline[sequential['parent']]
                     ilt_blocks[ilt_block_id]['chapter_display_name'] = chapter['display_name']
 
-            except CourseStructureNotAvailableError, AttributeError:
+            except (CourseStructureNotAvailableError, AttributeError), e:
                 pass
 
         return ilt_blocks
