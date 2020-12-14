@@ -11446,3 +11446,11 @@ msgstr ""
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"
 msgstr ""
+
+#: cms/static/js/views/settings/main.js
+msgid "Select one country under Course Country"
+msgstr ""
+
+#: cms/static/js/views/settings/main.js
+msgid "Your changes on this page will not be saved until you select at least one country under Course Country and then save."
+msgstr ""
