@@ -48,7 +48,7 @@
             },
 
             renderError: function(error) {
-                var errorMsg = error || gettext('An unexpected error occurred.  Please try again.');
+                var errorMsg = error || gettext('An error occurred. Please try again later.');
                 this.setResults(errorMsg);
             },
 

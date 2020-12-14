@@ -15,6 +15,9 @@ from util.date_utils import strftime_localized
     CertificateInvalidationFactory('${certificate_invalidations | n, dump_js_escaped_json}', '${certificate_invalidation_view_url | n, js_escaped_string}');
 </%static:require_module_async>
 
+<script type="text/javascript" src="${static.url('js/vendor/select2/i18n/fr.js')}"></script>
+<script type="text/javascript" src="${static.url('js/vendor/select2/i18n/pt-BR.js')}"></script>
+<script type="text/javascript" src="${static.url('js/vendor/select2/i18n/es.js')}"></script>
 <script type="text/javascript" src="${static.url('js/vendor/select2.js')}"></script>
 <script src="${static.url('js/vendor/timepicker/jquery.timepicker.js')}"></script>
 <link rel="stylesheet" type="text/css" href="${static.url('js/vendor/timepicker/jquery.timepicker.css')}" />
