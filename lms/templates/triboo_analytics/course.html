@@ -24,51 +24,34 @@
         <section class="analytics-wrapper course">
           <div class="report-wrapper">
               <h3>${_("Course Report")}</h3>
-                <div class="analytics-header" id="course-report-dropdown">
-                  ##% if courses:
-                    ##<form action="${reverse('analytics_course')}" method="get">
-                    ##    <label for="course_id">${_("Please select a course to see your report:")}</label>
-                    ##    <select name="course_id">
-                    ##    % for cid, course_title in courses:
-                    ##      % if cid == course_id:
-                    ##        <option value="${cid}" selected="selected">${course_title}</option>
-                    ##      % else:
-                    ##        <option value="${cid}">${course_title}</option>
-                    ##      % endif
-                    ##    % endfor
-                    ##    </select>
-                    ##    <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
-                    ##    <input type="submit" value="${_("Go")}">
-                    ##</form>
-                   ##% endif
-                </div>
-                  % if courses:
-                    <script type="text/javascript">
-                      new ReactRenderer({
-                        component: CourseReportDropdown,
-                        selector: '#course-report-dropdown',
-                        componentName: 'CourseReportDropdown',
-                        props: {
-                            'token':'${ csrf_token }',
-                            'submitText':'${_("Go")}',
-                            'labelText':'${_("Please select a course to see your report:")}',
+              <div class="analytics-header" id="course-report-dropdown"></div>
+            % if courses:
+              <script type="text/javascript">
+                new ReactRenderer({
+                  component: CourseReportDropdown,
+                  selector: '#course-report-dropdown',
+                  componentName: 'CourseReportDropdown',
+                  props: {
+                      'token':'${ csrf_token }',
+                      'submitText':'${_("Go")}',
+                      'labelText':'${_("Please select a course to see your report:")}',
 
-                            'data':${json.dumps([{'value': item[0], 'text':item[1]} for item in courses]) | n},
-                            'value':'${course_id}',
-                            'url':'${reverse("analytics_course")}'
-                          }
-                      });
-                    </script>
-                   % endif
+                      'data':${json.dumps([{'value': item[0], 'text':item[1]} for item in courses]) | n},
+                      'value':'${course_id}',
+                      'url':'${reverse("analytics_course")}'
+                    }
+                });
+              </script>
+             % endif
 
-                <div class="analytics-header">
-                  % if error_message:
-                    <p class="error">${error_message}</p>
-                  % endif
-                  % if course_name:
-                    <a href="${reverse('info', args=[course_id])}"><h2><i class="fal fa-file-alt"></i>${course_name}</h2></a>
-                  % endif
-                </div>
+              <div class="analytics-header">
+                % if error_message:
+                  <p class="error">${error_message}</p>
+                % endif
+                % if course_name:
+                  <a href="${reverse('info', args=[course_id])}"><h2><i class="fal fa-file-alt"></i>${course_name}</h2></a>
+                % endif
+              </div>
             % if course_report:
                 <div class="analytics-basic-wrapper">
                     <div class="analytics-float-wrapper">
@@ -217,7 +200,6 @@
                     </div>
                 </div>
               % endif
-
             % endif
             ## ${HTML(render_bundle('CourseReport'))}
             ## ${HTML(render_bundle('ReactRenderer'))}

@@ -21,7 +21,7 @@ export class LearnerReport extends BaseReport {
         dataUrl:'/analytics/learner/json/'
     }
 
-    getConfig(){
+    getConfig() {
         const propertiesFields = this.getOrderedProperties()
         return {...{
             fields: [

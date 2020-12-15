@@ -88,13 +88,13 @@ class ReportTypeAndCourseReport extends React.Component {
         this.setState({startDate, endDate}, this.fireOnChange)
     }
 
-    fireOnChange(){
+    fireOnChange() {
         const {onChange}=this.props
         const {reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate, selectedEnrollments, limit} = this.state
         onChange && onChange(reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate, selectedEnrollments, limit)
     }
 
-    getReportTypeSection(){
+    getReportTypeSection() {
         const {report_types} = this.props;
         const {reportTypeValue, reportType}=this.state;
         return <div className="custom-section" id="report_type_section">
@@ -120,7 +120,7 @@ class ReportTypeAndCourseReport extends React.Component {
         </div>
     }
 
-    getEnrollmentNumber(){
+    getEnrollmentNumber() {
         const {isMultiple, limit, selectedEnrollments}=this.state;
         let selectedEnrollmentsNum = 0
         if (isMultiple) {
@@ -139,7 +139,7 @@ class ReportTypeAndCourseReport extends React.Component {
         return selectedEnrollmentsNum
     }
 
-    getCourseSection(){
+    getCourseSection() {
         const {courses} = this.props,
             {isMultiple, hideCourseReportSelect, selectedCourses, limit, selectedEnrollments}=this.state;
         const render=(text,item)=>{
@@ -180,7 +180,7 @@ class ReportTypeAndCourseReport extends React.Component {
         </div>
     }
 
-    getFilterSection(){
+    getFilterSection() {
         const {selectedKeyValues,startDate, endDate}=this.state
         const stopEvent = e => {
             e.stopPropagation();

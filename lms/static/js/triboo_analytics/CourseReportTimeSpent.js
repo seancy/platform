@@ -21,12 +21,12 @@ export default class CourseReportTimeSpent extends BaseReport {
         dataUrl:'/analytics/course/json/'
     }
 
-    getDynamicFields(){
+    getDynamicFields() {
         const {data, columns} = this.state
         const propertiesValues = this.state.properties.map(p=>p.value)
 
         let dynamicFields = [], subFields = []
-        if (data && data.length > 0){
+        if (data && data.length > 0) {
             const firstRow = data[0]
             const dynamicKeys = Object.keys(firstRow)
                 .filter(key=>{
@@ -56,7 +56,7 @@ export default class CourseReportTimeSpent extends BaseReport {
         return {dynamicFields, subFields}
     }
 
-    getConfig(){
+    getConfig() {
         const propertiesFields = this.getOrderedProperties()
         const {dynamicFields, subFields}=this.getDynamicFields()
 
@@ -68,10 +68,10 @@ export default class CourseReportTimeSpent extends BaseReport {
                 ...dynamicFields
             ], subFields,
             cellRender:v=>{
-                if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')){
+                if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')) {
                     const arr = v.split(':')
                     return (<><span className={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}</> )
-                }else{
+                } else {
                     return v
                 }
             },

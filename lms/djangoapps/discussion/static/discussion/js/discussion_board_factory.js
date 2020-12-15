@@ -82,7 +82,7 @@
                     'thread:selected': function() {
                         router.discussionBoardView.searchView.clearSearch();
                     },
-                    'back-thread-list':function(){
+                    'back-thread-list': function() {
                         router.navigate('', {
                             trigger: true
                         })

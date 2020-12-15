@@ -7,7 +7,7 @@
             <a class="u-field-link" target="_blank" href="<%- receiptUrl %>"><%- gettext('Order Details') %><span class="sr"> <%- gettext('for') %> <%- orderId %></span></a>
         <% } %>
     </span>
-    <% _.each(lines, function(item){ %>
+    <% _.each(lines, function(item) { %>
         <div class="field u-field-order-lines">
             <span class="u-field-order-number"><span class="sr"><%- gettext('Product Name') %>: </span><%- item.title %></span>
             <span class="u-field-order-date"><span class="sr"><%- gettext('Date Placed') %>: </span><%- orderDate %></span>

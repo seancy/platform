@@ -46,7 +46,7 @@
                         model.fetch();
                     });
 
-                    setTimeout(function(){
+                    setTimeout(function() {
                         this.showCsvUpload();
                     }, 3900)
 
@@ -287,7 +287,7 @@
                 },
 
                 showCsvUpload: function(event) {
-                    if (event){
+                    if (event) {
                         event.preventDefault();
 
                         $(event.currentTarget).addClass(hiddenClass);

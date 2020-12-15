@@ -66,7 +66,7 @@
           }
         }
 
-        if (timeout !== undefined){
+        if (timeout !== undefined) {
           setTimeout(nextRequest, timeout);
         } else {
           nextRequest();

@@ -47,12 +47,12 @@ from openedx.features.portfolio_project import INCLUDE_PORTFOLIO_UPSELL_MODAL
             });
 
             % if use_ecommerce_payment_flow:
-            $('input[name=verified_mode]').click(function(e){
+            $('input[name=verified_mode]').click(function(e) {
                 e.preventDefault();
                 window.location.href = '${ecommerce_payment_page | n, js_escaped_string}?sku=' +
                 encodeURIComponent('${sku | n, js_escaped_string}');
             });
-            $('.v2 button[name=verified_mode]').click(function(e){
+            $('.v2 button[name=verified_mode]').click(function(e) {
                 e.preventDefault();
                 window.location.href = 'https://ecommerce.edx.org/coupons/redeem/?code=EDXTSV35&sku=' +
                 encodeURIComponent('${sku | n, js_escaped_string}');

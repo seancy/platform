@@ -37,7 +37,7 @@ export class LanguageSelector {
             span.innerText = option.innerHTML;
             img.src = option.getAttribute('imagesrc');
 
-            if (j == selectedIndex){
+            if (j == selectedIndex) {
                 item.classList.add('same-as-selected');
             }
 

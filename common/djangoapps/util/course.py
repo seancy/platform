@@ -8,9 +8,12 @@ from django.conf import settings
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from triboo_analytics.models import (
+    Badge,
+    CourseDailyReport,
     LearnerCourseDailyReport,
-    LearnerSectionReport,
-    CourseDailyReport
+    LearnerCourseJsonReport,
+    LearnerSectionDailyReport,
+    LearnerSectionJsonReport,
 )
 
 log = logging.getLogger(__name__)
@@ -68,6 +71,9 @@ def remove_course_reports(course_key):
     """
     Delete all reports related to the course.
     """
-    LearnerCourseDailyReport.objects.filter(course_id=course_key).delete()
-    LearnerSectionReport.objects.filter(course_id=course_key).delete()
+    Badge.objects.filter(course_id=course_key).delete()
     CourseDailyReport.objects.filter(course_id=course_key).delete()
+    LearnerCourseDailyReport.objects.filter(course_id=course_key).delete()
+    LearnerCourseJsonReport.objects.filter(course_id=course_key).delete()
+    LearnerSectionDailyReport.objects.filter(course_id=course_key).delete()
+    LearnerSectionJsonReport.objects.filter(course_id=course_key).delete()

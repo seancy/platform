@@ -30,7 +30,7 @@
                 this.isLoading = false;
             },
 
-            loadSkeletons: function(){
+            loadSkeletons: function() {
                 var items = [0, 1,2,3,4,5,6].map(function(index) {
                     var m0 = {attributes:{duration:'', badges:'', org:'', course_category:'', course_mandatory_enabled:'', language:'', image_url:'', course:'',content:{}}}
                     var item = new CourseCardView({model: m0})

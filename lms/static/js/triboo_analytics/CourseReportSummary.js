@@ -23,7 +23,7 @@ export default class CourseReportSummary extends BaseReport {
         dataUrl:'/analytics/course/json/'
     }
 
-    getConfig(){
+    getConfig() {
         const propertiesFields = this.getOrderedProperties()
         const statusRender = { render:StatusRender}, percentRender = { render:PercentRender}
         return {...{

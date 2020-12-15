@@ -21,12 +21,12 @@ export default class CourseReportProgress extends BaseReport {
         dataUrl:'/analytics/course/json/'
     }
 
-    getDynamicFields(){
+    getDynamicFields() {
         const {data, columns} = this.state
         const propertiesValues = this.state.properties.map(p=>p.value)
 
         let dynamicFields = [], subFields = []
-        if (data && data.length > 0){
+        if (data && data.length > 0) {
             const firstRow = data[0]
             const dynamicKeys = Object.keys(firstRow)
                 .filter(key=>{
@@ -72,7 +72,7 @@ export default class CourseReportProgress extends BaseReport {
                     return (<><span className={"trophy-" + (v == 'Yes'?'yes fa fa-check':'no fa fa-times')}></span></> )
                 } else if (item.fieldName.endsWith('Score')) {
                     return v + '%'
-                } else{
+                } else {
                     return v
                 }
             },

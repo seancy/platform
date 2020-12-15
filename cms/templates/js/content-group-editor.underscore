@@ -6,7 +6,7 @@
     <% } %>
     <div class="wrapper-form">
         <fieldset class="collection-fields">
-            <div class="input-wrap field text required add-collection-name <% if(error && error.attributes && error.attributes.name) { print('error'); } %>">
+            <div class="input-wrap field text required add-collection-name <% if (error && error.attributes && error.attributes.name) { print('error'); } %>">
                 <label for="group-cohort-name-<%- uniqueId %>"><%- gettext("Content Group Name") %></label><%
                 if (!_.isUndefined(id) && !_.isEmpty(id)) {
                     %><span class="group-configuration-id">

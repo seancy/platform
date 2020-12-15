@@ -7,7 +7,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.1/cookieconsent.min.js"></script>
 
 <script>
-window.addEventListener("load", function(){
+window.addEventListener("load", function() {
   window.cookieconsent.initialise({
 
     window: '<div dir="${static.dir_rtl()}" role="dialog" tabindex="-1" id="cookiepopup" aria-label="cookieconsent" class="cc-window {{classes}}"><!--googleoff: all-->{{children}}<!--googleon: all--></div>',
@@ -28,10 +28,10 @@ window.addEventListener("load", function(){
     "position": "bottom",
     "static": "true"
   },
-  function(popup){
+  function(popup) {
 
     $(".cc-window").on('keydown', function(event) {
-      if (event.keyCode == 27 ){
+      if (event.keyCode == 27 ) {
         popup.close();
       } 
     });

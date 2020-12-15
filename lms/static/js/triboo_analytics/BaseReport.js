@@ -3,7 +3,7 @@ import {PaginationConfig} from "./Config";
 import {get, merge, omit, isEmpty, pick} from "lodash";
 
 export default class BaseReport extends React.Component{
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             timer:null,
@@ -32,18 +32,18 @@ export default class BaseReport extends React.Component{
             (selectedFilterItems.length <= 0 &&
             selectedProperties.length <= 0  &&
             startDate == '' &&
-            endDate == '') ){
+            endDate == '') ) {
             this.fetchData(1)
         }
     }
 
-    toolbarDataUpdate(toolbarData, isExcluded){
+    toolbarDataUpdate(toolbarData, isExcluded) {
         this.setState(()=>{
             return {
                 toolbarData
             }
         },()=>{
-            if (!isExcluded){
+            if (!isExcluded) {
                 this.fetchData(1)
                 this.myRef.current.resetPage(1)
             }
@@ -52,13 +52,13 @@ export default class BaseReport extends React.Component{
         })
     }
 
-    getOrderedProperties(){
+    getOrderedProperties() {
         const {data}=this.state;
         const {selectedProperties}=this.state.toolbarData;
         let properties=selectedProperties && selectedProperties.length ?
             selectedProperties : this.state.properties.filter(p=>p.type == 'default')
         let orderedProperties = []
-        if (data && data.length > 0){
+        if (data && data.length > 0) {
             const firstRow = data[0]
             const propertiesValues = properties.map(p=>p.value)
             orderedProperties = Object.keys(firstRow)
@@ -83,7 +83,7 @@ export default class BaseReport extends React.Component{
             }));
     }
 
-    generateParameter(){
+    generateParameter() {
         const {toolbarData} = this.state
         const getVal=(key,defaultValue)=>{
             return toolbarData && toolbarData[key]?toolbarData[key]: defaultValue || '';
@@ -102,7 +102,7 @@ export default class BaseReport extends React.Component{
         }, ...get(this.setting, 'extraParams', {})}
     }
 
-    getBaseConfig(){
+    getBaseConfig() {
         return {
             onSort:(sort, pageNo)=>{
                 sort == '' ?
@@ -161,7 +161,7 @@ export default class BaseReport extends React.Component{
         })
     }
 
-    startExport(type){
+    startExport(type) {
         const url = `/analytics/export/`
         let ajaxData = omit({
             ...this.generateParameter(),

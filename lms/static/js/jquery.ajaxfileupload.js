@@ -10,15 +10,14 @@ jQuery.extend({
       (s.context ? jQuery(s.context) : jQuery.event).trigger( "ajaxError", [xhr, s, e] );
     }
   },
-    createUploadIframe: function(id, uri){
+    createUploadIframe: function(id, uri) {
         //create frame
         var frameId = 'jUploadFrame' + id;           
         if(window.ActiveXObject) {
             var io = document.createElement('<iframe id="' + frameId + '" name="' + frameId + '" />');
-            if(typeof uri== 'boolean'){
+            if (typeof uri== 'boolean') {
                 io.src = 'javascript:false';
-            }
-            else if(typeof uri== 'string'){
+            } else if (typeof uri== 'string') {
                 io.src = uri;
             }
         }
@@ -77,27 +76,23 @@ jQuery.extend({
 		{			
 			var io = document.getElementById(frameId);
             try {				
-				if(io.contentWindow){
+				if(io.contentWindow) {
 					 xml.responseText = io.contentWindow.document.body ? 
                       io.contentWindow.document.body.textContent || io.contentWindow.document.body.innerText : null;
                 	 xml.responseXML = io.contentWindow.document.XMLDocument ? 
                         io.contentWindow.document.XMLDocument : io.contentWindow.document;
 					 
-				}
-                else if(io.contentDocument)
-				{
+				} else if(io.contentDocument) {
 					xml.responseText = io.contentDocument.document.body ? 
                         io.contentDocument.document.body.textContent || document.body.innerText : null;
                 	xml.responseXML = io.contentDocument.document.XMLDocument ? 
                         io.contentDocument.document.XMLDocument : io.contentDocument.document;
 				}						
             }
-            catch(e)
-			{
+            catch(e) {
 				jQuery.handleError(s, xml, null, e);
 			}
-            if ( xml || isTimeout == "timeout") 
-			{				
+            if ( xml || isTimeout == "timeout") {				
                 requestDone = true;
                 var status;
                 try {
@@ -136,51 +131,44 @@ jQuery.extend({
 
                 jQuery(io).unbind();
 
-                setTimeout(function()
-                    {	try 
-                        {
-                            $(io).remove();
-                            $(form).remove();	
-                            
-                        } catch(e) {
-                            jQuery.handleError(s, xml, null, e);
-                        }									
-                    }, 100)
+                setTimeout(function() {
+                	try {
+                        $(io).remove();
+                        $(form).remove();	
+                        
+                    } catch(e) {
+                        jQuery.handleError(s, xml, null, e);
+                    }									
+                }, 100)
                 xml = null;
             }
         }
         // Timeout checker
         if ( s.timeout > 0 ) {
-            setTimeout(function(){
+            setTimeout(function() {
                 // Check to see if the request is still happening
-                if( !requestDone ) uploadCallback( "timeout" );
+                if (!requestDone) uploadCallback("timeout");
             }, s.timeout);
         }
-        try 
-		{
+        try {
            // var io = $('#' + frameId);
 			var form = $('#' + formId);
 			$(form).attr('action', s.url);
 			$(form).attr('method', 'POST');
 			$(form).attr('target', frameId);
-            if(form.encoding)
-			{
+            if (form.encoding) {
                 form.encoding = 'multipart/form-data';				
-            }
-            else
-			{				
+            } else {				
                 form.enctype = 'multipart/form-data';
             }			
             $(form).submit();
 
-        } catch(e) 
-		{			
+        } catch(e) {			
             jQuery.handleError(s, xml, null, e);
         }
-        if(window.attachEvent){
+        if (window.attachEvent) {
             document.getElementById(frameId).attachEvent('onload', uploadCallback);
-        }
-        else{
+        } else{
             document.getElementById(frameId).addEventListener('load', uploadCallback, false);
         } 		
         return {abort: function () {}};	
@@ -199,7 +187,7 @@ jQuery.extend({
         // evaluate scripts within html
         if ( type == "html" )
             jQuery("<div>").html(data).evalScripts();
-			//alert($('param', data).each(function(){alert($(this).attr('value'));}));
+			//alert($('param', data).each(function() {alert($(this).attr('value'));}));
         return data;
     }
 })

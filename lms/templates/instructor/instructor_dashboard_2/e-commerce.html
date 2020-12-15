@@ -221,7 +221,7 @@ import pytz
                     $.cookie('saved_index', null);
                     $.cookie('saved_index', active);
                     $('#error-msg').val('');
-                    $("#error-msg").fadeOut(2000 , function(){
+                    $("#error-msg").fadeOut(2000 , function() {
                         $('#error-msg').hide()
                     });
                    },
@@ -243,7 +243,7 @@ import pytz
          $(this).removeAttr('href')
        }
      });
-     $('#registration_code_generation_link').click(function(event){
+     $('#registration_code_generation_link').click(function(event) {
          event.preventDefault();
 
          $.ajax({
@@ -259,10 +259,10 @@ import pytz
      $('#invalidate_invoice, #re_validate_invoice').click(function (event) {
          event.preventDefault();
          var event_type = "re_validate"
-         if($(event.target).attr('id')=='invalidate_invoice'){
+         if ($(event.target).attr('id')=='invalidate_invoice') {
              event_type = "invalidate"
          }
-         if($('#invoice_number').val() == "") {
+         if ($('#invoice_number').val() == "") {
                      $('#error-msg').attr('class','error-msgs')
                     $('#error-msg').text("${_('The Invoice Number field cannot be empty.') | n, js_escaped_string}").show();
                      return

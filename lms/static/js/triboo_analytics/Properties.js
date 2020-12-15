@@ -9,11 +9,11 @@ class Properties extends React.Component {
         this.myRef = React.createRef()
     }
 
-    clean(){
+    clean() {
         this.myRef.current.clean()
     }
 
-    handleChange(selectedItems){
+    handleChange(selectedItems) {
         const {onChange}=this.props
         onChange && onChange(selectedItems)
     }

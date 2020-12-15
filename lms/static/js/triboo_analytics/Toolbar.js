@@ -31,7 +31,7 @@ export class Toolbar extends React.Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         fetch('/analytics/common/get_properties/json/')
             .then(response=>{
                 return response.json()
@@ -39,11 +39,11 @@ export class Toolbar extends React.Component {
             .then(data=>{
                 this.setState((prev)=>{
                     let toolbarItems = prev.toolbarItems.map(p=>{
-                        if (['filters','properties'].includes(p.name)){
+                        if (['filters','properties'].includes(p.name)) {
                             const nameList = p.name == 'filters'?[{text:gettext('Name'), value:'user_name'}]:[]
                             const dataList = [...nameList, ...data.list.map(item=>pick(item, ['text','value']))]
                             return {...p, props:{ ...p.props, data:dataList }}
-                        }else{
+                        } else {
                             return p
                         }
                     })
@@ -57,9 +57,9 @@ export class Toolbar extends React.Component {
             .catch(()=>{
                 this.setState((prev)=>{
                     let toolbarItems = prev.toolbarItems.map(p=>{
-                        if (['filters','properties'].includes(p.name)){
+                        if (['filters','properties'].includes(p.name)) {
                             return {...p, props: {...p.props, data: [{text: 'api: an error raised', value: ''}]}}
-                        }else{
+                        } else {
                             return p
                         }
                     })
@@ -71,12 +71,12 @@ export class Toolbar extends React.Component {
             })
     }
 
-    export(){
+    export() {
         const {onGo}=this.props
         onGo && onGo(this.state.exportType)
     }
 
-    fireExportTypeChange(){
+    fireExportTypeChange() {
         this.state.timer && clearTimeout(this.state.timer)
         this.setState({
             timer:setTimeout(()=>{
@@ -94,14 +94,14 @@ export class Toolbar extends React.Component {
         })
     }
 
-    doFireChange(isExcluded=false){
+    doFireChange(isExcluded=false) {
         this.setState({timer:null})
         const {onChange}=this.props
         const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate', 'activeButton', 'exportType')
         onChange && onChange(json, isExcluded);
     }
 
-    getToolbarItems(enabledItems=[]){
+    getToolbarItems(enabledItems=[]) {
         const propertyData = [
             {value: '', text: ''},
         ]
@@ -132,11 +132,11 @@ export class Toolbar extends React.Component {
             .filter(p=>enabledItems.includes(p.name) ||  enabledItems.length <= 0)
     }
 
-    setActiveTab(json){
+    setActiveTab(json) {
         const {onTabSwitch}=this.props
         let activeTabName = ''
         this.setState((prev)=>{
-            if (prev.activeTabName != json.name){
+            if (prev.activeTabName != json.name) {
                 activeTabName = json.name
             }
             return {activeTabName}

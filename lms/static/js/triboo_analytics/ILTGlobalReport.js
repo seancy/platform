@@ -20,7 +20,7 @@ export default class ILTGlobalReport extends BaseReport {
         dataUrl:'/analytics/ilt/json/'
     }
 
-    getConfig(){
+    getConfig() {
         const translationRender={
             render:v=>gettext(v)
         }

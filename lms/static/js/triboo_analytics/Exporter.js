@@ -11,12 +11,12 @@ class Exporter extends React.Component {
 
     componentDidMount() {
         const {defaultValue}=this.props
-        if (defaultValue != ''){
+        if (defaultValue != '') {
             this.fireChange(defaultValue)
         }
     }
 
-    handleChange(item){
+    handleChange(item) {
         const {value}=item
         this.setState({
             value,
@@ -26,7 +26,7 @@ class Exporter extends React.Component {
         })
     }
 
-    fireChange(value){
+    fireChange(value) {
         const {onChange}=this.props
         onChange && onChange(value)
         this.setState({buttonStatus:''})

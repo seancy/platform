@@ -15,7 +15,7 @@ from six import text_type
 from course_modes.models import CourseMode
 from django_comment_common.models import assign_default_role
 from django_comment_common.utils import seed_permissions_roles
-from lms.djangoapps.triboo_analytics.models import (
+from triboo_analytics.models import (
     LearnerCourseJsonReport,
     LearnerSectionJsonReport,
     LearnerBadgeJsonReport,

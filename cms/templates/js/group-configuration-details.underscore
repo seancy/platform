@@ -1,14 +1,14 @@
 <div class="collection-details wrapper-group-configuration">
     <header class="collection-header group-configuration-header">
         <h3 class="title group-configuration-title">
-            <a href="#" class="toggle group-toggle <% if(showGroups){ print('hide'); } else { print('show'); } %>-groups">
-                <span class="ui-toggle-expansion icon fa fa-caret-<% if(showGroups){ print('down'); } else { print('right'); } %>"></span>
+            <a href="#" class="toggle group-toggle <% if (showGroups){ print('hide'); } else { print('show'); } %>-groups">
+                <span class="ui-toggle-expansion icon fa fa-caret-<% if (showGroups){ print('down'); } else { print('right'); } %>"></span>
                 <%- name %>
             </a>
         </h3>
     </header>
 
-    <ol class="collection-info group-configuration-info group-configuration-info-<% if(showGroups){ print('block'); } else { print('inline'); } %>">
+    <ol class="collection-info group-configuration-info group-configuration-info-<% if (showGroups) { print('block'); } else { print('inline'); } %>">
       <% if (!_.isUndefined(id)) { %>
         <li class="group-configuration-id"
             ><span class="group-configuration-label"><%- gettext('ID') %>: </span
@@ -29,7 +29,7 @@
       <% } %>
     </ol>
 
-    <% if(showGroups) { %>
+    <% if (showGroups) { %>
       <% allocation = Math.floor(100 / groups.length) %>
       <ol class="collection-items groups groups-<%= index %>">
         <% groups.each(function(group, groupIndex) { %>
@@ -55,7 +55,7 @@
         <% } %>
     </ul>
 </div>
-<% if(showGroups) { %>
+<% if (showGroups) { %>
   <div class="collection-references wrapper-group-configuration-usages">
     <% if (!_.isEmpty(usage)) { %>
       <h4 class="intro group-configuration-usage-text"><%- gettext('This Group Configuration is used in:') %></h4>

@@ -27,16 +27,15 @@
                 $waiver_section = $("#waiver-section").find("option:selected"),
                 waiver_course = $("#waiver-course").val(),
                 waiver_description = $("#waiver-description").val().trim();
-            if (waiver_course == 'none' || waiver_description.length == 0){
-                if (waiver_course == 'none'){
+            if (waiver_course == 'none' || waiver_description.length == 0) {
+                if (waiver_course == 'none') {
                     $send_button.notify("${_('Please select a course!')}", {position: 'top-center', className: 'error'});
-                }
-                else {
+                } else {
                     $send_button.notify("${_('Please the provide the reason. It cannot be empty!')}", {position: 'top-center', className: 'error'});
                 }
-                if(!$modal.hasClass(fx) ){
+                if (!$modal.hasClass(fx) ) {
                     $modal.addClass(fx);
-                    setTimeout(function(){
+                    setTimeout(function() {
                         $modal.removeClass(fx);
                     }, 1500);
                 }
@@ -432,7 +431,7 @@
 
   drawPieChart('pieChart', pieChartData);
 
-    $('#table-pdf-button').click(function(e){
+    $('#table-pdf-button').click(function(e) {
         e.preventDefault();
         window.open("${reverse('analytics_my_transcript_pdf')}");
     });

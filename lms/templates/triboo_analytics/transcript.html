@@ -218,7 +218,7 @@
 
   drawPieChart('pieChart', pieChartData);
 
-    $('#table-pdf-button').click(function(e){
+    $('#table-pdf-button').click(function(e) {
         e.preventDefault();
         window.open("${reverse('analytics_learner_transcript_pdf', args=[user_id])}");
     });

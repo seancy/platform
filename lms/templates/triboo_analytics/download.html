@@ -25,7 +25,7 @@
                         div.html(link);
                         return div;
                     });
-                    if (links.length <= 0){
+                    if (links.length <= 0) {
                         links.push('<div><h3>${_("No reports available")}</h3></div>')
                     }
                     elem.html(links);
@@ -38,11 +38,11 @@
         });
         listDownloads();
 
-        $('.actions .download-item').on('click', function(e){
+        $('.actions .download-item').on('click', function(e) {
                 var $download = $(e.currentTarget)
-                if ($download.hasClass('showing')){
+                if ($download.hasClass('showing')) {
                     $download.removeClass('showing')
-                }else{
+                } else {
                     $download.addClass('showing')
                 }
         })

@@ -20,7 +20,7 @@ export default class ILTLearnerReport extends BaseReport {
         dataUrl:'/analytics/ilt/json/'
     }
 
-    getConfig(){
+    getConfig() {
         const propertiesFields = this.getOrderedProperties()
         const translationRender={
             render:v=>gettext(v)

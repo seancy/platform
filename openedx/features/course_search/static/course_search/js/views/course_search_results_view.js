@@ -20,7 +20,7 @@
                 'click .search-load-next': 'loadNext'
             },
 
-            updateSearchInfo:function(query){
+            updateSearchInfo: function(query) {
                 this.$el.find('.search-term span').text(query);
             },
             clear: function() {

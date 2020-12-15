@@ -8,9 +8,9 @@ function Courseware(options) {
   Logger.bind();
   this.render();
   var $courseIndex = $('.course-index');
-  var outlineVisibleInit = function(){
+  var outlineVisibleInit = function() {
     //always show course outline on desktop version
-    if ($courseIndex.hasClass('None') && $(window).width() > 768){
+    if ($courseIndex.hasClass('None') && $(window).width() > 768) {
       $courseIndex.addClass('showing');
     }
   }
@@ -18,7 +18,7 @@ function Courseware(options) {
   this.eventInit();
 }
 
-Courseware.prototype.eventInit = function(){
+Courseware.prototype.eventInit = function() {
   var $courseContent = $('.course-content');
   var $courseIndex = $('.course-index');
   var $leftSideIcon = $courseIndex.find('.back-link > i');
@@ -27,10 +27,10 @@ Courseware.prototype.eventInit = function(){
     var $iconInSearchResult = $('.courseware-results-wrapper .page-header i');
     var $leftSideIcon = $courseIndex.find('.back-link > i');
     var arr = [$icon, $iconInSearchResult, $leftSideIcon]
-    for(var i=0; i<arr.length; i++){
-      if (!$courseIndex.hasClass('showing')){
+    for(var i=0; i<arr.length; i++) {
+      if (!$courseIndex.hasClass('showing')) {
         arr[i].removeClass('fa-outdent').addClass('fa-indent').attr('title', this.options.textExtend)
-      }else {
+      } else {
         arr[i].removeClass('fa-indent').addClass('fa-outdent').attr('title', this.options.textCollapse)
       }
     }

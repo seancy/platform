@@ -520,8 +520,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
 </li>
 <script>
            $( document ).ready(function() {
-
-               if("${is_course_blocked | n, dump_js_escaped_json}" == 'true'){
+               if ("${is_course_blocked | n, dump_js_escaped_json}" == 'true') {
                    $( "#unregister_block_course" ).click(function() {
                        $('.disable-look-unregister').click();
                    });

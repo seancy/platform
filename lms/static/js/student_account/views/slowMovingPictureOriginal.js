@@ -1,5 +1,5 @@
 
-window.Animation_SlowMovingPicture = function ($bgImg, $bg){
+window.Animation_SlowMovingPicture = function ($bgImg, $bg) {
   var lFollowX = 0,
       lFollowY = 0,
       x = 0,

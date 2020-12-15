@@ -1,6 +1,6 @@
 /* English/UK initialisation for the jQuery UI date picker plugin. */
 /* Written by Stuart. */
-jQuery(function($){
+jQuery(function($) {
 	$.datepicker.regional['en'] = {
 		closeText: 'Done',
 		prevText: 'Prev',
@@ -24,7 +24,7 @@ jQuery(function($){
 
 /* Inicialización en español para la extensión 'UI date picker' para jQuery. */
 /* Traducido por Vester (xvester@gmail.com). */
-jQuery(function($){
+jQuery(function($) {
 	$.datepicker.regional['es-419'] = {
 		closeText: 'Cerrar',
 		prevText: '&#x3C;Ant',
@@ -48,7 +48,7 @@ jQuery(function($){
 
 /* Brazilian initialisation for the jQuery UI date picker plugin. */
 /* Written by Leonildo Costa Silva (leocsilva@gmail.com). */
-jQuery(function($){
+jQuery(function($) {
 	$.datepicker.regional['pt-br'] = {
 		closeText: 'Fechar',
 		prevText: '&#x3C;Anterior',
@@ -74,7 +74,7 @@ jQuery(function($){
 /* Written by Keith Wood (kbwood{at}iinet.com.au),
 			  Stéphane Nahmani (sholby@sholby.net),
 			  Stéphane Raimbault <stephane.raimbault@gmail.com> */
-jQuery(function($){
+jQuery(function($) {
 	$.datepicker.regional['fr'] = {
 		closeText: 'Fermer',
 		prevText: 'Précédent',
@@ -98,7 +98,7 @@ jQuery(function($){
 
 /* Chinese initialisation for the jQuery UI date picker plugin. */
 /* Written by Cloudream (cloudream@gmail.com). */
-jQuery(function($){
+jQuery(function($) {
 	$.datepicker.regional['zh-CN'] = {
 		closeText: '关闭',
 		prevText: '&#x3C;上月',

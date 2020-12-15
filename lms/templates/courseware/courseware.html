@@ -223,7 +223,7 @@ ${HTML(fragment.foot_html())}
                   $(document).ajaxSuccess(function(event, xhr, settings) {
                       if (settings.url.indexOf("xmodule_handler/problem_check") > -1) {
                           var data = JSON.parse(xhr.responseText);
-                          if (data.entrance_exam_passed){
+                          if (data.entrance_exam_passed) {
                               location.reload();
                           }
                       }

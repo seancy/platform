@@ -24,12 +24,12 @@ export class Transcript extends BaseReport {
         dataUrl:'/analytics/transcript/json/'
     }
 
-    getExtraParams(){
+    getExtraParams() {
         const matches = window.location.pathname.match(/[transcript|pdf]\/(\d+)/)
         return matches && matches.length ? {user_id: matches[1]} : {}
     }
 
-    getConfig(){
+    getConfig() {
         const statusRender = { render:StatusRender}, percentRender = { render:PercentRender}
         return {...{
             enableRowsCount:true,

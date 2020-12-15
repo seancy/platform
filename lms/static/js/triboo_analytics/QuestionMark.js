@@ -21,7 +21,7 @@ export class QuestionMark extends React.Component {
         let docWidth = document.body.offsetWidth,
             elementX = this.refs.root.getBoundingClientRect().x,
             offsetVal = 0;
-        if (docWidth - elementX < 100){
+        if (docWidth - elementX < 100) {
             offsetVal = docWidth-elementX
         }
         this.refs.root.querySelector('.after').style.marginLeft = `-${offsetVal}px`
