@@ -36,7 +36,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    options = options || {};
         // fill in fields
                    this.$el.find('#course-category').val(this.model.get('course_category'));
-                   this.$el.find('#course-country').val(this.model.get('course_country'));
+                   //this.$el.find('#course-country').val(this.model.get('course_country'));
                    this.$el.find('#course-language').val(this.model.get('language'));
                    this.$el.find('#course-organization').val(this.model.get('org'));
                    this.$el.find('#course-number').val(this.model.get('course_id'));
@@ -232,6 +232,26 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        instructorPacedButton.attr('disabled', true);
                        paceToggleTip.text(gettext('Course pacing cannot be changed once a course has started.'));
                    }
+
+                   var current_countries = this.model.get('course_country');
+                   $("input[name='course-country']").each(function () {
+                      var value = $(this).val();
+                      if (current_countries.includes(value)) {
+                          $(this).prop('checked', true)
+                      } else {
+                          $(this).prop('checked', false)
+                      }
+                   });
+
+                   var current_learning_group = this.model.get('enrollment_learning_groups');
+                   $("input[name='learning-group[]']").each(function () {
+                       var value = $(this).val();
+                       if (current_learning_group.includes(value)) {
+                           $(this).prop('checked', true)
+                       } else {
+                          $(this).prop('checked', false)
+                       }
+                   });
 
                    this.licenseView.render();
                    this.learning_info_view.render();
@@ -515,7 +535,6 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    case 'course-finish-days':
                    case 'course-language':
                    case 'course-category':
-                   case 'course-country':
                    case 'course-effort':
                    case 'course-title':
                    case 'course-subtitle':
@@ -545,6 +564,29 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                            checkedValue.push($(this).val());
                        });
                        this.model.set('vendor', checkedValue);
+                   } else if (name === 'course-country' && event.type === 'change') {
+                       console.log("country");
+                       var current_countries = Array.from(this.model.get('course_country')),
+                           selected_value = event.currentTarget.value;
+                       if (event.currentTarget.checked) {
+                           if (selected_value === 'All countries') {
+                               $("input#course-country-0").parent().siblings().find("input[name='course-country']").prop('checked', false);
+                               current_countries = ['All countries'];
+                           } else {
+                               var index = current_countries.indexOf('All countries');
+                               if (index > -1) {
+                                   current_countries.splice(index, 1);
+                               }
+                               $("input#course-country-0").prop('checked', false);
+                               current_countries.push(selected_value);
+                           }
+                       } else {
+                           var index = current_countries.indexOf(selected_value);
+                           if (index > -1) {
+                               current_countries.splice(index, 1);
+                           }
+                       }
+                       this.model.set('course_country', current_countries);
                    }
                },
 

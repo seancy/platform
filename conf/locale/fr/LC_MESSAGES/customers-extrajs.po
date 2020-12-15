@@ -29,3 +29,11 @@ msgstr "Oui"
 #: master-cofidis: lms/static/js/views/login_role_check.js
 msgid "No"
 msgstr "Non"
+
+#: cms/static/js/views/settings/main.js
+msgid "Select one country under Course Country"
+msgstr "Sélectionner un pays dans le champs Pays du cours"
+
+#: cms/static/js/views/settings/main.js
+msgid "Your changes on this page will not be saved until you select at least one country under Course Country and then save."
+msgstr "Vos changements sur cette page ne seront pas sauvegardés tant que vous ne sélectionnez pas un pays dans la liste."

@@ -28834,3 +28834,23 @@ msgstr "抱歉，我们无法找到您的账户。请联系您的 IT 管理员�
 #: lms/templates/registration/sso_failure.html:54
 msgid "Back to login"
 msgstr "回到注册页面"
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py:1006
+msgid "No intermediate certificates match your search criteria."
+msgstr "没有符合您搜索条件的中级证书"
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py:1011
+msgid "The number of certificates to export exceeds {upper_bound}. Please narrow your search."
+msgstr "要导出的证书数量超过了 {upper_bound}，请缩小查找范围。"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:41
+msgid "Partner Code"
+msgstr "合作伙伴代码"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:58
+msgid "Loading..."
+msgstr "加载中……"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:61
+msgid "Generate Intermediate Certificates"
+msgstr "生成中级证书"

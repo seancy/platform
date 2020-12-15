@@ -706,11 +706,11 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
-    course_country = String(
+    course_country = List(
         display_name=_("Course Country"),
         help=_("Specify the country of your course."),
         scope=Scope.settings,
-        default="All countries"
+        default=[]
     )
 
     course_category = String(

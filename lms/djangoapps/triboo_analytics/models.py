@@ -1968,7 +1968,7 @@ class IltSession(TimeStampedModel):
                         ilt_blocks[block_id] = {
                             'course_id': overview.id,
                             'course_display_name': overview.display_name,
-                            'course_country': course_details.course_country,
+                            'course_country': ", ".join(course_details.course_country),
                             'course_tags': ", ".join(course_details.vendor)
                         }
                     for child in block['children']:
@@ -1982,7 +1982,7 @@ class IltSession(TimeStampedModel):
                     chapter = outline[sequential['parent']]
                     ilt_blocks[ilt_block_id]['chapter_display_name'] = chapter['display_name']
 
-            except CourseStructureNotAvailableError:
+            except (CourseStructureNotAvailableError, AttributeError), e:
                 pass
 
         return ilt_blocks

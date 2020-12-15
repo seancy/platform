@@ -4263,8 +4263,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: lms/djangoapps/support/static/support/js/views/certificates.js:51
-msgid "An unexpected error occurred.  Please try again."
-msgstr "Une erreur inattendue est survenue. Veuillez réessayer."
+msgid "An error occurred. Please try again later."
+msgstr "Une erreur est survenue. Veuillez essayer de nouveau plus tard."
 
 #: lms/djangoapps/support/static/support/js/views/enrollment.js:15
 msgid "Financial Assistance"
@@ -12979,6 +12979,10 @@ msgstr "Enquête"
 msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
 msgstr "Le nombre de certificats à exporter dépasse 1 000. Veuillez affiner votre sélection."
 
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds {upper_bound}. Please narrow your search."
+msgstr "Le nombre de certificats à exporter dépasse {upper_bound}. Veuillez affiner votre sélection."
+
 #: lms/templates/dashboard.html
 msgid "No sessions available"
 msgstr "Pas de session disponible"
@@ -12986,3 +12990,11 @@ msgstr "Pas de session disponible"
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"
 msgstr "Ajouter à mon Calendrier"
+
+#: cms/static/js/views/settings/main.js
+msgid "Select one country under Course Country"
+msgstr "Sélectionner un pays dans le champs Pays du cours"
+
+#: cms/static/js/views/settings/main.js
+msgid "Your changes on this page will not be saved until you select at least one country under Course Country and then save."
+msgstr "Vos changements sur cette page ne seront pas sauvegardés tant que vous ne sélectionnez pas un pays dans la liste."

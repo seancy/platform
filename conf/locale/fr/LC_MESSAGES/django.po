@@ -30824,7 +30824,7 @@ msgid "Bookmark a course content"
 msgstr "Ajouter aux favoris"
 
 #: lms/templates/seq_module.html:85
-msgid "Go back on the previous page"
+msgid "Go back to the previous page"
 msgstr "Aller à la page précédente"
 
 #: lms/templates/seq_module.html:89
@@ -31420,3 +31420,23 @@ msgstr "Désolé, nous ne trouvons pas votre compte. Veuillez contacter votre ad
 #: lms/templates/registration/sso_failure.html:54
 msgid "Back to login"
 msgstr "Retour à la page de connexion"
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py:1006
+msgid "No intermediate certificates match your search criteria."
+msgstr "Aucun certificat intermédiaire ne correspond à vos critères de recherche."
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py:1011
+msgid "The number of certificates to export exceeds {upper_bound}. Please narrow your search."
+msgstr "Le nombre de certificats à exporter dépasse {upper_bound}. Veuillez affiner votre sélection."
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:41
+msgid "Partner Code"
+msgstr "Code partenaire"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:58
+msgid "Loading..."
+msgstr "Chargement en cours…"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:61
+msgid "Generate Intermediate Certificates"
+msgstr "Générer les certificats intermédiaires"

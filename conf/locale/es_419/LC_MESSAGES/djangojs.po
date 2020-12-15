@@ -4369,8 +4369,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: lms/djangoapps/support/static/support/js/views/certificates.js:51
-msgid "An unexpected error occurred.  Please try again."
-msgstr "Ocurrió un error inesperado. Prueba de nuevo."
+msgid "An error occurred. Please try again later."
+msgstr "Se ha producido un error. Por favor, inténtalo de nuevo más tarde."
 
 #: lms/djangoapps/support/static/support/js/views/enrollment.js:15
 msgid "Financial Assistance"
@@ -12799,6 +12799,11 @@ msgstr "Encuesta"
 # lms/static/js/certificates/intermediate_certificates.js
 msgid "The number of certificates to export exceeds 1,000. Please narrow your search."
 msgstr "El número de certificados para ser exportada sea superior a 1.000. Por favor limite su selección."
+
+# lms/static/js/certificates/intermediate_certificates.js
+msgid "The number of certificates to export exceeds {upper_bound}. Please narrow your search."
+msgstr "El número de certificados para ser exportada sea superior a {upper_bound}. Por favor limite su selección."
+
 #: lms/templates/dashboard.html
 msgid "No sessions available"
 msgstr "No hay sesiones disponibles"

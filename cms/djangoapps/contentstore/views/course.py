@@ -1181,6 +1181,7 @@ def settings_handler(request, course_key_string):
             country_options = ['All countries']
             if configuration_helpers.get_value('COURSE_COUNTRIES', []):
                 country_options += configuration_helpers.get_value('COURSE_COUNTRIES', [])
+            selected_countries = CourseDetails.fetch(course_key).course_country
 
             settings_context = {
                 'context_course': course_module,
@@ -1198,6 +1199,7 @@ def settings_handler(request, course_key_string):
                 'language_options': settings.ALL_LANGUAGES,
                 'category_options': settings.COURSE_CATEGORIES,
                 'country_options': country_options,
+                'selected_countries': selected_countries,
                 'credit_eligibility_enabled': credit_eligibility_enabled,
                 'is_credit_course': False,
                 'show_min_grade_warning': False,
@@ -1212,7 +1214,7 @@ def settings_handler(request, course_key_string):
             }
 
             if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
-                    settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
+                                               settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
                 user_learning_groups = UserProfile.objects.values_list('lt_learning_group', flat=True).distinct()
                 enrollment_learning_groups = dict((group, False) for group in user_learning_groups if group)
                 attached_learning_groups = CourseDetails.fetch(course_key).enrollment_learning_groups
