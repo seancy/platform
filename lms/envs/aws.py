@@ -1287,3 +1287,12 @@ FEATURES['ENABLE_DASHBOARD_BOOKMARKS'] = False
 
 ################ Enable Video auto-advance in video player control ####################
 FEATURES['ENABLE_AUTOADVANCE_VIDEOS'] = True
+
+# Crehana Catalog API
+
+CREHANA_API_KEY = AUTH_TOKENS.get('CREHANA_API_KEY', '')
+CREHANA_SECRET_KEY = AUTH_TOKENS.get('CREHANA_SECRET_KEY', '')
+
+################ Enable Crehana catalog ####################
+FEATURES['ENABLE_CREHANA_CATALOG'] = False
+CREHANA_RENAME = "Crehana"

@@ -332,6 +332,9 @@ urlpatterns += [
     # view of edflex catalog
     url(r'^courses/edflex_catalog$', branding_views.edflex_catalog, name='edflex_catalog'),
 
+    # view of crehana catalog
+    url(r'^courses/crehana_catalog$', branding_views.crehana_catalog, name='crehana_catalog'),
+
     #About the course
     url(
         r'^courses/{}/about$'.format(
