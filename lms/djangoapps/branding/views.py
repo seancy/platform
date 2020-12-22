@@ -1,6 +1,9 @@
 """Views for the branding app. """
+# -*- coding: utf-8 -*-
 import logging
 import urllib
+import requests
+import json
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -14,6 +17,7 @@ from django.utils import translation
 from django.utils.translation.trans_real import get_supported_language_variant
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
+from requests.structures import CaseInsensitiveDict
 
 import branding.api as branding_api
 import courseware.views.views
@@ -24,6 +28,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from student_account.views import login_and_registration_form
 from util.cache import cache_if_anonymous
 from util.json_request import JsonResponse
+from urllib import unquote
 
 from datetime import datetime
 from pytz import UTC
@@ -374,3 +379,46 @@ def learnlight_catalog(request):
     )
     learnlight_url += query_string
     return redirect(learnlight_url)
+
+
+@ensure_csrf_cookie
+@login_required
+@cache_if_anonymous()
+def crehana_catalog(request):
+    user_email = urllib.quote(request.user.email)
+    first_name = urllib.quote(request.user.first_name.encode('utf-8'))
+    last_name = urllib.quote(request.user.last_name.encode('utf-8'))
+    api_key = settings.CREHANA_API_KEY
+    secret_access = settings.CREHANA_SECRET_KEY
+    slug = "griky"
+
+    #Create the user on Crehana platform based on Triboo user profile
+    create_url = "https://www.crehana.com/api/rest/org/{slug}/users/".format(slug=slug)
+    headers = CaseInsensitiveDict()
+    headers["api-key"] = api_key
+    headers["secret-access"] = secret_access
+    payload = {"email": user_email, "first_name": unquote(first_name), "last_name": unquote(last_name)}
+    resp = requests.post(url=create_url, headers=headers, data=payload)
+    content = resp.content
+    json_content = json.loads(content)
+    user_id = json_content["id"]
+
+    #Generate the SSO auth token based on the user id created above
+    auth_URL = "https://www.crehana.com/api/rest/org/{slug}/users/{user_id}/sso-auth/?api_key={api_key}&secret_access={secret_access}".format(
+        slug=slug,
+        user_id=user_id,
+        api_key=api_key,
+        secret_access=secret_access,
+    )
+    r = requests.post(url=auth_URL)
+    content2 = r.content
+    json_content2 = json.loads(content2)
+    auth_token = json_content2['token']
+
+    #Authenticate the user and redirect him to main page
+    query_url = "https://www.crehana.com/api/rest/org/{slug}/sso-auth/?api_key={api_key}&token={auth_token}".format(
+        slug=slug,
+        api_key=api_key,
+        auth_token=auth_token,   
+    )
+    return redirect(query_url)

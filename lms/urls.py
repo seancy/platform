@@ -335,6 +335,9 @@ urlpatterns += [
     # view of learnlight catalog
     url(r'^courses/learnlight_catalog$', branding_views.learnlight_catalog, name='learnlight_catalog'),
     
+    # view of crehana catalog
+    url(r'^courses/crehana_catalog$', branding_views.crehana_catalog, name='crehana_catalog'),
+
     #About the course
     url(
         r'^courses/{}/about$'.format(

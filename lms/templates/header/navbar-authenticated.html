@@ -61,7 +61,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
         and configuration_helpers.get_value('EDFLEX_URL', None) \
         and EDFLEX_DENIED_GROUP not in user_groups):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab edflex-tab">
-          <a class="tab-nav-link" target="_blank" href="${reverse('edflex_catalog')}" title="${_('External content catalog')}">
+          <a class="tab-nav-link" target="_blank" href="${reverse('edflex_catalog')}" title="${_('External content catalog')} - EdFlex">
             <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
             ${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}
           </a>
@@ -74,6 +74,15 @@ from student.roles import studio_access_role, ilt_supervisor_role
             ${_("Languages")}
           </a>
         </div>
+
+      % if (configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False))):
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab crehana-tab">
+          <a class="tab-nav-link" target="_blank" href="${reverse('crehana_catalog')}" title="${_('External content catalog')} - Crehana">
+            <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
+            ${configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')}
+          </a>
+        </div>
+      % endif
 
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab my-courses-tab">
           <a class="tab-nav-link" href="${reverse('my_courses', kwargs={'tab': 'all-courses'})}" title="${_('Courses I am enrolled in')}">
