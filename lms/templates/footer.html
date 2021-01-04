@@ -77,7 +77,13 @@
         dir=${bidi}
       % endif
     >
-      <div class="colophon">
+      <%
+        if user.is_authenticated:
+          footer_class = "colophon"
+        else:
+          footer_class = "colophon unauthenticated"
+      %>
+      <div class="${footer_class}">
 
         <div class="wrapper-logo">
           <figure>

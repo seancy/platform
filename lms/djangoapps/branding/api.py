@@ -513,4 +513,7 @@ def get_home_url():
     if settings.FEATURES.get('ENABLE_MKTG_SITE', False):
         return marketing_link('ROOT')
 
+    if configuration_helpers.get_value("ENABLE_BRANDING_PAGE", False):
+        return reverse('root')
+
     return reverse('dashboard')

@@ -1,0 +1,166 @@
+<%page expression_filter="h"/>
+<%!
+    import json
+    from django.utils.translation import ugettext as _
+    from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+    from openedx.core.djangolib.js_utils import dump_js_escaped_json
+    from openedx.core.djangolib.markup import HTML, Text
+%>
+<%namespace name='static' file='/static_content.html'/>
+
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("Sign in")}</%block>
+<%block name="bodyclass">view-branding view-plans</%block>
+
+<%block name="header_extras">
+% if not request.user.is_authenticated:
+<script src="https://js.chargebee.com/v2/chargebee.js" data-cb-site="politecnicoindoamericano" ></script>
+% endif
+</%block>
+
+<%block name="js_extra">
+<script type="text/javascript">
+    $(window).on("scroll", function () {
+        var banner_height = $("header.branding-banner").height(),
+            header_height = $("header.global-header").height();
+        if (banner_height - $(window).scrollTop() <= header_height) {
+          $("header.global-header").addClass("darker")
+        }
+        else {
+          $("header.global-header").removeClass("darker")
+        }
+      })
+</script>
+</%block>
+
+<main id="main" class="dashboard" aria-label="Content" tabindex="-1">
+    <section class="home find-courses">
+      <header class="branding-banner">
+        <div class="outer-wrapper">
+          <div class="title">
+            % if initial_mode in ["register", "update_plan"]:
+            <div class="heading-group">
+              <h2><b>iAqui tu eres el</b></h2>
+              <h1><b>protagonista de tu futuro!</b></h1>
+              <p>Elige el plan que te llevara a sacar lo mejor de ti, preparandote para los nuevos trabajos del futuro.</p>
+            </div>
+            % elif request.user.is_authenticated:
+            <div class="subscription-detail">
+              <h2>${_("Hello {full_name}, you have successfully subscribed to the {plan_name} plan.").format(full_name=full_name, plan_name=plan_name)}</h2>
+              <h2>${_("A password reset email has been sent to the email address you provided.")}</h2>
+              <h2>${_("Subscription ID")}: ${subscription_id}</h2>
+              <a href="/dashboard">${_("Dashboard")}</a>
+            </div>
+            % else:
+            <div class="subscription-detail">
+              <h2>${_("We couldn't sign you in.")}</h2>
+              <h2>${_("In order to sign in, you need to activate your account.")}</h2>
+            </div>
+            % endif
+          </div>
+        </div>
+
+      </header>
+      <section class="plans-container">
+
+          % if initial_mode in ["register", "update_plan"]:
+          <div class="pricing-table">
+              <div class="pricing-plan-wrapper">
+                  <article class="pricing-plan">
+                      <div class="pricing-header-wrapper">
+                          <img class="pricing-image" src="${static.url('images/basic.png')}">
+                          <h2 class="pricing-header">APRENDE</h2>
+                          <p class="pricing-price">GRATIS</p>
+                      </div>
+                      <ul class="pricing-features">
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">Todos logs cursos gratis</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">Acceso a la communidad +10,000 estudiantes y profesores.</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">${_("Personalized learning lists, updated weekly")}</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">${_("Learning in the flow of life - anytime, anywhere")}</span>
+                          </li>
+                      </ul>
+                  </article>
+                  <a class="pricing-button" href="javascript:void(0)" data-cb-type="checkout" data-cb-plan-id="freemium" >
+                      <i class="far fa-check-circle"></i>
+                      ${_("Start Learning")}
+                  </a>
+              </div>
+              <div class="pricing-plan-wrapper pro-plan">
+                  <article class="pricing-plan">
+                      <div class="pricing-header-wrapper">
+                          <img class="pricing-image" src="${static.url('images/instructional.png')}">
+                          <h2 class="pricing-header">AFILIATE Y CERTIFICATE</h2>
+                          <p class="pricing-price">$25.000 COP/ MES</p>
+                      </div>
+                      <ul class="pricing-features">
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">Todos los cursos gratis + Cursos exclusivos Premium.</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">Acompanamiento de tutores especializados.</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">Academia Virtual de Idiomas.</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature"><b>Certificado de estudios por curso.</b></span>
+                          </li>
+                      </ul>
+                  </article>
+                  <a class="pricing-button" href="javascript:void(0)" data-cb-type="checkout" data-cb-plan-id="-premium" >
+                      <i class="far fa-check-circle"></i>
+                      ${_("Start Learning")}
+                  </a>
+              </div>
+              <div class="pricing-plan-wrapper">
+                  <article class="pricing-plan">
+                      <div class="pricing-header-wrapper">
+                          <img class="pricing-image" src="${static.url('images/professional.png')}">
+                          <h2 class="pricing-header">TITULATE</h2>
+                          <p class="pricing-price">$225.000 COP/ MES</p>
+                      </div>
+                      <ul class="pricing-features">
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">Todos los cursos gratis + Cursos exclusivos Premium.</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">Acompanamiento de tutores especializados.</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature">Academia Virtual de Idiomas.</span>
+                          </li>
+                          <li class="pricing-features-item">
+                              <i class="far fa-check-circle"></i>
+                              <span class="feature"><b>Titulacion Tecnica Professional (6 programas).</b></span>
+                          </li>
+                      </ul>
+                  </article>
+                  <a class="pricing-button professional" href="javascript:void(0)" data-cb-type="checkout" data-cb-plan-id="pro" >
+                      <i class="far fa-check-circle"></i>
+                      MABLEMOS
+                  </a>
+              </div>
+          </div>
+          % endif
+      </section>
+    </section>
+</main>

@@ -175,10 +175,12 @@ urlpatterns += [
 if settings.FEATURES.get('ENABLE_COMBINED_LOGIN_REGISTRATION'):
     # Backwards compatibility with old URL structure, but serve the new views
     urlpatterns += [
-        url(r'^login$', student_account_views.login_and_registration_form,
+        url(r'^login$', student_account_views.branding_login_and_registration_form,
             {'initial_mode': 'login'}, name='signin_user'),
-        url(r'^register$', student_account_views.login_and_registration_form,
+        url(r'^register$', student_account_views.branding_login_and_registration_form,
             {'initial_mode': 'register'}, name='register_user'),
+        url(r'^update_plan$', student_account_views.branding_login_and_registration_form,
+            {'initial_mode': 'update_plan'}, name='update_plan')
     ]
 else:
     # Serve the old views
@@ -334,7 +336,7 @@ urlpatterns += [
 
     # view of learnlight catalog
     url(r'^courses/learnlight_catalog$', branding_views.learnlight_catalog, name='learnlight_catalog'),
-    
+
     # view of crehana catalog
     url(r'^courses/crehana_catalog$', branding_views.crehana_catalog, name='crehana_catalog'),
 

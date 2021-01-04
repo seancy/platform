@@ -2,12 +2,15 @@
 
 import json
 import logging
+import sys
 from datetime import datetime
 
+import chargebee
 import urlparse
+from chargebee.api_error import InvalidRequestError
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
@@ -49,6 +52,7 @@ from openedx.features.enterprise_support.utils import (
     update_logistration_context_for_enterprise,
     update_account_settings_context_for_enterprise,
 )
+from student.forms import PasswordCreateResetFormNoActive
 from student.helpers import destroy_oauth_tokens, get_next_url_for_login_page
 from student.message_types import PasswordReset
 from student.models import UserProfile
@@ -62,6 +66,76 @@ from util.date_utils import strftime_localized
 AUDIT_LOG = logging.getLogger("audit")
 log = logging.getLogger(__name__)
 User = get_user_model()  # pylint:disable=invalid-name
+
+
+@require_http_methods(['GET'])
+def branding_login_and_registration_form(request, initial_mode="register"):
+
+    # for testing
+    if 'pytest' in sys.modules:
+        return login_and_registration_form(request, initial_mode=initial_mode)
+
+    plans = {"freemium": "Basic", "-premium": "Institucional", "pro": "Profesional"}
+    redirect_to = get_next_url_for_login_page(request)
+    # If we're already logged in, redirect to the dashboard
+    if request.user.is_authenticated and initial_mode == "register":
+        return redirect(redirect_to)
+
+    context = {"initial_mode": initial_mode}
+    if initial_mode == 'login':
+        subscription_id = request.GET.get("sub_id")
+        customer_id = request.GET.get("cus_id")
+        if subscription_id:
+            chargebee.configure(settings.CHARGEBEE_API_KEY, "politecnicoindoamericano")
+            try:
+                result = chargebee.Subscription.retrieve(subscription_id)
+                customer = result.customer
+                subscription = result.subscription
+                status = subscription.status
+                plan_id = subscription.plan_id
+                if status in ["active", "in_trial", "non_renewing"]:
+                    is_active = True
+                else:
+                    is_active = False
+                if customer.id == customer_id:
+                    email = customer.email
+                    first_name = customer.first_name
+                    last_name = customer.last_name
+                    user = User.objects.filter(email=email)
+                    if not user.exists():
+                        user = User.objects.create_user(username=customer_id, email=email, password="password",
+                                                        first_name=first_name, last_name=last_name, is_active=is_active)
+                        UserProfile.objects.create(user=user, name=first_name+" "+last_name,
+                                                   lt_employee_id=subscription_id,
+                                                   lt_learning_group=plans.get(plan_id))
+                        reset_password = True
+                    else:
+                        user = user.first()
+                        user.is_active = is_active
+                        user.save()
+                        user.profile.lt_employee_id = subscription_id
+                        user.profile.lt_learning_group = plans.get(plan_id)
+                        user.profile.save()
+                        reset_password = False
+                    if is_active and (not request.user.is_authenticated or request.user.id != user.id):
+                        login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+
+                    if reset_password:
+                        # send welcome email to let user reset their password
+                        form = PasswordCreateResetFormNoActive({'email': email}, "")
+                        if form.is_valid():
+                            form.save(use_https=request.is_secure(),
+                                      domain_override=request.get_host(),
+                                      request=request)
+                    sub_context = {"subscription_id": subscription_id, "full_name": first_name + " " + last_name,
+                                   "plan_name": plans.get(plan_id), "reset_password": reset_password}
+                    context.update(sub_context)
+                    return render_to_response('student_account/branding_login_and_register.html', context)
+            except InvalidRequestError:
+                pass
+        return login_and_registration_form(request)
+
+    return render_to_response('student_account/branding_login_and_register.html', context)
 
 
 @require_http_methods(['GET'])

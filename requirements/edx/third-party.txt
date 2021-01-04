@@ -9,4 +9,4 @@ django-crequest==2018.5.11
 openpyxl==2.6.4
 tablib==0.12.1
 slackclient==1.3.2
-
+chargebee==2.7.3

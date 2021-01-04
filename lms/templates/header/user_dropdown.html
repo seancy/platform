@@ -58,9 +58,28 @@ else:
     ##<div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('dashboard')}" role="menuitem">${_("Dashboard")}</a></div>
     ## <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('learner_profile', kwargs={'username': username})}" role="menuitem">${_("Profile")}</a></div>
     <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('account_settings')}" role="menuitem" title="${_('Account setting')}">${_("Account")}</a></div>
+    <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="javascript:void(0)" data-cb-type="portal" >${_("Chargebee Account")}</a></div>
+    <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('update_plan')}" role="menuitem" title="${_('Update Plan')}">${_("Update Plan")}</a></div>
     % if enable_leaderboard:
     <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('analytics_leaderboard')}" role="menuitem" title="${_('Leaderboard')}">${_("Leaderboard")}</a></div>
     % endif
     <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('analytics_my_transcript')}" role="menuitem" title="${_('My learning transcript')}">${_("My learning transcript")}</a></div>
     <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem" title="${_('Sign out')}">${_("Sign Out")}</a></div>
 </div>
+<script src="https://js.chargebee.com/v2/chargebee.js" data-cb-site="politecnicoindoamericano" ></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var cbInstance = Chargebee.init({
+            site: "politecnicoindoamericano", // your test site
+        });
+        cbInstance.setPortalCallbacks({
+          close: function() {
+            console.log("closed");
+          },
+          visit: function(value) {
+            // value -> which page in checkout/portal
+            console.log(value);
+          }
+        });
+    })
+</script>
