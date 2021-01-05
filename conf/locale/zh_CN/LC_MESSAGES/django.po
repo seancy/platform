@@ -28810,3 +28810,8 @@ msgstr "加载中……"
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:61
 msgid "Generate Intermediate Certificates"
 msgstr "生成中级证书"
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
+msgid "Free Text"
+msgstr "开放式文本"
