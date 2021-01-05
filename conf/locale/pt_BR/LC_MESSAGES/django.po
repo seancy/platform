@@ -30436,3 +30436,8 @@ msgstr "Carregando…"
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:61
 msgid "Generate Intermediate Certificates"
 msgstr "Gerar os certificados intermediários"
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
+msgid "Free Text"
+msgstr "Texto livre"
