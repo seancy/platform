@@ -265,8 +265,12 @@
 
                 toggleForm: function (e) {
                     let type = $(e.currentTarget).data('type');
-                    e.preventDefault();
-                    this._toggleForm(type);
+                    if (type === 'register') {
+
+                    } else {
+                        e.preventDefault();
+                        this._toggleForm(type);
+                    }
                 },
 
                 /**

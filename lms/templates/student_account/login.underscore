@@ -80,7 +80,7 @@
 <% if ( context.createAccountOption !== false && !context.syncLearnerProfileData && !(context.enterpriseName && context.currentProvider) ) { %>
 <div class="toggle-form">
     <span class="text"><%- gettext("First time here?") %></span>
-    <a href="#login" class="form-toggle action action-primary" data-type="register" type="button"><%- gettext("Sign up") %></a>
+    <a href="/register" class="form-toggle action action-primary" data-type="register" type="button"><%- gettext("Sign up") %></a>
 </div>
 <% } %>
 
