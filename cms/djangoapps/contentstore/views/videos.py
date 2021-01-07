@@ -807,7 +807,7 @@ def videos_post(course, request):
         })
 
         if hasattr(settings, 'VIDEO_PIPELINE_LOCAL'):
-            upload_url = 'https://' + configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.CMS_BASE) + '/api/upload_local/' + edx_video_id
+            upload_url = 'https://' + configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.ENV_TOKENS['CMS_BASE']) + '/api/upload_local/' + edx_video_id
             metadata_dict = {}
             for metadata_name, value in metadata_list:
                 metadata_dict[metadata_name] = value
