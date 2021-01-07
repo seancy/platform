@@ -559,7 +559,11 @@ def course_listing(request):
     active_courses, archived_courses = _process_courses_list(courses_iter, in_process_course_actions, split_archived)
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
-    orgs = SiteConfiguration.get_all_orgs()
+    #orgs = SiteConfiguration.get_all_orgs()
+    orgs = configuration_helpers.get_value('course_org_filter', [])
+    if not isinstance(orgs, list):
+        orgs = [orgs]
+
     pre_facet_filters = {}
     if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
                                        settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
