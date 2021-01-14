@@ -68,8 +68,14 @@ from django.core import signing
 from django.http import HttpResponse
 from django.utils.crypto import get_random_string
 from six import text_type
+from django.utils.cache import patch_vary_headers
+from django.contrib.sessions.backends.base import UpdateError
+from django.core.exceptions import SuspiciousOperation
+from django.utils.http import cookie_date
+import time
 
 from openedx.core.lib.mobile_utils import is_request_from_mobile_app
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 log = getLogger(__name__)
 
@@ -233,6 +239,66 @@ class SafeCookieData(object):
 
 
 class SafeSessionMiddleware(SessionMiddleware):
+    def super_process_request_copy(self, request):
+        session_key = request.COOKIES.get(configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME))
+        request.session = self.SessionStore(session_key)
+
+    def super_process_response_copy(self, request, response):
+        """
+        If request.session was modified, or if the configuration is to save the
+        session every time, save the changes and set a session cookie or delete
+        the session cookie if the session has been emptied.
+        """
+        try:
+            accessed = request.session.accessed
+            modified = request.session.modified
+            empty = request.session.is_empty()
+        except AttributeError:
+            pass
+        else:
+            # First check if we need to delete this cookie.
+            # The session should be deleted only if the session is entirely empty
+            if configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME) in request.COOKIES and empty:
+                response.delete_cookie(
+                    configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME),
+                    path=settings.SESSION_COOKIE_PATH,
+                    domain=settings.SESSION_COOKIE_DOMAIN,
+                )
+            else:
+                if accessed:
+                    patch_vary_headers(response, ('Cookie',))
+                if (modified or settings.SESSION_SAVE_EVERY_REQUEST) and not empty:
+                    if request.session.get_expire_at_browser_close():
+                        max_age = None
+                        expires = None
+                    else:
+                        max_age = request.session.get_expiry_age()
+                        expires_time = time.time() + max_age
+                        expires = cookie_date(expires_time)
+                    # Save the session data and refresh the client cookie.
+                    # Skip session save for 500 responses, refs #3881.
+                    if response.status_code != 500:
+                        try:
+                            request.session.save()
+                        except UpdateError:
+                            raise SuspiciousOperation(
+                                "The request's session was deleted before the "
+                                "request completed. The user may have logged "
+                                "out in a concurrent request, for example."
+                            )
+                        response.set_cookie(
+                            configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME),
+                            request.session.session_key, max_age=max_age,
+                            expires=expires, domain=settings.SESSION_COOKIE_DOMAIN,
+                            path=settings.SESSION_COOKIE_PATH,
+                            secure=settings.SESSION_COOKIE_SECURE or None,
+                            httponly=settings.SESSION_COOKIE_HTTPONLY or None,
+                        )
+        return response
+
+
+
+
     """
     A safer middleware implementation that uses SafeCookieData instead
     of just the session id to lookup and verify a user's session.
@@ -262,7 +328,7 @@ class SafeSessionMiddleware(SessionMiddleware):
         process_response).
         """
 
-        cookie_data_string = request.COOKIES.get(settings.SESSION_COOKIE_NAME)
+        cookie_data_string = request.COOKIES.get(configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME))
         if cookie_data_string:
 
             try:
@@ -274,9 +340,10 @@ class SafeSessionMiddleware(SessionMiddleware):
                 return self._on_user_authentication_failed(request)
 
             else:
-                request.COOKIES[settings.SESSION_COOKIE_NAME] = safe_cookie_data.session_id  # Step 2
+                request.COOKIES[configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME)] = safe_cookie_data.session_id  # Step 2
 
-        process_request_response = super(SafeSessionMiddleware, self).process_request(request)  # Step 3
+        #process_request_response = super(SafeSessionMiddleware, self).process_request(request)  # Step 3
+        process_request_response = self.super_process_request_copy(request)
         if process_request_response:
             # The process_request pipeline has been short circuited so
             # return the response.
@@ -316,7 +383,8 @@ class SafeSessionMiddleware(SessionMiddleware):
 
         """
 
-        response = super(SafeSessionMiddleware, self).process_response(request, response)  # Step 1
+        #response = super(SafeSessionMiddleware, self).process_response(request, response)  # Step 1
+        response = self.super_process_response_copy(request, response)
 
         if not _is_cookie_marked_for_deletion(request) and _is_cookie_present(response):
             try:
@@ -420,12 +488,12 @@ class SafeSessionMiddleware(SessionMiddleware):
         # Create safe cookie data that binds the user with the session
         # in place of just storing the session_key in the cookie.
         safe_cookie_data = SafeCookieData.create(
-            cookies[settings.SESSION_COOKIE_NAME].value,
+            cookies[configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME)].value,
             user_id,
         )
 
         # Update the cookie's value with the safe_cookie_data.
-        cookies[settings.SESSION_COOKIE_NAME] = unicode(safe_cookie_data)
+        cookies[configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME)] = unicode(safe_cookie_data)
 
 
 def _mark_cookie_for_deletion(request):
@@ -449,8 +517,8 @@ def _is_cookie_present(response):
     Returns whether the session cookie is present in the response.
     """
     return (
-        response.cookies.get(settings.SESSION_COOKIE_NAME) and  # cookie in response
-        response.cookies[settings.SESSION_COOKIE_NAME].value  # cookie is not empty
+        response.cookies.get(configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME)) and  # cookie in response
+        response.cookies[configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME)].value  # cookie is not empty
     )
 
 
@@ -460,7 +528,7 @@ def _delete_cookie(response):
     while maintaining the domain, secure, and httponly settings.
     """
     response.set_cookie(
-        settings.SESSION_COOKIE_NAME,
+        configuration_helpers.get_value('SESSION_COOKIE_NAME', settings.SESSION_COOKIE_NAME),
         max_age=0,
         expires='Thu, 01-Jan-1970 00:00:00 GMT',
         domain=settings.SESSION_COOKIE_DOMAIN,

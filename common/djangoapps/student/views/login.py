@@ -70,7 +70,7 @@ from student.models import (
     create_comments_service_user
 )
 from student.helpers import authenticate_new_user, do_create_account
-from student.roles import studio_access_role
+from student.roles import studio_access_role, skip_client_service_id_role
 from third_party_auth import pipeline, provider
 from util.json_request import JsonResponse
 
@@ -162,6 +162,12 @@ def _get_user_by_email(request):
             else:
                 AUDIT_LOG.warning(u"Login failed - Unknown user email or username: {0}".format(email))
     return user
+
+
+def _check_client_service_id(user, service_id):
+    if user.profile.service_id != service_id:
+        AUDIT_LOG.warning(u"User %s try to login others site on shared platform", user)
+        raise AuthFailedError(_('This account is not allowed to login into this site. Please contact your platform admin.'))
 
 
 def _check_shib_redirect(user):
@@ -455,6 +461,13 @@ def login_user(request):
                 return HttpResponse(e.value, content_type="text/plain", status=403)
         else:
             email_user = _get_user_by_email(request)
+
+        client_service_id = configuration_helpers.get_value('CLIENT_SERVICE_ID', None)
+        if client_service_id:
+            if skip_client_service_id_role(email_user):
+                pass
+            else:
+                _check_client_service_id(email_user, client_service_id)
 
         _check_shib_redirect(email_user)
         _check_excessive_login_attempts(email_user)

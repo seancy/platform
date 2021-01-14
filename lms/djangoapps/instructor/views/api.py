@@ -1073,6 +1073,9 @@ def lt_update_profile(profile, first_name, last_name,
     profile.lt_supervisor = lt_supervisor
     profile.lt_learning_group = lt_learning_group
     profile.lt_comments = lt_comments
+    client_service_id = configuration_helpers.get_value('CLIENT_SERVICE_ID', None)
+    if client_service_id:
+        profile.service_id = client_service_id
     profile.save()
 
 
