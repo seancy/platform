@@ -24,6 +24,7 @@ log = logging.getLogger(__name__)
 REGISTERED_ACCESS_ROLES = {}
 
 STUDIO_ADMIN_ACCESS_GROUP = "Studio Admin"
+SKIP_CHECK_SERVICE_ID_GROUP = "Multi-Sites Login"
 
 
 def register_access_role(cls):
@@ -49,6 +50,10 @@ def studio_access_role(user):
 def ilt_supervisor_role(user):
     supervised_learners = UserProfile.objects.filter(lt_ilt_supervisor=user.email)
     return supervised_learners.count() > 0
+
+
+def skip_client_service_id_role(user):
+    return SKIP_CHECK_SERVICE_ID_GROUP in [group.name for group in user.groups.all()]
 
 
 def studio_login_required(func):
