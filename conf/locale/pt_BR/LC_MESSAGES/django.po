@@ -18565,6 +18565,10 @@ msgstr "Explorar"
 msgid "My Mooc"
 msgstr "My Mooc"
 
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT request validation page"
+msgstr "Página de validação de registro para sessões ILT"
+
 #: lms/templates/footer.html:105 lms/templates/my_courses.html:27
 #: lms/templates/my_courses.html:133
 #: lms/templates/header/navbar-authenticated.html:69
