@@ -14010,6 +14010,10 @@ msgstr "探索课程"
 msgid "My Mooc"
 msgstr "My Mooc"
 
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT request validation page"
+msgstr "ILT 请求验证页面"
+
 #: lms/templates/footer.html:105 lms/templates/my_courses.html:27
 #: lms/templates/my_courses.html:133
 #: lms/templates/header/navbar-authenticated.html:69

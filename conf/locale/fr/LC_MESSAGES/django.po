@@ -30601,6 +30601,10 @@ msgstr "Les cours auxquels je suis inscrit"
 msgid "Built-in authoring tool"
 msgstr "Le studio de création "
 
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT request validation page"
+msgstr "Page de validation des demandes ILT"
+
 #: lms/templates/header/navbar-authenticated.html:77
 msgid "Tracking learners and courses analytics"
 msgstr "Suivi des données des apprenants et de formation"

@@ -30012,6 +30012,10 @@ msgstr "Seguimiento de alumnos y análisis de cursos"
 msgid "Built-in authoring tool"
 msgstr "Herramienta de autor integrada"
 
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT request validation page"
+msgstr "Página de validación de registro para sesiones ILT"
+
 #: lms/templates/header/user_dropdown.html:42
 msgid "Account setting"
 msgstr "Configuración de cuenta"

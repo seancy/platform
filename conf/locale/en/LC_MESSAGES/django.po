@@ -18911,6 +18911,11 @@ msgstr ""
 
 #: lms/templates/courseware/course_about.html:130
 #: lms/templates/courseware/course_navigation.html:86
+msgid "View Instructor Dashboard"
+msgstr ""
+
+#: lms/templates/courseware/course_about.html:130
+#: lms/templates/courseware/course_navigation.html:86
 msgid "View Instructor Page"
 msgstr ""
 
@@ -26351,6 +26356,10 @@ msgstr ""
 
 #: lms/templates/header/navbar-authenticated.html:86
 msgid "Built-in authoring tool"
+msgstr ""
+
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT request validation page"
 msgstr ""
 
 #: lms/templates/header/user_dropdown.html:42
