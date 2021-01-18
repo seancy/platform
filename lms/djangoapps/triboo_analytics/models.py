@@ -815,8 +815,8 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     finished = models.PositiveIntegerField(default=0)
     unique_visitors = models.PositiveIntegerField(default=0)
     average_time_spent = models.PositiveIntegerField(default=0)
-    total_time_spent_on_mobile = models.PositiveIntegerField(default=0)
-    total_time_spent_on_desktop = models.PositiveIntegerField(default=0)
+    total_time_spent_on_mobile = models.BigIntegerField(default=0)
+    total_time_spent_on_desktop = models.BigIntegerField(default=0)
 
     @classmethod
     def generate_today_reports(cls, course_ids, learner_course_reports, org_combinations):
