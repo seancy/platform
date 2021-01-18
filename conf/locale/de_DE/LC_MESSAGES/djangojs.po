@@ -728,21 +728,18 @@ msgstr "Änderungen verwerfen"
 #: cms/static/js/views/pages/container_subviews.js:233
 #: common/static/bundles/js/factories/container.js:1482
 #: common/static/bundles/js/factories/library.js:1745
-#, fuzzy
 msgid "Hiding from Learners"
 msgstr "Vor Lernenden verbergen"
 
 #: cms/static/js/views/pages/container_subviews.js:236
 #: common/static/bundles/js/factories/container.js:1484
 #: common/static/bundles/js/factories/library.js:1747
-#, fuzzy
 msgid "Explicitly Hiding from Learners"
 msgstr "Gezielt vor Teilnehmern verstecken"
 
 #: cms/static/js/views/pages/container_subviews.js:239
 #: common/static/bundles/js/factories/container.js:1486
 #: common/static/bundles/js/factories/library.js:1749
-#, fuzzy
 msgid "Inheriting Learner Visibility"
 msgstr "Sichtbarkeit für Teilnehmer vererben"
 
@@ -750,14 +747,12 @@ msgstr "Sichtbarkeit für Teilnehmer vererben"
 #: cms/static/js/views/pages/container_subviews.js:244
 #: common/static/bundles/js/factories/container.js:1488
 #: common/static/bundles/js/factories/library.js:1751
-#, fuzzy
 msgid "Make Visible to Learners"
 msgstr "Für die Teilnehmer anzeigen lassen"
 
 #: cms/static/js/views/pages/container_subviews.js:243
 #: common/static/bundles/js/factories/container.js:1488
 #: common/static/bundles/js/factories/library.js:1751
-#, fuzzy
 msgid ""
 "If the unit was previously published and released to learners, any changes "
 "you made to the unit when it was hidden will now be visible to learners. Do "
@@ -768,7 +763,6 @@ msgstr ""
 #: cms/static/js/views/pages/container_subviews.js:246
 #: common/static/bundles/js/factories/container.js:1489
 #: common/static/bundles/js/factories/library.js:1752
-#, fuzzy
 msgid "Making Visible to Learners"
 msgstr "Für die Teilnehmer sichtbar machen"
 
@@ -3228,7 +3222,6 @@ msgstr ""
 
 #: common/static/bundles/PasswordCreateConfirmation.js:188
 #: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:92
-#, fuzzy
 msgid "Create Your Password"
 msgstr "Passwort zurücksetzen"
 
@@ -3243,7 +3236,6 @@ msgstr "Neues Passwort eingeben und bestätigen"
 #: common/static/bundles/PasswordResetConfirmation.js:196
 #: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:103
 #: lms/static/js/student_account/components/PasswordResetConfirmation.jsx:102
-#, fuzzy
 msgid "New Password *"
 msgstr "Neues Passwort"
 
@@ -3251,7 +3243,6 @@ msgstr "Neues Passwort"
 #: common/static/bundles/PasswordResetConfirmation.js:204
 #: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:112
 #: lms/static/js/student_account/components/PasswordResetConfirmation.jsx:111
-#, fuzzy
 msgid "Confirm Password *"
 msgstr "Passwort bestätigen"
 
@@ -3264,7 +3255,6 @@ msgstr "Passwörter stimmen nicht überein"
 
 #: common/static/bundles/PasswordCreateConfirmation.js:221
 #: lms/static/js/student_account/components/PasswordCreateConfirmation.jsx:128
-#, fuzzy
 msgid "Create My Password"
 msgstr "Passwort zurücksetzen"
 
@@ -3470,7 +3460,6 @@ msgstr "Upload abbrechen"
 #: common/static/bundles/StudentAccountDeletionInitializer.js:492
 #: lms/static/js/student_account/components/StudentAccountDeletion.jsx:42
 #: lms/static/js/student_account/components/StudentAccountDeletionModal.jsx:97
-#, fuzzy
 msgid ""
 "You may also lose access to verified certificates. If you want to make a "
 "copy of these for your records before proceeding with deletion, follow the "
@@ -3502,7 +3491,6 @@ msgstr "Es tut uns leid, dass Sie Ihr Account löschen möchten!"
 #: common/static/bundles/StudentAccountDeletion.js:149
 #: common/static/bundles/StudentAccountDeletionInitializer.js:296
 #: lms/static/js/student_account/components/StudentAccountDeletion.jsx:70
-#, fuzzy
 msgid ""
 "Please note: Deletion of your account and personal data is permanent and "
 "cannot be undone. We will not be able to recover your account or the data "
@@ -3562,7 +3550,6 @@ msgstr "Ein Passwort ist erforderlich"
 #: common/static/bundles/StudentAccountDeletion.js:405
 #: common/static/bundles/StudentAccountDeletionInitializer.js:552
 #: lms/static/js/student_account/components/StudentAccountDeletionModal.jsx:140
-#, fuzzy
 msgid ""
 "You have selected “Delete my account.” Deletion of your account and personal "
 "data is permanent and cannot be undone. "
@@ -4669,7 +4656,6 @@ msgid "Heading"
 msgstr "Überschrift"
 
 #: lms/static/js/ajax-error.js:4
-#, fuzzy
 msgid ""
 "You have been logged out of your account. Click Okay to log in again now. "
 "Click Cancel to stay on this page (you must log in again to save your work)."
@@ -4728,7 +4714,6 @@ msgid "Enter Start Date and Time"
 msgstr "Geben Sie ein Startdatum und Zeit ein."
 
 #: lms/static/js/certificates/models/certificate_exception.js:31
-#, fuzzy
 msgid ""
 "Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Add to Exception List\" button."
@@ -4736,7 +4721,6 @@ msgstr ""
 "Teilnehmer Benutzername/E-Mail Adresse ist erforderlich und kann nicht unausgefüllt bleiben. Bitte geben Sie den Benutzername/E-Mail Adresse an und klicken Sie auf den Button"
 
 #: lms/static/js/certificates/models/certificate_invalidation.js:28
-#, fuzzy
 msgid ""
 "Learner username/email field is required and can not be empty. Kindly fill "
 "in username/email and then press \"Invalidate Certificate\" button."
@@ -4822,7 +4806,6 @@ msgstr ""
 "Die Zertifikatsinvalidierung konnte in der Liste nicht gefunden werden. Bitte aktualisieren Sie die Seite und versuchen Sie es erneut."
 
 #: lms/static/js/certificates/views/certificate_whitelist.js:58
-#, fuzzy
 msgid "Learner Removed from certificate white list successfully."
 msgstr "Teilnehmer wurde erfolgreich von der Whitelist für Zertifikate entfernt."
 
@@ -4913,8 +4896,7 @@ msgid ""
 msgstr ""
 "Die Rückgabefrist für diesen Kurs ist abgelaufen, so dass Sie keine Rückerstattung erhalten."
 
-#: lms/static/js/discovery/views/search_form.js:47
-#, fuzzy, javascript-format
+#: lms/static/js/discovery/views/search_form.js:47, javascript-format
 msgid "%s course found"
 msgid_plural "%s courses found"
 msgstr[0] "Kursnummer"
@@ -5164,7 +5146,6 @@ msgid "Add Cohort"
 msgstr "Grossgruppe hinzufügen"
 
 #: lms/static/js/groups/views/cohorts.js:268
-#, fuzzy
 msgid ""
 "The {cohortGroupName} cohort has been created. You can manually add learners "
 "to this cohort below."
@@ -5172,7 +5153,6 @@ msgstr ""
 "Die {cohortGroupName} Kohorte wurde erstellt. Sie können unten manuell Teilnehmer dieser Kohorte hinzufügen."
 
 #: lms/static/js/groups/views/cohorts.js:301
-#, fuzzy
 msgid "Assign learners to cohorts by uploading a CSV file."
 msgstr "Nutzern einen Kohort zuweisen, mit hochladen einer CSV-Datei"
 
@@ -5185,7 +5165,6 @@ msgid "Only properly formatted .csv files will be accepted."
 msgstr "Nur korrekt formatierte .csv Dateien werden hier akzeptiert."
 
 #: lms/static/js/groups/views/cohorts.js:304
-#, fuzzy
 msgid "Upload File and Assign Learners"
 msgstr "Dateien hochladen und Teilnehmern zuweisen"
 
@@ -5233,17 +5212,14 @@ msgid "No Events"
 msgstr "Keine Ereignisse"
 
 #: lms/static/js/instructor_dashboard/certificates.js:20
-#, fuzzy
 msgid "Allow learners to generate certificates for this course?"
 msgstr "Dürfen Teilnehmer sich selbst Zertifikate für diesen Kurs ausstellen? "
 
 #: lms/static/js/instructor_dashboard/certificates.js:22
-#, fuzzy
 msgid "Prevent learners from generating certificates in this course?"
 msgstr "Möchten Sie die Teilnehmer daran hindern Zertifikate für diesen Kurs zu generieren?"
 
 #: lms/static/js/instructor_dashboard/certificates.js:93
-#, fuzzy
 msgid "Start generating certificates for all learners in this course?"
 msgstr "Möchten Sie damit beginnen, Zertifikate für alle Teilnehmer dieses Kurses zu erstellen?"
 
@@ -5252,7 +5228,6 @@ msgid "Error while generating certificates. Please try again."
 msgstr "Fehler bei der Erstellung der Zertifikate. Bitte versuchen Sie es noch einmal."
 
 #: lms/static/js/instructor_dashboard/certificates.js:118
-#, fuzzy
 msgid "Start regenerating certificates for learners in this course?"
 msgstr "Möchten Sie Zertifikate für Teilnehmer dieses Kurses Regenerieren?"
 
@@ -5277,7 +5252,6 @@ msgid "Error generating survey results. Please try again."
 msgstr "Fehler bei der Generierung von Umfrageergebnissen. Bitte versuchen Sie es erneut."
 
 #: lms/static/js/instructor_dashboard/data_download.js:189
-#, fuzzy
 msgid "Error generating learner profile information. Please try again."
 msgstr "Es ist ein Fehler beim Laden der Teilnehmerinformationen aufgetreten. Bitte versuchen Sie es erneut."
 
@@ -5289,12 +5263,10 @@ msgid "Loading"
 msgstr "Ladevorgang"
 
 #: lms/static/js/instructor_dashboard/data_download.js:223
-#, fuzzy
 msgid "Error getting learner list."
 msgstr "Fehler beim Laden der Teilnehmerliste."
 
 #: lms/static/js/instructor_dashboard/data_download.js:289
-#, fuzzy
 msgid "Error generating list of learners who may enroll. Please try again."
 msgstr "Fehler beim Generieren der Liste der Teilnehmer, die sich einschreiben können. Bitte versuchen Sie es erneut."
 
@@ -5367,7 +5339,6 @@ msgid "Group"
 msgstr "Gruppe"
 
 #: lms/static/js/instructor_dashboard/membership.js:123
-#, fuzzy
 msgid "Add new team member"
 msgstr "Bereits Teammitglied"
 
@@ -5422,7 +5393,6 @@ msgid "Users successfully created and enrolled:"
 msgstr "Erfolgreich erstellte und angemeldete Benutzer:"
 
 #: lms/static/js/instructor_dashboard/membership.js:447
-#, fuzzy
 msgid "Registered users now enrolled in this course:"
 msgstr "Alle Lernenden, die in diesem Kurs eingeschrieben sind."
 
@@ -5431,7 +5401,6 @@ msgid "Registered users who were already enrolled (no changes):"
 msgstr "Alle Lernenden, die bereits in diesem Kurs eingeschrieben waren (keine Änderungen):"
 
 #: lms/static/js/instructor_dashboard/membership.js:612
-#, fuzzy
 msgid "User accounts successfully updated:"
 msgstr "Modulzustand erfogreich gelöscht."
 
@@ -5544,12 +5513,10 @@ msgstr ""
 "Diese Nutzer waren nicht dem Kurs angehörig, und konnten deshalb nicht gestrichen werden:"
 
 #: lms/static/js/instructor_dashboard/membership.js:1147
-#, fuzzy
 msgid "The following email addresses are invalid:"
 msgstr "Die folgenden E-Mail-Adressen und/oder Nutzernamen sind ungültig:"
 
 #: lms/static/js/instructor_dashboard/membership.js:1152
-#, fuzzy
 msgid "Successfully sent welcoming emails to the following addresses:"
 msgstr "Erfolgreich eingeschrieben und E-Mail an folgende Nutzer versandt:"
 
@@ -5641,12 +5608,10 @@ msgstr "Senden an:"
 #: lms/static/js/instructor_dashboard/student_admin.js:479
 #: lms/static/js/instructor_dashboard/student_admin.js:532
 #: lms/static/js/instructor_dashboard/student_admin.js:588
-#, fuzzy
 msgid "Please enter a learner email address or username."
 msgstr "Bitte gib eine Teilnehmer-E-Mail-Adresse oder einen Benutzernamen ein."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:85
-#, fuzzy
 msgid ""
 "Error getting learner progress url for '<%- student_id %>'. Make sure that "
 "the learner identifier is spelled correctly."
@@ -5665,7 +5630,6 @@ msgid "Please enter a problem location."
 msgstr "Bitte gib den Pfad der Fragestellung ein."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:126
-#, fuzzy
 msgid ""
 "Success! Problem attempts reset for problem '<%- problem_id %>' and learner "
 "'<%- student_id %>'."
@@ -5673,7 +5637,6 @@ msgstr ""
 "Erfolgreich! Problemversuche werden für das Problem '<%- problem_id %>' und Teilnehmer '<%- student_id %>' zurückgesetzt."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:127
-#, fuzzy
 msgid ""
 "Error resetting problem attempts for problem '<%= problem_id %>' and learner "
 "'<%- student_id %>'. Make sure that the problem and learner identifiers are "
@@ -5682,14 +5645,12 @@ msgstr ""
 "Fehler beim Zurücksetzen von Problemversuchen für das Problem '<%= problem_id %>' und Teilnehmer <%- student_id %>'. Stellen Sie sicher, dass die Problem- und Teilnehmercodes vollständig und korrekt sind."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:167
-#, fuzzy
 msgid ""
 "Delete learner '<%- student_id %>'s state on problem '<%- problem_id %>'?"
 msgstr ""
 "Zustand bei Problem '<%- problem_id %>' von Teilnehmer '<%- student_id %>' löschen?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:178
-#, fuzzy
 msgid ""
 "Error deleting learner '<%- student_id %>'s state on problem '<%- problem_id "
 "%>'. Make sure that the problem and learner identifiers are complete and "
@@ -5702,7 +5663,6 @@ msgid "Module state successfully deleted."
 msgstr "Modulzustand erfogreich gelöscht."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:226
-#, fuzzy
 msgid ""
 "Error getting task history for problem '<%- problem_id %>' and learner '<%- "
 "student_id %>'. Make sure that the problem and learner identifiers are "
@@ -5711,12 +5671,10 @@ msgstr ""
 "Fehler beim Abrufen der Aufgabenhistorie für das Problem '<%- problem_id %>' und Teilnehmer <%- student_id %>'. Stellen Sie sicher, dass die Problem- und Teilnehmercodes vollständig und korrekt sind."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:265
-#, fuzzy
 msgid "Entrance exam attempts is being reset for learner '{student_id}'."
 msgstr "Prüfungsversuche werden zurückgesetzt für folgende Teilnehmer: '{student_id}'."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:273
-#, fuzzy
 msgid ""
 "Error resetting entrance exam attempts for learner '{student_id}'. Make sure "
 "learner identifier is correct."
@@ -5725,19 +5683,16 @@ msgstr ""
 
 #: lms/static/js/instructor_dashboard/student_admin.js:292
 #: lms/static/js/instructor_dashboard/student_admin.js:363
-#, fuzzy
 msgid "Enter a learner's username or email address."
 msgstr "Geben Sie Benutzername oder E-Mail Adresse eines Teilnehmers an."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:295
-#, fuzzy
 msgid ""
 "Do you want to allow this learner ('{student_id}') to skip the entrance exam?"
 msgstr ""
 "Möchten Sie diesem Teilnehmer ('{student_id}') erlauben, die Aufnahmeprüfung zu überspringen?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:313
-#, fuzzy
 msgid ""
 "An error occurred. Make sure that the learner's username or email address is "
 "correct and try again."
@@ -5745,12 +5700,10 @@ msgstr ""
 "Ein Fehler ist aufgetreten. Versichern sie sich ,dass der Benutzername und die email Adresse des Studenten richtig sind und versuchen sie erneut."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:341
-#, fuzzy
 msgid "Entrance exam state is being deleted for learner '{student_id}'."
 msgstr "Prüfungsstatus wurde gelöscht von dem Teilnehmer: '{student_id}'."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:349
-#, fuzzy
 msgid ""
 "Error deleting entrance exam state for learner '{student_id}'. Make sure "
 "learner identifier is correct."
@@ -5758,7 +5711,6 @@ msgstr ""
 "Fehler beim Löschen des Status der Aufnahmeprüfung für den Teilnehmer '{student_id}'. Vergewissern Sie sich, dass die Teilnehmer ID korrekt ist."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:380
-#, fuzzy
 msgid ""
 "Error getting entrance exam task history for learner '{student_id}'. Make "
 "sure learner identifier is correct."
@@ -5766,14 +5718,12 @@ msgstr ""
 "Fehler beim Erhalten der Aufgabenhistorie der Aufnahmeprüfung für den Teilnehmer '{student_id}'. Vergewissern Sie sich, dass der Teilnehmercode korrekt ist."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:399
-#, fuzzy
 msgid ""
 "Reset attempts for all learners on problem <code>'<%- problem_id %>'</code>?"
 msgstr ""
 "Versuche für alle Schüler bei Problem '<%- problem_id %>' zurücksetzen?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:408
-#, fuzzy
 msgid ""
 "Successfully started task to reset attempts for problem <code>'<%- "
 "problem_id %>'</code>. Click the 'Show Task Status' button to see the status "
@@ -5782,7 +5732,6 @@ msgstr ""
 "Erfolgreich gestartete Aufgabe zum Zurücksetzen von Versuchen für das Problem '<%- problem_id %>'. Klicken Sie auf die Schaltfläche \"Aufgabenstatus anzeigen\", um den Status der Aufgabe anzuzeigen."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:412
-#, fuzzy
 msgid ""
 "Error starting a task to reset attempts for all learners on problem <code>'<"
 "%- problem_id %>'</code>. Make sure that the problem identifier is complete "
@@ -5791,12 +5740,10 @@ msgstr ""
 "Fehler beim Starten einer Aufgabe zum Zurücksetzen der Versuche für alle Teilnehmer bei Problem '<%- problem_id %>'. Stellen Sie sicher, dass die Problemkennung vollständig und korrekt ist."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:463
-#, fuzzy
 msgid "Error listing task history for this learner and problem."
 msgstr "Fehler beim Auflisten des Aufgabenverlaufs für diesen Teilnehmer und diese Fragestellung."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:494
-#, fuzzy
 msgid ""
 "Started rescore problem task for problem '<%- problem_id %>' and learner '<"
 "%- student_id %>'. Click the 'Show Task Status' button to see the status of "
@@ -5805,7 +5752,6 @@ msgstr ""
 "Neubewertung des Problems '<%- problem_id %>' für den Teilnehmer '<%- student_id %>' gestartet. Klicken Sie auf die Schaltfläche \"Aufgabenstatus anzeigen\", um den Status der Aufgabe anzuzeigen."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:499
-#, fuzzy
 msgid ""
 "Error starting a task to rescore problem '<%- problem_id %>' for learner '<"
 "%- student_id %>'. Make sure that the the problem and learner identifiers "
@@ -5818,7 +5764,6 @@ msgid "Please enter a score."
 msgstr "Bitte geben Sie eine Punktzahl ein."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:553
-#, fuzzy
 msgid ""
 "Started task to override the score for problem '<%- problem_id %>' and "
 "learner '<%- student_id %>'. Click the 'Show Task Status' button to see the "
@@ -5827,7 +5772,6 @@ msgstr ""
 "Aufgabe gestartet, um die Punktzahl für das Problem '<%- problem_id %>' für den Teilnehmer '<%- student_id %>' zu überschreiben. Klicken Sie auf die Schaltfläche \"Aufgabenstatus anzeigen\", um den Status der Aufgabe anzuzeigen."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:558
-#, fuzzy
 msgid ""
 "Error starting a task to override score for problem '<%- problem_id %>' for "
 "learner '<%- student_id %>'. Make sure that the the score and the problem "
@@ -5836,7 +5780,6 @@ msgstr ""
 "Fehler beim Starten einer Aufgabe, um die Punktzahl für das Problem '<%- problem_id %>' zu überschreiben für den Teilnehmer '<%- student_id %>'. Vergewissern Sie sich, dass die Punktzahl sowie die Problem- und Teilnehmercodes vollständig und korrekt sind."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:603
-#, fuzzy
 msgid ""
 "Started entrance exam rescore task for learner '{student_id}'. Click the "
 "'Show Task Status' button to see the status of the task."
@@ -5844,7 +5787,6 @@ msgstr ""
 "Aufgabe zur Neubewertung der Aufnahmeprüfung des Teilnehmers '{student_id}' gestartet. Klicken Sie auf die Schaltfläche \"Aufgabenstatus anzeigen\", um den Status der Aufgabe anzuzeigen."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:611
-#, fuzzy
 msgid ""
 "Error starting a task to rescore entrance exam for learner '{student_id}'. "
 "Make sure that entrance exam has problems in it and learner identifier is "
@@ -5853,12 +5795,10 @@ msgstr ""
 "Fehler beim Starten einer Aufgabe zur Neubewertung der Aufnahmeprüfung für den Teilnehmer '{student_id}'. Vergewissern Sie sich, dass die Aufnahmeprüfung Probleme beinhaltet und die Teilnehmer ID korrekt ist."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:633
-#, fuzzy
 msgid "Rescore problem <code>'<%- problem_id %>'</code> for all learners?"
 msgstr "Problem '<%- problem_id %>' für alle Lernenden neu bewerten?"
 
 #: lms/static/js/instructor_dashboard/student_admin.js:643
-#, fuzzy
 msgid ""
 "Successfully started task to rescore problem <code>'<%- problem_id %>'</"
 "code> for all learners. Click the 'Show Task Status' button to see the "
@@ -5867,7 +5807,6 @@ msgstr ""
 "Erfolgreich gestartete Aufgabe zur Neubewertung des Problems <%- problem_id %>' für alle Teilnehmer. Klicken Sie auf die Schaltfläche \"Aufgabenstatus anzeigen\", um den Status der Aufgabe anzuzeigen."
 
 #: lms/static/js/instructor_dashboard/student_admin.js:647
-#, fuzzy
 msgid ""
 "Error starting a task to rescore problem <code>'<%- problem_id %>'</code>. "
 "Make sure that the problem identifier is complete and correct."
@@ -5984,7 +5923,6 @@ msgid "File Name"
 msgstr "Dateiname"
 
 #: lms/static/js/instructor_dashboard/util.js:485
-#, fuzzy
 msgid ""
 "Links are generated on demand and expire within 5 minutes due to the "
 "sensitive nature of learner information."
@@ -6000,12 +5938,10 @@ msgid "Failed to reset attempts for user."
 msgstr "Die Freiversuche für diesen Teilnehmer konnten nicht zurückgesetzt werden."
 
 #: lms/static/js/staff_debug_actions.js:90
-#, fuzzy
 msgid "Successfully deleted learner state for user {user}"
 msgstr "Teilnehmerstatus für Nutzer {user} erfolgreich gelöscht."
 
 #: lms/static/js/staff_debug_actions.js:91
-#, fuzzy
 msgid "Failed to delete learner state for user."
 msgstr "Der Teilnehmerstatus für den Nutzer konnte nicht gelöscht werden."
 
@@ -6075,7 +6011,6 @@ msgid "An error occurred when signing you in to %s."
 msgstr "Es ist ein Fehler aufgetreten als Sie sich für %s angemeldet haben."
 
 #: lms/static/js/student_account/views/LoginView.js:169
-#, fuzzy
 msgid "Password Reset Email Sent"
 msgstr "Das Passwort ist falsch."
 
@@ -6184,7 +6119,6 @@ msgstr ""
 "Dies ist Ihr Benutzername auf der {platform_name} Plattform. Diesen können Sie nicht mehr ändern."
 
 #: lms/static/js/student_account/views/account_settings_factory.js:184
-#, fuzzy
 msgid "Phone Number"
 msgstr "Kursnummer"
 
@@ -6258,9 +6192,8 @@ msgstr ""
 "Optional können Sie auch Ihre persönlichen Social-Media Accounts mit dieser Plattform verbinden. Geben Sie dazu einfach Ihren jeweiligen Account zu dem entsprechenden Social-Media Icon an."
 
 #: lms/static/js/student_account/views/account_settings_factory.js:341
-#, fuzzy
 msgid "{platform_name} Link"
-msgstr "{display_name} Einstellungen"
+msgstr "{platform_name} Verknüpfung"
 
 #: lms/static/js/student_account/views/account_settings_factory.js:346
 msgid ""
@@ -6583,12 +6516,10 @@ msgid "MB"
 msgstr "MB"
 
 #: lms/static/lms/js/preview/preview_factory.js:13
-#, fuzzy
 msgid "Course is not yet visible to learners."
 msgstr "Der Kurs ist für die Teilnehmer noch nicht sichtbar."
 
 #: lms/static/lms/js/preview/preview_factory.js:24
-#, fuzzy
 msgid ""
 "You cannot view the course as a learner or beta tester before the course "
 "release date."
@@ -6614,7 +6545,6 @@ msgstr[0] "%(num_questions)s Frage"
 msgstr[1] "%(num_questions)s Fragen"
 
 #: lms/templates/class_dashboard/d3_stacked_bar_graph.js:441
-#, fuzzy
 msgid "Number of Learners"
 msgstr "Anzahl der Teilnehmer"
 
@@ -6965,7 +6895,6 @@ msgid "Maximum file size: {maxFileSize} GB"
 msgstr "Maximale Dateigröße beträgt: {maxDateiGröße} GB"
 
 #: cms/static/js/views/active_video_upload_list.js:62
-#, fuzzy
 msgid "Supported file type: {supportedVideoTypes}"
 msgstr "Unterstützte Dateitypen: {supportedVideoTypes}"
 
@@ -6983,7 +6912,6 @@ msgid "Upload failed for video {fileName}"
 msgstr "Upload der Videos {fileName} fehlgeschlagen"
 
 #: cms/static/js/views/active_video_upload_list.js:383
-#, fuzzy
 msgid ""
 "{filename} is not in a supported file format. Supported file format is "
 "{supportedFileFormats}."
@@ -7301,7 +7229,6 @@ msgstr "Noch nicht"
 
 #: cms/static/js/views/modals/course_outline_modals.js:305
 #: cms/static/js/views/modals/course_outline_modals.js:310
-#, fuzzy
 msgid "Subsection Estimated Time"
 msgstr "Unterabschnitt wird nach dem Fälligkeitsdatum nicht mehr angezeigt."
 
@@ -7419,7 +7346,6 @@ msgid "{hours}:{minutes} (current UTC time)"
 msgstr "{hours}:{minutes} (current UTC time)"
 
 #: cms/static/js/views/settings/main.js:370
-#, fuzzy
 msgid "I want to delete the course"
 msgstr "Bist du dir sicher, dass du diesen Kommentar löschen möchtest?"
 
@@ -7763,7 +7689,6 @@ msgid "Visible to"
 msgstr "Sichtbar für"
 
 #: common/static/common/templates/discussion/new-post.underscore:20
-#, fuzzy
 msgid ""
 "Discussion admins, moderators, and TAs can make their posts visible to all "
 "learners or specify a single group."
@@ -7825,10 +7750,9 @@ msgid "Reported"
 msgstr "Gemeldet"
 
 #: common/static/common/templates/discussion/response-comment-show.underscore:17
-#: common/static/common/templates/discussion/thread-show.underscore:81
-#, fuzzy, python-format
+#: common/static/common/templates/discussion/thread-show.underscore:81, python-format
 msgid "%(author)s %(time_ago)s"
-msgstr "befürwortet %(time_ago)s"
+msgstr "%(author)s %(time_ago)s"
 
 #: common/static/common/templates/discussion/thread-edit.underscore:1
 msgid "Editing post"
@@ -7926,13 +7850,11 @@ msgstr "Geschlossen"
 msgid "Related to: %(courseware_title_linked)s"
 msgstr "Verwandt mit: %(courseware_title_linked)s"
 
-#: common/static/common/templates/discussion/thread-show.underscore:60
-#, fuzzy, python-format
+#: common/static/common/templates/discussion/thread-show.underscore:60, python-format
 msgid "Visible only to %(group_name)s"
 msgstr "Dieser Beitrag ist nur für %(group_name)s sichtbar."
 
 #: common/static/common/templates/discussion/thread-show.underscore:66
-#, fuzzy
 msgid "Visible to everyone"
 msgstr "Dieser Beitrag ist für jeden sichtbar."
 
@@ -7957,7 +7879,6 @@ msgstr ""
 
 #: common/static/common/templates/discussion/thread.underscore:13
 #: common/static/common/templates/discussion/thread.underscore:15
-#, fuzzy
 msgid "Add a response"
 msgstr "Eine Antwort hinzufügen:"
 
@@ -7974,9 +7895,8 @@ msgid "Discussion Home"
 msgstr "Forum Home"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:11
-#, fuzzy
 msgid "How to use discussions"
-msgstr "So nutzen Sie das %(platform_name)s Diskussionsforum"
+msgstr "Wie man Diskussionen benutzt"
 
 #: lms/djangoapps/discussion/static/discussion/templates/discussion-home.underscore:15
 msgid "Engage with posts"
@@ -8448,22 +8368,19 @@ msgid_plural "badges"
 msgstr[0] "Abzeichen"
 msgstr[1] "Abzeichen"
 
-#: lms/templates/discovery/course_card.underscore:43
-#, fuzzy, python-format
+#: lms/templates/discovery/course_card.underscore:43, python-format
 msgid "%(num)s minute"
 msgid_plural "%(num)s minutes"
-msgstr[0] "%(value)s Minute"
-msgstr[1] "%(value)s Minuten"
+msgstr[0] "%(num)s Minute"
+msgstr[1] "%(num)s Minuten"
 
-#: lms/templates/discovery/course_card.underscore:46
-#, fuzzy, python-format
+#: lms/templates/discovery/course_card.underscore:46, python-format
 msgid "%(num)s hour"
 msgid_plural "%(num)s hours"
-msgstr[0] "%(value)sStunde"
-msgstr[1] "%(value)sStunden"
+msgstr[0] "%(num)s Stunde"
+msgstr[1] "%(num)s Stunden"
 
 #: lms/templates/discovery/course_card.underscore:55
-#, fuzzy
 msgid "Learn More"
 msgstr "Weiterlesen"
 
@@ -8620,7 +8537,6 @@ msgid "Invalidate Certificate"
 msgstr "Zertifikat entwerten"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-invalidation.underscore:28
-#, fuzzy
 msgid "Learner"
 msgstr "Nutzer hinzufügen"
 
@@ -8654,7 +8570,6 @@ msgstr ""
 
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list-editor.underscore:5
 #: lms/templates/instructor/instructor_dashboard_2/certificate-white-list-editor.underscore:6
-#, fuzzy
 msgid "Learner email or username"
 msgstr "Teilnehmer E-Mail oder Benutzername"
 
@@ -8763,7 +8678,6 @@ msgid "Manual"
 msgstr "Handbuch"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohort-form.underscore:57
-#, fuzzy
 msgid ""
 "There must be one cohort to which learners can automatically be assigned."
 msgstr ""
@@ -8863,7 +8777,6 @@ msgid "Assign learners to cohorts by uploading a CSV file"
 msgstr "Nutzern einen Kohort zuweisen, mit hochladen einer CSV-Datei"
 
 #: lms/templates/instructor/instructor_dashboard_2/cohorts.underscore:47
-#, fuzzy
 msgid ""
 "To review learner cohort assignments or see the results of uploading a CSV "
 "file, download course profile information or cohort results on {link_start}"
@@ -9250,9 +9163,8 @@ msgid "Sign in using SSO"
 msgstr "Mit Single-sign-on (SSO) anmelden"
 
 #: lms/templates/student_account/login.underscore:77
-#, fuzzy
 msgid "Sign in using email"
-msgstr "Melden Sie sich über %(providerName)s an"
+msgstr "Melden Sie sich per E-Mail an"
 
 #: lms/templates/student_account/login.underscore:82
 msgid "First time here?"
@@ -9278,12 +9190,10 @@ msgid "Reset my password"
 msgstr "Passwort zurücksetzen"
 
 #: lms/templates/student_account/password_reset.underscore:26
-#, fuzzy
 msgid "Some text would be here?"
 msgstr "Code hier eingeben"
 
 #: lms/templates/student_account/password_reset.underscore:27
-#, fuzzy
 msgid "Back to login."
 msgstr "Zurück zum Einloggen"
 
@@ -9326,12 +9236,10 @@ msgid "Congratulations! You are now verified on %(platformName)s!"
 msgstr "Herzlichen Glückwunsch! Sie sind nun überprüft auf %(platformName)s!"
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore:5
-#, fuzzy
 msgid "You are now enrolled as a verified learner for:"
 msgstr "Sie sind nun als überprüfter Student angemeldet für:"
 
 #: lms/templates/verify_student/enrollment_confirmation_step.underscore:12
-#, fuzzy
 msgid "A list of courses you have just enrolled in as a verified learner"
 msgstr "Eine Liste von Kurse für die Sie sich eben als überprüfter Student registriert haben."
 
@@ -9847,7 +9755,6 @@ msgid "Take Photo"
 msgstr "Bild aufnehmen"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
-#, fuzzy
 msgid "My Bookmarks"
 msgstr "Lesezeichen gesetzt"
 
@@ -9856,12 +9763,10 @@ msgid "Bookmarked on"
 msgstr "Lesezeichen gesetzt"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:46
-#, fuzzy
 msgid "You have not bookmarked any pages yet"
 msgstr "Du hast noch keine Lesezeichen hinzugefügt"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:51
-#, fuzzy
 msgid ""
 "Use bookmarks to help you easily return to pages. To bookmark a page, click "
 "\"Bookmark this page\" under the page title."
@@ -10213,7 +10118,6 @@ msgstr ""
 "Der Zugang zu manchen Inhalten im {blockType} ist nur bestimmten Teilnehmergruppen erlaubt."
 
 #: cms/templates/js/container-message.underscore:5
-#, fuzzy
 msgid ""
 "Caution: The last published version of this unit is live. By publishing "
 "changes you will change the learner experience."
@@ -10526,7 +10430,6 @@ msgid "Days"
 msgstr "Tage"
 
 #: cms/templates/js/course-reminder-details-fields.underscore:5
-#, fuzzy
 msgid "day(s) after enrollment"
 msgstr "Stelle den Einschreibungscode wieder her"
 
@@ -10637,7 +10540,6 @@ msgid "Threshold"
 msgstr "Schwellenwert"
 
 #: cms/templates/js/course_grade_policy.underscore:17
-#, fuzzy
 msgid ""
 "The threshold of all assignments of this type, by default it is 100. Do not "
 "include the percent symbol."
@@ -10766,7 +10668,6 @@ msgid "Introduction to Cookie Baking"
 msgstr "Einführung zum Cookie-Backen"
 
 #: cms/templates/js/edit-textbook.underscore:14
-#, fuzzy
 msgid ""
 "provide the title/name of the text book as you would like your learners to "
 "see it"
@@ -10842,7 +10743,6 @@ msgid "Group information"
 msgstr "Gruppeninformation"
 
 #: cms/templates/js/group-configuration-editor.underscore:31
-#, fuzzy
 msgid ""
 "Name of the groups that learners will be assigned to, for example, Control, "
 "Video, Problems. You must have two or more groups."
@@ -11221,7 +11121,6 @@ msgid "Title of the signatory"
 msgstr "Titel des Unterzeichners"
 
 #: cms/templates/js/signatory-editor.underscore:23
-#, fuzzy
 msgid ""
 "Titles more than 100 characters may prevent learners from printing their "
 "certificate on a single page."
@@ -11518,7 +11417,6 @@ msgid "Add URLs for additional versions"
 msgstr "URL für zusätzliche Versionen hinzufügen"
 
 #: cms/templates/js/video/transcripts/metadata-videolist-entry.underscore:11
-#, fuzzy
 msgid ""
 "To be sure all learners can access the video, we recommend providing both "
 "an .mp4 and a .webm version of your video. Click below to add a URL for "
@@ -11678,12 +11576,10 @@ msgid "Use Current Transcript"
 msgstr "Nutze aktuelles Transkript"
 
 #: lms/templates/discovery/facet.underscore
-#, fuzzy
 msgid "Availability"
 msgstr "Sichtbarkeit"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "Current"
 msgstr "Aktuelle Registerkarte"
 
@@ -11692,12 +11588,10 @@ msgid "New"
 msgstr "Neu"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "Starts soon"
 msgstr "Beginnt"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "Online"
 msgstr "inzeilig"
 
@@ -11710,7 +11604,6 @@ msgid "Future"
 msgstr "Künftig"
 
 #: lms/templates/discovery/facet.underscore
-#, fuzzy
 msgid "Tag"
 msgstr "Stichworte"
 
@@ -11719,7 +11612,6 @@ msgid "Category"
 msgstr "Kategorie"
 
 #: lms/templates/discovery/facet.underscore
-#, fuzzy
 msgid "Mandatory"
 msgstr "Unterzeichner"
 
@@ -11732,12 +11624,10 @@ msgid "false"
 msgstr "falsch"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "All countries"
 msgstr "Alle Abschnitte"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "France"
 msgstr "Abbrechen"
 
@@ -11754,7 +11644,6 @@ msgid "Draft"
 msgstr "Entwurf"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "Published"
 msgstr "Veröffentlichen"
 
@@ -11793,12 +11682,10 @@ msgstr "Spanisch"
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435
-#, fuzzy
 msgid "Saved Successfully"
 msgstr "Fotoaufnahme erfolgreich."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/js/src/ilt.js:403
-#, fuzzy
 msgid "This session is full"
 msgstr "Dieses Team ist voll."
 
@@ -11814,17 +11701,14 @@ msgid "Please choose the accommodation need"
 msgstr "Bitte wählen Sie die Angaben zur Unterkunft."
 
 #: lms/static/js/courseware/ilt_validation.js:157
-#, fuzzy
 msgid "yes"
 msgstr "bytes"
 
 #: lms/static/js/courseware/ilt_validation.js:157
-#, fuzzy
 msgid "no"
 msgstr "Undo"
 
 #: lms/templates/courseware/ilt_all_validation_page.html
-#, fuzzy
 msgid "Are you sure to unenroll this learner ?"
 msgstr "Bist du dir sicher, dass du diese Antwort löschen möchtest?"
 
@@ -11850,11 +11734,9 @@ msgstr "Zeitformat HH:MM erforderlich"
 msgid "Leaderboard"
 msgstr "Rangliste"
 
-#, fuzzy
 msgid "Show more"
 msgstr "Notizen anzeigen"
 
-#, fuzzy
 msgid "Position"
 msgstr "Abschnitt"
 
@@ -11862,11 +11744,9 @@ msgstr "Abschnitt"
 msgid "Points"
 msgstr "Punkte"
 
-#, fuzzy
 msgid "Ranking"
 msgstr "Verbinden"
 
-#, fuzzy
 msgid "Missions"
 msgstr "Dimensionen"
 
@@ -11910,11 +11790,9 @@ msgstr "Beantworten einer bewerteten Aktivität"
 msgid "Awarded points on completion of each unit"
 msgstr "Erreichte Punkte nach Abschluss jeder Einheit"
 
-#, fuzzy
 msgid "Accessing the first course"
 msgstr "%s Kurs ansehen"
 
-#, fuzzy
 msgid "Completion of each course"
 msgstr "Nicht kursbezogen"
 
@@ -11926,12 +11804,10 @@ msgstr ""
 "Die Anzahl der zu exportierenden Zertifikate überschreitet 1.000. Bitte grenzen Sie Ihre Suche ein."
 
 #: lms/templates/dashboard.html
-#, fuzzy
 msgid "No sessions available"
 msgstr "Keine Beschreibung verfügbar"
 
 #: lms/static/js/dashboard/ilt_calendar.js
-#, fuzzy
 msgid "Add to Calendar"
 msgstr "Kapitel hinzufügen"
 
