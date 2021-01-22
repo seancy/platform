@@ -318,13 +318,22 @@ class ReportMixin(object):
         except cls.DoesNotExist:
             return None
 
+
 class JsonReportMixin(object):
     @classmethod
-    def get_record(records_str, key):
+    def get_record_str(records_str, key):
         regex = r"\"%s\":\s(\{[^\}]+\})" % key
         m = re.search(regex, records_str)
         if m:
             return m.group(1)
+        return None
+
+
+    @classmethod
+    def get_record(records_str, key):
+        record_str = self.get_record_str(records_str, key)
+        if record_str:
+            return json.loads(record_str)
         return None
 
 
@@ -500,39 +509,28 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
 class LearnerCourseDailyReportMockup(object):
-    def __init__(self, learner_course_json_report, key_day):
+    def __init__(self, learner_course_json_report, record):
         self.user = learner_course_json_report.user
         self.course_id = learner_course_json_report.course_id
         self.org = learner_course_json_report.org
-        if key_day:
-            records = json.loads(learner_course_json_report.records)
-            if key_day in records.keys():
-                self.status = records[key_day]['status']
-                self.progress = records[key_day]['progress']
-                self.badges = records[key_day]['badges']
-                self.current_score = records[key_day]['current_score']
-                self.posts = records[key_day]['posts']
-                self.total_time_spent = records[key_day]['total_time_spent']
-                self.enrollment_date = dtload(records[key_day]['enrollment_date'])
-                self.completion_date = dtload(records[key_day]['completion_date'])
-            else:
-                self.status = 0
-                self.progress = 0
-                self.badges = 0
-                self.current_score = 0
-                self.posts = 0
-                self.total_time_spent = 0
-                self.enrollment_date = learner_course_json_report.enrollment_date
-                self.completion_date = None
+        if record:
+            self.status = record['status']
+            self.progress = record['progress']
+            self.badges = record['badges']
+            self.current_score = record['current_score']
+            self.posts = record['posts']
+            self.total_time_spent = record['total_time_spent']
+            self.enrollment_date = dtload(record['enrollment_date'])
+            self.completion_date = dtload(record['completion_date'])
         else:
-            self.status = learner_course_json_report.status
-            self.progress = learner_course_json_report.progress
-            self.badges = learner_course_json_report.badges
-            self.current_score = learner_course_json_report.current_score
-            self.posts = learner_course_json_report.posts
-            self.total_time_spent = learner_course_json_report.total_time_spent
+            self.status = 0
+            self.progress = 0
+            self.badges = 0
+            self.current_score = 0
+            self.posts = 0
+            self.total_time_spent = 0
             self.enrollment_date = learner_course_json_report.enrollment_date
-            self.completion_date = learner_course_json_report.completion_date
+            self.completion_date = None
 
 
 class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
@@ -661,7 +659,7 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
                 pass
             if key_last_analytics_success and report:
                 report_last_modified = report.modified.date()
-                last_analytics_success_record = cls.get_record(report.records, key_last_analytics_success)
+                last_analytics_success_record = cls.get_record_str(report.records, key_last_analytics_success)
                 if (last_analytics_success_record
                     and (not enrollment.gradebook_edit or enrollment.gradebook_edit.date() < report_last_modified)
                     and (not user.last_login or user.last_login.date() < report_last_modified)
@@ -769,23 +767,29 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
 
     @classmethod
     def filter_by_day(cls, date_time=None, **kwargs):
-        key_day = dt2key(date_time) if date_time else None
         reports = cls.objects.filter(is_active=True, **kwargs)
-        results = []
-        for r in reports:
-            results.append(LearnerCourseDailyReportMockup(r, key_day))
-        return results
+        if date_time:
+            day_key = dt2key(date_time)
+            results = []
+            for r in reports:
+                record = cls.get_record(r.records, day_key)
+                results.append(LearnerCourseDailyReportMockup(r, record))
+            return results
+        return reports
 
 
     @classmethod
     def get_by_day(cls, date_time=None, **kwargs):
-        day = dt2key(date_time) if date_time else None
         try:
             r = cls.objects.get(is_active=True, **kwargs)
-            return LearnerCourseDailyReportMockup(r, key_day)
+            if date_time:
+                day_key = dt2key(date_time)
+                record = cls.get_record(r.records, day_key)
+                return LearnerCourseDailyReportMockup(r, record)
+            return r
         except cls.DoesNotExist:
             return None
-
+        
 
 class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     class Meta(object):
@@ -984,14 +988,14 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
 class LearnerSectionDailyReportMockup(object):
-    def __init__(self, learner_section_json_report, key_day, total_time_spent=None):
+    def __init__(self, learner_section_json_report, total_time_spent=None):
         self.user = learner_section_json_report.user
         self.course_id = learner_section_json_report.course_id
         self.section_key = learner_section_json_report.section_key
         self.section_name = learner_section_json_report.section_name
         if total_time_spent:
             self.total_time_spent = total_time_spent
-        elif key_day:
+        elif re:
             records = json.loads(learner_section_json_report.records)
             if key_day in records.keys():
                 self.total_time_spent = records[key_day]['total_time_spent']
@@ -1001,7 +1005,7 @@ class LearnerSectionDailyReportMockup(object):
             self.total_time_spent = learner_section_json_report.total_time_spent
 
 
-class LearnerSectionJsonReport(TimeStampedModel):
+class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
     class Meta(object):
         app_label = "triboo_analytics"
         unique_together = ('user', 'course_id', 'section_key')
@@ -1029,7 +1033,7 @@ class LearnerSectionJsonReport(TimeStampedModel):
 
             last_analytics_success_record = None
             if key_last_analytics_success and report:
-                last_analytics_success_record = cls.get_record(report.records, key_last_analytics_success)
+                last_analytics_success_record = cls.get_record_str(report.records, key_last_analytics_success)
             if report and last_analytics_success_record and not needs_update:
                 report.records = cls.append_record(report.records, dt2key(), last_analytics_success_record)
                 report.is_active = True
@@ -1059,53 +1063,66 @@ class LearnerSectionJsonReport(TimeStampedModel):
 
     @classmethod
     def filter_by_day(cls, date_time=None, **kwargs):
-        key_day = dt2key(date_time) if date_time else None
         reports = cls.objects.filter(is_active=True, **kwargs)
-        results = []
-        for r in reports:
-            results.append(LearnerSectionDailyReportMockup(r, key_day))
-        return results
+        if date_time:
+            day_key = dt2key(date_time)
+            results = []
+            for r in reports:
+                record = cls.get_record(r.records, day_key)
+                total_time_spent = record['total_time_spent'] if record else 0
+                results.append(LearnerSectionDailyReportMockup(r, total_time_spent))
+            return results
+        return reports
 
 
     @classmethod
     def get_by_day(cls, date_time=None, **kwargs):
-        day = dt2key(date_time) if date_time else None
         try:
             r = cls.objects.get(is_active=True, **kwargs)
-            return LearnerSectionDailyReportMockup(r, key_day)
+            if date_time:
+                day_key = dt2key(date_time)
+                record = cls.get_record(r.records, day_key)
+                total_time_spent = record['total_time_spent'] if record else 0
+                return LearnerSectionDailyReportMockup(r, total_time_spent)
+            return r
         except cls.DoesNotExist:
             return None
 
 
+
     @classmethod
-    def filter_by_period(cls, course_id, date_time=None, period_start=None, **kwargs):
-        key_day = dt2key(date_time) if date_time else None
+    def filter_by_period(cls, course_id, period_start=None, period_end=None, **kwargs):
+        period_start_key = dt2key(period_start) if period_start else None
+        period_end_key = dt2key(period_end) if period_end else None
         reports = cls.objects.filter(course_id=course_id, is_active=True, **kwargs)
         results = []
         for r in reports:
+            old_time_spent = 0
             if period_start:
-                records = json.loads(r.records)
-                key_period_start = dt2key(period_start)
-                old_time_spent = 0
-                if key_period_start in records.keys():
-                    old_time_spent = records[key_period_start]['total_time_spent']
-                new_time_spent = r.total_time_spent
-                if key_day:
-                    if key_day in records.keys():
-                        new_time_spent = records[key_day]['total_time_spent']
-                    else:
-                        new_time_spent = 0
-                results.append(LearnerSectionDailyReportMockup(r, None, (new_time_spent - old_time_spent)))
+                start_record = cls.get_record(r.records, period_start_key)
+                if start_record:
+                    old_time_spent = start_record['total_time_spent']t
+            new_time_spent = r.total_time_spent
+            if period_end:
+                end_record = cls.get_record(r.records, period_end_key)
+                if end_record:
+                    new_time_spent = end_record['total_time_spent']
+                else:
+                    new_time_spent = 0
+            if new_time_spent >= old_time_spent:
+                results.append(LearnerSectionDailyReportMockup(r, (new_time_spent - old_time_spent)))
             else:
-                results.append(LearnerSectionDailyReportMockup(r, key_day))
+                logger.error("invalid values for user_id %d / section %s: start %s = %d, end %s = %d" % (
+                    r.user_id, r.section_key, period_start_key, old_time_spent,
+                    period_end_key, new_time_spent))
 
         dataset = {}
         sections = {}
         for res in results:
-            key = res.user.id
-            if key not in dataset.keys():
-                dataset[key] = {'user': res.user}
-            dataset[key][res.section_key] = res.total_time_spent
+            user_id = res.user.id
+            if user_id not in dataset.keys():
+                dataset[user_id] = {'user': res.user}
+            dataset[user_id][res.section_key] = res.total_time_spent
             sections[res.section_key] = res.section_name
 
         return dataset.values(), sections
@@ -1203,7 +1220,7 @@ class LearnerBadgeDailyReportMockup(object):
             self.success_date = learner_badge_json_report.success_date
 
 
-class LearnerBadgeJsonReport(UnicodeMixin, TimeStampedModel):
+class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
     class Meta(object):
        app_label = "triboo_analytics"
        unique_together = ['user', 'badge']
@@ -1254,7 +1271,7 @@ class LearnerBadgeJsonReport(UnicodeMixin, TimeStampedModel):
 
                 last_analytics_success_record = None
                 if key_last_analytics_success and report:
-                    last_analytics_success_record = cls.get_record(report.records, key_last_analytics_success)
+                    last_analytics_success_record = cls.get_record_str(report.records, key_last_analytics_success)
 
                 if report and last_analytics_success_record and not needs_update:
                     report.records = cls.append_record(report.records, dt2key(), last_analytics_success_record)
@@ -2114,7 +2131,13 @@ def generate_today_reports(multi_process=False):
                                                    multi_process=multi_process)
 
     logger.info("start double checking generated Learner Course reports")
-    check_generated_learner_course_reports(last_analytics_success, overviews, tracking_log_helper.sections_by_course)
+    course_last_updates = {o.id: o.modified.date() for o in overviews}
+    check_generated_learner_course_reports(last_analytics_success,
+                                           overviews,
+                                           course_last_updates, 
+                                           racking_log_helper.sections_by_course)
+
+    ReportLog.update_or_create(learner_course=timezone.now())
 
     logger.info("fetch Learner Course reports")
     learner_course_reports = LearnerCourseJsonReport.filter_by_day()
@@ -2140,10 +2163,9 @@ def generate_today_reports(multi_process=False):
     LeaderBoard.update_stayed_online()
 
 
-def check_generated_learner_course_reports(last_analytics_success, overviews, sections_by_course):
+def check_generated_learner_course_reports(last_analytics_success, overviews, course_last_updates, sections_by_course):
     all_good = False
     today = timezone.now().date()
-    course_last_updates = {o.id: o.modified.date() for o in overviews}
     course_ids_to_check = [o.id for o in overviews]
     while not all_good:
         course_ids_nok = []
@@ -2159,7 +2181,7 @@ def check_generated_learner_course_reports(last_analytics_success, overviews, se
                 try:
                     learner_course_report =  LearnerCourseJsonReport.objects.get(course_id=course_id,
                                                                                  user_id=enrollment.user_id)
-                    if learner_course_report.modified.date() == today:
+                    if learner_course_report.modified.date() == today and learner_course_report.is_active:
                         is_missing = False
                 except LearnerCourseJsonReport.DoesNotExist:
                     pass
@@ -2177,8 +2199,6 @@ def check_generated_learner_course_reports(last_analytics_success, overviews, se
             all_good = True
         else:
             course_ids_to_check = course_ids_nok
-
-    ReportLog.update_or_create(learner_course=timezone.now())
 
 
 class LeaderboardActivityLog(TimeStampedModel):
