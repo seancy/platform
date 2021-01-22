@@ -565,9 +565,6 @@ def course_listing(request):
         orgs = [orgs]
 
     pre_facet_filters = {}
-    if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
-                                       settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
-        settings.COURSE_DISCOVERY_FILTERS.extend(['course_country', 'enrollment_learning_groups'])
 
     trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
 
@@ -1182,10 +1179,14 @@ def settings_handler(request, course_key_string):
             )
             sidebar_html_enabled = course_experience_waffle().is_enabled(ENABLE_COURSE_ABOUT_SIDEBAR_HTML)
 
+            selected_countries = CourseDetails.fetch(course_key).course_country
             country_options = ['All countries']
             if configuration_helpers.get_value('COURSE_COUNTRIES', []):
                 country_options += configuration_helpers.get_value('COURSE_COUNTRIES', [])
-            selected_countries = CourseDetails.fetch(course_key).course_country
+                for c in selected_countries:
+                    if c not in country_options:
+                        country_options.append(c)
+                country_options.sort()
 
             settings_context = {
                 'context_course': course_module,
