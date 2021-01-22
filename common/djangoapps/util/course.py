@@ -73,7 +73,5 @@ def remove_course_reports(course_key):
     """
     Badge.objects.filter(course_id=course_key).delete()
     CourseDailyReport.objects.filter(course_id=course_key).delete()
-    LearnerCourseDailyReport.objects.filter(course_id=course_key).delete()
     LearnerCourseJsonReport.objects.filter(course_id=course_key).delete()
-    LearnerSectionDailyReport.objects.filter(course_id=course_key).delete()
     LearnerSectionJsonReport.objects.filter(course_id=course_key).delete()

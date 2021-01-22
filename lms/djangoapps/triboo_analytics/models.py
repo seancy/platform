@@ -2165,7 +2165,7 @@ def check_generated_learner_course_reports(last_analytics_success, overviews, se
                     pass
                 if is_missing:
                     course_id_needs_fix = True
-                    logger.info("missing report for user_id=%d => trying to generate it" % enrollment.user_id)
+                    # logger.info("missing report for user_id=%d => trying to generate it" % enrollment.user_id)
                     LearnerCourseJsonReport.generate_enrollment_report(last_analytics_success,
                                                                        course_last_updates[course_id],
                                                                        enrollment,
