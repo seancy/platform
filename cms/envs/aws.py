@@ -635,7 +635,9 @@ ELASTIC_SEARCH_CONFIG = ENV_TOKENS.get('ELASTIC_SEARCH_CONFIG', [{}])
 
 LANGUAGE_MAP = {'terms': {lang: display for lang, display in ALL_LANGUAGES}, 'name': 'Language'}
 
-COURSE_DISCOVERY_FILTERS = ["language", "status", "course_category", "vendor", "course_mandatory_enabled"]
+COURSE_DISCOVERY_FILTERS = [
+    "language", "start", "course_category", "vendor",
+    "course_mandatory_enabled", 'course_country', 'enrollment_learning_groups']
 
 COURSE_DISCOVERY_MEANINGS = {
     'language': LANGUAGE_MAP,
