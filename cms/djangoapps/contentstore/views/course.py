@@ -396,7 +396,13 @@ def _accessible_courses_summary_iter(request, org=None):
 
         return has_studio_read_access(request.user, course_summary.id)
     if org is not None:
-        courses_summary = [] if org == '' else CourseOverview.get_all_courses(orgs=[org])
+        #courses_summary = [] if org == '' else CourseOverview.get_all_courses(orgs=[org])
+        if org == '':
+            courses_summary = []
+        elif isinstance(org, list):
+            courses_summary = CourseOverview.get_all_courses(orgs=org)
+        else:
+            courses_summary = CourseOverview.get_all_courses(orgs=[org])
     else:
         courses_summary = modulestore().get_course_summaries()
     courses_summary = six.moves.filter(course_filter, courses_summary)
@@ -1242,7 +1248,11 @@ def settings_handler(request, course_key_string):
                 settings_context.update({'site_config_course_tags': site_config_course_tags})
 
             if is_prerequisite_courses_enabled():
-                courses, in_process_course_actions = get_courses_accessible_to_user(request)
+                org_filter = configuration_helpers.get_value('course_org_filter', None)
+                if org_filter:
+                    courses, in_process_course_actions = get_courses_accessible_to_user(request, org_filter)
+                else:
+                    courses, in_process_course_actions = get_courses_accessible_to_user(request)
                 # exclude current course from the list of available courses
                 courses = (course for course in courses if course.id != course_key)
                 if courses:
