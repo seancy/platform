@@ -18,11 +18,21 @@
             initialize: function() {
                 this.courseCards = new Backbone.Collection([], {model: CourseCard});
                 this.facetOptions = new Backbone.Collection([], {model: FacetOption});
+                const self = this;
+                $.ajax({
+                    url: '/search/course_discovery/',
+                    method: 'POST',
+                    data: {search_string: '', page_index: '0', page_size: '300'},
+                    async: false
+                }).done(function(data) {
+                    self.vendor_facets = data.facets.vendor;
+                });
             },
 
             parse: function(response) {
                 var courses = response.results || [];
                 var facets = response.facets || {};
+                facets.vendor = this.vendor_facets;
                 var options = this.facetOptions;
                 this.courseCards.add(_.pluck(courses, 'data'));
 

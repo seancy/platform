@@ -21,11 +21,25 @@
                     return item.get('content').display_name.toLowerCase();
                 };
                 this.facetOptions = new Backbone.Collection([], {model: FacetOption});
+                const self = this;
+                $.ajax({
+                    url: '/course_search/',
+                    method: 'POST',
+                    data: {search_string: '', page_index: '0', page_size: '1500'},
+                    async: false
+                }).done(function(data) {
+                    self.country_facets = data.facets.course_country;
+                    self.vendor_facets = data.facets.vendor;
+                    self.group_facets = data.facets.enrollment_learning_groups;
+                });
             },
 
             parse: function(response) {
                 var courses = response.results || [];
                 var facets = response.facets || {};
+                facets.course_country = this.country_facets;
+                facets.vendor = this.vendor_facets;
+                facets.enrollment_learning_groups = this.group_facets;
                 var options = this.facetOptions;
                 this.courseItems.add(_.pluck(courses, 'data'));
 
