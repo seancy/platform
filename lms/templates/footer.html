@@ -99,7 +99,7 @@
 
             % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
               and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
-              <li><a href="${marketing_link('COURSES')}">${_("Explore")}</a></li>
+              <li><a href="${marketing_link('COURSES')}">${_("Courses")}</a></li>
             % endif
 
             % if (configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG', settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False)) \
@@ -108,7 +108,14 @@
               <li><a href="${reverse('edflex_catalog')}">${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}</a></li>
             % endif
 
+              <li><a href="${reverse('learnlight_catalog')}">${_("Languages")}</a></li>
+
+            % if (configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False))):
+              <li><a href="${reverse('crehana_catalog')}">${configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')}</a></li>
+            % endif
+
               <li><a href="${reverse('my_courses', kwargs={'tab': 'all-courses'})}">${_('My Courses')}</a></li>
+
               <li><a href="${reverse('account_settings')}">${_('My Account')}</a></li>
             % if configuration_helpers.get_value('ENABLE_FAQ_LINK', settings.FEATURES.get('ENABLE_FAQ_LINK', False)):
               <li><a href="${reverse('faq')}">${_('FAQ')}</a></li>
@@ -133,7 +140,7 @@
                 <li><a href="${reverse('analytics_microsite')}">${_("Analytics")}</a></li>
               % endif
                  <li><a href="https://csc.learning-tribes.com" target="_blank">Customer Success Center</a></li>
-              </ol>
+            </ol>
 
           % endif
         </nav>
