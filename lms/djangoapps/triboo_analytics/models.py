@@ -1434,85 +1434,103 @@ class LeaderBoard(TimeStampedModel):
                 non_graded_completed += nb_posts
             except (CommentClientMaintenanceError, CommentClientRequestError):
                 pass
+            course_usage_key = modulestore().make_course_usage_key(course_key)
+            subsection_structure = None
+            subsection_grade_factory = None
             if course_key in cls.COURSE_STRUCTURE:
-                subsection_structure = cls.COURSE_STRUCTURE[course_key][0]
-                subsection_grade_factory = cls.COURSE_STRUCTURE[course_key][1]
+                vertical_blocks = cls.COURSE_STRUCTURE[course_key][0]
+                problem_blocks_data = cls.COURSE_STRUCTURE[course_key][1]
             else:
                 logger.info("Read course structure, course_id: {}".format(course_key))
-                course_usage_key = modulestore().make_course_usage_key(course_key)
                 # load course blocks with a staff user
-                subsection_structure = get_course_blocks(worker, course_usage_key)
-                subsection_grade_factory = SubsectionGradeFactory(worker, course_structure=subsection_structure)
-                cls.COURSE_STRUCTURE[course_key] = (subsection_structure, subsection_grade_factory)
+                vertical_blocks = modulestore().get_items(course_key, qualifiers={'category': 'vertical'})
+                problem_blocks_data = {}
+                cls.COURSE_STRUCTURE[course_key] = (vertical_blocks, problem_blocks_data)
 
             course_block_completions = BlockCompletion.get_course_completions(user, course_key)
             if len(course_block_completions) == 0:
                 continue
-            block_data_map = subsection_structure._block_data_map
-            block_relations = subsection_structure._block_relations
-            for block_id, block in block_data_map.items():
-                if block_id.block_type == 'vertical':
-                    children = block_relations[block_id].children
-                    if children:
-                        completed = True
-                    else:
-                        completed = False
-                    for child in children[:]:
-                        if child.block_type == 'library_content':
-                            lib_content_block = get_course_blocks(user, child)
-                            extra_children = [i for i in lib_content_block if i.block_type != 'library_content']
-                            children.extend(extra_children)
-                    for child in children:
-                        if child.block_type in ['discussion', 'library_content']:
-                            continue
-                        completion = course_block_completions.get(child, None)
-                        if completion:
-                            if child.block_type in ['survey', 'poll', 'word_cloud']:
-                                non_graded_completed += 1
-                            elif child.block_type == 'problem':
-                                child_data = block_data_map[child].fields
+
+            for block in vertical_blocks:
+                block_id = block.location
+                children = block.children
+                if children:
+                    completed = True
+                else:
+                    completed = False
+                    continue
+                for child in children[:]:
+                    if child.block_type == 'library_content':
+                        lib_content_blocks = get_course_blocks(user, child)
+                        extra_children = [i for i in lib_content_blocks if i.block_type != 'library_content']
+                        children = children + extra_children
+                for child in children:
+                    if child.block_type in ['discussion', 'library_content']:
+                        continue
+                    completion = course_block_completions.get(child, None)
+                    if completion:
+                        if child.block_type in ['survey', 'poll', 'word_cloud']:
+                            non_graded_completed += 1
+                        elif child.block_type == 'problem':
+                            if child in problem_blocks_data:
+                                graded = problem_blocks_data[child]
+                                if graded:
+                                    graded_completed += 1
+                                else:
+                                    non_graded_completed += 1
+                            else:
+                                if subsection_structure is None:
+                                    subsection_structure = get_course_blocks(user, course_usage_key)
+                                    subsection_grade_factory = SubsectionGradeFactory(
+                                        user, course_structure=subsection_structure
+                                    )
+                                child_data = subsection_structure[child].fields
                                 if not child_data['graded']:
                                     non_graded_completed += 1
+                                    problem_blocks_data[child] = False
                                 else:
                                     if child_data['weight'] == 0:
                                         non_graded_completed += 1
+                                        problem_blocks_data[child] = False
                                     else:
                                         problem_grade = subsection_grade_factory.update(
                                             subsection_structure[child], persist_grade=False
                                         )
                                         if problem_grade.all_total.possible == 0:
                                             non_graded_completed += 1
+                                            problem_blocks_data[child] = False
                                         else:
                                             graded_completed += 1
-                            else:
-                                pass
+                                            problem_blocks_data[child] = True
                         else:
-                            completed = False
-                    if completed:
-                        unit_completed += 1
-                        unit_completion_event = LeaderboardActivityLog.objects.filter(
+                            pass
+                    else:
+                        completed = False
+                if completed:
+                    unit_completed += 1
+                    unit_completion_event = LeaderboardActivityLog.objects.filter(
+                        user_id=user.id,
+                        event_type="unit_completion",
+                        block_key=block_id
+                    )
+                    if unit_completion_event.exists():
+                        logger.warn(
+                            "unit already completed before. "
+                            "user: {user_id}, block_id: {block_id}".format(user_id=user.id, block_id=block_id))
+                    else:
+                        LeaderboardActivityLog.objects.create(
                             user_id=user.id,
                             event_type="unit_completion",
-                            block_key=block_id
+                            block_key=block_id,
+                            course_key=course_key,
+                            event_time=timezone.now()
                         )
-                        if unit_completion_event.exists():
-                            logger.warn(
-                                "unit already completed before. "
-                                "user: {user_id}, block_id: {block_id}".format(user_id=user.id, block_id=block_id))
-                        else:
-                            LeaderboardActivityLog.objects.create(
+                        logger.info(
+                            "updated unit completed of leaderboard score for "
+                            "user: {user_id}, block_id: {block_id}".format(
                                 user_id=user.id,
-                                event_type="unit_completion",
-                                block_key=block_id,
-                                course_key=course_key,
-                                event_time=timezone.now()
-                            )
-                            logger.info(
-                                "updated unit completed of leaderboard score for "
-                                "user: {user_id}, block_id: {block_id}".format(
-                                    user_id=user.id,
-                                    block_id=block_id
-                                ))
+                                block_id=block_id
+                            ))
         reports = LearnerVisitsDailyReport.objects.filter(user=user, org__isnull=False)
         daily_visit_reports = reports.values("created").annotate(total=Sum("time_spent"))
         stayed_online = daily_visit_reports.filter(total__gte=1800).count()
