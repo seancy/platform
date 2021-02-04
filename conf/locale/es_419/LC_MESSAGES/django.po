@@ -18709,7 +18709,7 @@ msgstr "Navegación del curso"
 #: lms/templates/footer.html:96
 #: lms/templates/header/navbar-authenticated.html:48
 msgid "Explore"
-msgstr "Explora los cursos"
+msgstr "Habilidades Profesionales"
 
 #: lms/templates/footer.html:102
 #: lms/templates/header/navbar-authenticated.html:60

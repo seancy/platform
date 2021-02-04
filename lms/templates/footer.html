@@ -99,7 +99,7 @@
 
             % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
               and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
-              <li><a href="${marketing_link('COURSES')}">${_("Courses")}</a></li>
+              <li><a href="${marketing_link('COURSES')}">${_("Explore")}</a></li>
             % endif
 
             % if (configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG', settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False)) \
