@@ -196,7 +196,7 @@ class TranscriptTableWithGradeLink(TranscriptTable):
     gradebook_link = tables.TemplateColumn(gradebook_template, verbose_name='')
 
     class Meta:
-        model = LearnerCourseDailyReport
+        model = LearnerCourseJsonReport
         template = 'django_tables2/bootstrap.html'
         fields = ('course_title',
                   'gradebook_link',
