@@ -1101,7 +1101,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
             if period_start:
                 start_record = cls.get_record(r.records, period_start_key)
                 if start_record:
-                    old_time_spent = start_record['total_time_spent']t
+                    old_time_spent = start_record['total_time_spent']
             new_time_spent = r.total_time_spent
             if period_end:
                 end_record = cls.get_record(r.records, period_end_key)
