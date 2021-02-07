@@ -1441,9 +1441,11 @@ class LeaderBoard(TimeStampedModel):
                 vertical_blocks = cls.COURSE_STRUCTURE[course_key][0]
                 problem_blocks_data = cls.COURSE_STRUCTURE[course_key][1]
             else:
-                logger.info("Read course structure, course_id: {}".format(course_key))
                 # load course blocks with a staff user
-                vertical_blocks = modulestore().get_items(course_key, qualifiers={'category': 'vertical'})
+                try:
+                    vertical_blocks = modulestore().get_items(course_key, qualifiers={'category': 'vertical'})
+                except Exception:
+                    continue
                 problem_blocks_data = {}
                 cls.COURSE_STRUCTURE[course_key] = (vertical_blocks, problem_blocks_data)
 
@@ -1514,9 +1516,7 @@ class LeaderBoard(TimeStampedModel):
                         block_key=block_id
                     )
                     if unit_completion_event.exists():
-                        logger.warn(
-                            "unit already completed before. "
-                            "user: {user_id}, block_id: {block_id}".format(user_id=user.id, block_id=block_id))
+                        pass
                     else:
                         LeaderboardActivityLog.objects.create(
                             user_id=user.id,
@@ -1525,12 +1525,6 @@ class LeaderBoard(TimeStampedModel):
                             course_key=course_key,
                             event_time=timezone.now()
                         )
-                        logger.info(
-                            "updated unit completed of leaderboard score for "
-                            "user: {user_id}, block_id: {block_id}".format(
-                                user_id=user.id,
-                                block_id=block_id
-                            ))
         reports = LearnerVisitsDailyReport.objects.filter(user=user, org__isnull=False)
         daily_visit_reports = reports.values("created").annotate(total=Sum("time_spent"))
         stayed_online = daily_visit_reports.filter(total__gte=1800).count()
@@ -1549,10 +1543,6 @@ class LeaderBoard(TimeStampedModel):
                 "event_time": last_online_check
             }
         )
-        logger.info("online_check updated for user: {user_id}, last_check: {last}".format(
-            user_id=user.id,
-            last=last_online_check
-        ))
 
         obj, created = cls.objects.update_or_create(
             user=user,
