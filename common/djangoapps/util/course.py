@@ -10,11 +10,10 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from triboo_analytics.models import (
     Badge,
     CourseDailyReport,
-    LearnerCourseDailyReport,
     LearnerCourseJsonReport,
-    LearnerSectionDailyReport,
     LearnerSectionJsonReport,
 )
+
 
 log = logging.getLogger(__name__)
 

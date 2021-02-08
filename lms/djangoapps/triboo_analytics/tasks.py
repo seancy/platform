@@ -30,8 +30,8 @@ from opaque_keys.edx.keys import CourseKey, UsageKey
 from student.models import CourseEnrollment
 from util.file import course_filename_prefix_generator
 from xmodule.modulestore.django import modulestore
-import models
-import tables
+from . import models
+from . import tables
 from django.http import HttpResponseNotFound
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers

@@ -1,5 +1,7 @@
 import json
 import logging
+import time
+from django.utils import timezone
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from student.models import CourseEnrollment
 from triboo_analytics.models import (
@@ -51,17 +53,17 @@ for o in overviews:
                 "completion_date": dtdump(report.completion_date) if report.completion_date else None}
             records[report.created.strftime('%Y-%m-%d')] = record
         last_report = reports.last()
-        LearnerCourseJsonReport.update_or_create(user=e.user,
-                                                 course_id=e.course_id,
-                                                 defaults={'org': e.course_id.org,
-                                                           'status': last_report.status,
-                                                           'progress': last_report.progress,
-                                                           'badges': last_report.badges,
-                                                           'current_score': last_report.current_score,
-                                                           'posts': last_report.posts,
-                                                           'total_time_spent': last_report.total_time_spent,
-                                                           'enrollment_date': last_report.enrollment_date,
-                                                           'completion_date': last_report.completion_date,
-                                                           'records': json.dumps(records)}
+        LearnerCourseJsonReport.objects.update_or_create(user=e.user,
+                                                         course_id=e.course_id,
+                                                         defaults={'org': e.course_id.org,
+                                                                   'status': last_report.status,
+                                                                   'progress': last_report.progress,
+                                                                   'badges': last_report.badges,
+                                                                   'current_score': last_report.current_score,
+                                                                   'posts': last_report.posts,
+                                                                   'total_time_spent': last_report.total_time_spent,
+                                                                   'enrollment_date': last_report.enrollment_date,
+                                                                   'completion_date': last_report.completion_date,
+                                                                   'records': json.dumps(records)})
 
 

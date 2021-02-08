@@ -65,13 +65,13 @@ from track.event_transaction_utils import (
 from util.json_request import JsonResponse, JsonResponseBadRequest
 from util.date_utils import to_timestamp, strftime_localized
 from xmodule.modulestore.django import modulestore
-from forms import (
+from .forms import (
     UserPropertiesHelper,
     TableFilterForm,
     UserPropertiesForm,
     AVAILABLE_CHOICES,
 )
-from models import (
+from .models import (
     ANALYTICS_ACCESS_GROUP,
     ANALYTICS_LIMITED_ACCESS_GROUP,
     get_combined_org,
@@ -91,7 +91,7 @@ from models import (
     LeaderBoard,
     LeaderBoardView
 )
-from tables import (
+from .tables import (
     get_progress_table_class,
     get_time_spent_table_class,
     TranscriptTable,
@@ -103,7 +103,7 @@ from tables import (
     CustomizedCourseTable,
     UserBaseTable,
 )
-from tasks import generate_export_table as generate_export_table_task, links_for_all, \
+from .tasks import generate_export_table as generate_export_table_task, links_for_all, \
     send_waiver_request_email
 
 
