@@ -3,6 +3,7 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import AnonymousUser
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import DatabaseError
 from django.db.models import Count
@@ -111,7 +112,10 @@ def _get_courses(request):
     """
     edflex_configuration = get_edflex_configuration()
     configured_languages = edflex_configuration['locale']
-    platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
+    if isinstance(request.user, AnonymousUser):
+        platform_language = configured_languages[0]
+    else:
+        platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
 
     status = 'success'
     message = ''
@@ -164,7 +168,6 @@ def _get_courses(request):
             'facet_content': _get_facet(FILTERS, platform_language, configured_languages, queryset)['facet_content']}
 
 
-@login_required
 @ensure_csrf_cookie
 @expect_json
 def courses_handler(request):
@@ -183,7 +186,6 @@ def courses_handler(request):
     return HttpResponseBadRequest()
 
 
-@login_required
 @ensure_csrf_cookie
 def external_catalog_handler(request):
     """
@@ -211,7 +213,10 @@ def external_catalog_handler(request):
         return render_to_response('external_catalog/external_catalog.html')
 
     elif request.META.get('CONTENT_TYPE', '') == 'application/json':
-        platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
         configured_languages = edflex_configuration['locale']
+        if isinstance(request.user, AnonymousUser):
+            platform_language = configured_languages[0]
+        else:
+            platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
         return JsonResponse(_get_facet(FILTERS, platform_language, configured_languages))
     return HttpResponseNotAllowed(['GET'])
