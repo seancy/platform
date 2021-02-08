@@ -31010,3 +31010,15 @@ msgstr "Generar los certificados intermedios"
 #: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
 msgid "Free Text"
 msgstr "Texto libre"
+
+#: lms/templates/courseware/courses.html
+msgid "Internal"
+msgstr "Interno"
+
+#: lms/templates/courseware/courses.html
+msgid "External"
+msgstr "Externo"
+
+#: lms/templates/courseware/courses.html
+msgid "Filters"
+msgstr "Filtros"

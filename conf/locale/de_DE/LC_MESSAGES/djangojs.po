@@ -11679,6 +11679,10 @@ msgstr "Polieren"
 msgid "Spanish"
 msgstr "Spanisch"
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Italian"
+msgstr "Italienisch"
+
 #: xblock-ilt/ilt/static/js/src/ilt.js:196
 #: xblock-ilt/ilt/static/js/src/ilt.js:263
 #: xblock-ilt/ilt/static/js/src/ilt.js:435
@@ -11929,3 +11933,55 @@ msgstr "Drag & Drop"
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag & Drop"
 msgstr "Drag & Drop"
+
+#: wiki/models/article.py:262 wiki/models/pluginbase.py:38
+msgid "article"
+msgstr "Artikel"
+
+#: lms/templates/video.html:11 lms/templates/video.html:54
+msgid "video"
+msgstr "video"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Continue"
+msgstr "Fortsetzen"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Explore"
+msgstr "Kursauswahl"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External Resources"
+msgstr "Externe Ressourcen"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "You are switching to the external resources catalog which is a collection of public resources, third party and external content. Please note that although the catalog is free to browse, content requiring a paid subscription, or specific authorization, will not be provided by default via this platform. Please contact your organization with any specific questions. Do you wish to continue?"
+msgstr "Sie wechseln zum externen Ressourcenkatalog, der eine Sammlung öffentlicher Ressourcen, von Drittanbietern und externer Inhalte enthält. Bitte beachten Sie, dass Inhalte, für die ein kostenpflichtiges Abonnement oder eine bestimmte Autorisierung erforderlich ist, nicht standardmäßig über diese Plattform bereitgestellt werden, obwohl der Katalog kostenlos durchsucht werden kann. Bitte wenden Sie sich bei speziellen Fragen an Ihre Organisation. Möchten Sie fortfahren?"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Internal"
+msgstr "Intern"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External"
+msgstr "Extern"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Filters"
+msgstr "Filter"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Type of content"
+msgstr "Art des Inhalts"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "${recordCount} resources found"
+msgstr "${recordCount} Ressourcen gefunden"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "We couldn't find any results for \"${searchString}\"."
+msgstr "Wir konnten keine Ergebnisse für \"${searchString}\" finden."

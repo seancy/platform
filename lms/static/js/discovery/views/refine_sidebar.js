@@ -25,7 +25,7 @@
                 this.$container = this.$el.find('.search-facets-lists');
                 this.facetTpl = HtmlUtils.template($('#facet-tpl').html());
                 this.facetOptionTpl = HtmlUtils.template($('#facet_option-tpl').html());
-                $('body').on('click', this.resetPanel.bind(this))
+                // $('body').on('click', this.resetPanel.bind(this))
             },
 
             clearAll: function(event) {
@@ -34,19 +34,24 @@
 
             resetPanel: function (e) {
                 this.$container.find('.fact-wrapper').each(function (i, item) {
-                    $(item).addClass('hidden-panel')
+                    $(item).removeClass('hidden-panel')
                 })
 
             },
 
+            switchStatus: function (e, status) {
+                if (e.hasClass(status)) {
+                    e.removeClass(status)
+                } else {
+                    e.addClass(status)
+                }
+            },
+
             togglePanel: function (e) {
+                var self = this;
                 setTimeout(function () {
                     const $wrapper = $(e.currentTarget).parent();
-                    if ($wrapper.hasClass('hidden-panel')) {
-                        $wrapper.removeClass('hidden-panel')
-                    } else {
-                        $wrapper.addClass('hidden-panel')
-                    }
+                    self.switchStatus($wrapper, 'hidden-panel');
                 }, 50)
 
             },

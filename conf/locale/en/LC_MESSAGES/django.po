@@ -26993,3 +26993,15 @@ msgstr ""
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:61
 msgid "Generate Intermediate Certificates"
 msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "Internal"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "External"
+msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "Filters"
+msgstr ""

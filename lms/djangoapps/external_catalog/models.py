@@ -1,0 +1,44 @@
+"""
+External catalog used for "find courses" page.
+"""
+
+from django.db import models
+from .utils import get_edflex_configuration
+
+
+class EdflexCategory(models.Model):
+    edflex_configuration = get_edflex_configuration()
+    default_language = edflex_configuration['locale'][0]
+
+    category_id = models.CharField(max_length=255)
+    language = models.CharField(default=default_language, max_length=255)
+    name = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return u'{} - {} ({})'.format(self.category_id, self.name, self.language)
+
+
+class EdflexResource(models.Model):
+    resource_id = models.CharField(max_length=255, unique=True)
+    title = models.TextField()
+    type = models.CharField(max_length=255, db_index=True)
+    language = models.CharField(max_length=255, db_index=True)
+    url = models.URLField(max_length=1024)
+    duration = models.CharField(max_length=255, null=True, blank=True)
+    publication_date = models.DateTimeField(default=None, null=True, blank=True)
+    image_url = models.URLField(max_length=1024)
+    rating = models.FloatField(default=None, null=True, blank=True)
+    categories = models.ManyToManyField(EdflexCategory, related_name='resources')
+
+    class Meta:
+        ordering = ['-publication_date', 'title']
+
+    def __unicode__(self):
+        return u'{} - {}'.format(self.resource_id, self.title)
+
+
+class EdflexSelection(models.Model):
+    selection_id = models.CharField(max_length=255, unique=True)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    publication_date = models.DateTimeField(default=None, null=True, blank=True)
+    items = models.TextField()

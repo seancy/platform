@@ -211,7 +211,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         # assert that the course discovery UI is not present
-        self.assertNotIn('Search for a course', response.content)
+        self.assertNotIn('Search', response.content)
 
         # check the /courses view
         self.client.login(username=self.user.username, password='test')
@@ -219,7 +219,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         self.assertEqual(response.status_code, 200)
 
         # assert that the course discovery UI is not present
-        self.assertNotIn('Search for a course', response.content)
+        self.assertNotIn('Search', response.content)
         self.assertNotIn('<aside aria-label="Refine Your Search" class="search-facets phone-menu">', response.content)
 
         # make sure we have the special css class on the section
@@ -238,7 +238,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         # assert that the course discovery UI is not present
-        self.assertIn('Search for a course', response.content)
+        self.assertIn('Search', response.content)
 
         # check the /courses view
         self.client.login(username=self.user.username, password='test')
@@ -247,7 +247,7 @@ class IndexPageCourseCardsSortingTests(ModuleStoreTestCase):
 
 
         # assert that the course discovery UI is present
-        self.assertIn('Search for a course', response.content)
+        self.assertIn('Search', response.content)
         self.assertIn('<aside aria-label="Refine Your Search" class="search-facets phone-menu">', response.content)
         self.assertIn('<div class="courses"', response.content)
 

@@ -137,7 +137,7 @@ source, template_path = Loader(engine).load_template_source(path)
     % endif
 </%def>
 
-<%def name="renderReact(component, id, props={})">
+<%def name="renderReact(component, id, props={}, noWrapper=False, componentName='')">
     <%doc>
         Wrapper function to load a React component via webpack() and render
         it onto the page, passing an optional context object via props.
@@ -151,10 +151,12 @@ source, template_path = Loader(engine).load_template_source(path)
     ${HTML(render_bundle(component))}
     ${HTML(render_bundle('ReactRenderer'))}
 
+    % if not noWrapper:
     <div id="${id}" class="${props.get('class', '')}"></div>
+    % endif
     <script type="text/javascript">
       var c;
-      try { c = ${component | n, decode.utf8}; } catch (e) { c = null; }
+      try { c = ${ componentName if componentName != '' else component | n, decode.utf8}; } catch (e) { c = null; }
       new ReactRenderer({
         component: c,
         selector: '#${id | n, decode.utf8}',

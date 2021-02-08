@@ -58,6 +58,10 @@ msgstr ""
 msgid "Spanish"
 msgstr ""
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Italian"
+msgstr ""
+
 #: lms/templates/discovery/facet.underscore
 msgid "Tag"
 msgstr ""

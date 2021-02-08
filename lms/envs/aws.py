@@ -112,6 +112,10 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(minute=0, hour=0),
         'options': {'queue': 'edx.lms.message'}
     },
+    'external_catalog_fetch_edflex-data': {
+        'task': 'lms.djangoapps.external_catalog.tasks.fetch_edflex_data',
+        'schedule': crontab(minute=0, hour='3,15'),
+    }
 }  # For scheduling tasks, entries can be added to this dict
 
 ########################## NON-SECURE ENV CONFIG ##############################
@@ -831,6 +835,7 @@ FEATURES['ENABLE_COURSE_DISCOVERY'] = True
 FEATURES['ENABLE_COURSEWARE_SEARCH'] = True
 FEATURES['ENABLE_LAST_ACTIVITY'] = False
 FEATURES['ENABLE_PROGRAMMATIC_ENROLLMENT'] = False
+FEATURES['ENABLE_EXTERNAL_CATALOG'] = False
 
 if FEATURES.get('ENABLE_COURSEWARE_SEARCH') or \
    FEATURES.get('ENABLE_DASHBOARD_SEARCH') or \
@@ -849,6 +854,9 @@ FACEBOOK_APP_ID = AUTH_TOKENS.get("FACEBOOK_APP_ID")
 XBLOCK_SETTINGS = ENV_TOKENS.get('XBLOCK_SETTINGS', {})
 XBLOCK_SETTINGS.setdefault("VideoDescriptor", {})["licensing_enabled"] = FEATURES.get("LICENSING", False)
 XBLOCK_SETTINGS.setdefault("VideoModule", {})['YOUTUBE_API_KEY'] = AUTH_TOKENS.get('YOUTUBE_API_KEY', YOUTUBE_API_KEY)
+
+##### XBLOCK AUTH #####
+XBLOCK_AUTH = AUTH_TOKENS.get('XBLOCK_AUTH', {})
 
 ##### VIDEO IMAGE STORAGE #####
 VIDEO_IMAGE_SETTINGS = ENV_TOKENS.get('VIDEO_IMAGE_SETTINGS', VIDEO_IMAGE_SETTINGS)
@@ -1114,6 +1122,9 @@ COURSE_DISCOVERY_MEANINGS = {
     },
     'vendor': {
         'name': 'Tag'
+    },
+    'course_country': {
+        'name': 'Country'
     },
     'course_mandatory_enabled': {
         'name': 'Mandatory',

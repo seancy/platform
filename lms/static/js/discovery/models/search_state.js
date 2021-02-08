@@ -67,6 +67,13 @@
             },
 
             performFacetSelection: function(facet, term) {
+                if (facet == 'course_mandatory_enabled') {
+                    if (term == false) {
+                        term = 'false'
+                    } else if (term == true) {
+                        term = 'true'
+                    }
+                }
                 var option = this.discovery.facetOptions.findWhere({
                     facet: facet,
                     term: term
