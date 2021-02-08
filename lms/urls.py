@@ -29,6 +29,7 @@ from courseware.views.views import (
 from debug import views as debug_views
 from django_comment_common.models import ForumsConfig
 from django_openid_auth import views as django_openid_auth_views
+from external_catalog import views as external_catalog_views
 from lms.djangoapps.certificates import views as certificates_views
 from lms.djangoapps.discussion import views as discussion_views
 from lms.djangoapps.instructor.views import coupons as instructor_coupons_views
@@ -336,6 +337,10 @@ urlpatterns += [
 
     # view of learnlight catalog
     url(r'^courses/learnlight_catalog$', branding_views.learnlight_catalog, name='learnlight_catalog'),
+
+    # view of external catalog with different course resources
+    url(r'^external_catalog$', external_catalog_views.external_catalog_handler, name='external_catalog_handler'),
+    url(r'^external_catalog/courses$', external_catalog_views.courses_handler, name='external_catalog_courses_handler'),
 
     # view of crehana catalog
     url(r'^courses/crehana_catalog$', branding_views.crehana_catalog, name='crehana_catalog'),

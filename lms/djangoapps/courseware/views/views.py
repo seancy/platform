@@ -46,6 +46,7 @@ from web_fragments.fragment import Fragment
 import shoppingcart
 import survey.views
 from branding.api import get_logo_url
+from lms.djangoapps.branding.views import EDFLEX_DENIED_GROUP
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import CertificateStatuses
 from course_modes.models import CourseMode, get_course_prices
@@ -89,6 +90,7 @@ from lms.djangoapps.instructor.enrollment import (
 )
 from lms.djangoapps.instructor.views.api import require_global_staff
 from lms.djangoapps.verify_student.services import IDVerificationService
+from lms.djangoapps.external_catalog.utils import get_edflex_configuration
 from openedx.core.djangoapps.catalog.utils import get_programs, get_programs_with_type
 from openedx.core.djangoapps.certificates import api as auto_certs_api
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
@@ -252,8 +254,23 @@ def courses(request):
 
     # Add marketable programs to the context.
     programs_list = get_programs_with_type(request.site, include_hidden=False)
-
     trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
+
+    is_external_catalog_enabled = configuration_helpers.get_value('ENABLE_EXTERNAL_CATALOG', settings.FEATURES.get(
+            'ENABLE_EXTERNAL_CATALOG', False))
+    # edflex_enabled = configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG',
+    #                                                 settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False))
+    # edflex_url = configuration_helpers.get_value('EDFLEX_URL', None)
+
+    edflex_configuration_available = True
+    edflex_configuration = get_edflex_configuration()
+    for conf, val in edflex_configuration.items():
+        if not val:
+            edflex_configuration_available = False
+            break
+
+    external_catalog_and_edflex_enabled = is_external_catalog_enabled and edflex_configuration_available \
+            and EDFLEX_DENIED_GROUP not in [group.name for group in request.user.groups.all()]
 
     return render_to_response(
         "courseware/courses.html",
@@ -262,7 +279,8 @@ def courses(request):
             'course_discovery_meanings': course_discovery_meanings,
             'programs_list': programs_list,
             'show_dashboard_tabs': True,
-            'trans_for_tags': trans_for_tags
+            'trans_for_tags': trans_for_tags,
+            'is_external_catalog_enabled': external_catalog_and_edflex_enabled
         }
     )
 

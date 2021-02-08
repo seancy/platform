@@ -28300,3 +28300,15 @@ msgstr "mehr als {threshold}"
 
 #~ msgid "LMS"
 #~ msgstr "LMS"
+
+#: lms/templates/courseware/courses.html
+msgid "Internal"
+msgstr "Intern"
+
+#: lms/templates/courseware/courses.html
+msgid "External"
+msgstr "Extern"
+
+#: lms/templates/courseware/courses.html
+msgid "Filters"
+msgstr "Filter"

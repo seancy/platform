@@ -28446,3 +28446,15 @@ msgstr ""
 #: lms/djangoapps/instructor/views/instructor_dashboard.py
 msgid "more than {threshold}"
 msgstr ""
+
+#: lms/templates/courseware/courses.html
+msgid "Internal"
+msgstr "Interno"
+
+#: lms/templates/courseware/courses.html
+msgid "External"
+msgstr "Esterno"
+
+#: lms/templates/courseware/courses.html
+msgid "Filters"
+msgstr "Filtri"

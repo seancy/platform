@@ -52,18 +52,30 @@
     <section class="find-courses">
       <section class="banner">
         <section class="welcome-wrapper">
-          <h2>${_("Explore Courses")}</h2>
+          <h2>${_("Explore")}</h2>
+          % if is_external_catalog_enabled:
+            <a href="/external_catalog">
+              <span class="switcher">
+                <span class="round-button active">${_("Internal")}</span>
+                <span class="round-button">${_("External")}</span>
+              </span>
+            </a>
+          % endif
         </section>
       </section>
       <section class="courses-container">
         % if course_discovery_enabled:
         <section class="search-form">
           <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">
+            <div class="filter-header-wrapper" id="id-filter-header-wrapper">
+              <h4 class="filter-title">${_('Filters')}</h4>
+              <i class="fal fa-outdent" id="filter-bar-hide-button"></i>
+            </div>
             <form class="wrapper-search-input">
-              <label for="discovery-input" class="sr">${_('Search for a course')}</label>
-              <input id="discovery-input" class="discovery-input" placeholder="${_('Search for a course')}" type="text" title="${_('Course research')}"/>
+              <label for="discovery-input" class="sr">${_('Search')}</label>
+              <input id="discovery-input" class="discovery-input" placeholder="${_('Search')}" type="text" title="${_('Course research')}"/>
               <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
-                <span class="icon fa fa-search" aria-hidden="true"></span>
+                <span class="icon fal fa-search" aria-hidden="true"></span>
 
               </button>
               <div aria-live="polite" aria-relevant="all">
@@ -71,23 +83,32 @@
                     <span class="icon fa fa-spinner fa-spin" aria-hidden="true"></span>
                     <span class="sr">${_('Loading')}</span>
                   </div>
-                </div>
+              </div>
             </form>
           </div>
 
-          <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
-            <section class="search-facets-lists"></section>
-            <button id="clear-all-filters" class="clear-filters flt-right discovery-button" title="${_('Reset filters')}"><i class="fa fa-refresh icon"></i>${_('Reset')}</button>
-          </aside>
-
           <div id="filter-bar" class="filters hide-phone is-collapsed"></div>
 
-          <div id="discovery-message" class="search-status-label"></div>
+          <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
+            <section class="search-facets-lists"></section>
+            <button id="clear-all-filters" class="clear-filters flt-right discovery-button" title="${_('Reset filters')}">
+              <i class="fal fa-sync-alt"></i>
+              <span>${_('Reset')}</span>
+            </button>
+          </aside>
 
         </section>
         % endif
 
         <div class="courses${'' if course_discovery_enabled else ' no-course-discovery'}" role="region" aria-label="${_('List of Courses')}">
+          ##<div class="filter-message-wrapper hidden" id="filter-bar-show-button">
+          ##  <i class="fal fa-indent"></i>
+          ##  <h4 class="filter-title">${_('Filters')}</h4>
+          ##</div>
+          <div class="discovery-message-wrapper">
+            <i class="fal fa-indent"></i>
+            <div id="discovery-message" class="search-status-label"></div>
+          </div>
           <ul class="courses-listing">
             ##%for course in courses:
             ##<li class="courses-listing-item">
@@ -98,6 +119,14 @@
         </div>
       </section>
     </section>
+
+  % if is_external_catalog_enabled:
+  ${static.renderReact(
+      component="ExternalCatalog",
+      id="my-modal", props={}, componentName="Courses"
+    )
+  }
+  % endif
 </main>
 
 <!--${_('Mandatory Course')} it needs to take a place first, please don't remove.-->

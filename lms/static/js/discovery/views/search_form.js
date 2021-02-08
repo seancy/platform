@@ -5,7 +5,8 @@
 
             el: '#discovery-form',
             events: {
-                'submit form': 'submitForm'
+                'submit form': 'submitForm',
+                'click .filter-header-wrapper': 'toggleFilterBar',
             },
 
             initialize: function() {
@@ -61,7 +62,29 @@
 
             showErrorMessage: function(error) {
                 this.$message.text(gettext(error || 'There was an error, try searching again.'));
-            }
+            },
+
+            switchStatus: function (e, status) {
+                if (e.hasClass(status)) {
+                    e.removeClass(status)
+                } else {
+                    e.addClass(status)
+                }
+            },
+
+            toggleFilterBar: function (e) {
+                var self = this;
+                setTimeout($.proxy(function () {
+                    const $wrapper = $('.search-form');
+                    self.switchStatus($wrapper, 'hidden-panel');
+                    /*const $hideButton = $('#filter-bar-hide-button');
+                    const $showButton = $('#filter-bar-show-button');
+                    self.switchStatus($wrapper, 'hidden-panel');
+                    self.switchStatus($hideButton, 'hidden');
+                    self.switchStatus($showButton, 'hidden');*/
+                    this.trigger('displayStatusChange', e, $wrapper.hasClass('hidden-panel'))
+                }, this), 50)
+            },
 
         });
     });

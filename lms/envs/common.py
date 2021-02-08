@@ -419,7 +419,10 @@ FEATURES = {
     'ENABLE_LAST_ACTIVITY': False,
 
     # Set to display course country filter in explore.
-    'ENABLE_PROGRAMMATIC_ENROLLMENT': False
+    'ENABLE_PROGRAMMATIC_ENROLLMENT': False,
+
+    # Set to display external catalog with "find courses" page.
+    'ENABLE_EXTERNAL_CATALOG': False
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews
@@ -2360,6 +2363,9 @@ INSTALLED_APPS = [
     # analytics features
     'triboo_analytics',
     'django_tables2',
+
+    # external catalog for different course resources
+    'lms.djangoapps.external_catalog.apps.ExternalCatalogConfig'
 ]
 
 ######################### CSRF #########################################

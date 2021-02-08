@@ -24,6 +24,12 @@
                     userTimezone: userTimezone
                 };
                 listing = new CoursesListing({model: courseListingModel});
+                form.on('displayStatusChange', function(){
+                    listing.setSearchFormStatus()
+                })
+                listing.on('filterIconClick', function () {
+                    form.toggleFilterBar(null);
+                })
 
                 function removeFilter(filter) {
                     form.showLoadingIndicator();

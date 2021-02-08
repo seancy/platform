@@ -12436,6 +12436,10 @@ msgstr "Polonais"
 msgid "Spanish"
 msgstr "Espagnol"
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Italian"
+msgstr "Italien"
+
 #: lms/static/js/courseware/ilt_validation.js:157
 msgid "yes"
 msgstr "oui"
@@ -12648,3 +12652,55 @@ msgstr "Sélectionner un pays dans le champs Pays du cours"
 #: cms/static/js/views/settings/main.js
 msgid "Your changes on this page will not be saved until you select at least one country under Course Country and then save."
 msgstr "Vos changements sur cette page ne seront pas sauvegardés tant que vous ne sélectionnez pas un pays dans la liste."
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "article"
+msgstr "article"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "video"
+msgstr "vidéo"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Continue"
+msgstr "Continuer"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Explore"
+msgstr "Catalogue"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External Resources"
+msgstr "Ressources externes"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "You are switching to the external resources catalog which is a collection of public resources, third party and external content. Please note that although the catalog is free to browse, content requiring a paid subscription, or specific authorization, will not be provided by default via this platform. Please contact your organization with any specific questions. Do you wish to continue?"
+msgstr "Vous passez au catalogue de ressources externes qui est une collection de ressources publiques, de contenu tiers et externe. Bien qu’il soit gratuit de parcourcir le catalogue, veuillez noter que les contenus nécessitant un abonnement payant ou une autorisation spécifique ne seront pas fournis par défaut via cette plateforme. Veuillez contacter votre organisation pour toute question spécifique. Souhaitez-vous continuer ?"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Internal"
+msgstr "Interne"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External"
+msgstr "Externe"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Filters"
+msgstr "Filtres"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Type of content"
+msgstr "Type de contenu"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "${recordCount} resources found"
+msgstr "${recordCount} ressources trouvées"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "We couldn't find any results for \"${searchString}\"."
+msgstr "Nous n’avons trouvé aucun résultat pour \"${searchString}\"."

@@ -11454,3 +11454,55 @@ msgstr ""
 #: cms/static/js/views/settings/main.js
 msgid "Your changes on this page will not be saved until you select at least one country under Course Country and then save."
 msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Continue"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Explore"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "article"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "video"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External Resources"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "You are switching to the external resources catalog which is a collection of public resources, third party and external content. Please note that although the catalog is free to browse, content requiring a paid subscription, or specific authorization, will not be provided by default via this platform. Please contact your organization with any specific questions. Do you wish to continue?"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Internal"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Filters"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Type of content"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Reset"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "${recordCount} resources found"
+msgstr ""
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "We couldn't find any results for \"${searchString}\"."
+msgstr ""

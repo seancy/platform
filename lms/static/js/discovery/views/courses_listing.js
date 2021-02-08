@@ -10,6 +10,11 @@
         return Backbone.View.extend({
 
             el: 'div.courses',
+            events: {
+                //'click #filter-bar-show-button': 'toggleFilterBar',
+                'click .discovery-message-wrapper i': 'forwardFilterIconStatus',
+            },
+
             $window: $(window),
             $document: $(document),
 
@@ -68,7 +73,34 @@
                 var scrollBottom = this.$window.scrollTop() + this.$window.height();
                 var threshold = this.$document.height() - 200;
                 return scrollBottom >= threshold;
+            },
+
+            switchStatus: function (e, status) {
+                if (e.hasClass(status)) {
+                    e.removeClass(status)
+                } else {
+                    e.addClass(status)
+                }
+            },
+
+            toggleFilterBar: function (e) {
+                var self = this;
+                setTimeout(function () {
+                    const $wrapper = $('.search-form');
+                    const $hideButton = $('#filter-bar-hide-button');
+                    const $showButton = $('#filter-bar-show-button');
+                    self.switchStatus($wrapper, 'hidden');
+                    self.switchStatus($hideButton, 'hidden');
+                    self.switchStatus($showButton, 'hidden');
+                }, 50)
+            },
+            setSearchFormStatus:function(visible){
+                this.$el.toggleClass('search-form-hidden');
+            },
+            forwardFilterIconStatus: function(){
+                this.trigger('filterIconClick')
             }
+
 
         });
     });

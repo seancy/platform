@@ -28819,3 +28819,15 @@ msgstr "生成中级证书"
 #: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
 msgid "Free Text"
 msgstr "开放式文本"
+
+#: lms/templates/courseware/courses.html
+msgid "Internal"
+msgstr "内部课程目录"
+
+#: lms/templates/courseware/courses.html
+msgid "External"
+msgstr "外部课程目录"
+
+#: lms/templates/courseware/courses.html
+msgid "Filters"
+msgstr "筛选器"

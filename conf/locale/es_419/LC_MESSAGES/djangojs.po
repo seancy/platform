@@ -12201,6 +12201,10 @@ msgstr "Polaco"
 msgid "Spanish"
 msgstr "Español "
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Italian"
+msgstr "Italiano"
+
 #: lms/templates/discovery/facet.underscore
 msgid "Tag"
 msgstr "Etiquetas"
@@ -12461,3 +12465,55 @@ msgstr "Añadir al Calendario"
 #: lms/templates/student_account/login.underscore
 msgid "Sign up"
 msgstr "Regístrate"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "article"
+msgstr "artículo"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "video"
+msgstr "vídeo"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Continue"
+msgstr "Continuar"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Explore"
+msgstr "Explora los cursos"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External Resources"
+msgstr "Recursos externos"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "You are switching to the external resources catalog which is a collection of public resources, third party and external content. Please note that although the catalog is free to browse, content requiring a paid subscription, or specific authorization, will not be provided by default via this platform. Please contact your organization with any specific questions. Do you wish to continue?"
+msgstr "Está cambiando al catálogo de recursos externos, que es una colección de recursos públicos, contenido externo y de terceros. Tenga en cuenta que, aunque la navegación por el catálogo es gratuita, el contenido que requiera una suscripción paga o una autorización específica no se proporcionará de forma predeterminada a través de esta plataforma. Comuníquese con su organización si tiene preguntas específicas. ¿Desea continuar?"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Internal"
+msgstr "Interno"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External"
+msgstr "Externo"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Filters"
+msgstr "Filtros"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Type of content"
+msgstr "Tipo de contenido"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "${recordCount} resources found"
+msgstr "${recordCount} recursos encontrados"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "We couldn't find any results for \"${searchString}\"."
+msgstr "No pudimos encontrar ningún resultado para \"${searchString}\"."
