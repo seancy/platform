@@ -321,7 +321,7 @@ class ReportMixin(object):
 
 class JsonReportMixin(object):
     @classmethod
-    def get_record_str(records_str, key):
+    def get_record_str(cls, records_str, key):
         regex = r"\"%s\":\s(\{[^\}]+\})" % key
         m = re.search(regex, records_str)
         if m:
@@ -330,7 +330,7 @@ class JsonReportMixin(object):
 
 
     @classmethod
-    def get_record(records_str, key):
+    def get_record(cls, records_str, key):
         record_str = self.get_record_str(records_str, key)
         if record_str:
             return json.loads(record_str)
@@ -338,12 +338,12 @@ class JsonReportMixin(object):
 
 
     @classmethod
-    def recordify(key, record_str):
+    def recordify(cls, key, record_str):
         return "\"%s\": %s" % (key, record_str)
 
 
     @classmethod
-    def append_record(records_str, new_key, new_record_str):
+    def append_record(cls, records_str, new_key, new_record_str):
         new_record_str = cls.recordify(new_key, new_record_str)
         return "%s, %s}" % (records_str[:-1], new_record_str)
 
