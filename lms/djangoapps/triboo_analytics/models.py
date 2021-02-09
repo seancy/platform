@@ -521,7 +521,7 @@ class LearnerCourseDailyReportMockup(object):
             self.posts = record['posts']
             self.total_time_spent = record['total_time_spent']
             self.enrollment_date = dtload(record['enrollment_date'])
-            self.completion_date = dtload(record['completion_date']) if completion_date else None
+            self.completion_date = dtload(record['completion_date']) if record['completion_date'] else None
         else:
             self.status = 0
             self.progress = 0
