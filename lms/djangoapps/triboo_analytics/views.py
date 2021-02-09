@@ -339,7 +339,7 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
     if by_period:
         dataset = report_cls.filter_by_period(**filter_kwargs)
     else:
-        dataset = report_cls.filter_by_day(**filter_kwargs).prefetch_related('user__profile')
+        dataset = report_cls.filter_by_day(**filter_kwargs)
 
     order_by = get_order_by(table_cls, sort)
     if html_links:
