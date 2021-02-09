@@ -91,12 +91,9 @@ class ExternalCatalog extends React.Component {
             firstTimeLoading:true,
             sidebarStatus: sidebarStatus,
             sidebarData:{
-                resources: [{'text': 'All', 'value': 'all', label: ''},
-                    {'text': 'Edflex', 'value': 'edflex', label: ''},
-                    {'text': 'Tutellus', 'value': 'tutellus', label: ''}],
-                courseTypes: [{'text': 'All', 'value': 100}],
-                courseCategories: [{'text': 'Languages & culture', 'value': '0'}],
-                languages: [{'text': 'French', 'value': 'fr'}]
+                courseTypes: [],
+                courseCategories: [],
+                languages: []
             },
             courses: [],
             searchParameters: {},
@@ -155,7 +152,6 @@ class ExternalCatalog extends React.Component {
             }
         });
         return {
-            resources:this.state.sidebarData.resources,
             courseTypes: type.map(p => ({...p, text: gettext(p.value), label: p.count})),
             courseCategories: categories.sort(sortFn),
             languages: language.map(p => ({text: languageNameObj[p.value], value: p.value, label: p.count}))
@@ -163,7 +159,7 @@ class ExternalCatalog extends React.Component {
     }
 
     fetchData(p) {
-        const {filterValue, topic, selectedResources, selectedCourseTypes, selectedLanguages} = p || this.state.searchParameters;
+        const {filterValue, topic, selectedCourseTypes, selectedLanguages} = p || this.state.searchParameters;
         const {pageSize, pageNo} = this.state;
         const obj = {
             search_content: filterValue || '',
@@ -174,9 +170,7 @@ class ExternalCatalog extends React.Component {
         if (topic && topic.value) {
             obj.filter_content['categories'] = topic.text
         }
-        if (selectedResources && selectedResources.length > 0) {
-            obj.filter_content['resources'] = selectedResources.map(p => p.value)
-        }
+
         if (selectedCourseTypes && selectedCourseTypes.length > 0) {
             obj.filter_content['type'] = selectedCourseTypes.map(p => p.value)
         }
