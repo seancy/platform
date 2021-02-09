@@ -145,7 +145,9 @@ class ExternalCatalog extends React.Component {
             return 0;
         };
         const languageNameObj = {
-            fr: gettext('French'), en: gettext('English'), it: gettext('Italian'), ge: gettext('German')
+            fr: gettext('French'), en: gettext('English'), es: gettext('Spanish'),
+            pt: gettext('Portuguese'), it: gettext('Italian'), de: gettext('German'),
+            zh: gettext('Mandarin')
         };
         language.forEach(function(item, index, arr) {
             if(item.value === '') {
