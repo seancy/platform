@@ -331,7 +331,7 @@ class JsonReportMixin(object):
 
     @classmethod
     def get_record(cls, records_str, key):
-        record_str = self.get_record_str(records_str, key)
+        record_str = cls.get_record_str(records_str, key)
         if record_str:
             return json.loads(record_str)
         return None
