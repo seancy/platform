@@ -2117,7 +2117,7 @@ def generate_today_reports(multi_process=False):
     for e in inactive_enrollments:
         LearnerCourseJsonReport.objects.filter(user=e['user'], course_id=e['course_id']).update(is_active=False)
         LearnerSectionJsonReport.objects.filter(user=e['user'], course_id=e['course_id']).update(is_active=False)
-        LearnerBadgeJsonReport.objects.filter(user=e['user'], course_id=e['course_id']).update(is_active=False)
+        LearnerBadgeJsonReport.objects.filter(user=e['user'], badge__course_id=e['course_id']).update(is_active=False)
 
     last_analytics_success = None
     last_reportlog = ReportLog.get_latest()
