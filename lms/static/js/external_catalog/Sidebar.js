@@ -178,7 +178,6 @@ class SideBar extends React.Component {
             initializing: true,
             filterValue: '',
             topic: '',
-            selectedResources: [],
             selectedCourseTypes: [],
             selectedLanguages: []
         }
@@ -195,12 +194,6 @@ class SideBar extends React.Component {
 
     updateFilterValue(filterValue) {
         this.setState({filterValue}, this.fireOnChange)
-    }
-
-    updateExternalResources(selectedResources) {
-        this.setState({
-            selectedResources
-        }, this.fireOnChange)
     }
 
     updateCourseTypes(selectedCourseTypes) {
@@ -236,7 +229,7 @@ class SideBar extends React.Component {
     }
 
     getData() {
-        return _.pick(this.state, ['filterValue', 'topic', 'selectedResources', 'selectedCourseTypes', 'selectedLanguages'])
+        return _.pick(this.state, ['filterValue', 'topic', 'selectedCourseTypes', 'selectedLanguages'])
     }
 
     toggle() {
