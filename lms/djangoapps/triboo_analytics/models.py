@@ -525,7 +525,7 @@ class LearnerCourseDailyReportMockup(object):
         else:
             self.status = 0
             self.progress = 0
-            self.badges = 0
+            self.badges = "0 / 0"
             self.current_score = 0
             self.posts = 0
             self.total_time_spent = 0
