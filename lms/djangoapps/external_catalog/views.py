@@ -16,7 +16,7 @@ from lms.djangoapps.external_catalog.models import EdflexCategory, EdflexResourc
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.user_api.models import UserPreference
 from .utils import get_edflex_configuration
-from lms.djangoapps.branding.views import EDFLEX_DENIED_GROUP
+from student.triboo_groups import EDFLEX_DENIED_GROUP
 
 
 log = logging.getLogger(__name__)

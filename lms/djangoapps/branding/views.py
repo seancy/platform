@@ -29,11 +29,9 @@ from student_account.views import login_and_registration_form
 from util.cache import cache_if_anonymous
 from util.json_request import JsonResponse
 from urllib import unquote
+from student.triboo_groups import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP
 
 log = logging.getLogger(__name__)
-
-CATALOG_DENIED_GROUP = "Catalog Denied Users"
-EDFLEX_DENIED_GROUP = "EdFlex Denied Users"
 
 
 @ensure_csrf_cookie

@@ -46,7 +46,7 @@ from web_fragments.fragment import Fragment
 import shoppingcart
 import survey.views
 from branding.api import get_logo_url
-from lms.djangoapps.branding.views import EDFLEX_DENIED_GROUP
+from student.triboo_groups import EDFLEX_DENIED_GROUP
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import CertificateStatuses
 from course_modes.models import CourseMode, get_course_prices
