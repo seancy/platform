@@ -2135,7 +2135,7 @@ def generate_today_reports(multi_process=False):
     check_generated_learner_course_reports(last_analytics_success,
                                            overviews,
                                            course_last_updates, 
-                                           racking_log_helper.sections_by_course)
+                                           tracking_log_helper.sections_by_course)
 
     ReportLog.update_or_create(learner_course=timezone.now())
 
