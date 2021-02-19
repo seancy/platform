@@ -1287,9 +1287,9 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                                   "success_date": success_date}
                     new_record_str = cls.dump_record(new_record)
                     if report:
-                        report.score = record['score']
-                        report.success = record['success']
-                        report.success_date = record['success_date']
+                        report.score = new_record['score']
+                        report.success = new_record['success']
+                        report.success_date = new_record['success_date']
                         report.records = cls.append_record(report.records, dt2key(), new_record_str)
                         report.is_active = True
                         report.save()
