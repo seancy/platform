@@ -12,7 +12,7 @@ from .models import EdflexCategory, EdflexResource, EdflexSelection
 from .utils import get_edflex_configuration
 
 
-log = logging.getLogger(__name__)
+log = logging.getLogger('external_catalog')
 
 
 def fetch_selection(edflex_client):
@@ -31,6 +31,7 @@ def fetch_selection(edflex_client):
                     'items': json.dumps(r_selection['items'])
                 }
             )
+            log.info(u"Updated: Selection <{title}> ({id})".format(id=r_selection['id'], title=r_selection['title']))
         except KeyError:
             continue
 
@@ -61,19 +62,20 @@ def fetch_resources(client_id, client_secret, locale, base_api_url):
                     defaults={
                         'title': r_resource['title'],
                         'type': r_resource['type'],
-                        'language': r_resource['language'] if r_resource['url'] else '',
-                        'url': r_resource['url'] if r_resource['url'] else '',
+                        'language': r_resource['language'],
+                        'url': r_resource['provider_url'],
                         'duration': r_resource['duration'],
                         'publication_date': parse(r_resource['publication_date']) if r_resource.get('publication_date', None) else None,
                         'image_url': r_resource['image']['original'],
                         'rating': r_resource['note']['global']
                     },
                 )
+                log.info(u"Updated: Resource <{title}> ({id})".format(id=r_resource['id'], title=r_resource['title']))
             except KeyError as e:
-                log.exception("%s doesn't exist for resource: %s" % (e, r_resource['id']))
+                log.error(u"%s doesn't exist for resource: %s" % (e, r_resource['id']))
                 continue
             except IntegrityError as e:
-                log.exception("Database IntegrityError: %s" % str(e))
+                log.error(u"Database IntegrityError: %s" % str(e))
                 continue
 
             resource_ids.append(r_resource['id'])
@@ -86,6 +88,11 @@ def fetch_resources(client_id, client_secret, locale, base_api_url):
                     defaults={'name': r_category['name']}
                 )
                 model_resource.categories.add(model_category)
+                log.info(u"Updated: Category <{cname}> ({cid}) for Resource {id}".format(
+                    cid=r_category['id'],
+                    cname=r_category['name'],
+                    id=r_resource['id']
+                ))
                 category_ids.append(r_category['id'])
 
     EdflexResource.objects.exclude(resource_id__in=resource_ids).delete()
@@ -118,6 +125,12 @@ def fetch_other_categories(client_id, client_secret, locale, base_api_url):
                         language=locale,
                         defaults={'name': r_category['name']}
                     )
+                    log.info(u"Updated: Category <{cname}> ({cid}) for Resource <{title}> {id}".format(
+                        cid=r_category['id'],
+                        cname=r_category['name'],
+                        id=r_resource['id'],
+                        title=r_resource['title']
+                    ))
                     category_ids.append(r_category['id'])
                     model_resource.categories.add(model_category)
             except (ConnectionError, EdflexResource.DoesNotExist):
