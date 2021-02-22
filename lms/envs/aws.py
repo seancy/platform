@@ -111,10 +111,6 @@ CELERYBEAT_SCHEDULE = {
         'task': 'lms.djangoapps.integrations.slack_lt.tasks.default_slack_message',
         'schedule': crontab(minute=0, hour=0),
         'options': {'queue': 'edx.lms.message'}
-    },
-    'external_catalog_fetch_edflex-data': {
-        'task': 'lms.djangoapps.external_catalog.tasks.fetch_edflex_data',
-        'schedule': crontab(minute=0, hour='3,15'),
     }
 }  # For scheduling tasks, entries can be added to this dict
 
