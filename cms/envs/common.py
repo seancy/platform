@@ -1170,6 +1170,9 @@ INSTALLED_APPS = [
 
     # API Documentation
     'rest_framework_swagger',
+
+    # edflex-xblock
+    'edflex',
 ]
 
 

@@ -2365,7 +2365,10 @@ INSTALLED_APPS = [
     'django_tables2',
 
     # external catalog for different course resources
-    'lms.djangoapps.external_catalog.apps.ExternalCatalogConfig'
+    'lms.djangoapps.external_catalog.apps.ExternalCatalogConfig',
+
+    # edflex-xblock
+    'edflex',
 ]
 
 ######################### CSRF #########################################
