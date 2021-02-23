@@ -38,45 +38,45 @@ var onCertificatesReady = null;
         /**
          * Certificates Export
          */
-        $('#generate-cert').click(function () {
+        $('#generate-cert').click(function() {
             var url = $(this).data('endpoint'),
-                identifier_input = $(this).parent().find("textarea[name='student-ids']").val(),
-                $cert_download = $(".certificates-download");
-            $(this).val("generating ..");
+                identifier_input = $('#export-identifiers').val(),
+                $cert_download = $('.certificates-download');
+            $(this).val('generating ..');
             $.ajax({
-                type: "POST",
+                type: 'POST',
                 url: url,
                 data: {
                     identifiers: identifier_input
                 },
-                success: function (data) {
-                    $('#generate-cert').val("generate");
+                success: function(data) {
+                    $('#generate-cert').val('generate');
                     var $result = $('.certificates-error'),
-                        fail_num = data["fail"].length;
+                        fail_num = data.fail.length;
                     if (fail_num > 0) {
                         $result.show();
                         $result.find('ul').empty();
-                        for (var i = 0; i < data["fail"].length; i++) {
-                            $result.find('ul').append(data["fail"][i])
+                        for (var i = 0; i < data.fail.length; i++) {
+                            $result.find('ul').append(data.fail[i]);
                         }
                     }
                 }
             });
         });
 
-        var endpoint = $(".certificates-download").data('endpoint');
+        var endpoint = $('.certificates-download').data('endpoint');
         function get_zip_links() {
             $.ajax({
-                type: "GET",
+                type: 'GET',
                 url: endpoint,
-                success: function (data) {
+                success: function(data) {
                     var $zip_list = $('.zip-file-list'),
-                        link_num = data["links"].length;
+                        link_num = data.links.length;
                     if (link_num > 0) {
                         $zip_list.show();
                         $zip_list.find('ul').empty();
-                        for (var i = 0; i < data["links"].length; i++) {
-                            $zip_list.find('ul').append(data["links"][i])
+                        for (var i = 0; i < data.links.length; i++) {
+                            $zip_list.find('ul').append(data.links[i]);
                         }
                     }
                 }
@@ -147,10 +147,10 @@ var onCertificatesReady = null;
          * Start regenerating certificates for students.
          */
         $section.on('click', '#btn-start-regenerating-certificates', function(event) {
-            LearningTribes.confirmation.show(gettext('Start regenerating certificates for learners in this course?'), function () {
+            LearningTribes.confirmation.show(gettext('Start regenerating certificates for learners in this course?'), function() {
                 var $btn_regenerating_certs = $('#btn-start-regenerating-certificates'),
-                $certificate_regeneration_status = $('.certificate-regeneration-status'),
-                url = $btn_regenerating_certs.data('endpoint');
+                    $certificate_regeneration_status = $('.certificate-regeneration-status'),
+                    url = $btn_regenerating_certs.data('endpoint');
 
                 $.ajax({
                     type: 'POST',
@@ -175,7 +175,7 @@ var onCertificatesReady = null;
                         }
                     }
                 });
-            })
+            });
         });
 
         // $(".ic-type-sel").select2({

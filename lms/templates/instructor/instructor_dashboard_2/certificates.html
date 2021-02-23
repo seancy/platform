@@ -160,7 +160,7 @@ from util.date_utils import strftime_localized
         <h3 class="hd hd-3">${_("Certificates Export")}</h3>
         <p>${_("Enter email addresses and/or usernames separated by new lines or commas.")}</p>
         <form>
-            <textarea name="student-ids" placeholder="${_("Email Addresses/Usernames")}"></textarea>
+            <textarea id="export-identifiers" name="student-ids" placeholder="${_("Email Addresses/Usernames")}"></textarea>
             <div class="actions"><input type="button" value="generate" id="generate-cert" data-endpoint="${ section_data['urls']['certificates_export'] }"></div>
         </form>
         <div class="message certificates-error" style="display: none">
