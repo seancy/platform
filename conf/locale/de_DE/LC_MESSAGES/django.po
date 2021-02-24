@@ -11906,7 +11906,7 @@ msgid ""
 "I agree to the {platform_name} {terms_of_service_link_start}"
 "{terms_of_service}{terms_of_service_link_end}"
 msgstr ""
-"Ich stimme den {terms_of_service_link_start}{Nutzungsbedingungen}{terms_of_service_link_end} der {platform_name} zu."
+"Ich stimme den {terms_of_service_link_start}{terms_of_service}{terms_of_service_link_end} der {platform_name} zu."
 
 #. Translators: "Terms of Service" is a legal document users must agree to
 #. in order to register a new account.
