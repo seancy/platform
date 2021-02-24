@@ -12476,7 +12476,7 @@ msgstr "Continuar"
 
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "Explore"
-msgstr "Explora los cursos"
+msgstr "Explora"
 
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "External Resources"
