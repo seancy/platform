@@ -102,10 +102,11 @@
 -e git+https://github.com/Learningtribes/edx-search.git@lt-master#egg=edx-search
 -e git+https://github.com/Learningtribes/xblock-poll@hawthorn#egg=xblock-poll
 -e git+https://github.com/Learningtribes/xblock-drag-and-drop-v2@hawthorn#egg=xblock-drag-and-drop-v2
--e git+http://github.com/Learningtribes/edx_xblock_scorm@hawthorn#egg=scormxblock_xblock
--e git+http://github.com/Learningtribes/xblock-pdf@hawthorn#egg=xblock-pdf
--e git+http://github.com/Learningtribes/iframe-id-xblock@hawthorn#egg=iframe-id-xblock
--e git+http://github.com/Learningtribes/edx-ora2@hawthorn#egg=edx-ora2
+-e git+https://github.com/Learningtribes/edx_xblock_scorm@hawthorn#egg=scormxblock_xblock
+-e git+https://github.com/Learningtribes/xblock-pdf@hawthorn#egg=xblock-pdf
+-e git+https://github.com/Learningtribes/iframe-id-xblock@hawthorn#egg=iframe-id-xblock
+-e git+https://github.com/Learningtribes/edx-ora2@hawthorn#egg=edx-ora2
+-e git+https://github.com/Learningtribes/edflex-xblock@hawthorn#egg=edflex_xblock
 
 # Third Party XBlocks
 
