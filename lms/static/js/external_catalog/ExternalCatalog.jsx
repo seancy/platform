@@ -147,7 +147,7 @@ class ExternalCatalog extends React.Component {
             zh: gettext('Mandarin')
         };
         language.forEach(function(item, index, arr) {
-            if(item.value === '') {
+            if(item.value == null) {
                 arr.splice(index, 1);
             }
         });
