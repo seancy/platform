@@ -259,7 +259,14 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.reminder_info_view.render();
                    this.course_tags_info_view.render();
 
+                   this.applyElements();
+
                    return this;
+               },
+               applyElements:function(){
+                   _.each($('.content-primary').find('.question-mark-wrapper'), function(wrapper){
+                        new LearningTribes.QuestionMark(wrapper, $(wrapper).data('title'));
+                    })
                },
                fieldToSelectorMap: {
                    language: 'course-language',

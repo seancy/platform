@@ -10,6 +10,8 @@ export class QuestionMark extends React.Component {
         super(props);
         this.state = { username: '' };
 
+        this.myRef = React.createRef();
+
         this.handleResize = this.handleResize.bind(this);
 
         window.addEventListener('resize', this.handleResize)
@@ -18,13 +20,14 @@ export class QuestionMark extends React.Component {
     }
 
     handleResize(e) {
+        //if (!this.myRef.root) return;
         let docWidth = document.body.offsetWidth,
-            elementX = this.refs.root.getBoundingClientRect().x,
+            elementX = this.myRef.root.getBoundingClientRect().x,
             offsetVal = 0;
         if (docWidth - elementX < 100){
             offsetVal = docWidth-elementX
         }
-        this.refs.root.querySelector('.after').style.marginLeft = `-${offsetVal}px`
+        this.myRef.root.querySelector('.after').style.marginLeft = `-${offsetVal}px`
     }
 
     render() {
@@ -34,7 +37,7 @@ export class QuestionMark extends React.Component {
             <span ref="root" className="icon-question">
                 <span className="before"></span>
                 <i className="fas fa-question-circle"></i>
-                <span className="after">{this.props.tooltip}</span>
+                <span className="after" dangerouslySetInnerHTML={{__html:this.props.tooltip}}></span>
             </span>
             </div>
         );
