@@ -40,6 +40,8 @@ module.exports = Merge.smart({
         'js/factories/library': ['babel-polyfill', './cms/static/js/factories/library.js'],
         'js/factories/xblock_validation': ['babel-polyfill', './cms/static/js/factories/xblock_validation.js'],
         'js/factories/edit_tabs': ['babel-polyfill', './cms/static/js/factories/edit_tabs.js'],
+        'js/question_mark': ['babel-polyfill', './cms/static/js/question_mark.js'],
+        'js/switcher': ['babel-polyfill', './cms/static/js/switcher.js'],
         'js/sock': ['babel-polyfill', './cms/static/js/sock.js'],
 
         LanguageSelector: ['babel-polyfill', './cms/static/js/language_selector.js'],
