@@ -48,7 +48,7 @@ import survey.views
 from branding.api import get_logo_url
 from student.triboo_groups import EDFLEX_DENIED_GROUP
 from lms.djangoapps.certificates import api as certs_api
-from lms.djangoapps.certificates.models import CertificateStatuses
+from lms.djangoapps.certificates.models import CertificateStatuses, GeneratedCertificate
 from course_modes.models import CourseMode, get_course_prices
 from courseware.access import has_access, has_ccx_coach_role
 from courseware.access_utils import check_course_open_for_learner
@@ -2870,6 +2870,9 @@ class CourseReminder():
             student=course_enrollment.user
         )
         student_modules.delete()
+        cert = GeneratedCertificate.objects.filter(user=course_enrollment.user, course_id=course_enrollment.course_id)
+        if cert.exists():
+            cert.delete()
 
         if PersistentGradesEnabledFlag(course_enrollment.course_id):
             try:
