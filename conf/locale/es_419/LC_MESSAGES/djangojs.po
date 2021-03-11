@@ -9497,7 +9497,7 @@ msgstr "Registrarse a través de edX"
 #: lms/templates/student_account/login.underscore:13
 #: lms/templates/student_account/login.underscore
 msgid "Welcome to your training platform, log in to find your learning space!"
-msgstr "Bienvenido a su plataforma de formación, accede a encontrar su espacio de aprendizaje!"
+msgstr "Bienvenido a tu plataforma de formación, acceda a encontrar tu espacio de aprendizaje!"
 
 #: lms/templates/student_account/login.underscore:22
 msgid "Sign in to continue learning as {email}"
@@ -10828,12 +10828,18 @@ msgid "Display Name"
 msgstr "Nombre para mostrar"
 
 #: cms/templates/js/course-outline.underscore:129
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(min)s min"
 msgstr "%(min)s min"
 
 #: cms/templates/js/course-outline.underscore:132
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(h)s h"
 msgstr "%(h)s h"
+
+#: lms/static/js/discovery/views/course_card.js
+msgid "%(d)s d"
+msgstr "%(d)s d"
 
 #: cms/templates/js/course-outline.underscore:135
 msgid "%(h)s h %(min)s m"
@@ -12280,65 +12286,86 @@ msgstr "Por favor, elija la necesidad de alojamiento "
 msgid "Area of Development"
 msgstr "Área de desarrollo"
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "in total"
-msgstr "en total"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hour"
-msgstr "hora"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hours"
-msgstr "horas"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "day"
-msgstr "día"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "days"
-msgstr "dias"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "week"
-msgstr "semana"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "weeks"
-msgstr "semanas"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "month"
-msgstr "mes"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "months"
-msgstr "meses"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "year"
 msgstr "año"
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "years"
 msgstr "años"
 
-#: XBlock: edflex
-#: edflex/static/js/src/studio_edit.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "month"
+msgstr "mes"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "months"
+msgstr "meses"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "week"
+msgstr "semana"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "weeks"
+msgstr "semanas"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "day"
+msgstr "día"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "days"
+msgstr "dias"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hour"
+msgstr "hora"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hours"
+msgstr "horas"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:53
+msgid "in total"
+msgstr "en total"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:35
+msgid "There is no content available for this category or language at the moment"
+msgstr "No hay contenido disponible para esta categoría o idioma en este momento."
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:158
+msgid "Unable to update settings"
+msgstr "No se puede actualizar la configuración"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:196
+msgid "Choose a category"
+msgstr "Elige una categoría"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:222
+msgid "Choose a language"
+msgstr "Elige un idioma"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:229
 msgid "Select the content of your choice"
-msgstr "Selecciona el contenido que prefieres"
+msgstr "Seleccione el contenido de su elección"
+
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
@@ -12426,15 +12453,100 @@ msgstr "Sí"
 msgid "No"
 msgstr "No"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag and Drop"
 msgstr "Arrastrar y Soltar"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag & Drop"
 msgstr "Arrastrar y Soltar"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:298
+msgid "Keyboard Help"
+msgstr "Ayuda para el teclado"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:306
+msgid ""
+"You can complete this problem using only your keyboard by following the "
+"guidance below:"
+msgstr "Puede completar este problema usando solo su teclado siguiendo la guía a continuación:"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:307
+msgid ""
+"Drag and Drop problems consist of draggable items and dropzones. Users "
+"should select a draggable item with their keyboard and then navigate to an "
+"appropriate dropzone to drop it."
+msgstr "Los problemas de arrastrar y soltar consisten en elementos que se pueden arrastrar y zonas de colocación. "
+"Los usuarios deben seleccionar un elemento que se pueda arrastrar con su teclado y "
+"luego navegar a una zona de colocación adecuada para soltarlo."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:309
+msgid ""
+"Use only TAB and SHIFT+TAB to navigate between draggable items and drop "
+"zones."
+msgstr "Use solo TAB y SHIFT+TAB para navegar entre elementos que se pueden arrastrar y zonas de colocación."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:310
+msgid "Press CTRL+M to select a draggable item (effectively picking it up)."
+msgstr "Presione CTRL+M para seleccionar un elemento que se puede arrastrar (recogiéndolo efectivamente)."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:311
+msgid ""
+"Navigate using TAB and SHIFT+TAB to the appropriate dropzone and press CTRL"
+"+M once more to drop it here."
+msgstr "Navegue usando TAB y SHIFT + TAB hasta la zona de salto apropiada y presione CTRL+M una vez más para soltarlo aquí."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:312
+msgid ""
+"Press ESC if you want to cancel the drop operation (for example, to "
+"select a different item)."
+msgstr "Presione ESC si desea cancelar la operación de colocación (por ejemplo, para seleccionar un elemento diferente)."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:313
+msgid ""
+"TAB back to the list of draggable items and repeat this process until all of "
+"the draggable items have been placed on their respective dropzones."
+msgstr "TAB para volver a la lista de elementos que se pueden arrastrar y "
+"repetir este proceso hasta que todos los elementos que se pueden arrastrar "
+"se hayan colocado en sus respectivas zonas de colocación."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:453
+msgid "{earned}/{possible} point (graded)"
+msgid_plural "{earned}/{possible} points (graded)"
+msgstr[0] "{earned}/{possible} punto (calificado)"
+msgstr[1] "{earned}/{possible} puntos (calificado)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:459
+msgid "{earned}/{possible} point (ungraded)"
+msgid_plural "{earned}/{possible} points (ungraded)"
+msgstr[0] "{earned}/{possible} punto (sin calificar)"
+msgstr[1] "{earned}/{possible} puntos (sin calificar)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:468
+msgid "{possible} point possible (graded)"
+msgid_plural "{possible} points possible (graded)"
+msgstr[0] "{possible} punto posible (calificado)"
+msgstr[1] "{possible} puntos posibles (calificado)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:474
+msgid "{possible} point possible (ungraded)"
+msgid_plural "{possible} points possible (ungraded)"
+msgstr[0] "{possible} punto posible (sin calificar)"
+msgstr[1] "{possible} puntos posibles (sin calificar)"
 
 #: XBlock: poll
 #: xblock-poll/poll/public/html/poll_results.handlebars
@@ -12517,3 +12629,17 @@ msgstr "${recordCount} recursos encontrados"
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "We couldn't find any results for \"${searchString}\"."
 msgstr "No pudimos encontrar ningún resultado para \"${searchString}\"."
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:5
+#: poll/public/handlebars/survey_results.handlebars:4
+msgid "Results"
+msgstr "Resultados"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:33
+#: poll/public/handlebars/survey_results.handlebars:41
+msgid "Results gathered from {total} respondent."
+msgid_plural "Results gathered from {total} respondents."
+msgstr[0] "Resultados recopilados de {total} encuestado."
+msgstr[1] "Resultados recopilados de {total} encuestados."

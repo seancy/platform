@@ -89,7 +89,8 @@ msgid ""
 "This may be happening because of an error with our server or your internet "
 "connection. Try refreshing the page or making sure you are online."
 msgstr ""
-"L'errore può essere conseguenza di un errore nei nostri server o nella tua connessione Internet. Prova a ricaricare la pagina e assicurati di essere online."
+"L'errore può essere conseguenza di un errore nei nostri server o nella tua connessione Internet. "
+"Prova a ricaricare la pagina e assicurati di essere online."
 
 #: cms/static/cms/js/main.js:47 common/static/bundles/commons.js:267
 msgid "Studio's having trouble saving your work"
@@ -10395,12 +10396,18 @@ msgid "Display Name"
 msgstr "Mostra il nome"
 
 #: cms/templates/js/course-outline.underscore:129
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(min)s min"
 msgstr ""
 
 #: cms/templates/js/course-outline.underscore:132
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(h)s h"
 msgstr ""
+
+#: lms/static/js/discovery/views/course_card.js
+msgid "%(d)s d"
+msgstr "%(d)s g"
 
 #: cms/templates/js/course-outline.underscore:135
 msgid "%(h)s h %(min)s m"
@@ -11889,15 +11896,100 @@ msgstr ""
 msgid "Add to Calendar"
 msgstr ""
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag and Drop"
 msgstr "Trascinare e rilasciare"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag & Drop"
 msgstr "Trascinare e rilasciare"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:298
+msgid "Keyboard Help"
+msgstr "Guida per la tastiera"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:306
+msgid ""
+"You can complete this problem using only your keyboard by following the "
+"guidance below:"
+msgstr "Puoi risolvere questo problema utilizzando solo la tastiera seguendo la guida di seguito:"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:307
+msgid ""
+"Drag and Drop problems consist of draggable items and dropzones. Users "
+"should select a draggable item with their keyboard and then navigate to an "
+"appropriate dropzone to drop it."
+msgstr "I problemi di trascinamento sono costituiti da elementi trascinabili e zone di rilascio. "
+"Gli utenti devono selezionare un elemento che può essere trascinato con la tastiera e "
+"quindi passare a una zona di rilascio adatta per rilasciarlo."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:309
+msgid ""
+"Use only TAB and SHIFT+TAB to navigate between draggable items and drop "
+"zones."
+msgstr "Utilizzare solo TAB e MAIUSC+TAB per navigare tra gli elementi trascinabili e le zone di rilascio."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:310
+msgid "Press CTRL+M to select a draggable item (effectively picking it up)."
+msgstr "Premere CTRL+M per selezionare un elemento che può essere trascinato (raccogliendolo efficacemente)."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:311
+msgid ""
+"Navigate using TAB and SHIFT+TAB to the appropriate dropzone and press CTRL"
+"+M once more to drop it here."
+msgstr "Navigare utilizzando TAB e MAIUSC+TAB nella zona di salto appropriata e premere ancora una volta CTRL+M per rilasciarlo qui."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:312
+msgid ""
+"Press ESC if you want to cancel the drop operation (for example, to "
+"select a different item)."
+msgstr "Premere ESC se si desidera annullare l'operazione di rilascio (ad esempio, per selezionare un elemento diverso)."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:313
+msgid ""
+"TAB back to the list of draggable items and repeat this process until all of "
+"the draggable items have been placed on their respective dropzones."
+msgstr "TAB per tornare all'elenco degli oggetti trascinabili e "
+"ripetere questo processo finché tutti gli elementi trascinabili "
+"non sono stati posizionati nelle rispettive zone di rilascio."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:453
+msgid "{earned}/{possible} point (graded)"
+msgid_plural "{earned}/{possible} points (graded)"
+msgstr[0] "{earned}/{possible} punto (qualificato)"
+msgstr[1] "{earned}/{possible} punti (qualificato)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:459
+msgid "{earned}/{possible} point (ungraded)"
+msgid_plural "{earned}/{possible} points (ungraded)"
+msgstr[0] "{earned}/{possible} punto (non valutato)"
+msgstr[1] "{earned}/{possible} punti (non valutato)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:468
+msgid "{possible} point possible (graded)"
+msgid_plural "{possible} points possible (graded)"
+msgstr[0] "{possible} punto possibile (qualificato)"
+msgstr[1] "{possible} punti possibili (qualificato)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:474
+msgid "{possible} point possible (ungraded)"
+msgid_plural "{possible} points possible (ungraded)"
+msgstr[0] "{possible} punto possibile (non valutato)"
+msgstr[1] "{possible} punti possibili (non valutato)"
 
 #: wiki/models/article.py:262 wiki/models/pluginbase.py:38
 msgid "article"
@@ -11950,3 +12042,97 @@ msgstr "${recordCount} risorse trovate"
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "We couldn't find any results for \"${searchString}\"."
 msgstr "Non abbiamo trovato risultati per \"${searchString}\"."
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
+msgid "year"
+msgstr "anno"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
+msgid "years"
+msgstr "anni"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "month"
+msgstr "mese"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "months"
+msgstr "mesi"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "week"
+msgstr "settimana"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "weeks"
+msgstr "settimane"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "day"
+msgstr "giorno"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "days"
+msgstr "giorni"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hour"
+msgstr "ora"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hours"
+msgstr "ore"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:53
+msgid "in total"
+msgstr "in totale"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:35
+msgid "There is no content available for this category or language at the moment"
+msgstr "Al momento non sono disponibili contenuti per questa categoria o lingua"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:158
+msgid "Unable to update settings"
+msgstr "Impossibile aggiornare le impostazioni"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:196
+msgid "Choose a category"
+msgstr "Scegli una categoria"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:222
+msgid "Choose a language"
+msgstr "Scegli una lingua"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:229
+msgid "Select the content of your choice"
+msgstr "Seleziona il contenuto che preferisci"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:5
+#: poll/public/handlebars/survey_results.handlebars:4
+msgid "Results"
+msgstr "Risultati"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:33
+#: poll/public/handlebars/survey_results.handlebars:41
+msgid "Results gathered from {total} respondent."
+msgid_plural "Results gathered from {total} respondents."
+msgstr[0] "Risultati raccolti da {total} intervistato."
+msgstr[1] "Risultati raccolti da {total} intervistati."

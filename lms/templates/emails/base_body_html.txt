@@ -23,8 +23,7 @@
         padding: 20px 20px 20px 0;
     }
     .letter-wrapper .logo img {
-        width: auto !important;
-        max-height: 60px;
+        width: 70px;
     }
     .letter-wrapper .content {
         padding: 30px 20px; background-color: #fff;

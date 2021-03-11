@@ -10370,12 +10370,18 @@ msgid "Display Name"
 msgstr "显示名称"
 
 #: cms/templates/js/course-outline.underscore:129
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(min)s min"
 msgstr "%(min)s 分钟"
 
 #: cms/templates/js/course-outline.underscore:132
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(h)s h"
 msgstr "%(h)s 小时"
+
+#: lms/static/js/discovery/views/course_card.js
+msgid "%(d)s d"
+msgstr "%(d)s 天"
 
 #: cms/templates/js/course-outline.underscore:135
 msgid "%(h)s h %(min)s m"
@@ -11825,60 +11831,86 @@ msgstr "发展领域"
 msgid "Time format HH:MM expected"
 msgstr "时间格式 HH:MM"
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "in total"
-msgstr "总数"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hour"
-msgstr "小时"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hours"
-msgstr "小时"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "day"
-msgstr "天"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "days"
-msgstr "天"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "week"
-msgstr "周"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "weeks"
-msgstr "周"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "month"
-msgstr "月"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "months"
-msgstr "月"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "year"
 msgstr "年"
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "years"
 msgstr "年"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "month"
+msgstr "月"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "months"
+msgstr "月"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "week"
+msgstr "周"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "weeks"
+msgstr "周"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "day"
+msgstr "天"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "days"
+msgstr "天"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hour"
+msgstr "小时"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hours"
+msgstr "小时"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:53
+msgid "in total"
+msgstr "总数"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:35
+msgid "There is no content available for this category or language at the moment"
+msgstr ""
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:158
+msgid "Unable to update settings"
+msgstr ""
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:196
+msgid "Choose a category"
+msgstr ""
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:222
+msgid "Choose a language"
+msgstr ""
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:229
+msgid "Select the content of your choice"
+msgstr ""
+
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
 msgstr "排行榜"
@@ -11965,15 +11997,96 @@ msgstr "是"
 msgid "No"
 msgstr "否"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag and Drop"
 msgstr "拖放"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag & Drop"
 msgstr "拖放"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:298
+msgid "Keyboard Help"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:306
+msgid ""
+"You can complete this problem using only your keyboard by following the "
+"guidance below:"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:307
+msgid ""
+"Drag and Drop problems consist of draggable items and dropzones. Users "
+"should select a draggable item with their keyboard and then navigate to an "
+"appropriate dropzone to drop it."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:309
+msgid ""
+"Use only TAB and SHIFT+TAB to navigate between draggable items and drop "
+"zones."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:310
+msgid "Press CTRL+M to select a draggable item (effectively picking it up)."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:311
+msgid ""
+"Navigate using TAB and SHIFT+TAB to the appropriate dropzone and press CTRL"
+"+M once more to drop it here."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:312
+msgid ""
+"Press ESC if you want to cancel the drop operation (for example, to "
+"select a different item)."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:313
+msgid ""
+"TAB back to the list of draggable items and repeat this process until all of "
+"the draggable items have been placed on their respective dropzones."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:453
+msgid "{earned}/{possible} point (graded)"
+msgid_plural "{earned}/{possible} points (graded)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:459
+msgid "{earned}/{possible} point (ungraded)"
+msgid_plural "{earned}/{possible} points (ungraded)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:468
+msgid "{possible} point possible (graded)"
+msgid_plural "{possible} points possible (graded)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:474
+msgid "{possible} point possible (ungraded)"
+msgid_plural "{possible} points possible (ungraded)"
+msgstr[0] ""
+msgstr[1] ""
 
 #: XBlock: poll
 #: xblock-poll/poll/public/html/poll_results.handlebars
@@ -12052,3 +12165,17 @@ msgstr "找到 ${recordCount} 项课程资源"
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "We couldn't find any results for \"${searchString}\"."
 msgstr "我们无法找到任何符合 \"${searchString}\" 条件的结果。"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:5
+#: poll/public/handlebars/survey_results.handlebars:4
+msgid "Results"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:33
+#: poll/public/handlebars/survey_results.handlebars:41
+msgid "Results gathered from {total} respondent."
+msgid_plural "Results gathered from {total} respondents."
+msgstr[0] ""
+msgstr[1] ""

@@ -12727,9 +12727,7 @@ msgid "Content Locked"
 msgstr ""
 
 #: lms/templates/_gated_content.html:18
-msgid ""
-"You must complete the prerequisites for '{prereq_section_name}' to access "
-"this content."
+msgid "You must complete the sub-section '{prereq_section_name}' to access this content."
 msgstr ""
 
 #: lms/templates/_gated_content.html:22
