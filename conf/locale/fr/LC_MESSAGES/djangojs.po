@@ -10879,12 +10879,18 @@ msgid "Display Name"
 msgstr "Nom d'affichage"
 
 #: cms/templates/js/course-outline.underscore:129
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(min)s min"
 msgstr "%(min)s min"
 
 #: cms/templates/js/course-outline.underscore:132
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(h)s h"
 msgstr "%(h)s h"
+
+#: lms/static/js/discovery/views/course_card.js
+msgid "%(d)s d"
+msgstr "%(d)s j"
 
 #: cms/templates/js/course-outline.underscore:135
 msgid "%(h)s h %(min)s m"
@@ -12469,60 +12475,86 @@ msgstr "Axe de développement"
 msgid "Time format HH:MM expected"
 msgstr ""
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "in total"
-msgstr "au total"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hour"
-msgstr "heure"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hours"
-msgstr "heures"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "day"
-msgstr "journée"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "days"
-msgstr "journées"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "week"
-msgstr "la semaine"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "weeks"
-msgstr "semaines"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "month"
-msgstr "mois"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "months"
-msgstr "mois"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "year"
 msgstr "an"
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "years"
 msgstr "ans"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "month"
+msgstr "mois"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "months"
+msgstr "mois"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "week"
+msgstr "semaine"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "weeks"
+msgstr "semaines"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "day"
+msgstr "journée"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "days"
+msgstr "journées"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hour"
+msgstr "heure"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hours"
+msgstr "heures"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:53
+msgid "in total"
+msgstr "au total"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:35
+msgid "There is no content available for this category or language at the moment"
+msgstr "Il n'y a pas de contenu disponible pour cette catégorie ou langue pour le moment"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:158
+msgid "Unable to update settings"
+msgstr "Impossible de mettre à jour les paramètres"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:196
+msgid "Choose a category"
+msgstr "Choisissez une catégorie"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:222
+msgid "Choose a language"
+msgstr "Choisissez une langue"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:229
+msgid "Select the content of your choice"
+msgstr "Sélectionnez le contenu de votre choix"
+
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
 msgstr "Leaderboard"
@@ -12609,15 +12641,99 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag and Drop"
 msgstr "Glisser-déposer"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag & Drop"
 msgstr "Glisser-déposer"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:298
+msgid "Keyboard Help"
+msgstr "Raccourcis clavier"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:306
+msgid ""
+"You can complete this problem using only your keyboard by following the guidance below:"
+msgstr "Vous pouvez résoudre ce problème en utilisant uniquement votre clavier en suivant les instructions ci-dessous :"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:307
+msgid ""
+"Drag and Drop problems consist of draggable items and dropzones. Users "
+"should select a draggable item with their keyboard and then navigate to an "
+"appropriate dropzone to drop it."
+msgstr "Les problèmes de glisser-déposer consistent en des éléments déplaçables et des zones de dépôt. "
+"Les utilisateurs doivent sélectionner un élément déplaçable avec leur clavier, "
+"puis accéder à une zone de dépôt appropriée pour le déposer."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:309
+msgid ""
+"Use only TAB and SHIFT+TAB to navigate between draggable items and drop "
+"zones."
+msgstr "Utilisez uniquement TAB et MAJ+TAB pour naviguer entre les éléments déplaçables et les zones de dépôt."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:310
+msgid "Press CTRL+M to select a draggable item (effectively picking it up)."
+msgstr "Appuyez sur CTRL+M pour sélectionner un élément déplaçable."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:311
+msgid ""
+"Navigate using TAB and SHIFT+TAB to the appropriate dropzone and press CTRL"
+"+M once more to drop it here."
+msgstr "Naviguez en utilisant TAB et MAJ+TAB jusqu'à la zone de dépôt appropriée et appuyez à nouveau sur CTRL+M pour la déposer là."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:312
+msgid ""
+"Press ESC if you want to cancel the drop operation (for example, to "
+"select a different item)."
+msgstr "Appuyez sur ECHAP si vous souhaitez annuler l'opération de dépôt (par exemple, pour sélectionner un élément différent)."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:313
+msgid ""
+"TAB back to the list of draggable items and repeat this process until all of "
+"the draggable items have been placed on their respective dropzones."
+msgstr "Avec TAB, revenez à la liste des éléments déplaçables et "
+"répétez ce processus jusqu'à ce que tous les éléments déplaçables "
+"aient été placés sur leurs zones de dépôt respectives."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:453
+msgid "{earned}/{possible} point (graded)"
+msgid_plural "{earned}/{possible} points (graded)"
+msgstr[0] "{earned}/{possible} point (noté)"
+msgstr[1] "{earned}/{possible} points (noté)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:459
+msgid "{earned}/{possible} point (ungraded)"
+msgid_plural "{earned}/{possible} points (ungraded)"
+msgstr[0] "{earned}/{possible} point (non noté)"
+msgstr[1] "{earned}/{possible} points (non noté)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:468
+msgid "{possible} point possible (graded)"
+msgid_plural "{possible} points possible (graded)"
+msgstr[0] "{possible} point possible (noté)"
+msgstr[1] "{possible} points possibles (noté)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:474
+msgid "{possible} point possible (ungraded)"
+msgid_plural "{possible} points possible (ungraded)"
+msgstr[0] "{possible} point possible (non noté)"
+msgstr[1] "{possible} points possibles (non noté)"
 
 #: XBlock: poll
 #: xblock-poll/poll/public/html/poll_results.handlebars
@@ -12704,3 +12820,17 @@ msgstr "${recordCount} ressources trouvées"
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "We couldn't find any results for \"${searchString}\"."
 msgstr "Nous n’avons trouvé aucun résultat pour \"${searchString}\"."
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:5
+#: poll/public/handlebars/survey_results.handlebars:4
+msgid "Results"
+msgstr "Résultats"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:33
+#: poll/public/handlebars/survey_results.handlebars:41
+msgid "Results gathered from {total} respondent."
+msgid_plural "Results gathered from {total} respondents."
+msgstr[0] "Résultats recueillis auprès de {total} répondant."
+msgstr[1] "Résultats recueillis auprès de {total} répondants."

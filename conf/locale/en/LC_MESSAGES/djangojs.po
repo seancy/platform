@@ -10057,11 +10057,17 @@ msgid "Display Name"
 msgstr ""
 
 #: cms/templates/js/course-outline.underscore:129
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(min)s min"
 msgstr ""
 
 #: cms/templates/js/course-outline.underscore:132
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(h)s h"
+msgstr ""
+
+#: lms/static/js/discovery/views/course_card.js
+msgid "%(d)s d"
 msgstr ""
 
 #: cms/templates/js/course-outline.underscore:135

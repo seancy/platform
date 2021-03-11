@@ -14554,12 +14554,8 @@ msgid "Content Locked"
 msgstr "Contenu vérouillé"
 
 #: lms/templates/_gated_content.html:18
-msgid ""
-"You must complete the prerequisites for '{prereq_section_name}' to access "
-"this content."
-msgstr ""
-"Vous devez compléter les pré-requis pour '{prereq_section_name}' afin "
-"d'accéder à ce contenu."
+msgid "You must complete the sub-section '{prereq_section_name}' to access this content."
+msgstr "Vous devez compléter la sous-section '{prereq_section_name}' afin d'accéder à ce contenu."
 
 #: lms/templates/_gated_content.html:22
 msgid "Go to Prerequisite Section"
@@ -17984,6 +17980,13 @@ msgid "{num} hour"
 msgid_plural "{num} hours"
 msgstr[0] "{num} heure"
 msgstr[1] "{num} heures"
+
+#: lms/templates/courseware/course_banner.html:30
+#: lms/templates/dashboard/_dashboard_course_listing.html:226
+msgid "{num} day"
+msgid_plural "{num} days"
+msgstr[0] "{num} jour"
+msgstr[1] "{num} jours"
 
 #: lms/templates/courseware/course_banner.html:61
 msgid "English"
@@ -27592,6 +27595,10 @@ msgstr "heures"
 msgid "minutes"
 msgstr "minutes"
 
+#: cms/templates/settings.html:418
+msgid "days"
+msgstr "jours"
+
 #: cms/templates/settings.html:404
 msgid "Displayed on the course details page. Limit to 50 characters."
 msgstr "Affiché sur la page de détails du cours. Limité à 50 caractères."
@@ -29904,8 +29911,9 @@ msgstr "Télécharger le fichier CSV des apprenants inscrits à la session séle
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid ""
-"After you download the CSV file of the enrolled learners, tick with a 'x' the column 'attendance'. "
-"If the learner attended the course and upload it back in order to validate the completion of the module in the platform."
+"After you download the CSV file of the enrolled learners, tick with a 'x' "
+"the column 'attendance' if the learner attended the course. "
+"Then save the file and upload it back to validate the completion of the module in the platform."
 msgstr ""
 "Après avoir téléchargé le fichier CSV des apprenants inscrits, confirmez la présence à la session en marquant d'un 'x'"
 " la colonne 'attendance'. Une fois le fichier chargé, les utilisateurs présents valideront la section."
@@ -31283,19 +31291,212 @@ msgid "SCORM"
 msgstr ""
 
 #: XBlock: edflex
-#: edflex/static/html/edflex.html
+#: edflex/static/html/author_view.html:11
+msgid "Use External Content component"
+msgstr "Utilisez le composant des ressources externes"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html:13
+msgid "Add resources to your course, curated by Edflex technology. "
+"Choose from a selection of MOOCs, Videos, Podcasts, Books, and Articles to accompany and enhance the creation of your trainings!"
+msgstr "Ajoutez des ressources à votre cours, sélectionnées par la technologie Edflex. "
+"Faites votre choix parmi une sélection de MOOCs, vidéos, podcasts, livres et articles pour accompagner et valoriser la création de vos formations !"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html:25
+msgid "You are now ready"
+msgstr "Vous êtes maintenant prêt"
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html:26
+msgid "Integrate external content to enrich your course!"
+msgstr "Intégrez du contenu externe pour enrichir votre cours !"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:33
+msgid "Read the article"
+msgstr "Lire l'article"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:35
+msgid "Read the book"
+msgstr "Lire le livre"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:37
+msgid "Access the course"
+msgstr "Accéder au cours"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:70
 msgid "About the content"
 msgstr "En résumé"
 
 #: XBlock: edflex
-#: edflex/static/html/edflex.html
+#: edflex/static/html/edflex.html:85
+#: edflex/static/html/studio_edit.html:33
 msgid "reviews"
 msgstr "avis"
 
 #: XBlock: edflex
-#: edflex/static/html/edflex.html
+#: edflex/static/html/edflex.html:88
+#: edflex/static/html/studio_edit.html:36
 msgid "users’ reviews"
 msgstr "avis utilisateur"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:100
+#: edflex/static/html/studio_edit.html:48
+msgid "<b>Free</b> access"
+msgstr "Accès <b>gratuit</b>"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:102
+#: edflex/static/html/studio_edit.html:50
+msgid "<b>Paid</b> access"
+msgstr "Accès <b>payant</b>"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:112
+#: edflex/static/html/studio_edit.html:60
+msgid "<b>Free</b> certificate"
+msgstr "Certificat <b>gratuit</b>"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:114
+#: edflex/static/html/studio_edit.html:62
+msgid "<b>Paid</b> certificate"
+msgstr "Certificat <b>payant</b>"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:131
+#: edflex/static/html/studio_edit.html:79
+msgid "pages"
+msgstr "pages"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:154
+msgid "External content"
+msgstr "Contenu externe"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:157
+msgid "You are about to leave the Triboo platform to follow external training content. "
+"We remind you that <b>all content on this portal is always free.</b> "
+"However, the certification may have a cost and it is not supported by Triboo."
+msgstr "Vous êtes sur le point de quitter la plateforme Triboo pour suivre des contenus de formation externes. "
+"Nous vous rappelons que <b>tout le contenu de ce portail est toujours gratuit</b>. "
+"Cependant, la certification peut avoir un coût et n'est pas prise en charge par Triboo."
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:166
+msgid "See you soon on Triboo!"
+msgstr "`À bientôt sur Triboo"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:169
+msgid "Access"
+msgstr "Accéder"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:10
+msgid "This information is out of date. What you see is the last saved version."
+msgstr "Ces informations sont obsolètes. Ce que vous voyez est la dernière version enregistrée."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:91
+msgid "How it works?"
+msgstr "Comment ça marche ?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:95
+msgid "Select the format of content you want to add"
+msgstr "Sélectionnez le format de contenu que vous voulez ajouter"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:96
+msgid "Choose a category for your learning content"
+msgstr "Choisissez une catégorie pour votre contenu d'apprentissage"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:97
+msgid "Then a language"
+msgstr "Puis une langue"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:98
+msgid "Pick the content you want to use"
+msgstr "Choisissez le contenu que vous souhaitez utiliser"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:100
+msgid "No content available? Then change one of the parameters you previously selected."
+msgstr "Aucun contenu disponible? Modifiez l'un des paramètres que vous avez précédemment sélectionnés."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:105
+msgid "Which format of content do you need?"
+msgstr "De quel format de contentu avez-vous besoin ?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:106
+msgid "Choose a format. It is mandatory."
+msgstr "Choisissez un format. C'est obligatoire."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:116
+msgid "Podcast"
+msgstr "Podcast"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:134
+msgid "Mooc"
+msgstr "MOOC"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:143
+msgid "Article"
+msgstr "Article"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:152
+msgid "Book"
+msgstr "Livre"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:158
+msgid "Select one of the categories below"
+msgstr "Sélectionnez l'une des catégories ci-dessous"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:159
+msgid "Choose a category."
+msgstr "Choisissez une catégorie."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:173
+msgid "Which language for the content?"
+msgstr "Quel langue pour le contenu ?"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:174
+msgid "Choose a language."
+msgstr "Choisissez une lange."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:185
+msgid "Select the title of the content"
+msgstr "Sélectionnez le titre du contenu"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:186
+msgid "Choose a content."
+msgstr "Choisissez un contenu."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:205
+msgid "Add this content"
+msgstr "Ajouter ce contenu"
 
 #: lms/templates/problem.html
 msgid "Quiz"

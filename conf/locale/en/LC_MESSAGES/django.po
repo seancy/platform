@@ -14904,6 +14904,10 @@ msgstr ""
 msgid "minutes"
 msgstr ""
 
+#: cms/templates/settings.html:418
+msgid "days"
+msgstr ""
+
 #: cms/templates/settings.html:420
 msgid "Displayed on the course details page. Limit to 50 characters."
 msgstr ""
@@ -15826,6 +15830,7 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
+
 #: cms/templates/settings.html:607
 #: lms/templates/courseware/program_marketing.html:348
 msgid "Instructors"
@@ -16102,9 +16107,7 @@ msgid "Content Locked"
 msgstr ""
 
 #: lms/templates/_gated_content.html:18
-msgid ""
-"You must complete the prerequisites for '{prereq_section_name}' to access "
-"this content."
+msgid "You must complete the sub-section '{prereq_section_name}' to access this content."
 msgstr ""
 
 #: lms/templates/_gated_content.html:22
@@ -18988,6 +18991,13 @@ msgstr[1] ""
 #: lms/templates/dashboard/_dashboard_course_listing.html:235
 msgid "{num} hour"
 msgid_plural "{num} hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: lms/templates/courseware/course_banner.html:30
+#: lms/templates/dashboard/_dashboard_course_listing.html:226
+msgid "{num} day"
+msgid_plural "{num} days"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -26091,8 +26101,8 @@ msgstr ""
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid ""
 "After you download the CSV file of the enrolled learners, tick with a 'x' "
-"the column 'attendance'. If the learner attended the course and upload it "
-"back in order to validate the completion of the module in the platform."
+"the column 'attendance' if the learner attended the course. "
+"Then save the file and upload it back to validate the completion of the module in the platform."
 msgstr ""
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html

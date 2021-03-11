@@ -13246,8 +13246,7 @@ msgstr "محتوى مغلق"
 
 #: lms/templates/_gated_content.html
 msgid ""
-"You must complete the prerequisites for '{prereq_section_name}' to access "
-"this content."
+"You must complete the sub-section '{prereq_section_name}' to access this content."
 msgstr ""
 "يجب إكمال المتطلبات المسبقة التالية '{prereq_section_name}' للوصول إلى هذا "
 "المحتوى."
