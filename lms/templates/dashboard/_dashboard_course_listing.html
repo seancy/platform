@@ -234,6 +234,8 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                   <span>${ungettext('{num} minute', '{num} minutes', duration).format(num=duration)}</span>
                 % elif duration_unit.startswith('hour'):
                   <span>${ungettext('{num} hour', '{num} hours', duration).format(num=duration)}</span>
+                % elif duration_unit.startswith('day'):
+                  <span>${ungettext('{num} day', '{num} days', duration).format(num=duration)}</span>
                 % endif
             </div>
             % endif

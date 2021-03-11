@@ -68,6 +68,9 @@
                         } else if (duration[1].startsWith('hour')) {
                             fmt = gettext('%(h)s h', duration[0]);
                             data.display_duration = interpolate(fmt, {h: duration[0]}, true);
+                        } else if (duration[1].startsWith('day')) {
+                            fmt = gettext('%(d)s d', duration[0]);
+                            data.display_duration = interpolate(fmt, {d: duration[0]}, true);
                         }
                     }
                 }

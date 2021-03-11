@@ -52,6 +52,8 @@ from six import string_types
               <span>${ungettext('{num} minute', '{num} minutes', duration).format(num=duration)}</span>
             % elif duration_unit.startswith('hour'):
               <span>${ungettext('{num} hour', '{num} hours', duration).format(num=duration)}</span>
+            % elif duration_unit.startswith('day'):
+              <span>${ungettext('{num} day', '{num} days', duration).format(num=duration)}</span>
             % endif
           </li>
         % endif
@@ -216,12 +218,12 @@ from six import string_types
         </section>
         <script type="text/javascript">
           var $progressRing = $('.course-control .progress-ring');
-          var progressRing = $('.progress-ring')[0]
+          var progressRing = $('.progress-ring')[0];
           percent = $progressRing.data('percent');
           var circle = $('.progress-ring__circle')[0];
           var circleBg = $('.progress-ring__circle-bg')[0];
           var radius = circle.r.baseVal.value;
-          var size = (radius + 6) * 2
+          var size = (radius + 6) * 2;
           var circumference = radius * 2 * Math.PI;
           progressRing.style.height = size + "px";
           progressRing.style.width = size + "px";
