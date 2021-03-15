@@ -49,6 +49,41 @@
   <section class="content">
     <article class="content-primary" role="main">
       <form id="settings_details" class="settings-grading" method="post" action="">
+        <section class="group-settings completion-rule">
+          <header>
+            <h2 class="title-2">${_("Course Completion Rule")}</h2>
+            <span class="tip">${_("Set the completion rule for this course")}</span>
+          </header>
+          <ol class="list-input">
+            <li class="field" id="field-course-completion-rules">
+              <section class="default rule-section">
+                <label>
+                  ${_("100% Course progress and minimum passing score")}
+                </label>
+                <span class="tip tip-stacked">
+                  ${_("Learner is required to complete 100% course progress and earn the minimum passing score to successfully pass the course.")}
+                </span>
+                <div>
+                  <input type="radio" id="default-completion-rule" value="default">
+                  <span></span>
+                </div>
+              </section>
+              <section class="minimum rule-section">
+                <label for="minimum-completion-rule">
+                  ${_("Minimum passing score only")}
+                </label>
+                <span class="tip tip-stacked">
+                  ${_("Learner is required to earn only the minimum passing score to successfully pass the course.")}
+                </span>
+                <div>
+                  <input type="radio" id="minimum-completion-rule" value="minimum">
+                  <span></span>
+                </div>
+              </section>
+              <span class="question-mark-wrapper" data-title="${_('Changes on Course Completion Rule are not retroactive. If a Studio Admin changes the rule for a started course, learners will have to revisit the graded activities to see their score recalculated.')}"></span>
+            </li>
+          </ol>
+        </section>
         <section class="group-settings grade-range">
           <header>
             <h2 class="title-2">${_("Overall Grade Range")}</h2>

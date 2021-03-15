@@ -28469,6 +28469,34 @@ msgstr "Esterno"
 msgid "Filters"
 msgstr "Filtri"
 
+#: cms/templates/settings_graders.html
+msgid "Course Completion Rule"
+msgstr "Regola del passaggio del corso"
+
+#: cms/templates/settings_graders.html
+msgid "Set the completion rule for this course"
+msgstr "Definisci la regola di passaggio per questo corso"
+
+#: cms/templates/settings_graders.html
+msgid "100% Course progress and minimum passing score"
+msgstr "Progressione del corso del 100% e punteggio minimo di passaggio"
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to complete 100% course progress and earn the minimum passing score to successfully pass the course."
+msgstr "Lo studente deve completare il corso al 100% e raggiungere il grado minimo di passaggio per superare il corso."
+
+#: cms/templates/settings_graders.html
+msgid "Minimum passing score only"
+msgstr "Solo punteggio minimo di passaggio"
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to earn only the minimum passing score to successfully pass the course."
+msgstr "Lo studente deve solo raggiungere il punteggio minimo di passaggio per superare il corso."
+
+#: cms/templates/settings_graders.html
+msgid "Changes on Course Completion Rule are not retroactive. If a Studio Admin changes the rule for a started course, learners will have to revisit the graded activities to see their score recalculated."
+msgstr "Le modifiche apportate alla regola di fine corso non sono retroattive. Se un amministratore di studio modifica la regola per un corso che è già iniziato, gli studenti dovranno rivedere le attività valutate per ricalcolare il punteggio."
+
 #: XBlock: edflex
 #: edflex/static/html/author_view.html:11
 msgid "Use External Content component"
@@ -28676,4 +28704,3 @@ msgstr "Scegli un contenuto."
 #: edflex/static/html/studio_edit.html:205
 msgid "Add this content"
 msgstr "Aggiungi questo contenuto"
-

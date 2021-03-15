@@ -27015,3 +27015,31 @@ msgstr ""
 #: lms/templates/courseware/courses.html
 msgid "Filters"
 msgstr ""
+
+#: cms/templates/settings_graders.html
+msgid "Course Completion Rule"
+msgstr ""
+
+#: cms/templates/settings_graders.html
+msgid "Set the completion rule for this course"
+msgstr ""
+
+#: cms/templates/settings_graders.html
+msgid "100% Course progress and minimum passing score"
+msgstr ""
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to complete 100% course progress and earn the minimum passing score to successfully pass the course."
+msgstr ""
+
+#: cms/templates/settings_graders.html
+msgid "Minimum passing score only"
+msgstr ""
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to earn only the minimum passing score to successfully pass the course."
+msgstr ""
+
+#: cms/templates/settings_graders.html
+msgid "Changes on Course Completion Rule are not retroactive. If a Studio Admin changes the rule for a started course, learners will have to revisit the graded activities to see their score recalculated."
+msgstr ""

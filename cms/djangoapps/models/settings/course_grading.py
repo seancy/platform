@@ -25,6 +25,7 @@ class CourseGradingModel(object):
         self.grade_cutoffs = course_descriptor.grade_cutoffs
         self.grace_period = CourseGradingModel.convert_set_grace_period(course_descriptor)
         self.minimum_grade_credit = course_descriptor.minimum_grade_credit
+        self.course_completion_rule = course_descriptor.course_completion_rule
 
     @classmethod
     def fetch(cls, course_key):
@@ -66,8 +67,10 @@ class CourseGradingModel(object):
         descriptor = modulestore().get_course(course_key)
 
         graders_parsed = [CourseGradingModel.parse_grader(jsonele) for jsonele in jsondict['graders']]
+        completion_rule = jsondict['course_completion_rule']
 
         descriptor.raw_grader = graders_parsed
+        descriptor.course_completion_rule = completion_rule
         descriptor.grade_cutoffs = jsondict['grade_cutoffs']
 
         modulestore().update_item(descriptor, user.id)

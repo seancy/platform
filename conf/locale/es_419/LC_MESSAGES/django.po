@@ -31127,3 +31127,31 @@ msgstr "Externo"
 #: lms/templates/courseware/courses.html
 msgid "Filters"
 msgstr "Filtros"
+
+#: cms/templates/settings_graders.html
+msgid "Course Completion Rule"
+msgstr "Regla de aprobación del curso"
+
+#: cms/templates/settings_graders.html
+msgid "Set the completion rule for this course"
+msgstr "Definir la regla de aprobación para este curso"
+
+#: cms/templates/settings_graders.html
+msgid "100% Course progress and minimum passing score"
+msgstr "Progreso del curso del 100% y nota mínima para aprobar"
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to complete 100% course progress and earn the minimum passing score to successfully pass the course."
+msgstr "El alumno debe completar el curso al 100% y lograr la calificación mínima aprobatoria para aprobar el curso."
+
+#: cms/templates/settings_graders.html
+msgid "Minimum passing score only"
+msgstr "Solo nota mínima para aprobar"
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to earn only the minimum passing score to successfully pass the course."
+msgstr "El alumno solo necesita alcanzar la nota mínima de aprobación para aprobar el curso."
+
+#: cms/templates/settings_graders.html
+msgid "Changes on Course Completion Rule are not retroactive. If a Studio Admin changes the rule for a started course, learners will have to revisit the graded activities to see their score recalculated."
+msgstr "Los cambios realizados en la regla de fin de curso no son retroactivos. Si un administrador del estudio cambia la regla de un curso que ya ha comenzado, los alumnos deberán volver a visitar las actividades calificadas para que se vuelva a calcular su puntuación."

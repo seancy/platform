@@ -2663,7 +2663,7 @@ BADGR_TIMEOUT = 10
 ###################### Grade Downloads ######################
 # These keys are used for all of our asynchronous downloadable files, including
 # the ones that contain information other than grades.
-GRADES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
+GRADES_DOWNLOAD_ROUTING_KEY = HIGH_PRIORITY_QUEUE
 
 GRADES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
