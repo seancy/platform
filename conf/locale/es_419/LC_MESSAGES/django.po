@@ -29715,10 +29715,6 @@ msgstr "Su puntaje {score}% no es suficiente para obtener la insignia {type}."
 msgid "Preview Certificate"
 msgstr "Ver certificado"
 
-#: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
-msgid "View results"
-msgstr "Mostrar resultados"
-
 #: lbmdonexblock.html
 msgid "Done"
 msgstr "Terminado"
@@ -30907,13 +30903,23 @@ msgstr "Examen"
 msgid "Word cloud"
 msgstr "Nube de palabras"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "View results"
+msgstr "Mostrar resultados"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html:71 poll/public/html/survey.html:81
+msgid "Export results to CSV"
+msgstr "Exportar resultados a CSV"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Poll"
 msgstr "Votación"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Survey"
 msgstr "Encuesta"
 
