@@ -27604,10 +27604,6 @@ msgstr ""
 msgid "Intermediate Certificate"
 msgstr ""
 
-#: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
-msgid "View results"
-msgstr "Visualizza i risultati"
-
 #: lbmdonexblock.html
 msgid "Done"
 msgstr "Fatto"
@@ -28704,3 +28700,23 @@ msgstr "Scegli un contenuto."
 #: edflex/static/html/studio_edit.html:205
 msgid "Add this content"
 msgstr "Aggiungi questo contenuto"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "View results"
+msgstr "Visualizza i risultati"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html:71 poll/public/html/survey.html:81
+msgid "Export results to CSV"
+msgstr "Esporta i risultati in CSV"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "Poll"
+msgstr "Sondaggio"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "Survey"
+msgstr "Questionario"

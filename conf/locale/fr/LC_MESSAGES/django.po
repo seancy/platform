@@ -29828,11 +29828,6 @@ msgstr "Votre score de {score}% n'est pas suffisant pour obtenir le {type}."
 msgid "Intermediate Certificate"
 msgstr "Certificat intermédiaire"
 
-#: XBlock: xblock-poll
-#: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
-msgid "View results"
-msgstr "Voir les résultats"
-
 #: XBlock: xblock-done
 #: lbmdonexblock.html
 msgid "Done"
@@ -31476,12 +31471,12 @@ msgstr "Choisissez une catégorie."
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:173
 msgid "Which language for the content?"
-msgstr "Quel langue pour le contenu ?"
+msgstr "Quelle langue pour le contenu ?"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:174
 msgid "Choose a language."
-msgstr "Choisissez une lange."
+msgstr "Choisissez une langue."
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:185
@@ -31506,13 +31501,24 @@ msgstr "Quiz"
 msgid "Word cloud"
 msgstr "Nuage de mots"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "View results"
+msgstr "Voir les résultats"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html:71 poll/public/html/survey.html:81
+msgid "Export results to CSV"
+msgstr "Exporter les résultats au format CSV"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Poll"
 msgstr "Sondage"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Survey"
 msgstr "Enquête"
 

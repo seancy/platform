@@ -29517,10 +29517,6 @@ msgstr "Sua pontuação {score}% não é suficiente para obter a medalha {type}.
 msgid "Intermediate Certificate"
 msgstr "Certificado intermediário"
 
-#: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
-msgid "View results"
-msgstr "Visualizar crédito"
-
 #: lbmdonexblock.html
 msgid "Done"
 msgstr "lição concluída"
@@ -30547,13 +30543,23 @@ msgstr "Questionário"
 msgid "Word cloud"
 msgstr "Nuvem de palavras"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "View results"
+msgstr "Visualizar resultados"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html:71 poll/public/html/survey.html:81
+msgid "Export results to CSV"
+msgstr "Exportar resultados para CSV"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Poll"
 msgstr "Votação"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Survey"
 msgstr "Pesquisa"
 

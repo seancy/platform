@@ -27210,9 +27210,25 @@ msgstr "Ihr Ergebnis {score} % reicht für {type} nicht aus."
 msgid "Intermediate Certificate"
 msgstr "Generiere Zertifikate"
 
-#: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "View results"
-msgstr "Credit anzeigen"
+msgstr "Ergebnisse anzeigen"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html:71 poll/public/html/survey.html:81
+msgid "Export results to CSV"
+msgstr "Exportieren Sie die Ergebnisse in CSV"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "Poll"
+msgstr "Abstimmung"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "Survey"
+msgstr "Umfrage"
 
 #: lbmdonexblock.html
 msgid "Done"
