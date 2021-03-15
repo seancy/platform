@@ -11889,27 +11889,27 @@ msgstr "总数"
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/studio_edit.js:35
 msgid "There is no content available for this category or language at the moment"
-msgstr ""
+msgstr "目前没有针对这个分类或语言的可用内容"
 
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/studio_edit.js:158
 msgid "Unable to update settings"
-msgstr ""
+msgstr "不可更新设置"
 
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/studio_edit.js:196
 msgid "Choose a category"
-msgstr ""
+msgstr "选择一种分类"
 
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/studio_edit.js:222
 msgid "Choose a language"
-msgstr ""
+msgstr "选择一种语言"
 
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/studio_edit.js:229
 msgid "Select the content of your choice"
-msgstr ""
+msgstr "选择您需要的内容"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
@@ -12010,14 +12010,14 @@ msgstr "拖放"
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:298
 msgid "Keyboard Help"
-msgstr ""
+msgstr "键盘操作帮助"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:306
 msgid ""
 "You can complete this problem using only your keyboard by following the "
 "guidance below:"
-msgstr ""
+msgstr "您可以根据以下的操作指导只通过键盘操作来完成这个流程："
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:307
@@ -12025,68 +12025,68 @@ msgid ""
 "Drag and Drop problems consist of draggable items and dropzones. Users "
 "should select a draggable item with their keyboard and then navigate to an "
 "appropriate dropzone to drop it."
-msgstr ""
+msgstr "拖放操作涉及可拖放的项目和放置区。用户应该在选中一个拖放项目后，将它拖动到合适的放置区后并放置。"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:309
 msgid ""
 "Use only TAB and SHIFT+TAB to navigate between draggable items and drop "
 "zones."
-msgstr ""
+msgstr "只使用TAB键和SHIFT+TAB键的组合来移动放置可拖放项目到对应的放置区域。"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:310
 msgid "Press CTRL+M to select a draggable item (effectively picking it up)."
-msgstr ""
+msgstr "请使用CTRL+M的组合键来选择一个可拖放项目（注意：请有效的将拖放项目拖起来）。"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:311
 msgid ""
 "Navigate using TAB and SHIFT+TAB to the appropriate dropzone and press CTRL"
 "+M once more to drop it here."
-msgstr ""
+msgstr "请使用TAB键和SHIFT+TAB键的组合将可拖放项目移动到合适的放置区域并再一次按下CTRL+M键来进行放置。"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:312
 msgid ""
 "Press ESC if you want to cancel the drop operation (for example, to "
 "select a different item)."
-msgstr ""
+msgstr "如您想取消本次拖放操作，请按ESC键（比如，在您想改成对另一个拖放项目进行操作的时候）。"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:313
 msgid ""
 "TAB back to the list of draggable items and repeat this process until all of "
 "the draggable items have been placed on their respective dropzones."
-msgstr ""
+msgstr "回到可拖放项目列表，并重复这个操作流程。直到所有的可拖放项目都已经被合理放置到对应的放置区域。"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:453
 msgid "{earned}/{possible} point (graded)"
 msgid_plural "{earned}/{possible} points (graded)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{earned}/{possible} 分（分级）"
+msgstr[1] "{earned}/{possible} 分（分级）"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:459
 msgid "{earned}/{possible} point (ungraded)"
 msgid_plural "{earned}/{possible} points (ungraded)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{earned}/{possible} 分（未分级）"
+msgstr[1] "{earned}/{possible} 分（未分级）"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:468
 msgid "{possible} point possible (graded)"
 msgid_plural "{possible} points possible (graded)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{possible} 分 可以（分级）"
+msgstr[1] "{possible} 分 可以（分级）"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:474
 msgid "{possible} point possible (ungraded)"
 msgid_plural "{possible} points possible (ungraded)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{possible} 分 可以（未分级）"
+msgstr[1] "{possible} 分 可以（未分级）"
 
 #: XBlock: poll
 #: xblock-poll/poll/public/html/poll_results.handlebars
@@ -12170,12 +12170,12 @@ msgstr "我们无法找到任何符合 \"${searchString}\" 条件的结果。"
 #: poll/public/handlebars/poll_results.handlebars:5
 #: poll/public/handlebars/survey_results.handlebars:4
 msgid "Results"
-msgstr ""
+msgstr "结果"
 
 #: XBlock: xblock-poll
 #: poll/public/handlebars/poll_results.handlebars:33
 #: poll/public/handlebars/survey_results.handlebars:41
 msgid "Results gathered from {total} respondent."
 msgid_plural "Results gathered from {total} respondents."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "从{total}受访者收集到的个结果。"
+msgstr[1] "从{total}多名受访者收集到结果。"

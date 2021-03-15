@@ -28759,153 +28759,153 @@ msgstr "用户评价"
 #: edflex/static/html/edflex.html:100
 #: edflex/static/html/studio_edit.html:48
 msgid "<b>Free</b> access"
-msgstr ""
+msgstr "<b>免费</b>访问"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:102
 #: edflex/static/html/studio_edit.html:50
 msgid "<b>Paid</b> access"
-msgstr ""
+msgstr "<b>付款</b>访问"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:112
 #: edflex/static/html/studio_edit.html:60
 msgid "<b>Free</b> certificate"
-msgstr ""
+msgstr "<b>免费</b>证书"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:114
 #: edflex/static/html/studio_edit.html:62
 msgid "<b>Paid</b> certificate"
-msgstr ""
+msgstr "<b>付费</b>证书"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:131
 #: edflex/static/html/studio_edit.html:79
 msgid "pages"
-msgstr ""
+msgstr "页面"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:154
 msgid "External content"
-msgstr ""
+msgstr "外部内容"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:157
 msgid "You are about to leave the Triboo platform to follow external training content. "
 "We remind you that <b>all content on this portal is always free.</b> "
 "However, the certification may have a cost and it is not supported by Triboo."
-msgstr ""
+msgstr "您将离开Triboo平台进入到外部培训内容的站点。友情提醒<b>这个外部站点是免费访问的</b>但是,Triboo不支持提供他们付费培训内容的证书。"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:166
 msgid "See you soon on Triboo!"
-msgstr ""
+msgstr "欢迎再次访问Triboo！"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:169
 msgid "Access"
-msgstr ""
+msgstr "访问"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:10
 msgid "This information is out of date. What you see is the last saved version."
-msgstr ""
+msgstr "这些信息已经过期，您现在看到的是最近一次保存的内容。"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:91
 msgid "How it works?"
-msgstr ""
+msgstr "这是如何工作的？"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:95
 msgid "Select the format of content you want to add"
-msgstr ""
+msgstr "请选择一种您希望新增的内容的格式"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:96
 msgid "Choose a category for your learning content"
-msgstr ""
+msgstr "为您的学习内容选择一个分类"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:97
 msgid "Then a language"
-msgstr ""
+msgstr "请确认一种语言"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:98
 msgid "Pick the content you want to use"
-msgstr ""
+msgstr "请选择您想使用的内容"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:100
 msgid "No content available? Then change one of the parameters you previously selected."
-msgstr ""
+msgstr "不存在可用的内容？请改变您之前选择的参数后再试。"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:105
 msgid "Which format of content do you need?"
-msgstr ""
+msgstr "您需要哪一种内容格式？"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:106
 msgid "Choose a format. It is mandatory."
-msgstr ""
+msgstr "请选择一种格式。这是必选项。"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:116
 msgid "Podcast"
-msgstr ""
+msgstr "播客"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:134
 msgid "Mooc"
-msgstr ""
+msgstr "MOOC"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:143
 msgid "Article"
-msgstr ""
+msgstr "文章"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:152
 msgid "Book"
-msgstr ""
+msgstr "书籍"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:158
 msgid "Select one of the categories below"
-msgstr ""
+msgstr "请选择以下一种分类"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:159
 msgid "Choose a category."
-msgstr ""
+msgstr "选择一种分类"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:173
 msgid "Which language for the content?"
-msgstr ""
+msgstr "请为该内容选择一种语言"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:174
 msgid "Choose a language."
-msgstr ""
+msgstr "选择一种语言"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:185
 msgid "Select the title of the content"
-msgstr ""
+msgstr "请为该内容选择一个标题"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:186
 msgid "Choose a content."
-msgstr ""
+msgstr "选择内容"
 
 #: XBlock: edflex
 #: edflex/static/html/studio_edit.html:205
 msgid "Add this content"
-msgstr ""
+msgstr "增加这个内容"
 
 #: lms/templates/problem.html
 msgid "Quiz"
@@ -28923,7 +28923,7 @@ msgstr "查看结果"
 #: XBlock: xblock-poll
 #: poll/public/html/poll.html:71 poll/public/html/survey.html:81
 msgid "Export results to CSV"
-msgstr ""
+msgstr "导出结果到csv文件"
 
 #: XBlock: xblock-poll
 #: poll/public/html/poll.html
