@@ -5,7 +5,8 @@ define(['backbone', 'js/models/location', 'js/collections/course_grader'],
                 graders: null,  // CourseGraderCollection
                 grade_cutoffs: null,  // CourseGradeCutoff model
                 grace_period: null, // either null or { hours: n, minutes: m, ...}
-                minimum_grade_credit: null // either null or percentage
+                minimum_grade_credit: null, // either null or percentage
+                course_completion_rule: 'default'
             },
             parse: function(attributes) {
                 if (attributes.graders) {
@@ -31,6 +32,10 @@ define(['backbone', 'js/models/location', 'js/collections/course_grader'],
         // it's received as 0
                 if (attributes.minimum_grade_credit === null) {
                     attributes.minimum_grade_credit = 0;
+                }
+
+                if (attributes.course_completion_rule === null) {
+                    attributes.course_completion_rule = 'default';
                 }
                 return attributes;
             },

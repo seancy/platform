@@ -714,7 +714,8 @@ class CourseTabView(EdxFragmentView):
                 resume_course_url = get_last_accessed_courseware(request, course)
 
                 if not isinstance(request.user, AnonymousUser):
-                    progress = CourseGradeFactory().update_course_completion_percentage(course.id, request.user)
+                    progress = CourseGradeFactory().update_course_completion_percentage(
+                        course.id, request.user, force_update_grade=True)
                     progress = int(progress * 100)
 
         context = {

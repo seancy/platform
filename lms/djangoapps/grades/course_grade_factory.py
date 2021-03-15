@@ -231,7 +231,8 @@ class CourseGradeFactory(object):
 
         return course_grade
 
-    def update_course_completion_percentage(self, course_key, user, course_grade=None, enrollment=None):
+    def update_course_completion_percentage(self, course_key, user, course_grade=None,
+                                            enrollment=None, force_update_grade=False):
         from triboo_analytics.models import LeaderBoard
         course_usage_key = modulestore().make_course_usage_key(course_key)
         overrides = PersistentSubsectionGradeOverride.objects.filter(
@@ -247,9 +248,14 @@ class CourseGradeFactory(object):
                  unicode(course_key), user.id, percent_progress)
         if not enrollment:
             enrollment = CourseEnrollment.get_enrollment(user, course_key)
-        if overrides.exists():
-            if not course_grade:
-                course_grade = self.read(user, course_key=course_key)
+
+        # gradebook override or minimum completion rule, then only check if pass minimum score
+        if overrides.exists() or modulestore().get_course(course_key).course_completion_rule == 'minimum':
+            if force_update_grade:
+                course_grade = self.update(user, course_key=course_key)
+            else:
+                if not course_grade:
+                    course_grade = self.read(user, course_key=course_key)
             passed = course_grade.passed
             try:
                 # in case that it fails to fetch courseenrollment and returns None
