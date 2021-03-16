@@ -28793,9 +28793,11 @@ msgstr "外部内容"
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:157
 msgid "You are about to leave the Triboo platform to follow external training content. "
-"We remind you that <b>all content on this portal is always free.</b> "
-"However, the certification may have a cost and it is not supported by Triboo."
-msgstr "您将离开Triboo平台进入到外部培训内容的站点。友情提醒<b>这个外部站点是免费访问的</b>但是,Triboo不支持提供他们付费培训内容的证书。"
+"The majority of third-party content is free, but please note that sometimes it requires a paid "
+"subscription or certification or specific authorization that is not provided via this platform. "
+"Please contact your organization with any specific questions."
+msgstr "您将离开Triboo平台，以遵循外部培训内容。大多数第三方内容是免费的，但请注意，有时它需要付费订阅或认证，或未通过此平台提供的特定授权。"
+"如有任何特定问题，请与您的组织联系。"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:166

@@ -12071,22 +12071,22 @@ msgstr[1] "{earned}/{possible} 分（分级）"
 #: drag_and_drop_v2/public/js/drag_and_drop.js:459
 msgid "{earned}/{possible} point (ungraded)"
 msgid_plural "{earned}/{possible} points (ungraded)"
-msgstr[0] "{earned}/{possible} 分（未分级）"
-msgstr[1] "{earned}/{possible} 分（未分级）"
+msgstr[0] "{earned}/{possible} 分（非分级）"
+msgstr[1] "{earned}/{possible} 分（非分级）"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:468
 msgid "{possible} point possible (graded)"
 msgid_plural "{possible} points possible (graded)"
-msgstr[0] "{possible} 分 可以（分级）"
-msgstr[1] "{possible} 分 可以（分级）"
+msgstr[0] "{possible} 分可得（分级）"
+msgstr[1] "{possible} 分可得（分级）"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: drag_and_drop_v2/public/js/drag_and_drop.js:474
 msgid "{possible} point possible (ungraded)"
 msgid_plural "{possible} points possible (ungraded)"
-msgstr[0] "{possible} 分 可以（未分级）"
-msgstr[1] "{possible} 分 可以（未分级）"
+msgstr[0] "{possible} 分可得（非分级）"
+msgstr[1] "{possible} 分可得（非分级）"
 
 #: XBlock: poll
 #: xblock-poll/poll/public/html/poll_results.handlebars
