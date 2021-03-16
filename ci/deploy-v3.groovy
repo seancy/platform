@@ -45,6 +45,7 @@ def tag_restart_service = ''
 def tag_config_file = ''
 def commit_id = ''
 def lt_user_id = ''
+def stage_deploy_branch_name = ''
 
 
 def choose_environment(this_environment) {
@@ -162,7 +163,21 @@ def choose_tenant() {
     }
 }
 
-
+def send_slack_message(stage_deploy_branch_name, step){
+    if (step == 'start') {
+        sh """
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"${stage_deploy_branch_name} is deploying on Stage"}' https://hooks.slack.com/services/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
+        """   
+    } else if (step == 'success_end') {
+        sh """
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"${stage_deploy_branch_name} is successful to deploy on Stage"}' https://hooks.slack.com/services/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
+        """
+    } else if (step == 'failure_end') {
+        sh """
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"${stage_deploy_branch_name} is failed to deploy on Stage"}' https://hooks.slack.com/services/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
+        """
+    }
+}
 
 
 
@@ -211,6 +226,7 @@ pipeline {
                         if (params.DEPLOY_OWNER.substring(0,12) == 'staging-auto') {
                             println params.DEPLOY_OWNER.substring(0,12)
                             println params.DEPLOY_OWNER.replaceAll('staging-auto-', '')
+                            stage_deploy_branch_name = params.DEPLOY_OWNER.replaceAll('staging-auto-', '')
                             stage_auto_proceed = true
                             platform_process = true
                             this_environment = 'STAGING'
@@ -221,6 +237,7 @@ pipeline {
                                 this_platform_branch = params.DEPLOY_OWNER.replaceAll('staging-auto-', '')
                                 theme_process = false
                             }
+                            send_slack_message(stage_deploy_branch_name, 'start')
                         }
                     } catch (err) {
                         println err
@@ -924,6 +941,7 @@ pipeline {
                 if (stage_auto_proceed == true) {
                     githubNotify status: 'FAILURE', description: ' failed deploy at stage server'
                     println 'failure'
+                    send_slack_message(stage_deploy_branch_name, 'failure_end')
                 }
             }
         }
@@ -932,13 +950,17 @@ pipeline {
                 if (stage_auto_proceed == true) {
                     githubNotify status: 'SUCCESS', description: ' done deploy at stage server'
                     println 'success'
+                    send_slack_message(stage_deploy_branch_name, 'success_end')
                 }
             }
         }
         always {
             script {
-                if (proceed == true) {
+                if (proceed == true && manual == true) {
                     currentBuild.result = "SUCCESS"
+                    echo "RESULT: ${currentBuild.result}"
+                } else if (proceed == false && manual == false) {
+                    currentBuild.result = 'ABORTED'
                     echo "RESULT: ${currentBuild.result}"
                 } else if (proceed == false) {
                     currentBuild.result = "FAILURE"
