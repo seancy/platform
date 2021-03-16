@@ -28585,11 +28585,13 @@ msgstr "Contenuto esterno"
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:157
 msgid "You are about to leave the Triboo platform to follow external training content. "
-"We remind you that <b>all content on this portal is always free.</b> "
-"However, the certification may have a cost and it is not supported by Triboo."
-msgstr "Stai per lasciare la piattaforma Triboo per seguire i contenuti di formazione esterna. "
-"Ti ricordiamo che <b> tutto il contenuto di questo portale è sempre gratuito </b>. "
-"Tuttavia, la certificazione può avere un costo e non è supportata da Triboo."
+"The majority of third-party content is free, but please note that sometimes it requires a paid "
+"subscription or certification or specific authorization that is not provided via this platform. "
+"Please contact your organization with any specific questions."
+msgstr "Stai per lasciare la piattaforma Triboo per seguire i contenuti della formazione esterna. "
+"La maggior parte dei contenuti di terze parti è gratuita, ma tieni presente che a volte richiede "
+"un abbonamento o una certificazione a pagamento o un'autorizzazione specifica che non viene fornita "
+"tramite questa piattaforma. Contatta la tua organizzazione per qualsiasi domanda specifica."
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:166
