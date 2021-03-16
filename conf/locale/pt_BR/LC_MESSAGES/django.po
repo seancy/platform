@@ -23174,6 +23174,7 @@ msgid ""
 msgstr ""
 "Essa mensagem de e-mail foi automaticamente enviada por {lms_url} porque "
 "alguém tentou criar uma conta no {platform_name} usando este e-mail."
+
 #: lms/templates/emails/activation_email_subject.txt:2
 msgid "Action Required: Activate your {platform_name} account"
 msgstr "Ação Necessário: Ative sua conta em {platform_name}"

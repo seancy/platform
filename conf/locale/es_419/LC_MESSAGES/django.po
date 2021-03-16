@@ -23319,7 +23319,7 @@ msgstr ""
 
 #: lms/templates/emails/activation_email.txt:12
 msgid "Enjoy learning with {platform_name}."
-msgstr "Disfruta aprendiendo con {platform_name}"
+msgstr "Disfruta aprendiendo con {platform_name}."
 
 #: lms/templates/emails/activation_email.txt:16
 msgid ""

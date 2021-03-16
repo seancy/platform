@@ -18317,7 +18317,7 @@ msgid ""
 "If you need help, please use our web form at {support_url} or email "
 "{support_email}."
 msgstr ""
-"如果您需要帮助，请使用我们的 Web 表单 {support_url} 或电子邮件"
+"如果您需要帮助，请使用我们的 Web 表单 {support_url} 或电子邮件 "
 "{support_email}。"
 
 #: lms/templates/emails/activation_email.txt:20
@@ -18325,7 +18325,7 @@ msgid ""
 "This email message was automatically sent by {lms_url} because someone "
 "attempted to create an account on {platform_name} using this email address."
 msgstr ""
-"此电子邮件由 {lms_url} 自动发送，因为有人尝试使用此电子邮件地址在"
+"此电子邮件由 {lms_url} 自动发送，因为有人尝试使用此电子邮件地址在 "
 "{platform_name} 上创建帐户。"
 
 #: lms/templates/emails/activation_email_subject.txt:2
@@ -28796,8 +28796,9 @@ msgid "You are about to leave the Triboo platform to follow external training co
 "The majority of third-party content is free, but please note that sometimes it requires a paid "
 "subscription or certification or specific authorization that is not provided via this platform. "
 "Please contact your organization with any specific questions."
-msgstr "您将离开Triboo平台，以遵循外部培训内容。大多数第三方内容是免费的，但请注意，有时它需要付费订阅或认证，或未通过此平台提供的特定授权。"
-"如有任何特定问题，请与您的组织联系。"
+msgstr "您将离开Triboo平台进入到第三方培训内容站点。友情提示：这个第三方站点所提供内容大数都为免费内容，"
+"但请注意也有部分内容需要您付费订阅或提供付费证书，或者一个特殊的授权。而这些都需要通过那个第三方站点来获取。"
+"所以，如有问题，请联系您所在的机构。"
 
 #: XBlock: edflex
 #: edflex/static/html/edflex.html:166
