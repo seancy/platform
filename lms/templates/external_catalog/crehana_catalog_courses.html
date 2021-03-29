@@ -2,11 +2,14 @@
   import json
   from django.utils.translation import ugettext as _
   from openedx.core.djangolib.js_utils import dump_js_escaped_json
+  from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
   from django.conf import settings
 %>
 <%inherit file="../main.html" />
 <%
   course_discovery_enabled = settings.FEATURES.get('ENABLE_COURSE_DISCOVERY')
+  crehana_title = configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')
+  edflex_title = configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')
 %>
 
 <%namespace name='static' file='../static_content.html'/>
@@ -36,6 +39,8 @@ ${static.renderReact(
       id="main", props={
         'language': user_language,
         'need_show_3_tabs': need_show_3_tabs,
+        'crehana_title': crehana_title,
+        'edflex_title': edflex_title,
       }, noWrapper=True
     )
   }

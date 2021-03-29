@@ -110,7 +110,7 @@ class OverviewCoursesContainer extends React.Component {
 
     render() {
         try {
-            const {crehana_courses, edflex_courses} = this.props;
+            const {crehana_courses, edflex_courses, crehana_title, edflex_title} = this.props;
             const crehana_items = [];
             const edflex_items = [];
             JSON.parse(crehana_courses).forEach((course, index) => {
@@ -132,7 +132,7 @@ class OverviewCoursesContainer extends React.Component {
             return (
                 <main className="course-container">
                     <div>
-                        <span className={'category_name'}>{gettext("Crehana")}</span>
+                        <span className={'category_name'}>{crehana_title}</span>
                         <span className={'view_all_button'}>
                             <a className={'button_underline'} href="/crehana_catalog">{gettext("View all")}</a> &gt;
                         </span>
@@ -144,7 +144,7 @@ class OverviewCoursesContainer extends React.Component {
                         {crehana_items}
                     </InfiniteScroll>
                     <div>
-                        <span className={'category_name'}>{gettext("Edflex")}</span>
+                        <span className={'category_name'}>{edflex_title}</span>
                         <span className={'view_all_button'}>
                             <a className={'button_underline'} href="/edflex_catalog">{gettext("View all")}</a> &gt;
                         </span>
