@@ -274,6 +274,8 @@ def courses(request):
             external_button_url = r'/edflex_catalog'
         else:
             external_button_url = r'/crehana_catalog'
+    elif not request.user.is_authenticated and is_edflex_enabled:
+        external_button_url = r'/edflex_catalog'
 
     courses_list = []
     course_discovery_meanings = getattr(settings, 'COURSE_DISCOVERY_MEANINGS', {})
