@@ -12074,6 +12074,22 @@ msgstr "${recordCount} Ressourcen gefunden"
 msgid "We couldn't find any results for \"${searchString}\"."
 msgstr "Wir konnten keine Ergebnisse für \"${searchString}\" finden."
 
+#: lms/static/js/crehana_catalog/CrehanaCatalogOverviewCourses.js
+msgid "View all"
+msgstr "Alle ansehen"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Rating"
+msgstr "Bewertung"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Video Duration"
+msgstr "Videodauer"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+msgid "${hour} hours"
+msgstr "${hour} stunden"
+
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/parse_duration.js:25
 msgid "year"
@@ -12119,6 +12135,7 @@ msgstr "Tage"
 msgid "hour"
 msgstr "Stunde"
 
+#: lms/static/js/crehana_catalog/CrehanaCatalogCourses.jsx
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/parse_duration.js:41
 msgid "hours"

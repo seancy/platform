@@ -11876,6 +11876,7 @@ msgstr "天"
 msgid "hour"
 msgstr "小时"
 
+#: lms/static/js/crehana_catalog/CrehanaCatalogCourses.jsx
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/parse_duration.js:41
 msgid "hours"
@@ -12165,6 +12166,22 @@ msgstr "找到 ${recordCount} 项课程资源"
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "We couldn't find any results for \"${searchString}\"."
 msgstr "我们无法找到任何符合 \"${searchString}\" 条件的结果。"
+
+#: lms/static/js/crehana_catalog/CrehanaCatalogOverviewCourses.js
+msgid "View all"
+msgstr "查看全部"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Rating"
+msgstr "评分"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Video Duration"
+msgstr "视频时长"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+msgid "${hour} hours"
+msgstr "${hour} 小时"
 
 #: XBlock: xblock-poll
 #: poll/public/handlebars/poll_results.handlebars:5

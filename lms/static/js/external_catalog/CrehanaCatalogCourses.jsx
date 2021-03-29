@@ -1,82 +1,10 @@
 import React from "react";
 import Cookies from "js-cookie";
-import {SideBar} from './Sidebar'
-import {CourseContainer} from './CourseContainer'
+import {CoursesSideBar} from './CrehanaCoursesSidebar'
+import {CoursesContainer} from './CrehanaCoursesContainer'
 
-class Modal extends React.Component{
-    constructor(props) {
-        super(props);
-    }
 
-    render() {
-        const {status}=this.props, stopPropagation=e=>{
-            e.preventDefault();
-            e.stopPropagation();
-        };
-        return <React.Fragment>
-            <div className={`confirm-modal${status?'':' hide-status'}`}>
-                    <div className="content-area">
-                        <i className="fal fa-toggle-on"></i>
-                        <div>
-                            <h4>{gettext("External Resources")}</h4>
-                            <p>{gettext("You are switching to the external resources catalog which is a collection of public resources, third party and external content. Please note that although the catalog is free to browse, content requiring a paid subscription, or specific authorization, will not be provided by default via this platform. Please contact your organization with any specific questions. Do you wish to continue?")}</p>
-                        </div>
-                    </div>
-                    <div className="actions">
-                        <a href="#" className='cancel' onClick={e=>{
-                            const {onCancel}=this.props;
-                            onCancel && onCancel();
-                            stopPropagation(e)
-                        }}>{gettext("Cancel")}</a>
-                        <a href="#" className={`confirm${this.props.transfering?' disabled':''}`} onClick={e=>{
-                            const {onConfirm}=this.props;
-                            onConfirm && onConfirm();
-                            stopPropagation(e)
-                        }}>{gettext("Continue")}</a>
-                    </div>
-                </div>
-                <div className="cover-bg"></div>
-        </React.Fragment>
-    }
-}
-
-class Courses extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            transfering: false,
-            modalStatus:false
-        };
-    }
-
-    componentDidMount() {
-        $('.banner').delegate('.welcome-wrapper a', 'click', (e)=>{
-            this.setState(state=>{
-                return {
-                    modalStatus: !state.modalStatus
-                }
-            });
-            e.preventDefault();
-            e.stopPropagation();
-            return false
-        })
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <Modal status={this.state.modalStatus}
-                       transfering={this.state.transfering}
-                       onCancel={()=>{ this.setState({transfering:false, modalStatus:false}) }}
-                       onConfirm={()=>{ this.setState({transfering: true}); window.location = this.props.external_button_url }}
-                />
-            </React.Fragment>
-        );
-    }
-}
-
-class ExternalCatalog extends React.Component {
+class CrehanaCatalogCourses extends React.Component {
     constructor(props) {
         super(props);
         let sidebarStatus = true;
@@ -91,11 +19,12 @@ class ExternalCatalog extends React.Component {
             firstTimeLoading:true,
             sidebarStatus: sidebarStatus,
             sidebarData:{
-                courseTypes: [],
                 courseCategories: [],
-                languages: []
+                durations: [],
+                languages: [],
+                ratingRange: []
             },
-            courses: [],
+            course_list: [],
             searchParameters: {},
             isFetching: false,
             hasMore: false,
@@ -115,7 +44,8 @@ class ExternalCatalog extends React.Component {
     }
 
     fetchSidebarData() {
-        fetch("/edflex_catalog", {
+        fetch("/crehana_catalog/data", {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': Cookies.get('csrftoken'),
@@ -125,13 +55,13 @@ class ExternalCatalog extends React.Component {
             .then(
                 (result) => {
                     this.setState({
-                        sidebarData: this.parseSidebarData(result.facet_content)
+                        sidebarData: this.parseSidebarData(result.sidebar_data)
                     })
                 }
             )
     }
 
-    parseSidebarData({type, categories, language}){
+    parseSidebarData({categories, language, duration, rating_range}){
         const sortFn = (a, b) => {
             if (a.text < b.text) {
                 return -1;
@@ -142,24 +72,50 @@ class ExternalCatalog extends React.Component {
             return 0;
         };
         const languageNameObj = {
-            fr: gettext('French'), en: gettext('English'), es: gettext('Spanish'),
-            pt: gettext('Portuguese'), it: gettext('Italian'), de: gettext('German'),
-            zh: gettext('Mandarin')
+            fr: gettext('French'), en: gettext('English'), it: gettext('Italian'), ge: gettext('German'), es: gettext('Spanish'), pt: gettext('Portuguese')
         };
         language.forEach(function(item, index, arr) {
-            if(item.value == null) {
+            if(item.value === '') {
                 arr.splice(index, 1);
             }
         });
+        let prev_count = 0;
+        for (let i=0; i < rating_range.length; i++) {
+            let raw_number = rating_range[i].count;
+            if (i>0) {
+                rating_range[i].count = prev_count + rating_range[i].count;
+            }
+            prev_count += raw_number;
+        }
+        const genDuration = (durationLevel) => {
+            if (durationLevel == 1) {
+                return '0 - 2 ' + gettext('hours');
+            } else if (durationLevel == 2) {
+                return '2 - 6 ' + gettext('hours');
+            } else if (durationLevel == 3) {
+                return '6 - 16 ' + gettext('hours');
+            } else if (durationLevel == 4) {
+                return '16 + ' + gettext('hours');
+            } else {
+                return 'unknow level';
+            }
+        };
         return {
-            courseTypes: type.map(p => ({...p, text: gettext(p.value), label: p.count})),
             courseCategories: categories.sort(sortFn),
-            languages: language.map(p => ({text: languageNameObj[p.value], value: p.value, label: p.count}))
+            durations: duration.map(p => ({text: genDuration(p.value), value: p.value, label: p.count})),
+            languages: language.map(p => ({text: languageNameObj[p.value], value: p.value, label: p.count})),
+            ratingRange: rating_range.map(p => ({text: p.value, value: p.value, label: p.count}))
         }
     }
 
     fetchData(p) {
-        const {filterValue, topic, selectedCourseTypes, selectedLanguages} = p || this.state.searchParameters;
+        const {
+            filterValue,
+            topic,
+            selectedDurations,
+            selectedLanguages,
+            selectedRatingRange
+        } = p || this.state.searchParameters;
         const {pageSize, pageNo} = this.state;
         const obj = {
             search_content: filterValue || '',
@@ -170,15 +126,17 @@ class ExternalCatalog extends React.Component {
         if (topic && topic.value) {
             obj.filter_content['categories'] = topic.text
         }
-
-        if (selectedCourseTypes && selectedCourseTypes.length > 0) {
-            obj.filter_content['type'] = selectedCourseTypes.map(p => p.value)
+        if (selectedDurations && selectedDurations.length > 0) {
+            obj.filter_content['duration'] = selectedDurations.map(p => p.value)
         }
         if (selectedLanguages && selectedLanguages.length > 0) {
             obj.filter_content['language'] = selectedLanguages.map(p => p.value)
         }
-        this.setState({isFetching:true});
-        return fetch("/edflex_catalog/courses", {
+        if (selectedRatingRange && selectedRatingRange.length > 0) {
+            obj.filter_content['rating_range'] = selectedRatingRange.map(p => p.value)
+        }
+        this.setState({isFetching: true});
+        return fetch("/crehana_catalog/data", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -189,15 +147,15 @@ class ExternalCatalog extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    const {facet_content,course_list,course_count,search_content}=result;
-                    this.setState(prev=>{
+                    const {sidebar_data, course_list, course_count, search_content} = result;
+                    this.setState(prev => {
                         return {
-                            isFetching:false,
+                            isFetching: false,
                             recordCount: course_count,
                             searchString: search_content,
                             hasMore: this.getHasMore(course_count),
-                            sidebarData: this.parseSidebarData(facet_content),
-                            courses: prev.courses.concat(course_list)
+                            sidebarData: this.parseSidebarData(sidebar_data),
+                            course_list: prev.course_list.concat(course_list)
                         }
                     });
                     document.getElementById('id_show_loading').style.display = 'none';
@@ -212,7 +170,7 @@ class ExternalCatalog extends React.Component {
                     searchString: '',
                     hasMore: false,
                     sidebarData: {},
-                    courses: []
+                    course_list: []
                 });
                 console.error('Error:', error);
             })
@@ -222,7 +180,7 @@ class ExternalCatalog extends React.Component {
         this.setState({
             pageNo:1,
             searchParameters,
-            courses:[]
+            course_list:[]
         },this.fetchData)
     }
 
@@ -232,7 +190,7 @@ class ExternalCatalog extends React.Component {
         })
     }
 
-    getHasMore(course_count){
+    getHasMore(course_count) {
         const {pageSize, pageNo} = this.state;
         return ((pageSize * pageNo) < course_count)
     }
@@ -259,15 +217,17 @@ class ExternalCatalog extends React.Component {
     }
 
     render() {
-        const {sidebarStatus, courses, sidebarData} = this.state;
+        const {sidebarStatus, course_list, sidebarData} = this.state;
         const Switcher = props => {
-            return <a href="/courses"><span className="switcher"><span className="round-button">{gettext("Internal")}</span><span className="round-button active">{gettext("External")}</span></span></a>
+            return <a href="/courses"><span className="switcher"><span
+                className="round-button">{gettext("Internal")}</span><span
+                className="round-button active">{gettext("External")}</span></span></a>
         };
         const Categories = props => {
             return <div className="category_tabs">
                      <a href="/all_external_catalog" className="categories">{gettext("All")}</a>
-                     <a href="/crehana_catalog" className="categories">{gettext("Crehana")}</a>
-                     <a href="/edflex_catalog" className="current_category">{gettext("Edflex")}</a>
+                     <a href="/crehana_catalog" className="current_category">{gettext("Crehana")}</a>
+                     <a href="/edflex_catalog" className="categories">{gettext("Edflex")}</a>
                    </div>
         };
 
@@ -281,7 +241,7 @@ class ExternalCatalog extends React.Component {
                     {this.props.need_show_3_tabs && <Categories/>}
                 </section>
                 <div className="courses-wrapper">
-                    <SideBar
+                    <CoursesSideBar
                         {...sidebarData}
                         status={this.state.sidebarStatus}
                         onToggle={this.updateSidebarDisplayStatus.bind(this)}
@@ -289,15 +249,15 @@ class ExternalCatalog extends React.Component {
                         onChange={this.startFetch.bind(this)}
                     />
                     {/*<Switcher/>*/}
-                    <CourseContainer
+                    <CoursesContainer
                         indent={sidebarStatus}
                         {..._.pick(this.state, ['hasMore', 'recordCount', 'searchString', 'firstTimeLoading'])}
                         {..._.pick(this.props, ['language'])}
                         onNext={this.fetchMoreData.bind(this)}
-                        onIndentClick={() => this.setState({sidebarStatus: true}, ()=>{
-                            localStorage.setItem('triboo', JSON.stringify({sidebarStatus:true}))
+                        onIndentClick={() => this.setState({sidebarStatus: true}, () => {
+                            localStorage.setItem('triboo', JSON.stringify({sidebarStatus: true}))
                         })}
-                        data={courses}
+                        data={course_list}
                     />
                 </div>
             </section>
@@ -305,4 +265,4 @@ class ExternalCatalog extends React.Component {
     }
 }
 
-export {ExternalCatalog, Courses};
+export {CrehanaCatalogCourses};

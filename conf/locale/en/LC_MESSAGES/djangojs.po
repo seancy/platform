@@ -11512,3 +11512,28 @@ msgstr ""
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "We couldn't find any results for \"${searchString}\"."
 msgstr ""
+
+#: lms/static/js/crehana_catalog/CrehanaCatalogOverviewCourses.js
+msgid "View all"
+msgstr ""
+
+#: lms/static/js/crehana_catalog/CrehanaCatalogCourses.jsx
+msgid "hours"
+msgstr ""
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Rating"
+msgstr ""
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Video Duration"
+msgstr ""
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+msgid "${hour} h $(min) m"
+msgstr ""
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+msgid "${hour} hours"
+msgstr ""
+

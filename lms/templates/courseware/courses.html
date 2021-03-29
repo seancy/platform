@@ -53,7 +53,7 @@
       <section class="banner">
         <section class="welcome-wrapper">
           <h2>${_("Explore")}</h2>
-          % if is_external_catalog_enabled:
+          % if external_button_url:
             <a href="/external_catalog">
               <span class="switcher">
                 <span class="round-button active">${_("Internal")}</span>
@@ -120,10 +120,14 @@
       </section>
     </section>
 
-  % if is_external_catalog_enabled:
+  % if external_button_url:
   ${static.renderReact(
       component="ExternalCatalog",
-      id="my-modal", props={}, componentName="Courses"
+      id="my-modal",
+      props={
+          'external_button_url': external_button_url
+      },
+      componentName="Courses"
     )
   }
   % endif
