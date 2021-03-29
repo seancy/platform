@@ -1,5 +1,4 @@
 """Views for the branding app. """
-# -*- coding: utf-8 -*-
 import logging
 import urllib
 import requests
@@ -23,6 +22,7 @@ import branding.api as branding_api
 import courseware.views.views
 import student.views
 from edxmako.shortcuts import marketing_link, render_to_response
+from lms.djangoapps.external_catalog.utils import get_crehana_configuration
 from openedx.core.djangoapps.lang_pref.api import released_languages
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from student_account.views import login_and_registration_form
@@ -337,31 +337,6 @@ def footer(request):
 @ensure_csrf_cookie
 @login_required
 @cache_if_anonymous()
-def edflex_catalog(request):
-    """
-    If the "ENABLE_EDFLEX_CATALOG" feature is true
-       and the EDFLEX url link is provided in django admin
-       and the user is not part of the EDFLEX_DENIED_GROUP
-    then render the page containing an iframe loading the url.
-    Otherwise return 404
-    """
-    enable_edflex = configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG',
-                                                    settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False))
-    edflex_url = configuration_helpers.get_value('EDFLEX_URL', None)
-    if (enable_edflex and edflex_url
-            and EDFLEX_DENIED_GROUP not in [group.name for group in request.user.groups.all()]):
-        context = {'edflex_url': edflex_url}
-        # By default redirect
-        redirect_edflex = configuration_helpers.get_value('ENABLE_EDFLEX_REDIRECTION', True)
-        if redirect_edflex:
-            return redirect(edflex_url)
-        return render_to_response('courseware/edflex_catalog.html', context)
-    else:
-        raise Http404
-
-@ensure_csrf_cookie
-@login_required
-@cache_if_anonymous()
 def learnlight_catalog(request):
     learnlight_url = settings.LEARNLIGHT_URL
     user_email = urllib.quote(request.user.email)
@@ -379,44 +354,3 @@ def learnlight_catalog(request):
     return redirect(learnlight_url)
 
 
-@ensure_csrf_cookie
-@login_required
-@cache_if_anonymous()
-def crehana_catalog(request):
-    user_email = urllib.quote(request.user.email)
-    first_name = urllib.quote(request.user.first_name.encode('utf-8'))
-    last_name = urllib.quote(request.user.last_name.encode('utf-8'))
-    api_key = settings.CREHANA_API_KEY
-    secret_access = settings.CREHANA_SECRET_KEY
-    slug = "griky"
-
-    #Create the user on Crehana platform based on Triboo user profile
-    create_url = "https://www.crehana.com/api/rest/org/{slug}/users/".format(slug=slug)
-    headers = CaseInsensitiveDict()
-    headers["api-key"] = api_key
-    headers["secret-access"] = secret_access
-    payload = {"email": user_email, "first_name": unquote(first_name), "last_name": unquote(last_name)}
-    resp = requests.post(url=create_url, headers=headers, data=payload)
-    content = resp.content
-    json_content = json.loads(content)
-    user_id = json_content["id"]
-
-    #Generate the SSO auth token based on the user id created above
-    auth_URL = "https://www.crehana.com/api/rest/org/{slug}/users/{user_id}/sso-auth/?api_key={api_key}&secret_access={secret_access}".format(
-        slug=slug,
-        user_id=user_id,
-        api_key=api_key,
-        secret_access=secret_access,
-    )
-    r = requests.post(url=auth_URL)
-    content2 = r.content
-    json_content2 = json.loads(content2)
-    auth_token = json_content2['token']
-
-    #Authenticate the user and redirect him to main page
-    query_url = "https://www.crehana.com/api/rest/org/{slug}/sso-auth/?api_key={api_key}&token={auth_token}".format(
-        slug=slug,
-        api_key=api_key,
-        auth_token=auth_token,   
-    )
-    return redirect(query_url)

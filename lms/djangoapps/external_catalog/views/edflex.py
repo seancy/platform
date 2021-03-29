@@ -8,6 +8,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import DatabaseError
 from django.db.models import Count
 from django.http import Http404, HttpResponseNotAllowed, HttpResponseBadRequest
+from django.shortcuts import redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
 from edxmako.shortcuts import render_to_response
 from isodate import parse_duration
@@ -16,8 +17,11 @@ from util.json_request import JsonResponse, expect_json
 from lms.djangoapps.external_catalog.models import EdflexCategory, EdflexResource
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.user_api.models import UserPreference
-from .utils import get_edflex_configuration
+from ..utils import get_edflex_configuration
+from lms.djangoapps.external_catalog.utils import get_crehana_configuration
 from student.triboo_groups import EDFLEX_DENIED_GROUP
+from student.triboo_groups import CREHANA_DENIED_GROUP
+from util.cache import cache_if_anonymous
 
 
 log = logging.getLogger(__name__)
@@ -112,7 +116,7 @@ def _get_courses(request):
     """
     edflex_configuration = get_edflex_configuration()
     configured_languages = edflex_configuration['locale']
-    if isinstance(request.user, AnonymousUser):
+    if not request.user.is_authenticated:
         platform_language = configured_languages[0]
     else:
         platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
@@ -170,7 +174,7 @@ def _get_courses(request):
 
 @ensure_csrf_cookie
 @expect_json
-def courses_handler(request):
+def edflex_courses_handler(request):
     """
         External catalog courses
         POST
@@ -187,14 +191,14 @@ def courses_handler(request):
 
 
 @ensure_csrf_cookie
-def external_catalog_handler(request):
+def edflex_catalog_handler(request):
     """
         External catalog facet filter.
         GET
             html: get the page structure
             json: get the initial data for facet filter component.
     """
-    is_external_catalog_enabled = configuration_helpers.get_value('ENABLE_EXTERNAL_CATALOG', settings.FEATURES.get(
+    is_external_catalog_button = configuration_helpers.get_value('ENABLE_EXTERNAL_CATALOG', settings.FEATURES.get(
             'ENABLE_EXTERNAL_CATALOG', False))
     # edflex_enabled = configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG',
     #                                                 settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False))
@@ -204,13 +208,26 @@ def external_catalog_handler(request):
         if not val:
             edflex_configuration_available = False
             break
-    external_catalog_and_edflex_enabled = is_external_catalog_enabled and edflex_configuration_available \
-            and EDFLEX_DENIED_GROUP not in [group.name for group in request.user.groups.all()]
+    user_groups = {group.name for group in request.user.groups.all()}
+    external_catalog_and_edflex_enabled = is_external_catalog_button and edflex_configuration_available \
+            and EDFLEX_DENIED_GROUP not in user_groups
     if not external_catalog_and_edflex_enabled:
         raise Http404
 
     if 'text/html' in request.META.get('HTTP_ACCEPT', '') and request.method == 'GET':
-        return render_to_response('external_catalog/external_catalog.html')
+        need_show_3_tabs = all(
+            (
+                all(get_crehana_configuration().values()),
+                request.user.is_authenticated,
+                CREHANA_DENIED_GROUP not in user_groups
+            )
+        )
+        return render_to_response(
+            'external_catalog/external_catalog.html',
+            {
+                'need_show_3_tabs': need_show_3_tabs
+            }
+        )
 
     elif request.META.get('CONTENT_TYPE', '') == 'application/json':
         configured_languages = edflex_configuration['locale']
@@ -220,3 +237,29 @@ def external_catalog_handler(request):
             platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
         return JsonResponse(_get_facet(FILTERS, platform_language, configured_languages))
     return HttpResponseNotAllowed(['GET'])
+
+
+@ensure_csrf_cookie
+@login_required
+@cache_if_anonymous()
+def edflex_catalog(request):
+    """
+    If the "ENABLE_EDFLEX_CATALOG" feature is true
+       and the EDFLEX url link is provided in django admin
+       and the user is not part of the EDFLEX_DENIED_GROUP
+    then render the page containing an iframe loading the url.
+    Otherwise return 404
+    """
+    enable_edflex = configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG',
+                                                    settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False))
+    edflex_url = configuration_helpers.get_value('EDFLEX_URL', None)
+    if (enable_edflex and edflex_url
+            and EDFLEX_DENIED_GROUP not in [group.name for group in request.user.groups.all()]):
+        context = {'edflex_url': edflex_url}
+        # By default redirect
+        redirect_edflex = configuration_helpers.get_value('ENABLE_EDFLEX_REDIRECTION', True)
+        if redirect_edflex:
+            return redirect(edflex_url)
+        return render_to_response('external_catalog/edflex_catalog.html', context)
+    else:
+        raise Http404

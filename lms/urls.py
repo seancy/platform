@@ -333,17 +333,24 @@ urlpatterns += [
     url(r'^courses/?$', branding_views.courses, name='courses'),
 
     # view of edflex catalog
-    url(r'^courses/edflex_catalog$', branding_views.edflex_catalog, name='edflex_catalog'),
+    url(r'^courses/edflex_catalog$', external_catalog_views.edflex_catalog, name='edflex_catalog'),
 
     # view of learnlight catalog
     url(r'^courses/learnlight_catalog$', branding_views.learnlight_catalog, name='learnlight_catalog'),
 
     # view of external catalog with different course resources
-    url(r'^external_catalog$', external_catalog_views.external_catalog_handler, name='external_catalog_handler'),
-    url(r'^external_catalog/courses$', external_catalog_views.courses_handler, name='external_catalog_courses_handler'),
+    url(r'^edflex_catalog$', external_catalog_views.edflex_catalog_handler, name='external_catalog_handler'),
+    url(r'^edflex_catalog/courses$', external_catalog_views.edflex_courses_handler, name='external_catalog_courses_handler'),
 
     # view of crehana catalog
-    url(r'^courses/crehana_catalog$', branding_views.crehana_catalog, name='crehana_catalog'),
+    url(r'^courses/crehana_catalog$', external_catalog_views.CrehanaSSORedirectionPage.as_view(), name='crehana_catalog'),
+
+    # # view of crehana catalog with different course resources
+    url(r'^crehana_catalog$', external_catalog_views.CrehanaCoursesSearchPage.as_view(), name='crehana_catalog_page'),
+    url(r'^crehana_catalog/data$', external_catalog_views.CrehanaCoursesData.as_view(), name='crehana_catalog_data'),
+
+    # # overview of crehana catalog with different course resources
+    url(r'^all_external_catalog$', external_catalog_views.CoursesOverviewPage.as_view(), name='all_external_catalog'),
 
     #About the course
     url(

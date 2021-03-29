@@ -3,7 +3,7 @@ External catalog used for "find courses" page.
 """
 
 from django.db import models
-from .utils import get_edflex_configuration
+from ..utils import get_edflex_configuration
 
 
 class EdflexCategory(models.Model):

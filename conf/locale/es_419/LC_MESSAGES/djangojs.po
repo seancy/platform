@@ -12331,6 +12331,7 @@ msgstr "dias"
 msgid "hour"
 msgstr "hora"
 
+#: lms/static/js/crehana_catalog/CrehanaCatalogCourses.jsx
 #: XBlock: edflex-xblock
 #: edflex/static/js/src/parse_duration.js:41
 msgid "hours"
@@ -12629,6 +12630,22 @@ msgstr "${recordCount} recursos encontrados"
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "We couldn't find any results for \"${searchString}\"."
 msgstr "No pudimos encontrar ningún resultado para \"${searchString}\"."
+
+#: lms/static/js/crehana_catalog/CrehanaCatalogOverviewCourses.js
+msgid "View all"
+msgstr "Ver todos"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Rating"
+msgstr "Evaluación"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Video Duration"
+msgstr "Duración del video"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+msgid "${hour} hours"
+msgstr "${hour} horas"
 
 #: XBlock: xblock-poll
 #: poll/public/handlebars/poll_results.handlebars:5

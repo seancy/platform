@@ -47,6 +47,7 @@ import shoppingcart
 import survey.views
 from branding.api import get_logo_url
 from student.triboo_groups import EDFLEX_DENIED_GROUP
+from student.triboo_groups import CREHANA_DENIED_GROUP
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import CertificateStatuses, GeneratedCertificate
 from course_modes.models import CourseMode, get_course_prices
@@ -91,6 +92,7 @@ from lms.djangoapps.instructor.enrollment import (
 from lms.djangoapps.instructor.views.api import require_global_staff
 from lms.djangoapps.verify_student.services import IDVerificationService
 from lms.djangoapps.external_catalog.utils import get_edflex_configuration
+from lms.djangoapps.external_catalog.utils import get_crehana_configuration
 from openedx.core.djangoapps.catalog.utils import get_programs, get_programs_with_type
 from openedx.core.djangoapps.certificates import api as auto_certs_api
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
@@ -240,7 +242,39 @@ def user_groups(user):
 def courses(request):
     """
     Render "find courses" page.  The course selection work is done in courseware.courses.
+
+    Logic:
+        if [edflex catalog enable + edflex API config set] + user signed in:
+           if [crehana catalog enable + crehana API config set]:
+               => 3 tabs + we redirect to "All"
+           else:
+               => no tabs + we display the Edflex catalog
+        else:
+           if [crehana catalog enable + crehana API config set] + user signed in:
+               => no tabs + we display the Crehana catalog
+           else:
+               => no external catalog
     """
+    enable_external_catalog_button = configuration_helpers.get_value(
+        'ENABLE_EXTERNAL_CATALOG', settings.FEATURES.get('ENABLE_EXTERNAL_CATALOG', False)
+    )
+    user_groups = {group.name for group in request.user.groups.all()}
+    is_edflex_enabled = all(
+        (enable_external_catalog_button, all(get_edflex_configuration().values()), EDFLEX_DENIED_GROUP not in user_groups)
+    )
+    is_crehana_enabled = all(
+        (enable_external_catalog_button, all(get_crehana_configuration().values()), CREHANA_DENIED_GROUP not in user_groups)
+    )
+    external_button_url = r''   # `empty` means: hide `external catalog button`
+
+    if request.user.is_authenticated and (is_edflex_enabled or is_crehana_enabled):
+        if is_edflex_enabled and is_crehana_enabled:
+            external_button_url = r'/all_external_catalog'
+        elif is_edflex_enabled:
+            external_button_url = r'/edflex_catalog'
+        else:
+            external_button_url = r'/crehana_catalog'
+
     courses_list = []
     course_discovery_meanings = getattr(settings, 'COURSE_DISCOVERY_MEANINGS', {})
     if not settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
@@ -256,22 +290,6 @@ def courses(request):
     programs_list = get_programs_with_type(request.site, include_hidden=False)
     trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
 
-    is_external_catalog_enabled = configuration_helpers.get_value('ENABLE_EXTERNAL_CATALOG', settings.FEATURES.get(
-            'ENABLE_EXTERNAL_CATALOG', False))
-    # edflex_enabled = configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG',
-    #                                                 settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False))
-    # edflex_url = configuration_helpers.get_value('EDFLEX_URL', None)
-
-    edflex_configuration_available = True
-    edflex_configuration = get_edflex_configuration()
-    for conf, val in edflex_configuration.items():
-        if not val:
-            edflex_configuration_available = False
-            break
-
-    external_catalog_and_edflex_enabled = is_external_catalog_enabled and edflex_configuration_available \
-            and EDFLEX_DENIED_GROUP not in [group.name for group in request.user.groups.all()]
-
     return render_to_response(
         "courseware/courses.html",
         {
@@ -280,7 +298,7 @@ def courses(request):
             'programs_list': programs_list,
             'show_dashboard_tabs': True,
             'trans_for_tags': trans_for_tags,
-            'is_external_catalog_enabled': external_catalog_and_edflex_enabled
+            'external_button_url': external_button_url
         }
     )
 
