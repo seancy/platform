@@ -18,8 +18,8 @@ class CrehanaCatalogCoursesOverview extends React.Component {
             const Categories = props => {
                 return <div className="category_tabs">
                     <a href="/all_external_catalog" className="current_category">{gettext("All")}</a>
-                    <a href="/crehana_catalog" className="categories">{this.props.crehana_title}</a>
                     <a href="/edflex_catalog" className="categories">{this.props.edflex_title}</a>
+                    <a href="/crehana_catalog" className="categories">{this.props.crehana_title}</a>
                 </div>
             };
 
