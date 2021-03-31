@@ -132,18 +132,6 @@ class OverviewCoursesContainer extends React.Component {
             return (
                 <main className="course-container">
                     <div>
-                        <span className={'category_name'}>{crehana_title}</span>
-                        <span className={'view_all_button'}>
-                            <a className={'button_underline'} href="/crehana_catalog">{gettext("View all")}</a> &gt;
-                        </span>
-                    </div>
-                    <InfiniteScroll
-                        className={'courses-listing'}
-                        dataLength={crehana_items.length}
-                    >
-                        {crehana_items}
-                    </InfiniteScroll>
-                    <div>
                         <span className={'category_name'}>{edflex_title}</span>
                         <span className={'view_all_button'}>
                             <a className={'button_underline'} href="/edflex_catalog">{gettext("View all")}</a> &gt;
@@ -154,6 +142,18 @@ class OverviewCoursesContainer extends React.Component {
                         dataLength={edflex_items.length}
                     >
                         {edflex_items}
+                    </InfiniteScroll>
+                    <div>
+                        <span className={'category_name'}>{crehana_title}</span>
+                        <span className={'view_all_button'}>
+                            <a className={'button_underline'} href="/crehana_catalog">{gettext("View all")}</a> &gt;
+                        </span>
+                    </div>
+                    <InfiniteScroll
+                        className={'courses-listing'}
+                        dataLength={crehana_items.length}
+                    >
+                        {crehana_items}
                     </InfiniteScroll>
                 </main>
             )
