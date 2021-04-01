@@ -9,7 +9,7 @@
   from openedx.core.djangoapps.lang_pref.api import footer_language_selector_is_enabled
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
   from branding.api import get_footer
-  from student.triboo_groups import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP
+  from student.triboo_groups import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP, CREHANA_DENIED_GROUP
   from student.roles import studio_access_role
   from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
 %>
@@ -100,6 +100,11 @@
               and configuration_helpers.get_value('EDFLEX_URL', None) \
               and EDFLEX_DENIED_GROUP not in [group.name for group in user.groups.all()]):
               <li><a href="${reverse('edflex_catalog')}">${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}</a></li>
+            % endif
+
+            % if (configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False)) \
+              and CREHANA_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+              <li><a href="${reverse('crehana_catalog')}">${configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')}</a></li>
             % endif
 
               <li><a href="${reverse('my_courses', kwargs={'tab': 'all-courses'})}">${_('My Courses')}</a></li>

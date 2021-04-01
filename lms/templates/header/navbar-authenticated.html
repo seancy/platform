@@ -8,7 +8,7 @@
 from django.urls import reverse
 from django.utils.translation import pgettext, ugettext as _
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from student.triboo_groups import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP
+from student.triboo_groups import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP, CREHANA_DENIED_GROUP
 from triboo_analytics.models import ANALYTICS_ACCESS_GROUP, ANALYTICS_LIMITED_ACCESS_GROUP
 from student.roles import studio_access_role, ilt_supervisor_role
 %>
@@ -69,7 +69,8 @@ from student.roles import studio_access_role, ilt_supervisor_role
       % endif
 
 
-      % if (configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False))):
+      % if (configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False)) \
+        and CREHANA_DENIED_GROUP not in user_groups):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab crehana-tab">
           <a class="tab-nav-link" target="_blank" href="${reverse('crehana_catalog')}" title="${_('External content catalog')} - Crehana">
             <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
