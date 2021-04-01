@@ -329,7 +329,10 @@ FEATURES = {
     'ENABLE_API_DOCS': False,
 
     # Whether to display programmatic enrollment in Schedule & Details
-    'ENABLE_PROGRAMMATIC_ENROLLMENT': False
+    'ENABLE_PROGRAMMATIC_ENROLLMENT': False,
+
+    # Enable the ILT virtual session email reminder checking
+    'ENABLE_ILT_VIRTUAL_SESSION_REMINDER': False,
 }
 
 ENABLE_JASMINE = False

@@ -422,7 +422,10 @@ FEATURES = {
     'ENABLE_PROGRAMMATIC_ENROLLMENT': False,
 
     # Set to display external catalog with "find courses" page.
-    'ENABLE_EXTERNAL_CATALOG': False
+    'ENABLE_EXTERNAL_CATALOG': False,
+
+    # Enable the ILT virtual session email reminder checking
+    'ENABLE_ILT_VIRTUAL_SESSION_REMINDER': False,
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews

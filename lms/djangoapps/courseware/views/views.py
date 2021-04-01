@@ -38,7 +38,7 @@ from ipware.ip import get_ip
 from markupsafe import escape
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
-from pytz import UTC
+from pytz import UTC, timezone as tz
 from rest_framework import status
 from six import text_type
 from web_fragments.fragment import Fragment
@@ -127,6 +127,7 @@ from util.email_utils import send_mail_with_alias as send_mail
 from util.json_request import JsonResponse
 from util.milestones_helpers import get_prerequisite_courses_display
 from util.views import _record_feedback_in_zendesk, ensure_valid_course_key, ensure_valid_usage_key
+from util.string_utils import is_str_url
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError, NoPathToItem
 from xmodule.tabs import CourseTabList
@@ -2827,6 +2828,94 @@ def process_ilt_validation_check_email():
 
         ilt_log.info("sending ILT validation daily email to {}".format(i))
         send_mail_to_student(i, param_dict=params, language=lang)
+
+
+def process_virtual_session_check_email(time_mode='hourly'):
+    log_file = "edx.scripts.ilt_virtual_session_check"
+    ilt_virtual_session_log = logging.getLogger(log_file)
+    summaries = XModuleUserStateSummaryField.objects.filter(field_name='enrolled_users')
+    student_email_info_dict = {}
+    stripped_site_name = configuration_helpers.get_value(
+        'SITE_NAME',
+        settings.SITE_NAME
+    )
+    if not settings.FEATURES.get('ENABLE_ILT_VIRTUAL_SESSION_REMINDER', False):
+        ilt_virtual_session_log.info("ILT virtual session reminder is not enabled.")
+        return
+    for s in summaries:
+        try:
+            usage_id = s.usage_id
+            ilt_block = modulestore().get_item(usage_id)
+            sessions_summary = XModuleUserStateSummaryField.objects.get(field_name="sessions", usage_id=usage_id)
+            sessions_info = json.loads(sessions_summary.value)
+            enrolled_user_info = json.loads(s.value)
+            for session_id, users in enrolled_user_info.items():
+                session = sessions_info[session_id]
+                location = session.get("location", "")
+                session_timezone = tz(session.get("timezone", "UTC"))
+                if not is_str_url(location):
+                    continue
+                start_time = session_timezone.localize(decode_datetime(session['start_at']))
+                end_time = session_timezone.localize(decode_datetime(session['end_at']))
+                now_time = datetime.now(tz=session_timezone)
+                send_email = False
+                if time_mode == 'daily':
+                    time_diff = start_time.date() - now_time.date()
+                    if time_diff.days == 1:
+                        send_email = True
+                elif time_mode == 'hourly':
+                    # now_time - timedelta(0, 60) to avoid that 9:00:00 - 8:00:05(exact time now) < 1 (hour)
+                    time_diff = start_time - (now_time - timedelta(0, 60))
+                    if time_diff.total_seconds() // 3600 == 1:
+                        send_email = True
+                if send_email:
+                    for user_id, v in users.items():
+                        user = User.objects.get(id=user_id)
+                        email = user.email
+                        if email and email not in student_email_info_dict.keys():
+                            course_id = ilt_block.course_id
+                            section_id = ilt_block.get_parent().parent.block_id
+                            chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+                            unit_url = u'{proto}://{site}{path}'.format(
+                                proto="https",
+                                site=stripped_site_name,
+                                path=reverse('courseware_section', args=[unicode(course_id), chapter_id, section_id])
+                            )
+                            user_name = user.username
+                            if user.first_name and user.last_name:
+                                user_name = "{} {}".format(user.first_name, user.last_name)
+                            message_type = "ilt_virtual_session_{}_reminder".format(time_mode)
+                            start_hour_time = "{h}:{min}".format(h=start_time.hour, min=start_time.minute)
+                            end_hour_time = "{h}:{min}".format(h=end_time.hour, min=end_time.minute)
+                            email_params = dict(
+                                user_name=user_name,
+                                start_date=str(start_time.date()),
+                                start_hour=start_hour_time,
+                                end_date=str(end_time.date()),
+                                end_hour=end_hour_time,
+                                timezone=session.get("timezone", "UTC"),
+                                duration_time=session.get("duration", ""),
+                                location=session.get("location", ""),
+                                unit_url=unit_url,
+                                message=message_type,
+                                time_mode=time_mode,
+                                usage_id=usage_id,
+                                site_name=None,
+                            )
+                            student_email_info_dict[email] = email_params
+        except ItemNotFoundError:
+            ilt_virtual_session_log.error("ILT block: {usage_id} does not exist.".format(usage_id=usage_id))
+    for email, params in student_email_info_dict.items():
+        student = User.objects.get(email=email)
+        ilt_virtual_session_log.info("Sending ILT virtual session {time_mode} email to {user_email} (ILT block: {usage_id}, begins on {start_date} at {start_hour} {timezone})".format(
+            time_mode=params['time_mode'],
+            user_email=email,
+            usage_id=params['usage_id'],
+            start_date=params['start_date'],
+            start_hour=params['start_hour'],
+            timezone=params['timezone']
+        ))
+        send_mail_to_student(email, param_dict=params, language=get_user_email_language(student))
 
 
 # course reminder

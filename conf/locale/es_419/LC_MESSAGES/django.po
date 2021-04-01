@@ -7387,6 +7387,29 @@ msgstr "Dirección de ubicación"
 msgid "Zip code"
 msgstr "Código postal"
 
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr "Estado de inscripción"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr "Asistente"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr "Viajes de ida"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr "Viajes de regreso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr "Pernoctación"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
+msgstr "Dirección de pernoctación"
 
 
 #: lms/djangoapps/dashboard/sysadmin.py:436

@@ -580,6 +580,16 @@ def send_mail_to_student(student, param_dict, language=None):
             'emails/ilt_session_time_changed_email_message.txt',
             'emails/ilt_session_time_changed_email_html_message.txt'
         ),
+        'ilt_virtual_session_hourly_reminder': (
+            'emails/ilt_virtual_session_hourly_reminder_email_subject.txt',
+            'emails/ilt_virtual_session_hourly_reminder_email_message.txt',
+            'emails/ilt_virtual_session_hourly_reminder_email_html_message.txt'
+        ),
+        'ilt_virtual_session_daily_reminder': (
+            'emails/ilt_virtual_session_daily_reminder_email_subject.txt',
+            'emails/ilt_virtual_session_daily_reminder_email_message.txt',
+            'emails/ilt_virtual_session_daily_reminder_email_html_message.txt'
+        ),
         'allowed_enroll': (
             'emails/enroll_email_allowedsubject.txt',
             'emails/enroll_email_allowedmessage.txt',
