@@ -42,7 +42,7 @@ var StaffDebug = (function() {
             data: pdata,
             success: function(data) {
                 var text = _.template(action.success_msg, {interpolate: /\{(.+?)\}/g})(
-                {user: `<b>${data.student}</b>`}
+                {user: '<b>' + data.student + '</b>'}
             );
                 var html = _.template('<p id="idash_msg" class="success"><i class="fal fa-check"></i><span>{text}</span></p>', {interpolate: /\{(.+?)\}/g})(
                 {text: text}
