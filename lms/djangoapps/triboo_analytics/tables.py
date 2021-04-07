@@ -606,8 +606,8 @@ class LearnerDailyTable(_OrderMixin, LearnerBaseTable):
     enrollments = SumFooterColumn(verbose_name='Enrollments')
     finished = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.finished])
     failed = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.failed])
-    in_progress = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.not_started])
-    not_started = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.in_progress])
+    in_progress = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.in_progress])
+    not_started = SumFooterColumn(verbose_name=CourseStatus.verbose_names[CourseStatus.not_started])
     posts = SumFooterColumn(verbose_name='Posts')
     average_final_score = tables.Column(verbose_name='Average Final Score', footer=lambda table: "{}%".format(
                                     get_avg(None, [r.average_final_score for r in table.data])))

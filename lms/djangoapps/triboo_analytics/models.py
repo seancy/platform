@@ -500,11 +500,11 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     def get_active_user_ids(cls, from_date, to_date, course_id=None):
         if course_id:
             reports = cls.objects.filter(created__gte=from_date,
-                                         created__lte=to_date,
+                                         created__lt=to_date,
                                          user__is_active=True,
                                          course_id=course_id)
         else:
-            reports = cls.objects.filter(created__gte=from_date, created__lte=to_date, user__is_active=True,)
+            reports = cls.objects.filter(created__gte=from_date, created__lt=to_date, user__is_active=True,)
         return [result['user'] for result in reports.values('user').distinct()]
 
 
