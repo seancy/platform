@@ -12184,3 +12184,33 @@ msgid "Results gathered from {total} respondent."
 msgid_plural "Results gathered from {total} respondents."
 msgstr[0] "Ergebnisse von {total} Befragten gesammelt."
 msgstr[1] "Ergebnisse von {total} Befragten."
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Sort by"
+msgstr "Sortiere nach"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Most Recent"
+msgstr "Neueste"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Oldest"
+msgstr "Älteste"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Title A-Z"
+msgstr "Titel A-Z"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Title Z-A"
+msgstr "Titel Z-A"

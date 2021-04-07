@@ -13,7 +13,8 @@
             terms: {},
             jqhxr: null,
 
-            initialize: function() {
+            initialize: function(queryOrder) {
+                this.queryOrder = queryOrder;
                 this.discovery = new CourseDiscovery();
                 this.listenTo(this.discovery, 'sync', this.onSync, this);
                 this.listenTo(this.discovery, 'error', this.onError, this);
@@ -63,6 +64,9 @@
                     page_index: pageIndex
                 };
                 _.extend(data, this.terms);
+                if (this.queryOrder.getSortType()) {
+                    _.extend(data, this.queryOrder.getSortType())
+                }
                 return data;
             },
 

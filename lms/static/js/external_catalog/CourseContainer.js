@@ -55,7 +55,19 @@ class InfiniteManuallyScroll extends InfiniteScroll {
 
 class CourseContainer extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+
+        this.state = {
+            selected_option: '-start_date',
+            selected_name: gettext('Most Recent').trim()
+        };
+
+        this.all_options = Array(
+                ['-start_date', gettext('Most Recent').trim()],
+                ['+start_date', gettext('Oldest').trim()],
+                ['+display_name', gettext('Title A-Z').trim()],
+                ['-display_name', gettext('Title Z-A').trim()],
+        );
     }
 
     fireIndentClick() {
@@ -63,11 +75,35 @@ class CourseContainer extends React.Component {
         onIndentClick && onIndentClick();
     }
 
-    fireNext(){
+    fireNext() {
         const {onNext}=this.props;
         document.getElementById('id_show_loading').style.display = 'block';
         document.getElementById('id_show_more_btn').style.display = 'none';
         onNext && onNext();
+    }
+
+    fireOnChange() {
+        const {props} = this, {onChange} = props;
+
+        const DELAY = 500;
+        if (Date.now()-this.start < DELAY) {
+            clearTimeout(this.timer)
+        };
+        this.start = Date.now();
+
+        this.timer = setTimeout(()=>{
+            onChange && onChange(this.state.selected_option);
+        }, DELAY);
+    }
+
+    applySortType(event) {
+        let el = $(event.target);
+        this.state.selected_name = el.text();
+        let selected_option = el.attr("sort_type");
+
+        this.setState({
+            selected_option
+        }, this.fireOnChange)
     }
 
     render() {
@@ -83,11 +119,31 @@ class CourseContainer extends React.Component {
         });
         const skeletons = Array(12).fill(1).map((val,index)=><div key={'index'+index} className="skeleton"></div>);
 
+        const sort_items = [];
+        this.all_options.forEach(
+            (option, index) => {
+                if (option[0] != this.state.selected_option) {
+                    sort_items.push(
+                        <a href="#">
+                            <div onClick={this.applySortType.bind(this)} class="discovery-sort-item" sort_type={option[0]}>{option[1]}</div>
+                        </a>
+                    );
+                }
+            }
+        )
+
         return (
             <main className="course-container">
                 <div><i className={`fal fa-indent ${this.props.indent ? 'hidden' : ''}`}
                       onClick={this.fireIndentClick.bind(this)}></i>{firstTimeLoading ? '' :
                     (recordCount ? gettext('${recordCount} resources found').replace('${recordCount}', recordCount) : gettext('We couldn\'t find any results for "${searchString}".').replace('${searchString}', searchString) )}
+                    <span id="discovery-courses-sort-options" className="discovery-sort-options">
+                        <span>{gettext('Sort by')} |</span>
+                        <span class="discovery-selected-item">{this.state.selected_name}<span class="sort_icon"/></span>
+                        <div class="discovery-sort-menu">
+                            {sort_items}
+                        </div>
+                    </span>
                 </div>
                 <InfiniteManuallyScroll
                     className={'courses-listing'}

@@ -11537,3 +11537,32 @@ msgstr ""
 msgid "${hour} hours"
 msgstr ""
 
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Sort by"
+msgstr ""
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Most Recent"
+msgstr ""
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Oldest"
+msgstr ""
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Title A-Z"
+msgstr ""
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Title Z-A"
+msgstr ""
