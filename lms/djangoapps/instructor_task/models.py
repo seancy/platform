@@ -98,10 +98,10 @@ class InstructorTask(models.Model):
         json_task_input = json.dumps(task_input)
 
         # check length of task_input, and return an exception if it's too long:
-        if len(json_task_input) > 2047:
-            fmt = 'Task input longer than 2047: "{input}" for "{task}" of "{course}"'
-            msg = fmt.format(input=json_task_input, task=task_type, course=course_id)
-            raise ValueError(msg)
+        # if len(json_task_input) > 2047:
+        #     fmt = 'Task input longer than 2047: "{input}" for "{task}" of "{course}"'
+        #     msg = fmt.format(input=json_task_input, task=task_type, course=course_id)
+        #     raise ValueError(msg)
 
         # create the task, then save it:
         instructor_task = cls(

@@ -393,7 +393,12 @@ def get_ilt_global_table_data(filter_kwargs, sort=None):
         return []
 
     if filter_kwargs.get('ilt_period_range', False):
-        filter_kwargs.pop('ilt_period_range')
+        from_day, to_day = json.loads(filter_kwargs.pop('ilt_period_range', None))
+        if from_day and to_day:
+            from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
+            to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
+            period_filter = (from_date, to_date)
+            filter_kwargs['start__range'] = period_filter
 
     reports = IltSession.objects.filter(**filter_kwargs)
     order_by = get_order_by(IltTable, sort)
