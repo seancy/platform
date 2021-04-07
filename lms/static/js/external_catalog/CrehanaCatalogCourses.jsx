@@ -30,6 +30,7 @@ class CrehanaCatalogCourses extends React.Component {
             hasMore: false,
             recordCount: 0,
             searchString: '',
+            sort_type: '+display_name',
             pageSize: 60,
             pageNo: 1
         };
@@ -116,12 +117,13 @@ class CrehanaCatalogCourses extends React.Component {
             selectedLanguages,
             selectedRatingRange
         } = p || this.state.searchParameters;
-        const {pageSize, pageNo} = this.state;
+        const {pageSize, pageNo, sort_type} = this.state;
         const obj = {
             search_content: filterValue || '',
             filter_content: {},
             page_size: pageSize,
-            page_no: pageNo
+            page_no: pageNo,
+            sort_type: sort_type
         };
         if (topic && topic.value) {
             obj.filter_content['categories'] = topic.text
@@ -195,6 +197,13 @@ class CrehanaCatalogCourses extends React.Component {
         return ((pageSize * pageNo) < course_count)
     }
 
+    sortPage(sort_type) {
+        this.setState(
+            {sort_type: sort_type, course_list: [], pageNo: 1},
+            this.fetchData
+        )
+    }
+
     fetchMoreData() {
         if (
             (
@@ -254,6 +263,7 @@ class CrehanaCatalogCourses extends React.Component {
                         {..._.pick(this.state, ['hasMore', 'recordCount', 'searchString', 'firstTimeLoading'])}
                         {..._.pick(this.props, ['language'])}
                         onNext={this.fetchMoreData.bind(this)}
+                        onChange={this.sortPage.bind(this)}
                         onIndentClick={() => this.setState({sidebarStatus: true}, () => {
                             localStorage.setItem('triboo', JSON.stringify({sidebarStatus: true}))
                         })}

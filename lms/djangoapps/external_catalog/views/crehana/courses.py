@@ -257,7 +257,11 @@ class Data(View):
 
             if request.json['search_content']:
                 queryset = queryset.filter(title__icontains=request.json['search_content'])
-
+            sort_type = request.json['sort_type']
+            if sort_type == '-display_name':
+                queryset = queryset.order_by('-title')
+            else:
+                queryset = queryset.order_by('title')
             def _format_resource_for_page(record):
                 course = {attr: getattr(record, attr) for attr in {'title', 'duration', 'image', 'rating', 'url'}}
                 course['languages'] = [languages_mapping.get_lang_name_by_id(int(lang_id)) for lang_id in record.languages.split(',') if int(lang_id) in languages_mapping]

@@ -148,6 +148,15 @@ def _get_courses(request):
 
         if request.json['search_content']:
             queryset = queryset.filter(title__icontains=request.json['search_content'])
+        sort_type = request.json['sort_type']
+        if sort_type == '+start_date':
+            queryset = queryset.order_by('publication_date', 'title')
+        elif sort_type == '-display_name':
+            queryset = queryset.order_by('-title', '-publication_date')
+        elif sort_type == '+display_name':
+            queryset = queryset.order_by('title', '-publication_date')
+        else:
+            queryset = queryset.order_by('-publication_date', 'title')
     except DatabaseError:
         status, message = 'fail', 'Database error for transaction'
         log.exception(message)

@@ -13,7 +13,7 @@
 
 % if course_discovery_enabled:
 <%block name="header_extras">
-  % for template_name in ["course_card", "filter_bar", "filter", "facet", "facet_option"]:
+  % for template_name in ["course_card", "filter_bar", "filter", "facet", "facet_option", "sort_button"]:
   <script type="text/template" id="${template_name}-tpl">
       <%static:include path="discovery/${template_name}.underscore" />
   </script>
@@ -107,7 +107,8 @@
           ##</div>
           <div class="discovery-message-wrapper">
             <i class="fal fa-indent"></i>
-            <div id="discovery-message" class="search-status-label"></div>
+            <span id="discovery-message" class="search-status-label"></span>
+            <span id="discovery-courses-sort-options" class="discovery-sort-options"></span>
           </div>
           <ul class="courses-listing">
             ##%for course in courses:
