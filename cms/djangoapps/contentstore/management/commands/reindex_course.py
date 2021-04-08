@@ -29,6 +29,10 @@ CONFIG_BODY = {
                     "filter": [
                         "lowercase"
                     ]
+                },
+                "case_insensitive_sort": {
+                    "tokenizer": "keyword",
+                    "filter":  [ "lowercase" ]
                 }
             },
             "tokenizer": {
@@ -47,7 +51,13 @@ CONFIG_BODY = {
                     "properties": {
                         "display_name": {
                             "type": "string",
-                            "analyzer": "partword"
+                            "analyzer": "partword",
+                            "fields": {
+                                "raw_display_name": {
+                                    "type": "string",
+                                    "analyzer": "case_insensitive_sort"
+                                }
+                            }
                         }
                     }
                 }
