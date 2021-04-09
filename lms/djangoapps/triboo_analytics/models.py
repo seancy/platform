@@ -500,11 +500,11 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     def get_active_user_ids(cls, from_date, to_date, course_id=None):
         if course_id:
             reports = cls.objects.filter(created__gte=from_date,
-                                         created__lte=to_date,
+                                         created__lt=to_date,
                                          user__is_active=True,
                                          course_id=course_id)
         else:
-            reports = cls.objects.filter(created__gte=from_date, created__lte=to_date, user__is_active=True,)
+            reports = cls.objects.filter(created__gte=from_date, created__lt=to_date, user__is_active=True,)
         return [result['user'] for result in reports.values('user').distinct()]
 
 
@@ -1466,8 +1466,11 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         day = date_time.date() if date_time else timezone.now().date()
         new_results = cls.objects.filter(org=org, created=day, **kwargs)
         if period_start:
+            period_start = period_start.date()
+            logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s start=%s end=%s nb user_ids=%d" % (org, period_start, day, len(kwargs['user_id__in'])))
             results = []
             old_results = cls.objects.filter(org=org, created=period_start, **kwargs)
+            logger.info("LAETITIA -- nb old_results=%d / nb new_results=%d" % (len(old_results), len(new_results)))
             old_time_spent_by_user = { r.user_id: r.total_time_spent for r in old_results }
             for r in new_results:
                 old_time_spent = 0
@@ -1476,9 +1479,11 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 except KeyError:
                     pass
                 results.append(LearnerDailyReportMockup(r, (r.total_time_spent - old_time_spent)))
+            logger.info("LAETITIA -- => nb results=%d" % len(results))
             return results
+        logger.info("LAETITIA --  no period start => return only new_results")
         return new_results
-        
+
 
 class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeModel):
     class Meta(object):
