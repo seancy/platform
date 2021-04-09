@@ -1464,18 +1464,19 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def filter_by_period(cls, org, date_time=None, period_start=None, **kwargs):
-        day = date_time.date() if date_time else timezone.now().date()
-        if period_start:
-            period_start = period_start.date()
-            user_ids = LearnerVisitsDailyReport.get_active_user_ids(period_start, day)
+    def filter_by_period(cls, org, to_date=None, from_date=None, **kwargs):
+        if not to_date:
+            to_date = timezone.now().date()
+        if from_date:
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date)
 
-            old_results = cls.objects.filter(org=org, created=period_start, user_id__in=user_ids, **kwargs)
+            old_results = cls.objects.filter(org=org, created=from_date, user_id__in=user_ids, **kwargs)
             old_time_spent_by_user = { r.user_id: r.total_time_spent for r in old_results }
 
-            new_results = cls.objects.filter(org=org, created=day, user_id__in=user_ids, **kwargs)
+            new_results = cls.objects.filter(org=org, created=to_date, user_id__in=user_ids, **kwargs)
 
-            logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s start=%s end=%s nb user_ids=%d" % (org, period_start, day, len(user_ids)))
+            logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s from=%s to=%s nb user_ids=%d" % (
+                org, from_date, to_date, len(user_ids)))
             logger.info("LAETITIA -- nb old_results=%d / nb new_results=%d" % (len(old_results), len(new_results)))
             results = []
             for r in new_results:
@@ -1488,8 +1489,8 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
             logger.info("LAETITIA -- => nb results=%d" % len(results))
             return results
 
-        logger.info("LAETITIA --  no period start => return only results for day=%s" % day)
-        return cls.objects.filter(org=org, created=day, **kwargs)
+        logger.info("LAETITIA --  no period start => return only results for day=%s" % to_date)
+        return cls.objects.filter(org=org, created=to_date, **kwargs)
 
 
 class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeModel):

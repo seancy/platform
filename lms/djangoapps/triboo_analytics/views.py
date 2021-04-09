@@ -248,14 +248,14 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
             #                                                         to_date,
             #                                                         course_id)
             kwargs.update({
-                'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
+                'to_date': day2str(last_analytics_success) if as_string else last_analytics_success.date(),
                 # 'user_id__in': user_ids
             })
             if with_period_start:
                 period_start_reportlog = ReportLog.get_latest(to_date=from_date)
                 if period_start_reportlog:
                     period_start = period_start_reportlog.created
-                    kwargs['period_start'] = day2str(period_start) if as_string else period_start
+                    kwargs['from_date'] = day2str(period_start) if as_string else period_start.date()
 
     return kwargs, exclude
 
