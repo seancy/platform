@@ -1465,6 +1465,8 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def filter_by_period(cls, org, to_date=None, from_date=None, **kwargs):
+        logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s from=%s to=%s kwargs=%s" % (
+                org, from_date, to_date, kwargs.keys())
         if not to_date:
             to_date = timezone.now().date()
         if from_date:
