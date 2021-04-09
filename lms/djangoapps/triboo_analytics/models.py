@@ -415,6 +415,7 @@ class ReportLog(UnicodeMixin, TimeStampedModel):
     microsite = models.DateTimeField(default=None, null=True)
     country = models.DateTimeField(default=None, null=True)
 
+
     @classmethod
     def get_latest(cls, from_date=None, to_date=None):
         filter_kwargs = {
@@ -437,6 +438,7 @@ class ReportLog(UnicodeMixin, TimeStampedModel):
             return cls.objects.filter(**filter_kwargs).latest()
         except cls.DoesNotExist:
             return None
+
 
     @classmethod
     def update_or_create(cls, **kwargs):
@@ -1464,14 +1466,18 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     @classmethod
     def filter_by_period(cls, org, date_time=None, period_start=None, **kwargs):
         day = date_time.date() if date_time else timezone.now().date()
-        new_results = cls.objects.filter(org=org, created=day, **kwargs)
         if period_start:
             period_start = period_start.date()
-            logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s start=%s end=%s nb user_ids=%d" % (org, period_start, day, len(kwargs['user_id__in'])))
-            results = []
-            old_results = cls.objects.filter(org=org, created=period_start, **kwargs)
-            logger.info("LAETITIA -- nb old_results=%d / nb new_results=%d" % (len(old_results), len(new_results)))
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(period_start, day)
+
+            old_results = cls.objects.filter(org=org, created=period_start, user_id__in=user_ids, **kwargs)
             old_time_spent_by_user = { r.user_id: r.total_time_spent for r in old_results }
+
+            new_results = cls.objects.filter(org=org, created=day, user_id__in=user_ids, **kwargs)
+
+            logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s start=%s end=%s nb user_ids=%d" % (org, period_start, day, len(kwargs['user_id__in'])))
+            logger.info("LAETITIA -- nb old_results=%d / nb new_results=%d" % (len(old_results), len(new_results)))
+            results = []
             for r in new_results:
                 old_time_spent = 0
                 try:
@@ -1481,8 +1487,9 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
                 results.append(LearnerDailyReportMockup(r, (r.total_time_spent - old_time_spent)))
             logger.info("LAETITIA -- => nb results=%d" % len(results))
             return results
-        logger.info("LAETITIA --  no period start => return only new_results")
-        return new_results
+
+        logger.info("LAETITIA --  no period start => return only results for day=%s" % day)
+        return cls.objects.filter(org=org, created=day, **kwargs)
 
 
 class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeModel):
