@@ -187,7 +187,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         report_cls = getattr(models, _task_input['report_args']['report_cls'])
         table_cls = getattr(tables, _task_input['report_args']['table_cls'])
         if 'to_date' in kwargs.keys():
-            kwargs['date_time'] = datetime.strptime(kwargs['to_date'], "%Y-%m-%d").date()
+            kwargs['to_date'] = datetime.strptime(kwargs['to_date'], "%Y-%m-%d").date()
         if 'from_date' in kwargs.keys():
             kwargs['from_date'] = datetime.strptime(kwargs['from_date'], "%Y-%m-%d").date()
         table = get_table_data(report_cls, table_cls, kwargs, exclude, by_period=True)
