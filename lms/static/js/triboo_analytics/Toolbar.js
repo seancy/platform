@@ -81,7 +81,7 @@ export class Toolbar extends React.Component {
         this.setState({
             timer:setTimeout(()=>{
                 this.doFireChange(true)
-            },1000)
+            },500)
         })
     }
 
@@ -90,7 +90,7 @@ export class Toolbar extends React.Component {
         this.setState({
             timer:setTimeout(()=>{
                 this.doFireChange()
-            },1000)
+            },20000)
         })
     }
 
