@@ -1475,7 +1475,7 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
             new_results = cls.objects.filter(org=org, created=day, user_id__in=user_ids, **kwargs)
 
-            logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s start=%s end=%s nb user_ids=%d" % (org, period_start, day, len(kwargs['user_id__in'])))
+            logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s start=%s end=%s nb user_ids=%d" % (org, period_start, day, len(user_ids)))
             logger.info("LAETITIA -- nb old_results=%d / nb new_results=%d" % (len(old_results), len(new_results)))
             results = []
             for r in new_results:
