@@ -1442,8 +1442,8 @@ def learner_export_table(request):
     last_update = last_reportlog.learner
     filter_kwargs, exclude = get_period_kwargs(data, with_period_start=True, as_string=True)
     filter_kwargs['org'] = learner_report_org
-    if 'date_time' not in filter_kwargs.keys():
-        filter_kwargs['date_time'] = day2str(last_update)
+    if 'to_date' not in filter_kwargs.keys():
+        filter_kwargs['to_date'] = day2str(last_update)
 
     report_args = {
         'report_cls': LearnerDailyReport.__name__,
