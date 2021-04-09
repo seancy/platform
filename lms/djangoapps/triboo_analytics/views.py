@@ -244,12 +244,12 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
         last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
         if last_reportlog:
             last_analytics_success = last_reportlog.created
-            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date,
-                                                                    to_date,
-                                                                    course_id)
+            # user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date,
+            #                                                         to_date,
+            #                                                         course_id)
             kwargs.update({
                 'date_time': day2str(last_analytics_success) if as_string else last_analytics_success,
-                'user_id__in': user_ids
+                # 'user_id__in': user_ids
             })
             if with_period_start:
                 period_start_reportlog = ReportLog.get_latest(to_date=from_date)
