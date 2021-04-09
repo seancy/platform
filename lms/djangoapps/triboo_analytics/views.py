@@ -433,6 +433,7 @@ def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_
                              'pagination': {'rowsCount': 0}})
     try:
         rowsCount = len(table.data)
+        logger.info("LAETITIA -- rowsCount=%d" % rowsCount)
         if not rowsCount:
             return JsonResponse({'list': [],
                                  'total': 0,
@@ -452,6 +453,7 @@ def json_response(table, page={'no': 1, 'size': 20}, summary_columns=[], column_
                     new_row[column.name] = row.get_cell_value(column.name)
                 else:
                     new_row[column.verbose_name] = row.get_cell_value(column.name)
+            logger.info("LAETITIA -- %s" % new_row)
             table_response.append(new_row)
 
         response = {'list': table_response,
