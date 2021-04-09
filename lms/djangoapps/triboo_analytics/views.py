@@ -1173,7 +1173,7 @@ def learner_view_data(request):
         filter_kwargs, exclude = get_period_kwargs(data, with_period_start=True)
         filter_kwargs['org'] = learner_report_org
         if 'to_date' not in filter_kwargs.keys():
-            filter_kwargs['to_date'] = last_update
+            filter_kwargs['to_date'] = last_update.date()
             # if not data.get('from_day'):
             #     filter_kwargs['to_date'] = last_update
         if 'to_date' in filter_kwargs.keys():
