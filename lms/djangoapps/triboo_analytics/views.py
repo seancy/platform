@@ -1172,10 +1172,11 @@ def learner_view_data(request):
         last_update = last_reportlog.learner
         filter_kwargs, exclude = get_period_kwargs(data, with_period_start=True)
         filter_kwargs['org'] = learner_report_org
-        if 'date_time' not in filter_kwargs.keys():
-            if not data.get('from_day'):
-                filter_kwargs['date_time'] = last_update
-        if 'date_time' in filter_kwargs.keys():
+        if 'to_date' not in filter_kwargs.keys():
+            filter_kwargs['to_date'] = last_update
+            # if not data.get('from_day'):
+            #     filter_kwargs['to_date'] = last_update
+        if 'to_date' in filter_kwargs.keys():
             table = get_table_data(LearnerDailyReport,LearnerDailyTable, filter_kwargs, exclude,
                                    by_period=True, html_links=True, sort=data.get('sort'))
     return json_response(table,
