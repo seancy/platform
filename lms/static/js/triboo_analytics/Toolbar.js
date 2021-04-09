@@ -9,10 +9,20 @@ import {Exporter} from './Exporter'
 import {Properties} from './Properties'
 import {PeriodFilter} from './PeriodFilter'
 
+
+const debounce = (f, time) => {
+    let debounced
+    return function (...args) {
+        const actor = () => f.apply(this, args)
+        clearTimeout(debounced)
+        debounced = setTimeout(actor, time)
+    }
+}
+
 export class Toolbar extends React.Component {
     constructor(props) {
         super(props);
-        this.fireOnChange = this.fireOnChange.bind(this)
+        this.fireOnChange = debounce(this.doFireChange.bind(this), 1000).bind(this)
 
         const {enabledItems}=props
         const toolbarItems = this.getToolbarItems(enabledItems)
@@ -82,15 +92,6 @@ export class Toolbar extends React.Component {
             timer:setTimeout(()=>{
                 this.doFireChange(true)
             },500)
-        })
-    }
-
-    fireOnChange () {
-        this.state.timer && clearTimeout(this.state.timer)
-        this.setState({
-            timer:setTimeout(()=>{
-                this.doFireChange()
-            },20000)
         })
     }
 
