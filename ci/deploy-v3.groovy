@@ -46,11 +46,12 @@ def tag_config_file = ''
 def commit_id = ''
 def lt_user_id = ''
 def stage_deploy_branch_name = ''
+def revert_process = false
 
 
 def choose_environment(this_environment) {
     if (this_environment == 'PROD') {
-        this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'restart service', 'xblock', 'certs', 'config file'], description: 'which process to run')]
+        this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'restart service', 'xblock', 'certs', 'config file', 'revert platform code'], description: 'which process to run')]
     } else if (this_environment == 'STAGING') {
         this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'platform&theme', 'restart service', 'xblock', 'certs', 'config file'], description: 'which process to run')]
     } else if (this_environment == 'PREPROD') {
@@ -324,6 +325,8 @@ pipeline {
                                 } else if (sub_config_file_process == 'platform') {
                                     tag_config_file = 'update_platform'
                                 }
+                            } else if (this_process == 'revert platform code') {
+                                revert_process = true
                             }
                         }   
                     } catch (err) {
@@ -551,6 +554,23 @@ pipeline {
                                     ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=no" -e "run_npm_install=no" -e "run_trans_script=no" lt_pipeline_jobs.yml
                                     """
                                 }
+                            }
+                        }
+                    }
+                }
+                stage("Revert code") {
+                    when {
+                        expression { return proceed == true && revert_process == true }
+                    }
+                    steps {
+                        dir('configuration/playbooks') {
+                            script {
+                                restart_service_process = true
+                                tag_restart_service = 'restart-all'
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "revert-production" -e "migrate_lt_db=no" -e "run_npm_install=no" -e "run_trans_script=no" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                """
                             }
                         }
                     }
