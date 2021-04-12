@@ -63,11 +63,14 @@
                     var fmt = '';
                     if (duration.length > 1 && !_.isEmpty(duration[0])) {
                         if (duration[1].startsWith('minute')) {
-                            fmt = ngettext('%(num)s minute', '%(num)s minutes', duration[0]);
-                            data.display_duration = interpolate(fmt, {num: duration[0]}, true);
+                            fmt = gettext('%(min)s min', duration[0]);
+                            data.display_duration = interpolate(fmt, {min: duration[0]}, true);
                         } else if (duration[1].startsWith('hour')) {
-                            fmt = ngettext('%(num)s hour', '%(num)s hours', duration[0]);
-                            data.display_duration = interpolate(fmt, {num: duration[0]}, true);
+                            fmt = gettext('%(h)s h', duration[0]);
+                            data.display_duration = interpolate(fmt, {h: duration[0]}, true);
+                        } else if (duration[1].startsWith('day')) {
+                            fmt = gettext('%(d)s d', duration[0]);
+                            data.display_duration = interpolate(fmt, {d: duration[0]}, true);
                         }
                     }
                 }

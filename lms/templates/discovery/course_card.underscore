@@ -23,26 +23,22 @@
             </h2>
             <div class="course-date" aria-hidden="true">
                 <%- start %>
-                <% if (typeof(end) != "undefined") { %>
+                <% if (end != "") { %>
                     - <%- end %>
                 <% } %>
             </div>
         </section>
         <section class="sub-info">
             <div class="badge<%=(!badges && badges !== 0)?' hidden':''%>">
-                <% //if (badges || badges === 0) { %>
-                    <i class="fal fa-trophy"></i>
-                    <span><%- badges %> <%- ngettext("badge", "badges", badges) %></span>
-                <% //} %>
+                <i class="fal fa-trophy"></i>
+                <span><%- badges %></span>
             </div>
-            <% if (badges || badges === 0 || typeof(display_duration) != "undefined") { %>
-                <div class="spliter"></div>
+            <% if (typeof(display_duration) != "undefined") { %>
+                <div class="spliter-dot">&middot;</div>
             <% } %>
             <div class="duration<%=(typeof(display_duration) == "undefined")?' hidden':''%>">
-                <% //if (typeof(display_duration) != "undefined") { %>
-                    <i class="fal fa-clock"></i>
-                    <span><%- typeof(display_duration) != "undefined"?display_duration:'' %></span>
-                <% //} %>
+                <i class="fal fa-clock"></i>
+                <span><%- typeof(display_duration) != "undefined"?display_duration:'' %></span>
             </div>
         </section>
         <div class="course-actions" aria-hidden="true">

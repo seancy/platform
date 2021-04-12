@@ -20,6 +20,7 @@ define(['js/views/validation',
                 'click .new-grade-button': 'addNewGrade',
                 'click .remove-button': 'removeGrade',
                 'click .add-grading-data': 'addAssignmentType',
+                'click .rule-section': 'setCourseCompletionRule',
         // would love to move to a general superclass, but event hashes don't inherit in backbone :-(
                 'focus :input': 'inputFocus',
                 'blur :input': 'inputUnfocus'
@@ -43,11 +44,18 @@ define(['js/views/validation',
                 this.render();
             },
 
+            applyElements: function() {
+                _.each($('.content-primary').find('.question-mark-wrapper'), function(wrapper) {
+                    new LearningTribes.QuestionMark(wrapper, $(wrapper).data('title'));
+                });
+            },
+
             render: function() {
                 this.clearValidationErrors();
-
+                this.renderCompletionRule(this.model.get('course_completion_rule'));
                 this.renderGracePeriod();
                 this.renderMinimumGradeCredit();
+                this.applyElements();
 
         // Create and render the grading type subs
                 var self = this;
@@ -95,14 +103,27 @@ define(['js/views/validation',
                 grace_period: 'course-grading-graceperiod',
                 minimum_grade_credit: 'course-minimum_grade_credit'
             },
+            renderCompletionRule: function(rule) {
+                if (rule === 'default') {
+                    this.$el.find('section.default').addClass('active-rule');
+                    this.$el.find('section.minimum').removeClass('active-rule');
+                    this.$el.find('#default-completion-rule').prop('checked', true);
+                    this.$el.find('#minimum-completion-rule').prop('checked', false);
+                } else {
+                    this.$el.find('section.default').removeClass('active-rule');
+                    this.$el.find('section.minimum').addClass('active-rule');
+                    this.$el.find('#default-completion-rule').prop('checked', false);
+                    this.$el.find('#minimum-completion-rule').prop('checked', true);
+                }
+            },
             renderGracePeriod: function() {
                 var format = function(time) {
                     return time >= 10 ? time.toString() : '0' + time;
                 };
                 var grace_period = this.model.get('grace_period');
                 this.$el.find('#course-grading-graceperiod').val(
-            format(grace_period.hours) + ':' + format(grace_period.minutes)
-        );
+                    format(grace_period.hours) + ':' + format(grace_period.minutes)
+                );
             },
             renderMinimumGradeCredit: function() {
                 var minimum_grade_credit = this.model.get('minimum_grade_credit');
@@ -120,6 +141,12 @@ define(['js/views/validation',
         // get field value in float
                 var newVal = this.model.parseMinimumGradeCredit($(event.currentTarget).val()) / 100;
                 this.model.set('minimum_grade_credit', newVal, {validate: true});
+            },
+            setCourseCompletionRule: function(e) {
+                this.clearValidationErrors();
+                var newVal = $(e.currentTarget).find('input').val();
+                this.renderCompletionRule(newVal);
+                this.model.set('course_completion_rule', newVal, {validate: true});
             },
             updateModel: function(event) {
                 if (!this.selectorToField[event.currentTarget.id]) return;

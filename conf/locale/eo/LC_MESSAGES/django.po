@@ -15027,9 +15027,7 @@ msgid "Content Locked"
 msgstr "Çöntént Löçkéd Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт#"
 
 #: lms/templates/_gated_content.html
-msgid ""
-"You must complete the prerequisites for '{prereq_section_name}' to access "
-"this content."
+msgid "You must complete the sub-section '{prereq_section_name}' to access this content."
 msgstr ""
 "Ýöü müst çömplété thé préréqüïsïtés för '{prereq_section_name}' tö äççéss "
 "thïs çöntént. Ⱡ'σяєм ιρѕυм ∂σłσя ѕιт αмєт, ¢σηѕє¢тєтυя #"

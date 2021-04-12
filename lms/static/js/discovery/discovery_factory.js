@@ -2,11 +2,12 @@
     'use strict';
     define(['backbone', 'underscore', 'js/discovery/models/search_state', 'js/discovery/collections/filters',
         'js/discovery/views/search_form', 'js/discovery/views/courses_listing',
-        'js/discovery/views/filter_bar', 'js/discovery/views/refine_sidebar'],
-        function(Backbone, _, SearchState, Filters, SearchForm, CoursesListing, FilterBar, RefineSidebar) {
+        'js/discovery/views/filter_bar', 'js/discovery/views/refine_sidebar', 'js/discovery/views/sort_button'],
+        function(Backbone, _, SearchState, Filters, SearchForm, CoursesListing, FilterBar, RefineSidebar, SortButton) {
             return function(meanings, titleMeanings, transForTags, searchQuery, userLanguage, userTimezone) {
                 var dispatcher = _.extend({}, Backbone.Events);
-                var search = new SearchState();
+                var sortButton = new SortButton();
+                var search = new SearchState(sortButton);
                 var filters = new Filters();
                 var form = new SearchForm();
                 var filterBar = new FilterBar({collection: filters});
@@ -24,6 +25,12 @@
                     userTimezone: userTimezone
                 };
                 listing = new CoursesListing({model: courseListingModel});
+                form.on('displayStatusChange', function(){
+                    listing.setSearchFormStatus()
+                })
+                listing.on('filterIconClick', function () {
+                    form.toggleFilterBar(null);
+                })
 
                 function removeFilter(filter) {
                     form.showLoadingIndicator();
@@ -38,6 +45,11 @@
                 function quote(string) {
                     return '"' + string + '"';
                 }
+
+                dispatcher.listenTo(sortButton, 'search', function(query) {
+                    form.showLoadingIndicator();
+                    search.performSearch(query, filters.getTerms());
+                });
 
                 dispatcher.listenTo(form, 'search', function(query) {
                     filters.reset();

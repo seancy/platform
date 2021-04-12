@@ -6835,7 +6835,7 @@ msgstr "Libros de texto"
 #: lms/djangoapps/courseware/tabs.py:331
 #: lms/templates/courseware/course_about.html:125
 msgid "Overview"
-msgstr "Revisión"
+msgstr "Descripción"
 
 #: lms/djangoapps/courseware/views/index.py:169
 #, python-brace-format
@@ -7387,6 +7387,29 @@ msgstr "Dirección de ubicación"
 msgid "Zip code"
 msgstr "Código postal"
 
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollment status"
+msgstr "Estado de inscripción"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendee"
+msgstr "Asistente"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Outward trips"
+msgstr "Viajes de ida"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Return trips"
+msgstr "Viajes de regreso"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay"
+msgstr "Pernoctación"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Overnight stay address"
+msgstr "Dirección de pernoctación"
 
 
 #: lms/djangoapps/dashboard/sysadmin.py:436
@@ -17122,6 +17145,10 @@ msgstr "Duración del curso"
 msgid "minutes"
 msgstr "minutos"
 
+#: cms/templates/settings.html:418
+msgid "days"
+msgstr "días"
+
 #: cms/templates/settings.html:420
 msgid "Displayed on the course details page. Limit to 50 characters."
 msgstr ""
@@ -18433,12 +18460,8 @@ msgid "Content Locked"
 msgstr "Contenido bloqueado"
 
 #: lms/templates/_gated_content.html:18
-msgid ""
-"You must complete the prerequisites for '{prereq_section_name}' to access "
-"this content."
-msgstr ""
-"Debes de completar los prerrequisitos de '{prereq_section_name}' para "
-"acceder a este conenido."
+msgid "You must complete the sub-section '{prereq_section_name}' to access this content."
+msgstr "Debes de completar la subsección '{prereq_section_name}' para acceder a este conenido."
 
 #: lms/templates/_gated_content.html:22
 msgid "Go to Prerequisite Section"
@@ -18707,7 +18730,7 @@ msgstr "Navegación del curso"
 #: lms/templates/footer.html:96
 #: lms/templates/header/navbar-authenticated.html:48
 msgid "Explore"
-msgstr "Explora los cursos"
+msgstr "Explora"
 
 #: lms/templates/footer.html:102
 #: lms/templates/header/navbar-authenticated.html:60
@@ -21803,6 +21826,13 @@ msgid_plural "{num} hours"
 msgstr[0] "{num} hora"
 msgstr[1] "{num} horas"
 
+#: lms/templates/courseware/course_banner.html:30
+#: lms/templates/dashboard/_dashboard_course_listing.html:226
+msgid "{num} day"
+msgid_plural "{num} days"
+msgstr[0] "{num} día"
+msgstr[1] "{num} dias"
+
 #: lms/templates/courseware/course_banner.html:82
 msgid "Estimated Effort"
 msgstr "Esfuerzo estimado"
@@ -23310,7 +23340,7 @@ msgstr ""
 
 #: lms/templates/emails/activation_email.txt:12
 msgid "Enjoy learning with {platform_name}."
-msgstr "Disfruta aprendiendo con {platform_name}"
+msgstr "Disfruta aprendiendo con {platform_name}."
 
 #: lms/templates/emails/activation_email.txt:16
 msgid ""
@@ -29736,10 +29766,6 @@ msgstr "Su puntaje {score}% no es suficiente para obtener la insignia {type}."
 msgid "Preview Certificate"
 msgstr "Ver certificado"
 
-#: /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
-msgid "View results"
-msgstr "Mostrar resultados"
-
 #: lbmdonexblock.html
 msgid "Done"
 msgstr "Terminado"
@@ -29804,12 +29830,13 @@ msgstr ""
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid ""
 "After you download the CSV file of the enrolled learners, tick with a 'x' "
-"the column 'attendance'. If the learner attended the course and upload it "
-"back in order to validate the completion of the module in the platform."
+"the column 'attendance' if the learner attended the course. "
+"Then save the file and upload it back to validate the completion of the module in the platform."
 msgstr ""
 "Después de descargar el archivo CSV de los alumnos inscritos, marque con una "
-"'x'en la columna 'attendance'. Si el alumno asistió al curso y subelode "
-"nuevo para validar la finalización del módulo en la plataforma."
+"'x' en la columna 'attendance' si el alumno asistió al curso. "
+"Luego guarde el archivo y subelode nuevamente para validar la finalización del módulo en la plataforma."
+
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Validate"
@@ -30039,6 +30066,10 @@ msgstr "Seguimiento de alumnos y análisis de cursos"
 #: lms/templates/header/navbar-authenticated.html:86
 msgid "Built-in authoring tool"
 msgstr "Herramienta de autor integrada"
+
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT request validation page"
+msgstr "Página de validación de registro para sesiones ILT"
 
 #: lms/templates/header/user_dropdown.html:42
 msgid "Account setting"
@@ -30703,124 +30734,219 @@ msgid "Update Plan"
 msgstr "Plan de actualización"
 
 #: XBlock: edflex
-#: edflex/edflex.py
-msgid "External Resource"
-msgstr "Recurso Externo"
-
-#: XBlock: edflex
-#: edflex/static/html/author_view.html
+#: edflex/static/html/author_view.html:11
 msgid "Use External Content component"
-msgstr "Usa componente de contenido externo"
+msgstr "Utilice el componente de recursos externos"
 
 #: XBlock: edflex
-#: edflex/static/html/author_view.html
-msgid "Add resources to your course, curated by Edflex technology. Choose from a selection of MOOCs, Videos, Podcasts, Books, and Articles to accompany and enhance the creation of your trainings!"
-msgstr "Agrega recursos a tu curso, curados con la tecnología Edflex. ¡Elije entre una selección de MOOCs, videos, podcasts, libros y artículos para acompañar y mejorar la creación de tus entrenamientos!"
+#: edflex/static/html/author_view.html:13
+msgid "Add resources to your course, curated by Edflex technology. "
+"Choose from a selection of MOOCs, Videos, Podcasts, Books, and Articles to accompany and enhance the creation of your trainings!"
+msgstr "Agregue recursos a su curso, seleccionados por la tecnología Edflex. "
+"¡Elija entre una selección de MOOC, videos, pódcasts, libros y artículos para respaldar y mejorar la creación de su formación!"
 
 #: XBlock: edflex
-#: edflex/static/html/author_view.html
+#: edflex/static/html/author_view.html:25
 msgid "You are now ready"
-msgstr "Ahora estas listo"
+msgstr "Ya esta listo"
 
 #: XBlock: edflex
-#: edflex/static/html/author_view.html
+#: edflex/static/html/author_view.html:26
 msgid "Integrate external content to enrich your course!"
-msgstr "¡Integra contenido externo para enriquecer tu curso!"
+msgstr "¡Integre contenido externo para enriquecer su curso!"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/edflex.html:33
+msgid "Read the article"
+msgstr "Leer el artículo"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:35
+msgid "Read the book"
+msgstr "Leer el libro"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:37
+msgid "Access the course"
+msgstr "Acceder al curso"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:70
+msgid "About the content"
+msgstr "En resumen"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:85
+#: edflex/static/html/studio_edit.html:33
+msgid "reviews"
+msgstr "opiniones"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:88
+#: edflex/static/html/studio_edit.html:36
+msgid "users’ reviews"
+msgstr "Opiniones de los usuarios"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:100
+#: edflex/static/html/studio_edit.html:48
+msgid "<b>Free</b> access"
+msgstr "Acceso <b>gratuito</b>"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:102
+#: edflex/static/html/studio_edit.html:50
+msgid "<b>Paid</b> access"
+msgstr "Acceso <b>pagado</b>"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:112
+#: edflex/static/html/studio_edit.html:60
+msgid "<b>Free</b> certificate"
+msgstr "Certificado <b>gratuito</b>"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:114
+#: edflex/static/html/studio_edit.html:62
+msgid "<b>Paid</b> certificate"
+msgstr "Certificado <b>pagado</b>"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:131
+#: edflex/static/html/studio_edit.html:79
+msgid "pages"
+msgstr "paginas"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:154
+msgid "External content"
+msgstr "Contenido externo"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:157
+msgid "You are about to leave the Triboo platform to follow external training content. "
+"The majority of third-party content is free, but please note that sometimes it requires a paid "
+"subscription or certification or specific authorization that is not provided via this platform. "
+"Please contact your organization with any specific questions."
+msgstr "Está a punto de abandonar la plataforma Triboo para seguir el contenido de formación externo. "
+"La mayoría del contenido de terceros es gratuito, pero tenga en cuenta que a veces requiere "
+"una suscripción o certificación paga o una autorización específica que no se proporciona a través de esta plataforma. "
+"Comuníquese con su organización si tiene preguntas específicas."
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:166
+msgid "See you soon on Triboo!"
+msgstr "Hasta pronto en Triboo"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:169
+msgid "Access"
+msgstr "Acceder"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:10
+msgid "This information is out of date. What you see is the last saved version."
+msgstr "Esta información está desactualizada. Lo que ves es la última versión registrada."
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:91
 msgid "How it works?"
 msgstr "¿Cómo funciona?"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:95
 msgid "Select the format of content you want to add"
-msgstr "Selecciona el formato de contenido que deseas agregar"
+msgstr "Seleccione el formato de contenido que desea agregar"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:96
 msgid "Choose a category for your learning content"
-msgstr "Elije una categoría para su contenido de aprendizaje"
+msgstr "Elija una categoría para su contenido de aprendizaje"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:97
 msgid "Then a language"
-msgstr "A continuación, un idioma"
+msgstr "Entonces un idioma"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:98
 msgid "Pick the content you want to use"
-msgstr "Elige el contenido que quiere usar"
+msgstr "Elija el contenido que desea utilizar"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:100
 msgid "No content available? Then change one of the parameters you previously selected."
-msgstr "¿No hay contenido disponible? Cambia entonces uno de los parámetros que seleccionaste previamente."
+msgstr "¿No hay contenido disponible? Cambie uno de los parámetros que seleccionó previamente"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:105
 msgid "Which format of content do you need?"
-msgstr "¿En qué formato necesitas el contenido?"
+msgstr "¿Qué formato de contenido necesita?"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:106
 msgid "Choose a format. It is mandatory."
-msgstr "Elige un formato. Es obligatorio."
+msgstr "Elija un formato. Esto es obligatorio."
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
-msgid "Select one of the category below"
-msgstr "Selecciona una de las categorías a continuación"
+#: edflex/static/html/studio_edit.html:116
+msgid "Podcast"
+msgstr "Pódcast"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:134
+msgid "Mooc"
+msgstr "MOOC"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:143
+msgid "Article"
+msgstr "Artículo"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:152
+msgid "Book"
+msgstr "Libro"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:158
+msgid "Select one of the categories below"
+msgstr "Seleccione una de las siguientes categorías"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:159
 msgid "Choose a category."
 msgstr "Elige una categoría."
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:173
 msgid "Which language for the content?"
 msgstr "¿Qué idioma para el contenido?"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:174
 msgid "Choose a language."
 msgstr "Elige un idioma."
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:185
 msgid "Select the title of the content"
-msgstr "Selecciona el título del contenido."
+msgstr "Seleccione el título del contenido"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:186
 msgid "Choose a content."
 msgstr "Elige un contenido."
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:197
 msgid "Relative weight in this course section"
-msgstr "El peso relativo de esta sección del curso"
+msgstr "Valor relativo en esta sección del curso"
 
 #: XBlock: edflex
-#: edflex/static/html/studio_edit.html
+#: edflex/static/html/studio_edit.html:205
 msgid "Add this content"
-msgstr "Agrega este contenido"
-
-#: XBlock: edflex
-#: edflex/static/html/edflex.html
-msgid "About the content"
-msgstr "Sobre el contenido"
-
-#: XBlock: edflex
-#: edflex/static/html/edflex.html
-msgid "reviews"
-msgstr "comentarios"
-
-#: XBlock: edflex
-#: edflex/static/html/edflex.html
-msgid "users’ reviews"
-msgstr "comentarios de los usuarios"
+msgstr "Agregar este contenido"
 
 #: lms/templates/problem.html
 msgid "Quiz"
@@ -30830,13 +30956,23 @@ msgstr "Examen"
 msgid "Word cloud"
 msgstr "Nube de palabras"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "View results"
+msgstr "Mostrar resultados"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html:71 poll/public/html/survey.html:81
+msgid "Export results to CSV"
+msgstr "Exportar resultados a CSV"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Poll"
 msgstr "Votación"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Survey"
 msgstr "Encuesta"
 
@@ -31029,3 +31165,48 @@ msgstr "Cargando…"
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:61
 msgid "Generate Intermediate Certificates"
 msgstr "Generar los certificados intermedios"
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
+msgid "Free Text"
+msgstr "Texto libre"
+
+#: lms/templates/courseware/courses.html
+msgid "Internal"
+msgstr "Interno"
+
+#: lms/templates/courseware/courses.html
+msgid "External"
+msgstr "Externo"
+
+#: lms/templates/courseware/courses.html
+msgid "Filters"
+msgstr "Filtros"
+
+#: cms/templates/settings_graders.html
+msgid "Course Completion Rule"
+msgstr "Regla de aprobación del curso"
+
+#: cms/templates/settings_graders.html
+msgid "Set the completion rule for this course"
+msgstr "Definir la regla de aprobación para este curso"
+
+#: cms/templates/settings_graders.html
+msgid "100% Course progress and minimum passing score"
+msgstr "Progreso del curso del 100% y nota mínima para aprobar"
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to complete 100% course progress and earn the minimum passing score to successfully pass the course."
+msgstr "El alumno debe completar el curso al 100% y lograr la calificación mínima aprobatoria para aprobar el curso."
+
+#: cms/templates/settings_graders.html
+msgid "Minimum passing score only"
+msgstr "Solo nota mínima para aprobar"
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to earn only the minimum passing score to successfully pass the course."
+msgstr "El alumno solo necesita alcanzar la nota mínima de aprobación para aprobar el curso."
+
+#: cms/templates/settings_graders.html
+msgid "Changes on Course Completion Rule are not retroactive. If a Studio Admin changes the rule for a started course, learners will have to revisit the graded activities to see their score recalculated."
+msgstr "Los cambios realizados en la regla de fin de curso no son retroactivos. Si un administrador del estudio cambia la regla de un curso que ya ha comenzado, los alumnos deberán volver a visitar las actividades calificadas para que se vuelva a calcular su puntuación."

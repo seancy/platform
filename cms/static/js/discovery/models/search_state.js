@@ -8,7 +8,7 @@
         return Backbone.Model.extend({
 
             page: 0,
-            pageSize: 1500,
+            pageSize: 2000,
             searchTerm: '',
             terms: {},
             jqhxr: null,

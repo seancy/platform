@@ -45,11 +45,13 @@ def tag_restart_service = ''
 def tag_config_file = ''
 def commit_id = ''
 def lt_user_id = ''
+def stage_deploy_branch_name = ''
+def revert_process = false
 
 
 def choose_environment(this_environment) {
     if (this_environment == 'PROD') {
-        this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'restart service', 'xblock', 'certs', 'config file'], description: 'which process to run')]
+        this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'restart service', 'xblock', 'certs', 'config file', 'revert platform code'], description: 'which process to run')]
     } else if (this_environment == 'STAGING') {
         this_process = input message: "which process to run", parameters: [choice(name: 'process', choices: ['platform', 'theme', 'platform&theme', 'restart service', 'xblock', 'certs', 'config file'], description: 'which process to run')]
     } else if (this_environment == 'PREPROD') {
@@ -162,7 +164,21 @@ def choose_tenant() {
     }
 }
 
-
+def send_slack_message(stage_deploy_branch_name, step){
+    if (step == 'start') {
+        sh """
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"${stage_deploy_branch_name} is deploying on Stage"}' https://hooks.slack.com/services/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
+        """   
+    } else if (step == 'success_end') {
+        sh """
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"${stage_deploy_branch_name} is successful to deploy on Stage"}' https://hooks.slack.com/services/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
+        """
+    } else if (step == 'failure_end') {
+        sh """
+        curl -X POST -H 'Content-type: application/json' --data '{"text":"${stage_deploy_branch_name} is failed to deploy on Stage"}' https://hooks.slack.com/services/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
+        """
+    }
+}
 
 
 
@@ -211,6 +227,7 @@ pipeline {
                         if (params.DEPLOY_OWNER.substring(0,12) == 'staging-auto') {
                             println params.DEPLOY_OWNER.substring(0,12)
                             println params.DEPLOY_OWNER.replaceAll('staging-auto-', '')
+                            stage_deploy_branch_name = params.DEPLOY_OWNER.replaceAll('staging-auto-', '')
                             stage_auto_proceed = true
                             platform_process = true
                             this_environment = 'STAGING'
@@ -221,6 +238,7 @@ pipeline {
                                 this_platform_branch = params.DEPLOY_OWNER.replaceAll('staging-auto-', '')
                                 theme_process = false
                             }
+                            send_slack_message(stage_deploy_branch_name, 'start')
                         }
                     } catch (err) {
                         println err
@@ -307,6 +325,8 @@ pipeline {
                                 } else if (sub_config_file_process == 'platform') {
                                     tag_config_file = 'update_platform'
                                 }
+                            } else if (this_process == 'revert platform code') {
+                                revert_process = true
                             }
                         }   
                     } catch (err) {
@@ -534,6 +554,23 @@ pipeline {
                                     ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "deploy" -e "edx_platform_version=${this_platform_branch}" -e "migrate_lt_db=no" -e "run_npm_install=no" -e "run_trans_script=no" lt_pipeline_jobs.yml
                                     """
                                 }
+                            }
+                        }
+                    }
+                }
+                stage("Revert code") {
+                    when {
+                        expression { return proceed == true && revert_process == true }
+                    }
+                    steps {
+                        dir('configuration/playbooks') {
+                            script {
+                                restart_service_process = true
+                                tag_restart_service = 'restart-all'
+                                sh """
+                                . /tmp/.venvec2/bin/activate
+                                ansible-playbook -i "${instance_ip}" -u ubuntu --private-key /opt/instanceskey/"${ec2_location}"_platform_key.pem --vault-password-file "${key_file}" --tags "revert-production" -e "migrate_lt_db=no" -e "run_npm_install=no" -e "run_trans_script=no" -e "lt_ec2_region=${ec2_location}" lt_pipeline_jobs.yml
+                                """
                             }
                         }
                     }
@@ -924,6 +961,7 @@ pipeline {
                 if (stage_auto_proceed == true) {
                     githubNotify status: 'FAILURE', description: ' failed deploy at stage server'
                     println 'failure'
+                    send_slack_message(stage_deploy_branch_name, 'failure_end')
                 }
             }
         }
@@ -932,13 +970,17 @@ pipeline {
                 if (stage_auto_proceed == true) {
                     githubNotify status: 'SUCCESS', description: ' done deploy at stage server'
                     println 'success'
+                    send_slack_message(stage_deploy_branch_name, 'success_end')
                 }
             }
         }
         always {
             script {
-                if (proceed == true) {
+                if (proceed == true && manual == true) {
                     currentBuild.result = "SUCCESS"
+                    echo "RESULT: ${currentBuild.result}"
+                } else if (proceed == false && manual == false) {
+                    currentBuild.result = 'ABORTED'
                     echo "RESULT: ${currentBuild.result}"
                 } else if (proceed == false) {
                     currentBuild.result = "FAILURE"

@@ -692,6 +692,9 @@ def do_create_account(form, custom_form=None):
     extended_profile = form.cleaned_extended_profile
     if extended_profile:
         profile.meta = json.dumps(extended_profile)
+    client_service_id = configuration_helpers.get_value('CLIENT_SERVICE_ID', None)
+    if client_service_id:
+        profile.service_id = client_service_id
     try:
         profile.save()
     except Exception:

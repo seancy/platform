@@ -233,8 +233,13 @@ class CourseFields(object):
             "GRADER": [],
             "GRADE_CUTOFFS": {
                 "Pass": 0.5,
-            },
+            }
         },
+        scope=Scope.content
+    )
+    course_completion_rule = String(
+        help=_(""),
+        default="default",
         scope=Scope.content
     )
     show_calculator = Boolean(

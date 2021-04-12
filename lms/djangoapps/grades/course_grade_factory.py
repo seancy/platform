@@ -232,7 +232,8 @@ class CourseGradeFactory(object):
 
         return course_grade
 
-    def update_course_completion_percentage(self, course_key, user, course_grade=None, enrollment=None):
+    def update_course_completion_percentage(self, course_key, user, course_grade=None,
+                                            enrollment=None, force_update_grade=False):
         from triboo_analytics.models import LeaderBoard
         course_usage_key = modulestore().make_course_usage_key(course_key)
         overrides = PersistentSubsectionGradeOverride.objects.filter(
@@ -248,96 +249,65 @@ class CourseGradeFactory(object):
                  unicode(course_key), user.id, percent_progress)
         if not enrollment:
             enrollment = CourseEnrollment.get_enrollment(user, course_key)
-        if overrides.exists():
-            if not course_grade:
-                course_grade = self.read(user, course_key=course_key)
-            passed = course_grade.passed
-            try:
-                # in case that it fails to fetch courseenrollment and returns None
-                if passed:
-                    if not enrollment.completed:
-                        completion_date = datetime.today()
-                        enrollment.completed = completion_date
-                        enrollment.save()
-                        log.info(
-                            "Create completion date for user id %d / %s: %s" % (user.id, course_key, completion_date))
-                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
-                        leader_board.course_completed = leader_board.course_completed + 1
-                        leader_board.save()
-                        log.info(
-                            "updated course completed of leaderboard score "
-                            "for user: {user_id}, course_id: {course_id}".format(
-                                user_id=user.id,
-                                course_id=course_key
-                            )
-                        )
-                else:
-                    if enrollment.completed:
-                        enrollment.completed = None
-                        enrollment.save()
-                        log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
-                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
-                        if leader_board.course_completed > 0:
-                            leader_board.course_completed = leader_board.course_completed - 1
-                            leader_board.save()
-                            log.info(
-                                "updated course completed (-1) of leaderboard score "
-                                "for user: {user_id}, course_id: {course_id}".format(
-                                    user_id=user.id,
-                                    course_id=course_key
-                                )
-                            )
-                        cert = GeneratedCertificate.objects.filter(
-                            user=user, course_id=course_key, status='downloadable'
-                        )
-                        if cert.exists():
-                            cert.delete()
 
-            except AttributeError:
-                pass
+        # in some cases, we call the update_progress function, but the learner's enrollment
+        # somehow doesn't exit any more (deleted for some reason), we should end this function
+        # asap, not causing attribute error.
+        if enrollment is None:
+            pass
         else:
-            try:
-                # in case that it fails to fetch courseenrollment and returns None
-                if percent_progress == 100:
-                    if not enrollment.completed:
-                        completion_date = datetime.today()
-                        enrollment.completed = completion_date
-                        enrollment.save()
-                        log.info("Create completion date for user id %d / %s: %s" % (
-                            user.id, course_key, completion_date))
-                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
-                        leader_board.course_completed = leader_board.course_completed + 1
+            should_be_completed = False
+            if percent_progress == 100:
+                should_be_completed = True
+            elif overrides.exists() or modulestore().get_course(course_key).course_completion_rule == 'minimum':
+                if force_update_grade:
+                    course_grade = self.update(user, course_key=course_key)
+                else:
+                    if not course_grade:
+                        course_grade = self.read(user, course_key=course_key)
+                passed = course_grade.passed
+                if passed:
+                    should_be_completed = True
+
+            if should_be_completed:
+                if not enrollment.completed:
+                    completion_date = datetime.today()
+                    enrollment.completed = completion_date
+                    enrollment.save()
+                    log.info(
+                        "Create completion date for user id %d / %s: %s" % (user.id, course_key, completion_date))
+                    leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                    leader_board.course_completed = leader_board.course_completed + 1
+                    leader_board.save()
+                    log.info(
+                        "updated course completed of leaderboard score "
+                        "for user: {user_id}, course_id: {course_id}".format(
+                            user_id=user.id,
+                            course_id=course_key
+                        )
+                    )
+            else:
+                if enrollment.completed:
+                    enrollment.completed = None
+                    enrollment.save()
+                    log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
+                    leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
+                    if leader_board.course_completed > 0:
+                        leader_board.course_completed = leader_board.course_completed - 1
                         leader_board.save()
                         log.info(
-                            "updated course completed of leaderboard score "
+                            "updated course completed (-1) of leaderboard score "
                             "for user: {user_id}, course_id: {course_id}".format(
                                 user_id=user.id,
                                 course_id=course_key
                             )
                         )
-                else:
-                    if enrollment.completed:
-                        enrollment.completed = None
-                        enrollment.save()
-                        log.info("Delete completion date for user id %d / %s" % (user.id, course_key))
-                        leader_board, _ = LeaderBoard.objects.get_or_create(user=user)
-                        if leader_board.course_completed > 0:
-                            leader_board.course_completed = leader_board.course_completed - 1
-                            leader_board.save()
-                            log.info(
-                                "updated course completed (-1) of leaderboard score "
-                                "for user: {user_id}, course_id: {course_id}".format(
-                                    user_id=user.id,
-                                    course_id=course_key
-                                )
-                            )
-                        cert = GeneratedCertificate.objects.filter(
-                            user=user, course_id=course_key, status='downloadable'
-                        )
-                        if cert.exists():
-                            cert.delete()
-            except AttributeError:
-                pass
+                    cert = GeneratedCertificate.objects.filter(
+                        user=user, course_id=course_key, status='downloadable'
+                    )
+                    if cert.exists():
+                        cert.delete()
+
         if should_persist_grades(course_key):
             PersistentCourseProgress.update_or_create(
                 user_id=user.id,

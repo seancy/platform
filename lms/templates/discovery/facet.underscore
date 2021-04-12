@@ -1,4 +1,4 @@
-<div class="fact-wrapper hidden-panel">
+<div class="fact-wrapper">
     <h3 class="header-facet" title="<%- gettext(title) %>">
         <%- gettext(displayName) %>
     </h3>

@@ -396,7 +396,13 @@ def _accessible_courses_summary_iter(request, org=None):
 
         return has_studio_read_access(request.user, course_summary.id)
     if org is not None:
-        courses_summary = [] if org == '' else CourseOverview.get_all_courses(orgs=[org])
+        #courses_summary = [] if org == '' else CourseOverview.get_all_courses(orgs=[org])
+        if org == '':
+            courses_summary = []
+        elif isinstance(org, list):
+            courses_summary = CourseOverview.get_all_courses(orgs=org)
+        else:
+            courses_summary = CourseOverview.get_all_courses(orgs=[org])
     else:
         courses_summary = modulestore().get_course_summaries()
     courses_summary = six.moves.filter(course_filter, courses_summary)
@@ -559,11 +565,12 @@ def course_listing(request):
     active_courses, archived_courses = _process_courses_list(courses_iter, in_process_course_actions, split_archived)
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
-    orgs = SiteConfiguration.get_all_orgs()
+    #orgs = SiteConfiguration.get_all_orgs()
+    orgs = configuration_helpers.get_value('course_org_filter', [])
+    if not isinstance(orgs, list):
+        orgs = [orgs]
+
     pre_facet_filters = {}
-    if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
-                                       settings.FEATURES.get('ENABLE_PROGRAMMATIC_ENROLLMENT', False)):
-        settings.COURSE_DISCOVERY_FILTERS.extend(['course_country', 'enrollment_learning_groups'])
 
     trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
 
@@ -1178,10 +1185,14 @@ def settings_handler(request, course_key_string):
             )
             sidebar_html_enabled = course_experience_waffle().is_enabled(ENABLE_COURSE_ABOUT_SIDEBAR_HTML)
 
+            selected_countries = CourseDetails.fetch(course_key).course_country
             country_options = ['All countries']
             if configuration_helpers.get_value('COURSE_COUNTRIES', []):
                 country_options += configuration_helpers.get_value('COURSE_COUNTRIES', [])
-            selected_countries = CourseDetails.fetch(course_key).course_country
+                for c in selected_countries:
+                    if c not in country_options:
+                        country_options.append(c)
+                country_options.sort()
 
             settings_context = {
                 'context_course': course_module,
@@ -1237,7 +1248,11 @@ def settings_handler(request, course_key_string):
                 settings_context.update({'site_config_course_tags': site_config_course_tags})
 
             if is_prerequisite_courses_enabled():
-                courses, in_process_course_actions = get_courses_accessible_to_user(request)
+                org_filter = configuration_helpers.get_value('course_org_filter', None)
+                if org_filter:
+                    courses, in_process_course_actions = get_courses_accessible_to_user(request, org_filter)
+                else:
+                    courses, in_process_course_actions = get_courses_accessible_to_user(request)
                 # exclude current course from the list of available courses
                 courses = (course for course in courses if course.id != course_key)
                 if courses:

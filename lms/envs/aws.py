@@ -111,7 +111,7 @@ CELERYBEAT_SCHEDULE = {
         'task': 'lms.djangoapps.integrations.slack_lt.tasks.default_slack_message',
         'schedule': crontab(minute=0, hour=0),
         'options': {'queue': 'edx.lms.message'}
-    },
+    }
 }  # For scheduling tasks, entries can be added to this dict
 
 ########################## NON-SECURE ENV CONFIG ##############################
@@ -649,7 +649,7 @@ DISABLE_ACCOUNT_ACTIVATION_REQUIREMENT_SWITCH = ENV_TOKENS.get(
 )
 
 # Grades download
-GRADES_DOWNLOAD_ROUTING_KEY = ENV_TOKENS.get('GRADES_DOWNLOAD_ROUTING_KEY', HIGH_MEM_QUEUE)
+GRADES_DOWNLOAD_ROUTING_KEY = ENV_TOKENS.get('GRADES_DOWNLOAD_ROUTING_KEY', HIGH_PRIORITY_QUEUE)
 
 GRADES_DOWNLOAD = ENV_TOKENS.get("GRADES_DOWNLOAD", GRADES_DOWNLOAD)
 
@@ -831,6 +831,7 @@ FEATURES['ENABLE_COURSE_DISCOVERY'] = True
 FEATURES['ENABLE_COURSEWARE_SEARCH'] = True
 FEATURES['ENABLE_LAST_ACTIVITY'] = False
 FEATURES['ENABLE_PROGRAMMATIC_ENROLLMENT'] = False
+FEATURES['ENABLE_EXTERNAL_CATALOG'] = False
 
 if FEATURES.get('ENABLE_COURSEWARE_SEARCH') or \
    FEATURES.get('ENABLE_DASHBOARD_SEARCH') or \
@@ -849,6 +850,9 @@ FACEBOOK_APP_ID = AUTH_TOKENS.get("FACEBOOK_APP_ID")
 XBLOCK_SETTINGS = ENV_TOKENS.get('XBLOCK_SETTINGS', {})
 XBLOCK_SETTINGS.setdefault("VideoDescriptor", {})["licensing_enabled"] = FEATURES.get("LICENSING", False)
 XBLOCK_SETTINGS.setdefault("VideoModule", {})['YOUTUBE_API_KEY'] = AUTH_TOKENS.get('YOUTUBE_API_KEY', YOUTUBE_API_KEY)
+
+##### XBLOCK AUTH #####
+XBLOCK_AUTH = AUTH_TOKENS.get('XBLOCK_AUTH', {})
 
 ##### VIDEO IMAGE STORAGE #####
 VIDEO_IMAGE_SETTINGS = ENV_TOKENS.get('VIDEO_IMAGE_SETTINGS', VIDEO_IMAGE_SETTINGS)
@@ -1115,6 +1119,9 @@ COURSE_DISCOVERY_MEANINGS = {
     'vendor': {
         'name': 'Tag'
     },
+    'course_country': {
+        'name': 'Country'
+    },
     'course_mandatory_enabled': {
         'name': 'Mandatory',
         'terms': dict(MANDATORY_OPTIONS),
@@ -1122,7 +1129,7 @@ COURSE_DISCOVERY_MEANINGS = {
 }
 
 # Max search page size for LMS Catalog
-SEARCH_MAX_PAGE_SIZE = 1500
+SEARCH_MAX_PAGE_SIZE = 2000
 
 SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
 
@@ -1287,3 +1294,12 @@ FEATURES['ENABLE_DASHBOARD_BOOKMARKS'] = False
 
 ################ Enable Video auto-advance in video player control ####################
 FEATURES['ENABLE_AUTOADVANCE_VIDEOS'] = True
+
+# Crehana Catalog API
+
+CREHANA_API_KEY = AUTH_TOKENS.get('CREHANA_API_KEY', '')
+CREHANA_SECRET_KEY = AUTH_TOKENS.get('CREHANA_SECRET_KEY', '')
+
+################ Enable Crehana catalog ####################
+FEATURES['ENABLE_CREHANA_CATALOG'] = False
+CREHANA_RENAME = "Crehana"

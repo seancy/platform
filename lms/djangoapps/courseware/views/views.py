@@ -38,7 +38,7 @@ from ipware.ip import get_ip
 from markupsafe import escape
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
-from pytz import UTC
+from pytz import UTC, timezone as tz
 from rest_framework import status
 from six import text_type
 from web_fragments.fragment import Fragment
@@ -46,8 +46,10 @@ from web_fragments.fragment import Fragment
 import shoppingcart
 import survey.views
 from branding.api import get_logo_url
+from student.triboo_groups import EDFLEX_DENIED_GROUP
+from student.triboo_groups import CREHANA_DENIED_GROUP
 from lms.djangoapps.certificates import api as certs_api
-from lms.djangoapps.certificates.models import CertificateStatuses
+from lms.djangoapps.certificates.models import CertificateStatuses, GeneratedCertificate
 from course_modes.models import CourseMode, get_course_prices
 from courseware.access import has_access, has_ccx_coach_role
 from courseware.access_utils import check_course_open_for_learner
@@ -89,6 +91,8 @@ from lms.djangoapps.instructor.enrollment import (
 )
 from lms.djangoapps.instructor.views.api import require_global_staff
 from lms.djangoapps.verify_student.services import IDVerificationService
+from lms.djangoapps.external_catalog.utils import get_edflex_configuration
+from lms.djangoapps.external_catalog.utils import get_crehana_configuration
 from openedx.core.djangoapps.catalog.utils import get_programs, get_programs_with_type
 from openedx.core.djangoapps.certificates import api as auto_certs_api
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
@@ -123,6 +127,7 @@ from util.email_utils import send_mail_with_alias as send_mail
 from util.json_request import JsonResponse
 from util.milestones_helpers import get_prerequisite_courses_display
 from util.views import _record_feedback_in_zendesk, ensure_valid_course_key, ensure_valid_usage_key
+from util.string_utils import is_str_url
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError, NoPathToItem
 from xmodule.tabs import CourseTabList
@@ -238,7 +243,39 @@ def user_groups(user):
 def courses(request):
     """
     Render "find courses" page.  The course selection work is done in courseware.courses.
+
+    Logic:
+        if [edflex catalog enable + edflex API config set] + user signed in:
+           if [crehana catalog enable + crehana API config set]:
+               => 3 tabs + we redirect to "All"
+           else:
+               => no tabs + we display the Edflex catalog
+        else:
+           if [crehana catalog enable + crehana API config set] + user signed in:
+               => no tabs + we display the Crehana catalog
+           else:
+               => no external catalog
     """
+    enable_external_catalog_button = configuration_helpers.get_value(
+        'ENABLE_EXTERNAL_CATALOG', settings.FEATURES.get('ENABLE_EXTERNAL_CATALOG', False)
+    )
+    user_groups = {group.name for group in request.user.groups.all()}
+    is_edflex_enabled = all(
+        (enable_external_catalog_button, all(get_edflex_configuration().values()), EDFLEX_DENIED_GROUP not in user_groups)
+    )
+    is_crehana_enabled = all(
+        (enable_external_catalog_button, all(get_crehana_configuration().values()), CREHANA_DENIED_GROUP not in user_groups)
+    )
+    external_button_url = r''   # `empty` means: hide `external catalog button`
+
+    if request.user.is_authenticated and (is_edflex_enabled or is_crehana_enabled):
+        if is_edflex_enabled and is_crehana_enabled:
+            external_button_url = r'/all_external_catalog'
+        elif is_edflex_enabled:
+            external_button_url = r'/edflex_catalog'
+        else:
+            external_button_url = r'/crehana_catalog'
+
     courses_list = []
     course_discovery_meanings = getattr(settings, 'COURSE_DISCOVERY_MEANINGS', {})
     if not settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
@@ -252,7 +289,6 @@ def courses(request):
 
     # Add marketable programs to the context.
     programs_list = get_programs_with_type(request.site, include_hidden=False)
-
     trans_for_tags = configuration_helpers.get_value('COURSE_TAGS', {})
 
     return render_to_response(
@@ -262,7 +298,8 @@ def courses(request):
             'course_discovery_meanings': course_discovery_meanings,
             'programs_list': programs_list,
             'show_dashboard_tabs': True,
-            'trans_for_tags': trans_for_tags
+            'trans_for_tags': trans_for_tags,
+            'external_button_url': external_button_url
         }
     )
 
@@ -696,7 +733,8 @@ class CourseTabView(EdxFragmentView):
                 resume_course_url = get_last_accessed_courseware(request, course)
 
                 if not isinstance(request.user, AnonymousUser):
-                    progress = CourseGradeFactory().update_course_completion_percentage(course.id, request.user)
+                    progress = CourseGradeFactory().update_course_completion_percentage(
+                        course.id, request.user, force_update_grade=True)
                     progress = int(progress * 100)
 
         context = {
@@ -2790,6 +2828,94 @@ def process_ilt_validation_check_email():
         send_mail_to_student(i, param_dict=params, language=lang)
 
 
+def process_virtual_session_check_email(time_mode='hourly'):
+    log_file = "edx.scripts.ilt_virtual_session_check"
+    ilt_virtual_session_log = logging.getLogger(log_file)
+    summaries = XModuleUserStateSummaryField.objects.filter(field_name='enrolled_users')
+    student_email_info_dict = {}
+    stripped_site_name = configuration_helpers.get_value(
+        'SITE_NAME',
+        settings.SITE_NAME
+    )
+    if not settings.FEATURES.get('ENABLE_ILT_VIRTUAL_SESSION_REMINDER', False):
+        ilt_virtual_session_log.info("ILT virtual session reminder is not enabled.")
+        return
+    for s in summaries:
+        try:
+            usage_id = s.usage_id
+            ilt_block = modulestore().get_item(usage_id)
+            sessions_summary = XModuleUserStateSummaryField.objects.get(field_name="sessions", usage_id=usage_id)
+            sessions_info = json.loads(sessions_summary.value)
+            enrolled_user_info = json.loads(s.value)
+            for session_id, users in enrolled_user_info.items():
+                session = sessions_info[session_id]
+                location = session.get("location", "")
+                session_timezone = tz(session.get("timezone", "UTC"))
+                if not is_str_url(location):
+                    continue
+                start_time = session_timezone.localize(decode_datetime(session['start_at']))
+                end_time = session_timezone.localize(decode_datetime(session['end_at']))
+                now_time = datetime.now(tz=session_timezone)
+                send_email = False
+                if time_mode == 'daily':
+                    time_diff = start_time.date() - now_time.date()
+                    if time_diff.days == 1:
+                        send_email = True
+                elif time_mode == 'hourly':
+                    # now_time - timedelta(0, 60) to avoid that 9:00:00 - 8:00:05(exact time now) < 1 (hour)
+                    time_diff = start_time - (now_time - timedelta(0, 60))
+                    if time_diff.total_seconds() // 3600 == 1:
+                        send_email = True
+                if send_email:
+                    for user_id, v in users.items():
+                        user = User.objects.get(id=user_id)
+                        email = user.email
+                        if email and email not in student_email_info_dict.keys():
+                            course_id = ilt_block.course_id
+                            section_id = ilt_block.get_parent().parent.block_id
+                            chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+                            unit_url = u'{proto}://{site}{path}'.format(
+                                proto="https",
+                                site=stripped_site_name,
+                                path=reverse('courseware_section', args=[unicode(course_id), chapter_id, section_id])
+                            )
+                            user_name = user.username
+                            if user.first_name and user.last_name:
+                                user_name = "{} {}".format(user.first_name, user.last_name)
+                            message_type = "ilt_virtual_session_{}_reminder".format(time_mode)
+                            start_hour_time = "{h}:{min}".format(h=start_time.hour, min=start_time.minute)
+                            end_hour_time = "{h}:{min}".format(h=end_time.hour, min=end_time.minute)
+                            email_params = dict(
+                                user_name=user_name,
+                                start_date=str(start_time.date()),
+                                start_hour=start_hour_time,
+                                end_date=str(end_time.date()),
+                                end_hour=end_hour_time,
+                                timezone=session.get("timezone", "UTC"),
+                                duration_time=session.get("duration", ""),
+                                location=session.get("location", ""),
+                                unit_url=unit_url,
+                                message=message_type,
+                                time_mode=time_mode,
+                                usage_id=usage_id,
+                                site_name=None,
+                            )
+                            student_email_info_dict[email] = email_params
+        except ItemNotFoundError:
+            ilt_virtual_session_log.error("ILT block: {usage_id} does not exist.".format(usage_id=usage_id))
+    for email, params in student_email_info_dict.items():
+        student = User.objects.get(email=email)
+        ilt_virtual_session_log.info("Sending ILT virtual session {time_mode} email to {user_email} (ILT block: {usage_id}, begins on {start_date} at {start_hour} {timezone})".format(
+            time_mode=params['time_mode'],
+            user_email=email,
+            usage_id=params['usage_id'],
+            start_date=params['start_date'],
+            start_hour=params['start_hour'],
+            timezone=params['timezone']
+        ))
+        send_mail_to_student(email, param_dict=params, language=get_user_email_language(student))
+
+
 # course reminder
 class CourseReminder():
 
@@ -2852,6 +2978,9 @@ class CourseReminder():
             student=course_enrollment.user
         )
         student_modules.delete()
+        cert = GeneratedCertificate.objects.filter(user=course_enrollment.user, course_id=course_enrollment.course_id)
+        if cert.exists():
+            cert.delete()
 
         if PersistentGradesEnabledFlag(course_enrollment.course_id):
             try:

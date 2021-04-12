@@ -95,7 +95,7 @@ CELERY_ROUTES = "{}celery.Router".format(QUEUE_VARIANT)
 with open(CONFIG_ROOT / CONFIG_PREFIX + "env.json") as env_file:
     ENV_TOKENS = json.load(env_file)
 
-GRADES_DOWNLOAD_ROUTING_KEY = ENV_TOKENS.get('GRADES_DOWNLOAD_ROUTING_KEY', HIGH_MEM_QUEUE)
+GRADES_DOWNLOAD_ROUTING_KEY = ENV_TOKENS.get('GRADES_DOWNLOAD_ROUTING_KEY', HIGH_PRIORITY_QUEUE)
 
 # Do NOT calculate this dynamically at startup with git because it's *slow*.
 EDX_PLATFORM_REVISION = ENV_TOKENS.get('EDX_PLATFORM_REVISION', EDX_PLATFORM_REVISION)
@@ -635,7 +635,9 @@ ELASTIC_SEARCH_CONFIG = ENV_TOKENS.get('ELASTIC_SEARCH_CONFIG', [{}])
 
 LANGUAGE_MAP = {'terms': {lang: display for lang, display in ALL_LANGUAGES}, 'name': 'Language'}
 
-COURSE_DISCOVERY_FILTERS = ["language", "status", "course_category", "vendor", "course_mandatory_enabled"]
+COURSE_DISCOVERY_FILTERS = [
+    "language", "start", "course_category", "vendor",
+    "course_mandatory_enabled", 'course_country', 'enrollment_learning_groups']
 
 COURSE_DISCOVERY_MEANINGS = {
     'language': LANGUAGE_MAP,
@@ -674,7 +676,7 @@ COURSE_COUNTRY_MAPPING = {
 SEARCH_SKIP_ENROLLMENT_START_DATE_FILTERING = True
 
 # Max search page size for Studio home page
-SEARCH_MAX_PAGE_SIZE = 1500
+SEARCH_MAX_PAGE_SIZE = 2000
 
 ########## Enable Video auto-advance to let course staff to set this feature in Advanced Settings ###############
 FEATURES['ENABLE_AUTOADVANCE_VIDEOS'] = True

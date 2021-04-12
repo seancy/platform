@@ -594,6 +594,19 @@ VIDEO_TRANSCRIPTS_SETTINGS = dict(
     DIRECTORY_PREFIX='video-transcripts/',
 )
 
+########################## EDFLEX CATALOG ############################
+XBLOCK_SETTINGS = {
+    "EdflexXBlock": {
+        "EDFLEX_CLIENT_ID": "xx",
+        "EDFLEX_CLIENT_SECRET": "xx",
+        "EDFLEX_LOCALE": [
+            "en",
+            "fr"
+        ],
+        "EDFLEX_BASE_API_URL": "https://triboo.edflex.com/api"
+    }
+}
+
 ####################### Plugin Settings ##########################
 
 from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants

@@ -29,6 +29,7 @@ from courseware.views.views import (
 from debug import views as debug_views
 from django_comment_common.models import ForumsConfig
 from django_openid_auth import views as django_openid_auth_views
+from external_catalog import views as external_catalog_views
 from lms.djangoapps.certificates import views as certificates_views
 from lms.djangoapps.discussion import views as discussion_views
 from lms.djangoapps.instructor.views import coupons as instructor_coupons_views
@@ -330,7 +331,21 @@ urlpatterns += [
     url(r'^courses/?$', branding_views.courses, name='courses'),
 
     # view of edflex catalog
-    url(r'^courses/edflex_catalog$', branding_views.edflex_catalog, name='edflex_catalog'),
+    url(r'^courses/edflex_catalog$', external_catalog_views.edflex_catalog, name='edflex_catalog'),
+
+    # view of external catalog with different course resources
+    url(r'^edflex_catalog$', external_catalog_views.edflex_catalog_handler, name='external_catalog_handler'),
+    url(r'^edflex_catalog/courses$', external_catalog_views.edflex_courses_handler, name='external_catalog_courses_handler'),
+
+    # view of crehana catalog
+    url(r'^courses/crehana_catalog$', external_catalog_views.CrehanaSSORedirectionPage.as_view(), name='crehana_catalog'),
+
+    # # view of crehana catalog with different course resources
+    url(r'^crehana_catalog$', external_catalog_views.CrehanaCoursesSearchPage.as_view(), name='crehana_catalog_page'),
+    url(r'^crehana_catalog/data$', external_catalog_views.CrehanaCoursesData.as_view(), name='crehana_catalog_data'),
+
+    # # overview of crehana catalog with different course resources
+    url(r'^all_external_catalog$', external_catalog_views.CoursesOverviewPage.as_view(), name='all_external_catalog'),
 
     #About the course
     url(

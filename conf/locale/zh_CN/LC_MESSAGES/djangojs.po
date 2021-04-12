@@ -10725,16 +10725,22 @@ msgid "Display Name"
 msgstr "显示名称"
 
 #: cms/templates/js/course-outline.underscore:129
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(min)s min"
-msgstr "%(min)s分钟"
+msgstr "%(min)s 分钟"
 
 #: cms/templates/js/course-outline.underscore:132
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(h)s h"
-msgstr "%(h)s小时"
+msgstr "%(h)s 小时"
+
+#: lms/static/js/discovery/views/course_card.js
+msgid "%(d)s d"
+msgstr "%(d)s 天"
 
 #: cms/templates/js/course-outline.underscore:135
 msgid "%(h)s h %(min)s m"
-msgstr "%(h)s时%(min)s分"
+msgstr "%(h)s 时 %(min)s 分"
 
 #: cms/templates/js/course-outline.underscore:138
 #: cms/templates/js/course-outline.underscore:140
@@ -12070,6 +12076,10 @@ msgstr "波兰语"
 msgid "Spanish"
 msgstr "西班牙语"
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Italian"
+msgstr "意大利语"
+
 #: lms/templates/discovery/facet.underscore
 msgid "Tag"
 msgstr "标签"
@@ -12176,60 +12186,87 @@ msgstr "发展领域"
 msgid "Time format HH:MM expected"
 msgstr "时间格式 HH:MM"
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "in total"
-msgstr "总数"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hour"
-msgstr "小时"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hours"
-msgstr "小时"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "day"
-msgstr "天"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "days"
-msgstr "天"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "week"
-msgstr "周"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "weeks"
-msgstr "周"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "month"
-msgstr "月"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "months"
-msgstr "月"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "year"
 msgstr "年"
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "years"
 msgstr "年"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "month"
+msgstr "月"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "months"
+msgstr "月"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "week"
+msgstr "周"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "weeks"
+msgstr "周"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "day"
+msgstr "天"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "days"
+msgstr "天"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hour"
+msgstr "小时"
+
+#: lms/static/js/crehana_catalog/CrehanaCatalogCourses.jsx
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hours"
+msgstr "小时"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:53
+msgid "in total"
+msgstr "总数"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:35
+msgid "There is no content available for this category or language at the moment"
+msgstr "目前没有针对这个分类或语言的可用内容"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:158
+msgid "Unable to update settings"
+msgstr "不可更新设置"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:196
+msgid "Choose a category"
+msgstr "选择一种分类"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:222
+msgid "Choose a language"
+msgstr "选择一种语言"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:229
+msgid "Select the content of your choice"
+msgstr "选择您需要的内容"
+
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
 msgstr "排行榜"
@@ -12316,15 +12353,96 @@ msgstr "是"
 msgid "No"
 msgstr "否"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag and Drop"
 msgstr "拖放"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag & Drop"
 msgstr "拖放"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:298
+msgid "Keyboard Help"
+msgstr "键盘操作帮助"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:306
+msgid ""
+"You can complete this problem using only your keyboard by following the "
+"guidance below:"
+msgstr "您可以根据以下的操作指导只通过键盘操作来完成这个流程："
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:307
+msgid ""
+"Drag and Drop problems consist of draggable items and dropzones. Users "
+"should select a draggable item with their keyboard and then navigate to an "
+"appropriate dropzone to drop it."
+msgstr "拖放操作涉及可拖放的项目和放置区。用户应该在选中一个拖放项目后，将它拖动到合适的放置区后并放置。"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:309
+msgid ""
+"Use only TAB and SHIFT+TAB to navigate between draggable items and drop "
+"zones."
+msgstr "只使用TAB键和SHIFT+TAB键的组合来移动放置可拖放项目到对应的放置区域。"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:310
+msgid "Press CTRL+M to select a draggable item (effectively picking it up)."
+msgstr "请使用CTRL+M的组合键来选择一个可拖放项目（注意：请有效的将拖放项目拖起来）。"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:311
+msgid ""
+"Navigate using TAB and SHIFT+TAB to the appropriate dropzone and press CTRL"
+"+M once more to drop it here."
+msgstr "请使用TAB键和SHIFT+TAB键的组合将可拖放项目移动到合适的放置区域并再一次按下CTRL+M键来进行放置。"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:312
+msgid ""
+"Press ESC if you want to cancel the drop operation (for example, to "
+"select a different item)."
+msgstr "如您想取消本次拖放操作，请按ESC键（比如，在您想改成对另一个拖放项目进行操作的时候）。"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:313
+msgid ""
+"TAB back to the list of draggable items and repeat this process until all of "
+"the draggable items have been placed on their respective dropzones."
+msgstr "回到可拖放项目列表，并重复这个操作流程。直到所有的可拖放项目都已经被合理放置到对应的放置区域。"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:453
+msgid "{earned}/{possible} point (graded)"
+msgid_plural "{earned}/{possible} points (graded)"
+msgstr[0] "{earned}/{possible} 分（分级）"
+msgstr[1] "{earned}/{possible} 分（分级）"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:459
+msgid "{earned}/{possible} point (ungraded)"
+msgid_plural "{earned}/{possible} points (ungraded)"
+msgstr[0] "{earned}/{possible} 分（非分级）"
+msgstr[1] "{earned}/{possible} 分（非分级）"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:468
+msgid "{possible} point possible (graded)"
+msgid_plural "{possible} points possible (graded)"
+msgstr[0] "{possible} 分可得（分级）"
+msgstr[1] "{possible} 分可得（分级）"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:474
+msgid "{possible} point possible (ungraded)"
+msgid_plural "{possible} points possible (ungraded)"
+msgstr[0] "{possible} 分可得（非分级）"
+msgstr[1] "{possible} 分可得（非分级）"
 
 #: XBlock: poll
 #: xblock-poll/poll/public/html/poll_results.handlebars
@@ -12351,3 +12469,115 @@ msgstr "没有注册课程"
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"
 msgstr "添加到日历"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Continue"
+msgstr "继续"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Explore"
+msgstr "探索课程"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "article"
+msgstr "文档"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "video"
+msgstr "视频"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External Resources"
+msgstr "外部课程"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "You are switching to the external resources catalog which is a collection of public resources, third party and external content. Please note that although the catalog is free to browse, content requiring a paid subscription, or specific authorization, will not be provided by default via this platform. Please contact your organization with any specific questions. Do you wish to continue?"
+msgstr "您将切换到外部资源目录，该目录是公共资源、第三方和外部内容的集合。请注意，尽管目录是免费浏览的，但默认情况下此平台不会提供需要付费订阅或特定授权的内容。如有任何特定问题，请与您的组织联系。你想继续吗？"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Internal"
+msgstr "内部课程目录"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External"
+msgstr "外部课程目录"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Filters"
+msgstr "筛选器"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Type of content"
+msgstr "内容类型"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Reset"
+msgstr "重置"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "${recordCount} resources found"
+msgstr "找到 ${recordCount} 项课程资源"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "We couldn't find any results for \"${searchString}\"."
+msgstr "我们无法找到任何符合 \"${searchString}\" 条件的结果。"
+
+#: lms/static/js/crehana_catalog/CrehanaCatalogOverviewCourses.js
+msgid "View all"
+msgstr "查看全部"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Rating"
+msgstr "评分"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Video Duration"
+msgstr "视频时长"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+msgid "${hour} hours"
+msgstr "${hour} 小时"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:5
+#: poll/public/handlebars/survey_results.handlebars:4
+msgid "Results"
+msgstr "结果"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:33
+#: poll/public/handlebars/survey_results.handlebars:41
+msgid "Results gathered from {total} respondent."
+msgid_plural "Results gathered from {total} respondents."
+msgstr[0] "从{total}受访者收集到的个结果。"
+msgstr[1] "从{total}多名受访者收集到结果。"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Sort by"
+msgstr "排序"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Most Recent"
+msgstr "最近日期优先"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Oldest"
+msgstr "最远日期优先"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Title A-Z"
+msgstr "标题 A-Z"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Title Z-A"
+msgstr "标题 Z-A"

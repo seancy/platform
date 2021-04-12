@@ -11229,12 +11229,18 @@ msgid "Display Name"
 msgstr "Nom d'affichage"
 
 #: cms/templates/js/course-outline.underscore:129
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(min)s min"
 msgstr "%(min)s min"
 
 #: cms/templates/js/course-outline.underscore:132
+#: lms/static/js/discovery/views/course_card.js
 msgid "%(h)s h"
 msgstr "%(h)s h"
+
+#: lms/static/js/discovery/views/course_card.js
+msgid "%(d)s d"
+msgstr "%(d)s j"
 
 #: cms/templates/js/course-outline.underscore:135
 msgid "%(h)s h %(min)s m"
@@ -12786,6 +12792,10 @@ msgstr "Polonais"
 msgid "Spanish"
 msgstr "Espagnol"
 
+#: lms/templates/discovery/facet_option.underscore
+msgid "Italian"
+msgstr "Italien"
+
 #: lms/static/js/courseware/ilt_validation.js:157
 msgid "yes"
 msgstr "oui"
@@ -12815,60 +12825,87 @@ msgstr "Axe de développement"
 msgid "Time format HH:MM expected"
 msgstr ""
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "in total"
-msgstr "au total"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hour"
-msgstr "heure"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "hours"
-msgstr "heures"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "day"
-msgstr "journée"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "days"
-msgstr "journées"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "week"
-msgstr "la semaine"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "weeks"
-msgstr "semaines"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "month"
-msgstr "mois"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
-msgid "months"
-msgstr "mois"
-
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "year"
 msgstr "an"
 
-#: XBlock: edflex
-#: edflex/static/js/src/parse_duration.js
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:25
 msgid "years"
 msgstr "ans"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "month"
+msgstr "mois"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:29
+msgid "months"
+msgstr "mois"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "week"
+msgstr "semaine"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:33
+msgid "weeks"
+msgstr "semaines"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "day"
+msgstr "journée"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:37
+msgid "days"
+msgstr "journées"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hour"
+msgstr "heure"
+
+#: lms/static/js/crehana_catalog/CrehanaCatalogCourses.jsx
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:41
+msgid "hours"
+msgstr "heures"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/parse_duration.js:53
+msgid "in total"
+msgstr "au total"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:35
+msgid "There is no content available for this category or language at the moment"
+msgstr "Il n'y a pas de contenu disponible pour cette catégorie ou langue pour le moment"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:158
+msgid "Unable to update settings"
+msgstr "Impossible de mettre à jour les paramètres"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:196
+msgid "Choose a category"
+msgstr "Choisissez une catégorie"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:222
+msgid "Choose a language"
+msgstr "Choisissez une langue"
+
+#: XBlock: edflex-xblock
+#: edflex/static/js/src/studio_edit.js:229
+msgid "Select the content of your choice"
+msgstr "Sélectionnez le contenu de votre choix"
+
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
 msgstr "Leaderboard"
@@ -12955,15 +12992,99 @@ msgstr "Oui"
 msgid "No"
 msgstr "Non"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag and Drop"
 msgstr "Glisser-déposer"
 
-#: XBlock: drag and drop
+#: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Drag & Drop"
 msgstr "Glisser-déposer"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:298
+msgid "Keyboard Help"
+msgstr "Raccourcis clavier"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:306
+msgid ""
+"You can complete this problem using only your keyboard by following the guidance below:"
+msgstr "Vous pouvez résoudre ce problème en utilisant uniquement votre clavier en suivant les instructions ci-dessous :"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:307
+msgid ""
+"Drag and Drop problems consist of draggable items and dropzones. Users "
+"should select a draggable item with their keyboard and then navigate to an "
+"appropriate dropzone to drop it."
+msgstr "Les problèmes de glisser-déposer consistent en des éléments déplaçables et des zones de dépôt. "
+"Les utilisateurs doivent sélectionner un élément déplaçable avec leur clavier, "
+"puis accéder à une zone de dépôt appropriée pour le déposer."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:309
+msgid ""
+"Use only TAB and SHIFT+TAB to navigate between draggable items and drop "
+"zones."
+msgstr "Utilisez uniquement TAB et MAJ+TAB pour naviguer entre les éléments déplaçables et les zones de dépôt."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:310
+msgid "Press CTRL+M to select a draggable item (effectively picking it up)."
+msgstr "Appuyez sur CTRL+M pour sélectionner un élément déplaçable."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:311
+msgid ""
+"Navigate using TAB and SHIFT+TAB to the appropriate dropzone and press CTRL"
+"+M once more to drop it here."
+msgstr "Naviguez en utilisant TAB et MAJ+TAB jusqu'à la zone de dépôt appropriée et appuyez à nouveau sur CTRL+M pour la déposer là."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:312
+msgid ""
+"Press ESC if you want to cancel the drop operation (for example, to "
+"select a different item)."
+msgstr "Appuyez sur ECHAP si vous souhaitez annuler l'opération de dépôt (par exemple, pour sélectionner un élément différent)."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:313
+msgid ""
+"TAB back to the list of draggable items and repeat this process until all of "
+"the draggable items have been placed on their respective dropzones."
+msgstr "Avec TAB, revenez à la liste des éléments déplaçables et "
+"répétez ce processus jusqu'à ce que tous les éléments déplaçables "
+"aient été placés sur leurs zones de dépôt respectives."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:453
+msgid "{earned}/{possible} point (graded)"
+msgid_plural "{earned}/{possible} points (graded)"
+msgstr[0] "{earned}/{possible} point (noté)"
+msgstr[1] "{earned}/{possible} points (noté)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:459
+msgid "{earned}/{possible} point (ungraded)"
+msgid_plural "{earned}/{possible} points (ungraded)"
+msgstr[0] "{earned}/{possible} point (non noté)"
+msgstr[1] "{earned}/{possible} points (non noté)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:468
+msgid "{possible} point possible (graded)"
+msgid_plural "{possible} points possible (graded)"
+msgstr[0] "{possible} point possible (noté)"
+msgstr[1] "{possible} points possibles (noté)"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: drag_and_drop_v2/public/js/drag_and_drop.js:474
+msgid "{possible} point possible (ungraded)"
+msgid_plural "{possible} points possible (ungraded)"
+msgstr[0] "{possible} point possible (non noté)"
+msgstr[1] "{possible} points possibles (non noté)"
 
 #: XBlock: poll
 #: xblock-poll/poll/public/html/poll_results.handlebars
@@ -12998,3 +13119,119 @@ msgstr "Sélectionner un pays dans le champs Pays du cours"
 #: cms/static/js/views/settings/main.js
 msgid "Your changes on this page will not be saved until you select at least one country under Course Country and then save."
 msgstr "Vos changements sur cette page ne seront pas sauvegardés tant que vous ne sélectionnez pas un pays dans la liste."
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "article"
+msgstr "article"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "video"
+msgstr "vidéo"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Continue"
+msgstr "Continuer"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Explore"
+msgstr "Catalogue"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External Resources"
+msgstr "Ressources externes"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "You are switching to the external resources catalog which is a collection of public resources, third party and external content. Please note that although the catalog is free to browse, content requiring a paid subscription, or specific authorization, will not be provided by default via this platform. Please contact your organization with any specific questions. Do you wish to continue?"
+msgstr "Vous passez au catalogue de ressources externes qui est une collection de ressources publiques, de contenu tiers et externe. Bien qu’il soit gratuit de parcourcir le catalogue, veuillez noter que les contenus nécessitant un abonnement payant ou une autorisation spécifique ne seront pas fournis par défaut via cette plateforme. Veuillez contacter votre organisation pour toute question spécifique. Souhaitez-vous continuer ?"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Internal"
+msgstr "Interne"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "External"
+msgstr "Externe"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Filters"
+msgstr "Filtres"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Type of content"
+msgstr "Type de contenu"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "${recordCount} resources found"
+msgstr "${recordCount} ressources trouvées"
+
+#: lms/static/js/external_catalog/ExternalCatalog.jsx
+msgid "We couldn't find any results for \"${searchString}\"."
+msgstr "Nous n’avons trouvé aucun résultat pour \"${searchString}\"."
+
+#: lms/static/js/crehana_catalog/CrehanaCatalogOverviewCourses.js
+msgid "View all"
+msgstr "Voir tout"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Rating"
+msgstr "Notation"
+
+#: lms/static/js/crehana_catalog/CoursesSidebar.js
+msgid "Video Duration"
+msgstr "Durée de la vidéo"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+msgid "${hour} h $(min) m"
+msgstr "${hour} h $(min)"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+msgid "${hour} hours"
+msgstr "${hour} heures"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:5
+#: poll/public/handlebars/survey_results.handlebars:4
+msgid "Results"
+msgstr "Résultats"
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:33
+#: poll/public/handlebars/survey_results.handlebars:41
+msgid "Results gathered from {total} respondent."
+msgid_plural "Results gathered from {total} respondents."
+msgstr[0] "Résultats recueillis auprès de {total} répondant."
+msgstr[1] "Résultats recueillis auprès de {total} répondants."
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Sort by"
+msgstr "Trier par"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Most Recent"
+msgstr "Le plus récent"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Oldest"
+msgstr "Le plus ancien"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Title A-Z"
+msgstr "Titre A-Z"
+
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js
+#: lms/static/js/external_catalog/CourseContainer.js
+#: lms/static/js/discovery/views/sort_button.js
+msgid "Title Z-A"
+msgstr "Titre Z-A"

@@ -1,6 +1,8 @@
 """Views for the branding app. """
 import logging
 import urllib
+import requests
+import json
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -14,21 +16,22 @@ from django.utils import translation
 from django.utils.translation.trans_real import get_supported_language_variant
 from django.views.decorators.cache import cache_control
 from django.views.decorators.csrf import ensure_csrf_cookie
+from requests.structures import CaseInsensitiveDict
 
 import branding.api as branding_api
 import courseware.views.views
 import student.views
 from edxmako.shortcuts import marketing_link, render_to_response
+from lms.djangoapps.external_catalog.utils import get_crehana_configuration
 from openedx.core.djangoapps.lang_pref.api import released_languages
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from student_account.views import login_and_registration_form
 from util.cache import cache_if_anonymous
 from util.json_request import JsonResponse
+from urllib import unquote
+from student.triboo_groups import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP
 
 log = logging.getLogger(__name__)
-
-CATALOG_DENIED_GROUP = "Catalog Denied Users"
-EDFLEX_DENIED_GROUP = "EdFlex Denied Users"
 
 
 @ensure_csrf_cookie
@@ -325,29 +328,3 @@ def footer(request):
 
     else:
         return HttpResponse(status=406)
-
-
-@ensure_csrf_cookie
-@login_required
-@cache_if_anonymous()
-def edflex_catalog(request):
-    """
-    If the "ENABLE_EDFLEX_CATALOG" feature is true
-       and the EDFLEX url link is provided in django admin
-       and the user is not part of the EDFLEX_DENIED_GROUP
-    then render the page containing an iframe loading the url.
-    Otherwise return 404
-    """
-    enable_edflex = configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG',
-                                                    settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False))
-    edflex_url = configuration_helpers.get_value('EDFLEX_URL', None)
-    if (enable_edflex and edflex_url
-            and EDFLEX_DENIED_GROUP not in [group.name for group in request.user.groups.all()]):
-        context = {'edflex_url': edflex_url}
-        # By default redirect
-        redirect_edflex = configuration_helpers.get_value('ENABLE_EDFLEX_REDIRECTION', True)
-        if redirect_edflex:
-            return redirect(edflex_url)
-        return render_to_response('courseware/edflex_catalog.html', context)
-    else:
-        raise Http404

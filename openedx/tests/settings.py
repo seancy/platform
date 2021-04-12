@@ -79,7 +79,7 @@ INSTALLED_APPS = (
     'celery_utils',
 
     # Django 1.11 demands to have imported models supported by installed apps.
-    'completion',
+    'completion'
 )
 
 LMS_ROOT_URL = 'http://localhost:8000'

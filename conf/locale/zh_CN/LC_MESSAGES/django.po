@@ -13749,10 +13749,8 @@ msgid "Content Locked"
 msgstr "内容已锁定"
 
 #: lms/templates/_gated_content.html:18
-msgid ""
-"You must complete the prerequisites for '{prereq_section_name}' to access "
-"this content."
-msgstr "您必须完成'{prereq_section_name}' 的先决条件才能访问此内容。"
+msgid "You must complete the sub-section '{prereq_section_name}' to access this content."
+msgstr "您必须完成'{prereq_section_name}' 小节才能访问此内容。"
 
 #: lms/templates/_gated_content.html:22
 msgid "Go to Prerequisite Section"
@@ -14024,6 +14022,10 @@ msgstr "探索课程"
 #: lms/templates/header/navbar-authenticated.html:60
 msgid "My Mooc"
 msgstr "My Mooc"
+
+#: lms/templates/header/navbar-authenticated.html
+msgid "ILT request validation page"
+msgstr "ILT 请求验证页面"
 
 #: lms/templates/footer.html:105 lms/templates/my_courses.html:27
 #: lms/templates/my_courses.html:133
@@ -16913,6 +16915,13 @@ msgid_plural "{num} hours"
 msgstr[0] "{num} 小时"
 msgstr[1] "{num} 小时"
 
+#: lms/templates/courseware/course_banner.html:30
+#: lms/templates/dashboard/_dashboard_course_listing.html:226
+msgid "{num} day"
+msgid_plural "{num} days"
+msgstr[0] "{num} 天"
+msgstr[1] "{num} 天"
+
 #: lms/templates/courseware/course_banner.html:61
 msgid "English"
 msgstr "英语"
@@ -18323,7 +18332,7 @@ msgid ""
 "If you need help, please use our web form at {support_url} or email "
 "{support_email}."
 msgstr ""
-"如果您需要帮助，请使用我们的 Web 表单 {support_url} 或电子邮件"
+"如果您需要帮助，请使用我们的 Web 表单 {support_url} 或电子邮件 "
 "{support_email}。"
 
 #: lms/templates/emails/activation_email.txt:20
@@ -18331,7 +18340,7 @@ msgid ""
 "This email message was automatically sent by {lms_url} because someone "
 "attempted to create an account on {platform_name} using this email address."
 msgstr ""
-"此电子邮件由 {lms_url} 自动发送，因为有人尝试使用此电子邮件地址在"
+"此电子邮件由 {lms_url} 自动发送，因为有人尝试使用此电子邮件地址在 "
 "{platform_name} 上创建帐户。"
 
 #: lms/templates/emails/activation_email_subject.txt:2
@@ -25803,6 +25812,10 @@ msgstr "小时"
 msgid "minutes"
 msgstr "分钟"
 
+#: cms/templates/settings.html:418
+msgid "days"
+msgstr "天"
+
 #: cms/templates/settings.html:404
 msgid "Displayed on the course details page. Limit to 50 characters."
 msgstr "显示在课程详细信息页面上。限制为50个字符。"
@@ -27903,10 +27916,6 @@ msgstr "您的分数 {score}% 不足以获得 {type} 徽章。"
 msgid "Intermediate Certificate"
 msgstr "中级证书"
 
-#: XBlock: xblock-poll /edx/app/edxapp/venvs/edxapp/src/xblock-poll/poll/public/html/poll.html
-msgid "View results"
-msgstr "查看结果"
-
 #: XBlock: xblock-done lbmdonexblock.html
 msgid "Done"
 msgstr "完成"
@@ -27969,11 +27978,11 @@ msgstr "下载所选课程的注册学员名单的 CSV 文件"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid ""
-"After you download the CSV file of the enrolled learners, tick with a 'x' the column 'attendance'. If the learner "
-"attended the course and upload it back in order to validate the completion of the module in the platform."
+"After you download the CSV file of the enrolled learners, tick with a 'x' "
+"the column 'attendance' if the learner attended the course. "
+"Then save the file and upload it back to validate the completion of the module in the platform."
 msgstr ""
-"下载已注册学员的 CSV 文件后，在\"attendance\"出席这一列，用\"x\"勾选出已出席学员名单，并将文件重新上传到平台，使平台能"
-"够将这些学员此模块的学习进度标记为完成。"
+"下载已注册学员的 CSV 文件后，在\"attendance\"出席这一列，用\"x\"勾选出已出席学员名单，并将文件重新上传到平台，使平台能够将这些学员此模块的学习进度标记为完成。"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Validate"
@@ -28738,19 +28747,212 @@ msgid "SCORM"
 msgstr ""
 
 #: XBlock: edflex
-#: edflex/static/html/edflex.html
+#: edflex/static/html/author_view.html:11
+msgid "Use External Content component"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html:13
+msgid "Add resources to your course, curated by Edflex technology. "
+"Choose from a selection of MOOCs, Videos, Podcasts, Books, and Articles to accompany and enhance the creation of your trainings!"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html:25
+msgid "You are now ready"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/author_view.html:26
+msgid "Integrate external content to enrich your course!"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:33
+msgid "Read the article"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:35
+msgid "Read the book"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:37
+msgid "Access the course"
+msgstr ""
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:70
 msgid "About the content"
 msgstr "关于内容"
 
 #: XBlock: edflex
-#: edflex/static/html/edflex.html
+#: edflex/static/html/edflex.html:85
+#: edflex/static/html/studio_edit.html:33
 msgid "reviews"
 msgstr "评价"
 
 #: XBlock: edflex
-#: edflex/static/html/edflex.html
+#: edflex/static/html/edflex.html:88
+#: edflex/static/html/studio_edit.html:36
 msgid "users’ reviews"
 msgstr "用户评价"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:100
+#: edflex/static/html/studio_edit.html:48
+msgid "<b>Free</b> access"
+msgstr "<b>免费</b>访问"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:102
+#: edflex/static/html/studio_edit.html:50
+msgid "<b>Paid</b> access"
+msgstr "<b>付款</b>访问"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:112
+#: edflex/static/html/studio_edit.html:60
+msgid "<b>Free</b> certificate"
+msgstr "<b>免费</b>证书"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:114
+#: edflex/static/html/studio_edit.html:62
+msgid "<b>Paid</b> certificate"
+msgstr "<b>付费</b>证书"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:131
+#: edflex/static/html/studio_edit.html:79
+msgid "pages"
+msgstr "页面"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:154
+msgid "External content"
+msgstr "外部内容"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:157
+msgid "You are about to leave the Triboo platform to follow external training content. "
+"The majority of third-party content is free, but please note that sometimes it requires a paid "
+"subscription or certification or specific authorization that is not provided via this platform. "
+"Please contact your organization with any specific questions."
+msgstr "您将离开Triboo平台进入到第三方培训内容站点。友情提示：这个第三方站点所提供内容大数都为免费内容，"
+"但请注意也有部分内容需要您付费订阅或提供付费证书，或者一个特殊的授权。而这些都需要通过那个第三方站点来获取。"
+"所以，如有问题，请联系您所在的机构。"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:166
+msgid "See you soon on Triboo!"
+msgstr "欢迎再次访问Triboo！"
+
+#: XBlock: edflex
+#: edflex/static/html/edflex.html:169
+msgid "Access"
+msgstr "访问"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:10
+msgid "This information is out of date. What you see is the last saved version."
+msgstr "这些信息已经过期，您现在看到的是最近一次保存的内容。"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:91
+msgid "How it works?"
+msgstr "这是如何工作的？"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:95
+msgid "Select the format of content you want to add"
+msgstr "请选择一种您希望新增的内容的格式"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:96
+msgid "Choose a category for your learning content"
+msgstr "为您的学习内容选择一个分类"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:97
+msgid "Then a language"
+msgstr "请确认一种语言"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:98
+msgid "Pick the content you want to use"
+msgstr "请选择您想使用的内容"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:100
+msgid "No content available? Then change one of the parameters you previously selected."
+msgstr "不存在可用的内容？请改变您之前选择的参数后再试。"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:105
+msgid "Which format of content do you need?"
+msgstr "您需要哪一种内容格式？"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:106
+msgid "Choose a format. It is mandatory."
+msgstr "请选择一种格式。这是必选项。"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:116
+msgid "Podcast"
+msgstr "播客"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:134
+msgid "Mooc"
+msgstr "MOOC"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:143
+msgid "Article"
+msgstr "文章"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:152
+msgid "Book"
+msgstr "书籍"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:158
+msgid "Select one of the categories below"
+msgstr "请选择以下一种分类"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:159
+msgid "Choose a category."
+msgstr "选择一种分类"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:173
+msgid "Which language for the content?"
+msgstr "请为该内容选择一种语言"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:174
+msgid "Choose a language."
+msgstr "选择一种语言"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:185
+msgid "Select the title of the content"
+msgstr "请为该内容选择一个标题"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:186
+msgid "Choose a content."
+msgstr "选择内容"
+
+#: XBlock: edflex
+#: edflex/static/html/studio_edit.html:205
+msgid "Add this content"
+msgstr "增加这个内容"
 
 #: lms/templates/problem.html
 msgid "Quiz"
@@ -28760,13 +28962,23 @@ msgstr "测验"
 msgid "Word cloud"
 msgstr "词云"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
+msgid "View results"
+msgstr "查看结果"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html:71 poll/public/html/survey.html:81
+msgid "Export results to CSV"
+msgstr "导出结果到csv文件"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Poll"
 msgstr "投票"
 
-#: XBlock: poll
-#: xblock-poll/poll/public/html/poll.html
+#: XBlock: xblock-poll
+#: poll/public/html/poll.html
 msgid "Survey"
 msgstr "调查"
 
@@ -28854,3 +29066,48 @@ msgstr "加载中……"
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:61
 msgid "Generate Intermediate Certificates"
 msgstr "生成中级证书"
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
+msgid "Free Text"
+msgstr "开放式文本"
+
+#: lms/templates/courseware/courses.html
+msgid "Internal"
+msgstr "内部课程目录"
+
+#: lms/templates/courseware/courses.html
+msgid "External"
+msgstr "外部课程目录"
+
+#: lms/templates/courseware/courses.html
+msgid "Filters"
+msgstr "筛选器"
+
+#: cms/templates/settings_graders.html
+msgid "Course Completion Rule"
+msgstr "课程完成规则"
+
+#: cms/templates/settings_graders.html
+msgid "Set the completion rule for this course"
+msgstr "设置这门课的完成规则"
+
+#: cms/templates/settings_graders.html
+msgid "100% Course progress and minimum passing score"
+msgstr "100%课程进度和最低分数"
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to complete 100% course progress and earn the minimum passing score to successfully pass the course."
+msgstr "学员需要达到100%课程进度以及取得最低通过分数才能成功完成这门课。"
+
+#: cms/templates/settings_graders.html
+msgid "Minimum passing score only"
+msgstr "仅需最低分数"
+
+#: cms/templates/settings_graders.html
+msgid "Learner is required to earn only the minimum passing score to successfully pass the course."
+msgstr "学员仅需要取得最低通过分数就能成功完成这门课。"
+
+#: cms/templates/settings_graders.html
+msgid "Changes on Course Completion Rule are not retroactive. If a Studio Admin changes the rule for a started course, learners will have to revisit the graded activities to see their score recalculated."
+msgstr "改变课程完成规则不是即时生效的。对于已经开始的课程，如果Studio管理员更改了课程完成规则，学员需要重新查看得分活动才能看到他们的分数重新计算了。"

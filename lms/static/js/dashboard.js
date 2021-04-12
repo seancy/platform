@@ -14,7 +14,9 @@ window.moment.tz = momentTZ
 const Dashboard = function () {
     const initializatie = ()=>{
         setTimeout(()=>{
+            //these 2 lines needs to be rewrite and test.
             $('.last-activity').removeClass('skeleton')
+            $('.course-container .course').removeClass('skeleton')
         },500)
     }
 

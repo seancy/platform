@@ -386,7 +386,7 @@ FEATURES = {
     'ALLOW_EMAIL_ADDRESS_CHANGE': True,
 
     # Whether the bulk enrollment view is enabled.
-    'ENABLE_BULK_ENROLLMENT_VIEW': False,
+    'ENABLE_BULK_ENROLLMENT_VIEW': True,
 
     # Whether course goals is enabled.
     'ENABLE_COURSE_GOALS': True,
@@ -419,7 +419,13 @@ FEATURES = {
     'ENABLE_LAST_ACTIVITY': False,
 
     # Set to display course country filter in explore.
-    'ENABLE_PROGRAMMATIC_ENROLLMENT': False
+    'ENABLE_PROGRAMMATIC_ENROLLMENT': False,
+
+    # Set to display external catalog with "find courses" page.
+    'ENABLE_EXTERNAL_CATALOG': False,
+
+    # Enable the ILT virtual session email reminder checking
+    'ENABLE_ILT_VIRTUAL_SESSION_REMINDER': False,
 }
 
 # Settings for the course reviews tool template and identification key, set either to None to disable course reviews
@@ -2360,6 +2366,12 @@ INSTALLED_APPS = [
     # analytics features
     'triboo_analytics',
     'django_tables2',
+
+    # external catalog for different course resources
+    'lms.djangoapps.external_catalog.apps.ExternalCatalogConfig',
+
+    # edflex-xblock
+    'edflex',
 ]
 
 ######################### CSRF #########################################
@@ -2654,7 +2666,7 @@ BADGR_TIMEOUT = 10
 ###################### Grade Downloads ######################
 # These keys are used for all of our asynchronous downloadable files, including
 # the ones that contain information other than grades.
-GRADES_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
+GRADES_DOWNLOAD_ROUTING_KEY = HIGH_PRIORITY_QUEUE
 
 GRADES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
