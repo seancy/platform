@@ -471,7 +471,7 @@ class LearnerBaseTable(UserBaseTable):
     total_time_spent = TimeSpentFooterColumn(verbose_name='Total Time Spent')
 
 
-class CourseTable(_RenderMixin, LearnerBaseTable):
+class CourseTable(_OrderMixin, _RenderMixin, LearnerBaseTable):
     current_score = tables.Column(verbose_name='Current Score', footer=lambda table: "{}%".format(
                          get_avg(None, [r.current_score for r in table.data if r.status != CourseStatus.not_started])))
     progress = tables.Column(verbose_name='Progress', footer=lambda table: "{}%".format(
