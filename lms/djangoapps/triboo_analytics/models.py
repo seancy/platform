@@ -768,10 +768,10 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
 
 
     @classmethod
-    def filter_by_day(cls, date_time=None, **kwargs):
+    def filter_by_day(cls, to_date=None, **kwargs):
         reports = cls.objects.filter(is_active=True, **kwargs)
-        if date_time:
-            day_key = dt2key(date_time)
+        if to_date:
+            day_key = dt2key(to_date)
             results = []
             for r in reports:
                 record = cls.get_record(r.records, day_key)
@@ -781,11 +781,11 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
 
 
     @classmethod
-    def get_by_day(cls, date_time=None, **kwargs):
+    def get_by_day(cls, to_date=None, **kwargs):
         try:
             r = cls.objects.get(is_active=True, **kwargs)
             if date_time:
-                day_key = dt2key(date_time)
+                day_key = dt2key(to_date)
                 record = cls.get_record(r.records, day_key)
                 return LearnerCourseDailyReportMockup(r, record)
             return r

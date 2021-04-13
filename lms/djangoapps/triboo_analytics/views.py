@@ -1093,24 +1093,20 @@ def course_view_data(request):
         filter_kwargs, exclude = get_period_kwargs(data,
                                                    course_id=course_key,
                                                    with_period_start=with_period_start)
-        if 'date_time' not in filter_kwargs.keys():
-            if not data.get('from_day'):
-                filter_kwargs['date_time'] = last_update
 
-        if 'date_time' in filter_kwargs.keys():
-            if report == "course_summary":
-                table = get_table_data(LearnerCourseJsonReport, CourseTable, filter_kwargs, exclude, sort=data.get('sort'))
-                summary_columns = ['Progress',
-                                   'Current Score',
-                                   'Badges',
-                                   'Posts',
-                                   'Total Time Spent']
+        if report == "course_summary":
+            table = get_table_data(LearnerCourseJsonReport, CourseTable, filter_kwargs, exclude, sort=data.get('sort'))
+            summary_columns = ['Progress',
+                               'Current Score',
+                               'Badges',
+                               'Posts',
+                               'Total Time Spent']
 
-            elif report == "course_progress":
-                table, column_order = get_progress_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
+        elif report == "course_progress":
+            table, column_order = get_progress_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
 
-            elif report == "course_time_spent":
-                table, column_order = get_time_spent_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
+        elif report == "course_time_spent":
+            table, column_order = get_time_spent_table_data(course_key, filter_kwargs, exclude, sort=data.get('sort'))
 
     return json_response(table,
                          data.get('page'),
@@ -1179,7 +1175,7 @@ def learner_view_data(request):
             # if not data.get('from_day'):
             #     filter_kwargs['to_date'] = last_update
         if 'to_date' in filter_kwargs.keys():
-            table = get_table_data(LearnerDailyReport,LearnerDailyTable, filter_kwargs, exclude,
+            table = get_table_data(LearnerDailyReport, LearnerDailyTable, filter_kwargs, exclude,
                                    by_period=True, html_links=True, sort=data.get('sort'))
     return json_response(table,
                          data.get('page'),
