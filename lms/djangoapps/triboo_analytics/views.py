@@ -1090,7 +1090,7 @@ def course_view_data(request):
     if last_reportlog:
         last_update = last_reportlog.course
 
-        with_period_start = True if report == "course_time_spent" else False
+        with_period_start = True if report in ["course_summary", "course_time_spent"] else False
         filter_kwargs, exclude = get_period_kwargs(data,
                                                    course_id=course_key,
                                                    with_period_start=with_period_start)
