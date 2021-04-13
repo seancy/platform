@@ -82,8 +82,8 @@ class _RenderMixin(object):
     def render_status(self, value):
         return CourseStatus.verbose_names[value]
 
-    def value_status(self, value):
-        return _(CourseStatus.verbose_names[value])
+    # def value_status(self, value):
+    #     return _(CourseStatus.verbose_names[value])
 
     def value_enrollment_date(self, value):
         return dt2str(value)
@@ -138,9 +138,9 @@ class _RenderMixin(object):
 class TranscriptTable(_OrderMixin, _RenderMixin, tables.Table):
     export_formats = EXPORT_FORMATS
     course_title = tables.LinkColumn('info', args=[A('course_id')],
-                                     verbose_name=_('Course Title'), empty_values=('', ))
-    enrollment_date = tables.Column(verbose_name=_('Enrollment Date'))
-    completion_date = tables.Column(verbose_name=_('Completion Date'))
+                                     verbose_name='Course Title', empty_values=('', ))
+    enrollment_date = tables.Column(verbose_name='Enrollment Date')
+    completion_date = tables.Column(verbose_name='Completion Date')
 
     class Meta:
         model = LearnerCourseJsonReport
@@ -200,9 +200,9 @@ class TranscriptTableWithGradeLink(TranscriptTable):
                 <span class="fal fa-clipboard-list-check"></span>
             </a>
         '''
-    gradebook_link = tables.TemplateColumn(gradebook_template, verbose_name=_(''))
-    enrollment_date = tables.Column(verbose_name=_('Enrollment Date'))
-    completion_date = tables.Column(verbose_name=_('Completion Date'))
+    gradebook_link = tables.TemplateColumn(gradebook_template, verbose_name='')
+    enrollment_date = tables.Column(verbose_name='Enrollment Date')
+    completion_date = tables.Column(verbose_name='Completion Date')
 
     class Meta:
         model = LearnerCourseJsonReport
@@ -239,34 +239,34 @@ class TranscriptTableWithGradeLink(TranscriptTable):
 class UserBaseTable(tables.Table):
     export_formats = EXPORT_FORMATS
 
-    user_name = tables.Column(accessor='user.profile.name', verbose_name=_('Name'))
+    user_name = tables.Column(accessor='user.profile.name', verbose_name='Name')
 
-    user_email = tables.Column(accessor='user.email', verbose_name=_('Email'))
-    user_username = tables.Column(accessor='user.username', verbose_name=_('Username'))
-    user_date_joined = tables.Column(accessor='user.date_joined', verbose_name=_('Date Joined'))
+    user_email = tables.Column(accessor='user.email', verbose_name='Email')
+    user_username = tables.Column(accessor='user.username', verbose_name='Username')
+    user_date_joined = tables.Column(accessor='user.date_joined', verbose_name='Date Joined')
 
-    user_gender = tables.Column(accessor='user.profile.gender', verbose_name=_('Gender'))
-    user_country = tables.Column(accessor='user.profile.country', verbose_name=_('Country'))
-    user_lt_area = tables.Column(accessor='user.profile.lt_area', verbose_name=_('Commercial Zone'))
-    user_lt_sub_area = tables.Column(accessor='user.profile.lt_sub_area', verbose_name=_('Commercial Region'))
-    user_city = tables.Column(accessor='user.profile.city', verbose_name=_('City'))
-    user_location = tables.Column(accessor='user.profile.location', verbose_name=_('Location'))
-    user_lt_address = tables.Column(accessor='user.profile.lt_address', verbose_name=_('Address'))
-    user_lt_address_2 = tables.Column(accessor='user.profile.lt_address_2', verbose_name=_('Address 2'))
-    user_lt_phone_number = tables.Column(accessor='user.profile.lt_phone_number', verbose_name=_('Phone Number'))
-    user_lt_gdpr = tables.Column(accessor='user.profile.lt_gdpr', verbose_name=_('GDPR'))
-    user_lt_company = tables.Column(accessor='user.profile.lt_company', verbose_name=_('Company'))
-    user_lt_employee_id = tables.Column(accessor='user.profile.lt_employee_id', verbose_name=_('Employee ID'))
-    user_lt_hire_date = tables.Column(accessor='user.profile.lt_hire_date', verbose_name=_('Hire Date'))
-    user_lt_level = tables.Column(accessor='user.profile.lt_level', verbose_name=_('Level'))
-    user_lt_job_code = tables.Column(accessor='user.profile.lt_job_code', verbose_name=_('Job Code'))
-    user_lt_job_description = tables.Column(accessor='user.profile.lt_job_description', verbose_name=_('Job Description'))
-    user_lt_department = tables.Column(accessor='user.profile.lt_department', verbose_name=_('Department'))
-    user_lt_supervisor = tables.Column(accessor='user.profile.lt_supervisor', verbose_name=_('Supervisor'))
-    user_lt_ilt_supervisor = tables.Column(accessor='user.profile.lt_ilt_supervisor', verbose_name=_('ILT Supervisor'))
-    user_lt_learning_group = tables.Column(accessor='user.profile.lt_learning_group', verbose_name=_('Learning Group'))
-    user_lt_exempt_status = tables.Column(accessor='user.profile.lt_exempt_status', verbose_name=_('Exempt Status'))
-    user_lt_comments = tables.Column(accessor='user.profile.lt_comments', verbose_name=_('Comments'))
+    user_gender = tables.Column(accessor='user.profile.gender', verbose_name='Gender')
+    user_country = tables.Column(accessor='user.profile.country', verbose_name='Country')
+    user_lt_area = tables.Column(accessor='user.profile.lt_area', verbose_name='Commercial Zone')
+    user_lt_sub_area = tables.Column(accessor='user.profile.lt_sub_area', verbose_name='Commercial Region')
+    user_city = tables.Column(accessor='user.profile.city', verbose_name='City')
+    user_location = tables.Column(accessor='user.profile.location', verbose_name='Location')
+    user_lt_address = tables.Column(accessor='user.profile.lt_address', verbose_name='Address')
+    user_lt_address_2 = tables.Column(accessor='user.profile.lt_address_2', verbose_name='Address 2')
+    user_lt_phone_number = tables.Column(accessor='user.profile.lt_phone_number', verbose_name='Phone Number')
+    user_lt_gdpr = tables.Column(accessor='user.profile.lt_gdpr', verbose_name='GDPR')
+    user_lt_company = tables.Column(accessor='user.profile.lt_company', verbose_name='Company')
+    user_lt_employee_id = tables.Column(accessor='user.profile.lt_employee_id', verbose_name='Employee ID')
+    user_lt_hire_date = tables.Column(accessor='user.profile.lt_hire_date', verbose_name='Hire Date')
+    user_lt_level = tables.Column(accessor='user.profile.lt_level', verbose_name='Level')
+    user_lt_job_code = tables.Column(accessor='user.profile.lt_job_code', verbose_name='Job Code')
+    user_lt_job_description = tables.Column(accessor='user.profile.lt_job_description', verbose_name='Job Description')
+    user_lt_department = tables.Column(accessor='user.profile.lt_department', verbose_name='Department')
+    user_lt_supervisor = tables.Column(accessor='user.profile.lt_supervisor', verbose_name='Supervisor')
+    user_lt_ilt_supervisor = tables.Column(accessor='user.profile.lt_ilt_supervisor', verbose_name='ILT Supervisor')
+    user_lt_learning_group = tables.Column(accessor='user.profile.lt_learning_group', verbose_name='Learning Group')
+    user_lt_exempt_status = tables.Column(accessor='user.profile.lt_exempt_status', verbose_name='Exempt Status')
+    user_lt_comments = tables.Column(accessor='user.profile.lt_comments', verbose_name='Comments')
 
     def order_user_name(self, queryset, is_descending):
         queryset = queryset.order_by(('-' if is_descending else '') + 'user__profile__name')
@@ -466,19 +466,19 @@ def get_time_spent_table_class(chapters, sections):
 
 
 class LearnerBaseTable(UserBaseTable):
-    badges = tables.Column(verbose_name=_('Badges'), footer=lambda table: get_sum(
+    badges = tables.Column(verbose_name='Badges', footer=lambda table: get_sum(
                 None, [get_badges(row.badges)[0] for row in table.data]))
-    total_time_spent = TimeSpentFooterColumn(verbose_name=_('Total Time Spent'))
+    total_time_spent = TimeSpentFooterColumn(verbose_name='Total Time Spent')
 
 
 class CourseTable(_RenderMixin, LearnerBaseTable):
-    current_score = tables.Column(verbose_name=_('Current Score'), footer=lambda table: "{}%".format(
+    current_score = tables.Column(verbose_name='Current Score', footer=lambda table: "{}%".format(
                          get_avg(None, [r.current_score for r in table.data if r.status != CourseStatus.not_started])))
-    progress = tables.Column(verbose_name=_('Progress'), footer=lambda table: "{}%".format(
+    progress = tables.Column(verbose_name='Progress', footer=lambda table: "{}%".format(
                          get_avg(None, [r.progress for r in table.data])))
-    posts = SumFooterColumn(verbose_name=_('Posts'))
-    enrollment_date = tables.Column(verbose_name=_('Enrollment Date'))
-    completion_date = tables.Column(verbose_name=_('Completion Date'))
+    posts = SumFooterColumn(verbose_name='Posts')
+    enrollment_date = tables.Column(verbose_name='Enrollment Date')
+    completion_date = tables.Column(verbose_name='Completion Date')
 
     class Meta:
         model = LearnerCourseJsonReport
@@ -612,16 +612,16 @@ class CustomizedCourseTable(_RenderMixin, LearnerBaseTable):
 
 class LearnerDailyTable(_OrderMixin, LearnerBaseTable):
     user_name = tables.LinkColumn('analytics_learner_transcript', args=[A('user.id')],
-                                  verbose_name=_('Name'), text=lambda record: record.user.profile.name)
-    enrollments = SumFooterColumn(verbose_name=_('Enrollments'))
-    finished = SumFooterColumn(verbose_name=_('Finished'))
-    failed = SumFooterColumn(verbose_name=_('Failed'))
-    in_progress = SumFooterColumn(verbose_name=_('In Progress'))
-    not_started = SumFooterColumn(verbose_name=_('Not Started'))
-    posts = SumFooterColumn(verbose_name=_('Posts'))
-    average_final_score = tables.Column(verbose_name=_('Average Final Score'), footer=lambda table: "{}%".format(
+                                  verbose_name='Name', text=lambda record: record.user.profile.name)
+    enrollments = SumFooterColumn(verbose_name='Enrollments')
+    finished = SumFooterColumn(verbose_name='Finished')
+    failed = SumFooterColumn(verbose_name='Failed')
+    in_progress = SumFooterColumn(verbose_name='In Progress')
+    not_started = SumFooterColumn(verbose_name='Not Started')
+    posts = SumFooterColumn(verbose_name='Posts')
+    average_final_score = tables.Column(verbose_name='Average Final Score', footer=lambda table: "{}%".format(
                                     get_avg(None, [r.average_final_score for r in table.data])))
-    user_last_login = tables.Column(accessor='user.last_login', verbose_name=_('Last Login'))
+    user_last_login = tables.Column(accessor='user.last_login', verbose_name='Last Login')
 
     class Meta:
         model = LearnerDailyReport
@@ -709,22 +709,22 @@ class LearnerDailyTable(_OrderMixin, LearnerBaseTable):
 class IltBaseTable(tables.Table):
     export_formats = EXPORT_FORMATS
 
-    course_area = tables.Column(accessor='ilt_module.course_country', verbose_name=_('Geographical area'))
-    course_country = tables.Column(accessor='ilt_module.course_country', verbose_name=_('Course country'))
-    course_tags = tables.Column(accessor='ilt_module.course_tags', verbose_name=_('Course tags'))
-    course_code = tables.Column(accessor='ilt_module.course_id', verbose_name=_('Course code'))
-    course_display_name = tables.Column(accessor='ilt_module.course_display_name', verbose_name=_('Course name'))
-    chapter_display_name = tables.Column(accessor='ilt_module.chapter_display_name', verbose_name=_('Section'))
-    section_display_name = tables.Column(accessor='ilt_module.section_display_name', verbose_name=_('Subsection'))
+    course_area = tables.Column(accessor='ilt_module.course_country', verbose_name='Geographical area')
+    course_country = tables.Column(accessor='ilt_module.course_country', verbose_name='Course country')
+    course_tags = tables.Column(accessor='ilt_module.course_tags', verbose_name='Course tags')
+    course_code = tables.Column(accessor='ilt_module.course_id', verbose_name='Course code')
+    course_display_name = tables.Column(accessor='ilt_module.course_display_name', verbose_name='Course name')
+    chapter_display_name = tables.Column(accessor='ilt_module.chapter_display_name', verbose_name='Section')
+    section_display_name = tables.Column(accessor='ilt_module.section_display_name', verbose_name='Subsection')
 
     def render_course_area(self, value):
         if value:
             if value == "All countries":
-                return _("All")
+                return "All"
             elif value == "France":
-                return _("FR")
+                return "FR"
             elif value == "Romania":
-                return _("BK")
+                return "BK"
         return "-"
 
     def order_session_id(self, queryset, is_descending):
@@ -748,26 +748,26 @@ class IltBaseTable(tables.Table):
         return value.strftime("%H:%M:%S")
 
     def render_ack_attendance_sheet(self, value):
-        return _("Received") if value else _("Expected")
+        return "Received" if value else "Expected"
 
 
 class IltTable(IltBaseTable):
-    area = tables.Column(verbose_name=_('Zone/Region'))
-    session_id = tables.Column(verbose_name=_('Session ID'))
-    start_day = tables.Column(accessor='start', verbose_name=_('Start date'))
-    start_time = tables.Column(accessor='start', verbose_name=_('Start time'))
-    end_day = tables.Column(accessor='end', verbose_name=_('End date'))
-    end_time = tables.Column(accessor='end', verbose_name=_('End time'))
-    duration = tables.Column(verbose_name=_('Duration (in hours)'))
-    seats = tables.Column(verbose_name=_('Max capacity'))
-    enrollees = tables.Column(verbose_name=_('Enrollees'))
-    attendees = tables.Column(verbose_name=_('Attendees'))
-    ack_attendance_sheet = tables.Column(verbose_name=_('Attendance sheet'))
-    location_id = tables.Column(verbose_name=_('Location ID'))
-    location = tables.Column(verbose_name=_('Location name'))
-    address = tables.Column(verbose_name=_('Location address'))
-    zip_code = tables.Column(verbose_name=_('Zip code'))
-    city = tables.Column(verbose_name=_('City'))
+    area = tables.Column(verbose_name='Zone/Region')
+    session_id = tables.Column(verbose_name='Session ID')
+    start_day = tables.Column(accessor='start', verbose_name='Start date')
+    start_time = tables.Column(accessor='start', verbose_name='Start time')
+    end_day = tables.Column(accessor='end', verbose_name='End date')
+    end_time = tables.Column(accessor='end', verbose_name='End time')
+    duration = tables.Column(verbose_name='Duration (in hours)')
+    seats = tables.Column(verbose_name='Max capacity')
+    enrollees = tables.Column(verbose_name='Enrollees')
+    attendees = tables.Column(verbose_name='Attendees')
+    ack_attendance_sheet = tables.Column(verbose_name='Attendance sheet')
+    location_id = tables.Column(verbose_name='Location ID')
+    location = tables.Column(verbose_name='Location name')
+    address = tables.Column(verbose_name='Location address')
+    zip_code = tables.Column(verbose_name='Zip code')
+    city = tables.Column(verbose_name='City')
 
     class Meta:
         model = IltSession
@@ -838,25 +838,25 @@ class IltTable(IltBaseTable):
 
 
 class IltLearnerTable(IltBaseTable, UserBaseTable):
-    area = tables.Column(accessor='ilt_session.area', verbose_name=_('Zone/Region'))
-    session_id = tables.Column(accessor='ilt_session.session_id', verbose_name=_('Session ID'))
-    start_day = tables.Column(accessor='ilt_session.start', verbose_name=_('Start date'))
-    start_time = tables.Column(accessor='ilt_session.start', verbose_name=_('Start time'))
-    end_day = tables.Column(accessor='ilt_session.end', verbose_name=_('End date'))
-    end_time = tables.Column(accessor='ilt_session.end', verbose_name=_('End time'))
-    duration = tables.Column(accessor='ilt_session.duration', verbose_name=_('Duration (in hours)'))
-    location_id = tables.Column(accessor='ilt_session.location_id', verbose_name=_('Location ID'))
-    location = tables.Column(accessor='ilt_session.location', verbose_name=_('Location name'))
-    address = tables.Column(accessor='ilt_session.address', verbose_name=_('Location address'))
-    zip_code = tables.Column(accessor='ilt_session.zip_code', verbose_name=_('Zip code'))
-    city = tables.Column(accessor='ilt_session.city', verbose_name=_('City'))
-    status = tables.Column(verbose_name=_('Enrollment status'))
-    attendee = tables.Column(verbose_name=_('Attendee'))
-    outward_trips = tables.Column(verbose_name=_('Outward trips'))
-    return_trips = tables.Column(verbose_name=_('Return trips'))
-    accommodation = tables.Column(verbose_name=_('Overnight stay'))
-    hotel = tables.Column(verbose_name=_('Overnight stay address'))
-    comment = tables.Column(verbose_name=_('Comment'))
+    area = tables.Column(accessor='ilt_session.area', verbose_name='Zone/Region')
+    session_id = tables.Column(accessor='ilt_session.session_id', verbose_name='Session ID')
+    start_day = tables.Column(accessor='ilt_session.start', verbose_name='Start date')
+    start_time = tables.Column(accessor='ilt_session.start', verbose_name='Start time')
+    end_day = tables.Column(accessor='ilt_session.end', verbose_name='End date')
+    end_time = tables.Column(accessor='ilt_session.end', verbose_name='End time')
+    duration = tables.Column(accessor='ilt_session.duration', verbose_name='Duration (in hours)')
+    location_id = tables.Column(accessor='ilt_session.location_id', verbose_name='Location ID')
+    location = tables.Column(accessor='ilt_session.location', verbose_name='Location name')
+    address = tables.Column(accessor='ilt_session.address', verbose_name='Location address')
+    zip_code = tables.Column(accessor='ilt_session.zip_code', verbose_name='Zip code')
+    city = tables.Column(accessor='ilt_session.city', verbose_name='City')
+    status = tables.Column(verbose_name='Enrollment status')
+    attendee = tables.Column(verbose_name='Attendee')
+    outward_trips = tables.Column(verbose_name='Outward trips')
+    return_trips = tables.Column(verbose_name='Return trips')
+    accommodation = tables.Column(verbose_name='Overnight stay')
+    hotel = tables.Column(verbose_name='Overnight stay address')
+    comment = tables.Column(verbose_name='Comment')
 
     class Meta:
         model = IltLearnerReport
@@ -988,12 +988,9 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
         queryset = queryset.order_by(order + 'ilt_module__id', order + 'ilt_session__session_nb')
         return queryset, True
 
-    def value_status(self, value):
-        return _(value)
-
     def render_accommodation(self, value):
-        return _("Yes") if value else _("No")
+        return "Yes" if value else "No"
 
     def render_attendee(self, value):
-        return _("Yes") if value else _("No")
+        return "Yes" if value else "No"
 
