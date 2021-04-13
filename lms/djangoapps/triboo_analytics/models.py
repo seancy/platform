@@ -768,6 +768,17 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
 
 
     @classmethod
+    def filter_by_period(cls, org, to_date=None, from_date=None, **kwargs):
+        if from_date:
+            _to_date = to_date
+            if not _to_date:
+                _to_date = timezone.now().date()
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, _to_date)
+            kwargs['user_id__in'] = user_ids
+        return cls.filter_by_day(to_date, **kwargs)
+
+
+    @classmethod
     def filter_by_day(cls, to_date=None, **kwargs):
         reports = cls.objects.filter(is_active=True, **kwargs)
         if to_date:

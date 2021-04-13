@@ -1096,7 +1096,8 @@ def course_view_data(request):
                                                    with_period_start=with_period_start)
 
         if report == "course_summary":
-            table = get_table_data(LearnerCourseJsonReport, CourseTable, filter_kwargs, exclude, sort=data.get('sort'))
+            table = get_table_data(LearnerCourseJsonReport, CourseTable, filter_kwargs, exclude, 
+                                   by_period=True, sort=data.get('sort'))
             summary_columns = ['Progress',
                                'Current Score',
                                'Badges',
