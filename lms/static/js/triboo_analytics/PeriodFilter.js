@@ -1,6 +1,6 @@
 import React from "react";
 import DateRange from 'se-react-date-range';
-import {QuestionMark} from './QuestionMark';
+import {QuestionMark} from '../QuestionMark';
 
 
 class PeriodFilter extends React.Component {
