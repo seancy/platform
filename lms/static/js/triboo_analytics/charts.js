@@ -1,164 +1,218 @@
-function drawPieChart(elementId, data) {
-  var containerEl = document.getElementById(elementId),
-      width       = containerEl.clientWidth,
-      height      = width,
-      radius      = (width - 100) / 2,
-      labelRadius = radius + 20,
-      container   = d3.select(containerEl),
-      svg         = container.select('svg')
-                            .attr('width', width)
-                            .attr('height', height);
-  var pie = svg.append('g')
-               .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
-
-  var pieData = d3.pie()
-                  .sort(null)
-                  .value(function(d) { return d.percent; })
-                  .padAngle(0.02);
-
-  var pieChartPieces = pie.datum(data)
-                          .selectAll('.pieChart__arc')
-                          .data(pieData)
-                          .enter().append('g')
-                              .attr('class', 'pieChart__arc');
-
-  var pathArc = d3.arc()
-              .outerRadius(radius)
-              .innerRadius(radius * 0.6)
-              .cornerRadius(2);
-
-  pieChartPieces.append('path')
-                .attr('d', pathArc)
-                .attr('class', function(d) { return 'pieChart__' + d.data.color; })
-                .on('mouseover', function(d) {
-                  d3.select('#pieChart__label__' + d.data.color)
-                    .attr('class', function(d) { return 'pieChart__label pieChart__' + d.data.color; });
-                 })
-                .on('mouseout', function(d) {
-                  d3.select('#pieChart__label__' + d.data.color)
-                    .attr('class', 'pieChart__label hidden');
-                 });
-
-
-  var labelArc = d3.arc()
-                .outerRadius(labelRadius)
-                .innerRadius(labelRadius);
-
-  var f = d3.format("%");
-
-  pieChartPieces.append('text')
-                .attr("transform", function(d) {
-                  var c = labelArc.centroid(d),
-                      x = c[0],
-                      y = c[1],
-                      // pythagorean theorem for hypotenuse
-                      h = Math.sqrt(x*x + y*y);
-                  return "translate(" + (x/h * labelRadius) +  ',' + (y/h * labelRadius) +  ")";
-                })
-                .attr("text-anchor", function(d) {
-                  // are we past the center?
-                  return (d.endAngle + d.startAngle)/2 > Math.PI ? "end" : "start";
-                })
-                .attr('id', function(d) { return 'pieChart__label__' + d.data.color; })
-                .attr('class', 'pieChart__label hidden')
-                .text(function(d) {  return Math.round(d.data.percent*100) + "%";  });
-
-}
-
-
-function drawLineChart(elementId, csvData, redraw) {
-  var containerEl = document.getElementById(elementId),
-      width = containerEl.clientWidth,
-      height = (containerEl.clientHeight < width / 2) ? containerEl.clientHeight : width / 2,
-      container = d3.select(containerEl),
-      svg = container.select('svg')
-            .attr('viewBox', '0 0 '+ width  +' ' + height)
-            .attr('width', '100%')
-            .attr('height', '100%'),
-      margin = {top: 10, right: 0, bottom: 23, left: 0},
-      detailWidth  = 58,
-      detailHeight = 35,
-      detailMarginBottom = 10,
-
-      areaWidth = width - margin.left - margin.right - detailWidth,
-      areaHeight = height - margin.top - margin.bottom - detailHeight - detailMarginBottom,
-
-      parseTime = d3.timeParse('%d-%m-%Y'),
-
-      max_value = 0,
-      data = d3.csvParse(csvData, function(d) {
-        d.date = parseTime(d.date);
-        d.value = +d.value;
-        if (d.value > max_value) {
-          max_value = d.value;
-        }
-        return d;
-      });
-
-  if (redraw === true) {
-    svg.select('g').remove();
+/* eslint-disable semi */
+/* eslint-disable quotes */
+/* eslint-disable no-unused-vars */
+/* global d3, topojson, echarts */
+/**
+ * key,val
+ * key1,val1
+ * key2,val2
+ * ...
+ *
+ * [
+ * {key: "key1", val: "val1"},
+ * {key: "key2", val: "val2"},
+ * ...
+ * ]
+ */
+function readCsvData(csvData) {
+  var ret = [];
+  var lines = csvData.split('\n');
+  var readLine = function(line) { return line.split(','); };
+  var captions = readLine(lines[0]);
+  for (var i = 1; i < lines.length; i++) {
+    if (!lines[i])
+      continue;
+    var values = readLine(lines[i]);
+    var record = {};
+    for (var j = 0; j < captions.length; j++) {
+      record[captions[j]] = values[j];
+    }
+    ret.push(record);
   }
-  var lineChart = svg.append('g').attr('transform', "translate(" + margin.left + "," + margin.top + ")"),
-
-      x = d3.scaleTime().rangeRound([0, areaWidth]),
-      y = d3.scaleLinear().rangeRound([areaHeight, 0]),
-
-      line = d3.line().x(function(d) { return x(d.date); })
-                      .y(function(d) { return y(d.value); }),
-
-      area = d3.area().x(function(d) { return x(d.date); })
-                      .y0(y(0))
-                      .y1(function(d) { return y(d.value); });
-
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, max_value]);
-
-  lineChart.append('g').attr('transform', "translate(" + (detailWidth / 2) + "," + (detailHeight + detailMarginBottom + areaHeight) + ")")
-                       .call(d3.axisBottom(x))
-                       .select('.domain').remove();
-
-  var drawing = lineChart.append('g').attr('transform', "translate(" + (detailWidth / 2) + "," + (detailHeight + detailMarginBottom) + ")");
-
-  drawing.append('path').datum(data)
-                        .attr('class', 'lineChart--area')
-                        .attr('d', area);
-
-  drawing.append('path').datum(data)
-                        .attr('class', 'lineChart--areaLine')
-                        .attr('d', line);
-
-  var circles = drawing.append('g')
-  data.forEach(function(datum) {
-      circles.datum(datum)
-             .append('circle')
-             .attr('class', 'lineChart--circle')
-             .attr('r', 4)
-             .attr('cx', function(d) { return x(d.date); })
-             .attr('cy', function(d) { return y(d.value); })
-             .on('mouseenter', function(d) {
-                  d3.select(this).attr('r', 6);
-                  var details = circles.append('g').attr('class', 'lineChart--bubble')
-                                                   .attr('transform', function() {
-                                                      var x_coord = x(d.date) - detailWidth/2;
-                                                      var y_coord = y(d.value) - detailHeight - detailMarginBottom;
-                                                      return "translate(" + x_coord + "," + y_coord + ")"
-                                                   });
-                  details.append('path').attr('d', 'M2.99990186,0 C1.34310181,0 0,1.34216977 0,2.99898218 L0,27.6680579 C0,29.32435 1.34136094,30.6670401 3.00074875,30.6670401 L24.4095996,30.6670401 C28.9775098,34.3898926 24.4672607,30.6057129 29,34.46875 C33.4190918,30.6962891 29.0050244,34.4362793 33.501875,30.6670401 L54.9943116,30.6670401 C56.6543075,30.6670401 58,29.3248703 58,27.6680579 L58,2.99898218 C58,1.34269006 56.651936,0 55.0000981,0 L2.99990186,0 Z M2.99990186,0')
-                                        .attr('width', detailWidth)
-                                        .attr('height', detailHeight);
-                  details.append('text').attr('class', 'lineChart--bubble--value')
-                                        .attr('x', detailWidth / 2)
-                                        .attr('y', detailHeight / 2 + 2)
-                                        .attr('text-anchor', 'middle')
-                                        .text(d.value);
-             })
-             .on('mouseout', function(d) {
-                  d3.select(this).attr('r', 4);
-                  circles.selectAll('.lineChart--bubble').remove();
-             })
-             .transition()
-             .delay(2000);
+  return ret;
+}
+/** "#E7413C" => [231, 65, 60] */
+var hex2Rgb = function(hex) { return (function(n) { return [1, 2, 3].map(function(c) { return n << (c * 8) >>> 24; }); })(Number(hex.replace('#', '0x'))); };
+var getElementCssProperty = function(elt, key) { return getComputedStyle(elt).getPropertyValue(key); };
+//
+var chartMap = {};
+function drawEchart(elementId, options) {
+  if (chartMap[elementId])
+    chartMap[elementId].dispose();
+  chartMap[elementId] = echarts.init(document.getElementById(elementId));
+  chartMap[elementId].setOption(options);
+}
+function drawGaugeChart(elementId, data, colorKeys, extraOptions) {
+  if (colorKeys === void 0) { colorKeys = ['#2ED47A', '#FEC400']; }
+  if (extraOptions === void 0) { extraOptions = {}; }
+  var $el = document.getElementById(elementId);
+  if (!$el)
+    return;
+  var colors = colorKeys.map(function(key) {
+    if (key.startsWith('--'))
+      return getElementCssProperty($el, key);
+    return key;
   });
+  var options = {
+    tooltip: {
+      trigger: 'item'
+    },
+    series: [
+      {
+        startAngle: 180,
+        endAngle: 360,
+        type: 'pie',
+        radius: ['50%', '90%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+        },
+        emphasis: {},
+        labelLine: {
+          show: false
+        },
+        data: data.map(function(value, i) { return ({
+          name: value[0],
+          value: value[1],
+          itemStyle: {
+            color: colors[i],
+          },
+        }); }).concat(data.map(function(value) { return ({
+          value: data.reduce(function(r, value) { return r + value[1]; }, 0) / (data.length || 1),
+          name: null,
+          itemStyle: { opacity: 0 },
+          tooltip: { show: false },
+        }); })),
+      }
+    ],
+  };
+  drawEchart(elementId, Object.assign(options, extraOptions));
+}
+function drawPieChart(elementId, data, colorKeys, extraOptions) {
+  if (colorKeys === void 0) { colorKeys = ['#2ED47A', '#FEC400']; }
+  if (extraOptions === void 0) { extraOptions = {}; }
+  var $el = document.getElementById(elementId);
+  if (!$el)
+    return;
+  var colors = colorKeys.map(function(key) {
+    if (key.startsWith('--'))
+      return getElementCssProperty($el, key);
+    return key;
+  });
+  var options = {
+    tooltip: {
+      trigger: 'item'
+    },
+    series: [
+      {
+        startAngle: 180,
+        endAngle: 360,
+        type: 'pie',
+        radius: ['75%', '90%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+        },
+        emphasis: {},
+        labelLine: {
+          show: false
+        },
+        data: data.map(function(value, i) { return ({
+          name: value[0],
+          value: value[1],
+          itemStyle: {
+            color: colors[i],
+          },
+        }); })
+      }
+    ],
+  };
+  drawEchart(elementId, Object.assign(options, extraOptions));
+}
+function sampleByCount(datas, count) {
+  if (datas.length <= count)
+    return datas;
+  var interval = datas.length / count | 0;
+  return datas.filter(function(data, i) { return i % interval === 0; });
+}
+function drawLineChart(elementId, csvData, colorKey, extraOptions) {
+  if (colorKey === void 0) { colorKey = '#E7413C'; }
+  if (extraOptions === void 0) { extraOptions = {}; }
+  var $el = document.getElementById(elementId);
+  if (!$el)
+    return;
+  var color = colorKey.startsWith('--') ? getElementCssProperty($el, colorKey) : colorKey;
+  var data = sampleByCount(readCsvData(csvData), 100);
+  var values = data.map(function(value) { return [value.date, parseFloat(value.value)]; });
+  var options = {
+    xAxis: {
+      type: 'category',
+      data: values.map(function(value) { return value[0]; }),
+      axisLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+    },
+    yAxis: {
+      type: 'value',
+      splitLine: {
+        lineStyle: {
+          type: 'dashed',
+          color: '#D3D8DD',
+        },
+      },
+    },
+    tooltip: {
+      trigger: 'axis',
+      backgroundColor: 'rgba(25, 42, 62, 0.8)',
+      borderWidth: 0,
+      textStyle: {
+        color: '#fff',
+        lineHeight: 14,
+      },
+      padding: [5, 20],
+      borderRadius: 100,
+      axisPointer: {
+        type: 'none',
+      },
+      snap: false,
+      formatter: function(params) {
+        return String(params[0].data);
+      },
+    },
+    series: [{
+      data: values.map(function(value) { return value[1]; }),
+      type: 'line',
+      smooth: true,
+      symbol: 'emptyCircle',
+      showSymbol: false,
+      sampling: 'average',
+      itemStyle: {
+        color: "rgba(" + hex2Rgb(color).join(',') + ", 0.8)",
+      },
+      areaStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          offset: 0,
+          color: "rgba(" + hex2Rgb(color).join(',') + ", 0.8)"
+        }, {
+          offset: 1,
+          color: "rgba(" + hex2Rgb(color).join(',') + ", 0)"
+        }])
+      },
+    }],
+    grid: {
+      top: 20,
+      right: 0,
+      bottom: 40,
+      left: 20,
+    },
+  };
+  if (Reflect.apply(Object.prototype.toString, extraOptions, []) === '[object Function]') {
+    extraOptions = extraOptions(values);
+  }
+  drawEchart(elementId, Object.assign(options, extraOptions));
 }
 
 function drawMap(elementId, csvData, mapJsonFile) {
@@ -183,11 +237,11 @@ function drawMap(elementId, csvData, mapJsonFile) {
 
   var max_value = 0;
   var data = d3.csvParse(csvData, function(d) {
-                values.set(d.id, [d.label, +d.value]);
-                if (+d.value > max_value) {
-                  max_value = d.value;
-                }
-             });
+    values.set(d.id, [d.label, +d.value]);
+    if (+d.value > max_value) {
+      max_value = d.value;
+    }
+  });
 
   var color = d3.scaleLinear()
       .domain([1, max_value])
