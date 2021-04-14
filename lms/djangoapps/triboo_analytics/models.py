@@ -768,7 +768,7 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
 
 
     @classmethod
-    def filter_by_period(cls, org, to_date=None, from_date=None, **kwargs):
+    def filter_by_period(cls, to_date=None, from_date=None, **kwargs):
         if from_date:
             _to_date = to_date
             if not _to_date:

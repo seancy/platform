@@ -1096,6 +1096,7 @@ def course_view_data(request):
                                                    with_period_start=with_period_start)
 
         if report == "course_summary":
+            logger.info("LAETITIA -- Course Summary kwargs=%s" % filter_kwargs)
             table = get_table_data(LearnerCourseJsonReport, CourseTable, filter_kwargs, exclude, 
                                    by_period=True, sort=data.get('sort'))
             summary_columns = ['Progress',
