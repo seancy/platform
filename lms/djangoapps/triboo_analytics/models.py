@@ -500,6 +500,7 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def get_active_user_ids(cls, from_date, to_date, course_id=None):
+        logger.info("LAETITIA -- searching for visitors in [%s, %s[" % (from_date, to_date))
         if course_id:
             reports = cls.objects.filter(created__gte=from_date,
                                          created__lt=to_date,
@@ -783,6 +784,7 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
         reports = cls.objects.filter(is_active=True, **kwargs)
         if to_date:
             day_key = dt2key(to_date)
+            logger.info("LAETITIA -- LearnerCourseJsonReport of %s" % day_key)
             results = []
             for r in reports:
                 record = cls.get_record(r.records, day_key)

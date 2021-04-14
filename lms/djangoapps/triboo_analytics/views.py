@@ -238,6 +238,7 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
 
     from_day = data.get('from_day')
     to_day = data.get('to_day')
+    logger.info("LAETITIA -- requesting period %s - %s" % (from_day, to_day))
     if from_day and to_day:
         from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
         to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
@@ -251,11 +252,15 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
                 'to_date': day2str(last_analytics_success) if as_string else last_analytics_success.date(),
                 # 'user_id__in': user_ids
             })
+            logger.info("LAETITIA -- searching for last analytics success in [%s - %s] => %s" % (
+                from_date, to_date, kwargs['to_date']))
             if with_period_start:
                 period_start_reportlog = ReportLog.get_latest(to_date=from_date)
                 if period_start_reportlog:
                     period_start = period_start_reportlog.created
                     kwargs['from_date'] = day2str(period_start) if as_string else period_start.date()
+                    logger.info("LAETITIA -- searching for last analytics success in [… - %s] => %s" % (
+                        from_date, kwargs['from_date']))
 
     return kwargs, exclude
 
