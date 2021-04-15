@@ -1608,7 +1608,7 @@ class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeMode
 
 
     @classmethod
-    def get_csv_data(cls, org, from_date=None, to_date=None):
+    def get_csv_data(cls, course_id, from_date=None, to_date=None):
         course_overview = CourseOverview.objects.get(id=course_id)
 
         if from_date:
