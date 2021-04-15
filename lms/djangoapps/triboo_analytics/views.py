@@ -245,7 +245,7 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
         period_end_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
         if period_end_reportlog:
             period_end = period_end_reportlog.created
-            kwargs['to_date'] = day2str(period_end) if as_string else period_end.date(),
+            kwargs['to_date'] = day2str(period_end) if as_string else period_end.date()
             logger.info("LAETITIA -- searching for last analytics success in [%s - %s] => %s" % (
                 from_date, to_date, kwargs['to_date']))
             if with_period_start:
