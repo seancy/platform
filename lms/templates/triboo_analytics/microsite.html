@@ -179,13 +179,13 @@
     </div>
 </main>
 
-% if microsite_report and unique_visitors_csv_data:
+% if microsite_report and unique_visitors_csv:
     <script type="text/javascript">
         function drawUVChart (by) {
           function fetchUVChartData (by) {
-              if (by === 'by-week') return "${unique_visitors_csv_data['per_week']}"
-              if (by === 'by-month') return "${unique_visitors_csv_data['per_month']}"
-              return "${unique_visitors_csv_data['per_day']}"
+              if (by === 'by-week') return "${unique_visitors_csv['per_week']}"
+              if (by === 'by-month') return "${unique_visitors_csv['per_month']}"
+              return "${unique_visitors_csv['per_day']}"
           }
           var lineChartCsvData = "date,value\n" + fetchUVChartData(by)
           drawLineChart('lineChart', lineChartCsvData, '--analytics-line-chart-color')
@@ -212,9 +212,9 @@
         ]);
     </script>
 % endif
-% if users_by_country_csv_data:
+% if users_by_country_csv:
     <script type="text/javascript">
-        var mapCsvData =  "id,label,value\n" + "${users_by_country_csv_data}";
+        var mapCsvData =  "id,label,value\n" + "${users_by_country_csv}";
         drawMap('map', mapCsvData, '${static.url('js/triboo_analytics/world-110m.v1.json')}');
     </script>
 % endif

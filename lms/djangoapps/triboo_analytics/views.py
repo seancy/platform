@@ -927,10 +927,15 @@ def microsite_view(request):
         from_date = datetime.strptime(from_date, "%Y-%m-%d").date() if from_date else None
         to_date = request.GET.get('to_day')
         to_date = datetime.strptime(to_date, "%Y-%m-%d").date() if to_date else None
-        unique_visitors_csv_data = MicrositeDailyReport.get_unique_visitors_csv_data(microsite_report_org,
-                                                                                     from_date,
-                                                                                     to_date)
-        users_by_country_csv_data = ""
+        unique_visitors_csv, users_csv, average_time_spent_csv = MicrositeDailyReport.get_csv_data(
+                                                                    microsite_report_org,
+                                                                    from_date,
+                                                                    to_date)
+        logger.info("LAETITIA -- unique_visitors_csv = %s" % unique_visitors_csv)
+        logger.info("LAETITIA -- users_csv = %s" % users_csv)
+        logger.info("LAETITIA -- average_time_spent_csv = %s" % average_time_spent_csv)
+
+        users_by_country_csv = ""
         country_reports = CountryDailyReport.filter_by_day(date_time=last_update, org=microsite_report_org)
         for report in country_reports:
             country_code = report.country.numeric
@@ -942,15 +947,17 @@ def microsite_view(request):
                         country_code = "0%d" % country_code
                 else:
                     country_code = "%d" % country_code
-                users_by_country_csv_data += "%s,%s,%d\\n" % (country_code, report.country.name, report.nb_users)
+                users_by_country_csv += "%s,%s,%d\\n" % (country_code, report.country.name, report.nb_users)
 
         return render_to_response(
                 "triboo_analytics/microsite.html",
                 {
                     'last_update': dt2str(last_update),
                     'microsite_report': microsite_report,
-                    'unique_visitors_csv_data': unique_visitors_csv_data,
-                    'users_by_country_csv_data': users_by_country_csv_data,
+                    'unique_visitors_csv': unique_visitors_csv,
+                    'users_csv_data': users_csv,
+                    'average_time_spent_csv': average_time_spent_csv,
+                    'users_by_country_csv': users_by_country_csv,
                     'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'global'}),
                 }
             )
@@ -960,8 +967,8 @@ def microsite_view(request):
         {
             'last_update': "",
             'microsite_report': None,
-            'unique_visitors_csv_data': "",
-            'users_by_country_csv_data': "",
+            'unique_visitors_csv': "",
+            'users_by_country_csv': "",
             'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'global'}),
         }
     )
@@ -1035,16 +1042,20 @@ def course_view(request):
         course_key = CourseKey.from_string(course_id)
 
         course_report = None
-        unique_visitors_csv_data = None
+        unique_visitors_csv = None
+        average_complete_time_csv = None
         last_update = None
 
         last_reportlog = ReportLog.get_latest()
         if last_reportlog:
             last_update = last_reportlog.course
             course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
-            unique_visitors_csv_data = CourseDailyReport.get_unique_visitors_csv_data(course_key, None, None)
-
+            unique_visitors_csv, average_complete_time_csv = CourseDailyReport.get_unique_visitors_csv_data(
+                                                                course_key, None, None)
             last_update = dt2str(last_update)
+
+        logger.info("LAETITIA -- unique_visitors_csv = %s" % unique_visitors_csv)
+        logger.info("LAETITIA -- average_complete_time_csv = %s" % average_complete_time_csv)
  
         return render_to_response(
             "triboo_analytics/course.html",
@@ -1054,7 +1065,8 @@ def course_view(request):
                 'course_name': courses.get(course_id),
                 'last_update': last_update,
                 'course_report': course_report,
-                'unique_visitors_csv_data': unique_visitors_csv_data,
+                'unique_visitors_csv': unique_visitors_csv,
+                'average_complete_time_csv': average_complete_time_csv,
                 'list_table_downloads_url': reverse('list_table_downloads', kwargs={'report': 'course'}),
             }
         )

@@ -54,7 +54,7 @@
               </div>
             % if course_report:
               <div class="analytics-widgets">
-                % if len(unique_visitors_csv_data) > 0:
+                % if len(unique_visitors_csv) > 0:
                   <div class="analytics-basic-wrapper analytics-basic-wrapper--grow">
                       <section class="analytics-widget analytics-linechart analytics-widget-enrollmentschart analytics-widget--row2">
                           <div class="analytics-widget__caption">
@@ -255,9 +255,9 @@
       drawPieChart('pieChart', pieChartData, ['green', 'red', 'orange', 'gray'])
     </script>
 % endif
-% if unique_visitors_csv_data and len(unique_visitors_csv_data) > 0:
+% if unique_visitors_csv and len(unique_visitors_csv) > 0:
     <script type="text/javascript">
-      var lineChartCsvData = "date,value\n" + "${unique_visitors_csv_data['per_day']}";
+      var lineChartCsvData = "date,value\n" + "${unique_visitors_csv['per_day']}";
       drawLineChart('lineChart', lineChartCsvData);
     </script>
 % endif
