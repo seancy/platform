@@ -1050,8 +1050,7 @@ def course_view(request):
         if last_reportlog:
             last_update = last_reportlog.course
             course_report = CourseDailyReport.get_by_day(date_time=last_update, course_id=course_key)
-            unique_visitors_csv, average_complete_time_csv = CourseDailyReport.get_unique_visitors_csv_data(
-                                                                course_key, None, None)
+            unique_visitors_csv, average_complete_time_csv = CourseDailyReport.get_csv_data(course_key, None, None)
             last_update = dt2str(last_update)
 
         logger.info("LAETITIA -- unique_visitors_csv = %s" % unique_visitors_csv)
