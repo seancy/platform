@@ -364,22 +364,22 @@ class UniqueVisitorsMixin(object):
 
         unique_visitors = unique_visitors.values('created', 'unique_visitors').order_by('created')
         if unique_visitors:
-            current_week = unique_visitors[0]['created'].strftime('%W-%Y')
+            current_week = unique_visitors[0]['created'].strftime('%Y-%W')
             per_week = {current_week: []}
-            current_month = unique_visitors[0]['created'].strftime('%m-%Y')
+            current_month = unique_visitors[0]['created'].strftime('%Y-%m')
             per_month = {current_month: []}
 
             for uv in unique_visitors:
-                unique_visitors_csv_data['per_day'] += "%s,%d\\n" % (uv['created'].strftime('%d-%m-%Y'), uv['unique_visitors'])
+                unique_visitors_csv_data['per_day'] += "%s,%d\\n" % (uv['created'].strftime('%Y-%m-%d'), uv['unique_visitors'])
 
-                uv_week = uv['created'].strftime('%W-%Y')
+                uv_week = uv['created'].strftime('%Y-%W')
                 if uv_week != current_week:
                     current_week = uv_week
                     per_week[current_week] = [uv['unique_visitors']]
                 else:
                     per_week[current_week].append(uv['unique_visitors'])
 
-                uv_month = uv['created'].strftime('%m-%Y')
+                uv_month = uv['created'].strftime('%Y-%m')
                 if uv_month != current_month:
                     current_month = uv_month
                     per_month[current_month] = [uv['unique_visitors']]
