@@ -364,7 +364,7 @@ class UniqueVisitorsMixin(object):
 
         unique_visitors = unique_visitors.values('created', 'unique_visitors').order_by('created')
         if unique_visitors:
-            current_week = unique_visitors[0]['created'].strftime('%W')
+            current_week = unique_visitors[0]['created'].strftime('%W-%Y')
             per_week = {current_week: []}
             current_month = unique_visitors[0]['created'].strftime('%m-%Y')
             per_month = {current_month: []}
@@ -372,7 +372,7 @@ class UniqueVisitorsMixin(object):
             for uv in unique_visitors:
                 unique_visitors_csv_data['per_day'] += "%s,%d\\n" % (uv['created'].strftime('%d-%m-%Y'), uv['unique_visitors'])
 
-                uv_week = uv['created'].strftime('%W')
+                uv_week = uv['created'].strftime('%W-%Y')
                 if uv_week != current_week:
                     current_week = uv_week
                     per_week[current_week] = [uv['unique_visitors']]
