@@ -1336,9 +1336,32 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
             return None
             
 
+    # @classmethod
+    # def list_filter_by_day(cls, date_time=None, **kwargs):
+    #     results = cls.filter_by_day(date_time, **kwargs)
+    #     dataset = {}
+    #     for res in results:
+    #         key = res.user.id
+    #         if key not in dataset.keys():
+    #             dataset[key] = {'user': res.user}
+    #         dataset[key]["%s_success" % res.badge.badge_hash] = res.success
+    #         dataset[key]["%s_score" % res.badge.badge_hash] = res.score
+    #         dataset[key]["%s_successdate" % res.badge.badge_hash] = res.success_date
+    #     return dataset.values()
+
+
     @classmethod
-    def list_filter_by_day(cls, date_time=None, **kwargs):
-        results = cls.filter_by_day(date_time, **kwargs)
+    def filter_by_period(cls, to_date=None, from_date=None, **kwargs):
+        logger.info("LAETITIA -- LearnerBadgeJsonReport filter_by_period from=%s to=%s kwargs=%s" % (
+            from_date, to_date, kwargs.keys()))
+        if from_date:
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date)
+            kwargs['user_id__in'] = user_ids
+
+            logger.info("LAETITIA -- LearnerBadgeJsonReport filter_by_period from=%s to=%s nb user_ids=%d" % (
+                from_date, to_date, len(user_ids)))
+
+        results = cls.filter_by_day(to_date, **kwargs)
         dataset = {}
         for res in results:
             key = res.user.id
@@ -1347,6 +1370,8 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
             dataset[key]["%s_success" % res.badge.badge_hash] = res.success
             dataset[key]["%s_score" % res.badge.badge_hash] = res.score
             dataset[key]["%s_successdate" % res.badge.badge_hash] = res.success_date
+
+        logger.info("LAETITIA -- => nb results=%d" % len(dataset.values()))
         return dataset.values()
 
 
@@ -1476,11 +1501,9 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def filter_by_period(cls, org, to_date=None, from_date=None, **kwargs):
+    def filter_by_period(cls, org, to_date, from_date=None, **kwargs):
         logger.info("LAETITIA -- LearnerDailyReport filter_by_period org=%s from=%s to=%s kwargs=%s" % (
                 org, from_date, to_date, kwargs.keys()))
-        if not to_date:
-            to_date = timezone.now().date()
         if from_date:
             user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date)
 

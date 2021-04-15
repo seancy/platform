@@ -242,16 +242,10 @@ def get_period_kwargs(data, course_id=None, as_string=False, with_period_start=F
     if from_day and to_day:
         from_date = utc.localize(datetime.strptime(from_day, '%Y-%m-%d'))
         to_date = utc.localize(datetime.strptime(to_day, '%Y-%m-%d')) + timedelta(days=1)
-        last_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
-        if last_reportlog:
-            last_analytics_success = last_reportlog.created
-            # user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date,
-            #                                                         to_date,
-            #                                                         course_id)
-            kwargs.update({
-                'to_date': day2str(last_analytics_success) if as_string else last_analytics_success.date(),
-                # 'user_id__in': user_ids
-            })
+        period_end_reportlog = ReportLog.get_latest(from_date=from_date, to_date=to_date)
+        if period_end_reportlog:
+            period_end = period_end_reportlog.created
+            kwargs['to_date'] = day2str(period_end) if as_string else period_end.date(),
             logger.info("LAETITIA -- searching for last analytics success in [%s - %s] => %s" % (
                 from_date, to_date, kwargs['to_date']))
             if with_period_start:
@@ -357,7 +351,7 @@ def get_progress_table_data(course_key, filter_kwargs, exclude, sort=None):
         return []
     course_filter = filter_kwargs.pop('course_id')
     filter_kwargs['badge__course_id'] = course_filter
-    dataset = LearnerBadgeJsonReport.list_filter_by_day(**filter_kwargs)
+    dataset = LearnerBadgeJsonReport.filter_by_period(**filter_kwargs)
     _badges = Badge.objects.filter(course_id=course_key).order_by('order')
     badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
     ProgressTable = get_progress_table_class(badges)
@@ -931,9 +925,9 @@ def microsite_view(request):
                                                                     microsite_report_org,
                                                                     from_date,
                                                                     to_date)
-        logger.info("LAETITIA -- unique_visitors_csv = %s" % unique_visitors_csv)
-        logger.info("LAETITIA -- users_csv = %s" % users_csv)
-        logger.info("LAETITIA -- average_time_spent_csv = %s" % average_time_spent_csv)
+        # logger.info("LAETITIA -- unique_visitors_csv = %s" % unique_visitors_csv)
+        # logger.info("LAETITIA -- users_csv = %s" % users_csv)
+        # logger.info("LAETITIA -- average_time_spent_csv = %s" % average_time_spent_csv)
 
         users_by_country_csv = ""
         country_reports = CountryDailyReport.filter_by_day(date_time=last_update, org=microsite_report_org)
@@ -1053,8 +1047,8 @@ def course_view(request):
             unique_visitors_csv, average_complete_time_csv = CourseDailyReport.get_csv_data(course_key, None, None)
             last_update = dt2str(last_update)
 
-        logger.info("LAETITIA -- unique_visitors_csv = %s" % unique_visitors_csv)
-        logger.info("LAETITIA -- average_complete_time_csv = %s" % average_complete_time_csv)
+        # logger.info("LAETITIA -- unique_visitors_csv = %s" % unique_visitors_csv)
+        # logger.info("LAETITIA -- average_complete_time_csv = %s" % average_complete_time_csv)
  
         return render_to_response(
             "triboo_analytics/course.html",
@@ -1191,8 +1185,6 @@ def learner_view_data(request):
         filter_kwargs['org'] = learner_report_org
         if 'to_date' not in filter_kwargs.keys():
             filter_kwargs['to_date'] = last_update.date()
-            # if not data.get('from_day'):
-            #     filter_kwargs['to_date'] = last_update
         if 'to_date' in filter_kwargs.keys():
             table = get_table_data(LearnerDailyReport, LearnerDailyTable, filter_kwargs, exclude,
                                    by_period=True, html_links=True, sort=data.get('sort'))
