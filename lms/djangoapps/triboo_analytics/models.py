@@ -371,7 +371,6 @@ class UniqueVisitorsMixin(object):
 
             for uv in unique_visitors:
                 unique_visitors_csv_data['per_day'] += "%s,%d\\n" % (uv['created'].strftime('%Y-%m-%d'), uv['unique_visitors'])
-
                 uv_week = uv['created'].strftime('%Y-%W')
                 if uv_week != current_week:
                     current_week = uv_week
@@ -1603,7 +1602,7 @@ class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeMode
         _reports = reports.values('created', 'average_complete_time').order_by('created')
         average_complete_time_csv_data = ""
         for r in _reports:
-            average_complete_time_csv_data += "%s,%d\\n" % (r['created'].strftime('%d-%m-%Y'), r['average_complete_time'])
+            average_complete_time_csv_data += "%s,%d\\n" % (r['created'].strftime('%Y-%m-%d'), r['average_complete_time'])
 
         return average_complete_time_csv_data
 
@@ -1786,7 +1785,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
         _reports = reports.values('created', 'users').order_by('created')
         users_csv_data = ""
         for r in _reports:
-            users_csv_data += "%s,%d\\n" % (r['created'].strftime('%d-%m-%Y'), r['users'])
+            users_csv_data += "%s,%d\\n" % (r['created'].strftime('%Y-%m-%d'), r['users'])
 
         return users_csv_data
 
@@ -1796,7 +1795,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
         _reports = reports.values('created', 'average_time_spent').order_by('created')
         average_time_spent_csv_data = ""
         for r in _reports:
-            average_time_spent_csv_data += "%s,%d\\n" % (r['created'].strftime('%d-%m-%Y'), r['average_time_spent'])
+            average_time_spent_csv_data += "%s,%d\\n" % (r['created'].strftime('%Y-%m-%d'), r['average_time_spent'])
 
         return average_time_spent_csv_data
 
