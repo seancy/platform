@@ -769,18 +769,23 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
 
     @classmethod
     def filter_by_period(cls, to_date=None, from_date=None, **kwargs):
+        logger.info("LAETITIA -- LearnerCourseJsonReport filter_by_period from=%s to=%s kwargs=%s" % (
+            from_date, to_date, kwargs))
         if from_date:
             _to_date = to_date
             if not _to_date:
                 _to_date = timezone.now().date()
             user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, _to_date)
             kwargs['user_id__in'] = user_ids
+            logger.info("LAETITIA -- LearnerCourseJsonReport filter_by_period from=%s to=%s nb user_ids=%d" % (
+                from_date, to_date, len(user_ids)))
         return cls.filter_by_day(to_date, **kwargs)
 
 
     @classmethod
     def filter_by_day(cls, to_date=None, **kwargs):
         reports = cls.objects.filter(is_active=True, **kwargs)
+        logger.info("LAETITIA -- LearnerCourseJsonReport nb reports = %d" % len(reports))
         if to_date:
             day_key = dt2key(to_date)
             logger.info("LAETITIA -- LearnerCourseJsonReport of %s" % day_key)
@@ -1353,7 +1358,7 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
     @classmethod
     def filter_by_period(cls, to_date=None, from_date=None, **kwargs):
         logger.info("LAETITIA -- LearnerBadgeJsonReport filter_by_period from=%s to=%s kwargs=%s" % (
-            from_date, to_date, kwargs.keys()))
+            from_date, to_date, kwargs))
         if from_date:
             user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, to_date)
             kwargs['user_id__in'] = user_ids
