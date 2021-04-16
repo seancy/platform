@@ -1576,114 +1576,13 @@ def get_customized_period_kwargs(request_dict, kwargs, course_id=None, as_string
 
     return kwargs
 
+
 @transaction.non_atomic_requests
 @analytics_on
 @analytics_member_required
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def customized_export_table(request):
-
-    orgs = configuration_helpers.get_current_site_orgs()
-    if not orgs:
-        return HttpResponseNotFound()
-
-    body_data = request.body.decode('utf-8')
-    request_dict = json.loads(body_data)
-    report_type = request_dict.get('report_type', 'course_summary')
-    courses_selected = request_dict.get('courses_selected', None)
-    last_reportlog = ReportLog.get_latest()
-    if not last_reportlog:
-        return None
-
-    if report_type == 'course_summary':
-        last_reportlog = ReportLog.get_latest()
-        if last_reportlog:
-            last_update = last_reportlog.course
-            date_time = day2str(last_update)
-            filter_kwargs, exclude = get_customized_kwargs(request_dict)
-            filter_kwargs = get_customized_period_kwargs(request_dict,
-                                                         filter_kwargs,
-                                                         with_period_start=False,
-                                                         as_string=True)
-            report_args = {
-                'report_cls': LearnerCourseJsonReport.__name__,
-                'filter_kwargs': filter_kwargs,
-                'courses_selected': courses_selected,
-                'date_time': date_time,
-                'table_cls': CustomizedCourseTable.__name__,
-                'exclude': list(exclude)
-            }
-            return _export_table(request, CourseKeyField.Empty, 'summary_report_multiple', report_args)
-
-    elif report_type in ['course_progress', 'course_time_spent']:
-        try:
-            course_key = CourseKey.from_string(courses_selected)
-        except InvalidKeyError:
-            return JsonResponseBadRequest({"message": _("Invalid course id.")})
-
-        last_update = last_reportlog.course
-        with_period_start = True if report_type == "course_time_spent" else False
-        filter_kwargs, exclude = get_customized_kwargs(request_dict)
-        filter_kwargs = get_customized_period_kwargs(request_dict,
-                                                     filter_kwargs,
-                                                     course_id=course_key,
-                                                     with_period_start=with_period_start,
-                                                     as_string=True)
-        report_args = {
-            'filter_kwargs': filter_kwargs,
-            'exclude': list(exclude)
-        }
-        if report_type == "course_progress":
-            return _export_table(request, course_key, 'progress_report', report_args)
-        elif report_type == "course_time_spent":
-            return _export_table(request, course_key, 'time_spent_report', report_args)
-
-    elif report_type == 'learner':
-        last_update = last_reportlog.learner
-        learner_report_org = orgs[0]
-        if len(orgs) > 1:
-            learner_report_org = get_combined_org(orgs)
-        filter_kwargs, exclude = get_customized_kwargs(request_dict)
-        filter_kwargs = get_customized_period_kwargs(request_dict,
-                                                     filter_kwargs,
-                                                     with_period_start=True,
-                                                     as_string=True)
-        filter_kwargs['org'] = learner_report_org
-        if 'date_time' not in filter_kwargs.keys():
-            filter_kwargs['date_time'] = day2str(last_update)
-        report_args = {
-            'report_cls': LearnerDailyReport.__name__,
-            'filter_kwargs': filter_kwargs,
-            'table_cls': LearnerDailyTable.__name__,
-            'exclude': list(exclude)
-        }
-        return _export_table(request, CourseKeyField.Empty, 'learner_report', report_args)
-
-    elif report_type in ['ilt_global', 'ilt_learner']:
-        filter_kwargs, exclude = get_customized_kwargs(request_dict)
-        filter_kwargs['org__in'] = orgs
-        from_day = request_dict.get('from_day')
-        to_day = request_dict.get('to_day')
-        if from_day and to_day:
-            filter_kwargs['ilt_period_range'] = json.dumps((from_day, to_day))
-        report_args = {
-            'filter_kwargs': filter_kwargs,
-            'exclude': list(exclude)
-        }
-
-        if report_type == "ilt_global":
-            return _export_table(request, CourseKeyField.Empty, 'ilt_global_report', report_args)
-
-        elif report_type == "ilt_learner":
-            return _export_table(request, CourseKeyField.Empty, 'ilt_learner_report', report_args)
-
-
-@transaction.non_atomic_requests
-@analytics_on
-@analytics_member_required
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-def customized_export_table_new(request):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return HttpResponseNotFound()
@@ -1692,50 +1591,48 @@ def customized_export_table_new(request):
     data = json.loads(body_data)
     report_type = data.get('report_type', 'course_summary')
     courses_selected = data.get('courses_selected', None)
+
     last_reportlog = ReportLog.get_latest()
     if not last_reportlog:
         return None
 
-    if report_type == 'course_summary':
+    if report_type in ['course_summary', 'course_progress', 'course_time_spent']:
         last_update = last_reportlog.course
-        date_time = day2str(last_update)
-        filter_kwargs, exclude = get_period_kwargs(data,
-                                                   course_id=None,
-                                                   with_period_start=False,
-                                                   as_string=True)
-        report_args = {
-            'report_cls': LearnerCourseJsonReport.__name__,
-            'filter_kwargs': filter_kwargs,
-            'courses_selected': courses_selected,
-            'date_time': date_time,
-            'table_cls': CustomizedCourseTable.__name__,
-            'exclude': list(exclude)
-        }
-        return _export_table(request, CourseKeyField.Empty, 'summary_report_multiple', report_args)
+        with_period_start = True if report in ["course_summary", "course_time_spent"] else False
 
-    elif report_type in ['course_progress', 'course_time_spent']:
-        try:
-            course_key = CourseKey.from_string(courses_selected)
-        except InvalidKeyError:
-            return JsonResponseBadRequest({"message": _("Invalid course id.")})
+        if report_type == "course_summary":
+            filter_kwargs, exclude = get_period_kwargs(data,
+                                                       course_id=None,
+                                                       with_period_start=with_period_start,
+                                                       as_string=True)
+            report_args = {
+                'report_cls': LearnerCourseJsonReport.__name__,
+                'filter_kwargs': filter_kwargs,
+                'courses_selected': courses_selected,
+                'table_cls': CustomizedCourseTable.__name__,
+                'exclude': list(exclude)
+            }
+            return _export_table(request, CourseKeyField.Empty, 'summary_report_multiple', report_args)
 
-        with_period_start = True if report_type == "course_time_spent" else False
-        last_update = last_reportlog.course
-        filter_kwargs, exclude = get_period_kwargs(data,
-                                                   course_id=course_key,
-                                                   with_period_start=with_period_start,
-                                                   as_string=True)
-        if 'date_time' not in filter_kwargs.keys():
-            filter_kwargs['date_time'] = day2str(last_update)
+        else:
+            try:
+                course_key = CourseKey.from_string(courses_selected)
+            except InvalidKeyError:
+                return JsonResponseBadRequest({"message": _("Invalid course id.")})
 
-        report_args = {
-            'filter_kwargs': filter_kwargs,
-            'exclude': list(exclude)
-        }
-        if report_type == "course_progress":
-            return _export_table(request, course_key, 'progress_report', report_args)
-        elif report_type == "course_time_spent":
-            return _export_table(request, course_key, 'time_spent_report', report_args)
+            filter_kwargs, exclude = get_period_kwargs(data,
+                                                       course_id=course_key,
+                                                       with_period_start=with_period_start,
+                                                       as_string=True)
+
+            report_args = {
+                'filter_kwargs': filter_kwargs,
+                'exclude': list(exclude)
+            }
+            if report_type == "course_progress":
+                return _export_table(request, course_key, 'progress_report', report_args)
+            elif report_type == "course_time_spent":
+                return _export_table(request, course_key, 'time_spent_report', report_args)
 
     elif report_type == 'learner':
         return learner_export_table(request)
