@@ -1137,6 +1137,8 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                     r.user_id, r.section_key, from_date_key, old_time_spent,
                     to_date_key, new_time_spent))
 
+        logger.info("LAETITIA -- LearnerSectionJsonReport nb results = %d" % len(results))
+
         dataset = {}
         sections = {}
         for res in results:
@@ -1146,6 +1148,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
             dataset[user_id][res.section_key] = res.total_time_spent
             sections[res.section_key] = res.section_name
 
+        logger.info("LAETITIA -- LearnerSectionJsonReport dataset is ready")
         return dataset.values(), sections
 
 
