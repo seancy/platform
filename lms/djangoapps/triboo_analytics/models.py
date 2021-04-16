@@ -1007,21 +1007,12 @@ class LearnerCourseDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
 class LearnerSectionDailyReportMockup(object):
-    def __init__(self, learner_section_json_report, total_time_spent=None):
+    def __init__(self, learner_section_json_report, total_time_spent):
         self.user = learner_section_json_report.user
         self.course_id = learner_section_json_report.course_id
         self.section_key = learner_section_json_report.section_key
         self.section_name = learner_section_json_report.section_name
-        if total_time_spent:
-            self.total_time_spent = total_time_spent
-        elif re:
-            records = json.loads(learner_section_json_report.records)
-            if key_day in records.keys():
-                self.total_time_spent = records[key_day]['total_time_spent']
-            else:
-                self.total_time_spent = 0
-        else:
-            self.total_time_spent = learner_section_json_report.total_time_spent
+        self.total_time_spent = total_time_spent
 
 
 class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
@@ -1080,60 +1071,71 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                                                            'records': "{%s}" % cls.recordify(dt2key(), new_record_str)})
 
 
+    # @classmethod
+    # def filter_by_day(cls, date_time=None, **kwargs):
+    #     reports = cls.objects.filter(is_active=True, **kwargs)
+    #     if date_time:
+    #         day_key = dt2key(date_time)
+    #         results = []
+    #         for r in reports:
+    #             record = cls.get_record(r.records, day_key)
+    #             total_time_spent = record['total_time_spent'] if record else 0
+    #             results.append(LearnerSectionDailyReportMockup(r, total_time_spent))
+    #         return results
+    #     return reports
+
+
+    # @classmethod
+    # def get_by_day(cls, date_time=None, **kwargs):
+    #     try:
+    #         r = cls.objects.get(is_active=True, **kwargs)
+    #         if date_time:
+    #             day_key = dt2key(date_time)
+    #             record = cls.get_record(r.records, day_key)
+    #             total_time_spent = record['total_time_spent'] if record else 0
+    #             return LearnerSectionDailyReportMockup(r, total_time_spent)
+    #         return r
+    #     except cls.DoesNotExist:
+    #         return None
+
+
+
     @classmethod
-    def filter_by_day(cls, date_time=None, **kwargs):
-        reports = cls.objects.filter(is_active=True, **kwargs)
-        if date_time:
-            day_key = dt2key(date_time)
-            results = []
-            for r in reports:
-                record = cls.get_record(r.records, day_key)
-                total_time_spent = record['total_time_spent'] if record else 0
-                results.append(LearnerSectionDailyReportMockup(r, total_time_spent))
-            return results
-        return reports
-
-
-    @classmethod
-    def get_by_day(cls, date_time=None, **kwargs):
-        try:
-            r = cls.objects.get(is_active=True, **kwargs)
-            if date_time:
-                day_key = dt2key(date_time)
-                record = cls.get_record(r.records, day_key)
-                total_time_spent = record['total_time_spent'] if record else 0
-                return LearnerSectionDailyReportMockup(r, total_time_spent)
-            return r
-        except cls.DoesNotExist:
-            return None
-
-
-
-    @classmethod
-    def filter_by_period(cls, course_id, period_start=None, period_end=None, **kwargs):
-        period_start_key = dt2key(period_start) if period_start else None
-        period_end_key = dt2key(period_end) if period_end else None
+    def filter_by_period(cls, course_id, to_date=None, from_date=None, **kwargs):
+        logger.info("LAETITIA -- LearnerSectionJsonReport filter_by_period course_id=%s from=%s to=%s kwargs=%s" % (
+            course_id, from_date, to_date, kwargs))
+        if from_date:
+            _to_date = to_date
+            if not _to_date:
+                _to_date = timezone.now().date()
+            user_ids = LearnerVisitsDailyReport.get_active_user_ids(from_date, _to_date)
+            kwargs['user_id__in'] = user_ids
+            logger.info("LAETITIA -- LearnerSectionJsonReport filter_by_period from=%s to=%s nb user_ids=%d" % (
+                from_date, to_date, len(user_ids)))
         reports = cls.objects.filter(course_id=course_id, is_active=True, **kwargs)
+
+        from_date_key = dt2key(from_date) if from_date else None
+        to_date_key = dt2key(to_date) if to_date else None
         results = []
         for r in reports:
             old_time_spent = 0
-            if period_start:
-                start_record = cls.get_record(r.records, period_start_key)
-                if start_record:
-                    old_time_spent = start_record['total_time_spent']
+            if from_date:
+                from_record = cls.get_record(r.records, from_date_key)
+                if from_record:
+                    old_time_spent = from_record['total_time_spent']
             new_time_spent = r.total_time_spent
-            if period_end:
-                end_record = cls.get_record(r.records, period_end_key)
-                if end_record:
-                    new_time_spent = end_record['total_time_spent']
+            if to_date:
+                to_record = cls.get_record(r.records, to_date_key)
+                if to_record:
+                    new_time_spent = to_record['total_time_spent']
                 else:
                     new_time_spent = 0
             if new_time_spent >= old_time_spent:
                 results.append(LearnerSectionDailyReportMockup(r, (new_time_spent - old_time_spent)))
             else:
-                logger.error("invalid values for user_id %d / section %s: start %s = %d, end %s = %d" % (
-                    r.user_id, r.section_key, period_start_key, old_time_spent,
-                    period_end_key, new_time_spent))
+                logger.error("invalid values for user_id %d / section %s: from %s = %d, to %s = %d" % (
+                    r.user_id, r.section_key, from_date_key, old_time_spent,
+                    to_date_key, new_time_spent))
 
         dataset = {}
         sections = {}
