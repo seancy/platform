@@ -349,9 +349,11 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
 def get_progress_table_data(course_key, filter_kwargs, exclude, sort=None):
     if filter_kwargs.pop('invalid', False):
         return []
+
     course_filter = filter_kwargs.pop('course_id')
     filter_kwargs['badge__course_id'] = course_filter
     dataset = LearnerBadgeJsonReport.filter_by_period(**filter_kwargs)
+
     _badges = Badge.objects.filter(course_id=course_key).order_by('order')
     badges = [(b.badge_hash, b.grading_rule, b.section_name) for b in _badges]
     ProgressTable = get_progress_table_class(badges)

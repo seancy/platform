@@ -1104,6 +1104,8 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
     def filter_by_period(cls, course_id, to_date=None, from_date=None, **kwargs):
         logger.info("LAETITIA -- LearnerSectionJsonReport filter_by_period course_id=%s from=%s to=%s kwargs=%s" % (
             course_id, from_date, to_date, kwargs))
+        results = []
+
         if from_date:
             _to_date = to_date
             if not _to_date:
@@ -1112,30 +1114,32 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
             kwargs['user_id__in'] = user_ids
             logger.info("LAETITIA -- LearnerSectionJsonReport filter_by_period from=%s to=%s nb user_ids=%d" % (
                 from_date, to_date, len(user_ids)))
-        reports = cls.objects.filter(course_id=course_id, is_active=True, **kwargs)
 
-        from_date_key = dt2key(from_date) if from_date else None
-        to_date_key = dt2key(to_date) if to_date else None
-        results = []
-        for r in reports:
-            old_time_spent = 0
-            if from_date:
-                from_record = cls.get_record(r.records, from_date_key)
-                if from_record:
-                    old_time_spent = from_record['total_time_spent']
-            new_time_spent = r.total_time_spent
-            if to_date:
-                to_record = cls.get_record(r.records, to_date_key)
-                if to_record:
-                    new_time_spent = to_record['total_time_spent']
+            reports = cls.objects.filter(course_id=course_id, is_active=True, **kwargs)
+
+            from_date_key = dt2key(from_date) if from_date else None
+            to_date_key = dt2key(to_date) if to_date else None
+            for r in reports:
+                old_time_spent = 0
+                if from_date:
+                    from_record = cls.get_record(r.records, from_date_key)
+                    if from_record:
+                        old_time_spent = from_record['total_time_spent']
+                new_time_spent = r.total_time_spent
+                if to_date:
+                    to_record = cls.get_record(r.records, to_date_key)
+                    if to_record:
+                        new_time_spent = to_record['total_time_spent']
+                    else:
+                        new_time_spent = 0
+                if new_time_spent >= old_time_spent:
+                    results.append(LearnerSectionDailyReportMockup(r, (new_time_spent - old_time_spent)))
                 else:
-                    new_time_spent = 0
-            if new_time_spent >= old_time_spent:
-                results.append(LearnerSectionDailyReportMockup(r, (new_time_spent - old_time_spent)))
-            else:
-                logger.error("invalid values for user_id %d / section %s: from %s = %d, to %s = %d" % (
-                    r.user_id, r.section_key, from_date_key, old_time_spent,
-                    to_date_key, new_time_spent))
+                    logger.error("invalid values for user_id %d / section %s: from %s = %d, to %s = %d" % (
+                        r.user_id, r.section_key, from_date_key, old_time_spent,
+                        to_date_key, new_time_spent))
+        else:
+            results = cls.objects.filter(course_id=course_id, is_active=True, **kwargs)
 
         logger.info("LAETITIA -- LearnerSectionJsonReport nb results = %d" % len(results))
 
