@@ -1029,7 +1029,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
     class Meta(object):
         app_label = "triboo_analytics"
         unique_together = ('user', 'course_id', 'section_key')
-        index_together = (['user', 'course_id', 'section_key'])
+        index_together = (['user', 'course_id', 'section_key'], ['course_id', 'user'])
 
     user = models.ForeignKey(User, null=False)
     course_id = CourseKeyField(max_length=255, db_index=True, null=False)
