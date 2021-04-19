@@ -1056,7 +1056,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                 last_analytics_success_record = cls.get_record_str(report.records, key_last_analytics_success)
             if report and last_analytics_success_record and not needs_update:
                 logger.info("LAETITIA -- Section report user_id=%d / section=%s NO UPDATE NEEDED" % (
-                        user.id, section_combined_url))
+                        enrollment.user.id, section_combined_url))
                 report.records = cls.append_record(report.records, dt2key(), last_analytics_success_record)
                 report.is_active = True
                 report.save()
@@ -1070,7 +1070,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                 new_record_str = json.dumps(new_record)
                 if report:
                     logger.info("LAETITIA -- Badge report user_id=%d / section=%s SIMPLY ADD RECORD" % (
-                            user.id, section_combined_url))
+                            enrollment.user.id, section_combined_url))
                     report.section_name = section_combined_display_name
                     report.total_time_spent = new_record['total_time_spent']
                     report.records = cls.append_record(report.records, dt2key(), new_record_str)
@@ -1078,7 +1078,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                     report.save()
                 else:
                     logger.info("LAETITIA -- Badge report user_id=%d / section=%s CREATE NEW REPORT" % (
-                            user.id, section_combined_url))
+                            enrollment.user.id, section_combined_url))
                     cls.objects.update_or_create(user=enrollment.user,
                                                  course_id=enrollment.course_id,
                                                  section_key=section_combined_url,
