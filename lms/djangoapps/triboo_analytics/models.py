@@ -1303,6 +1303,9 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                                                   trophy['section_url'])
                 try:
                     badge = Badge.objects.get(course_id=course_key, badge_hash=badge_hash)
+                    logger.info("LAETITIA -- found Badge course=%s - progress trophy %s (%s %s)" % (
+                        course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
+
                 except Badge.DoesNotExist:
                     badge, _ = Badge.objects.update_or_create(course_id=course_key,
                                                            badge_hash=badge_hash,
@@ -1310,8 +1313,8 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                                                                      'grading_rule': trophy['section_format'],
                                                                      'section_name': trophy['section_name'],
                                                                      'threshold': (trophy['threshold'] * 100)})
-                    logger.info("LAETITIA -- create Badge user_id=%d - course=%s - progress trophy %s (%s %s)" % (
-                        user.id, course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
+                    logger.info("LAETITIA -- create Badge course=%s - progress trophy %s (%s %s)" % (
+                        course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
 
                 report = None
                 records = {}
