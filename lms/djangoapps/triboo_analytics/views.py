@@ -1598,7 +1598,7 @@ def customized_export_table(request):
 
     if report_type in ['course_summary', 'course_progress', 'course_time_spent']:
         last_update = last_reportlog.course
-        with_period_start = True if report in ["course_summary", "course_time_spent"] else False
+        with_period_start = True if report_type in ["course_summary", "course_time_spent"] else False
 
         if report_type == "course_summary":
             filter_kwargs, exclude = get_period_kwargs(data,
