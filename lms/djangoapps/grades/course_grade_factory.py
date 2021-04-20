@@ -383,8 +383,10 @@ class CourseGradeFactory(object):
             return
 
         progress = self.get_progress(user, course, enrollment=enrollment)
+        i = 0
         for chapter in progress['trophies_by_chapter']:
             for trophy in chapter['trophies']:
+                i += 1
                 badge_hash = Badge.get_badge_hash(trophy['section_format'],
                                                   chapter['url'],
                                                   trophy['section_url'])
@@ -392,11 +394,11 @@ class CourseGradeFactory(object):
                 if trophy['result'] >= trophy['threshold']:
                     if not badge:
                         badge = Badge.objects.update_or_create(course_id=course_key,
-                                                       badge_hash=badge_hash,
-                                                       defaults={'order': i,
-                                                                 'grading_rule': trophy['section_format'],
-                                                                 'section_name': trophy['section_name'],
-                                                                 'threshold': (trophy['threshold'] * 100)})
+                                                               badge_hash=badge_hash,
+                                                               defaults={'order': i,
+                                                                         'grading_rule': trophy['section_format'],
+                                                                         'section_name': trophy['section_name'],
+                                                                         'threshold': (trophy['threshold'] * 100)})
                     success = LearnerBadgeSuccess.objects.filter(user=user, badge=badge).first()
                     if not success:
                         LearnerBadgeSuccess.objects.update_or_create(user=user,

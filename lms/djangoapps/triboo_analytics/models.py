@@ -1069,7 +1069,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                 new_record = {"total_time_spent": total_time_spent}
                 new_record_str = json.dumps(new_record)
                 if report:
-                    logger.info("LAETITIA -- Badge report user_id=%d / section=%s SIMPLY ADD RECORD" % (
+                    logger.info("LAETITIA -- Section report user_id=%d / section=%s SIMPLY ADD RECORD" % (
                             enrollment.user.id, section_combined_url))
                     report.section_name = section_combined_display_name
                     report.total_time_spent = new_record['total_time_spent']
@@ -1077,7 +1077,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                     report.is_active = True
                     report.save()
                 else:
-                    logger.info("LAETITIA -- Badge report user_id=%d / section=%s CREATE NEW REPORT" % (
+                    logger.info("LAETITIA -- Section report user_id=%d / section=%s CREATE NEW REPORT" % (
                             enrollment.user.id, section_combined_url))
                     cls.objects.update_or_create(user=enrollment.user,
                                                  course_id=enrollment.course_id,
@@ -1294,17 +1294,24 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
 
         _successes = LearnerBadgeSuccess.objects.filter(badge__course_id=course_key, user=user)
         successes = {s.badge.badge_hash: s.success_date for s in _successes}
+        i = 0
         for chapter in trophies_by_chapter:
             for trophy in chapter['trophies']:
+                i += 1
                 badge_hash = Badge.get_badge_hash(trophy['section_format'],
                                                   chapter['url'],
                                                   trophy['section_url'])
                 try:
                     badge = Badge.objects.get(course_id=course_key, badge_hash=badge_hash)
                 except Badge.DoesNotExist:
-                    logger.error("LAETITIA -- user_id=%d - course=%s - progress trophy %s (%s %s) does not exist in Badge" % (
+                    badge = Badge.objects.update_or_create(course_id=course_key,
+                                                           badge_hash=badge_hash,
+                                                           defaults={'order': i,
+                                                                     'grading_rule': trophy['section_format'],
+                                                                     'section_name': trophy['section_name'],
+                                                                     'threshold': (trophy['threshold'] * 100)})
+                    logger.info("LAETITIA -- create Badge user_id=%d - course=%s - progress trophy %s (%s %s)" % (
                         user.id, course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
-                    continue
 
                 report = None
                 records = {}
