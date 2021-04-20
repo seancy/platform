@@ -1304,7 +1304,7 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                 try:
                     badge = Badge.objects.get(course_id=course_key, badge_hash=badge_hash)
                 except Badge.DoesNotExist:
-                    badge = Badge.objects.update_or_create(course_id=course_key,
+                    badge, _ = Badge.objects.update_or_create(course_id=course_key,
                                                            badge_hash=badge_hash,
                                                            defaults={'order': i,
                                                                      'grading_rule': trophy['section_format'],

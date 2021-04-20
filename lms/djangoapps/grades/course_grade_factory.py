@@ -393,7 +393,7 @@ class CourseGradeFactory(object):
                 badge = Badge.objects.filter(course_id=course_key, badge_hash=badge_hash).first()
                 if trophy['result'] >= trophy['threshold']:
                     if not badge:
-                        badge = Badge.objects.update_or_create(course_id=course_key,
+                        badge, _ = Badge.objects.update_or_create(course_id=course_key,
                                                                badge_hash=badge_hash,
                                                                defaults={'order': i,
                                                                          'grading_rule': trophy['section_format'],
