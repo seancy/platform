@@ -2272,11 +2272,11 @@ def generate_today_reports(multi_process=False):
     logger.info("start Country reports")
     CountryDailyReport.generate_today_reports(learner_course_reports, org_combinations)
 
-    logger.info("start ILT reports")
-    IltSession.generate_today_reports()
-
     logger.info("start Leaderboard daily update")
     LeaderBoard.update_stayed_online()
+
+    logger.info("start ILT reports")
+    IltSession.generate_today_reports()
 
 
 def check_generated_learner_course_reports(last_analytics_success, overviews, course_last_updates, sections_by_course):
