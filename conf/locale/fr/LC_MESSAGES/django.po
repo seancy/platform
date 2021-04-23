@@ -23782,6 +23782,26 @@ msgstr "Reporting - Rapport des cours"
 msgid "Global Report"
 msgstr "Rapport global"
 
+#: lms/templates/triboo_analytics/microsite.html:40
+#: lms/templates/triboo_analytics/course.html:64
+msgid "Show:"
+msgstr "Afficher :"
+
+#: lms/templates/triboo_analytics/microsite.html:42
+#: lms/templates/triboo_analytics/course.html:66
+msgid "Daily"
+msgstr "par jour"
+
+#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/course.html:67
+msgid "Weekly"
+msgstr "par semaine"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/course.html:68
+msgid "Monthly"
+msgstr "par mois"
+
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
 msgid "Course Report"
@@ -23851,6 +23871,10 @@ msgstr "Afficher"
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
 msgstr "Temps moyen pour terminer le cours"
+
+#: lms/templates/triboo_analytics/course.html:143
+msgid "Learner Status"
+msgstr "Statut des apprenants"
 
 #: lms/templates/triboo_analytics/course.html:76
 #: lms/templates/triboo_analytics/my_transcript.html:268

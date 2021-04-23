@@ -22262,6 +22262,26 @@ msgstr "分析 - 课程报告"
 msgid "Global Report"
 msgstr "总体报告"
 
+#: lms/templates/triboo_analytics/microsite.html:40
+#: lms/templates/triboo_analytics/course.html:64
+msgid "Show:"
+msgstr "按："
+
+#: lms/templates/triboo_analytics/microsite.html:42
+#: lms/templates/triboo_analytics/course.html:66
+msgid "Daily"
+msgstr "日"
+
+#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/course.html:67
+msgid "Weekly"
+msgstr "周"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/course.html:68
+msgid "Monthly"
+msgstr "月"
+
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
 msgid "Course Report"
@@ -22331,6 +22351,10 @@ msgstr "完成"
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
 msgstr "完成课程的平均时间"
+
+#: lms/templates/triboo_analytics/course.html:143
+msgid "Learner Status"
+msgstr "学员进度"
 
 #: lms/templates/triboo_analytics/course.html:76
 #: lms/templates/triboo_analytics/my_transcript.html:268

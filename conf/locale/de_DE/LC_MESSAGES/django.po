@@ -3400,7 +3400,7 @@ msgstr "Wählen Sie die Sprache Ihres Kurses. "
 #: common/lib/xmodule/xmodule/course_module.py:710
 #: cms/templates/settings.html:344
 msgid "Course Country"
-msgstr "Kursverlauf"
+msgstr "Kursland"
 
 #: common/lib/xmodule/xmodule/course_module.py:711
 msgid "Specify the country of your course."
@@ -7793,7 +7793,7 @@ msgstr "Erweiterungen"
 #: lms/templates/triboo_analytics/microsite.html:23
 #: lms/templates/triboo_analytics/transcript.html:18
 msgid "Analytics"
-msgstr "Analytics"
+msgstr "Analytik"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py:834
 msgid "Metrics"
@@ -9840,6 +9840,106 @@ msgstr "Feld"
 #: lms/templates/triboo_analytics/learner.html:43
 msgid "Select the user properties you want to display"
 msgstr "Wählen Sie die Bibliothek aus, aus der Sie Inhalt aufzeichnen möchten."
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "Kursname"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Successful"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Unsuccessful"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr "Geografisches Gebiet"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr "Zone / Region"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr "Kurs-Tags"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr "Kurscode"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr "Sitzungs-ID"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr "Startdatum"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr "Startzeit"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr "Enddatum"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr "Endzeit"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr "Dauer (in Stunden)"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr "Maximale Kapazität"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr ""
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr "Anwesenheitsliste"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr "Standortname"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "Standortadresse"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "Postleitzahl"
 
 #: lms/djangoapps/triboo_analytics/models.py:1138
 msgid "Accepted"
@@ -16475,7 +16575,7 @@ msgstr "Ladevorgang"
 #: lms/templates/emails/ilt_enrolled_email_message.txt:33
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:37
 msgid "Location ID"
-msgstr "Pfad ID"
+msgstr "Standort-ID"
 
 #: cms/templates/course_outline.html:13 cms/templates/course_outline.html:123
 #: cms/templates/course_outline.html:217
@@ -25228,6 +25328,26 @@ msgstr "Ihre Lerndaten"
 msgid "Global Report"
 msgstr "Verfügbare Berichte"
 
+#: lms/templates/triboo_analytics/microsite.html:40
+#: lms/templates/triboo_analytics/course.html:64
+msgid "Show:"
+msgstr "Anzeigen:"
+
+#: lms/templates/triboo_analytics/microsite.html:42
+#: lms/templates/triboo_analytics/course.html:66
+msgid "Daily"
+msgstr "Täglich"
+
+#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/course.html:67
+msgid "Weekly"
+msgstr "Wöchentlich"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/course.html:68
+msgid "Monthly"
+msgstr "Monatlich"
+
 #: lms/templates/triboo_analytics/course.html:27
 #: lms/templates/triboo_analytics/ilt.html:27
 #: lms/templates/triboo_analytics/learner.html:26
@@ -25258,6 +25378,10 @@ msgstr "Gut"
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
 msgstr "Bewährter Motivator für den Abschluss des Kurses"
+
+#: lms/templates/triboo_analytics/course.html:143
+msgid "Learner Status"
+msgstr "Lernerstatus"
 
 #: lms/templates/triboo_analytics/course.html:76
 #: lms/templates/triboo_analytics/my_transcript.html:268
@@ -25332,7 +25456,7 @@ msgstr "Anzahl der Plätze"
 
 #: lms/templates/triboo_analytics/microsite.html:74
 msgid "Device Use"
-msgstr "Genutzt"
+msgstr "Geräteverwendung"
 
 #: lms/templates/triboo_analytics/microsite.html:79
 msgid "Desktop"
@@ -25340,7 +25464,7 @@ msgstr "Desktop"
 
 #: lms/templates/triboo_analytics/microsite.html:80
 msgid "Mobile"
-msgstr "Mobile"
+msgstr "Mobil"
 
 #: lms/templates/triboo_analytics/microsite.html:86
 msgid "Active Learners Location"

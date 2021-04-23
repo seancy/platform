@@ -24116,6 +24116,26 @@ msgstr ""
 msgid "Global Report"
 msgstr ""
 
+#: lms/templates/triboo_analytics/microsite.html:40
+#: lms/templates/triboo_analytics/course.html:64
+msgid "Show:"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:42
+#: lms/templates/triboo_analytics/course.html:66
+msgid "Daily"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/course.html:67
+msgid "Weekly"
+msgstr ""
+
+#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/course.html:68
+msgid "Monthly"
+msgstr ""
+
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
 msgid "Course Report"
@@ -24185,6 +24205,10 @@ msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
+msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:143
+msgid "Learner Status"
 msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:76

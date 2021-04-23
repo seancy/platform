@@ -27405,6 +27405,28 @@ msgstr "Vamos dar uma olhada nos seus dados de aprendizado"
 msgid "Global Report"
 msgstr "Relatório Global"
 
+#: lms/templates/triboo_analytics/microsite.html:40
+#: lms/templates/triboo_analytics/course.html:64
+msgid "Show:"
+msgstr "Mostrar :"
+
+#: lms/templates/triboo_analytics/microsite.html:42
+#: lms/templates/triboo_analytics/course.html:66
+msgid "Daily"
+msgstr "por dia"
+
+
+
+#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/course.html:67
+msgid "Weekly"
+msgstr "por semana"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/course.html:68
+msgid "Monthly"
+msgstr "por mês"
+
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
 msgid "Course Report"
@@ -27471,6 +27493,10 @@ msgstr "Ir"
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
 msgstr "Tempo médio para passar por este curso"
+
+#: lms/templates/triboo_analytics/course.html:143
+msgid "Learner Status"
+msgstr "Status de aluno"
 
 #: lms/templates/triboo_analytics/course.html:76
 #: lms/templates/triboo_analytics/my_transcript.html:268
