@@ -9863,11 +9863,11 @@ msgstr ""
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Successful"
-msgstr ""
+msgstr "Erfolgreich"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Unsuccessful"
-msgstr ""
+msgstr "Erfolglos"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Last Login"
@@ -27977,14 +27977,6 @@ msgid ""
 "{location} at {address}, {city} {zipcode}."
 msgstr ""
 "Hiermit möchten wir Sie darüber informieren, dass Ihr Klassenraumtraining {ilt_name} auf eine andere Sitzung am {start} in {location} ({address}, {city} {zipcode}) verlegt wurde."
-
-#: lms/templates/triboo_analytics/courseware.html
-msgid "Successful"
-msgstr "Operation Erfolgreich"
-
-#: lms/templates/triboo_analytics/courseware.html
-msgid "Unsuccessful"
-msgstr "Erfolgreich"
 
 #: lms/templates/triboo_analytics/microsite.html:44
 msgid "Number of learners enrolled in a course"
