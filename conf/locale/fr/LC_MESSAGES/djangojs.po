@@ -10260,10 +10260,6 @@ msgstr "Prendre une photo"
 # ----------analytics----------
 
 #: lms/static/js/triboo_analytics/Toolbar.js
-msgid "Filters"
-msgstr "Filtres"
-
-#: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -12983,14 +12979,6 @@ msgstr "Complétion d'un cours"
 #: master-cofidis: lms/static/js/views/login_role_check.js
 msgid "Are you a manager?"
 msgstr "Êtes-vous un manager ?"
-
-#: master-cofidis: lms/static/js/views/login_role_check.js
-msgid "Yes"
-msgstr "Oui"
-
-#: master-cofidis: lms/static/js/views/login_role_check.js
-msgid "No"
-msgstr "Non"
 
 #: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js

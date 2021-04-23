@@ -27670,11 +27670,6 @@ msgstr "por semana"
 msgid "Monthly"
 msgstr "por mes"
 
-#: lms/templates/triboo_analytics/banner_nav.html
-#: lms/templates/triboo_analytics/course.html:25
-msgid "Course Report"
-msgstr "Informe del curso"
-
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Summary Report"
 msgstr ""
