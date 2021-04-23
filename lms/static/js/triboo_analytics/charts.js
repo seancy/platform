@@ -135,6 +135,7 @@ function sampleByCount(datas, count) {
   var interval = datas.length / count | 0;
   return datas.filter(function(data, i) { return i % interval === 0; });
 }
+
 function drawLineChart(elementId, csvData, colorKey, extraOptions) {
   if (colorKey === void 0) { colorKey = '#E7413C'; }
   if (extraOptions === void 0) { extraOptions = {}; }
@@ -179,7 +180,7 @@ function drawLineChart(elementId, csvData, colorKey, extraOptions) {
       },
       snap: false,
       formatter: function(params) {
-        return String(params[0].data);
+        return String(params[0].name) + '<br />' + String(params[0].data);
       },
     },
     series: [{
@@ -204,15 +205,108 @@ function drawLineChart(elementId, csvData, colorKey, extraOptions) {
     }],
     grid: {
       top: 20,
-      right: 0,
+      right: 30,
       bottom: 40,
-      left: 20,
+      left: 55,
     },
   };
   if (Reflect.apply(Object.prototype.toString, extraOptions, []) === '[object Function]') {
     extraOptions = extraOptions(values);
   }
   drawEchart(elementId, Object.assign(options, extraOptions));
+}
+
+function drawSimplifiedChart(elementId, csvData, colorKey, extraOptions) {
+  if (colorKey === void 0) { colorKey = '#7ab9f3'; }
+  if (extraOptions === void 0) { extraOptions = {}; }
+  var $el = document.getElementById(elementId);
+  if (!$el)
+    return;
+  var color = colorKey.startsWith('--') ? getElementCssProperty($el, colorKey) : colorKey;
+  var data = sampleByCount(readCsvData(csvData), 100);
+  var values = data.map(function(value) { return [value.date, parseFloat(value.value)]; });
+  var options = {
+    xAxis: {
+      type: 'category',
+      data: values.map(function (value) {return value[0]}),
+      axisLine: {
+          show: false,
+      },
+      axisTick: {
+          show: false,
+      },
+      axisLabel: {
+          show: false
+      },
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: {
+          show: false
+      },
+      splitLine: {
+          show: false
+      },
+    },
+    tooltip: {},
+    series: [{
+      data: values.map(function(value) { return value[1]; }),
+      type: 'line',
+      smooth: true,
+      symbol: 'emptyCircle',
+      showSymbol: false,
+      sampling: 'average',
+      silent: true,
+      itemStyle: {
+        color: "rgba(" + hex2Rgb(color).join(',') + ", 0.8)",
+      },
+      areaStyle: {
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          offset: 0,
+          color: "rgba(" + hex2Rgb(color).join(',') + ", 0.8)"
+        }, {
+          offset: 1,
+          color: "rgba(" + hex2Rgb(color).join(',') + ", 0)"
+        }])
+      },
+    }],
+    grid: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    }
+  }
+  if (Reflect.apply(Object.prototype.toString, extraOptions, []) === '[object Function]') {
+    extraOptions = extraOptions(values);
+  }
+  drawEchart(elementId, Object.assign(options, extraOptions));
+}
+
+function readCsvDataTrending(csvData) {
+  var records = readCsvData(csvData).reverse()
+  var latestValue = records[0].value
+  for (var i = 1; i < records.length; i++) {
+    var value = records[i].value
+    if (value > latestValue) return -1
+    if (value < latestValue) return 1
+  }
+
+  return 0
+}
+
+function lightTrendingMark(selector, csvData) {
+  var $el = document.querySelector(selector)
+  if ($el) {
+    var trending = readCsvDataTrending(csvData)
+    if (trending > 0) {
+      $el.classList.add('fa-long-arrow-up')
+      $el.classList.add('analytics-widget__caption-mark--up')
+    } else if (trending < 0) {
+      $el.classList.add('fa-long-arrow-down')
+      $el.classList.add('analytics-widget__caption-mark--down')
+    }
+  }
 }
 
 function drawMap(elementId, csvData, mapJsonFile) {

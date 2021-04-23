@@ -5,6 +5,9 @@
     from django.utils.translation import ungettext, gettext
     from django.core.urlresolvers import reverse
     from triboo_analytics.models import format_time_spent
+
+    from openedx.core.djangolib.markup import HTML
+    from webpack_loader.templatetags.webpack_loader import render_bundle
 %>
 
 <%block name="headextra">
@@ -20,6 +23,9 @@
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="main-container">
         <%include file="banner_nav.html" args="active_page='global'" />
+        ${HTML(render_bundle('ReactRenderer'))}
+        ${HTML(render_bundle('NumberLocale'))}
+
         <section class="analytics-wrapper microsite">
             <div class="report-wrapper">
                 <h3>${_("Global Report")}</h3>
@@ -30,14 +36,14 @@
                         <section class="analytics-widget analytics-linechart analytics-widget-uv analytics-widget--row2">
                             <div class="analytics-widget__caption">
                                 <h3>${_("Number of Unique Visitors")}</h3>
-                                <!-- <div class="analytics-widget__caption-select">
+                                <div class="analytics-widget__caption-select">
                                     <label for="uvchart-select">Show:</label>
                                     <select name="by" id="uvchart-select">
-                                        <option value="by-month">Monthly</option>
-                                        <option value="by-week">Weekly</option>
                                         <option value="by-day">Daily</option>
+                                        <option value="by-week">Weekly</option>
+                                        <option value="by-month">Monthly</option>
                                     </select>
-                                </div> -->
+                                </div>
                                 ${static.renderReact(
                                   component="QuestionMark",
                                   id="id-unique-visitors",
@@ -67,7 +73,17 @@
                               )}
                           </div>
                           <main>
-                              <p class="figure">${microsite_report.courses}</p>
+                              <p class="figure" id="figure-courses"></p>
+                              <script type="text/javascript">
+                                new ReactRenderer({
+                                  component: NumberLocale,
+                                  selector: '#figure-courses',
+                                  props: {
+                                    value: ${microsite_report.courses},
+                                    languageCode: '${LANGUAGE_CODE}',
+                                  }
+                                })
+                              </script>
                           </main>
                         </section>
 
@@ -84,36 +100,48 @@
                                 )}
                             </div>
                             <main>
-                                <p class="figure">${microsite_report.finished}</p>
+                                <p class="figure" id="figure-certificates"></p>
+                                <script type="text/javascript">
+                                  new ReactRenderer({
+                                    component: NumberLocale,
+                                    selector: '#figure-certificates',
+                                    props: {
+                                      value: ${microsite_report.finished},
+                                      languageCode: '${LANGUAGE_CODE}',
+                                    }
+                                  })
+                                </script>
                             </main>
                         </section>
 
-                        <section class="analytics-widget analytics-guagechart analytics-widget-device analytics-widget--col2">
-                            <main>
-                                <div class="analytics-widget__chart" id="gaugeChart"></div>
-                            </main>
-                            <aside>
-                                <div class="analytics-widget__caption">
-                                    <h3>${_("Device Use")}</h3>
-                                    ${static.renderReact(
-                                      component="QuestionMark",
-                                      id="id-device-use",
-                                      props={
-                                        'class':'question-mark',
-                                        'tooltip': gettext('Proportion of mobile connection vs. computer connection'),
-                                      }
-                                    )}
-                                </div>
-                                <div class="legend">
-                                    <p><span class="desktop">&#9679;</span> ${_("Desktop")}</p>
-                                    <p><span class="mobile">&#9679;</span> ${_("Mobile")}</p>
-                                </div>
-                            </aside>
+                        <section class="analytics-widget analytics-gaugechart analytics-widget-device analytics-widget--col2">
+                            <div class="analytics-widget__caption">
+                                <h3>${_("Device Use")}</h3>
+                                ${static.renderReact(
+                                  component="QuestionMark",
+                                  id="id-device-use",
+                                  props={
+                                    'class':'question-mark',
+                                    'tooltip': gettext('Proportion of mobile connection vs. computer connection'),
+                                  }
+                                )}
+                            </div>
+                            <div class="analytics-widget__content">
+                                <main>
+                                    <div class="analytics-widget__chart" id="gaugeChart"></div>
+                                </main>
+                                <aside>
+                                    <div class="legend">
+                                        <div class="legend__item"><span class="desktop">&#9679;</span><div>${_("Desktop")}</div></div>
+                                        <div class="legend__item"><span class="mobile">&#9679;</span><div>${_("Mobile")}</div></div>
+                                    </div>
+                                </aside>
+                            </div>
                         </section>
 
                         <section class="analytics-widget analytics-figure analytics-widget-learners analytics-widget--col2">
                             <div class="analytics-widget__caption">
-                                <h3>${ungettext("Learner", "Learners", microsite_report.users)}</h3>
+                                <h3>${ungettext("Learner", "Learners", microsite_report.users)}<i class="analytics-widget__caption-mark far"></i></h3>
                                 ${static.renderReact(
                                   component="QuestionMark",
                                   id="id-active-learners",
@@ -124,14 +152,24 @@
                                 )}
                             </div>
                             <main>
-                                <p class="figure">${microsite_report.users}</p>
-                                <div class="analytics-widget__chart" id="learnerChart"></div>
+                                <p class="figure" id="figure-learners"></p>
+                                <script type="text/javascript">
+                                  new ReactRenderer({
+                                    component: NumberLocale,
+                                    selector: '#figure-learners',
+                                    props: {
+                                      value: ${microsite_report.users},
+                                      languageCode: '${LANGUAGE_CODE}',
+                                    }
+                                  })
+                                </script>
+                                <div class="analytics-widget__chart" id="usersChart"></div>
                             </main>
                         </section>
 
                         <section class="analytics-widget analytics-figure analytics-widget-timespent analytics-widget--col2">
                             <div class="analytics-widget__caption">
-                                <h3>${_("Average Time Spent Per Active Learner")}</h3>
+                                <h3>${_("Average Time Spent Per Active Learner")}<i class="analytics-widget__caption-mark far"></i></h3>
                                 ${static.renderReact(
                                   component="QuestionMark",
                                   id="id-average-time",
@@ -142,7 +180,8 @@
                                 )}
                             </div>
                             <main>
-                                <p class="figure">${format_time_spent(microsite_report.average_time_spent)}</p>
+                                <p class="figure" id="figure-timespent">${format_time_spent(microsite_report.average_time_spent)}</p>
+                                <div class="analytics-widget__chart" id="timeSpentChart"></div>
                             </main>
                         </section>
                     </div>
@@ -216,5 +255,19 @@
     <script type="text/javascript">
         var mapCsvData =  "id,label,value\n" + "${users_by_country_csv}";
         drawMap('map', mapCsvData, '${static.url('js/triboo_analytics/world-110m.v1.json')}');
+    </script>
+% endif
+% if users_csv_data and len(users_csv_data) > 0:
+    <script type="text/javascript">
+      var usersChartCsvData = "date,value\n" + "${users_csv_data}";
+      drawSimplifiedChart('usersChart', usersChartCsvData, '--analytics-learners-chart-color');
+      lightTrendingMark('.analytics-widget-learners .analytics-widget__caption-mark', usersChartCsvData)
+    </script>
+% endif
+% if average_time_spent_csv and len(average_time_spent_csv) > 0:
+    <script type="text/javascript">
+      var timeSpentChartCsvData = "date,value\n" + "${average_time_spent_csv}";
+      drawSimplifiedChart('timeSpentChart', timeSpentChartCsvData, '--analytics-learners-chart-color');
+      lightTrendingMark('.analytics-widget-timespent .analytics-widget__caption-mark', timeSpentChartCsvData)
     </script>
 % endif

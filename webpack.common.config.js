@@ -56,6 +56,7 @@ module.exports = Merge.smart({
         EntitlementSupportPage: ['babel-polyfill', './lms/djangoapps/support/static/support/jsx/entitlements/index.jsx'],
         PasswordResetConfirmation: ['babel-polyfill', './lms/static/js/student_account/components/PasswordResetConfirmation.jsx'],
         QuestionMark: ['babel-polyfill', './lms/static/js/QuestionMark.js'],
+        NumberLocale: ['babel-polyfill', './lms/static/js/NumberLocale.js'],
 
         PasswordCreateConfirmation: ['babel-polyfill', './lms/static/js/student_account/components/PasswordCreateConfirmation.jsx'],
         StudentAccountDeletion: ['babel-polyfill', './lms/static/js/student_account/components/StudentAccountDeletion.jsx'],
@@ -92,13 +93,13 @@ module.exports = Merge.smart({
 
         // Triboo Analytics
         Toolbar: ['./lms/static/js/triboo_analytics/Toolbar.js'],
-        CourseReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CourseReport.js'],
-        LearnerReport: ['babel-polyfill','./lms/static/js/triboo_analytics/LearnerReport.js'],
+        CourseReport: ['babel-polyfill', './lms/static/js/triboo_analytics/CourseReport.js'],
+        LearnerReport: ['babel-polyfill', './lms/static/js/triboo_analytics/LearnerReport.js'],
         ILTGlobalReport: ['./lms/static/js/triboo_analytics/ILTGlobalReport.js'],
-        ILTLearnerReport: ['babel-polyfill','./lms/static/js/triboo_analytics/ILTLearnerReport.js'],
-        ILTReport: ['babel-polyfill','./lms/static/js/triboo_analytics/ILTReport.js'],
-        Transcript: ['babel-polyfill','./lms/static/js/triboo_analytics/Transcript.js'],
-        CustomizedReport: ['babel-polyfill','./lms/static/js/triboo_analytics/CustomizedReport.js'],
+        ILTLearnerReport: ['babel-polyfill', './lms/static/js/triboo_analytics/ILTLearnerReport.js'],
+        ILTReport: ['babel-polyfill', './lms/static/js/triboo_analytics/ILTReport.js'],
+        Transcript: ['babel-polyfill', './lms/static/js/triboo_analytics/Transcript.js'],
+        CustomizedReport: ['babel-polyfill', './lms/static/js/triboo_analytics/CustomizedReport.js'],
 
         // Common
         ReactRenderer: ['babel-polyfill', './common/static/js/src/ReactRenderer.jsx'],
@@ -124,7 +125,7 @@ module.exports = Merge.smart({
             filename: 'webpack-stats.json'
         }),
         new webpack.ProvidePlugin({
-            'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch',
+            fetch: 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch',
             _: 'underscore',
             $: 'jquery',
             jQuery: 'jquery',
@@ -283,8 +284,8 @@ module.exports = Merge.smart({
                 loader: 'svg-inline-loader'
             },
             {
-                test:/\.gif$/,
-                use:['file-loader']
+                test: /\.gif$/,
+                use: ['file-loader']
             },
             {
                 test: /xblock\/core/,
