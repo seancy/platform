@@ -1597,13 +1597,10 @@ class CourseDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeMode
 
 
     @classmethod
-    def generate_today_reports(cls, learner_course_reports):
-        reports_by_course = defaultdict(list)
-        for report in learner_course_reports:
-            reports_by_course[report.course_id].append(report)
-
-        for course_id, reports in reports_by_course.iteritems():
+    def generate_today_reports(cls, course_ids):
+        for course_id in course_ids:
             logger.debug("course report for course_id=%s" % course_id)
+            reports = LearnerCourseJsonReport.filter_by_day(course_id=course_id)
             cls.update_or_create(course_id, reports)
 
         ReportLog.update_or_create(course=timezone.now())
@@ -2264,10 +2261,10 @@ def generate_today_reports(multi_process=False):
     org_combinations = get_org_combinations()
 
     logger.info("start Learner reports")
-    LearnerDailyReport.generate_today_reports(learner_course_reports, org_combinations)
+    LearnerDailyReport.generate_today_reports(org_combinations)
 
     logger.info("start Course reports")
-    CourseDailyReport.generate_today_reports(learner_course_reports)
+    CourseDailyReport.generate_today_reports(course_ids)
 
     logger.info("start Microsite reports")
     MicrositeDailyReport.generate_today_reports(course_ids, learner_course_reports, org_combinations)
