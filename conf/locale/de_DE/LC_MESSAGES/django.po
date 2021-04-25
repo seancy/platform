@@ -9919,11 +9919,11 @@ msgstr "Maximale Kapazität"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Enrollees"
-msgstr ""
+msgstr "Eingetragen"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Attendees"
-msgstr ""
+msgstr "Teilnehmer"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Attendance sheet"
