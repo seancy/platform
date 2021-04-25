@@ -1467,17 +1467,16 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     total_time_spent = models.PositiveIntegerField(default=0)
 
     @classmethod
-    def generate_today_reports(cls, learner_course_reports, org_combinations):
-        reports_by_user_org = defaultdict(list)
-        for report in learner_course_reports:
-            reports_by_user_org[(report.user_id, report.org)].append(report)
-
-        for (user_id, org), reports in reports_by_user_org.iteritems():
+    def generate_today_reports(cls, org_combinations):
+        distinct_user_org = LearnerCourseJsonReport.objects.filter(is_active=True).values_list('user_id', 'org').distinct()
+        learners = set()
+        for (user_id, org) in distinct_user_org:
             logger.debug("learner report for user_id=%d org=%s" % (user_id, org))
+            reports = LearnerCourseJsonReport.objects.filter(user_id=user_id, org=org)
             cls.update_or_create(user_id, org, reports)
 
         for combination in org_combinations:
-            cls.update_or_create_combined_orgs(combination, reports_by_user_org)
+            cls.update_or_create_combined_orgs(combination)
 
         ReportLog.update_or_create(learner=timezone.now())
 
@@ -1533,16 +1532,18 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def update_or_create_combined_orgs(cls, org_combination, learner_course_reports_by_user_org):
+    def update_or_create_combined_orgs(cls, org_combination):
+        query = Q()
+        for org in org_combination:
+            query = query | Q(org=org)
+
+        distinct_users = LearnerCourseJsonReport.objects.filter(is_active=True, query).values_list(
+            'user_id', flat=True).distinct()
+
         combined_org = get_combined_org(org_combination)
-
-        learner_course_reports_by_user = defaultdict(list)
-        for (user_id, org), reports in learner_course_reports_by_user_org.iteritems():
-            if org in org_combination:
-                learner_course_reports_by_user[user_id] += reports
-
-        for user_id, reports in learner_course_reports_by_user.iteritems():
+        for user_id in distinct_users:
             logger.debug("learner report for user_id=%d org=%s" % (user_id, combined_org))
+            reports = LearnerCourseJsonReport.objects.filter(user_id=user_id, query)
             cls.update_or_create(user_id, combined_org, reports)
 
 
@@ -2199,7 +2200,9 @@ def get_org_combinations():
     for configuration in SiteConfiguration.objects.filter(enabled=True).all():
         course_org_filter = configuration.get_value('course_org_filter', None)
         if course_org_filter and isinstance(course_org_filter, list) and len(course_org_filter) > 1:
-            org_combinations.append(course_org_filter)
+            sorted_course_org_filter = sorted(course_org_filter)
+            if sorted_course_org_filter not in org_combinations:
+                org_combinations.append(sorted_course_org_filter)
     return org_combinations
 
 
