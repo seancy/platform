@@ -1468,11 +1468,11 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def generate_today_reports(cls, org_combinations):
-        distinct_user_org = LearnerCourseJsonReport.objects.filter(is_active=True).values_list('user_id', 'org').distinct()
+        distinct_user_org = LearnerCourseJsonReport.filter_by_day().values_list('user_id', 'org').distinct()
         learners = set()
         for (user_id, org) in distinct_user_org:
             logger.debug("learner report for user_id=%d org=%s" % (user_id, org))
-            reports = LearnerCourseJsonReport.objects.filter(user_id=user_id, org=org)
+            reports = LearnerCourseJsonReport.filter_by_day(user_id=user_id, org=org)
             cls.update_or_create(user_id, org, reports)
 
         for combination in org_combinations:
@@ -1537,13 +1537,13 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         for org in org_combination:
             query = query | Q(org=org)
 
-        distinct_users = LearnerCourseJsonReport.objects.filter(query, is_active=True).values_list(
+        distinct_users = LearnerCourseJsonReport.filter_by_day(query).values_list(
             'user_id', flat=True).distinct()
 
         combined_org = get_combined_org(org_combination)
         for user_id in distinct_users:
             logger.debug("learner report for user_id=%d org=%s" % (user_id, combined_org))
-            reports = LearnerCourseJsonReport.objects.filter(query, user_id=user_id)
+            reports = LearnerCourseJsonReport.filter_by_day(query, user_id=user_id)
             cls.update_or_create(user_id, combined_org, reports)
 
 
@@ -1719,33 +1719,26 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
     total_time_spent_on_desktop = models.BigIntegerField(default=0)
 
     @classmethod
-    def generate_today_reports(cls, course_ids, learner_course_reports, org_combinations):
+    def generate_today_reports(cls, course_ids, org_combinations):
         course_ids_by_org = defaultdict(list)
         for course_id in course_ids:
             course_ids_by_org[course_id.org].append(course_id)
 
-        reports_by_org = defaultdict(list)
-        for report in learner_course_reports:
-            reports_by_org[report.org].append(report)
-
-        for org, reports in reports_by_org.iteritems():
+        for org, reports in course_ids_by_org.iteritems():
             logger.debug("microsite report for org=%s" % org)
-            cls.update_or_create(org, course_ids_by_org[org], reports)
+            cls.update_or_create(org, course_ids_by_org[org])
 
         for combination in org_combinations:
-            cls.update_or_create_combined_orgs(combination, reports_by_org)
+            cls.update_or_create_combined_orgs(combination)
 
         ReportLog.update_or_create(microsite=timezone.now())
 
 
     @classmethod
-    def update_or_create(cls, org, course_ids, learner_course_reports):
-        users = set()
-        finished = 0
-        for report in learner_course_reports:
-            users.add(report.user_id)
-            if report.status == CourseStatus.finished:
-                finished += 1
+    def update_or_create(cls, org, course_ids):
+        user_ids = LearnerCourseJsonReport.filter_by_day(org=org).values_list('user_id', flat=True).distinct()
+        users = len(user_ids)
+        finished = len(LearnerCourseJsonReport.filter_by_day(org=org, status=CourseStatus.finished))
 
         total_time_spent_on_mobile = (LearnerVisitsDailyReport.objects.filter(
                                         org=org, course_id__in=course_ids, device="mobile").aggregate(
@@ -1766,7 +1759,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
         cls.objects.update_or_create(
             created=timezone.now().date(),
             org=org,
-            defaults={'users': len(users),
+            defaults={'users': users,
                       'courses': len(course_ids),
                       'finished': finished,
                       'unique_visitors': today_unique_visitors,
@@ -1776,7 +1769,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
 
 
     @classmethod
-    def update_or_create_combined_orgs(cls, org_combination, learner_course_reports_by_org):
+    def update_or_create_combined_orgs(cls, org_combination):
         combined_org = get_combined_org(org_combination)
 
         learner_course_reports = []
@@ -1784,6 +1777,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
         finished = 0
         total_time_spent_on_mobile = 0
         total_time_spent_on_desktop = 0
+        query = Q()
 
         for org in org_combination:
             microsite_report = cls.get_by_day(org=org)
@@ -1791,15 +1785,14 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
                 logger.error("combined microsite report for %s could not be generated: no report found for %s" % (
                     org_combination, org))
                 return
-            learner_course_reports += learner_course_reports_by_org[org]
             courses += microsite_report.courses
             finished += microsite_report.finished
             total_time_spent_on_mobile += microsite_report.total_time_spent_on_mobile
             total_time_spent_on_desktop += microsite_report.total_time_spent_on_desktop
+            query = query | Q(org=org)
 
-        users = set()
-        for report in learner_course_reports:
-            users.add(report.user_id)
+        user_ids = LearnerCourseJsonReport.filter_by_day(query).values_list('user_id', flat=True).distinct()
+        users = len(user_ids)
 
         today_unique_visitors = (LearnerVisitsDailyReport.filter_by_day(org__in=org_combination).aggregate(
                                 Count('user_id', distinct=True)).get('user_id__count') or 0)
@@ -1814,7 +1807,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
         cls.objects.update_or_create(
             created=timezone.now().date(),
             org=combined_org,
-            defaults={'users': len(users),
+            defaults={'users': users,
                       'courses': courses,
                       'finished': finished,
                       'unique_visitors': today_unique_visitors,
@@ -2267,7 +2260,7 @@ def generate_today_reports(multi_process=False):
     CourseDailyReport.generate_today_reports(course_ids)
 
     logger.info("start Microsite reports")
-    MicrositeDailyReport.generate_today_reports(course_ids, learner_course_reports, org_combinations)
+    MicrositeDailyReport.generate_today_reports(course_ids, org_combinations)
 
     logger.info("start Country reports")
     CountryDailyReport.generate_today_reports(learner_course_reports, org_combinations)
