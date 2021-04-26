@@ -1542,7 +1542,7 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
         combined_org = get_combined_org(org_combination)
         for user_id in user_ids:
             logger.info("learner report for user_id=%d org=%s" % (user_id, combined_org))
-            reports = LearnerCourseJsonReport.filter_by_day(query, user_id=user_id)
+            reports = LearnerCourseJsonReport.objects.filter(query, is_active=True, user_id=user_id)
             cls.update_or_create(user_id, combined_org, reports)
 
 
