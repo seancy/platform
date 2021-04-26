@@ -1895,49 +1895,42 @@ class CountryDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     nb_users = models.PositiveIntegerField(default=0)
 
     @classmethod
-    def generate_today_reports(cls, org_combinations):
-        reports_by_org = defaultdict(list)
-        for report in learner_course_reports:
-            reports_by_org[report.org].append(report)
-
-        for org, reports in reports_by_org.iteritems():
+    def generate_today_reports(cls, org_combinations, user_ids_by_org):
+        for org in user_ids_by_org.keys():
             logger.info("country reports for org=%s" % org)
-            cls.update_or_create(org, reports)
+            cls.update_or_create(org, user_ids_by_org[org]['countries'])
 
         for combination in org_combinations:
-            cls.update_or_create_combined_orgs(combination, reports_by_org)
+            cls.update_or_create_combined_orgs(combination, user_ids_by_org)
 
         ReportLog.update_or_create(country=timezone.now())
 
 
 
     @classmethod
-    def update_or_create(cls, org, learner_course_reports):
-        users_by_country = defaultdict(int)
-        users = []
-        for report in learner_course_reports:
-            if report.user.id not in users:
-                users.append(report.user.id)
-                users_by_country[report.user.profile.country] += 1
-
-        for country, nb_users in users_by_country.iteritems():
+    def update_or_create(cls, org, users_by_country):
+        for country, user_ids in users_by_country.iteritems():
             cls.objects.update_or_create(
                 created=timezone.now().date(),
                 org=org,
                 country=country,
-                defaults={'nb_users': nb_users})
+                defaults={'nb_users': len(user_ids)})
 
 
     @classmethod
-    def update_or_create_combined_orgs(cls, org_combination, learner_course_reports_by_org):
+    def update_or_create_combined_orgs(cls, org_combination, user_ids_by_org):
         combined_org = get_combined_org(org_combination)
 
-        learner_course_reports = []
+        users_by_country = {}
         for org in org_combination:
-            learner_course_reports += learner_course_reports_by_org[org]
+            if org in user_ids_by_org.keys():
+                for country, user_ids in user_ids_by_org[org]['countries'].iteritems():
+                    if country not in users_by_country.keys():
+                        users_by_country[country] = set()
+                    users_by_country[country] = users_by_country[country].union(user_ids)
 
         logger.info("country reports for org=%s" % combined_org)
-        cls.update_or_create(combined_org, learner_course_reports)
+        cls.update_or_create(combined_org, users_by_country)
 
 
 class IltModule(TimeStampedModel):
