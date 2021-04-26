@@ -1467,18 +1467,15 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
     total_time_spent = models.PositiveIntegerField(default=0)
 
     @classmethod
-    def generate_today_reports(cls, org_combinations):
-        with connection.cursor() as cursor:
-            cursor.execute("select distinct user_id, org from triboo_analytics_learnercoursejsonreport where is_active=1")
-            for row in cursor.fetchall():
-                user_id = row[0]
-                org = row[1]
+    def generate_today_reports(cls, org_combinations, user_ids_by_org):
+        for org in user_ids_by_org.keys():
+            for user_id in user_ids_by_org[org]['total']:
                 logger.info("learner report for user_id=%d org=%s" % (user_id, org))
                 reports = LearnerCourseJsonReport.filter_by_day(user_id=user_id, org=org)
                 cls.update_or_create(user_id, org, reports)
 
         for combination in org_combinations:
-            cls.update_or_create_combined_orgs(combination)
+            cls.update_or_create_combined_orgs(combination, user_ids_by_org)
 
         ReportLog.update_or_create(learner=timezone.now())
 
@@ -1534,16 +1531,16 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
 
     @classmethod
-    def update_or_create_combined_orgs(cls, org_combination):
+    def update_or_create_combined_orgs(cls, org_combination, user_ids_by_org):
+        user_ids = set()
         query = Q()
         for org in org_combination:
             query = query | Q(org=org)
-
-        distinct_users = LearnerCourseJsonReport.filter_by_day(query).values_list(
-            'user_id', flat=True).distinct()
+            if org in user_ids_by_org.keys():
+                user_ids = user_ids.union(user_ids_by_org[org]['total'])
 
         combined_org = get_combined_org(org_combination)
-        for user_id in distinct_users:
+        for user_id in user_ids:
             logger.info("learner report for user_id=%d org=%s" % (user_id, combined_org))
             reports = LearnerCourseJsonReport.filter_by_day(query, user_id=user_id)
             cls.update_or_create(user_id, combined_org, reports)
@@ -2256,30 +2253,32 @@ def generate_today_reports(multi_process=False):
 
     ReportLog.update_or_create(learner_course=timezone.now())
 
-    logger.info("fetch Learner Course reports")
-    learner_course_reports = LearnerCourseJsonReport.filter_by_day()
+    logger.info("fetch user_ids by org")
+    # user_ids_by_org = { org : { total : set(user_ids...), countries : { XX : set(user_ids...) } } }
+    user_ids_by_org = {}
+    with connection.cursor() as cursor:
+        cursor.execute("select distinct user_id, org from triboo_analytics_learnercoursejsonreport where is_active=1")
+        for row in cursor.fetchall():
+            user_id = row[0]
+            org = row[1]
+            if org not in user_ids_by_org.keys():
+                user_ids_by_org[org] = {'total': set(), 'countries': {}}
+            user_ids_by_org[org]['total'].add(user_id)
+            try:
+                country = UserProfile.objects.get(user_id=user_id).country
+                if country not in user_ids_by_org[org]['countries'].keys():
+                    user_ids_by_org[org]['countries'][country] = set()
+                user_ids_by_org[org]['countries'][country].add(user_id)
+            except UserProfile.DoesNotExist:
+                pass
 
     org_combinations = get_org_combinations()
 
     logger.info("start Learner reports")
-    LearnerDailyReport.generate_today_reports(org_combinations)
+    LearnerDailyReport.generate_today_reports(org_combinations, user_ids_by_org)
 
     logger.info("start Course reports")
-    CourseDailyReport.generate_today_reports(course_ids)
-
-    logger.info("start listing user_ids by org")
-    # user_ids_by_org = { org : { total : set(user_ids...), countries : { XX : set(user_ids...) } } }
-    user_ids_by_org = {}
-    for course_id in course_ids:
-        if course_id.org not in user_ids_by_org.keys():
-            user_ids_by_org[course_id.org] = {'total': set(), 'countries': {}}
-        enrollments = CourseEnrollment.objects.filter(course_id=course_id, is_active=True, user__is_active=True)
-        for enrollment in enrollments:
-            user_ids_by_org[course_id.org]['total'].add(enrollment.user_id)
-            country = enrollment.user.profile.country
-            if country not in user_ids_by_org[course_id.org]['countries'].keys():
-                user_ids_by_org[course_id.org]['countries'][country] = set()
-            user_ids_by_org[course_id.org]['countries'][country].add(enrollment.user_id)    
+    CourseDailyReport.generate_today_reports(course_ids) 
 
     logger.info("start Microsite reports")
     MicrositeDailyReport.generate_today_reports(course_ids, org_combinations, user_ids_by_org)
