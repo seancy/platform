@@ -10,7 +10,7 @@ import re
 import uuid
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
-from django.db import models, connections
+from django.db import models, connection, connections
 from django.db.models import Sum, Count, Q, Max
 from django.http import Http404
 from datetime import date, datetime
@@ -1720,6 +1720,13 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
 
     @classmethod
     def generate_today_reports(cls, course_ids, org_combinations, user_ids_by_org):
+        finished_by_org = {}
+        with connection.cursor() as cursor:
+            cursor.execute("select org, count(*) as finished from triboo_analytics_learnercoursejsonreport "\
+                           "where is_active=1 and status=%s group by org" % CourseStatus.finished)
+            for row in cursor.fetchall():
+                finished_by_org[row[0]] = row[1]
+
         course_ids_by_org = defaultdict(list)
         for course_id in course_ids:
             course_ids_by_org[course_id.org].append(course_id)
@@ -1727,7 +1734,8 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
         for org, ids in course_ids_by_org.iteritems():
             logger.info("microsite report for org=%s" % org)
             nb_users = len(user_ids_by_org[org]['total'])
-            cls.update_or_create(org, ids, nb_users)
+            finished = finished_by_org.get(org, 0)
+            cls.update_or_create(org, ids, nb_users, finished)
 
         for combination in org_combinations:
             cls.update_or_create_combined_orgs(combination, user_ids_by_org)
@@ -1736,9 +1744,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
 
 
     @classmethod
-    def update_or_create(cls, org, course_ids, nb_users):
-        finished = LearnerCourseJsonReport.filter_by_day(org=org, status=CourseStatus.finished).count()
-
+    def update_or_create(cls, org, course_ids, nb_users, finished):
         total_time_spent_on_mobile = (LearnerVisitsDailyReport.objects.filter(
                                         org=org, course_id__in=course_ids, device="mobile").aggregate(
                                         Sum('time_spent')).get('time_spent__sum') or 0)
