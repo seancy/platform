@@ -1468,12 +1468,14 @@ class LearnerDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def generate_today_reports(cls, org_combinations):
-        distinct_user_org = LearnerCourseJsonReport.filter_by_day().values_list('user_id', 'org').distinct()
-        learners = set()
-        for (user_id, org) in distinct_user_org:
-            logger.info("learner report for user_id=%d org=%s" % (user_id, org))
-            reports = LearnerCourseJsonReport.filter_by_day(user_id=user_id, org=org)
-            cls.update_or_create(user_id, org, reports)
+        with connection.cursor() as cursor:
+            cursor.execute("select distinct user_id, org from triboo_analytics_learnercoursejsonreport where is_active=1")
+            for row in cursor.fetchall():
+                user_id = row[0]
+                org = row[1]
+                logger.info("learner report for user_id=%d org=%s" % (user_id, org))
+                reports = LearnerCourseJsonReport.filter_by_day(user_id=user_id, org=org)
+                cls.update_or_create(user_id, org, reports)
 
         for combination in org_combinations:
             cls.update_or_create_combined_orgs(combination)
