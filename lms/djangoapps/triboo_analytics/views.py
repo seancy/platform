@@ -127,7 +127,7 @@ def analytics_member_required(func):
     @wraps(func)
     def wrapper(request, *args, **kwargs):
         user_groups = [group.name for group in request.user.groups.all()]
-        if (ANALYTICS_ACCESS_GROUP in user_groups or ANALYTICS_LIMITED_ACCESS_GROUP in user_groups):
+        if (request.user.is_staff or ANALYTICS_ACCESS_GROUP in user_groups or ANALYTICS_LIMITED_ACCESS_GROUP in user_groups):
             return func(request, *args, **kwargs)
         raise PermissionDenied
     return wrapper
@@ -136,10 +136,9 @@ def analytics_member_required(func):
 def analytics_full_member_required(func):
     @wraps(func)
     def wrapper(request, *args, **kwargs):
-        if not ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()]:
-            raise PermissionDenied
-        else:
+        if request.user.is_staff or ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()]:
             return func(request, *args, **kwargs)
+        raise PermissionDenied
     return wrapper
 
 

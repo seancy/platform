@@ -73,7 +73,7 @@ if course is not None:
                 </li>
               % endif
               % if (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
-              and (ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()] \
+              and (request.user.is_staff ord ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()] \
               or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in request.user.groups.all()])):
                 <li>
                   <a class="instructor-info-action" href="${"%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course.id}))}" title="${_('Course Report')}">
