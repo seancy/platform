@@ -227,7 +227,7 @@
               return "${unique_visitors_csv['per_day']}"
           }
           var lineChartCsvData = "date,value\n" + fetchUVChartData(by)
-          drawLineChart('lineChart', lineChartCsvData, '--analytics-line-chart-color')
+          drawLineChart('lineChart', lineChartCsvData, '--analytics-line-chart-color', '${LANGUAGE_CODE}')
           return lineChartCsvData
         }
 

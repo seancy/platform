@@ -136,7 +136,7 @@ function sampleByCount(datas, count) {
   return datas.filter(function(data, i) { return i % interval === 0; });
 }
 
-function drawLineChart(elementId, csvData, colorKey, extraOptions) {
+function drawLineChart(elementId, csvData, colorKey, languageCode, extraOptions) {
   if (colorKey === void 0) { colorKey = '#E7413C'; }
   if (extraOptions === void 0) { extraOptions = {}; }
   var $el = document.getElementById(elementId);
@@ -164,6 +164,12 @@ function drawLineChart(elementId, csvData, colorKey, extraOptions) {
           color: '#D3D8DD',
         },
       },
+      axisLabel: {
+        formatter: function (value, index) {
+          var formatter = new Intl.NumberFormat(languageCode)
+          return formatter.format(value)
+        }
+      }
     },
     tooltip: {
       trigger: 'axis',

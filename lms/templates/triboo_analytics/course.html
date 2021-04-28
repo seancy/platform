@@ -157,34 +157,19 @@
                               <aside>
                                   <div class="legend">
                                       <div class="legend__item">
-                                          <span class="finished">&#9679;</span>
-                                          <div>${_(CourseStatus.verbose_names[CourseStatus.finished])}</div>
+                                          <span class="not-started">&#9679;</span>
+                                          <div>${_(CourseStatus.verbose_names[CourseStatus.not_started])}</div>
                                           <div>
                                             ${static.renderReact(
                                               component="QuestionMark",
-                                              id="id-finished-2",
+                                              id="id-not-started",
                                               props={
                                                 'class':'status-message',
-                                                'tooltip': gettext('Leaners who completed the course with 100% progress and a total score passing the minimum required score'),
+                                                'tooltip': gettext("Learners who are enrolled in the course but haven't visited it yet"),
                                               }
                                             )}
-                                          </div>
-                                      </div>
-                                      <div class="legend__item">
-                                          <span class="failed">&#9679;</span>
-                                          <div>${_(CourseStatus.verbose_names[CourseStatus.failed])}</div>
-                                          <div>
-                                            ${static.renderReact(
-                                              component="QuestionMark",
-                                              id="id-failed",
-                                              props={
-                                                'class':'status-message',
-                                                'tooltip': gettext('Leaners who completed the course with 100% progress but with a total score below the minimum required score to validate the course'),
-                                              }
-                                            )}
-                                          </div>
-                                      </div>
-                                      <div class="legend__item">
+                                        </div>
+                                        <div class="legend__item">
                                           <span class="in-progress">&#9679;</span>
                                           <div>${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</div>
                                           <div>
@@ -197,19 +182,34 @@
                                               }
                                             )}
                                           </div>
-                                      </div>
-                                      <div class="legend__item">
-                                          <span class="not-started">&#9679;</span>
-                                          <div>${_(CourseStatus.verbose_names[CourseStatus.not_started])}</div>
+                                        </div>
+                                        <div class="legend__item">
+                                          <span class="finished">&#9679;</span>
+                                          <div>${_(CourseStatus.verbose_names[CourseStatus.finished])}</div>
                                           <div>
                                             ${static.renderReact(
                                               component="QuestionMark",
-                                              id="id-not-started",
+                                              id="id-finished-2",
                                               props={
                                                 'class':'status-message',
-                                                'tooltip': gettext("Learners who are enrolled in the course but haven't visited it yet"),
+                                                'tooltip': gettext('Leaners who completed the course with 100% progress and a total score passing the minimum required score'),
                                               }
                                             )}
+                                          </div>
+                                        </div>
+                                        <div class="legend__item">
+                                          <span class="failed">&#9679;</span>
+                                          <div>${_(CourseStatus.verbose_names[CourseStatus.failed])}</div>
+                                          <div>
+                                            ${static.renderReact(
+                                              component="QuestionMark",
+                                              id="id-failed",
+                                              props={
+                                                'class':'status-message',
+                                                'tooltip': gettext('Leaners who completed the course with 100% progress but with a total score below the minimum required score to validate the course'),
+                                              }
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
                                   </div>
@@ -295,17 +295,17 @@
     <!-- the script -->
     <script type="text/javascript">
       var pieChartData = [
+        ['${_("Not started")}', ${course_report.not_started}],
+        ['${_("In progress")}', ${course_report.in_progress}],
         ['${_("Successful")}', ${course_report.finished}],
         ['${_("Unsuccessful")}', ${course_report.failed}],
-        ['${_("In progress")}', ${course_report.in_progress}],
-        ['${_("Not started")}', ${course_report.not_started}],
       ];
 
       drawGaugeChart('pieChart', pieChartData, [
+        '--analytics-not-started-color',
+        '--analytics-in-progress-color',
         '--analytics-finished-color',
         '--analytics-failed-color',
-        '--analytics-in-progress-color',
-        '--analytics-not-started-color',
       ])
     </script>
 % endif
@@ -318,7 +318,7 @@
             return "${unique_visitors_csv['per_day']}"
         }
         var lineChartCsvData = "date,value\n" + fetchUVChartData(by)
-        drawLineChart('lineChart', lineChartCsvData, '--analytics-line-chart-color')
+        drawLineChart('lineChart', lineChartCsvData, '--analytics-line-chart-color', '${LANGUAGE_CODE}')
         return lineChartCsvData
       }
 
