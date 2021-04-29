@@ -41,6 +41,7 @@
         $(window).unload(function () {
             clearInterval(inter);
         });
+        $('#report-file-list').html('<div><h3>${_("No reports available")}</h3></div>')
         listDownloads();
 
         $('.actions .download-item').on('click', function(e) {
