@@ -2,6 +2,7 @@ import React from 'react';
 import {PaginationConfig} from "./Config";
 import {get, merge, omit, isEmpty, pick} from "lodash";
 
+
 export default class BaseReport extends React.Component{
     constructor(props) {
         super(props)
@@ -20,6 +21,7 @@ export default class BaseReport extends React.Component{
             data: [],
             totalData: {},
             rowsCount: 0,
+            xhrFetchData: null,
         }
 
         this.myRef = React.createRef()
@@ -131,13 +133,20 @@ export default class BaseReport extends React.Component{
                 no: pageNo
             }, ...(sort!=''?{sort}:{})
         })
-        this.setState({isLoading:true})
-        $.ajax(url, {
+
+        const xhrFetchData = $.ajax(url, {
             // method: 'get', //please change it to post in real environment.
             method: 'post',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(ajaxData),
             dataType: 'json',
+            beforeSend: () => {
+              if (this.state.xhrFetchData) this.state.xhrFetchData.abort()
+              this.setState(() => ({
+                xhrFetchData,
+                isLoading: true
+              }))
+            },
             success: (json) => {
                 this.setState((s, p) => {
                     return {
