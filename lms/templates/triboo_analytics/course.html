@@ -168,48 +168,48 @@
                                                 'tooltip': gettext("Learners who are enrolled in the course but haven't visited it yet"),
                                               }
                                             )}
-                                        </div>
-                                        <div class="legend__item">
-                                          <span class="in-progress">&#9679;</span>
-                                          <div>${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</div>
-                                          <div>
-                                            ${static.renderReact(
-                                              component="QuestionMark",
-                                              id="id-in-progress",
-                                              props={
-                                                'class':'status-message',
-                                                'tooltip': gettext("Learners who started to visit the course but haven't completed it yet"),
-                                              }
-                                            )}
                                           </div>
+                                      </div>
+                                      <div class="legend__item">
+                                        <span class="in-progress">&#9679;</span>
+                                        <div>${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</div>
+                                        <div>
+                                          ${static.renderReact(
+                                            component="QuestionMark",
+                                            id="id-in-progress",
+                                            props={
+                                              'class':'status-message',
+                                              'tooltip': gettext("Learners who started to visit the course but haven't completed it yet"),
+                                            }
+                                          )}
                                         </div>
-                                        <div class="legend__item">
-                                          <span class="finished">&#9679;</span>
-                                          <div>${_(CourseStatus.verbose_names[CourseStatus.finished])}</div>
-                                          <div>
-                                            ${static.renderReact(
-                                              component="QuestionMark",
-                                              id="id-finished-2",
-                                              props={
-                                                'class':'status-message',
-                                                'tooltip': gettext('Leaners who completed the course with 100% progress and a total score passing the minimum required score'),
-                                              }
-                                            )}
-                                          </div>
+                                      </div>
+                                      <div class="legend__item">
+                                        <span class="finished">&#9679;</span>
+                                        <div>${_(CourseStatus.verbose_names[CourseStatus.finished])}</div>
+                                        <div>
+                                          ${static.renderReact(
+                                            component="QuestionMark",
+                                            id="id-finished-2",
+                                            props={
+                                              'class':'status-message',
+                                              'tooltip': gettext('Leaners who completed the course with 100% progress and a total score passing the minimum required score'),
+                                            }
+                                          )}
                                         </div>
-                                        <div class="legend__item">
-                                          <span class="failed">&#9679;</span>
-                                          <div>${_(CourseStatus.verbose_names[CourseStatus.failed])}</div>
-                                          <div>
-                                            ${static.renderReact(
-                                              component="QuestionMark",
-                                              id="id-failed",
-                                              props={
-                                                'class':'status-message',
-                                                'tooltip': gettext('Leaners who completed the course with 100% progress but with a total score below the minimum required score to validate the course'),
-                                              }
-                                            )}
-                                          </div>
+                                      </div>
+                                      <div class="legend__item">
+                                        <span class="failed">&#9679;</span>
+                                        <div>${_(CourseStatus.verbose_names[CourseStatus.failed])}</div>
+                                        <div>
+                                          ${static.renderReact(
+                                            component="QuestionMark",
+                                            id="id-failed",
+                                            props={
+                                              'class':'status-message',
+                                              'tooltip': gettext('Leaners who completed the course with 100% progress but with a total score below the minimum required score to validate the course'),
+                                            }
+                                          )}
                                         </div>
                                       </div>
                                   </div>
