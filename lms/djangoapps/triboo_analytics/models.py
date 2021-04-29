@@ -1978,9 +1978,8 @@ class IltSession(TimeStampedModel):
         return "%s_%d" % (module_id, self.session_nb)
 
     @classmethod
-    def get_ilt_blocks(cls):
-        overviews = CourseOverview.objects.all()
-        ilt_blocks = {}
+    def get_ilt_blocks(cls, overviews):
+        lt_blocks = {}
         for overview in overviews:
             course_ilt_blocks = []
             try:
@@ -2014,11 +2013,19 @@ class IltSession(TimeStampedModel):
 
 
     @classmethod
-    def generate_today_reports(cls):
+    def prepare_today_reports(cls):
         cls.objects.all().update(is_active=False)
         IltLearnerReport.objects.all().update(is_active=False)
 
-        ilt_blocks = cls.get_ilt_blocks()
+    @classmethod
+    def clean_obsolete_reports(cls):
+        cls.objects.filter(is_active=False).delete()
+        IltLearnerReport.objects.filter(is_active=False).delete()    
+
+
+    @classmethod
+    def generate_today_reports(cls, overviews):
+        ilt_blocks = cls.get_ilt_blocks(overviews)
         for ilt_block_id, ilt_block_info in ilt_blocks.iteritems():
             logger.info("ILT Module %s" % ilt_block_id)
             ilt_module_id = UsageKey.from_string(ilt_block_id)
@@ -2081,9 +2088,6 @@ class IltSession(TimeStampedModel):
             except Exception as err:  # pylint: disable=broad-except
                 logger.error('Error with %s: %r', ilt_block_id, err)
                 pass
-
-        cls.objects.filter(is_active=False).delete()
-        IltLearnerReport.objects.filter(is_active=False).delete()
 
 
     @classmethod
@@ -2283,7 +2287,10 @@ def generate_today_reports(multi_process=False):
     LeaderBoard.update_stayed_online()
 
     logger.info("start ILT reports")
-    IltSession.generate_today_reports()
+    IltSession.prepare_today_reports()
+    all_overviews = CourseOverview.objects.all()
+    IltSession.generate_today_reports(all_overviews)
+    IltSession.clean_obsolete_reports()
 
 
 def check_generated_learner_course_reports(last_analytics_success, overviews, course_last_updates, sections_by_course):
