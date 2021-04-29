@@ -55,21 +55,23 @@ export class CustomizedReport {
         })
         $('#table-export-selection').delegate('label', 'click', () => {
             this.goButtonStatusUpdate()
-            const checked = $('#table-export-selection input[name=format]:checked')[0]
-            if (checked) {
-              const formatBar = document.getElementById('format_bar')
-              const text = checked.parentNode.querySelector('label').textContent
-              if (formatBar.querySelector('button')) {
-                formatBar.querySelector('button span').innerHTML = text
-              } else {
-                const button = document.createElement('button')
-                button.className = 'property-option option-label'
-                formatBar.appendChild(button)
-                const span = document.createElement('span')
-                span.innerText = text
-                button.appendChild(span)
+            requestAnimationFrame(() => {
+              const checked = $('#table-export-selection input[name=format]:checked')[0]
+              if (checked) {
+                const formatBar = document.getElementById('format_bar')
+                const text = checked.parentNode.querySelector('label').textContent
+                if (formatBar.querySelector('button')) {
+                  formatBar.querySelector('button span').innerHTML = text
+                } else {
+                  const button = document.createElement('button')
+                  button.className = 'property-option option-label'
+                  formatBar.appendChild(button)
+                  const span = document.createElement('span')
+                  span.innerText = text
+                  button.appendChild(span)
+                }
               }
-            }
+            })
         })
         $('#id_selected_properties').delegate('li label', 'click', (e) => {
             let prop_name = $(e.currentTarget)[0].innerText;
