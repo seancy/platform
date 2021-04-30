@@ -25734,7 +25734,7 @@ msgstr ""
 
 #: cms/templates/export.html:161 cms/templates/import.html:175
 msgid "Success"
-msgstr "Opération réussie"
+msgstr "Réussite"
 
 #: cms/templates/export.html:166
 msgid "Your exported library can now be downloaded"

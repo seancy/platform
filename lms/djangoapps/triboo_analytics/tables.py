@@ -405,9 +405,9 @@ def get_progress_table_class(badges):
     for badge_hash, grading_rule, section_name in badges:
         verbose_name = "%s ▸ %s" % (grading_rule.encode('utf-8'), section_name.encode('utf-8'))
         # attributes[badge_hash] = HeaderColumn(verbose_name=verbose_name, colspan=3)
-        attributes["%s_success" % badge_hash] = ProgressSuccessColumn(verbose_name=("%s / Success" % verbose_name))
-        attributes["%s_score" % badge_hash] = AvgPercentFooterColumn(verbose_name=("%s / Score" % verbose_name))
-        attributes["%s_successdate" % badge_hash] = ProgressSuccessDateColumn(verbose_name=("%s / Date" % verbose_name))
+        attributes["%s_success" % badge_hash] = ProgressSuccessColumn(verbose_name=("%s / %sSuccess" % (verbose_name, _("Success"))))
+        attributes["%s_score" % badge_hash] = AvgPercentFooterColumn(verbose_name=("%s / %s" % (verbose_name, _("Score"))))
+        attributes["%s_successdate" % badge_hash] = ProgressSuccessDateColumn(verbose_name=("%s / %s" % (verbose_name, _("Date"))))
 
     def render_user_country(self, value):
         return dict(countries)[value]

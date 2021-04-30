@@ -15215,7 +15215,7 @@ msgstr "Comprimir los datos exportados y prepararlos para descargar"
 
 #: cms/templates/export.html:161 cms/templates/import.html:175
 msgid "Success"
-msgstr "Finalizado con éxito"
+msgstr "Éxito"
 
 #: cms/templates/export.html:166
 msgid "Your exported library can now be downloaded"

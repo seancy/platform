@@ -6455,7 +6455,7 @@ msgstr "In Bearbeitung"
 
 #: lms/static/js/views/fields.js:58
 msgid "Success"
-msgstr "Operation Erfolgreich"
+msgstr "Erfolgreich"
 
 #: lms/static/js/views/fields.js:63
 msgid "Placeholder"
@@ -9794,7 +9794,7 @@ msgstr "Zeitaufwand"
 
 #: lms/static/js/triboo_analytics/CourseReportSummary.js
 msgid "Display the state of learners at the end of the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "Zeigen Sie den Status der Lernenden am Ende des ausgewählten Zeitraums für Lernende an, die den Kurs während dieses Zeitraums besucht haben."
 
 #: lms/static/js/triboo_analytics/CourseReportProgress.js
 msgid "Display the progress of learners at the end of the selected period for learners who visited the course during this period."
