@@ -9809,7 +9809,7 @@ msgstr "Scatta la foto"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Filters"
-msgstr ""
+msgstr "Filtri"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Properties"
@@ -12366,10 +12366,6 @@ msgstr "Interno"
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "External"
 msgstr "Esterno"
-
-#: lms/static/js/external_catalog/ExternalCatalog.jsx
-msgid "Filters"
-msgstr "Filtri"
 
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "Type of content"
