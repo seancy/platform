@@ -24141,6 +24141,10 @@ msgstr ""
 msgid "Course Report"
 msgstr ""
 
+#: lms/templates/triboo_analytics/course.html:76
+msgid "Number of different visitors who opened the course per day"
+msgstr ""
+
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Summary Report"
 msgstr ""

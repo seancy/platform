@@ -25597,6 +25597,18 @@ msgstr "a settimana"
 msgid "Monthly"
 msgstr "al mese"
 
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Summary Report"
+msgstr "Rapporto del corso - Riassunto"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Progress Report"
+msgstr "Rapporto del corso - Progressi"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Time Spent Report"
+msgstr "Rapporto del corso - Tempo speso"
+
 #: lms/templates/triboo_analytics/banner_nav.html:32
 #: lms/templates/triboo_analytics/banner_nav.html:34
 #: lms/templates/triboo_analytics/transcript.html:26
@@ -25608,6 +25620,10 @@ msgstr "Rapporto dello studente"
 #: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
 msgstr "Rapporto ILT"
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customized Report"
+msgstr "Relatório Personalizado"
 
 #: lms/templates/triboo_analytics/course.html:21
 msgid "Please select a course to see your report:"
@@ -28089,7 +28105,7 @@ msgstr "Iscrizioni"
 
 #: lms/templates/triboo_analytics/microsite.html:44
 msgid "Number of learners enrolled in a course"
-msgstr ""
+msgstr "Numero di studenti iscritti a un corso"
 
 #: lms/templates/triboo_analytics/microsite.html:75
 msgid "Average time learners have spent on the platform"
@@ -28099,11 +28115,11 @@ msgstr ""
 msgid ""
 "Number of times a learner successfully completed a course with 100% progress "
 "and a passing total score"
-msgstr ""
+msgstr "Numero di volte in cui uno studente ha completato con successo un corso con il 100% di progresso e un punteggio totale superato"
 
 #: lms/templates/triboo_analytics/microsite.html:34
 msgid "Number of courses created and available"
-msgstr ""
+msgstr "Numero di corsi creati e disponibili"
 
 #: lms/templates/triboo_analytics/microsite.html:91
 msgid "Number of different visitors who logged in the platform per day"
@@ -28111,12 +28127,12 @@ msgstr ""
 
 #: lms/templates/triboo_analytics/microsite.html:114
 msgid "Proportion of mobile connection vs. computer connection"
-msgstr ""
+msgstr "Percentuale di connessione mobile vs. collegamento al computer"
 
 #: lms/templates/triboo_analytics/microsite.html:136
 msgid ""
 "Where are located the active learners based on their profile information"
-msgstr ""
+msgstr "Dove si trovano gli studenti attivi in base alle informazioni del loro profilo"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Last Login"
@@ -28245,6 +28261,10 @@ msgstr ""
 msgid ""
 "Average time it took to learners to complete the course with 100% progress"
 msgstr ""
+
+#: lms/templates/triboo_analytics/course.html:76
+msgid "Number of different visitors who opened the course per day"
+msgstr "Numero di visitatori diversi che hanno aperto il corso al giorno"
 
 #: lms/templates/triboo_analytics/course.html:80
 msgid ""

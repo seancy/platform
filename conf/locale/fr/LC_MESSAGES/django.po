@@ -23807,6 +23807,10 @@ msgstr "par mois"
 msgid "Course Report"
 msgstr "Rapport des cours"
 
+#: lms/templates/triboo_analytics/course.html:76
+msgid "Number of different visitors who opened the course per day"
+msgstr "Nombre de visiteurs différents qui ont ouvert le cours par jour"
+
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Summary Report"
 msgstr "Rapport de cours - Résumé"

@@ -28481,6 +28481,10 @@ msgid ""
 "Average time it took to learners to complete the course with 100% progress"
 msgstr "学生完成课程所用的平均时间"
 
+#: lms/templates/triboo_analytics/course.html:76
+msgid "Number of different visitors who opened the course per day"
+msgstr ""
+
 #: lms/templates/triboo_analytics/course.html:80
 msgid ""
 "Average total score of the learners who completed the course with 100% "

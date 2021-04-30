@@ -27434,15 +27434,15 @@ msgstr "Relatório do Curso"
 
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Summary Report"
-msgstr "Relatório de Resumo do Curso"
+msgstr "Relatório do curso - Resumo"
 
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Progress Report"
-msgstr "Relatório de Progresso do Curso"
+msgstr "Relatório do curso - Progresso"
 
 #: lms/templates/triboo_analytics/views.py
 msgid "Course Time Spent Report"
-msgstr "Relatório de Tempo Gasto do Curso"
+msgstr "Relatório do curso - Tempo gasto"
 
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/learner.html:26
@@ -29971,6 +29971,10 @@ msgstr "Número de alunos inscritos no curso. Os alunos foram registrados por um
 msgid ""
 "Average time it took to learners to complete the course with 100% progress"
 msgstr "Tempo médio que os alunos levaram para completar o curso com 100% de progresso"
+
+#: lms/templates/triboo_analytics/course.html:76
+msgid "Number of different visitors who opened the course per day"
+msgstr "Número de visitantes diferentes que abriram o curso por dia"
 
 #: lms/templates/triboo_analytics/course.html:80
 msgid ""
