@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { pick, get } from 'lodash'
 
-import DateRange from 'se-react-date-range'
+import DateRange from 'lt-react-date-range'
 import LabelValue from 'sec-react-label-value'
 import {Exporter} from './Exporter'
 import {Properties} from './Properties'

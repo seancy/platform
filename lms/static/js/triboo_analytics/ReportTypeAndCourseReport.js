@@ -1,7 +1,7 @@
 import React from "react";
 import LabelValue from "sec-react-label-value";
-import DateRange from "se-react-date-range";
-import Dropdown from 'se-react-dropdown'
+import DateRange from "lt-react-date-range";
+import Dropdown from 'lt-react-dropdown'
 import {get} from 'lodash'
 
 class ReportTypeAndCourseReport extends React.Component {

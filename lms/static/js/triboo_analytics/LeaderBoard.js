@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown from 'se-react-dropdown'
+import Dropdown from 'lt-react-dropdown'
 import {get, pick} from 'lodash'
 
 //for leader board page.

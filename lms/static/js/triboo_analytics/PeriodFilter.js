@@ -1,5 +1,5 @@
 import React from "react";
-import DateRange from 'se-react-date-range';
+import DateRange from 'lt-react-date-range';
 import {QuestionMark} from '../QuestionMark';
 
 

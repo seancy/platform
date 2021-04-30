@@ -1,6 +1,6 @@
 import React from 'react';
 import {Toolbar} from "./Toolbar";
-import DataList from "se-react-data-list";
+import DataList from "lt-react-data-list";
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
 import {pick} from "lodash";

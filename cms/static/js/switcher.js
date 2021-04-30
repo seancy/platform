@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 //import {QuestionMark} from '../../../lms/static/js/QuestionMark';
 import Switch from "react-switch";
-import Dropdown from "se-react-dropdown"
-import CheckboxGroup from "se-react-checkbox-group"
+import Dropdown from "lt-react-dropdown"
+import CheckboxGroup from "lt-react-checkbox-group"
 
 export class Switcher extends React.Component {
     constructor(props) {

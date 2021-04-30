@@ -1,6 +1,6 @@
 import React from "react";
-import Dropdown from "se-react-dropdown"
-import CheckboxGroup from 'se-react-checkbox-group'
+import Dropdown from "lt-react-dropdown"
+import CheckboxGroup from 'lt-react-checkbox-group'
 import Cookies from "js-cookie";
 import _ from 'underscore';
 import PropTypes from 'prop-types'
@@ -151,10 +151,10 @@ class StarCheckboxGroup extends React.Component {
         }
 
         return (
-            <CheckboxWrapperEx className={'se-react-checkbox-group ' + (this.props.className || '')}>
+            <CheckboxWrapperEx className={'lt-react-checkbox-group ' + (this.props.className || '')}>
                 {data.map(item => {
                     var stars = [];
-                    const id = 'star-se-react-checkbox-group-box' + item.value;
+                    const id = 'star-lt-react-checkbox-group-box' + item.value;
                     for(var i = 1; i <= 5; i++) {
                         if( item.value >= i ) {
                             stars.push(<i className="fa fa-star"></i>);

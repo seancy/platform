@@ -3,11 +3,11 @@ import '../../../../node_modules/select2/dist/css/select2.css'
 
 /* eslint-disable react/no-danger, import/prefer-default-export */
 import React from 'react';
-import Tab from "se-react-tab"
+import Tab from "lt-react-tab"
 import Summary from './CourseReportSummary'
 import Progress from './CourseReportProgress'
 import TimeSpent from './CourseReportTimeSpent'
-import Dropdown from 'se-react-dropdown'
+import Dropdown from 'lt-react-dropdown'
 
 import { pick } from 'lodash'
 import 'url-search-params-polyfill';

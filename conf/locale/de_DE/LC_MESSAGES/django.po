@@ -9953,6 +9953,12 @@ msgstr "Bestätigung"
 msgid "Refused"
 msgstr "Abgelehnt"
 
+#: lms/djangoapps/triboo_analytics/forms.py:81
+#: lms/templates/triboo_analytics/course.html:150
+#: lms/templates/triboo_analytics/learner.html:43
+msgid "Select the user properties to display"
+msgstr "Wählen Sie die anzuzeigenden Benutzereigenschaften aus"
+
 #: lms/djangoapps/triboo_analytics/views.py:240
 #: lms/djangoapps/triboo_analytics/views.py:571
 msgid "Invalid User ID"

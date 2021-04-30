@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger, import/prefer-default-export */
 import React from 'react';
-import Tab from "se-react-tab"
+import Tab from "lt-react-tab"
 import ILTGlobalReport from './ILTGlobalReport'
 import ILTLearnerReport from './ILTLearnerReport'
 import {pick} from "lodash";
