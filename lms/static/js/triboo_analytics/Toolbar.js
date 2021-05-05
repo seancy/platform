@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { pick, get } from 'lodash'
 
 import DateRange from 'lt-react-date-range'
-import LabelValue from 'sec-react-label-value'
+import LabelValue from 'lt-react-label-value'
 import {Exporter} from './Exporter'
 import {Properties} from './Properties'
 import {PeriodFilter} from './PeriodFilter'
