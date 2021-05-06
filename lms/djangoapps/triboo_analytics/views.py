@@ -311,11 +311,11 @@ def get_course_sections(course_key):
     return ordered_chapters, ordered_sections
 
 
-def get_customized_table(report_cls, filter_kwargs, filters, table_cls, exclude):
+def get_customized_table(report_cls, filter_kwargs, table_cls, exclude):
     if filter_kwargs.pop('invalid', False):
         return table_cls([]), 0
 
-    querysets = report_cls.filter_by_period(**filters)
+    querysets = report_cls.filter_by_period(**filter_kwargs)
     row_count = querysets.count()
     table = table_cls(querysets, exclude=exclude)
     return table, row_count

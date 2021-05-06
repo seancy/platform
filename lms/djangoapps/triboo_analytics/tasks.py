@@ -35,7 +35,6 @@ from . import tables
 from django.http import HttpResponseNotFound
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from django.db.models import Q
 
 
 logger = logging.getLogger('triboo_analytics')
@@ -206,16 +205,14 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
                                         datetime.strptime(_task_input['report_args']['last_update'], datetime_format))
 
     elif _task_input['report_name'] == "summary_report_multiple":
-        courses_selected = _task_input['report_args'].get('courses_selected', None)
-        course_keys = [CourseKey.from_string(id) for id in courses_selected.split(',')]
-        course_filter = Q()
-        for course_key in course_keys:
-            course_filter |= Q(**{'course_id': course_key})
-        filters = Q(**kwargs) & course_filter
+        logger.info("LAETITIA -- export course summary MULTIPLE report > call get_table_data")
         report_cls = getattr(models, _task_input['report_args']['report_cls'])
         table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+        courses_selected = _task_input['report_args'].get('courses_selected', None)
+        course_keys = [CourseKey.from_string(course_id) for course_id in courses_selected.split(',')]
+        kwargs['course_id__in'] = course_keys
         logger.info("LAETITIA -- export course summary MULTIPLE report > call get_table_data")
-        table, _ = get_customized_table(report_cls, kwargs, filters, table_cls, exclude)
+        table, _ = get_customized_table(report_cls, kwargs, table_cls, exclude)
 
     logger.info("LAETITIA -- about to export")
     exporter = TableExport(_task_input['export_format'], table)
