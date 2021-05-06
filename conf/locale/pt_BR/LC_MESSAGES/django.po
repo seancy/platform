@@ -27427,6 +27427,12 @@ msgstr "por semana"
 msgid "Monthly"
 msgstr "por mês"
 
+#: lms/templates/triboo_analytics/microsite.html:145
+#: lms/templates/triboo_analytics/microsite.html:175
+#: lms/templates/triboo_analytics/course.html:250
+msgid "Comparison between today's value and yesterday's"
+msgstr "Comparação entre o valor de hoje e o de ontem"
+
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
 msgid "Course Report"

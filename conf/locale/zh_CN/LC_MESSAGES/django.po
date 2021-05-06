@@ -22282,6 +22282,12 @@ msgstr "周"
 msgid "Monthly"
 msgstr "月"
 
+#: lms/templates/triboo_analytics/microsite.html:145
+#: lms/templates/triboo_analytics/microsite.html:175
+#: lms/templates/triboo_analytics/course.html:250
+msgid "Comparison between today's value and yesterday's"
+msgstr ""
+
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
 msgid "Course Report"
