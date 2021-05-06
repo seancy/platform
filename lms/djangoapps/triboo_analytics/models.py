@@ -1253,7 +1253,7 @@ class LearnerBadgeDailyReportMockup(object):
             if key_day in records .keys():
                 self.score = records[key_day]['score']
                 self.success = records[key_day]['success']
-                self.success_date = dtload(records[key_day]['success_date'])
+                self.success_date = dtload(records[key_day]['success_date']) if records[key_day]['success_date'] else None
             else:
                 self.score = 0
                 self.success = 0
