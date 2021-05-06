@@ -252,7 +252,12 @@
         drawGaugeChart('gaugeChart', platformDistributionData, [
           '--analytics-desktop-color',
           '--analytics-mobile-color',
-        ]);
+        ], {
+          tooltip: {
+            trigger: 'item',
+            formatter: '{b}&nbsp;&nbsp;&nbsp;{d}%',
+          },
+        });
     </script>
 % endif
 % if users_by_country_csv:
