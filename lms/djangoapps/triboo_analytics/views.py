@@ -163,6 +163,7 @@ def config_tables(request, *tables):
 def list_table_downloads(_request, report='', course_id=None):
     report_store = ReportStore.from_config(config_name='TRIBOO_ANALYTICS_REPORTS')
     links = links_for_all(report_store.storage, _request.user)
+    logger.info("LAETITIA -- downloads = %s" % links)
     response_payload = {'download': links}
     return JsonResponse(response_payload)
 
