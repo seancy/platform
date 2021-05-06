@@ -193,6 +193,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         table = get_ilt_global_table_data(kwargs)
 
     elif _task_input['report_name'] == "ilt_learner_report":
+        logger.info("LAETITIA -- export ilt report > call get_table_data")
         table = get_ilt_learner_table_data(kwargs, exclude)
 
     elif _task_input['report_name'] == "transcript":
@@ -203,6 +204,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         table, _ = get_transcript_table(_task_input['report_args']['orgs'],
                                         _task_input['report_args']['user_id'],
                                         datetime.strptime(_task_input['report_args']['last_update'], datetime_format))
+
     elif _task_input['report_name'] == "summary_report_multiple":
         courses_selected = _task_input['report_args'].get('courses_selected', None)
         course_keys = [CourseKey.from_string(id) for id in courses_selected.split(',')]
@@ -212,6 +214,7 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         filters = Q(**kwargs) & course_filter
         report_cls = getattr(models, _task_input['report_args']['report_cls'])
         table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+        logger.info("LAETITIA -- export course summary MULTIPLE report > call get_table_data")
         table, _ = get_customized_table(report_cls, kwargs, filters, table_cls, exclude)
 
     logger.info("LAETITIA -- about to export")
