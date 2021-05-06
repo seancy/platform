@@ -272,7 +272,7 @@ def get_ilt_period_kwargs(data, orgs, as_string=False):
 
 
 def get_transcript_table(orgs, user_id, last_update, html_links=False, sort=None, with_gradebook_link=False):
-    queryset = []
+    queryset = LearnerCourseJsonReport.objects.none()
     for org in orgs:
         new_queryset = LearnerCourseJsonReport.filter_by_day(org=org, user_id=user_id)
         queryset = queryset | new_queryset
