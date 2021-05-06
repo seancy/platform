@@ -1407,8 +1407,8 @@ def course_export_table(request):
                                                course_id=course_key,
                                                with_period_start=with_period_start,
                                                as_string=True)
-    if 'date_time' not in filter_kwargs.keys():
-        filter_kwargs['date_time'] = day2str(last_update)
+    if 'to_date' not in filter_kwargs.keys():
+        filter_kwargs['to_date'] = day2str(last_update)
 
     report_args = {
         'filter_kwargs': filter_kwargs,
