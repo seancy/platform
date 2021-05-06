@@ -204,21 +204,15 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
                                         _task_input['report_args']['user_id'],
                                         datetime.strptime(_task_input['report_args']['last_update'], datetime_format))
     elif _task_input['report_name'] == "summary_report_multiple":
-        date_time = _task_input['report_args'].get('date_time', None)
-        # customized course summary report
-        if date_time:
-            day = datetime.strptime(date_time, "%Y-%m-%d").date()
-            courses_selected = _task_input['report_args'].get('courses_selected', None)
-            course_keys = [CourseKey.from_string(id) for id in courses_selected.split(',')]
-            course_filter = Q()
-            for course_key in course_keys:
-                course_filter |= Q(**{'course_id': course_key})
-            if kwargs.get('date_time', None):
-                kwargs.pop('date_time')
-            filters = Q(**{'created': day}) & Q(**kwargs) & course_filter
-            report_cls = getattr(models, _task_input['report_args']['report_cls'])
-            table_cls = getattr(tables, _task_input['report_args']['table_cls'])
-            table, _ = get_customized_table(report_cls, kwargs, filters, table_cls, exclude)
+        courses_selected = _task_input['report_args'].get('courses_selected', None)
+        course_keys = [CourseKey.from_string(id) for id in courses_selected.split(',')]
+        course_filter = Q()
+        for course_key in course_keys:
+            course_filter |= Q(**{'course_id': course_key})
+        filters = Q(**kwargs) & course_filter
+        report_cls = getattr(models, _task_input['report_args']['report_cls'])
+        table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+        table, _ = get_customized_table(report_cls, kwargs, filters, table_cls, exclude)
 
     logger.info("LAETITIA -- about to export")
     exporter = TableExport(_task_input['export_format'], table)
