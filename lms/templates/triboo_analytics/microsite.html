@@ -255,7 +255,9 @@
         ], {
           tooltip: {
             trigger: 'item',
-            formatter: '{b}&nbsp;&nbsp;&nbsp;{d}%',
+            formatter: function (params) {
+              return params.name + ' ' + params.percent * 2 + '%'
+            }
           },
         });
     </script>
