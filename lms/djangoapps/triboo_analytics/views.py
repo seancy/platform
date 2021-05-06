@@ -274,7 +274,7 @@ def get_ilt_period_kwargs(data, orgs, as_string=False):
 def get_transcript_table(orgs, user_id, last_update, html_links=False, sort=None, with_gradebook_link=False):
     queryset = []
     for org in orgs:
-        new_queryset = LearnerCourseJsonReport.filter_by_day(org=org, user_id=user_id, is_active=True)
+        new_queryset = LearnerCourseJsonReport.filter_by_day(org=org, user_id=user_id)
         queryset = queryset | new_queryset
     order_by = get_order_by(TranscriptTable, sort)
     if with_gradebook_link:
@@ -507,8 +507,8 @@ def _transcript_view(user, request, template, report_type, with_gradebook_link=F
         learner_course_table, learner_course_reports = get_transcript_table(orgs,
                                                                             user.id,
                                                                             last_update,
-                                                                            with_gradebook_link,
-                                                                            html_links=True)
+                                                                            html_links=True,
+                                                                            with_gradebook_link=with_gradebook_link)
         config_tables(request, learner_course_table)
 
         courses = []
