@@ -134,6 +134,15 @@ export default class BaseReport extends React.Component{
             }, ...(sort!=''?{sort}:{})
         })
 
+        const isValidateDate = v => {
+          if (!v) return true
+          if (isNaN(new Date(v).getTime())) return false
+          return true
+        }
+
+        if (!isValidateDate(ajaxData.from_day)) return
+        if (!isValidateDate(ajaxData.to_day)) return
+
         const xhrFetchData = $.ajax(url, {
             // method: 'get', //please change it to post in real environment.
             method: 'post',
