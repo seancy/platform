@@ -141,7 +141,9 @@
 
                         <section class="analytics-widget analytics-figure analytics-widget-learners analytics-widget--col2">
                             <div class="analytics-widget__caption">
-                                <h3>${ungettext("Learner", "Learners", microsite_report.users)}<i class="analytics-widget__caption-mark far"></i></h3>
+                                <h3>${ungettext("Learner", "Learners", microsite_report.users)}
+                                  <i class="analytics-widget__caption-mark far" title="${_("Comparison between today's value and yesterday's")}"></i>
+                                </h3>
                                 ${static.renderReact(
                                   component="QuestionMark",
                                   id="id-active-learners",
@@ -169,7 +171,9 @@
 
                         <section class="analytics-widget analytics-figure analytics-widget-timespent analytics-widget--col2">
                             <div class="analytics-widget__caption">
-                                <h3>${_("Average Time Spent Per Active Learner")}<i class="analytics-widget__caption-mark far"></i></h3>
+                                <h3>${_("Average Time Spent Per Active Learner")}
+                                  <i class="analytics-widget__caption-mark far" title="${_("Comparison between today's value and yesterday's")}"></i>
+                                </h3>
                                 ${static.renderReact(
                                   component="QuestionMark",
                                   id="id-average-time",

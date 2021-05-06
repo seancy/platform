@@ -246,7 +246,9 @@
 
                       <section class="analytics-widget analytics-figure analytics-widget-completetime analytics-widget--col2">
                           <div class="analytics-widget__caption">
-                              <h3>${_("Average time to complete the course")}<i class="analytics-widget__caption-mark far"></i></h3>
+                              <h3>${_("Average time to complete the course")}
+                                <i class="analytics-widget__caption-mark far" title="${_("Comparison between today's value and yesterday's")}"></i>
+                              </h3>
                               ${static.renderReact(
                                 component="QuestionMark",
                                 id="id-average-time",
