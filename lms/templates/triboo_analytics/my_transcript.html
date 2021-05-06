@@ -215,14 +215,12 @@
 
         <section class="analytics-wrapper transcript">
           <div class="report-wrapper">
-              <div class="analytics-header">
-                % if configuration_helpers.get_value("ENABLE_WAIVER_REQUEST", False):
-                  <button class="request-waiver" data-izimodal-open="#waiver-pop-up">${_("Request a waiver")}</button>
-                % else:
-                  <div class="table-pdf-view">
-                      <button id="table-pdf-button"><i class="fal fa-print"></i>${_("Print")}</button>
-                  </div>
-                % endif
+              <h3>${_("My learning transcript")}</h3>
+            % if configuration_helpers.get_value("ENABLE_WAIVER_REQUEST", False):
+              <button class="request-waiver" data-izimodal-open="#waiver-pop-up">${_("Request a waiver")}</button>
+            % endif
+              <div class="table-pdf-view">
+                  <button id="table-pdf-button"><i class="fal fa-print"></i>${_("Print")}</button>
               </div>
               <div class="waiver-pop-up" id="waiver-pop-up" data-iziModal-group="group1">
                   <span class="waiver-x" data-iziModal-close>X</span>

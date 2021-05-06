@@ -24,23 +24,20 @@
 
         <section class="analytics-wrapper transcript">
           <div class="report-wrapper">
-
-            <div class="analytics-header">
-              % if error_message:
-                <h2>${_("Learning Transcript")}</h2>
-                <div class="analytics-summary">
-                    <p class="error">${error_message}</p>
-                </div>
-              % else:
-                <h2>${_("Learning Transcript of")} ${user_profile_name}</h2>
-                <div class="table-pdf-view">
-                    <button id="table-pdf-button">
-                        <i class="fal fa-print"></i>
-                          ${_("Print")}
-                    </button>
-                </div>
-              % endif
-            </div>
+            % if error_message:
+              <h3>${_("Learning Transcript")}</h3>
+              <div class="analytics-summary">
+                  <p class="error">${error_message}</p>
+              </div>
+            % else:
+              <h3>${_("Learning Transcript of")} ${user_profile_name}</h3>
+              <div class="table-pdf-view">
+                  <button id="table-pdf-button">
+                      <i class="fal fa-print"></i>
+                        ${_("Print")}
+                  </button>
+              </div>
+            % endif
 
             % if learner_report_enrollments:
               <div class="analytics-basic-wrapper">
