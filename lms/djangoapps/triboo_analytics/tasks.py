@@ -162,17 +162,15 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         raise UnsupportedExportFormatError()
 
     table = []
-    if 'to_date' in kwargs.keys():
-        kwargs['to_date'] = datetime.strptime(kwargs['to_date'], "%Y-%m-%d").date()
-    if 'from_date' in kwargs.keys():
-        kwargs['from_date'] = datetime.strptime(kwargs['from_date'], "%Y-%m-%d").date()
 
     if _task_input['report_name'] != "transcript":
         kwargs = _task_input['report_args']['filter_kwargs']
         exclude = _task_input['report_args']['exclude']
 
-        if 'date_time' in kwargs.keys():
-            kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
+        if 'to_date' in kwargs.keys():
+            kwargs['to_date'] = datetime.strptime(kwargs['to_date'], "%Y-%m-%d").date()
+        if 'from_date' in kwargs.keys():
+            kwargs['from_date'] = datetime.strptime(kwargs['from_date'], "%Y-%m-%d").date()
 
         if 'course_id' in kwargs.keys():
             kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
