@@ -1979,7 +1979,7 @@ class IltSession(TimeStampedModel):
 
     @classmethod
     def get_ilt_blocks(cls, overviews):
-        lt_blocks = {}
+        ilt_blocks = {}
         for overview in overviews:
             course_ilt_blocks = []
             try:
