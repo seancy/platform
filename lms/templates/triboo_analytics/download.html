@@ -18,7 +18,7 @@
             var elem = $('#report-file-list');
             $.ajax(elem.attr('data-endpoint'), {
                 success: function (data) {
-                    if (elem.children().length !== data.download.length) {
+                    if (elem.children().length < data.download.length) {
                         var downloadIcon = $('a.download-item')
                         if (downloadIcon) downloadIcon.addClass('red-dot')
                     }
