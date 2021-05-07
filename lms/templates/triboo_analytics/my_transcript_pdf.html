@@ -1,8 +1,7 @@
 <%inherit file="../main.html" />
 <%namespace name='static' file='../static_content.html'/>
 <%!
-  from django.utils.translation import ugettext as _
-  from django.utils.translation import ungettext
+  from django.utils.translation import ugettext as _, ungettext, gettext
   from django.core.urlresolvers import reverse
   from django.template import Template, Context
   from triboo_analytics.models import CourseStatus, format_time_spent, ANALYTICS_LIMITED_ACCESS_GROUP
@@ -77,14 +76,6 @@
                       <section class="analytics-widget analytics-figure analytics-widget-enrollments analytics-widget--col1">
                           <div class="analytics-widget__caption">
                               <h3>${ungettext("Enrollment", "Enrollments", learner_report_enrollments)}</h3>
-                              ${static.renderReact(
-                                component="QuestionMark",
-                                id="id-enrollment",
-                                props={
-                                  'class':'question-mark',
-                                  'tooltip': gettext('Number of courses the learner is enrolled in (enrollments made by an Admin or by himself/herself via the catalog)'),
-                                }
-                              )}
                           </div>
                           <main>
                               <p class="figure" id="figure-enrollments"></p>
@@ -104,14 +95,6 @@
                       <section class="analytics-widget analytics-figure analytics-widget-averagescore analytics-widget--col1">
                           <div class="analytics-widget__caption">
                               <h3>${_("Average Final Score")}</h3>
-                              ${static.renderReact(
-                                component="QuestionMark",
-                                id="id-average-final-score",
-                                props={
-                                  'class':'question-mark',
-                                  'tooltip': gettext('Average final score over all the courses the learner has completed (status successful or unsuccessful)'),
-                                }
-                              )}
                           </div>
                           <main>
                               <p class="figure"><span id="figure-averagescore"></span>%</p>
@@ -131,14 +114,6 @@
                       <section class="analytics-gaugechart analytics-widget analytics-widget-statuschart analytics-widget--col2">
                           <div class="analytics-widget__caption">
                               <h3>${_("Learner Status")}</h3>
-                              ${static.renderReact(
-                                component="QuestionMark",
-                                id="id-donuts-chart",
-                                props={
-                                  'class':'question-mark',
-                                  'tooltip': gettext("Proportion of courses according to the learner's progress"),
-                                }
-                              )}
                           </div>
 
                           <div class="analytics-widget__content">
@@ -151,56 +126,24 @@
                                           <span class="not-started">&#9679;</span>
                                           <div>${_(CourseStatus.verbose_names[CourseStatus.not_started])}</div>
                                           <div>
-                                            ${static.renderReact(
-                                              component="QuestionMark",
-                                              id="id-not-started",
-                                              props={
-                                                'class':'status-message',
-                                                'tooltip': gettext("Number of courses the learner is enrolled in but hasn't visited yet"),
-                                              }
-                                            )}
                                           </div>
                                       </div>
                                       <div class="legend__item">
                                         <span class="in-progress">&#9679;</span>
                                         <div>${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</div>
                                         <div>
-                                          ${static.renderReact(
-                                            component="QuestionMark",
-                                            id="id-in-progress",
-                                            props={
-                                              'class':'status-message',
-                                              'tooltip': gettext("Number of courses the learner started to visit but hasn't completed yet"),
-                                            }
-                                          )}
                                         </div>
                                       </div>
                                       <div class="legend__item">
                                         <span class="finished">&#9679;</span>
                                         <div>${_(CourseStatus.verbose_names[CourseStatus.finished])}</div>
                                         <div>
-                                          ${static.renderReact(
-                                            component="QuestionMark",
-                                            id="id-finished-2",
-                                            props={
-                                              'class':'status-message',
-                                              'tooltip': gettext('Number of courses the learner completed with 100% progress and a total score passing the minimum required score'),
-                                            }
-                                          )}
                                         </div>
                                       </div>
                                       <div class="legend__item">
                                         <span class="failed">&#9679;</span>
                                         <div>${_(CourseStatus.verbose_names[CourseStatus.failed])}</div>
                                         <div>
-                                          ${static.renderReact(
-                                            component="QuestionMark",
-                                            id="id-failed",
-                                            props={
-                                              'class':'status-message',
-                                              'tooltip': gettext('Number of courses the learner completed with 100% progress but with a total score below the minimum required score'),
-                                            }
-                                          )}
                                         </div>
                                       </div>
                                   </div>
@@ -213,14 +156,6 @@
                       <section class="analytics-widget analytics-figure analytics-widget-post analytics-widget--col1">
                           <div class="analytics-widget__caption">
                               <h3>${ungettext("Post", "Posts", learner_report_posts)}</h3>
-                              ${static.renderReact(
-                                component="QuestionMark",
-                                id="id-posts",
-                                props={
-                                  'class':'question-mark',
-                                  'tooltip': gettext('Number of posts/answers/comments the learner has written in the discussions/forums'),
-                                }
-                              )}
                           </div>
                           <main>
                               <p class="figure" id="figure-posts"></p>
@@ -240,14 +175,6 @@
                       <section class="analytics-widget analytics-figure analytics-widget-completetime analytics-widget--col2">
                           <div class="analytics-widget__caption">
                               <h3>${_("Time spent on the platform")}</h3>
-                              ${static.renderReact(
-                                component="QuestionMark",
-                                id="id-time-spent",
-                                props={
-                                  'class':'question-mark',
-                                  'tooltip': gettext('Total time the learner has spent on the platform'),
-                                }
-                              )}
                           </div>
                           <main>
                               <p class="figure" id="figure-completetime">${format_time_spent(learner_report_total_time_spent)}</p>
