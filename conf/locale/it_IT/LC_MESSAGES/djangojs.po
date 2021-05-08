@@ -12243,7 +12243,7 @@ msgstr "Guida per la tastiera"
 #: drag_and_drop_v2/public/js/drag_and_drop.js:306
 msgid ""
 "You can complete this problem using only your keyboard by following the "
-"guidance below:""
+"guidance below:"
 msgstr "Puoi risolvere questo problema utilizzando solo la tastiera seguendo la guida di seguito:"
 
 #: XBlock: xblock-drag-and-drop-v2
