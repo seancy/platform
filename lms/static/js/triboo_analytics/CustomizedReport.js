@@ -27,6 +27,8 @@ export class CustomizedReport {
                         this.reportTypeValue = reportTypeValue
                         this.selectedCourses = selectedCourses
                         this.query_tuples = query_tuples
+                        this.startDate = startDate
+                        this.endDate = endDate
                         this.selectedEnrollments = selectedEnrollments
                         this.limit = limit
                         this.goButtonStatusUpdate();
@@ -198,6 +200,8 @@ export class CustomizedReport {
                 const {value, key} = pick(p, ['key', 'value'])
                 return [value, key]
             }),
+            from_day: this.startDate,
+            to_day: this.endDate,
             selected_properties: []
         }
         $('#form-customized-report').serializeArray().forEach(function ({name, value}) {
