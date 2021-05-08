@@ -9839,7 +9839,7 @@ msgstr "Feld"
 #: lms/templates/triboo_analytics/ilt.html:57
 #: lms/templates/triboo_analytics/learner.html:43
 msgid "Select the user properties you want to display"
-msgstr "Wählen Sie die Bibliothek aus, aus der Sie Inhalt aufzeichnen möchten."
+msgstr "Wählen Sie die anzuzeigenden Benutzereigenschaften aus"
 
 #: lms/templates/triboo_analytics/table.html
 msgid "Course name"

@@ -18078,9 +18078,6 @@ msgstr "Conta"
 msgid "Leaderboard"
 msgstr "Entre os melhores"
 
-msgid "My learning transcript"
-msgstr "Minha transcrição de aprendizagem"
-
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
@@ -18380,7 +18377,7 @@ msgid "posts"
 msgstr "postagens"
 
 #: lms/templates/dashboard.html:164
-msgid "My Learning Transcript"
+msgid "My learning transcript"
 msgstr "Minha transcrição"
 
 #: lms/templates/dashboard.html:168
@@ -27582,7 +27579,7 @@ msgstr "Quantas Vezes Utilizado"
 
 #: lms/templates/triboo_analytics/microsite.html:79
 msgid "Desktop"
-msgstr "Área de Trabalho"
+msgstr "Desktop"
 
 #: lms/templates/triboo_analytics/microsite.html:80
 msgid "Mobile"

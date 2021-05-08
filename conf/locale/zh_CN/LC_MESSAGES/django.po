@@ -13544,9 +13544,6 @@ msgstr "账户"
 msgid "Leaderboard"
 msgstr "排行榜"
 
-msgid "My learning transcript"
-msgstr "我的学习成绩单"
-
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
@@ -13842,7 +13839,7 @@ msgid "posts"
 msgstr "发布的帖子"
 
 #: lms/templates/dashboard.html:162
-msgid "My Learning Transcript"
+msgid "My learning transcript"
 msgstr "我的学习报告"
 
 #: lms/templates/dashboard.html:168
