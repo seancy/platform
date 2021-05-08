@@ -140,7 +140,7 @@ class ReportTypeAndCourseReport extends React.Component {
     }
 
     getCourseSection() {
-        const {courses} = this.props,
+        const {courses, courseSelectKey = 'key-select-course'} = this.props,
             {isMultiple, hideCourseReportSelect, selectedCourses, limit, selectedEnrollments}=this.state;
         const render=(text,item)=>{
             return `${text} (${item.course_enrollments || '0'})`
@@ -165,7 +165,7 @@ class ReportTypeAndCourseReport extends React.Component {
                             .replace('*', this.getEnrollmentNumber())}</p>
                         <p>{gettext('The limit is 300,000 for CSV and JSON, 65,000 for XLS.')}</p>
                     </p>
-                    <Dropdown data={courses} multiple={isMultiple} searchable={true} optionRender={render} onChange={handleCourseSelect}/>
+                    <Dropdown key={courseSelectKey} data={courses} multiple={isMultiple} searchable={true} optionRender={render} onChange={handleCourseSelect}/>
                 </div>
             </div>
             <div id="course_bar" className="courses label-bar is-collapsed">

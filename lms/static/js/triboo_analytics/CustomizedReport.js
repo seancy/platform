@@ -20,7 +20,7 @@ export class CustomizedReport {
                 props: {...props, onChange: (reportTypeValue,
                                              selectedCourses,
                                              query_tuples,
-                                             startDate,
+                                             startDate, // FIXME: not working
                                              endDate,
                                              selectedEnrollments,
                                              limit) => {
@@ -105,6 +105,72 @@ export class CustomizedReport {
         $('#format_bar').delegate('button', 'click', (e) => {
             e.preventDefault();
         });
+
+        const clearNode = node => {
+          if (!node) return
+          while (node.firstChild) {
+            node.firstChild.remove()
+          }
+        }
+        const clearNodeById = elementId => clearNode(document.getElementById(elementId))
+        const clearNodeByQuery = query => clearNode(document.querySelector(query))
+        const resetSelections = (elementId, inputName) => {
+          const $el = document.getElementById(elementId)
+          if (!$el) return
+
+          $el.querySelectorAll(`input[name="${inputName}"]`).forEach(e => {
+            e.checked = false
+          })
+        }
+        const resetInput = (elementId, inputName) => {
+          const $el = document.getElementById(elementId)
+          if ($el) return
+
+          $el.querySelectorAll(`input[name="${inputName}"]`).forEach(e => {
+            e.value = ''
+          })
+        }
+        const resetCourseSelections = () => {
+          clearNodeByQuery('#custom_course_section .lt-react-dropdown .select .text')
+          this.selectedCourses = []
+          document
+            .querySelectorAll('#custom_course_section .lt-react-dropdown .panel input[type="checkbox"]')
+            .forEach(checkbox => {
+              checkbox.checked = false
+            })
+        }
+        const resetFilters = () => {
+          document
+            .querySelectorAll('#filter_section_contents .date-range-selector .labels span.day')
+            .forEach(label => label.classList.remove('active'))
+          document
+            .querySelectorAll('#filter_section_contents #filter-form .lt-react-dropdown .select .text')
+            .forEach(el => {el.textContent = ''})
+          document
+            .querySelectorAll('#filter_section_contents #filter-form .lt-react-dropdown .panel li')
+            .forEach(label => label.classList.remove('active'))
+          document
+            .querySelectorAll('#filter_section_contents #filter-form .lt-react-label-value input')
+            .forEach(input => {input.value = ''})
+
+          clearNodeByQuery('#filter-form .selected-wrapper')
+          this.query_tuples = []
+
+          // TODO: reset date range
+          resetInput('filter_section_contents', 'from_day')
+          resetInput('filter_section_contents', 'to_day')
+        }
+        $('#reset-button').on('click', () => {
+          resetCourseSelections()
+          resetFilters()
+
+          clearNodeById('property_bar')
+          resetSelections('user-properties', 'selected_properties')
+
+          clearNodeById('format_bar')
+          resetSelections('table-export-selection', 'format')
+        })
+
         this.triggerExpand();
         this.reportTypeAndCourseInit();
     }
