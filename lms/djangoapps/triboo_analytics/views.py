@@ -602,7 +602,6 @@ def transcript_view_data(request):
                          column_order)
 
 
-@analytics_on
 @login_required
 @ensure_csrf_cookie
 def my_transcript_view(request):
