@@ -608,7 +608,6 @@ def my_transcript_view(request):
     return _transcript_view(request.user, request, "triboo_analytics/my_transcript.html", "my_transcript")
 
 
-@analytics_on
 @login_required
 @ensure_csrf_cookie
 def my_transcript_view_pdf(request):
