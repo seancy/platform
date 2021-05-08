@@ -607,6 +607,8 @@ XBLOCK_SETTINGS = {
     }
 }
 
+AUTH_TOKENS = {}  # For fixing tests
+
 ####################### Plugin Settings ##########################
 
 from openedx.core.djangoapps.plugins import plugin_settings, constants as plugin_constants
