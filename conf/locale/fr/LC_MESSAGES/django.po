@@ -31048,19 +31048,14 @@ msgstr "Apprenants inscrits au cours qui ne l’ont pas encore visité"
 
 #: lms/templates/triboo_analytics/course.html:123
 msgid ""
-"Leaners who completed the course with 100% progress and a total score "
+"Learners who completed the course with 100% progress and a total score "
 "passing the minimum required score"
 msgstr "Apprenants ayant terminé le cours avec 100% de progression et une note au dessus de la note de passage"
 
 #: lms/templates/triboo_analytics/course.html:159
-msgid "Leaners who completed the course with 100% progress but with "
+msgid "Learners who completed the course with 100% progress but with "
 "a total score below the minimum required score to validate the course"
 msgstr "Apprenants ayant terminé le cours avec 100% de progression mais une note en dessous de la note de passage"
-
-#: lms/templates/triboo_analytics/course.html:174
-msgid "Cumulative number of enrollments over time"
-msgstr "Nombre cumulé d’inscriptions au cours du temps"
-
 
 #: lms/templates/triboo_analytics/my_transcript.html:262
 msgid "Number of courses you are enrolled in"

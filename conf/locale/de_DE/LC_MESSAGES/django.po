@@ -28109,21 +28109,17 @@ msgstr "Sie müssen angemeldet sein, um die Inhalte dieser Seite sehen zu könne
 
 #: lms/templates/triboo_analytics/course.html:123
 msgid ""
-"Leaners who completed the course with 100% progress and a total score "
+"Learners who completed the course with 100% progress and a total score "
 "passing the minimum required score"
 msgstr ""
 "Teilnehmer, die den Kurs mit einem Fortschritt von 100 % abgeschlossen und dabei die erforderliche Mindestpunktzahl erreicht haben."
 
 #: lms/templates/triboo_analytics/course.html:159
 msgid ""
-"Leaners who completed the course with 100% progress but with a total score "
+"Learners who completed the course with 100% progress but with a total score "
 "below the minimum required score to validate the course"
 msgstr ""
 "Teilnehmer, die den Kurs zwar mit einem Fortschritt von 100 % abgeschlossen haben, aber die erforderliche Mindestpunktzahl zum Bestehen des Kurses nicht erreicht haben."
-
-#: lms/templates/triboo_analytics/course.html:174
-msgid "Cumulative number of enrollments over time"
-msgstr "Geben Sie eine Anzahl der Zugangscodes ein"
 
 #: lms/templates/triboo_analytics/my_transcript.html:262
 msgid "Number of courses you are enrolled in"

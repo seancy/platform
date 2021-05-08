@@ -9813,343 +9813,327 @@ msgstr "Filtri"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Properties"
-msgstr ""
+msgstr "Proprietà"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Period"
-msgstr ""
+msgstr "Periodo"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Export"
-msgstr ""
+msgstr "Esportare"
 
 #: lms/static/js/triboo_analytics/Properties.js
 msgid "Select the user properties to display"
-msgstr ""
+msgstr "Seleziona le proprietà utente da visualizzare"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 #: lms/static/js/triboo_analytics/ILTReport.js
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Please, note that these reports are not live. Last update:"
-msgstr ""
+msgstr "Nota che questi rapporti non sono diffusi in tempo reale. Ultimo aggiornamento:"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Summary"
-msgstr ""
+msgstr "Sommario"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Progress"
-msgstr ""
+msgstr "Progresso"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Time Spent"
-msgstr ""
+msgstr "Tempo impiegato"
 
 #: lms/static/js/triboo_analytics/CourseReportSummary.js
 msgid "Display the state of learners at the end of the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "Visualizza lo stato degli studenti alla fine del periodo selezionato per gli studenti che hanno visitato il corso durante questo periodo."
 
 #: lms/static/js/triboo_analytics/CourseReportProgress.js
 msgid "Display the progress of learners at the end of the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "Visualizza i progressi degli studenti alla fine del periodo selezionato per gli studenti che hanno visitato il corso durante questo periodo."
 
 #: lms/static/js/triboo_analytics/CourseReportTimeSpent.js
 msgid "Display the time learners spent in the course during the selected period for learners who visited the course during this period."
-msgstr ""
+msgstr "Visualizza il tempo impiegato dagli studenti durante il periodo selezionato per gli studenti che hanno visitato il corso durante questo periodo."
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Display the state of learners at the end of the selected period for learners who visited the platform during this period. The total time spent shows the time learners spent on the platform during the selected period."
-msgstr ""
+msgstr "Visualizza lo stato degli studenti alla fine del periodo selezionato per gli studenti che hanno visitato la piattaforma durante questo periodo. Il tempo totale trascorso mostra il tempo trascorso dagli studenti sulla piattaforma durante il periodo selezionato."
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Learner Report"
-msgstr ""
+msgstr "Rapporto dello studente"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "Course Report"
-msgstr ""
+msgstr "Rapporto sul corso"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Report"
-msgstr ""
+msgstr "Rapporto ILT"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Global Report"
-msgstr ""
+msgstr "Rapporto globale ILT"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Learner Report"
-msgstr ""
+msgstr "Rapporto sullo studente ILT"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Filter the sessions starting in the selected period."
-msgstr ""
+msgstr "Filtra le sessioni che iniziano nel periodo selezionato."
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Page"
-msgstr ""
+msgstr "Pagina"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "of"
-msgstr ""
+msgstr "di"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select a report"
-msgstr ""
+msgstr "Seleziona un rapporto"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select course(s)"
-msgstr ""
+msgstr "Seleziona corso / i"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Filter the data"
-msgstr ""
+msgstr "Filtra i dati"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "Select a time range"
-msgstr ""
+msgstr "Seleziona un intervallo di tempo"
 
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Press enter to add"
-msgstr ""
+msgstr "Premi Invio per aggiungere"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 #: lms/static/js/triboo_analytics/Toolbar.js
 msgid "Last * days"
-msgstr ""
+msgstr "Ultimi * giorni"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "CSV report"
-msgstr ""
+msgstr "Rapporto CSV"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "XLS report"
-msgstr ""
+msgstr "Rapporto XLS"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "JSON report"
-msgstr ""
+msgstr "Rapporto JSON"
 
 #: lms/static/js/triboo_analytics/BaseReport.js
 msgid "Total: * rows"
-msgstr ""
+msgstr "Totale: * righe"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Enrollments"
-msgstr ""
+msgstr "Iscrizioni"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Successful"
-msgstr ""
+msgstr "Terminato con successo"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Unsuccessful"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
-#msgid "In Progress" already exists
-#msgstr ""
+msgstr "Fallito"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Not Started"
-msgstr ""
+msgstr "Non iniziati"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Average Final Score"
-msgstr ""
+msgstr "Punteggio finale medio"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Badges"
-msgstr ""
+msgstr "Badge"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Posts"
-msgstr ""
+msgstr "Post"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Total Time Spent"
-msgstr ""
+msgstr "Tempo totale impiegato"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Last Login"
-msgstr ""
+msgstr "Ultimo accesso"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Geographical area"
-msgstr ""
+msgstr "Area geografica"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Course country"
-msgstr ""
+msgstr "Paese del corso"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Zone/Region"
-msgstr ""
+msgstr "Zona/Regione"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Course tags"
-msgstr ""
+msgstr "Tag del corso"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Course code"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/ILTGlobalReport.js
-msgid "Course name"
-msgstr ""
-
-#: lms/static/js/triboo_analytics/ILTGlobalReport.js
-#msgid "Section"  already exists
-#msgstr ""
-
-#: lms/static/js/triboo_analytics/ILTGlobalReport.js
-#msgid "Subsection" already exists
-#msgstr ""
+msgstr "Codice del corso"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Session ID"
-msgstr ""
+msgstr "ID sessione"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Start date"
-msgstr ""
+msgstr "Data di inizio"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Start time"
-msgstr ""
+msgstr "Ora di inizio"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "End date"
-msgstr ""
+msgstr "Data di fine"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "End time"
-msgstr ""
+msgstr "Ora di fine"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Duration (in hours)"
-msgstr ""
+msgstr "Durata (in ore)"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Max capacity"
-msgstr ""
+msgstr "Capacità massima"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Enrollees"
-msgstr ""
+msgstr "Iscritti"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Attendees"
-msgstr ""
+msgstr "Partecipanti"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Attendance sheet"
-msgstr ""
+msgstr "Foglio di partecipazione"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Location ID"
-msgstr ""
+msgstr "ID della posizione"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Location name"
-msgstr ""
+msgstr "Nome della posizione"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Location address"
-msgstr ""
+msgstr "Indirizzo di posizione"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Zip code"
-msgstr ""
+msgstr "Codice di avviamento postale"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "City"
-msgstr ""
+msgstr "Città"
 
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Enrollment status"
-msgstr ""
+msgstr "Stato de iscrizione"
 
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Outward trips"
-msgstr ""
+msgstr "Viaggi di andata"
 
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Return trips"
-msgstr ""
+msgstr "Viaggi di ritorno"
 
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Overnight stay"
-msgstr ""
+msgstr "Pernottamento"
 
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Overnight stay address"
-msgstr ""
+msgstr "Pernottamento indirizzo di soggiorno"
 
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
 msgid "Comment"
-msgstr ""
+msgstr "Commento"
 
 #: lms/static/js/triboo_analytics/CourseReportSummary.js
 msgid "Current Score"
-msgstr ""
+msgstr "Punteggio attuale"
 
 #: lms/static/js/triboo_analytics/CourseReportSummary.js
 msgid "Completion Date"
-msgstr ""
+msgstr "Data di completamento"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "Go"
-msgstr ""
+msgstr "Vai"
 
 #: lms/static/js/triboo_analytics/Exporter.js
 msgid "No data available"
-msgstr ""
+msgstr "Nessun dato disponibile"
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "With the selected courses, the report will count * lines."
-msgstr ""
+msgstr "Con i corsi selezionati, il rapporto conterà * righe."
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "The limit is 300,000 for CSV and JSON, 65,000 for XLS."
-msgstr ""
+msgstr "Il limite è 300.000 per CSV e JSON, 65.000 per XLS."
 
 #: lms/static/js/triboo_analytics/ReportTypeAndCourseReport.js
 msgid "With the selected courses, the report exceeds the maximum number of lines. Please unselect some courses."
-msgstr ""
+msgstr "Con i corsi selezionati, il report supera il numero massimo di righe. Deseleziona alcuni corsi."
 
 #: lms/static/js/triboo_analytics/
 msgid "Confirmed"
-msgstr ""
+msgstr "Confermato"
 
 #: lms/static/js/triboo_analytics/
 msgid "Accepted"
-msgstr ""
+msgstr "Accettato"
 
 #: lms/static/js/triboo_analytics/
 msgid "Pending"
-msgstr ""
+msgstr "In attesa"
 
 #: lms/static/js/triboo_analytics/
 msgid "Refused"
-msgstr ""
+msgstr "Rifiutato"
 
 #: lms/static/js/triboo_analytics/
 msgid "Received"
-msgstr ""
+msgstr "Ricevuto"
 
 #: lms/static/js/triboo_analytics/
 msgid "Expected"
-msgstr ""
+msgstr "Previsto"
 
 #: lms/static/js/triboo_analytics/
 msgid "Yes"
-msgstr ""
+msgstr "Si"
 
 #: lms/static/js/triboo_analytics/
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: openedx/features/course_bookmarks/static/course_bookmarks/templates/bookmarks-list.underscore:3
 msgid "My Bookmarks"
@@ -12134,11 +12118,11 @@ msgstr "Scegli la sistemazione necessaria"
 
 #: lms/static/js/courseware/ilt_validation.js:157
 msgid "yes"
-msgstr ""
+msgstr "sì"
 
 #: lms/static/js/courseware/ilt_validation.js:157
 msgid "no"
-msgstr ""
+msgstr "no"
 
 #: lms/templates/courseware/ilt_all_validation_page.html
 msgid "Are you sure to unenroll this learner ?"
@@ -12259,7 +12243,7 @@ msgstr "Guida per la tastiera"
 #: drag_and_drop_v2/public/js/drag_and_drop.js:306
 msgid ""
 "You can complete this problem using only your keyboard by following the "
-"guidance below:"
+"guidance below:""
 msgstr "Puoi risolvere questo problema utilizzando solo la tastiera seguendo la guida di seguito:"
 
 #: XBlock: xblock-drag-and-drop-v2
