@@ -25627,6 +25627,10 @@ msgstr "Rapporto dello studente"
 msgid "ILT Report"
 msgstr "Rapporto ILT"
 
+#: lms/templates/triboo_analytics/customized.html:18
+msgid "Analytics - Customized Report"
+msgstr "Analisi - Relatório personalizado"
+
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/customized.html
 msgid "Customized Report"

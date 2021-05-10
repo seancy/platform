@@ -9922,10 +9922,6 @@ msgid "Unsuccessful"
 msgstr "失败"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
-#msgid "In Progress" already exists
-#msgstr ""
-
-#: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Not Started"
 msgstr "未开始"
 
@@ -9972,14 +9968,6 @@ msgstr "课程编号"
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Course name"
 msgstr "课程名"
-
-#: lms/static/js/triboo_analytics/ILTGlobalReport.js
-#msgid "Section"  already exists
-#msgstr ""
-
-#: lms/static/js/triboo_analytics/ILTGlobalReport.js
-#msgid "Subsection" already exists
-#msgstr ""
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 msgid "Session ID"

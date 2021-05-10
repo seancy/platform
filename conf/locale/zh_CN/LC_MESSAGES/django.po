@@ -22312,6 +22312,10 @@ msgstr "学员报告"
 msgid "ILT Report"
 msgstr "ILT 报告"
 
+#: lms/templates/triboo_analytics/customized.html:18
+msgid "Analytics - Customized Report"
+msgstr "分析 - 自定义报告"
+
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/customized.html
 msgid "Customized Report"

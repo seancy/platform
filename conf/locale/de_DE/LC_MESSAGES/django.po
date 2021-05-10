@@ -25317,7 +25317,7 @@ msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:11
 msgid "Analytics - Course Report"
-msgstr "Analyse - Kursbericht"
+msgstr "Analytik - Kursbericht"
 
 #: lms/templates/triboo_analytics/course.html:19
 #: lms/templates/triboo_analytics/ilt.html:19
@@ -25387,6 +25387,10 @@ msgstr "Lernbericht"
 #: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
 msgstr "Bericht zu Präsenztraining"
+
+#: lms/templates/triboo_analytics/customized.html:18
+msgid "Analytics - Customized Report"
+msgstr "Analytik - Kundenspezifischer Bericht"
 
 #: lms/templates/triboo_analytics/customized.html
 msgid "Customized Report"
@@ -25473,7 +25477,7 @@ msgstr "Genutzt"
 
 #: lms/templates/triboo_analytics/ilt.html:11
 msgid "Analytics - ILT Report"
-msgstr "Analyse - Bericht zu Präsenztraining"
+msgstr "Analytik - Bericht zu Präsenztraining"
 
 #: lms/templates/triboo_analytics/ilt.html:40
 #: lms/templates/triboo_analytics/ilt.html:52
@@ -25487,11 +25491,11 @@ msgstr "Teilnehmerbericht zu Präsenztraining"
 
 #: lms/templates/triboo_analytics/learner.html:10
 msgid "Analytics - Learner Report"
-msgstr "Analyse - Teilnehmerbericht"
+msgstr "Analytik - Teilnehmerbericht"
 
 #: lms/templates/triboo_analytics/microsite.html:16
 msgid "Analytics - Global Report"
-msgstr "Verfügbare Berichte"
+msgstr "Analytik - Verfügbare Berichte"
 
 #: lms/templates/triboo_analytics/microsite.html:51
 msgid "Certificate Delivered"
@@ -25533,7 +25537,7 @@ msgstr "Bitte geben Sie einen Grund an. Feld darf nicht leer sein."
 
 #: lms/templates/triboo_analytics/my_transcript.html:121
 msgid "Analytics - Learning Transcript"
-msgstr "Analyse - Teilnehmerprotokoll"
+msgstr "Analytik - Teilnehmerprotokoll"
 
 #: lms/templates/triboo_analytics/my_transcript.html:213
 #: lms/templates/triboo_analytics/transcript.html:35
@@ -25591,7 +25595,7 @@ msgstr "Gesamtzeit, die mit Kursarbeit verbracht wurde"
 
 #: lms/templates/triboo_analytics/process_waiver_request.html:9
 msgid "Analytics - Process Waiver Request"
-msgstr "Analyse - Prozess Freistellungsantrag"
+msgstr "Analytik - Prozess Freistellungsantrag"
 
 #: lms/templates/triboo_analytics/process_waiver_request.html:35
 msgid "Forwarding to gradebook page ... "
@@ -25599,7 +25603,7 @@ msgstr "Weiterleiten an Seite für Noteneinträge ..."
 
 #: lms/templates/triboo_analytics/transcript.html:11
 msgid "Analytics - Learner Transcript"
-msgstr "Analyse - Teilnehmerprotokoll"
+msgstr "Analytik - Teilnehmerprotokoll"
 
 #: lms/templates/triboo_analytics/transcript.html:40
 msgid "Learning Transcript of"

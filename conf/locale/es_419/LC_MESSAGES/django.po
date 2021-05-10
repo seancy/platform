@@ -27633,7 +27633,7 @@ msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:11
 msgid "Analytics - Course Report"
-msgstr "Analytics - Informe del curso"
+msgstr "Analíticas - Informe del curso"
 
 #: lms/templates/triboo_analytics/course.html:19
 #: lms/templates/triboo_analytics/ilt.html:19
@@ -27694,6 +27694,10 @@ msgstr "Informe de los alumnos"
 #: lms/templates/triboo_analytics/ilt.html:29
 msgid "ILT Report"
 msgstr "Informe de Intruccion Presencial"
+
+#: lms/templates/triboo_analytics/customized.html:18
+msgid "Analytics - Customized Report"
+msgstr "Analíticas - Informe personalizado"
 
 #: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/customized.html
@@ -27777,7 +27781,7 @@ msgstr "Tiempo usado"
 
 #: lms/templates/triboo_analytics/ilt.html:11
 msgid "Analytics - ILT Report"
-msgstr "Análisis - Informe de Entrenamirenamiento presencial"
+msgstr "Analíticas - Informe de Entrenamirenamiento presencial"
 
 #: lms/templates/triboo_analytics/ilt.html:40
 #: lms/templates/triboo_analytics/ilt.html:52
@@ -27791,11 +27795,11 @@ msgstr "Entrenamirenamiento presencial- Informe de los alumnos"
 
 #: lms/templates/triboo_analytics/learner.html:10
 msgid "Analytics - Learner Report"
-msgstr "Analytics - Informe del usuario"
+msgstr "Analíticas - Informe de los alumnos"
 
 #: lms/templates/triboo_analytics/microsite.html:16
 msgid "Analytics - Global Report"
-msgstr "Analytics - Informe global"
+msgstr "Analíticas - Informe global"
 
 #: lms/templates/triboo_analytics/microsite.html:51
 msgid "Certificate Delivered"
@@ -27837,7 +27841,7 @@ msgstr "Por favor, proporcione la razón. ¡No puede estar vacío!"
 
 #: lms/templates/triboo_analytics/my_transcript.html:121
 msgid "Analytics - Learning Transcript"
-msgstr "Analytics - Transcripción"
+msgstr "Analíticas - Transcripción"
 
 #: lms/templates/triboo_analytics/my_transcript.html:213
 #: lms/templates/triboo_analytics/transcript.html:35
@@ -27897,7 +27901,7 @@ msgstr "Tiempo invertido en todo el trabajo del curso"
 
 #: lms/templates/triboo_analytics/process_waiver_request.html:9
 msgid "Analytics - Process Waiver Request"
-msgstr "Analytics - Proceso de solicitud de renuncia"
+msgstr "Analíticas - Proceso de solicitud de renuncia"
 
 #: lms/templates/triboo_analytics/process_waiver_request.html:35
 msgid "Forwarding to gradebook page ... "
@@ -27905,7 +27909,7 @@ msgstr "Reenvío a la página del libro de calificaciones..."
 
 #: lms/templates/triboo_analytics/transcript.html:11
 msgid "Analytics - Learner Transcript"
-msgstr "Analytics - Transcripción del usuario"
+msgstr "Analíticas - Transcripción del alumno"
 
 #: lms/templates/triboo_analytics/transcript.html:40
 msgid "Learning Transcript of"
