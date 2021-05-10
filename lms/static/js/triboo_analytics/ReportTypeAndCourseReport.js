@@ -143,7 +143,7 @@ class ReportTypeAndCourseReport extends React.Component {
         const {courses} = this.props,
             {isMultiple, hideCourseReportSelect, selectedCourses, limit, selectedEnrollments}=this.state;
         const render=(text,item)=>{
-            return `${text} (${item.course_enrollments || '0'} users)`
+            return `${text} (${item.course_enrollments || '0'})`
         }
 
         const handleCourseSelect = (selectedCourses)=>{
