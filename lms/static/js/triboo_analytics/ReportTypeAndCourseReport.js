@@ -4,11 +4,15 @@ import DateRange from "lt-react-date-range";
 import Dropdown from 'lt-react-dropdown'
 import {get} from 'lodash'
 
+
+let version = 0
+
 class ReportTypeAndCourseReport extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            version: 0,
             reportType:get(props, ['report_types','0']) || {},
             reportTypeValue: get(props, ['report_types','0', 'value']) || '',
             selectedCourses:[],
@@ -20,6 +24,14 @@ class ReportTypeAndCourseReport extends React.Component {
             hideCourseReportSelect: false,
             filterData:[{value: '', text: 'loading'}]
         };
+
+        window.reportTypeAndCourseReport = this
+    }
+
+    reset () {
+      this.setState({
+        version: ++version,
+      })
     }
 
     componentDidMount() {
@@ -35,12 +47,6 @@ class ReportTypeAndCourseReport extends React.Component {
     }
 
     changeLimitByFormat() {
-        const {isMultiple, limit} = this.state
-        // const getEnrollmentNumber=()=>{
-        //     return isMultiple ? this.state.selectedCourses.reduce((prevVal, currVal)=>{
-        //         return prevVal + currVal.course_enrollments;
-        //     }, 0) : (this.state.selectedCourses.course_enrollments || '0')
-        // }
         this.getEnrollmentNumber()
         $('#table-export-selection').delegate('input', 'click', (e) => {
             let format_val = $('#table-export-selection input[name=format]:checked')[0].value;
@@ -121,7 +127,7 @@ class ReportTypeAndCourseReport extends React.Component {
     }
 
     getEnrollmentNumber() {
-        const {isMultiple, limit, selectedEnrollments}=this.state;
+        const {isMultiple, limit}=this.state;
         let selectedEnrollmentsNum = 0
         if (isMultiple) {
             selectedEnrollmentsNum = this.state.selectedCourses.reduce((prevVal, currVal)=>{
@@ -133,9 +139,7 @@ class ReportTypeAndCourseReport extends React.Component {
         } else {
             selectedEnrollmentsNum = this.state.selectedCourses.course_enrollments || '0'
         }
-        // this.setState({'selectedEnrollments': selectedEnrollmentsNum})
         this.state.selectedEnrollments = selectedEnrollmentsNum
-        // console.log('this.state.selectedEnrollments', this.state.selectedEnrollments)
         return selectedEnrollmentsNum
     }
 
@@ -232,7 +236,7 @@ class ReportTypeAndCourseReport extends React.Component {
     render() {
         const { } = this.props;
         return (
-            <React.Fragment>
+            <React.Fragment key={this.state.version}>
                 {this.getReportTypeSection()}
                 {this.getCourseSection()}
                 {this.getFilterSection()}

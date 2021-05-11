@@ -111,8 +111,30 @@ export class CustomizedReport {
             e.preventDefault();
         });
 
+        const clearNode = node => {
+          if (!node) return
+          while (node.firstChild) {
+            node.firstChild.remove()
+          }
+        }
+        const clearNodeById = elementId => clearNode(document.getElementById(elementId))
+        const resetSelections = (elementId, inputName) => {
+          const $el = document.getElementById(elementId)
+          if (!$el) return
+
+          $el.querySelectorAll(`input[name="${inputName}"]`).forEach(e => {
+            e.checked = false
+          })
+        }
         $('#reset-button').on('click', () => {
-          this.initDom()
+          if (window.reportTypeAndCourseReport && window.reportTypeAndCourseReport.reset) {
+            window.reportTypeAndCourseReport.reset()
+          }
+          clearNodeById('property_bar')
+          resetSelections('user-properties', 'selected_properties')
+
+          clearNodeById('format_bar')
+          resetSelections('table-export-selection', 'format')
         })
 
         this.triggerExpand();
