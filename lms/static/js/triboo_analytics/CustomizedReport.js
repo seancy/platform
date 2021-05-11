@@ -11,6 +11,7 @@ export class CustomizedReport {
     constructor(props) {
         //comes from beginning of customized_report.js
         this.log = console.log.bind(console)
+        this.savedProps = props
 
         $(() => {
             this.initDom()
@@ -22,7 +23,7 @@ export class CustomizedReport {
         component: ReportTypeAndCourseReport,
         selector: '.report_type_and_course_selected',
         componentName: 'CustomizedReport',
-        props: {...props, onChange: (reportTypeValue,
+        props: {...this.savedProps, onChange: (reportTypeValue,
                                      selectedCourses,
                                      query_tuples,
                                      startDate,
