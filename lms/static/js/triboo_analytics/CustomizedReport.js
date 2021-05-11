@@ -129,6 +129,15 @@ export class CustomizedReport {
         $('#reset-button').on('click', () => {
           if (window.reportTypeAndCourseReport && window.reportTypeAndCourseReport.reset) {
             window.reportTypeAndCourseReport.reset()
+            const hideSection = id => {
+              const $el = document.getElementById(id)
+              if ($el) {
+                $el.classList.add('is-hidden')
+              }
+            }
+            hideSection('report_bar')
+            hideSection('course_bar')
+            hideSection('filter-bar2')
           }
           clearNodeById('property_bar')
           resetSelections('user-properties', 'selected_properties')
