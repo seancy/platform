@@ -316,7 +316,7 @@ def get_customized_table(report_cls, filter_kwargs, table_cls, exclude):
         return table_cls([]), 0
 
     querysets = report_cls.filter_by_period(**filter_kwargs)
-    row_count = querysets.count()
+    row_count = len(querysets)
     table = table_cls(querysets, exclude=exclude)
     return table, row_count
 
@@ -342,7 +342,7 @@ def get_table_data(report_cls, table_cls, filter_kwargs, exclude, by_period=Fals
 
     order_by = get_order_by(table_cls, sort)
     if html_links:
-        return table_cls(dataset, exclude=exclude, html_links=True, order_by=order_by)    
+        return table_cls(dataset, exclude=exclude, html_links=True, order_by=order_by)
     return table_cls(dataset, exclude=exclude, order_by=order_by)
 
 
