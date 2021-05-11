@@ -11,25 +11,28 @@ class ReportTypeAndCourseReport extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            version: 0,
-            reportType:get(props, ['report_types','0']) || {},
-            reportTypeValue: get(props, ['report_types','0', 'value']) || '',
-            selectedCourses:[],
-            selectedCourseValues:[],
-            selectedKeyValues:[],
-            isMultiple:true,
-            selectedEnrollments:0,
-            limit:300000,
-            hideCourseReportSelect: false,
-            filterData:[{value: '', text: 'loading'}]
-        };
+        this.initState = {
+          version: 0,
+          reportType:get(props, ['report_types','0']) || {},
+          reportTypeValue: get(props, ['report_types','0', 'value']) || '',
+          selectedCourses:[],
+          selectedCourseValues:[],
+          selectedKeyValues:[],
+          isMultiple:true,
+          selectedEnrollments:0,
+          limit:300000,
+          hideCourseReportSelect: false,
+          filterData:[{value: '', text: 'loading'}]
+        }
+
+        this.state = {...this.initState}
 
         window.reportTypeAndCourseReport = this
     }
 
     reset () {
       this.setState({
+        ...this.initState,
         version: ++version,
       })
     }
@@ -103,7 +106,8 @@ class ReportTypeAndCourseReport extends React.Component {
     getReportTypeSection() {
         const {report_types} = this.props;
         const {reportTypeValue, reportType}=this.state;
-        return <div className="custom-section" id="report_type_section">
+        return (
+          <div className="custom-section" id="report_type_section">
             <button className="section-button accordion-trigger"
                     aria-expanded="true"
                     aria-controls="report_section_contents"
@@ -118,12 +122,13 @@ class ReportTypeAndCourseReport extends React.Component {
                     <input type="hidden" id='report_type' value={this.state.reportTypeValue}/>
                 </div>
             </div>
-            <div id="report_bar" className="reports label-bar is-collapsed">
+            <div id="report_bar" className="reports label-bar is-collapsed is-hidden">
                 {reportTypeValue && <button className="filter-option option-label">
                     <span className="query">{gettext(reportType.text)}</span>
                 </button>}
             </div>
-        </div>
+          </div>
+        )
     }
 
     getEnrollmentNumber() {
