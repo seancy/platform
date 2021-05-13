@@ -66,6 +66,7 @@ export class Transcript extends BaseReport {
                 {!disable_last_update && <LastUpdate last_update={last_update} />}
                 <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={defaultLanguage}
                           {...config}
+                          doubleScroll
                 />
             </>
         )
