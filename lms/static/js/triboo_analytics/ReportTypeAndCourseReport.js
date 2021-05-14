@@ -39,12 +39,12 @@ class ReportTypeAndCourseReport extends React.Component {
   }
 
   componentDidMount () {
-    this.changeLimitByFormat()
   }
 
   changeLimitByFormat () {
-    let format_val = $('#table-export-selection input[name=format]:checked')[0].value
-    const limit = format_val == 'xls' ? 65000 : 300000
+    const $el = $('#table-export-selection input[name=format]:checked')[0]
+    if (!$el) return
+    const limit = el.value == 'xls' ? 65000 : 300000
     this.setState({limit}, this.fireOnChange)
     this.checkLimit()
   }
