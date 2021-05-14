@@ -16,6 +16,8 @@ export class CustomizedReport {
     $(() => {
       this.initDom()
     })
+
+    window.customizedReport = this
   }
 
   initDom () {
@@ -165,13 +167,8 @@ export class CustomizedReport {
 
   eventInit () {
     const listen = (parentSelector, childrenSelector, handler, events = 'click') => {
-      if (childrenSelector) {
-        $(parentSelector).off(events, childrenSelector, handler)
-        $(parentSelector).on(events, childrenSelector, handler)
-      } else {
-        $(parentSelector).off(events, handler)
-        $(parentSelector).on(events, handler)
-      }
+      $(parentSelector).off(events, childrenSelector, handler)
+      $(parentSelector).on(events, childrenSelector, handler)
     }
 
     listen('input[type=submit]', '', this.onSubmit.bind(this))
@@ -186,7 +183,7 @@ export class CustomizedReport {
     listen('.accordion-trigger', '', this.preventDefault.bind(this))
     listen('#format_bar', 'button', this.preventDefault.bind(this))
 
-    listen('#reset-button', '', 'click', this.onReset.bind(this))
+    listen('#reset-button', '', this.onReset.bind(this))
 
     document.querySelectorAll('.accordion-trigger').forEach(section => {
       section.removeEventListener('click', this.onToggleSection.bind(this))
