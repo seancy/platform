@@ -39,6 +39,7 @@ class ReportTypeAndCourseReport extends React.Component {
   }
 
   componentDidMount () {
+    this.recreateCourseSelect(this.state.reportType)
   }
 
   changeLimitByFormat () {
