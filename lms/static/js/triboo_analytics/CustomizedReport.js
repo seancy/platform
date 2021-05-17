@@ -153,6 +153,8 @@ export class CustomizedReport {
     clearNodeById('format_bar')
     resetSelections('table-export-selection', 'format')
 
+    this.eventInit()
+
     this.reportTypeAndCourseInit()
   }
 

@@ -36,6 +36,7 @@ class ReportTypeAndCourseReport extends React.Component {
       ...this.initState,
       version: ++version,
     })
+    this.recreateCourseSelect(this.state.reportType)
   }
 
   componentDidMount () {
@@ -146,25 +147,16 @@ function CourseSection ({courses, isMultiple, hideCourseReportInfo, hideCourseRe
 
   const optionRender = (text, item) => `${text} (${item.course_enrollments || '0'})`
 
-  const fireOnChange = useCallback(() => {
-    console.log('emit', { // TODELETE
-      selectedCourses,
-      selectedEnrollments,
-    })
+  const handleCourseSelect = useCallback((selectedCourses) => {
+    const selectedEnrollments = isMultiple
+      ? selectedCourses.reduce((r, c) => r + c.course_enrollments, 0)
+      : selectedCourses.course_enrollments || '0'
+    setSelectedCourses(selectedCourses)
+    setSelectedEnrollments(selectedEnrollments)
     onChange && onChange({
       selectedCourses,
       selectedEnrollments,
     })
-  }, [selectedCourses, selectedEnrollments])
-
-  const handleCourseSelect = useCallback((selectedCourses) => {
-    console.log('selectedCourses', selectedCourses) // TODELETE
-    setSelectedCourses(selectedCourses)
-    setSelectedEnrollments(isMultiple
-      ? selectedCourses.reduce((r, c) => r + c.course_enrollments, 0)
-      : selectedCourses.course_enrollments || '0'
-    )
-    fireOnChange()
   }, [isMultiple])
 
   return (
@@ -204,22 +196,16 @@ function FilterSection ({onChange}) {
   const [selectedKeyValues, setSelectedKeyValues] = useState([])
   const [{startDate, endDate}, setPeriod] = useState({startDate, endDate})
 
-  const fireOnChange = useCallback(() => {
-    onChange && onChange({
-      selectedKeyValues,
-      startDate,
-      endDate
-    })
-  }, [selectedKeyValues, startDate, endDate])
-
   const filterOnChange = (selectedKeyValues) => {
     setSelectedKeyValues(selectedKeyValues)
-    fireOnChange()
+    onChange && onChange({
+      selectedKeyValues,
+    })
   }
 
   const periodOnChange = (startDate, endDate) => {
     setPeriod({startDate, endDate})
-    fireOnChange()
+    onChange && onChange({startDate, endDate})
   }
 
   const stopEvent = e => {
