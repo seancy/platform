@@ -42,7 +42,7 @@
     "js-cookie": "2.2.0",
     "lodash": "^4.17.15",
     "lt-react-checkbox-group": "^2.0.1",
-    "lt-react-data-list": "^2.0.3",
+    "lt-react-data-list": "^2.0.4",
     "lt-react-date-range": "^2.0.1",
     "lt-react-dropdown": "^2.0.1",
     "lt-react-label-value": "^2.0.1",
