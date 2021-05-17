@@ -23,6 +23,14 @@ from openedx.core.djangoapps.theming.helpers import (
 from lms.djangoapps.certificates.api import get_asset_url_by_slug
 from webpack_loader.templatetags.webpack_loader import render_bundle
 logger = logging.getLogger(__name__)
+
+import random
+import string
+
+def randomString(stringLength=8):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(stringLength))
+
 %>
 
 <%def name="marketing_link(name)"><%
@@ -164,6 +172,20 @@ source, template_path = Loader(engine).load_template_source(path)
         props: ${props | n, dump_js_escaped_json}
       });
     </script>
+</%def>
+
+<%def name="renderReactQuestionMark(tooltip='please set tooltip property')">
+    <%doc>
+        display a question mark.
+    </%doc>
+    ${renderReact(
+        component="QuestionMark",
+        id="id-"+randomString(30),
+        props={
+          'class':'question-mark',
+          'tooltip': tooltip
+        }
+      )}
 </%def>
 
 <%def name="require_module(module_name, class_name)">

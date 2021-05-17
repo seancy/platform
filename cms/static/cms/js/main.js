@@ -45,6 +45,7 @@ define([
             }
             msg = new NotificationView.Error({
                 title: gettext("Studio's having trouble saving your work"),
+                closeIcon: true,
                 message: message
             });
             console.log('Studio AJAX Error', { // eslint-disable-line no-console

@@ -36,6 +36,10 @@ CATALOG_VISIBILITY_CATALOG_AND_ABOUT = "both"
 CATALOG_VISIBILITY_ABOUT = "about"
 CATALOG_VISIBILITY_NONE = "none"
 
+CERTIFICATES_DISPLAY_BEHAVIOR_END = "end"
+CERTIFICATES_DISPLAY_BEHAVIOR_WITH_INFO = "early_with_info"
+CERTIFICATES_DISPLAY_BEHAVIOR_NO_INFO = "early_no_info"
+
 DEFAULT_COURSE_VISIBILITY_IN_CATALOG = getattr(
     settings,
     'DEFAULT_COURSE_VISIBILITY_IN_CATALOG',
@@ -244,7 +248,7 @@ class CourseFields(object):
     )
     show_calculator = Boolean(
         display_name=_("Show Calculator"),
-        help=_("Enter true or false. When true, learners can see the calculator in the course."),
+        help=_("Indicate if learners can see the calculator in the course."),
         default=False,
         scope=Scope.settings
     )
@@ -298,7 +302,7 @@ class CourseFields(object):
         display_name=_("Discussion Sorting Alphabetical"),
         scope=Scope.settings, default=False,
         help=_(
-            "Enter true or false. If true, discussion categories and subcategories are sorted alphabetically. "
+            "If activated, discussion categories and subcategories are sorted alphabetically. "
             "If false, they are sorted chronologically by creation date and time."
         )
     )
@@ -325,7 +329,7 @@ class CourseFields(object):
     )
     mobile_available = Boolean(
         display_name=_("Mobile Course Available"),
-        help=_("Enter true or false. If true, the course will be available to mobile devices."),
+        help=_("Indicate if the course will be available to mobile devices."),
         default=DEFAULT_MOBILE_AVAILABLE,
         scope=Scope.settings
     )
@@ -399,15 +403,16 @@ class CourseFields(object):
     allow_anonymous_to_peers = Boolean(
         display_name=_("Allow Anonymous Discussion Posts to Peers"),
         help=_(
-            "Enter true or false. If true, learners can create discussion posts that are anonymous to other "
-            "learners. This setting does not make posts anonymous to course staff."
+            "If activated, learners can create discussion posts that are anonymous to other learners. "
+            "This setting does not make posts anonymous to course staff."
         ),
         scope=Scope.settings, default=False
     )
     advanced_modules = List(
         display_name=_("Advanced Module List"),
+        values=settings.OFFICIAL_ADVANCED_MODULES,
         default=settings.COURSE_ADVANCED_MODULES,
-        help=_("Enter the names of the advanced modules to use in your course."),
+        help=_("Select the names of the advanced modules to use in your course."),
         scope=Scope.settings
     )
     has_children = True
@@ -460,6 +465,11 @@ class CourseFields(object):
             "certificates are generated, enter early_with_info. To display only the links to passing learners as "
             "soon as certificates are generated, enter early_no_info."
         ),
+        values=[
+            {"display_name": _("End"), "value": CERTIFICATES_DISPLAY_BEHAVIOR_END},
+            {"display_name": _("Early with Info"), "value": CERTIFICATES_DISPLAY_BEHAVIOR_WITH_INFO},
+            {"display_name": _("Early no Info"), "value": CERTIFICATES_DISPLAY_BEHAVIOR_NO_INFO}
+        ],
         scope=Scope.settings,
         default="early_no_info"
     )
@@ -616,8 +626,7 @@ class CourseFields(object):
     allow_public_wiki_access = Boolean(
         display_name=_("Allow Public Wiki Access"),
         help=_(
-            "Enter true or false. If true, edX users can view the course wiki even "
-            "if they're not enrolled in the course."
+            "If activated, users can view the course wiki even if they're not enrolled in the course."
         ),
         default=False,
         scope=Scope.settings
@@ -661,7 +670,8 @@ class CourseFields(object):
         values=[
             {"display_name": _("Both"), "value": CATALOG_VISIBILITY_CATALOG_AND_ABOUT},
             {"display_name": _("About"), "value": CATALOG_VISIBILITY_ABOUT},
-            {"display_name": _("None"), "value": CATALOG_VISIBILITY_NONE}]
+            {"display_name": _("None"), "value": CATALOG_VISIBILITY_NONE}
+        ]
     )
 
     entrance_exam_enabled = Boolean(
@@ -758,7 +768,7 @@ class CourseFields(object):
     enable_proctored_exams = Boolean(
         display_name=_("Enable Proctored Exams"),
         help=_(
-            "Enter true or false. If this value is true, proctored exams are enabled in your course. "
+            "Enable if proctored exams are enabled in your course. "
             "Note that enabling proctored exams will also enable timed exams."
         ),
         default=False,
@@ -768,8 +778,8 @@ class CourseFields(object):
     allow_proctoring_opt_out = Boolean(
         display_name=_("Allow Opting Out of Proctored Exams"),
         help=_(
-            "Enter true or false. If this value is true, learners can choose to take proctored exams "
-            "without proctoring. If this value is false, all learners must take the exam with proctoring. "
+            "Indicate if learners can choose to take proctored exams without proctoring. "
+            "If this value is false, all learners must take the exam with proctoring. "
             "This setting only applies if proctored exams are enabled for the course."
         ),
         default=True,
@@ -779,7 +789,7 @@ class CourseFields(object):
     create_zendesk_tickets = Boolean(
         display_name=_("Create Zendesk Tickets For Suspicious Proctored Exam Attempts"),
         help=_(
-            "Enter true or false. If this value is true, a Zendesk ticket will be created for suspicious attempts."
+            "Indicate if a Zendesk ticket will be created for suspicious attempts."
         ),
         default=True,
         scope=Scope.settings
@@ -788,8 +798,8 @@ class CourseFields(object):
     enable_timed_exams = Boolean(
         display_name=_("Enable Timed Exams"),
         help=_(
-            "Enter true or false. If this value is true, timed exams are enabled in your course. "
-            "Regardless of this setting, timed exams are enabled if Enable Proctored Exams is set to true."
+            "Indicate if timed exams are enabled in your course. Regardless of "
+            "this setting, timed exams are enabled if Enable Proctored Exams is set to true."
         ),
         default=False,
         scope=Scope.settings
@@ -830,9 +840,8 @@ class CourseFields(object):
     enable_subsection_gating = Boolean(
         display_name=_("Enable Subsection Prerequisites"),
         help=_(
-            "Enter true or false. If this value is true, you can hide a "
-            "subsection until learners earn a minimum score in another, "
-            "prerequisite subsection."
+            "Indicate if you can hide a subsection until "
+            "learners earn a minimum score in another, prerequisite subsection."
         ),
         default=True,
         scope=Scope.settings
@@ -923,7 +932,7 @@ class CourseFields(object):
     periodic_reminder_day = Integer(
         display_name=_("Periodic Reminder Day"),
         help="",
-        default=1,
+        default=None,
         scope=Scope.settings
     )
 

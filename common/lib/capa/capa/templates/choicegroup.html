@@ -38,7 +38,7 @@
                 % elif input_type != 'radio' and choice_id in value:
                 checked="true"
                 % endif
-                /> ${HTML(choice_label)}
+                /> <span class="choice-label-text">${HTML(choice_label)}</span>
                 % if is_radio_input(choice_id):
                   % if not show_correctness == 'never' and status.classname != 'unanswered':
                     <%include file="status_span.html" args="status=status, status_id=id"/>

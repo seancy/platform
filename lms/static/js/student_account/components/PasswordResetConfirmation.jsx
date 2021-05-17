@@ -96,6 +96,9 @@ class PasswordResetConfirmation extends React.Component {
               <span className="text">
                 {gettext('Reset Your Password')}
               </span>
+              <span className="text" style={{ display: 'none' }}>
+                {gettext('Update \n Password')}
+              </span>
             </h2>
 
             <p className="action-label" id="new_password_help_text">
@@ -131,6 +134,12 @@ class PasswordResetConfirmation extends React.Component {
               type="submit"
               className={['action', 'action-primary', 'action-update', 'js-reset']}
               label={gettext('Reset My Password')}
+            />
+            <Button
+              type="submit"
+              className={['action', 'action-primary', 'action-update', 'js-reset']}
+              label={gettext('Change Password')}
+              style={{ display: 'none' }}
             />
           </form>
           </div>

@@ -35,8 +35,7 @@ __all__ = [
 
 log = logging.getLogger(__name__)
 
-# NOTE: This list is disjoint from ADVANCED_COMPONENT_TYPES
-COMPONENT_TYPES = ['discussion', 'html', 'problem', 'video']
+COMPONENT_TYPES = ['resources', 'learner_activities', 'quiz', 'blended_learning']
 
 ADVANCED_COMPONENT_TYPES = sorted(set(name for name, class_ in XBlock.load_classes()) - set(COMPONENT_TYPES))
 
@@ -47,9 +46,54 @@ CONTAINER_TEMPLATES = [
     "editor-mode-button", "upload-dialog",
     "add-xblock-component", "add-xblock-component-button", "add-xblock-component-menu",
     "add-xblock-component-support-legend", "add-xblock-component-support-level", "add-xblock-component-menu-problem",
-    "xblock-string-field-editor", "xblock-access-editor", "publish-xblock", "publish-history",
+    "xblock-string-field-editor", "xblock-access-editor", "info-board", "publish-xblock", "publish-history",
     "unit-outline", "container-message", "container-access", "license-selector",
 ]
+
+
+def _component_category(category, type, available_advanced_keys=[]):
+    category_mapping = dict(
+        resources={
+            'common_category': 'html',
+            'advanced': [
+                'pdf',
+                'videoalpha',
+                'html',
+                'edflex',
+                'scormxblock',
+                'iframe',
+            ]
+        },
+        learner_activities={
+            'common_category': 'discussion',
+            'advanced': [
+                'poll',
+                'survey',
+                'word_cloud',
+            ]
+        },
+        blended_learning={
+            'common_category': '',
+            'advanced': [
+                'ilt',
+            ]
+        },
+        quiz={
+            'common_category': 'problem',
+            'advanced': [
+                'drag-and-drop-v2',
+                'openassessment',
+                'icxblock',
+                'library_content',
+            ]
+        }
+    )
+    component = None
+    if category_mapping.get(category):
+        component = category_mapping.get(category).get(type)
+    if type == 'advanced':
+        component = list(set(component) & set(available_advanced_keys))
+    return component
 
 
 def _advanced_component_types(show_unsupported):
@@ -147,6 +191,11 @@ def container_handler(request, usage_key_string):
 
             if is_unit_page:
                 add_container_page_publishing_info(xblock, xblock_info)
+                xblock_info.update({
+                    'is_unit_page': is_unit_page,
+                    'draft_preview_link': preview_lms_link,
+                    'published_preview_link': lms_link,
+                })
 
             # need to figure out where this item is in the list of children as the
             # preview will need this
@@ -248,156 +297,100 @@ def get_component_templates(courselike, library=False):
         'discussion': _("Discussion"),
         'html': _("HTML"),
         'problem': _("Problem"),
-        'video': _("Video")
+        'video': _("Video"),
+        'resources': _("Resources"),
+        'learner_activities': _("Learner Activities"),
+        'blended_learning': _("Blended Learning"),
+        'quiz': _("Quiz"),
     }
 
     component_templates = []
     categories = set()
-    # The component_templates array is in the order of "advanced" (if present), followed
-    # by the components in the order listed in COMPONENT_TYPES.
-    component_types = COMPONENT_TYPES[:]
-
-    # Libraries do not support discussions
-    if library:
-        component_types = [component for component in component_types if component != 'discussion']
-
-    component_types = _filter_disabled_blocks(component_types)
 
     # Content Libraries currently don't allow opting in to unsupported xblocks/problem types.
     allow_unsupported = getattr(courselike, "allow_unsupported_xblocks", False)
 
-    for category in component_types:
-        authorable_variations = authorable_xblocks(allow_unsupported=allow_unsupported, name=category)
-        support_level_without_template = component_support_level(authorable_variations, category)
-        templates_for_category = []
-        component_class = _load_mixed_class(category)
-
-        if support_level_without_template:
-            # add the default template with localized display name
-            # TODO: Once mixins are defined per-application, rather than per-runtime,
-            # this should use a cms mixed-in class. (cpennington)
-            display_name = xblock_type_display_name(category, _('Blank'))  # this is the Blank Advanced problem
-            templates_for_category.append(
-                create_template_dict(display_name, category, support_level_without_template, None, 'advanced')
-            )
-            categories.add(category)
-
-        # add boilerplates
-        if hasattr(component_class, 'templates'):
-            for template in component_class.templates():
-                filter_templates = getattr(component_class, 'filter_templates', None)
-                if not filter_templates or filter_templates(template, courselike):
-                    template_id = template.get('template_id')
-                    support_level_with_template = component_support_level(
-                        authorable_variations, category, template_id
-                    )
-                    if support_level_with_template:
-                        # Tab can be 'common' 'advanced'
-                        # Default setting is common/advanced depending on the presence of markdown
-                        tab = 'common'
-                        if template['metadata'].get('markdown') is None:
-                            tab = 'advanced'
-                        hinted = template.get('hinted', False)
-
-                        templates_for_category.append(
-                            create_template_dict(
-                                _(template['metadata'].get('display_name')),    # pylint: disable=translation-of-non-string
-                                category,
-                                support_level_with_template,
-                                template_id,
-                                tab,
-                                hinted,
-                            )
-                        )
-
-        # Add any advanced problem types. Note that these are different xblocks being stored as Advanced Problems,
-        # currently not supported in libraries .
-        if category == 'problem' and not library:
-            disabled_block_names = [block.name for block in disabled_xblocks()]
-            advanced_problem_types = [advanced_problem_type for advanced_problem_type in ADVANCED_PROBLEM_TYPES
-                                      if advanced_problem_type['component'] not in disabled_block_names]
-            for advanced_problem_type in advanced_problem_types:
-                component = advanced_problem_type['component']
-                boilerplate_name = advanced_problem_type['boilerplate_name']
-
-                authorable_advanced_component_variations = authorable_xblocks(
-                    allow_unsupported=allow_unsupported, name=component
-                )
-                advanced_component_support_level = component_support_level(
-                    authorable_advanced_component_variations, component, boilerplate_name
-                )
-                if advanced_component_support_level:
-                    try:
-                        component_display_name = xblock_type_display_name(component)
-                    except PluginMissingError:
-                        log.warning('Unable to load xblock type %s to read display_name', component, exc_info=True)
-                    else:
-                        templates_for_category.append(
-                            create_template_dict(
-                                component_display_name,
-                                component,
-                                advanced_component_support_level,
-                                boilerplate_name,
-                                'advanced'
-                            )
-                        )
-                        categories.add(component)
-
-        component_templates.append({
-            "type": category,
-            "templates": templates_for_category,
-            "display_name": component_display_names[category],
-            "support_legend": create_support_legend_dict()
-        })
-
-    # Libraries do not support advanced components at this time.
-    if library:
-        return component_templates
-
-    # Check if there are any advanced modules specified in the course policy.
-    # These modules should be specified as a list of strings, where the strings
-    # are the names of the modules in ADVANCED_COMPONENT_TYPES that should be
-    # enabled for the course.
-    course_advanced_keys = courselike.advanced_modules
-    advanced_component_templates = {
-        "type": "advanced",
-        "templates": [],
-        "display_name": _("Advanced"),
-        "support_legend": create_support_legend_dict()
-    }
+    # Below are the new updates for the reorganization of Add New Component
     advanced_component_types = _advanced_component_types(allow_unsupported)
-    # Set component types according to course policy file
-    if isinstance(course_advanced_keys, list):
-        for category in course_advanced_keys:
-            if category in advanced_component_types.keys() and category not in categories:
-                # boilerplates not supported for advanced components
-                try:
-                    component_display_name = xblock_type_display_name(category, default_display_name=category)
-                    advanced_component_templates['templates'].append(
-                        create_template_dict(
-                            component_display_name,
-                            category,
-                            advanced_component_types[category]
+    component_types = COMPONENT_TYPES[:]
+    for component_type in component_types:
+        new_component_templates = {
+            "type": component_type,
+            "templates": [],
+            "display_name": component_display_names[component_type],
+            "support_legend": create_support_legend_dict()
+        }
+
+        course_advanced_keys = courselike.advanced_modules
+        category = _component_category(component_type, 'common_category')
+        if category:
+            authorable_variations = authorable_xblocks(allow_unsupported=allow_unsupported, name=category)
+            support_level_without_template = component_support_level(authorable_variations, category)
+            templates_for_category = []
+            component_class = _load_mixed_class(category)
+
+            if category != 'problem':
+                # add the default template with localized display name
+                # TODO: Once mixins are defined per-application, rather than per-runtime,
+                # this should use a cms mixed-in class. (cpennington)
+                display_name = xblock_type_display_name(category, _('Blank'))  # this is the Blank Advanced problem
+                templates_for_category.append(
+                    create_template_dict(display_name, category, True)
+                )
+                categories.add(category)
+
+            # add boilerplates
+            if hasattr(component_class, 'templates'):
+                for template in component_class.templates():
+                    filter_templates = getattr(component_class, 'filter_templates', None)
+                    if not filter_templates or filter_templates(template, courselike):
+                        template_id = template.get('template_id')
+                        support_level_with_template = component_support_level(
+                            authorable_variations, category, template_id
                         )
-                    )
-                    categories.add(category)
-                except PluginMissingError:
-                    # dhm: I got this once but it can happen any time the
-                    # course author configures an advanced component which does
-                    # not exist on the server. This code here merely
-                    # prevents any authors from trying to instantiate the
-                    # non-existent component type by not showing it in the menu
-                    log.warning(
-                        "Advanced component %s does not exist. It will not be added to the Studio new component menu.",
-                        category
-                    )
-    else:
-        log.error(
-            "Improper format for course advanced keys! %s",
-            course_advanced_keys
-        )
-    if len(advanced_component_templates['templates']) > 0:
-        component_templates.insert(0, advanced_component_templates)
+                        if support_level_with_template:
+                            templates_for_category.append(
+                                create_template_dict(
+                                    _(template['metadata'].get('display_name')),    # pylint: disable=translation-of-non-string
+                                    category,
+                                    support_level_with_template,
+                                    template_id
+                                )
+                            )
+
+            new_component_templates['templates'] = templates_for_category
+
+        advanced_component_keys = _component_category(component_type, 'advanced', course_advanced_keys)
+        if isinstance(advanced_component_keys, list):
+            for category in advanced_component_keys:
+                if category in advanced_component_types.keys():
+                    # boilerplates not supported for advanced components
+                    try:
+                        component_display_name = xblock_type_display_name(category, default_display_name=category)
+                        template_dict = create_template_dict(
+                                component_display_name,
+                                category,
+                                advanced_component_types[category]
+                            )
+                        new_component_templates['templates'].append(template_dict)
+                        categories.add(category)
+                    except PluginMissingError:
+                        # dhm: I got this once but it can happen any time the
+                        # course author configures an advanced component which does
+                        # not exist on the server. This code here merely
+                        # prevents any authors from trying to instantiate the
+                        # non-existent component type by not showing it in the menu
+                        log.warning(
+                            "Advanced component %s does not exist. It will not be added to the Studio new component menu.",
+                            category
+                        )
+        else:
+            log.error(
+                "Improper format for course advanced keys! %s",
+                advanced_component_keys
+            )
+        if len(new_component_templates['templates']) > 0:
+            component_templates.append(new_component_templates)
 
     return component_templates
 

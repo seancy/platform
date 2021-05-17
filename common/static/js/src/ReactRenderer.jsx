@@ -62,7 +62,7 @@ export class ReactRenderer {
   }
 
   renderComponent() {
-    ReactDOM.render(
+    this.component = ReactDOM.render(
       React.createElement(this.component, this.props, null),
       this.targetElement,
     );

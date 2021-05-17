@@ -30,7 +30,8 @@ module.exports = Merge.smart(commonConfig, {
                     /paragon/,
                     /node_modules/,
                     /font-awesome/,
-                    /lms\/static/
+                    /cms\/theme-sass/,
+                    /cms\/static/
                 ],
                 use: [
                     'style-loader',

@@ -1,7 +1,7 @@
 /**
  * Simple model for adding a component of a given type (for example, "video" or "html").
  */
-define(['backbone'], function(Backbone) {
+define(['backbone', 'text!js/views/components/components.json'], function(Backbone, componentsText) {
     return Backbone.Model.extend({
         defaults: {
             type: '',
@@ -27,8 +27,32 @@ define(['backbone'], function(Backbone) {
             this.display_name = response.display_name;
             this.support_legend = response.support_legend;
 
+            var componentsConfig = JSON.parse(componentsText);
+            var orderedComponents = [];
+            for (var category in componentsConfig) {
+                var components = componentsConfig[category];
+                var components_list = Object.keys(components).map(function(component) {
+                    return component;
+                });
+                orderedComponents.push(...components_list.slice(1));
+            }
+
+            var getTemplateType = function(template) {
+                var type = template.category;
+                if (type === 'problem' || type === 'html') {
+                    var boilerplateFile = template.boilerplate_name;
+                    if (boilerplateFile !== null && boilerplateFile !== undefined) {
+                        var boilerplateName = boilerplateFile.split('.')[0];
+                        type = boilerplateName
+                    }
+                }
+                return type
+            };
+
             // Sort the templates.
             this.templates.sort(function(a, b) {
+                var type_a = getTemplateType(a);
+                var type_b = getTemplateType(b);
                 // The blank problem for the current type goes first
                 if (isPrimaryBlankTemplate(a)) {
                     return -1;
@@ -39,9 +63,9 @@ define(['backbone'], function(Backbone) {
                     return 1;
                 } else if (!a.hinted && b.hinted) {
                     return -1;
-                } else if (a.display_name > b.display_name) {
+                } else if (orderedComponents.indexOf(type_a) > orderedComponents.indexOf(type_b)) {
                     return 1;
-                } else if (a.display_name < b.display_name) {
+                } else if (orderedComponents.indexOf(type_a) < orderedComponents.indexOf(type_b)) {
                     return -1;
                 }
                 return 0;

@@ -1,5 +1,7 @@
+
 define(['js/views/baseview', 'underscore', 'jquery', 'js/views/edit_chapter', 'common/js/components/views/feedback_notification'],
         function(BaseView, _, $, EditChapterView, NotificationView) {
+
             var EditTextbook = BaseView.extend({
                 initialize: function() {
                     this.template = this.loadTemplate('edit-textbook');
@@ -8,6 +10,10 @@ define(['js/views/baseview', 'underscore', 'jquery', 'js/views/edit_chapter', 'c
                     this.listenTo(chapters, 'add', this.addOne);
                     this.listenTo(chapters, 'reset', this.addAll);
                     this.listenTo(chapters, 'all', this.render);
+                    var that = this;
+                    setTimeout(function () {
+                        that.$el.parent().find('.view-textbook').hide()
+                    },200)
                 },
                 tagName: 'section',
                 className: 'textbook',
@@ -16,6 +22,9 @@ define(['js/views/baseview', 'underscore', 'jquery', 'js/views/edit_chapter', 'c
                         name: this.model.get('name'),
                         error: this.model.validationError
                     }));
+                    setTimeout(()=>{
+                        this.options.QuestionMarkWrapper($('.question-mark-container', this.$el)[0]);
+                    },100)
                     this.addAll();
                     return this;
                 },
@@ -23,11 +32,15 @@ define(['js/views/baseview', 'underscore', 'jquery', 'js/views/edit_chapter', 'c
                     'change input[name=textbook-name]': 'setName',
                     submit: 'setAndClose',
                     'click .action-cancel': 'cancel',
+                    'click .wrapper-close i': 'cancel',
                     'click .action-add-chapter': 'createChapter'
                 },
                 addOne: function(chapter) {
                     var view = new EditChapterView({model: chapter});
-                    this.$('ol.chapters').append(view.render().el);
+                    var chapterEl = view.render().el
+                    this.$('ol.chapters').append(chapterEl);
+                    this.options.QuestionMarkWrapper($('.queation-mark-container',chapterEl)[0])
+                    this.options.QuestionMarkWrapper($('.queation-mark-container',chapterEl)[1])
                     return this;
                 },
                 addAll: function() {
@@ -37,6 +50,8 @@ define(['js/views/baseview', 'underscore', 'jquery', 'js/views/edit_chapter', 'c
                     if (e && e.preventDefault) { e.preventDefault(); }
                     this.setValues();
                     this.model.get('chapters').add([{}]);
+                    var chapters = $('.chapters')[0];
+                    chapters.scrollTop = chapters.scrollHeight;
                 },
                 setName: function(e) {
                     if (e && e.preventDefault) { e.preventDefault(); }
@@ -76,6 +91,7 @@ define(['js/views/baseview', 'underscore', 'jquery', 'js/views/edit_chapter', 'c
                 cancel: function(e) {
                     if (e && e.preventDefault) { e.preventDefault(); }
                     this.model.reset();
+                    this.$el.parent().find('.view-textbook').show()
                     return this.close();
                 },
                 close: function() {

@@ -5,12 +5,14 @@
     <% } else { %>
         <%- gettext('Section Visibility') %>
     <% } %>
+    - <%- gettext('Hide for learners') %>
 </h3>
 <div class="modal-section-content staff-lock">
-    <label class="label">
+    <div class="field">
+        <span class="label"><%- gettext('You can hide all content in a section from students, regardless of the status of subsections and units within the section. Check Hide from learners. Then, no content in the section is visible to learners.') %></span>
+        <span class="switcher"></span>
         <input type="checkbox" id="staff_lock" name="staff_lock" class="input input-checkbox" />
-        <%- gettext('Hide from learners') %>
-     </label>
+     </div>
     <% if (hasExplicitStaffLock && !ancestorLocked) { %>
         <p class="tip tip-warning">
           <% if (xblockInfo.isVertical()) { %>

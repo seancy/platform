@@ -11,7 +11,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 <%block name="bodyclass">is-signedin course view-textbooks</%block>
 
 <%block name="header_extras">
-% for template_name in ["edit-textbook", "show-textbook", "no-textbooks", "basic-modal", "modal-button", "upload-dialog"]:
+% for template_name in ["list-textbook", "edit-textbook", "show-textbook", "no-textbooks", "basic-modal", "modal-button", "upload-dialog"]:
   <script type="text/template" id="${template_name}-tpl">
     <%static:include path="js/${template_name}.underscore" />
   </script>
@@ -46,7 +46,7 @@ CMS.URL.LMS_BASE = "${configuration_helpers.get_value('SITE_LMS_DOMAIN_NAME', se
         <h3 class="sr">${_("Page Actions")}</h3>
         <ul>
           <li class="nav-item">
-            <a href="#" class="button new-button"><span class="icon fa fa-plus" aria-hidden="true"></span> ${_("New Textbook")}</a>
+            <a href="#" class="button new-button"><span class="icon fal fa-plus" aria-hidden="true"></span> ${_("New Textbook")}</a>
           </li>
         </ul>
       </nav>

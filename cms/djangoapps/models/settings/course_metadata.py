@@ -151,13 +151,8 @@ class CourseMetadata(object):
                 'help': field_help,
                 'deprecated': field.runtime_options.get('deprecated', False)
             }
-            if field.name == 'course_category':
-                result[field.name]['options'] = getattr(settings, 'COURSE_CATEGORIES', tuple())
-            if field.name == 'course_country':
-                country_options = ['All countries']
-                if configuration_helpers.get_value('COURSE_COUNTRIES', []):
-                    country_options += configuration_helpers.get_value('COURSE_COUNTRIES', [])
-                result[field.name]['options'] = country_options
+            if hasattr(field, 'values') and field.values:
+                result[field.name].update({'values': field.values})
         return result
 
     @classmethod

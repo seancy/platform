@@ -194,7 +194,7 @@ export class LeaderSideBoard extends React.Component {
                             return (<tr key={index}>
                                 <td><strong>{`${index + 1}.`}</strong></td>
                                 <td><img src={`${item.Portrait}`}
-                                         alt=""/>{item.Name}</td>
+                                         alt=""/><span className="name">{item.Name}</span></td>
                                 <td><strong>{item.Points}</strong> <span>points</span></td>
                             </tr>)
                         })}

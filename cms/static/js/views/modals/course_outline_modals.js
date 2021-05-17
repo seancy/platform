@@ -18,7 +18,7 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         ReleaseDateEditor, DueDateEditor, GradingEditor, PublishEditor, AbstractVisibilityEditor,
         StaffLockEditor, UnitAccessEditor, ContentVisibilityEditor, TimedExaminationPreferenceEditor,
         AccessEditor, ShowCorrectnessEditor, HighlightsEditor, HighlightsEnableXBlockModal, HighlightsEnableEditor,
-        EstimatedTimeXBlockModal, EstimatedTimeEditor;
+        EstimatedTimeXBlockModal, EstimatedTimeEditor
 
     CourseOutlineXBlockModal = BaseModal.extend({
         events: _.extend({}, BaseModal.prototype.events, {
@@ -36,7 +36,7 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         }),
 
         initialize: function() {
-            BaseModal.prototype.initialize.call(this);
+            BaseModal.prototype.initialize.call(this, {displayCloseButton:true});
             this.template = this.loadTemplate('course-outline-modal');
             this.options.title = this.getTitle();
         },
@@ -216,8 +216,8 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         },
 
         addActionButtons: function() {
-            this.addActionButton('publish', gettext('Publish'), true);
             this.addActionButton('cancel', gettext('Cancel'));
+            this.addActionButton('publish', gettext('Publish'), true);
         }
     });
 
@@ -257,8 +257,8 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         },
 
         addActionButtons: function() {
-            this.addActionButton('save', gettext('Save'), true);
             this.addActionButton('cancel', gettext('Cancel'));
+            this.addActionButton('save', gettext('Save'), true);
         }
     });
 
@@ -295,8 +295,8 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         },
 
         addActionButtons: function() {
-            this.addActionButton('save', gettext('Enable'), true);
             this.addActionButton('cancel', gettext('Not yet'));
+            this.addActionButton('save', gettext('Enable'), true);
         }
     });
 
@@ -603,6 +603,13 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
             this.$('#prereq_min_score_input').toggle(prereq.length > 0);
             this.$('#prereq_min_completion').val(prereqMinCompletion);
             this.$('#prereq_min_completion_input').toggle(prereq.length > 0);
+
+            var switcher = this.$el.find('.switcher')[0];
+            var $checkbox = $(switcher).next()
+            new LearningTribes.Switcher(switcher, $checkbox.is(':checked').toString(),
+                function(checked){
+                $checkbox.attr('checked', checked)
+            })
         },
         handlePrereqSelect: function() {
             var showPrereqInput = this.$('#prereq option:selected').val().length > 0;
@@ -723,6 +730,13 @@ define(['jquery', 'backbone', 'underscore', 'gettext', 'js/views/baseview',
         afterRender: function() {
             AbstractVisibilityEditor.prototype.afterRender.call(this);
             this.setLock(this.isModelLocked());
+
+            var switcher = this.$el.find('.switcher')[0];
+            var $checkbox = $(switcher).next()
+            new LearningTribes.Switcher(switcher, $checkbox.is(':checked').toString(),
+                function(checked){
+                $checkbox.attr('checked', checked)
+            })
         },
 
         setLock: function(value) {

@@ -58,6 +58,7 @@
                         return new ModuleEditView({
                             el: element,
                             onDelete: self.deleteTab,
+                            onToggle: self.toggleDisplayStatus,
                             model: model
                         });
                     });
@@ -76,6 +77,43 @@
                         items: '> .is-movable'
                     });
                 };
+
+                TabsEdit.prototype.toggleDisplayStatus = function(event) {
+                    var saving, tab_element, tab_url, is_hidden, course_staff_only;
+                    tab_element = $(event.target).parents('.course-tab')[0]
+                    saving = new NotificationView.Mini({
+                        title: gettext('Saving')
+                    });
+                    saving.show();
+                    var $iconShowHide = $(tab_element).find('.icon-show-hide')
+                    if ($iconShowHide.hasClass('fa-eye')) {
+                        is_hidden = true
+                        course_staff_only = true
+                        $iconShowHide.removeClass('fa-eye').addClass('fa-eye-slash')
+                    }else{
+                        is_hidden = false
+                        course_staff_only = false
+                        $iconShowHide.removeClass('fa-eye-slash').addClass('fa-eye')
+                    }
+                    var base_url_str = $('.tab-list')[0].baseURI.split('/')
+                    tab_url = '/' + base_url_str[base_url_str.length - 2] + '/' + base_url_str[base_url_str.length - 1]
+                    // tab_url = '/tab/<course_id>'
+                    $.ajax({
+                        type: 'POST',
+                        url: tab_url,
+                        data: JSON.stringify({
+                            tab_id_locator: {
+                                tab_id: $(tab_element).data('tab-id'),
+                                tab_locator: $(tab_element).data('locator')
+                            },
+                            is_hidden: is_hidden, // true or false,
+                            course_staff_only: course_staff_only,
+                        }),
+                        contentType: 'application/json'
+                    }).success(function() {
+                        return saving.hide();
+                    });
+                }
 
                 TabsEdit.prototype.toggleVisibilityOfTab = function(event) {
                     var checkbox_element, saving, tab_element;

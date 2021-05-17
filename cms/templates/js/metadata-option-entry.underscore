@@ -9,8 +9,11 @@
             <% } %>
         <% }) %>
     </select>
+    <span class="switcher-wrapper"></span>
+    <span class="question-mark-wrapper" data-title="<%= model.get('help') %>"></span>
     <button class="action setting-clear inactive" type="button" name="setting-clear" value="<%= gettext("Clear") %>" data-tooltip="<%= gettext("Clear") %>">
         <span class="icon fa fa-undo" aria-hidden="true"></span><span class="sr">"<%= gettext("Clear Value") %>"</span>
     </button>
+
 </div>
 <span class="tip setting-help"><%= model.get('help') %></span>

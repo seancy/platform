@@ -1,25 +1,84 @@
 import copy
 import crum
+import json
 
+from collections import OrderedDict
+from datetime import datetime
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from django.core.validators import validate_email, ValidationError
+from django.contrib.auth.models import User, Group
+from django.contrib.admin.utils import NestedObjects
+from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django_countries import countries
 
 import accounts
 import third_party_auth
+import errors
+from courseware.courses import get_courses
 from edxmako.shortcuts import marketing_link
+from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.user_api.helpers import FormDescription
-from openedx.core.lib.mobile_utils import is_request_from_mobile_app
 from openedx.features.enterprise_support.api import enterprise_customer_for_request
 from student.forms import get_registration_extension_form
-from student.models import UserProfile
+from student.models import CourseEnrollment, UserProfile
+from student import forms as student_forms
+from student import views as student_views
 from util.password_policy_validators import (
-    password_complexity, password_instructions, password_max_length, password_min_length
+    password_complexity, password_instructions, password_max_length, password_min_length, validate_password
 )
+from util.json_request import JsonResponse
+from util.date_utils import strftime_localized
+
+
+CATALOG_DENIED_GROUP = "Catalog Denied Users"
+EDFLEX_DENIED_GROUP = "EdFlex Denied Users"
+CREHANA_DENIED_GROUP = "Crehana Denied Users"
+STUDIO_ADMIN_ACCESS_GROUP = "Studio Admin"
+ANALYTICS_ACCESS_GROUP = "Triboo Analytics Admin"
+ANALYTICS_LIMITED_ACCESS_GROUP = "Restricted Triboo Analytics Admin"
+FULL_USER_PROFILE_FIELDS = [
+    'name',
+    'service_id',
+    'language',
+    'location',
+    'year_of_birth',
+    'gender',
+    'level_of_education',
+    'mailing_address',
+    'city',
+    'country',
+    'goals',
+    'allow_certificate',
+    'bio',
+    'lt_custom_country',
+    'lt_area',
+    'lt_sub_area',
+    'lt_address',
+    'lt_address_2',
+    'lt_phone_number',
+    'lt_gdpr',
+    'lt_company',
+    'lt_employee_id',
+    'lt_hire_date',
+    'lt_level',
+    'lt_job_code',
+    'lt_job_description',
+    'lt_department',
+    'lt_supervisor',
+    'lt_learning_group',
+    'lt_exempt_status',
+    'lt_is_tos_agreed',
+    'lt_comments',
+    'lt_ilt_supervisor'
+]
 
 
 def get_password_reset_form():
@@ -311,6 +370,31 @@ class RegistrationFormFactory(object):
                         form_desc,
                         required=self._is_field_required(field_name)
                     )
+
+        return form_desc
+
+    def get_admin_panel_registration_form(self, request):
+        """
+        Return a description of the registration form.
+        This is used in Admin Panel user creation/ edit
+        The form_desc includes a complete list of fields
+        Arguments:
+            request (HttpRequest)
+        Returns:
+            HttpResponse
+        """
+        form_desc = FormDescription("post", reverse("user_api_registration"))
+        self._apply_third_party_auth_overrides(request, form_desc)
+
+        # Go through the fields in the fields order and add them if they are required or visible
+        for field_name in self.field_order:
+            if field_name in self.DEFAULT_FIELDS:
+                self.field_handlers[field_name](form_desc, required=True)
+            else:
+                self.field_handlers[field_name](
+                    form_desc,
+                    required=False
+                )
 
         return form_desc
 
@@ -1050,3 +1134,305 @@ class RegistrationFormFactory(object):
                     )
 
 
+def get_user_account_info(user):
+    profile_fields = configuration_helpers.get_value(
+        'ANALYTICS_USER_PROPERTIES',
+        settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {})
+    )
+    profile_fields.update({'lt_gdpr': 'optional', 'lt_exempt_status': 'optional', 'name': 'optional'})
+    context = {
+        "username": user.username,
+        "email": user.email,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "is_active": user.is_active,
+        "user_id": user.id
+    }
+    user_groups = [group.name for group in user.groups.all()]
+
+    analytics_access = "0"
+    if ANALYTICS_ACCESS_GROUP in user_groups:
+        analytics_access = "2"  # full access
+    if ANALYTICS_LIMITED_ACCESS_GROUP in user_groups:
+        analytics_access = "1"  # restricted
+
+    platform_level = "0"  # learner
+    if user.is_superuser:
+        platform_level = "3"  # super admin
+        analytics_access = "2"  # full access
+    elif user.is_staff:
+        platform_level = "2"  # platform admin
+        analytics_access = "2"  # full access
+    else:
+        if STUDIO_ADMIN_ACCESS_GROUP in user_groups:
+            platform_level = "1"  # studio admin
+
+    catalog_access = True
+    edflex_access = True
+    crehana_access = True
+    if CATALOG_DENIED_GROUP in user_groups:
+        catalog_access = False
+    if EDFLEX_DENIED_GROUP in user_groups:
+        edflex_access = False
+    if CREHANA_DENIED_GROUP in user_groups:
+        crehana_access = False
+
+    permissions = {
+        "platform_level": platform_level,
+        "catalog_access": catalog_access,
+        "edflex_access": edflex_access,
+        "crehana_access": crehana_access,
+        "analytics_access": analytics_access
+    }
+
+    profile_info = {key: getattr(user.profile, key) for key in profile_fields if key in FULL_USER_PROFILE_FIELDS}
+    if 'country' in profile_info:
+        profile_info['country'] = profile_info['country'].code
+    if 'lt_hire_date' in profile_info:
+        if profile_info['lt_hire_date']:
+            profile_info['lt_hire_date'] = strftime_localized(profile_info['lt_hire_date'], "NUMBERIC_SHORT_DATE_SLASH")
+
+    orgs = configuration_helpers.get_current_site_orgs()
+    courses = CourseOverview.objects.filter(org__in=orgs)
+    course_ids = {c.id: c.display_name for c in courses}
+    enrollments = CourseEnrollment.enrollments_for_user(user).filter(course_id__in=course_ids)
+    enrolled_course_ids = [i.course_id for i in enrollments]
+    currently_enrolled = [{
+        "name": course_ids.get(i.course_id), "course_id": unicode(i.course_id),
+        "created": strftime_localized(i.created, "NUMBERIC_SHORT_DATE_SLASH"),
+        "completed": strftime_localized(i.completed, "NUMBERIC_SHORT_DATE_SLASH") if i.completed else "-"
+    } for i in enrollments]
+    not_enrolled = [{"name": course_ids.get(i), "course_id": unicode(i)}
+                    for i in course_ids if i not in enrolled_course_ids]
+    context.update(profile_info)
+    context.update(permissions)
+    context.update({
+        "currently_enrolled": currently_enrolled, "not_enrolled": not_enrolled, "profile_fields": profile_fields
+    })
+
+    return context
+
+
+@csrf_exempt
+def get_user_full_account_info(request, user_id):
+    user = User.objects.select_related('profile').get(id=user_id)
+    user_fields = [
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        'is_active',
+        'is_superuser',
+        'is_staff'
+    ]
+
+    if request.method == "POST":
+        update = json.loads(request.body)
+        field_errors = {}
+        if "email" in update:
+            new_email = update["email"]
+
+            try:
+                student_views.validate_new_email(user, new_email)
+            except ValueError as err:
+                field_errors["email"] = {
+                    "developer_message": u"Error thrown from validate_new_email: '{}'".format(unicode(err)),
+                    "user_message": unicode(err)
+                }
+
+        if "name" in update:
+            try:
+                student_forms.validate_name(update['name'])
+            except ValidationError as err:
+                field_errors["name"] = {
+                    "developer_message": u"Error thrown from validate_name: '{}'".format(err.message),
+                    "user_message": err.message
+                }
+        if "password" in update:
+            try:
+                validate_password(update["password"], user=user)
+                user.set_password(update["password"])
+                user.save()
+            except ValidationError as err:
+                field_errors["password"] = {
+                    "developer_message": u"Error thrown from validate_password: '{}'".format(err.message),
+                    "user_message": err.message
+                }
+
+        if "year_of_birth" in update:
+            year_str = update["year_of_birth"]
+            update["year_of_birth"] = int(year_str) if year_str is not None else None
+
+        if "platform_level" in update:
+            platform_level = update.pop("platform_level")
+            studio_admin_group = Group.objects.get(name=STUDIO_ADMIN_ACCESS_GROUP)
+            if platform_level == "0":
+                update["is_staff"] = False
+                update["is_superuser"] = False
+                user.groups.remove(studio_admin_group)
+            elif platform_level == "1":
+                update["is_staff"] = False
+                update["is_superuser"] = False
+                user.groups.add(studio_admin_group)
+            elif platform_level == "2":
+                update["is_staff"] = True
+                update["is_superuser"] = False
+                user.groups.remove(studio_admin_group)
+            else:
+                update["is_staff"] = True
+                update["is_superuser"] = True
+                user.groups.remove(studio_admin_group)
+
+        if "catalog_access" in update:
+            catalog_denied_group = Group.objects.get(name=CATALOG_DENIED_GROUP)
+            catalog_access = update.pop("catalog_access")
+            if catalog_access:
+                user.groups.remove(catalog_denied_group)
+            else:
+                user.groups.add(catalog_denied_group)
+
+        if "edflex_access" in update:
+            edflex_denied_group = Group.objects.get(name=EDFLEX_DENIED_GROUP)
+            edflex_access = update.pop("edflex_access")
+            if edflex_access:
+                user.groups.remove(edflex_denied_group)
+            else:
+                user.groups.add(edflex_denied_group)
+
+        if "crehana_access" in update:
+            crehana_denied_group = Group.objects.get(name=CREHANA_DENIED_GROUP)
+            crehana_access = update.pop("crehana_access")
+            if crehana_access:
+                user.groups.remove(crehana_denied_group)
+            else:
+                user.groups.add(crehana_denied_group)
+
+        if "analytics_access" in update:
+            full_access_group = Group.objects.get(name=ANALYTICS_ACCESS_GROUP)  # Analytics
+            limited_access_group = Group.objects.get(name=ANALYTICS_LIMITED_ACCESS_GROUP)  # Analytics
+            analytics_access = update.pop("analytics_access")
+            if analytics_access == "0":
+                user.groups.remove(full_access_group)
+                user.groups.remove(limited_access_group)
+            elif analytics_access == "1":
+                user.groups.remove(full_access_group)
+                user.groups.add(limited_access_group)
+            else:
+                user.groups.add(full_access_group)
+                user.groups.remove(limited_access_group)
+
+        # If we have encountered any validation errors, return them to the user.
+        if field_errors:
+            error_list = [v['user_message'] for _, v in field_errors.items()]
+            return JsonResponse({'error': error_list}, status=409)
+
+        user_properties = {key: update[key] for key in user_fields if key in update}
+        profile_properties = {key: update[key] for key in FULL_USER_PROFILE_FIELDS if key in update}
+        if 'lt_hire_date' in profile_properties:
+            profile_properties['lt_hire_date'] = datetime.strptime(
+                profile_properties['lt_hire_date'], student_views.get_date_format()[0]
+            )
+
+        User.objects.filter(id=user_id).update(**user_properties)
+        UserProfile.objects.filter(user=user).update(**profile_properties)
+
+    context = get_user_account_info(User.objects.select_related('profile').get(id=user_id))
+    return JsonResponse(context)
+
+
+@csrf_exempt
+@require_POST
+def search_users(request):
+    post_data = json.loads(request.body)
+    query = post_data["query"]
+    users = User.objects.filter(
+        Q(username__icontains=query) | Q(email__icontains=query)).select_related('profile')
+    show_more = False
+    if users.count() > 20:
+        users = users[:20]
+        show_more = True
+    search_result = []
+    for user in users:
+        info = get_user_account_info(user)
+        search_result.append(info)
+    return JsonResponse({"search_result": search_result, "show_more": show_more})
+
+
+def get_user_related_objects(user):
+    collector = NestedObjects(using='default')
+    collector.collect([user])
+    to_delete = collector.nested()
+    related_objects = OrderedDict({'User': 1})
+    for i in to_delete[1]:
+        if type(i) == list:
+            for j in i:
+                if type(j) == list:
+                    for x in j:
+                        name = str(x._meta.verbose_name)
+                        if name in related_objects:
+                            related_objects[name] += 1
+                        else:
+                            related_objects[name] = 1
+                else:
+                    name = str(j._meta.verbose_name)
+                    if name in related_objects:
+                        related_objects[name] += 1
+                    else:
+                        related_objects[name] = 1
+        else:
+            name = str(i._meta.verbose_name)
+            if name in related_objects:
+                related_objects[name] += 1
+            else:
+                related_objects[name] = 1
+    return related_objects
+
+
+@csrf_exempt
+def delete_user(request, user_id):
+    user = User.objects.get(id=user_id)
+    if request.method == 'GET':
+        related_objects = get_user_related_objects(user)
+        return JsonResponse(related_objects)
+    if request.method == 'POST':
+        try:
+            user.delete()
+            return JsonResponse({"deleted": True})
+        except Exception:
+            return JsonResponse(status=500)
+
+
+@csrf_exempt
+@require_POST
+def update_course_enrollment(request, course_id, user_id):
+    course_key = CourseKey.from_string(course_id)
+    user = User.objects.get(id=user_id)
+    action = json.loads(request.body)["action"]
+
+    if action == "enroll":
+        enrollment = CourseEnrollment.enroll(user, course_key)
+        result = {"created": strftime_localized(enrollment.created, "NUMBERIC_SHORT_DATE_SLASH"),
+                  "completed": strftime_localized(enrollment.completed, "NUMBERIC_SHORT_DATE_SLASH")
+                  if enrollment.completed else "-",
+                  "course_id": course_id}
+        return JsonResponse({"info": result})
+
+    else:
+        CourseEnrollment.unenroll(user, course_key)
+        result = {"course_id": course_id}
+        return JsonResponse({"info": result})
+
+
+@csrf_exempt
+@require_POST
+def update_user_status(request):
+    user_list = request.POST.get("user_list")
+    user_list = json.loads(user_list)
+    action = request.POST.get("action")
+    if action == "1":
+        is_active = True
+    else:
+        is_active = False
+
+    User.objects.filter(id__in=user_list).update(is_active=is_active)
+    return JsonResponse({"success": True})

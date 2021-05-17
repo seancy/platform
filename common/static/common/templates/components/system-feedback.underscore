@@ -16,17 +16,12 @@
 
     <div class="copy">
       <h2 class="title title-3" id="<%= type %>-<%= intent %>-title"><%- title %></h2>
-      <% if(obj.message) { %><p class="message" id="<%= type %>-<%= intent %>-description"><%- message %></p><% } %>
+      <% if(obj.message) { %><p class="message" id="<%= type %>-<%= intent %>-description"><%= message %></p><% } %>
     </div>
 
     <% if(obj.actions) { %>
     <nav class="nav-actions">
       <ul>
-        <% if(actions.primary) { %>
-        <li class="nav-item">
-          <button class="action-primary <%= actions.primary.class %>"><%- actions.primary.text %></button>
-        </li>
-        <% } %>
         <% if(actions.secondary) {
              _.each(actions.secondary, function(secondary) { %>
         <li class="nav-item">
@@ -34,13 +29,18 @@
         </li>
         <%   });
            } %>
+        <% if(actions.primary) { %>
+        <li class="nav-item">
+          <button class="action-primary <%= actions.primary.class %>"><%- actions.primary.text %></button>
+        </li>
+        <% } %>
       </ul>
     </nav>
     <% } %>
 
     <% if(obj.closeIcon) { %>
     <a href="#" rel="view" class="action action-close action-<%= type %>-close">
-      <span class="icon fa fa-times-circle" aria-hidden="true"></span>
+      <span class="icon fa fa-times" aria-hidden="true"></span>
       <span class="label">close <%= type %></span>
     </a>
     <% } %>

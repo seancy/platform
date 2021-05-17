@@ -4712,11 +4712,11 @@ msgstr ""
 "效。"
 
 #: common/lib/xmodule/xmodule/seq_module.py:78
-msgid "Estimated time for subsection" 
+msgid "Estimated time for subsection"
 msgstr "子章节预计时间"
 
 #: common/lib/xmodule/xmodule/seq_module.py:80
-msgid "If set, estimated time will show in subsection display area." 
+msgid "If set, estimated time will show in subsection display area."
 msgstr "如果设置，预计时间将显示在子章节相关区域"
 
 #: common/lib/xmodule/xmodule/seq_module.py:83
@@ -9677,7 +9677,7 @@ msgid "Course Announce Date"
 msgstr "课程发布日期"
 
 #: lms/djangoapps/shoppingcart/reports.py:214
-#: cms/templates/course_outline.html:161 cms/templates/settings.html:218
+#: cms/templates/settings.html:218
 #: lms/templates/instructor/instructor_dashboard_2/executive_summary.html:35
 msgid "Course Start Date"
 msgstr "课程开始日期"
@@ -19710,6 +19710,7 @@ msgid "Basic Course Information"
 msgstr "基本课程信息"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:23
+#: cms/templates/course_outline.html:161
 msgid "Course Start Date:"
 msgstr "课程开始日期："
 
@@ -23670,8 +23671,17 @@ msgid ""
 "particular discussions in the forums, announce schedule changes, and respond "
 "to learner questions. You add or edit updates in HTML."
 msgstr ""
-"使用课程更新来通知学员重要的日期或者考试，高亮显示论坛中的特别讨论，发布进度"
+"使用课程更新来通知学员重要的日期或者考试，高亮显示论坛中的特别讨论、发布进度"
 "变更，以及回复学员问题。您可以用HTML来编辑更新。"
+
+#: cms/templates/course_info.html:79
+msgid ""
+"Use course updates to notify learners of important dates or exams, "
+"highlight particular discussions in the forums, announce schedule changes, "
+"and respond to learner questions. You can add or edit updates."
+msgstr ""
+"使用课程更新来通知学员重要的日期或者考试，高亮显示论坛中的特别讨论、发布进度"
+"变更，以及回复学员问题。您可以添加或编辑更新。"
 
 #: cms/templates/course_outline.html:13 cms/templates/course_outline.html:123
 #: cms/templates/course_outline.html:217
@@ -23765,9 +23775,13 @@ msgstr "在线查看"
 msgid "Edit Start Date"
 msgstr "编辑开始日期"
 
-#: cms/templates/course_outline.html:174 cms/templates/settings.html:186
+#: cms/templates/settings.html:186
 msgid "Course Pacing"
 msgstr "课程速率"
+
+#: cms/templates/course_outline.html:174
+msgid "Course Pacing:"
+msgstr "课程速率："
 
 #: cms/templates/course_outline.html:177 cms/templates/settings.html:200
 msgid "Self-Paced"
@@ -23883,6 +23897,18 @@ msgstr "显示该页面"
 msgid "Show/hide page"
 msgstr "显示/隐藏页面"
 
+#: cms/templates/edit-tabs.html:103
+msgid "Show to all"
+msgstr "对所有人显示"
+
+#: cms/templates/edit-tabs.html:105 cms/templates/edit-tabs.html:107
+msgid "Hide from all"
+msgstr "对所有人隐藏"
+
+#: cms/templates/edit-tabs.html:103
+msgid "Show to learners"
+msgstr "对学员显示"
+
 #: cms/templates/edit-tabs.html:121 cms/templates/edit-tabs.html:122
 msgid "This page cannot be reordered"
 msgstr "该页面无法重新排序"
@@ -23912,6 +23938,15 @@ msgstr ""
 msgid "Custom pages"
 msgstr "自定义页面"
 
+#: cms/templates/edit-tabs.html:152
+msgid ""
+"Pages are listed horizontally at the top of your course. Default pages (Home, "
+"Course, Discussion and Progress) are followed by textbooks if you add one and "
+"custom pages that you create."
+msgstr ""
+"页面将会水平列在课程顶部。默认页面（主页、课程、讨论和进度），接下来是"
+"您添加的教材（如果有）和创建的自定义页面。"
+
 #: cms/templates/edit-tabs.html:148
 msgid ""
 "You can create and edit custom pages to provide learners with additional "
@@ -23920,6 +23955,14 @@ msgid ""
 msgstr ""
 "您可以通过创建个性化页面来为学员提供额外的课程内容。例如，您可以为评分策略、"
 "课程幻灯片、课程日历等创建自定义页面。"
+
+#: cms/templates/edit-tabs.html:160
+msgid ""
+"Learners see the default and custom pages at the top of your course "
+"presentation or course about pages and use these links to navigate."
+msgstr ""
+"学员将会看到水平列于您课程展示页面上方的默认及自定义页面、或课程相关页面，"
+"并通过这些链接来漫游整个课程。"
 
 #: cms/templates/edit-tabs.html:151
 msgid "How do pages look to learners in my course?"
@@ -24262,6 +24305,14 @@ msgstr ""
 msgid "Learn more about exporting a course"
 msgstr "了解更多关于课程导出的信息"
 
+#: cms/templates/export.html:261
+msgid "The following content is exported:"
+msgstr "如下内容被导出："
+
+#: cms/templates/export.html:269
+msgid "The following content is {b_start}not exported{b_end}:"
+msgstr "如下内容{b_start}不被导出{b_end}："
+
 #: cms/templates/export_git.html:9
 msgid "Export Course to Git"
 msgstr "导出课程到Git"
@@ -24317,6 +24368,10 @@ msgstr "课程Git地址："
 #: cms/templates/group_configurations.html:105
 msgid "Experiment Group Configurations"
 msgstr "实验组配置"
+
+#: cms/templates/group_configurations.html:53
+msgid "New Content Group"
+msgstr "新建内容组"
 
 #: cms/templates/group_configurations.html:70
 msgid "This module is disabled at the moment."
@@ -24879,6 +24934,18 @@ msgstr ""
 msgid "Learn more about importing a course"
 msgstr "了解更多关于导入课程的信息"
 
+#: cms/templates/import.html:53
+msgid "Import My Course Content"
+msgstr "导入我的课程内容"
+
+#: cms/templates/import.html:253
+msgid "The following content is imported:"
+msgstr "如下内容被导入："
+
+#: cms/templates/import.html:261
+msgid "The following content is {b_start}not imported{b_end}:"
+msgstr "如下内容{b_start}不被导入{b_end}："
+
 #: cms/templates/index.html:15 cms/templates/index.html:27
 msgid "{studio_name} Home"
 msgstr "{studio_name}主页"
@@ -25359,6 +25426,34 @@ msgstr "添加一个团队成员"
 #: cms/templates/manage_users.html:99
 msgid "Course Team Roles"
 msgstr "课程团队角色"
+
+#: cms/templates/manage_users.html:100
+msgid ""
+"This user has Admin Access to the course, because he/she is the one who "
+"created the course or this user has been granted Admin Access by another "
+"Admin. They can add and remove other course team members. They have also "
+"the right to delete a course."
+msgstr ""
+"该用户拥有这门课程的管理员权限，因为他/她是这门课程的创建者，或者该用户已被另一位管理员"
+"授权为管理员。他们可以添加和删除其他课程团队成员。他们同时也拥有删除一门课程的权利。"
+
+#: cms/templates/manage_users.html:102
+msgid ""
+"This user can edit the course but cannot manage the course team (cannot add "
+"a new member or change other members' access). They are courseco-authors. "
+"They have also full writing and editing privileges on all course content."
+msgstr ""
+"该用户可以编辑这门课程但不能管理课程团队（不能添加一名新成员或修改其他成员的权限）。"
+"他们是课程的协同作者。他们同时也拥有在所有课程内容上撰写和编辑的权利。"
+
+#: cms/templates/manage_users.html:108
+msgid ""
+"This user has no access to the Studio, but has been added to the course "
+"team by an Admin. He/She cannot be granted Admin Access to the course. He/she "
+"will have access to the ILT Admin Panel."
+msgstr ""
+"该用户没有 Studio 的访问权限，但他/她已被一名管理员添加进了这门课程的团队。他/她不能被授予"
+"这门课程的管理权限。他/她能有 ILT 管理平台的访问权限。"
 
 #: cms/templates/manage_users.html:100
 msgid ""
@@ -29097,6 +29192,7 @@ msgstr "加载中……"
 msgid "Generate Intermediate Certificates"
 msgstr "生成中级证书"
 
+
 #: XBlock: edx-ora2
 #: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
 msgid "Free Text"
@@ -29141,3 +29237,817 @@ msgstr "学员仅需要取得最低通过分数就能成功完成这门课。"
 #: cms/templates/settings_graders.html
 msgid "Changes on Course Completion Rule are not retroactive. If a Studio Admin changes the rule for a started course, learners will have to revisit the graded activities to see their score recalculated."
 msgstr "改变课程完成规则不是即时生效的。对于已经开始的课程，如果Studio管理员更改了课程完成规则，学员需要重新查看得分活动才能看到他们的分数重新计算了。"
+
+#: cms/templates/settings.html:112
+msgid ""
+"Course number that you want to appear in the course. This setting "
+"overrides the course number that you entered when you created the course."
+msgstr ""
+
+#: cms/templates/settings.html:362
+msgid "Upload Course Introduction Video"
+msgstr ""
+
+#: cms/templates/settings.html:396 cms/templates/settings.html:424
+msgid "You can manage this image along with all of your other files and uploads."
+msgstr ""
+
+#: cms/templates/settings.html:400
+msgid ""
+"Please provide a valid path and name your video thumbmail image (Note: "
+"the ideal image is 375px wide by 200px tall, in JPEG or PNG format)"
+msgstr ""
+
+#: cms/templates/settings.html:480
+msgid ""
+"Introductions, prerequisites, FAQs that are used on your course summary "
+"page."
+msgstr ""
+
+#: cms/templates/settings.html:517
+msgid "Course Visibility in Catalog"
+msgstr ""
+
+#: cms/templates/settings.html:524
+msgid ""
+"Defines the access permissions for showing the course in the course "
+"catalog. This can be set to one of three values: \"full public\", "
+"\"accessible by URL\", \"private\"."
+msgstr ""
+
+#: cms/templates/settings.html:547
+msgid ""
+"Identify the main language of your course, this is used to assist users "
+"find courses that are taught in a specific language."
+msgstr ""
+
+#: cms/templates/settings.html:559
+msgid ""
+"Identify the category of your course to assist users to filter courses "
+"with ease on the catalog and to better orient them during their training "
+"session."
+msgstr ""
+
+#: cms/templates/settings.html:563
+msgid "Add course tags to help users to find courses easily."
+msgstr ""
+
+#: cms/templates/settings.html:594
+msgid ""
+"Sort the courses to display on the My Courses page in ascending order. "
+"The order is from 0 to 99."
+msgstr ""
+
+#: cms/templates/settings.html:606
+msgid ""
+"If set on true, a New! label temporarily appears next to the course card "
+"image."
+msgstr ""
+
+#: cms/templates/settings.html:623 cms/templates/settings.html:631
+msgid "Define a course as a prerequisite."
+msgstr ""
+
+#: cms/templates/settings.html:659
+msgid "Programmatic Enrollments"
+msgstr ""
+
+#: cms/templates/settings.html:702
+msgid "Invite Your Learners"
+msgstr ""
+
+#: cms/templates/settings.html:729
+msgid "Open your course"
+msgstr ""
+
+#: cms/templates/settings.html:748
+msgid "Schedule Reminders"
+msgstr ""
+
+#: cms/templates/settings.html:774
+msgid "Schedule Re-enrollement"
+msgstr ""
+
+#: cms/templates/settings.html:796
+msgid "Delete your entire course and all data"
+msgstr ""
+
+#: lms/templates/video.html:98
+msgid ""
+"Add videos to your course, you can also set subtitles, allow download and"
+" configure other options."
+msgstr ""
+
+#: cms/templates/settings.html:65 cms/templates/settings.html:82
+msgid "General Information"
+msgstr ""
+
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:10
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:20
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:37
+msgid "Schedule Your Course"
+msgstr ""
+
+#: cms/templates/settings.html:67 cms/templates/settings.html:315
+msgid "Introduce Your Course"
+msgstr ""
+
+#: cms/templates/settings.html:68 cms/templates/settings.html:534
+msgid "Label Your Course"
+msgstr ""
+
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:11
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:21
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:39
+msgid "Target Your Learners"
+msgstr ""
+
+#: cms/templates/settings.html:70 cms/templates/settings.html:743
+msgid "Schedule Engagement"
+msgstr ""
+
+#: cms/templates/settings.html:71 cms/templates/settings.html:795
+msgid "Delete Course"
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:332
+msgid "Indicate if the course will be available to mobile devices."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:843
+msgid ""
+"Indicate if you can hide a subsection until learners earn a minimum score in "
+"another, prerequisite subsection."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:415
+msgid "Select the names of the advanced modules to use in your course."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/modulestore/inheritance.py:212
+msgid " Indicate if video caching will be used for HTML5 videos."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:251
+msgid "Indicate if learners can see the calculator in the course."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/modulestore/inheritance.py:248
+msgid ""
+" Indicate if problems in the course default to always displaying a 'Reset' "
+"button. You can override this in each problem's settings. All existing "
+"problems are affected when this course-wide setting is changed."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:801
+msgid ""
+"Indicate if timed exams are enabled in your course. Regardless of this "
+"setting, timed exams are enabled if Enable Proctored Exams is set to true."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:771
+msgid ""
+"Enable if proctored exams are enabled in your course. Note that enabling "
+"proctored exams will also enable timed exams."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:781
+msgid ""
+"Indicate if learners can choose to take proctored exams without proctoring. "
+"If this value is false, all learners must take the exam with proctoring. "
+"This setting only applies if proctored exams are enabled for the course."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:792
+msgid "Indicate if a Zendesk ticket will be created for suspicious attempts."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:406
+msgid ""
+"If activated, learners can create discussion posts that are anonymous to "
+"other learners. This setting does not make posts anonymous to course staff."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:305
+msgid ""
+"If activated, discussion categories and subcategories are sorted "
+"alphabetically. If false, they are sorted chronologically by creation date "
+"and time."
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:629
+msgid ""
+"If activated, users can view the course wiki even if they're not enrolled in "
+"the course."
+msgstr ""
+
+#: edx-platform/cms/djangoapps/contentstore/views/component.py:301
+msgid "Resources"
+msgstr ""
+
+#: edx-platform/cms/djangoapps/contentstore/views/component.py:302
+msgid "Learner Activities"
+msgstr ""
+
+#: edx-platform/cms/djangoapps/contentstore/views/component.py:303
+msgid "Blended Learning"
+msgstr ""
+
+#: XBlock: xblock-edflex
+#: edflex-xblock/edflex/edflex.py
+msgid "External Resource"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Instructor Led Training"
+msgstr ""
+
+#: common/lib/capa/capa/responsetypes.py
+msgid "Blank Quiz"
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/library_content_module.py:69
+msgid "Randomized Content Block"
+msgstr ""
+
+#: edx-platform/common/lib/xmodule/xmodule/word_cloud_module.py:43
+msgid "Word Cloud"
+msgstr ""
+
+#: edx-platform/openedx/core/lib/xblock_builtin/xblock_discussion/xblock_discussion/__init__.py:47
+msgid "Forum"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Icon be used in course page"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:36
+msgid ""
+"\n"
+"                    This text will be displayed for the user as some extra "
+"feedback after they have\n"
+"                    submitted their response to the poll.\n"
+"                "
+msgstr ""
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:44
+msgid "Private Results"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:53
+msgid "If this is activated, the platform will not display results of the poll to the user."
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html
+msgid "Maximum Submissions"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html
+msgid ""
+"\n"
+"                    If you change an answer's text, all students who voted for that choice will have their votes updated to\n"
+"                    the new text. You'll want to avoid changing an answer from something like 'True' to 'False', accordingly.\n"
+"                    If you delete an answer, any votes for that answer will also be deleted. Students whose choices are deleted\n"
+"                    may vote again, but will not lose course progress.\n"
+"                "
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/public/handlebars/poll_studio.handlebars
+msgid "Image URL"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/handlebars/poll_studio.handlebars
+msgid "Image alternative text"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/handlebars/poll_studio.handlebars
+msgid ""
+"You can make limited use of Markdown in answer texts, preferably only bold "
+"and italics."
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html:97
+msgid "Add Answer"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html:101
+msgid "Add Question"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop.html
+msgid "Loading drag and drop problem."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Basic Settings"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Show title"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background Image"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Provide custom image"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Generate image automatically"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Describe this zone to non-visual users."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "width"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "height"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Align dropped items to the left, center, or right."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Maximum items per zone"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "This setting limits the number of items that can be dropped into a single zone."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Item definitions"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Use text that is clear and descriptive of the item to be placed."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Success feedback"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Error feedback"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Show advanced settings"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Preferred width"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Specify preferred width as percentage of the background image width. Leave blank for automatic width."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/default_data.py
+msgid "Drag the items onto the image above."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "PROBLEM"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Standard mode: the problem provides immediate feedback each time a learner drops an item on a target zone. Assessment mode: the problem provides feedback only after a learner drops all available items on target zones."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Defines the number of points the problem is worth."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Problem text"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Introductory feedback"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Final feedback"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background URL"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Change background"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "For example, 'http://example.com/background.png' or '/static/background.png'."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background description"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid ""
+"\n"
+"                            Please provide a description of the image for non-visual users.\n"
+"                            The description should provide sufficient information to allow anyone\n"
+"                            to solve the problem even without seeing the image.\n"
+"                        "
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Zone labels"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Zone borders"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Display label names on the image"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Display zone borders on the image"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Add a zone"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Items"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Item background color"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "The background color of draggable items in the problem (example: 'blue' or '#0000ff')."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Item text color"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Text color to use for draggable items (example: 'white' or '#ffffff')."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:57
+msgid "Enter your response to the prompt."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:93
+msgid "Your response (required)"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:105
+msgid "Enter your response to the prompt above."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: edx-ora2/openassessment/templates/openassessmentblock/response/oa_response.html
+msgid "Save your progress"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response_submitted.html:32
+msgid ""
+"Your response has been submitted. You will receive your grade after all "
+"steps are complete and your response is fully assessed."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:46
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html:46
+msgid "IN PROGRESS"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: edx-ora2/openassessment/templates/openassessmentblock/peer/oa_peer_waiting.html
+msgid ""
+"All available peer responses have been assessed. Check back later to see if "
+"more learners have submitted responses. You will receive your grade after "
+"you've completed all the steps for this problem and your peers have assessed"
+" your response."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_incomplete.html:42
+#, python-format
+msgid ""
+"\n"
+"                                    This assignment is in progress. All submitted peer responses have been assessed. Check back later to see if more learners have submitted responses. You still need to complete the %(start_link)speer assessment%(end_link)s step.\n"
+"                                "
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_incomplete.html:11
+msgid ""
+"This assignment is in progress. Complete the learner training step to move "
+"on."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/grade/oa_grade_incomplete.html:27
+msgid "You have not completed all the steps of this problem."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:6
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:17
+msgid "Manage Individual Learners"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:7
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:44
+msgid "View Assignment Statistics"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/instructor_dashboard/oa_grade_available_responses.html:15
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:9
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:126
+msgid "Grade Available Responses"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/peer/oa_peer_unavailable.html:16
+#: openassessment/templates/openassessmentblock/response/oa_response_unavailable.html:17
+#: openassessment/templates/openassessmentblock/self/oa_self_unavailable.html:17
+#: openassessment/templates/openassessmentblock/student_training/student_training_unavailable.html:16
+#: openassessment/xblock/staff_assessment_mixin.py:99
+#: openassessment/xblock/staff_assessment_mixin.py:123
+msgid "Not Available"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Registration Deadline"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Does this scorm, need to be scored?"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Enter a class description."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Assignment Type"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Select assignment type defined in Course Grading section on which you want to generate an Intermediate Certificate"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Success Threshold"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the percentage to obtain the Intermediate Certificate. Any student with a total score above the success threshold will be able to generate the Intermediate Certificate."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the name of your certificate"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Issue Date"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the Issue date to appear on certificate. Leave blank to use the quizz completion date."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Assignment Type override"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Leave blank to use the Assignment type name or provide a different name here."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Platform Name override"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Leave blank to use the default platform name or provide a different name here."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "HTML Template"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "HTML template to use when generating intermediate certificate. Include style to customise the appearance of the message, including color, font size, etc."
+msgstr ""
+
+#: platform/cms/djangoapps/contentstore/views/course.py:1223
+msgid "full public"
+msgstr ""
+
+#: platform/cms/djangoapps/contentstore/views/course.py:1223
+msgid "accessible by URL"
+msgstr ""
+
+#: platform/cms/djangoapps/contentstore/views/course.py:1223
+msgid "private"
+msgstr ""
+
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:38
+msgid "E-commerce"
+msgstr ""
+
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:14
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:24
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:47
+msgid "Graded Activities"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Your answer"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Learn to Assess Responses"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Assess Peers"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Assess Your Response"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Not completed"
+msgstr ""
+
+#: platform/cms/djangoapps/contentstore/views/component.py
+msgid "Raw HTML"
+msgstr "HTML 代码"
+
+#: platform/cms/djangoapps/contentstore/views/component.py
+msgid "Drag and Drop"
+msgstr "拖放"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Access Level"
+msgstr "访问权限"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Personal Info"
+msgstr "个人信息"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Update Password"
+msgstr "更新密码"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Password Confirmation"
+msgstr "确认密码"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Enter the same password as before, for verification"
+msgstr "输入与之前相同的密码进行验证"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Designates whether this user should be treated as Active. <br>Unselect this instead of deleting accounts."
+msgstr "指定是否应将此用户视为活跃用户。 <br>取消此选项，而不是删除帐户。"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Platform Access"
+msgstr "平台权限"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Designates the level of permissions the user has."
+msgstr "指定用户具有的权限级别。"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Configure your user Analytics access."
+msgstr "配置用户访问分析的权限。"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Internal Catalog Access"
+msgstr "内部课程访问权限"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "External Catalog - Edflex Access"
+msgstr "外部课程 - Edflex访问权限"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "External Catalog - Crehana Access"
+msgstr "外部课程 - Crehana访问权限"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Bulk Registration"
+msgstr "批量注册"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Is currently enrolled in ..."
+msgstr "当前已注册 。。。"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Could be enrolled in ..."
+msgstr "还未注册的 。。。"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "A legal name must be a minimum of two characters long."
+msgstr "有效的名字必须至少两个字符长。"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "All the following related items will be deleted"
+msgstr "以下所有相关项目将被删除"

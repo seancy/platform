@@ -6,7 +6,8 @@ define(['backbone', 'underscore', 'gettext'], function(Backbone, _, gettext) {
             drop_count: null,
             short_label: '', // what to use in place of type if space is an issue
             threshold: null,
-            weight: null // int 0..100
+            weight: null, // int 0..100
+            badge_url: ''
         },
         parse: function(attrs) {
         // round off values while converting them to integer

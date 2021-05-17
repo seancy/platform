@@ -8,15 +8,15 @@ var selectablePartitions = userPartitionInfo['selectable_partitions'];
         <%- gettext('Unit Access') %>
     </h3>
     <div class="modal-section-content access-change">
-        <label class="group-select-title"><%- gettext('Restrict access to:') %>
+        <div class="unit-access-wrapper">
+            <label class="group-select-title"><%- gettext('Restrict access to:') %></label>
             <select class="user-partition-select" id="partition-select">
                 <option value="-1" selected ="selected"><%- gettext('Select a group type') %></option>
                 <% for (var i=0; i < selectablePartitions.length; i++) { %>
                     <option id="<%- selectablePartitions[i].id %>-option" value="<%- selectablePartitions[i].id %>"><%- selectablePartitions[i].name %></option>
                 <% } %>
             </select>
-        </label>
-        <br>
+        </div>
         <div class="user-partition-group-checkboxes">
             <% for (var i=0; i < selectablePartitions.length; i++) { %>
                 <div role="group" aria-labelledby="partition-group-directions-<%- selectablePartitions[i].id %>" id="<%- selectablePartitions[i].id %>-checkboxes">

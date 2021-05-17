@@ -45,6 +45,7 @@ class UserPropertiesHelper():
     def __init__(self):
         config_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
                                                             settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+
         self.possible_choices_db_prefix = []
         self.possible_choices = []
         self.initial_choices = ["user_name"]

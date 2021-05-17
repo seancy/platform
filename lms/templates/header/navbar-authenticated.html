@@ -62,7 +62,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
         and EDFLEX_DENIED_GROUP not in user_groups):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab edflex-tab">
           <a class="tab-nav-link" target="_blank" href="${reverse('edflex_catalog')}" title="${_('External content catalog')} - EdFlex">
-            <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-caret-circle-right" aria-hidden="true"></span></span>
             ${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}
           </a>
         </div>
@@ -73,7 +73,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
         and CREHANA_DENIED_GROUP not in user_groups):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab crehana-tab">
           <a class="tab-nav-link" target="_blank" href="${reverse('crehana_catalog')}" title="${_('External content catalog')} - Crehana">
-            <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
+            <span class="label"><span class="icon fal fa-caret-circle-right" aria-hidden="true"></span></span>
             ${configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')}
           </a>
         </div>
@@ -110,6 +110,14 @@ from student.roles import studio_access_role, ilt_supervisor_role
           <a class="tab-nav-link" href="${reverse('ilt_validation_list')}" title="${_('ILT request validation page')}">
             <span class="label"><span class="icon fal fa-ballot-check" aria-hidden="true"></span></span>
             ${pgettext('tab', "ILT Follow-up")}
+          </a>
+        </div>
+      % endif
+      % if user.is_staff:
+        <div class="mobile-nav-item hidden-mobile nav-item nav-tab admin-panel-tab">
+          <a class="tab-nav-link" href="${reverse('admin_panel_user_list')}" title="${_('Admin')}">
+            <span class="label"><span class="icon fal fa-crown" aria-hidden="true"></span></span>
+            ${_("Admin")}
           </a>
         </div>
       % endif

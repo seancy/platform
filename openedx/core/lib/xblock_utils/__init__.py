@@ -134,8 +134,32 @@ def wrap_xblock(
     block_label = None
     block_title = None
     frag_content = frag.content
-
+    # This is for the default template for Text xblock
     if block.category == 'html' and frag.content.find('hd hd-2') == -1:
+        if block.display_name == 'Text' and (frag_content == ' ' or frag_content == ''):
+            text_use_video = _('Use Text Component ')
+            text_add_videos = _('Use Text component to add and format text, links, images, and more.')
+            text_you_are_ready = _('You are now ready')
+            text_add_a_video = _('Integrate content by clicking on the pencil icon.')
+            frag_content = '''
+                    <div class="colorful-boxes">
+                        <div class="blue-block">
+                            <span class="icon"><span class="fal fa-text"></span></span>
+                            <strong>{text_use_video}</strong>
+                            <p>{text_add_videos}</p>
+                        </div>
+                        <div class="yellow-block">
+                            <span class="icon"><span class="fal fa-play"></span></span>
+                            <strong>{text_you_are_ready}</strong>
+                            <p>{text_add_a_video}</p>
+                        </div>
+                    </div>
+                    '''.format(
+                text_use_video=text_use_video,
+                text_add_videos=text_add_videos,
+                text_you_are_ready=text_you_are_ready,
+                text_add_a_video=text_add_a_video
+            )
         frag_content = '<hr class="sep-line">' + frag_content
         if block.display_name not in ['Text', 'Raw HTML']:
             block_label = '''

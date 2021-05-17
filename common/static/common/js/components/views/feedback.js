@@ -78,6 +78,12 @@
                             !_.isArray(this.options.actions.secondary)) {
                         this.options.actions.secondary = [this.options.actions.secondary];
                     }
+                    setTimeout($.proxy(function(){
+                        this.$el.delegate('.action-close', 'click', function(e){
+                            return false;
+                        })
+                    }, this),200)
+
                     return this;
                 },
 

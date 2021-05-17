@@ -188,7 +188,7 @@ class TabsPageTests(CourseTestCase):
         # Verify that the HTML contains the expected elements
         self.assertIn('<span class="action-button-text">Edit</span>', html)
         self.assertIn('<span class="sr">Duplicate this component</span>', html)
-        self.assertIn('<span class="sr">Delete this component</span>', html)
+        self.assertIn('<span class="action-button-text">Delete</span>', html)
         self.assertIn('<span data-tooltip="Drag to reorder" class="drag-handle action"></span>', html)
 
 

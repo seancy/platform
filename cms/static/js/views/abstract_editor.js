@@ -12,6 +12,10 @@ define(['js/views/baseview', 'underscore'], function(BaseView, _) {
             this.$el.html(this.template({model: this.model, uniqueId: this.uniqueId}));
             this.listenTo(this.model, 'change', this.render);
             this.render();
+            setTimeout($.proxy(function(){
+                var wrapper = this.$el.find('.question-mark-wrapper')[0]
+                wrapper && new LearningTribes.QuestionMark(wrapper)
+            }, this), 500)
         },
 
         /**

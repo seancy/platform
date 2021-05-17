@@ -367,6 +367,9 @@ class VideoModule(VideoFields, VideoTranscriptsMixin, VideoStudentViewHandlers, 
 
         bumperize(self)
 
+        student_id = self.runtime.anonymous_student_id
+        is_in_studio = student_id == 'student'
+
         context = {
             'autoadvance_enabled': autoadvance_enabled,
             'bumper_metadata': json.dumps(self.bumper['metadata']),  # pylint: disable=E1101
@@ -383,6 +386,9 @@ class VideoModule(VideoFields, VideoTranscriptsMixin, VideoStudentViewHandlers, 
             'transcript_download_format': transcript_download_format,
             'transcript_download_formats_list': self.descriptor.fields['transcript_download_format'].values,
             'license': getattr(self, "license", None),
+            'streams': self.youtube_streams,
+            'video_id': self.edx_video_id,
+            'is_in_studio': is_in_studio,
         }
         return self.system.render_template('video.html', context)
 

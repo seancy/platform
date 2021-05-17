@@ -31,6 +31,15 @@ function($, _, gettext, BasePage, GroupConfigurationsListView, PartitionGroupLis
                     })
                 );
             }
+
+            var customizedGroupView = this.allGroupViewList[this.allGroupViewList.length - 1]
+            customizedGroupView.on('onRemove', function(){
+                $('.create-group-configurations-button').removeClass('disabled')
+            })
+            $('.nav-actions .new-button').on('click', $.proxy(function(e){
+                customizedGroupView.onAddItem();
+                $(e.currentTarget).addClass('disabled')
+            },this))
         },
 
         renderPage: function() {

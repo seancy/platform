@@ -32,7 +32,9 @@ from openedx.core.djangolib.js_utils import (
       <ul>
         %if allow_actions:
         <li class="nav-item">
-          <a href="#" class="button new-button create-user-button"><span class="icon fa fa-plus" aria-hidden="true"></span> ${_("New Team Member")}</a>
+          <a href="#" class="button new-button create-user-button">
+            <span class="icon fal fa-plus" aria-hidden="true"></span>
+            ${_("New Team Member")}</a>
         </li>
         %endif
       </ul>
@@ -63,48 +65,51 @@ from openedx.core.djangolib.js_utils import (
           </div>
 
           <div class="actions">
-            <button class="action action-primary" type="submit">${_("Add User")}</button>
             <button class="action action-secondary action-cancel">${_("Cancel")}</button>
+            <button class="action action-primary" type="submit">${_("Add User")}</button>
           </div>
         </form>
       </div>
       %endif
 
-      <ol class="user-list" id="user-list">
-        <div class="ui-loading">
-          <p><span class="spin"><span class="icon fa fa-refresh" aria-hidden="true"></span></span> <span class="copy">${_('Loading')}</span></p>
-        </div>
-      </ol>
+      <div class="user-list-wrapper">
+        <div class="header"><span class="name">${_('Name')}</span><span class="action">${_('Action')}</span></div>
+        <ol class="user-list" id="user-list">
+          <div class="ui-loading">
+            <p><span class="spin"><span class="icon fa fa-refresh" aria-hidden="true"></span></span> <span class="copy">${_('Loading')}</span></p>
+          </div>
+        </ol>
+      </div>
 
       % if allow_actions and len(users) == 1:
-      <div class="notice notice-incontext notice-create has-actions">
-        <div class="msg">
-          <h3 class="title">${_('Add Team Members to This Course')}</h3>
-          <div class="copy">
-            <p>${_('Adding team members makes course authoring collaborative. Users must be signed up for {studio_name} and have an active account.').format(studio_name=settings.STUDIO_SHORT_NAME)}</p>
-          </div>
-        </div>
+      ##<div class="notice notice-incontext notice-create has-actions">
+      ##  <div class="msg">
+      ##    <h3 class="title">${_('Add Team Members to This Course')}</h3>
+      ##    <div class="copy">
+      ##      <p>${_('Adding team members makes course authoring collaborative. Users must be signed up for {studio_name} and have an active account.').format(studio_name=settings.STUDIO_SHORT_NAME)}</p>
+      ##    </div>
+      ##  </div>
 
-        <ul class="list-actions">
-          <li class="action-item">
-            <a href="#" class="action action-primary button new-button create-user-button"><span class="icon fa fa-plus icon-inline" aria-hidden="true"></span> ${_('Add a New Team Member')}</a>
-          </li>
-        </ul>
-      </div>
+      ##  <ul class="list-actions">
+      ##    <li class="action-item">
+      ##      <a href="#" class="action action-primary button new-button create-user-button"><span class="icon fa fa-plus icon-inline" aria-hidden="true"></span> ${_('Add a New Team Member')}</a>
+      ##    </li>
+      ##  </ul>
+      ##</div>
       %endif
     </article>
 
     <aside class="content-supplementary" role="complementary">
       <div class="bit">
         <h3 class="title-3">${_("Course Team Roles")}</h3>
-        <p>${_("Course team members with the Staff role are course co-authors. They have full writing and editing privileges on all course content.")}</p>
-        ## Note that the "Admin" role below is identified as "Instructor" in the Django admin panel.
-        <p>${_("Admins are course team members who can add and remove other course team members.")}</p>
-        <p>${_("All course team members can access content in Studio, the LMS, and Insights, but are not automatically enrolled in the course.")}</p>
+        <p><i class="fal fa-user-crown"></i><span><b>${_("Admin")}</b>${_("This user has Admin Access to the course, because he/she is the one who created the course or this user has been granted Admin Access by another Admin. They can add and remove other course team members. They have also the right to delete a course.")}</span></p>
+        <p><i class="fal fa-user-edit"></i><span><b>${_("Staff")}</b>${_("This user can edit the course but cannot manage the course team (cannot add a new member or change other members' access). They are courseco-authors. They have also full writing and editing privileges on all course content.")}</span></p>
+        <p><i class="fal"></i><span>${_("All course team members can access content in Studio and the LMS, but are not automatically enrolled in the course.")}</span></p>
+        <p><i class="fal fa-user-tie"></i><span><b>${_("Instructor")}</b>${_("This user has no access to the Studio, but has been added to the course team by an Admin. He/She cannot be granted Admin Access to the course. He/she will have access to the ILT Admin Panel.")}</span></p>
       </div>
 
       % if show_transfer_ownership_hint:
-      <div class="bit">
+      <div class="bit show_transfer_ownership_hint">
         <h3 class="title-3">${_("Transferring Ownership")}</h3>
         <p>${_("Every course must have an Admin. If you are the Admin and you want to transfer ownership of the course, click <strong>Add admin access</strong> to make another user the Admin, then ask that user to remove you from the Course Team list.")}</p>
       </div>

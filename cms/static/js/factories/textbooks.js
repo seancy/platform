@@ -4,12 +4,23 @@ import * as TextbookCollection from 'js/collections/textbook';
 import * as ListTextbooksView from 'js/views/list_textbooks';
 import './base';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {QuestionMark} from '../../../../lms/static/js/QuestionMark';
+
+function QuestionMarkWrapper(element, tooltip) {
+    ReactDOM.render(
+      React.createElement(QuestionMark, {tooltip:$(element).data('title') || tooltip}, null),
+      element
+    );
+}
+
 'use strict';
 export default function TextbooksFactory(textbooksJson) {
     var textbooks = new TextbookCollection(textbooksJson, {parse: true}),
-        tbView = new ListTextbooksView({collection: textbooks});
-
-    $('.content-primary').append(tbView.render().el);
+        tbView = new ListTextbooksView({collection: textbooks, QuestionMarkWrapper});
+    var $contentPrimary = $('.content-primary')
+    $contentPrimary.append(tbView.render().el);
     $('.nav-actions .new-button').click(function(event) {
         tbView.addOne(event);
     });

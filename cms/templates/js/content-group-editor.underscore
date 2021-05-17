@@ -1,13 +1,16 @@
 <form class="collection-edit-form">
     <% if (error && error.message) { %>
-        <div class="content-group-edit-error message message-status message-status error is-shown">
+        <!--<div class="content-group-edit-error message message-status message-status error is-shown">
           <%- gettext(error.message) %>
-        </div>
+        </div>-->
     <% } %>
     <div class="wrapper-form">
         <fieldset class="collection-fields">
             <div class="input-wrap field text required add-collection-name <% if (error && error.attributes && error.attributes.name) { print('error'); } %>">
-                <label for="group-cohort-name-<%- uniqueId %>"><%- gettext("Content Group Name") %></label><%
+                <label for="group-cohort-name-<%- uniqueId %>">
+                    <%- gettext("Content Group Name") %>
+                    <i class="fal fa-times"></i>
+                </label><%
                 if (!_.isUndefined(id) && !_.isEmpty(id)) {
                     %><span class="group-configuration-id">
                         <span class="group-configuration-label"><%- gettext('Content Group ID') %></span>
@@ -15,6 +18,7 @@
                     </span><%
                 }
                 %>
+                <label for="group-cohort-name-<%- uniqueId %>"><%- gettext("Name") %></label>
                 <input name="group-cohort-name" id="group-cohort-name-<%- uniqueId %>" class="collection-name-input input-text" value="<%- name %>" type="text" placeholder="<%- gettext("This is the name of the group") %>">
             </div>
         </fieldset>
@@ -28,10 +32,10 @@
         <% } %>
     </div>
     <div class="actions">
-        <button class="action action-primary" type="submit"><% if (isNew) { print(gettext("Create")) } else { print(gettext("Save")) } %></button>
         <button class="action action-secondary action-cancel"><%- gettext("Cancel") %></button>
+        <button class="action action-primary" type="submit"><% if (isNew) { print(gettext("Create")) } else { print(gettext("Save")) } %></button>
 
-         <% if (!isNew) { %>
+         <!--<% if (!isNew) { %>
             <% if (_.isEmpty(usage)) { %>
                 <span class="wrapper-delete-button" data-tooltip="<%- gettext("Delete") %>">
                     <a class="button action-delete delete" href="#"><%- gettext("Delete") %></a>
@@ -41,6 +45,6 @@
                     <a class="button action-delete delete is-disabled" href="#" aria-disabled="true" ><%- gettext("Delete") %></a>
                 </span>
             <% } %>
-        <% } %>
+        <% } %>-->
     </div>
 </form>

@@ -5,6 +5,9 @@ import logging
 import urllib
 
 from django.conf import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
+from opaque_keys.edx.keys import AssetKey
+from opaque_keys.edx.locator import InvalidKeyError
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from triboo_analytics.models import (
@@ -13,6 +16,8 @@ from triboo_analytics.models import (
     LearnerCourseJsonReport,
     LearnerSectionJsonReport,
 )
+from xmodule.contentstore.content import StaticContent
+from xmodule.contentstore.django import contentstore
 
 
 log = logging.getLogger(__name__)
@@ -74,3 +79,31 @@ def remove_course_reports(course_key):
     CourseDailyReport.objects.filter(course_id=course_key).delete()
     LearnerCourseJsonReport.objects.filter(course_id=course_key).delete()
     LearnerSectionJsonReport.objects.filter(course_id=course_key).delete()
+
+
+def get_badge_url(course_key, grader):
+    """
+    Get real asset for the provided grade image url.
+    """
+
+    try:
+        badge_url = grader.get('badge_url', '')
+        if badge_url:
+            asset_key = AssetKey.from_string(badge_url[1:]) # trim first slash char to get asset key
+            content = contentstore().find(asset_key, throw_on_not_found=False)
+            if content is not None:
+                return badge_url
+
+        if grader['short_label'] is not None:
+            # keep compatibility with old badge image url get(use the same name with grade's
+            # short label.
+            for img_type in ('.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'):
+                asset_key = course_key.make_asset_key('asset', str(grader['short_label']) + img_type)
+                content = contentstore().find(asset_key, throw_on_not_found=False)
+                if content is not None:
+                    return StaticContent.serialize_asset_key_with_slash(asset_key)
+    except InvalidKeyError:
+        # roll back to get image url with the default one.
+        pass
+
+    return staticfiles_storage.url("images/badge.png")

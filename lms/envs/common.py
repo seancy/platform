@@ -3575,6 +3575,21 @@ from openedx.core.djangoapps.plugins import plugin_apps, plugin_settings, consta
 INSTALLED_APPS.extend(plugin_apps.get_apps(plugin_constants.ProjectType.LMS))
 plugin_settings.add_plugins(__name__, plugin_constants.ProjectType.LMS, plugin_constants.SettingsType.COMMON)
 
+OFFICIAL_ADVANCED_MODULES = [
+        "drag-and-drop-v2",
+        "icxblock",
+        "ilt",
+        "library_content",
+        "openassessment",
+        "pdf",
+        "poll",
+        "scormxblock",
+        "survey",
+        "videoalpha",
+        "edflex",
+        "word_cloud",
+        "iframe",
+]
 COURSE_ADVANCED_MODULES = []
 
 ########################### SAML IdP ################################################

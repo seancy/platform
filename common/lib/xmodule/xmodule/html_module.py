@@ -380,8 +380,8 @@ class StaticTabFields(object):
     The overrides for Static Tabs
     """
     display_name = String(
-        display_name=_("Display Name"),
-        help=_("The display name for this component."),
+        display_name=_("Page Name"),
+        help=_("The page name for this component."),
         scope=Scope.settings,
         default="Empty",
     )

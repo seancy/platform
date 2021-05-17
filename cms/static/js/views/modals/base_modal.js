@@ -26,6 +26,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview'],
     function($, _, gettext, BaseView) {
         var BaseModal = BaseView.extend({
             events: {
+                'click .icon-return': 'cancel',
                 'click .action-cancel': 'cancel'
             },
 
@@ -46,11 +47,12 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview'],
                 showEditorModeButtons: true
             }),
 
-            initialize: function() {
+            initialize: function(options) {
                 var parent = this.options.parent,
                     parentElement = this.options.parentElement;
                 this.modalTemplate = this.loadTemplate('basic-modal');
                 this.buttonTemplate = this.loadTemplate('modal-button');
+                _.extend(this.options, options);
                 if (parent) {
                     parentElement = parent.$el;
                 } else if (!parentElement) {
@@ -124,6 +126,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview'],
              * Adds the action buttons to the modal.
              */
             addActionButtons: function() {
+                this.addActionButton('cancel', gettext('Cancel'));
                 if (this.options.addPrimaryActionButton) {
                     this.addActionButton(
                         this.options.primaryActionButtonType,
@@ -131,7 +134,6 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview'],
                         true
                     );
                 }
-                this.addActionButton('cancel', gettext('Cancel'));
             },
 
             /**
@@ -178,7 +180,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview'],
                 modalWindow = this.$el.find(this.options.modalWindowClass);
                 availableWidth = $(window).width();
                 availableHeight = $(window).height();
-                maxWidth = availableWidth * 0.80;
+                maxWidth = availableWidth * 0.96;
                 maxHeight = availableHeight * 0.80;
                 modalWidth = Math.min(modalWindow.outerWidth(), maxWidth);
                 modalHeight = Math.min(modalWindow.outerHeight(), maxHeight);

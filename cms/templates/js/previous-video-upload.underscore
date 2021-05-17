@@ -6,13 +6,13 @@
     <div class="video-col date-col"><%- created %></div>
     <div class="video-col video-id-col"><%- edx_video_id %></div>
     <div class="video-col transcripts-col"></div>
-    <div class="video-col status-col"><%- status %></div>
+    <div class="video-col status-col"><span class="<%- status_class.replace(/ /g,'') %>"><i class="fas fa-circle"></i><%- status %></span></div>
     <div class="video-col actions-col">
         <ul class="actions-list">
             <li class="action-item action-remove">
                 <a href="#" data-tooltip="<%- gettext('Remove this video') %>" class="remove-video-button action-button">
-                    <span class="icon fa fa-times-circle" aria-hidden="true"></span>
-                    <span class="sr"><%- StringUtils.interpolate(gettext("Remove {video_name} video"), {video_name: client_video_id}) %></span>
+                    <i class="icon fal fa-trash-alt" aria-hidden="true"/>
+                    <!--<span><%- gettext("Delete") %></span>-->
                 </a>
             </li>
         </ul>

@@ -315,7 +315,6 @@ msgstr "Professionnel de l'éducation"
 #: common/lib/xmodule/xmodule/capa_base.py:99
 #: common/lib/xmodule/xmodule/conditional_module.py:32
 #: common/lib/xmodule/xmodule/html_module.py:42
-#: common/lib/xmodule/xmodule/html_module.py:380
 #: common/lib/xmodule/xmodule/imageannotation_module.py:47
 #: common/lib/xmodule/xmodule/library_content_module.py:68
 #: common/lib/xmodule/xmodule/lti_module.py:114
@@ -2957,10 +2956,9 @@ msgid ""
 "for the course, such as \"Winter 2018\". If you enter null for this value, "
 "the start date that you have set for this course is used."
 msgstr ""
-"Saisissez le texte que vous souhaitez utiliser en tant que période de début "
-"des cours annoncés, tel que « Hiver 2018 ». Si vous saisissez null pour "
-"cette valeur, la date de début que vous aviez choisie pour ce cours sera "
-"celle retenue."
+"Entrez la date que vous souhaitez utiliser en tant que période de début des "
+"cours annoncés. Si vous laissez la valeur par défaut pour cette valeur, la "
+"date de début que vous aviez choisie pour ce cours sera celle retenue."
 
 #: common/lib/xmodule/xmodule/course_module.py:226
 msgid "Pre-Requisite Courses"
@@ -2983,8 +2981,7 @@ msgid ""
 "Enter true or false. When true, learners can see the calculator in the "
 "course."
 msgstr ""
-"Entrez vrai ou faux. Si vrai, les élèves peuvent voir la calculatrice "
-"pendant le cours."
+"Indiquez si les élèves peuvent voir la calculatrice pendant le cours."
 
 #: common/lib/xmodule/xmodule/course_module.py:279
 msgid ""
@@ -3086,9 +3083,9 @@ msgid ""
 "sorted alphabetically. If false, they are sorted chronologically by creation "
 "date and time."
 msgstr ""
-"Entrez true ou false. Si true, les catégories et sous-catégories de "
-"discussion sont triées par ordre alphabétique. Si false, elles sont triées "
-"par ordre chronologique de date et heure de création."
+"Indiquez si les catégories et sous-catégories de discussion sont triées par "
+"ordre alphabétique. Si false, elles sont triées par ordre chronologique de "
+"date et heure de création."
 
 #: common/lib/xmodule/xmodule/course_module.py:333
 msgid "Course Announcement Date"
@@ -3132,7 +3129,7 @@ msgstr "Cours disponible sur mobile"
 #: common/lib/xmodule/xmodule/course_module.py:355
 msgid ""
 "Enter true or false. If true, the course will be available to mobile devices."
-msgstr "Entrez true ou false. Si true, le cours sera disponible sur mobile."
+msgstr "Indiquez si le cours sera disponible sur mobile."
 
 #: common/lib/xmodule/xmodule/course_module.py:360
 msgid "Video Upload Credentials"
@@ -3244,9 +3241,8 @@ msgid ""
 "Enter true or false. If true, learners can create discussion posts that are "
 "anonymous to all users."
 msgstr ""
-"Entrez vrai ou faux. Si vrai, les apprenants peuvent proposer des "
-"contributions aux discussions qui sont vues comme anonymes par tous les "
-"utilisateurs."
+"Indiquez si les apprenants peuvent proposer des contributions aux discussions "
+"qui sont vues comme anonymes par tous les utilisateurs."
 
 #: common/lib/xmodule/xmodule/course_module.py:427
 msgid "Allow Anonymous Discussion Posts to Peers"
@@ -3259,10 +3255,9 @@ msgid ""
 "anonymous to other learners. This setting does not make posts anonymous to "
 "course staff."
 msgstr ""
-"Entrez vrai ou faux. Si vrai, les apprenants peuvent proposer des "
-"contributions aux discussions qui sont vues comme anonymes par les autres "
-"apprenants. Ce paramètre ne rend pas les messages anonymes pour l'équipe "
-"pédagogique."
+"Indiquez si les apprenants peuvent proposer des contributions aux discussions "
+"qui sont vues comme anonymes par les autres apprenants. Ce paramètre ne rend "
+"pas les messages anonymes pour l'équipe pédagogique."
 
 #: common/lib/xmodule/xmodule/course_module.py:435
 #: common/lib/xmodule/xmodule/library_root_xblock.py:34
@@ -3271,7 +3266,7 @@ msgstr "Liste des modules avancés"
 
 #: common/lib/xmodule/xmodule/course_module.py:437
 msgid "Enter the names of the advanced modules to use in your course."
-msgstr "Entrer les noms des composants avancés à utiliser dans votre cours."
+msgstr "Sélectionner les noms des composants avancés à utiliser dans votre cours."
 
 #: common/lib/xmodule/xmodule/course_module.py:442
 msgid "Course Home Sidebar Name"
@@ -3564,8 +3559,8 @@ msgid ""
 "Enter true or false. If true, edX users can view the course wiki even if "
 "they're not enrolled in the course."
 msgstr ""
-"Entrez vrai ou faux. Si vrai, les utilisateurs edX peuvent voir le wiki de "
-"cours même s'ils ne sont pas inscrits au cours."
+"Indiquez si les apprenants peuvent voir le wiki du cours même s'ils ne "
+"sont pas inscrits au cours."
 
 #: common/lib/xmodule/xmodule/course_module.py:654
 msgid "Invitation Only"
@@ -3765,9 +3760,8 @@ msgid ""
 "Enter true or false. If this value is true, proctored exams are enabled in "
 "your course. Note that enabling proctored exams will also enable timed exams."
 msgstr ""
-"Entrer vrai (true) ou faux (false). Si cette valeur est vrai, les examens "
-"surveillés seront activés dans votre cours. Veuillez noter qu'activer les "
-"examens surveillés va aussi activer les examens minutés."
+"Indiquez si les examens surveillés seront activés dans votre cours. Veuillez "
+"noter qu'activer les examens surveillés va aussi activer les examens minutés."
 
 #: common/lib/xmodule/xmodule/course_module.py:789
 msgid "Allow Opting Out of Proctored Exams"
@@ -3780,10 +3774,10 @@ msgid ""
 "must take the exam with proctoring. This setting only applies if proctored "
 "exams are enabled for the course."
 msgstr ""
-"Indiquez vrai ou faux. Si la valeur choisie est vrai, les apprenants peuvent "
-"choisir de passer cet examen surveillé sans surveillance. Si la valeur est "
-"faux, tous les apprenants doivent passer l'examen en étant surveillés. Ce "
-"paramètre ne peut être utilisé que dans le cadre d'un examen surveillé."
+"Indiquez si les apprenants peuvent choisir de passer cet examen surveillé "
+"sans surveillance. Si la valeur est faux, tous les apprenants doivent passer "
+"l'examen en étant surveillés. Ce paramètre ne peut être utilisé que dans le cadre "
+"d'un examen surveillé."
 
 #: common/lib/xmodule/xmodule/course_module.py:800
 msgid "Create Zendesk Tickets For Suspicious Proctored Exam Attempts"
@@ -3795,8 +3789,7 @@ msgid ""
 "Enter true or false. If this value is true, a Zendesk ticket will be created "
 "for suspicious attempts."
 msgstr ""
-"Entrer vrai ou faux. Si cette valeur est vrai, un ticket Zendesk sera créé "
-"pour des tentatives suspectes."
+"Indiquez si un ticket Zendesk sera créé pour des tentatives suspectes."
 
 #: common/lib/xmodule/xmodule/course_module.py:809
 msgid "Enable Timed Exams"
@@ -3808,10 +3801,9 @@ msgid ""
 "course. Regardless of this setting, timed exams are enabled if Enable "
 "Proctored Exams is set to true."
 msgstr ""
-"Saisissez vrai ou faux. Si la valeur est vrai, vous pourrez activer les "
-"examens minutés dans votre cours. Ce paramètre mis à part, les examens "
-"minutés sont activés si le paramètre Activer les examens surveillés est "
-"réglé sur vrai."
+"Indiquez si vous autorisez les examens minutés dans votre cours. Ce paramètre "
+"mis à part, les examens minutés sont activés si le paramètre Activer les examens "
+"surveillés est réglé sur vrai."
 
 #: common/lib/xmodule/xmodule/course_module.py:819
 msgid "Minimum Grade for Credit"
@@ -3864,9 +3856,8 @@ msgid ""
 "Enter true or false. If this value is true, you can hide a subsection until "
 "learners earn a minimum score in another, prerequisite subsection."
 msgstr ""
-"Entrer vrai ou faux. Si la valeur est vrai, vous pouvez cacher une sous-"
-"section jusqu'à ce que les apprenants obtiennent un score minimum dans une "
-"autre sous-section pré-requise."
+"Indiquez si vous pouvez cacher une sous-section jusqu'à ce que les apprenants "
+"obtiennent un score minimum dans une autre sous-section pré-requise."
 
 #: common/lib/xmodule/xmodule/course_module.py:862
 msgid "Course Learning Information"
@@ -3985,8 +3976,8 @@ msgid ""
 "Indicate to the learners that the course is important and required for their "
 "training."
 msgstr ""
-"Indiquer à l'apprenant que le cours est important et requis dans le cadre"
-"de leur formation."
+"Indiquer à l'apprenant que le cours est important et requis dans "
+"le cadre de leur formation."
 
 #: common/lib/xmodule/xmodule/course_module.py:1017
 msgid "General"
@@ -4067,6 +4058,10 @@ msgstr "Visuel"
 #: common/lib/xmodule/xmodule/html_module.py:68
 msgid "Raw"
 msgstr "Brut"
+
+#: common/lib/xmodule/xmodule/html_module.py:383
+msgid "Page Name"
+msgstr "Nom de la page"
 
 #: common/lib/xmodule/xmodule/html_module.py:386
 msgid "Hide Page From Learners"
@@ -4627,7 +4622,7 @@ msgid ""
 "the course."
 msgstr ""
 "Entrez le nombre de jours avant la date de début pendant lesquels les "
-"utilisateurs bêta peuvent accéder au cours."
+"bêta-testeurs peuvent accéder au cours."
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:137
 msgid "Static Asset Path"
@@ -4710,8 +4705,7 @@ msgstr "Activer le système de cache vidéo"
 msgid ""
 "Enter true or false. If true, video caching will be used for HTML5 videos."
 msgstr ""
-"Entrez vrai ou faux. Si vrai, la mise en cache sera utilisée pour les vidéos "
-"HTML5."
+"Indiquez si la mise en cache sera utilisée pour les vidéos HTML5."
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:177
 msgid "Enable video auto-advance"
@@ -4757,10 +4751,9 @@ msgid ""
 "settings. All existing problems are affected when this course-wide setting "
 "is changed."
 msgstr ""
-"Saisir vrai ou faux. Si la valeur vaut vrai, les exercices du cours vont par "
-"défaut afficher un bouton de 'Réinitialisation'. Cette valeur peut être "
-"modifiée dans chaque paramétrage d'exercice. Tous les exercices existants "
-"sont affectés quand ce paramètre de cours est changé."
+"Indiquez si les exercices du cours vont par défaut afficher un bouton de "
+"'Réinitialisation'. Cette valeur peut être modifiée dans chaque paramétrage "
+"d'exercice. Tous les exercices existants sont affectés quand ce paramètre de cours est changé."
 
 #: common/lib/xmodule/xmodule/modulestore/inheritance.py:216
 msgid "Enable Learner Notes"
@@ -4856,11 +4849,11 @@ msgstr ""
 "effet."
 
 #: common/lib/xmodule/xmodule/seq_module.py:78
-msgid "Estimated time for subsection" 
+msgid "Estimated time for subsection"
 msgstr "Durée estimée de la sous-section"
 
 #: common/lib/xmodule/xmodule/seq_module.py:80
-msgid "If set, estimated time will show in subsection display area." 
+msgid "If set, estimated time will show in subsection display area."
 msgstr "S’il est défini, le temps estimé s’affichera au niveau des sous-sections."
 
 #: common/lib/xmodule/xmodule/seq_module.py:83
@@ -7284,11 +7277,16 @@ msgstr "Cours ajouté"
 
 #: lms/djangoapps/dashboard/sysadmin.py:435
 #: lms/djangoapps/dashboard/sysadmin.py:534
-#: cms/templates/course-create-rerun.html:76 cms/templates/index.html:73
+#: cms/templates/course-create-rerun.html:76
+#: cms/templates/index.html:73
 #: lms/templates/courseware/ilt_validation.html:26
 #: lms/templates/shoppingcart/receipt.html:71
 msgid "Course Name"
 msgstr "Nom du cours"
+
+#: cms/templates/index.html:113
+msgid "Enter your course name"
+msgstr "Saisie du nom du cours"
 
 #: lms/djangoapps/dashboard/sysadmin.py:436
 msgid "Directory/ID"
@@ -10278,7 +10276,7 @@ msgid "Course Announce Date"
 msgstr "Date de l'annonce du cours"
 
 #: lms/djangoapps/shoppingcart/reports.py:214
-#: cms/templates/course_outline.html:161 cms/templates/settings.html:218
+#: cms/templates/settings.html:218
 #: lms/templates/instructor/instructor_dashboard_2/executive_summary.html:35
 msgid "Course Start Date"
 msgstr "Date de début du cours"
@@ -10708,7 +10706,7 @@ msgstr "Numéro de téléphone"
 
 #: lms/djangoapps/triboo_analytics/forms.py:18
 msgid "GDPR"
-msgstr "GRPD"
+msgstr "RGPD"
 
 #: lms/djangoapps/triboo_analytics/forms.py:20
 msgid "Employee ID"
@@ -13221,7 +13219,7 @@ msgstr ""
 #: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
 #: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:25
 msgid "Updates"
-msgstr "Annonces"
+msgstr "Actualités du cours"
 
 #: openedx/features/course_experience/plugins.py:79
 #: openedx/features/course_experience/templates/course_experience/course-reviews-fragment.html:19
@@ -14022,6 +14020,14 @@ msgstr "Date ajoutée"
 msgid "{course}_video_urls"
 msgstr "{course}_video_urls"
 
+#: cms/djangoapps/contentstore/views/settings_data_config.py
+msgid "Basic Information"
+msgstr "Information générale"
+
+#: cms/djangoapps/contentstore/views/settings_data_config.py
+msgid "Graded Activities"
+msgstr "Activité scorée"
+
 #: cms/djangoapps/course_creators/models.py:32
 msgid "unrequested"
 msgstr "non demandé"
@@ -14190,15 +14196,25 @@ msgstr "Erreur :"
 msgid "Organization:"
 msgstr "Organisation :"
 
-#: cms/templates/index.html:232 cms/templates/index.html:278
+#: cms/templates/index.html:232
+#: cms/templates/index.html:278
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:18
 msgid "Course Number:"
 msgstr "Numéro du cours :"
 
-#: cms/templates/index.html:236 cms/templates/index.html:282
+#: cms/templates/index.html:142
+msgid "Enter the course number"
+msgstr "Saisie du numéro du cours"
+
+#: cms/templates/index.html:236
+#: cms/templates/index.html:282
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:43
 msgid "Course Run:"
 msgstr "Session de cours :"
+
+#: cms/templates/index.html:156
+msgid "Enter the course run date"
+msgstr "Saisie du trimestre du cours"
 
 #: cms/templates/index.html:321 lms/templates/sysadmin_dashboard.html:59
 #: lms/templates/sysadmin_dashboard_gitlogs.html:116
@@ -21015,6 +21031,7 @@ msgid "Basic Course Information"
 msgstr "Informations de base relatives au cours"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:23
+#: cms/templates/course_outline.html:161
 msgid "Course Start Date:"
 msgstr "Date de début du cours :"
 
@@ -25246,10 +25263,10 @@ msgstr ""
 msgid "Learn more about Course Re-runs"
 msgstr "En savoir plus sur les cours relancés"
 
-#: cms/templates/course_info.html:13 
+#: cms/templates/course_info.html:13
 #: cms/templates/course_info.html:41
 msgid "Course Updates"
-msgstr "Actualités du Cours"
+msgstr "Actualités du cours"
 
 #: openedx/features/course_experience/templates/course_experience/course-updates-fragment.html:18
 msgid "View more"
@@ -25283,10 +25300,21 @@ msgstr ""
 "et pour répondre aux questions des apprenants. Vous pouvez ajouter ou "
 "modifier les mises à jour en HTML."
 
+#: cms/templates/course_info.html:79
+msgid ""
+"Use course updates to notify learners of important dates or exams, "
+"highlight particular discussions in the forums, announce schedule changes, "
+"and respond to learner questions. You can add or edit updates."
+msgstr ""
+"Utilisez la page d’actualité du cours pour informer les apprenants "
+"des dates importantes comme les quiz, pour mettre en évidence des discussions "
+"particulières dans les forums, pour annoncer des changements dans la "
+"programmation et pour répondre aux questions des apprenants. Vous pouvez ajouter ou modifier les actualités."
+
 #: cms/templates/course_outline.html:13 cms/templates/course_outline.html:123
 #: cms/templates/course_outline.html:217
 msgid "Course Outline"
-msgstr "Plan du Cours"
+msgstr "Plan du cours"
 
 #: cms/templates/course_outline.html:49
 msgid ""
@@ -25380,9 +25408,13 @@ msgstr "Aperçu réel"
 msgid "Edit Start Date"
 msgstr "Modifier la date de début"
 
-#: cms/templates/course_outline.html:174 cms/templates/settings.html:186
+#: cms/templates/settings.html:186
 msgid "Course Pacing"
 msgstr "Rythme du cours"
+
+#: cms/templates/course_outline.html:174
+msgid "Course Pacing:"
+msgstr "Rythme du cours:"
 
 #: cms/templates/course_outline.html:177 cms/templates/settings.html:200
 msgid "Self-Paced"
@@ -25512,6 +25544,18 @@ msgstr "Montrer cette page"
 msgid "Show/hide page"
 msgstr "Montrer/cacher la page"
 
+#: cms/templates/edit-tabs.html:103
+msgid "Show to all"
+msgstr "Cacher de tous"
+
+#: cms/templates/edit-tabs.html:105 cms/templates/edit-tabs.html:107
+msgid "Hide from all"
+msgstr "Diffuser à tous"
+
+#: cms/templates/edit-tabs.html:103
+msgid "Show to learners"
+msgstr "Diffuser aux apprenants"
+
 #: cms/templates/edit-tabs.html:121 cms/templates/edit-tabs.html:122
 msgid "This page cannot be reordered"
 msgstr "Cette page ne peut pas être reclassée."
@@ -25527,7 +25571,7 @@ msgstr "Ajouter une nouvelle page"
 
 #: cms/templates/edit-tabs.html:143
 msgid "What are pages?"
-msgstr "Quelles sont les pages ?"
+msgstr "Que sont les pages ?"
 
 #: cms/templates/edit-tabs.html:144
 msgid ""
@@ -25543,6 +25587,16 @@ msgstr ""
 msgid "Custom pages"
 msgstr "Pages personnalisées"
 
+#: cms/templates/edit-tabs.html:152
+msgid ""
+"Pages are listed horizontally at the top of your course. Default pages (Home, "
+"Course, Discussion and Progress) are followed by textbooks if you add one and "
+"custom pages that you create."
+msgstr ""
+"Les pages sont répertoriés horizontalement en haut de votre présentation "
+"du cours. Les pages par défaut (Accueil, Cours, Discussion, et Progression) sont "
+"suivies par les manuels et les pages personnalisées que vous pouvez créer."
+
 #: cms/templates/edit-tabs.html:148
 msgid ""
 "You can create and edit custom pages to provide learners with additional "
@@ -25553,6 +25607,15 @@ msgstr ""
 "informations aux apprenants sur le contenu additionnel du cours. Par exemple, "
 "vous pouvez créer des pages sur le système de notation, les supports de "
 "cours et un calendrier de cours."
+
+#: cms/templates/edit-tabs.html:160
+msgid ""
+"Learners see the default and custom pages at the top of your course "
+"presentation or course about pages and use these links to navigate."
+msgstr ""
+"Les apprenants voient les pages par défaut et les pages personnalisées en "
+"haut de votre page de présentation du cours et utilisent ces liens pour naviguer."
+
 
 #: cms/templates/edit-tabs.html:151
 msgid "How do pages look to learners in my course?"
@@ -25919,6 +25982,14 @@ msgstr ""
 msgid "Learn more about exporting a course"
 msgstr "En savoir plus sur l'exportation d'un cours"
 
+#: cms/templates/export.html:261
+msgid "The following content is exported:"
+msgstr "Les contenus suivants seront exportés : "
+
+#: cms/templates/export.html:269
+msgid "The following content is {b_start}not exported{b_end}:"
+msgstr "Les contenus suivants {b_start}ne seront pas exportés {b_end}: "
+
 #: cms/templates/export_git.html:9
 msgid "Export Course to Git"
 msgstr "Exporter le Cours vers Git"
@@ -25977,6 +26048,10 @@ msgstr "url git du cours :"
 #: cms/templates/group_configurations.html:105
 msgid "Experiment Group Configurations"
 msgstr "Configuration des groupes"
+
+#: cms/templates/group_configurations.html:53
+msgid "New Content Group"
+msgstr "Nouveau groupe de contenu"
 
 #: cms/templates/group_configurations.html:70
 msgid "This module is disabled at the moment."
@@ -26613,6 +26688,18 @@ msgstr ""
 msgid "Learn more about importing a course"
 msgstr "En savoir plus sur l'importation d'un cours"
 
+#: cms/templates/import.html:53
+msgid "Import My Course Content"
+msgstr "Importer le contenu de mon cours "
+
+#: cms/templates/import.html:253
+msgid "The following content is imported:"
+msgstr "Les contenus suivants seront importés :"
+
+#: cms/templates/import.html:261
+msgid "The following content is {b_start}not imported{b_end}:"
+msgstr "Les contenus suivants {b_start}ne seront pas importés {b_end}: "
+
 #: cms/templates/index.html:15 cms/templates/index.html:27
 msgid "{studio_name} Home"
 msgstr "Accueil {studio_name}"
@@ -27134,31 +27221,46 @@ msgstr "Rôles dans l'équipe pédagogique"
 
 #: cms/templates/manage_users.html:100
 msgid ""
-"Course team members with the Staff role are course co-authors. They have "
-"full writing and editing privileges on all course content."
+"This user has Admin Access to the course, because he/she is the one who "
+"created the course or this user has been granted Admin Access by another "
+"Admin. They can add and remove other course team members. They have also "
+"the right to delete a course."
 msgstr ""
-"Les membres de l'équipe pédagogique du cours sont co-auteurs de cours. Ils "
-"ont droits complets d'écriture et d'édition sur tout le contenu du cours."
+"Cet utilisateur dispose d'un accès administrateur au cours, car il/elle "
+"est celui qui a créé le cours ou cet utilisateur a obtenu un accès administrateur "
+"par un autre administrateur. Ils peuvent ajouter et supprimer d'autres membres de "
+"l'équipe de cours. Ils ont également le droit de supprimer le cours."
 
 #: cms/templates/manage_users.html:102
 msgid ""
-"Admins are course team members who can add and remove other course team "
-"members."
+"This user can edit the course but cannot manage the course team (cannot add "
+"a new member or change other members' access). They are courseco-authors. "
+"They have also full writing and editing privileges on all course content."
 msgstr ""
-"Les administrateurs sont des membres de l'équipe pédagogique qui peuvent "
-"ajouter ou supprimer des membres à cette équipe."
+"Cet utilisateur peut modifier le cours, mais ne peut pas gérer l'équipe du "
+"cours (ne peut pas ajouter un nouveau membre ou modifier l'accès des autres "
+"membres). Ils sont co-auteurs de cours. Ils ont également tous les privilèges "
+"de rédaction et d'édition sur tout le contenu du cours."
 
 #: cms/templates/manage_users.html:103
 msgid ""
-"All course team members can access content in Studio, the LMS, and Insights, "
-"but are not automatically enrolled in the course."
+"All course team members can access content in Studio and the LMS, but are not "
+"automatically enrolled in the course."
 msgstr ""
-"Tous les membres de l'équipe peuvent accéder au contenu dans Studio, le LMS "
-"et Insights, mais ils ne sont pas automatiquement inscrits dans ce cours."
+"Tous les membres de l'équipe du cours peuvent accéder au contenu dans Studio et "
+"dans le LMS, mais ne sont pas automatiquement inscrits au cours."
 
 #: cms/templates/manage_users.html:108
 msgid "Transferring Ownership"
 msgstr "Transfert de possession"
+
+msgid ""
+"This user has no access to the Studio, but has been added to the course "
+"team by an Admin. He/She cannot be granted Admin Access to the course. He/she "
+"will have access to the ILT Admin Panel."
+msgstr "Cet utilisateur n'a pas accès au Studio, mais a été ajouté à l'équipe "
+"du cours par un administrateur. Il/elle ne peut pas bénéficier d'un accès "
+"administrateur au cours. Il/elle aura accès au panneau d'administration ILT."
 
 #: cms/templates/manage_users.html:109
 msgid ""
@@ -27353,8 +27455,8 @@ msgid "Schedule & Details"
 msgstr "Dates & Détails"
 
 #: cms/templates/settings.html:63
-msgid "Basic Information"
-msgstr "Information de base"
+msgid "General Information"
+msgstr "Informations générales"
 
 #: cms/templates/settings.html:64
 msgid "The nuts and bolts of your course"
@@ -27394,7 +27496,15 @@ msgstr "Envoyer une note aux apprenants par e-mail"
 
 #: cms/templates/settings.html:111
 msgid "Invite your learners"
-msgstr "Inviter vos apprenants"
+msgstr "Invitez vos apprenants"
+
+#: cms/templates/settings.html:111
+msgid ""
+"Course number that you want to appear in the course. This setting overrides "
+"the course number that you entered when you created the course."
+msgstr ""
+"Numéro de cours que vous souhaitez voir apparaître dans le cours. Ce "
+"paramètre remplace le numéro que vous avez saisi lors de la création du cours."
 
 #: cms/templates/settings.html:119
 msgid "Promoting Your Course with {platform_name}"
@@ -27412,7 +27522,7 @@ msgstr ""
 
 #: cms/templates/settings.html:138
 msgid "Delete course"
-msgstr "Supprimer le cours"
+msgstr "Suppression du cours"
 
 #: cms/templates/settings.html:140
 msgid ""
@@ -27459,9 +27569,9 @@ msgid ""
 "You can configure release dates for course content and due dates for "
 "assignments."
 msgstr ""
-"Les cours au rythme de l'instructeur progressent selon le rythme déterminé "
-"par l'instructeur. Vous pouvez configurer des dates de disponibilité pour le "
-"contenu du cours et des dates de remise pour les travaux."
+"Les cours en mode rythmé par l'instructeur respectent le rythme déterminé "
+"par l'instructeur. Vous pouvez configurer des dates de disponibilité du "
+"contenu du cours et des dates limites de réalisation des activités."
 
 #: cms/templates/settings.html:201
 msgid ""
@@ -27469,13 +27579,14 @@ msgid ""
 "for assignments. Learners can complete course material at any time before "
 "the course end date."
 msgstr ""
-"Les cours à votre rythme n'ont pas de date de disponibilité pour le contenu "
-"de cours ou de date de remise  pour les travaux. Les apprenants peuvent "
-"compléter le contenu du cours n'importe quand avant la date de fin du cours."
+"Les cours en mode autorythmé ne peuvent pas avoir un paramétrage spécifique "
+" pour la diffusion du contenus ou avoir des dates limites de réalisation des "
+"activités. Les apprenants peuvent alors réaliser le contenu du cours n'importe "
+"quand avant la date de fin du cours."
 
 #: cms/templates/settings.html:211
-msgid "Course Schedule"
-msgstr "Dates du Cours"
+msgid "Schedule Your Course"
+msgstr "Programmation du cours"
 
 #: cms/templates/settings.html:212
 msgid "Dates that control when your course can be viewed"
@@ -27483,7 +27594,7 @@ msgstr "Les dates qui déterminent quand votre cours peut être visualisé."
 
 #: cms/templates/settings.html:220
 msgid "First day the course begins"
-msgstr "Premier jour du Cours"
+msgstr "Premier jour du cours"
 
 #: cms/templates/settings.html:224
 msgid "Course Start Time"
@@ -27496,7 +27607,7 @@ msgstr "(UTC)"
 
 #: cms/templates/settings.html:234
 msgid "Last day your course is active"
-msgstr "Dernier jour d'activité de votre Cours"
+msgstr "Dernier jour d'activité du cours"
 
 #: cms/templates/settings.html:238
 msgid "Course End Time"
@@ -27577,8 +27688,76 @@ msgid "Add an Email Reminder"
 msgstr "Ajouter un rappel par mail"
 
 #: cms/templates/settings.html:339
-msgid "Course Details"
-msgstr "Détails du cours"
+msgid "Label Your Course"
+msgstr "Spécification du cours"
+
+#: cms/templates/settings.html:69
+msgid "Target Your Learners"
+msgstr "Cible du cours"
+
+#: cms/templates/settings.html:70
+msgid "Schedule Engagement"
+msgstr "Paramétrage de l’engagement"
+
+#: cms/templates/settings.html:487
+msgid ""
+"Size limit: 256KB and to avoid distortion the ideal image is "
+"110px wide by 110px tall, in JPEG or PNG format."
+msgstr ""
+"Taille limite : 256 Ko et pour éviter toute distorsion, l'image "
+"idéale est de 110 px de large sur 110 px de haut, au format JPEG ou PNG."
+
+#: cms/templates/settings.html:501
+msgid "Course Visibility in Catalog"
+msgstr "Visibilité du cours dans le catalogue"
+
+#: cms/templates/settings.html:531
+msgid ""
+"Identify the main language of your course, this is used to "
+"assist users find courses that are taught in a specific language."
+msgstr ""
+"Identifiez ici la langue principale du cours. Ceci permet aux "
+"utilisateurs de trouver quels cours sont donnés dans quelle langue."
+
+#: cms/templates/settings.html:543
+msgid ""
+"Identify the category of your course to assist users to filter courses "
+"with ease on the catalog and to better orient them during their training session."
+msgstr ""
+"Identifiez la catégorie de votre cours pour aider les apprenants à filtrer "
+"facilement les cours dans le catalogue et les orienter tout au long de leur formation."
+
+#: cms/templates/settings.html:547
+msgid "Add course tags to help users to find courses easily."
+msgstr "Ajout de labels du cours pour accompagner les apprenants dans leur recherché de cours."
+
+#: cms/templates/settings.html:587
+msgid "Sort the courses to display on the My Courses page in ascending order. The order is from 0 to 99."
+msgstr "Trier les cours pour les afficher dans l'ordre ascendant sur la page de cours. L'ordre est de 0 à 99."
+
+#: cms/templates/settings.html:590
+msgid "If set on true, a New! label temporarily appears next to the course card image."
+msgstr "Si activée, une étiquette « Nouveau » apparaît temporairement à côté de l'image de la carte de cours."
+
+#: cms/templates/settings.html:703
+msgid "Schedule Reminders"
+msgstr "Rappel du cours"
+
+#: cms/templates/settings.html:712
+msgid "Open your course"
+msgstr "Voir le cours"
+
+#: cms/templates/settings.html:729
+msgid "Schedule Re-enrollement"
+msgstr "Paramétrer la réinscription"
+
+#: cms/templates/settings.html:739
+msgid "Delete Course"
+msgstr "Suppression du cours"
+
+#: cms/templates/settings.html:750
+msgid "Delete your entire course and all data"
+msgstr "Supprimer entièrement votre cours et toutes les données"
 
 #: cms/templates/settings.html:584
 msgid "Course Programmatic Enrollments"
@@ -27599,6 +27778,10 @@ msgstr "Identifiez ici le ou les groupe(s) apprenants pour inscription."
 #: cms/templates/settings.html:340
 msgid "Provide useful information about your course"
 msgstr "Fournir des informations utiles sur votre cours"
+
+#: cms/templates/settings.html:323
+msgid "Size limit: 10MB"
+msgstr "Taille limite : 10MB"
 
 #: cms/templates/settings.html:351
 msgid ""
@@ -27629,8 +27812,8 @@ msgid "Identify the course tag here."
 msgstr "Choisissez les tags du cours ici."
 
 #: cms/templates/settings.html:381
-msgid "Introducing Your Course"
-msgstr "Présentation de votre Cours"
+msgid "Introduce Your Course"
+msgstr "Présentation du cours"
 
 #: cms/templates/settings.html:382
 msgid "Information for prospective learners"
@@ -27645,6 +27828,12 @@ msgid "Displayed as title on the course details page. Limit to 50 characters."
 msgstr ""
 "Affiché comme titre sur la page de détails du cours. Limité à 50 caractères."
 
+#: cms/templates/settings.html:391
+#: cms/templates/settings.html:419
+msgid "You can manage this image along with all of your other files and uploads."
+msgstr ""
+"Vous pouvez gérer cette image avec tous vos autres fichiers."
+
 #: cms/templates/settings.html:393
 msgid "Course Subtitle"
 msgstr "Sous-titre du cours"
@@ -27655,6 +27844,15 @@ msgid ""
 msgstr ""
 "Affiché comme sous-titre sur la page de détails du cours. Limité à 150 "
 "caractères."
+
+#: cms/templates/settings.html:395
+msgid ""
+"Please provide a valid path and name your video thumbmail image (Note: the "
+"ideal image is 375px wide by 200px tall, in JPEG or PNG format)"
+msgstr ""
+"Veuillez fournir un chemin valide et un nom pour l'image de votre vignette de "
+"vidéo de cours (Note : seuls les formats JPEG ou PNG sont supportés et la taille "
+"doit être 375x200 pixels)"
 
 #: cms/templates/settings.html:398
 msgid "Course Duration"
@@ -27682,7 +27880,7 @@ msgstr "Description du cours"
 
 #: cms/templates/settings.html:409
 msgid "Displayed on the course details page. Limit to 1000 characters."
-msgstr "Affiché sur la page de détails du cours. Limité à 1000 caractères."
+msgstr "Affichée sur la page de détails du cours. Limitée à 1000 caractères."
 
 #: cms/templates/settings.html:415
 msgid "Course Short Description"
@@ -27737,8 +27935,16 @@ msgid ""
 "You can manage this image along with all of your other {a_link_start}files "
 "and uploads{a_link_end}"
 msgstr ""
-"Vous pouvez gérer cette image ainsi que tous vos autres {a_link_start}"
-"fichiers et téléversements{a_link_end}"
+"Vous pouvez gérer cette image avec tous vos autres {a_link_start}"
+"fichiers et téléchargements{a_link_end}."
+
+#: cms/templates/settings.html:465
+msgid ""
+"Introductions, prerequisites, FAQs that are used on your course "
+"summary page."
+msgstr ""
+"Courte entrée en matière, prérequis, FAQ de la page de présentation "
+"de votre cours affichés sur la page de détail du cours."
 
 #: cms/templates/settings.html:467
 msgid ""
@@ -27865,6 +28071,10 @@ msgstr "Ajouter des détails à propos des instructeurs de ce cours"
 #: cms/templates/settings.html:599
 msgid "Add Instructor"
 msgstr "Ajouter un instructeur"
+
+#: cms/templates/settings.html:607
+msgid "Define a course as a prerequisite."
+msgstr "Définir un cours pour prérequis."
 
 #: cms/templates/settings.html:611
 msgid "Expectations of the learners taking this course"
@@ -28066,11 +28276,11 @@ msgstr ""
 
 #: cms/templates/settings_graders.html:114
 msgid "Grace Period on Deadline:"
-msgstr "délai supplémentaire après la date limite :"
+msgstr "Délai supplémentaire après la date limite :"
 
 #: cms/templates/settings_graders.html:116
 msgid "Leeway on due dates"
-msgstr "Marges de manœuvre sur les dates d'échéance"
+msgstr "Marge de manœuvre sur les dates d'échéance"
 
 #: cms/templates/settings_graders.html:124
 msgid "Assignment Types"
@@ -28078,7 +28288,7 @@ msgstr "Types de travaux"
 
 #: cms/templates/settings_graders.html:125
 msgid "Categories and labels for any exercises that are gradable"
-msgstr "Catégories et étiquettes pour tous les exercices soumis à notation"
+msgstr "Catégories et badges pour tous les quiz soumis à notation"
 
 #: cms/templates/settings_graders.html:134
 msgid "New Assignment Type"
@@ -28091,30 +28301,25 @@ msgstr "Que puis-je faire sur cette page ?"
 #: cms/templates/settings_graders.html:144
 msgid ""
 "You can use the slider under Overall Grade Range to specify whether your "
-"course is pass/fail or graded by letter, and to establish the thresholds for "
-"each grade."
+"course is pass/fail or graded by letter, and to establish the thresholds for each grade."
 msgstr ""
-"Vous pouvez utiliser le curseur sous la \"fourchette des notes\" pour "
-"spécifier d'une part si le cours est  réussi/raté ou évalué par des lettres, "
-"et d'autre part pour établir les seuils pour chaque grade."
+"Vous pouvez utiliser le curseur sous la \"Plage d'évaluation globale\" pour "
+"spécifier le seuil de réussite et d’echec du cours dans sa globalité."
 
 #: cms/templates/settings_graders.html:146
 msgid ""
 "You can specify whether your course offers learners a grace period for late "
 "assignments."
 msgstr ""
-"Vous pouvez spécifier si votre cours peut offrir aux apprenants une période "
-"de grâce pour les devoirs en retard."
+"Vous pouvez spécifier si votre cours peut offrir aux apprenants un délai "
+"supplémentaire pour les devoirs en retard."
 
 #: cms/templates/settings_graders.html:147
 msgid ""
-"You can also create assignment types, such as homework, labs, quizzes, and "
-"exams, and specify how much of a learner's grade each assignment type is "
-"worth."
+"You can also create assignment types and specify how much of a learner's "
+"grade each assignment type is worth."
 msgstr ""
-"Vous pouvez aussi créer des types de tâches , comme des devoirs, des "
-"laboratoires, des quiz, des examens et préciser la valeur des points pour "
-"chacune de ces tâches."
+"Vous pouvez aussi créer des badges et préciser la valeur des points pour chacune de ces tâches."
 
 #: cms/templates/studio_xblock_wrapper.html:61
 #: cms/templates/studio_xblock_wrapper.html:63
@@ -31687,6 +31892,7 @@ msgstr "Chargement en cours…"
 msgid "Generate Intermediate Certificates"
 msgstr "Générer les certificats intermédiaires"
 
+
 #: XBlock: edx-ora2
 #: openassessment/templates/openassessmentblock/message/oa_message_open.html:11
 msgid "Free Text"
@@ -31731,3 +31937,646 @@ msgstr "L'apprenant ne doit obtenir que la note de passage minimale pour réussi
 #: cms/templates/settings_graders.html
 msgid "Changes on Course Completion Rule are not retroactive. If a Studio Admin changes the rule for a started course, learners will have to revisit the graded activities to see their score recalculated."
 msgstr "Les modifications apportées à la règle de fin de cours ne sont pas rétroactives. Si un administrateur du studio modifie la règle pour un cours déjà commencé, les apprenants devront revisiter les activités notées pour voir leur score recalculé."
+
+#: cms/templates/settings.html:524
+msgid ""
+"Defines the access permissions for showing the course in the course "
+"catalog. This can be set to one of three values: \"full public\", "
+"\"accessible by URL\", \"private\"."
+msgstr "Définit les conditions d'affichage des cours dans le catalogue. Trois valeurs sont possibles : \"accès à tous\", \"accessible par URL\" et \"privé\"."
+
+#: cms/templates/settings.html:659
+msgid "Programmatic Enrollments"
+msgstr "Inscription automatique au cours"
+
+#: cms/templates/settings.html:702
+msgid "Invite Your Learners"
+msgstr "Inviter vos apprenants"
+
+#: lms/templates/video.html:98
+msgid ""
+"Add videos to your course, you can also set subtitles, allow download and"
+" configure other options."
+msgstr "Ajoutez des vidéos à votre cours, vous pouvez également définir des sous-titres, en autoriser le téléchargement et configurer d'autres options."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:332
+msgid "Indicate if the course will be available to mobile devices."
+msgstr "Indiquez si le cours sera disponible sur mobile."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:843
+msgid ""
+"Indicate if you can hide a subsection until learners earn a minimum score in "
+"another, prerequisite subsection."
+msgstr "Indiquez si vous pouvez cacher une sous-section jusqu'à ce que les apprenants obtiennent un score minimum dans une autre sous-section pré-requise."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:415
+msgid "Select the names of the advanced modules to use in your course."
+msgstr "Sélectionner les noms des composants avancés à utiliser dans votre cours."
+
+#: edx-platform/common/lib/xmodule/xmodule/modulestore/inheritance.py:212
+msgid " Indicate if video caching will be used for HTML5 videos."
+msgstr "Indiquez si la mise en cache sera utilisée pour les vidéos HTML5."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:251
+msgid "Indicate if learners can see the calculator in the course."
+msgstr "Indiquez si les élèves peuvent voir la calculatrice pendant le cours."
+
+#: edx-platform/common/lib/xmodule/xmodule/modulestore/inheritance.py:248
+msgid ""
+" Indicate if problems in the course default to always displaying a 'Reset' "
+"button. You can override this in each problem's settings. All existing "
+"problems are affected when this course-wide setting is changed."
+msgstr "Indiquez si les exercices du cours vont par défaut afficher un bouton de 'Réinitialisation'. Cette valeur peut être modifiée dans chaque paramétrage d'exercice. Tous les exercices existants sont affectés quand ce paramètre de cours est changé."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:801
+msgid ""
+"Indicate if timed exams are enabled in your course. Regardless of this "
+"setting, timed exams are enabled if Enable Proctored Exams is set to true."
+msgstr "Indiquez si vous autorisez les examens minutés dans votre cours. Ce paramètre mis à part, les examens minutés sont activés si le paramètre Activer les examens surveillés est réglé sur vrai."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:771
+msgid ""
+"Enable if proctored exams are enabled in your course. Note that enabling "
+"proctored exams will also enable timed exams."
+msgstr "Indiquez si les examens surveillés seront activés dans votre cours. Veuillez noter qu'activer les examens surveillés va aussi activer les examens minutés."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:781
+msgid ""
+"Indicate if learners can choose to take proctored exams without proctoring. "
+"If this value is false, all learners must take the exam with proctoring. "
+"This setting only applies if proctored exams are enabled for the course."
+msgstr "Indiquez si les apprenants peuvent choisir de passer cet examen surveillé sans surveillance. Si la valeur est faux, tous les apprenants doivent passer l'examen en étant surveillés. Ce paramètre ne peut être utilisé que dans le cadre d'un examen surveillé."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:792
+msgid "Indicate if a Zendesk ticket will be created for suspicious attempts."
+msgstr "Indiquez si un ticket Zendesk sera créé pour des tentatives suspectes."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:406
+msgid ""
+"If activated, learners can create discussion posts that are anonymous to "
+"other learners. This setting does not make posts anonymous to course staff."
+msgstr "Indiquez si les apprenants peuvent proposer des contributions aux discussions qui sont vues comme anonymes par les autres apprenants. Ce paramètre ne rend pas les messages anonymes pour l'équipe pédagogique."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:305
+msgid ""
+"If activated, discussion categories and subcategories are sorted "
+"alphabetically. If false, they are sorted chronologically by creation date "
+"and time."
+msgstr "Indiquez si les catégories et sous-catégories de discussion sont triées par ordre alphabétique. Si false, elles sont triées par ordre chronologique de date et heure de création."
+
+#: edx-platform/common/lib/xmodule/xmodule/course_module.py:629
+msgid ""
+"If activated, users can view the course wiki even if they're not enrolled in "
+"the course."
+msgstr "Indiquez si les apprenants peuvent voir le wiki du cours même s'ils ne sont pas inscrits au cours."
+
+#: edx-platform/cms/djangoapps/contentstore/views/component.py:301
+msgid "Resources"
+msgstr "Ressources"
+
+#: edx-platform/cms/djangoapps/contentstore/views/component.py:302
+msgid "Learner Activities"
+msgstr "Activités collaboratives"
+
+#: edx-platform/cms/djangoapps/contentstore/views/component.py:303
+msgid "Blended Learning"
+msgstr "Blended Learning"
+
+#: XBlock: xblock-edflex
+#: edflex-xblock/edflex/edflex.py
+msgid "External Resource"
+msgstr "Ressources externes"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Instructor Led Training"
+msgstr "Session présentielle / virtuelle"
+
+#: common/lib/capa/capa/responsetypes.py
+msgid "Blank Quiz"
+msgstr "Quiz vierge"
+
+#: edx-platform/common/lib/xmodule/xmodule/library_content_module.py:69
+msgid "Randomized Content Block"
+msgstr "Quiz aléatoire"
+
+#: edx-platform/common/lib/xmodule/xmodule/word_cloud_module.py:43
+msgid "Word Cloud"
+msgstr "Nuage de mots"
+
+#: edx-platform/openedx/core/lib/xblock_builtin/xblock_discussion/xblock_discussion/__init__.py:47
+msgid "Forum"
+msgstr "Forum"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Icon be used in course page"
+msgstr "L'icône qui doit être utilisée dans la page du cours"
+
+#: XBlock: xblock-poll
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Enter the prompt for the user."
+msgstr "Entrez la question pour l'apprenant."
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:36
+msgid ""
+"\n"
+"                    This text will be displayed for the user as some extra "
+"feedback after they have\n"
+"                    submitted their response to the poll.\n"
+"                "
+msgstr "\nCe texte sera affiché pour l'utilisateur comme un commentaire supplémentaire après avoir soumis sa réponse au sondage.\n "
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:44
+msgid "Private Results"
+msgstr "Résultats privés"
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:53
+msgid "If this is activated, the platform will not display results of the poll to the user."
+msgstr "Si ce paramètre est activé, la plateforme n'affichera pas les résultats du sondage à l'utilisateur."
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html
+msgid "Maximum Submissions"
+msgstr "Soumissions maximum"
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html
+msgid ""
+"\n"
+"                    If you change an answer's text, all students who voted for that choice will have their votes updated to\n"
+"                    the new text. You'll want to avoid changing an answer from something like 'True' to 'False', accordingly.\n"
+"                    If you delete an answer, any votes for that answer will also be deleted. Students whose choices are deleted\n"
+"                    may vote again, but will not lose course progress.\n"
+"                "
+msgstr "\nSi vous modifiez le texte d'une réponse, tous les apprenants qui ont voté pour ce choix verront leur vote mis à jour avec le nouveau texte. Par conséquence, évitez de changer une réponse de «Vrai» en «Faux». Si vous supprimez une réponse, tous les votes pour cette réponse seront également supprimés. Les apprenants dont les choix sont supprimés peuvent voter à nouveau, mais ne perdront pas leur progression dans le cours.\n "
+
+#: XBlock: xblock-poll
+#: xblock-poll/public/handlebars/poll_studio.handlebars
+msgid "Image URL"
+msgstr "URL de l'image"
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/handlebars/poll_studio.handlebars
+msgid "Image alternative text"
+msgstr "Texte alternatif pour l'image"
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/handlebars/poll_studio.handlebars
+msgid ""
+"You can make limited use of Markdown in answer texts, preferably only bold "
+"and italics."
+msgstr "Vous pouvez faire un usage limité de Markdown dans les textes de réponse, de préférence uniquement en gras et en italique."
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html:97
+msgid "Add Answer"
+msgstr "Ajouter une réponse"
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html:101
+msgid "Add Question"
+msgstr "Ajouter une question"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop.html
+msgid "Loading drag and drop problem."
+msgstr "Problème de chargement du glisser-déposer."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Basic Settings"
+msgstr "Paramètres de base"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Show title"
+msgstr "Afficher le titre"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background Image"
+msgstr "Image de fond"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Provide custom image"
+msgstr "Fournir une image personnalisée"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Generate image automatically"
+msgstr "Générer l'image automatiquement"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Describe this zone to non-visual users."
+msgstr "Décrivez cette zone aux utilisateurs non visuels."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "width"
+msgstr "largeur"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "height"
+msgstr "hauteur"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Align dropped items to the left, center, or right."
+msgstr "Alignez les éléments déposés à gauche, au centre ou à droite."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Maximum items per zone"
+msgstr "Nombre maximum d'articles par zone"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "This setting limits the number of items that can be dropped into a single zone."
+msgstr "Ce paramètre limite le nombre d'éléments qui peuvent être déposés dans une seule zone."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Item definitions"
+msgstr "Définitions des éléments"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Use text that is clear and descriptive of the item to be placed."
+msgstr "Utilisez un texte clair et descriptif de l'élément à placer."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Success feedback"
+msgstr "Commentaires de réussite"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Error feedback"
+msgstr "Retour d'erreur"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Show advanced settings"
+msgstr "Afficher les paramètres avancés"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Preferred width"
+msgstr "Largeur préférée"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Specify preferred width as percentage of the background image width. Leave blank for automatic width."
+msgstr "Spécifiez la largeur préférée en pourcentage de la largeur de l'image d'arrière-plan. Laissez vide pour la largeur automatique."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/default_data.py
+msgid "Drag the items onto the image above."
+msgstr "Faites glisser les éléments sur l'image ci-dessus."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "PROBLEM"
+msgstr "PROBLÈME"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Standard mode: the problem provides immediate feedback each time a learner drops an item on a target zone. Assessment mode: the problem provides feedback only after a learner drops all available items on target zones."
+msgstr "Mode standard: le problème fournit une rétroaction immédiate chaque fois qu'un apprenant dépose un élément sur une zone cible. Mode d'évaluation: le problème fournit un retour d'information uniquement après qu'un apprenant laisse tomber tous les éléments disponibles sur les zones cibles."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Defines the number of points the problem is worth."
+msgstr "Définit le nombre de points que vaut le problème."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Problem text"
+msgstr "Texte du problème"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Introductory feedback"
+msgstr "Commentaires introductifs"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Final feedback"
+msgstr "Dernier commentaire"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background URL"
+msgstr "URL d'arrière-plan"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Change background"
+msgstr "Changement de fond"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "For example, 'http://example.com/background.png' or '/static/background.png'."
+msgstr "Par exemple, 'http://example.com/background.png' ou '/static/background.png'."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background description"
+msgstr "Description de l'arrière-plan"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid ""
+"\n"
+"                            Please provide a description of the image for non-visual users.\n"
+"                            The description should provide sufficient information to allow anyone\n"
+"                            to solve the problem even without seeing the image.\n"
+"                        "
+msgstr "\nVeuillez fournir une description de l'image pour les utilisateurs non visuels. La description doit fournir des informations suffisantes pour permettre à quiconque de résoudre le problème même sans voir l'image.\n "
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Zone labels"
+msgstr "Libellés de zone"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Zone borders"
+msgstr "Bordures de zone"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Display label names on the image"
+msgstr "Afficher les noms d'étiquettes sur l'image"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Display zone borders on the image"
+msgstr "Afficher les bordures de zone sur l'image"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Add a zone"
+msgstr "Ajouter une zone"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Items"
+msgstr "Items"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Item background color"
+msgstr "Couleur d'arrière-plan de l'item"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "The background color of draggable items in the problem (example: 'blue' or '#0000ff')."
+msgstr "La couleur d'arrière-plan des éléments déplaçables dans le problème (exemple: 'bleu' ou '# 0000ff')."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Item text color"
+msgstr "Couleur du texte de l'item"
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Text color to use for draggable items (example: 'white' or '#ffffff')."
+msgstr "Couleur du texte à utiliser pour les éléments déplaçables (exemple: 'white' ou '#ffffff')."
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:57
+msgid "Enter your response to the prompt."
+msgstr "Entrez votre réponse à la question."
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:93
+msgid "Your response (required)"
+msgstr "Votre réponse (requis)"
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:105
+msgid "Enter your response to the prompt above."
+msgstr "Entrez votre réponse à la question ci-dessus."
+
+#: XBlock: edx-ora2
+#: edx-ora2/openassessment/templates/openassessmentblock/response/oa_response.html
+msgid "Save your progress"
+msgstr "Sauvegardez votre progression"
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response_submitted.html:32
+msgid ""
+"Your response has been submitted. You will receive your grade after all "
+"steps are complete and your response is fully assessed."
+msgstr "Votre réponse a été envoyée. Vous recevrez votre note une fois que toutes les étapes seront terminées et que votre réponse aura été évaluée."
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:46
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html:46
+msgid "IN PROGRESS"
+msgstr "EN COURS"
+
+#: XBlock: edx-ora2
+#: edx-ora2/openassessment/templates/openassessmentblock/peer/oa_peer_waiting.html
+msgid ""
+"All available peer responses have been assessed. Check back later to see if "
+"more learners have submitted responses. You will receive your grade after "
+"you've completed all the steps for this problem and your peers have assessed"
+" your response."
+msgstr "Toutes les réponses disponibles ont été évaluées. Revenez plus tard pour voir si d'autres apprenants ont soumis des réponses. Vous recevrez votre note une fois que vous aurez terminé toutes les étapes de ce problème et que vos pairs auront évalué votre réponse."
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_incomplete.html:42
+#, python-format
+msgid ""
+"\n"
+"                                    This assignment is in progress. All submitted peer responses have been assessed. Check back later to see if more learners have submitted responses. You still need to complete the %(start_link)speer assessment%(end_link)s step.\n"
+"                                "
+msgstr "\nCette mission est en cours. Toutes les réponses des pairs soumises ont été évaluées. Revenez plus tard pour voir si d'autres apprenants ont soumis des réponses. Vous devez encore terminer l'étape d'évaluation par les pairs.\n "
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_incomplete.html:11
+msgid ""
+"This assignment is in progress. Complete the learner training step to move "
+"on."
+msgstr "Cette mission est en cours. Terminez l'étape de formation de l'apprenant pour passer à autre chose."
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Registration Deadline"
+msgstr "Date limite d'inscription"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Does this scorm, need to be scored?"
+msgstr "Est-ce que ce composant, doit être marqué?"
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Enter a class description."
+msgstr "Entrez une description de session."
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Assignment Type"
+msgstr "Type de badge"
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Select assignment type defined in Course Grading section on which you want to generate an Intermediate Certificate"
+msgstr "Sélectionnez le type de badge défini dans la section Evaluation du cours sur lequel vous souhaitez générer un certificat intermédiaire"
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Success Threshold"
+msgstr "Seuil de succès"
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the percentage to obtain the Intermediate Certificate. Any student with a total score above the success threshold will be able to generate the Intermediate Certificate."
+msgstr "Entrez le pourcentage minimum pour obtenir le certificat intermédiaire. Tout apprenant avec un score total supérieur au seuil de réussite pourra générer le certificat intermédiaire."
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the name of your certificate"
+msgstr "Entrez le nom de votre certificat"
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Issue Date"
+msgstr "Date d'émission"
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the Issue date to appear on certificate. Leave blank to use the quizz completion date."
+msgstr "Entrez la date d'émission qui apparaîtra sur le certificat. Laissez ce champ vide pour utiliser la date de fin du quiz."
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Assignment Type override"
+msgstr "Remplacement du type de badge"
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Leave blank to use the Assignment type name or provide a different name here."
+msgstr "Laissez vide pour utiliser le nom du type de badge ou indiquez un nom différent ici."
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Platform Name override"
+msgstr "Remplacement du nom de la plateforme"
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Leave blank to use the default platform name or provide a different name here."
+msgstr "Laissez vide pour utiliser le nom de plateforme par défaut ou indiquez un nom différent ici."
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "HTML Template"
+msgstr "Modèle HTML"
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "HTML template to use when generating intermediate certificate. Include style to customise the appearance of the message, including color, font size, etc."
+msgstr "Modèle HTML à utiliser lors de la génération d'un certificat intermédiaire. Incluez un style pour personnaliser l'apparence du message, y compris la couleur, la taille de la police, etc."
+
+#: platform/cms/djangoapps/contentstore/views/course.py:1223
+msgid "full public"
+msgstr "accès à tous"
+
+#: platform/cms/djangoapps/contentstore/views/course.py:1223
+msgid "accessible by URL"
+msgstr "accessible par URL"
+
+#: platform/cms/djangoapps/contentstore/views/course.py:1223
+msgid "private"
+msgstr "privé"
+
+#: edx-platform/cms/djangoapps/contentstore/views/settings_data_config.py:38
+msgid "E-commerce"
+msgstr "E-commerce"
+
+#: platform/cms/djangoapps/contentstore/views/component.py
+msgid "Raw HTML"
+msgstr "Code HTML"
+
+#: platform/cms/djangoapps/contentstore/views/component.py
+msgid "Drag and Drop"
+msgstr "Glisser-déposer"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Access Level"
+msgstr "Niveau d'accès"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Personal Info"
+msgstr "Informations personnelles"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Update Password"
+msgstr "Mettre à jour le mot de passe"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Password Confirmation"
+msgstr "Confirmation mot de passe"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Enter the same password as before, for verification"
+msgstr "Entrez le même mot de passe que précédemment, pour vérification"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Designates whether this user should be treated as Active. <br>Unselect this instead of deleting accounts."
+msgstr "Indique si cet utilisateur doit être considéré comme Actif. <br>Désélectionnez cette option au lieu de supprimer des comptes."
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Platform Access"
+msgstr "Accès à la plateforme"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Designates the level of permissions the user has."
+msgstr "Désigne le niveau d'autorisations dont dispose l'utilisateur."
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Configure your user Analytics access."
+msgstr "Configurez votre accès à Analytics utilisateur."
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Internal Catalog Access"
+msgstr "Accès au catalogue interne"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "External Catalog - Edflex Access"
+msgstr "Catalogue externe - Accès Edflex"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "External Catalog - Crehana Access"
+msgstr "Catalogue externe - Accès Crehana"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Bulk Registration"
+msgstr "Enregistrement groupé"
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Is currently enrolled in ..."
+msgstr "Est actuellement inscrit à ..."
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "Could be enrolled in ..."
+msgstr "Pourrait être inscrit à ..."
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "A legal name must be a minimum of two characters long."
+msgstr "Un nom légal doit comporter au moins deux caractères."
+
+#: platform/lms/templates/admin_panel/admin_panel.html
+msgid "All the following related items will be deleted"
+msgstr "Tous les éléments connexes suivants seront supprimés"

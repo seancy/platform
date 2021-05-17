@@ -24,8 +24,8 @@ define(['jquery', 'underscore', 'gettext', 'js/views/modals/base_modal', 'jquery
             },
 
             addActionButtons: function() {
-                this.addActionButton('upload', gettext('Upload'), true);
                 BaseModal.prototype.addActionButtons.call(this);
+                this.addActionButton('upload', gettext('Upload'), true);
             },
 
             renderContents: function() {
@@ -68,6 +68,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/modals/base_modal', 'jquery
                 this.model.set({
                     selectedFile: selectedFile
                 });
+                this.$el.find('.browse + span').text(selectedFile.name);
                 // This change event triggering necessary for FireFox, because the browser don't
                 // consider change of File object (file input field) as a change in model.
                 if (selectedFile && $.isEmptyObject(this.model.changed)) {

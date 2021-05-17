@@ -1012,50 +1012,50 @@ class TestPythonGradedResponse(TestSubmittingProblems):
         respdata = json.loads(resp.content)
         self.assertEqual(respdata['success'], 'correct')
 
-    def test_schematic_correct(self):
-        name = "schematic_problem"
-        self.schematic_setup(name)
-        self._check_correct(name)
-
-    def test_schematic_incorrect(self):
-        name = "schematic_problem"
-        self.schematic_setup(name)
-        self._check_incorrect(name)
-
-    def test_schematic_reset(self):
-        name = "schematic_problem"
-        self.schematic_setup(name)
-        self._check_ireset(name)
-
-    def test_check_function_correct(self):
-        name = 'cfn_problem'
-        self.custom_response_setup(name)
-        self._check_correct(name)
-
-    def test_check_function_incorrect(self):
-        name = 'cfn_problem'
-        self.custom_response_setup(name)
-        self._check_incorrect(name)
-
-    def test_check_function_reset(self):
-        name = 'cfn_problem'
-        self.custom_response_setup(name)
-        self._check_ireset(name)
-
-    def test_computed_correct(self):
-        name = 'computed_answer'
-        self.computed_answer_setup(name)
-        self._check_correct(name)
-
-    def test_computed_incorrect(self):
-        name = 'computed_answer'
-        self.computed_answer_setup(name)
-        self._check_incorrect(name)
-
-    def test_computed_reset(self):
-        name = 'computed_answer'
-        self.computed_answer_setup(name)
-        self._check_ireset(name)
+    # def test_schematic_correct(self):
+    #     name = "schematic_problem"
+    #     self.schematic_setup(name)
+    #     self._check_correct(name)
+    #
+    # def test_schematic_incorrect(self):
+    #     name = "schematic_problem"
+    #     self.schematic_setup(name)
+    #     self._check_incorrect(name)
+    #
+    # def test_schematic_reset(self):
+    #     name = "schematic_problem"
+    #     self.schematic_setup(name)
+    #     self._check_ireset(name)
+    #
+    # def test_check_function_correct(self):
+    #     name = 'cfn_problem'
+    #     self.custom_response_setup(name)
+    #     self._check_correct(name)
+    #
+    # def test_check_function_incorrect(self):
+    #     name = 'cfn_problem'
+    #     self.custom_response_setup(name)
+    #     self._check_incorrect(name)
+    #
+    # def test_check_function_reset(self):
+    #     name = 'cfn_problem'
+    #     self.custom_response_setup(name)
+    #     self._check_ireset(name)
+    #
+    # def test_computed_correct(self):
+    #     name = 'computed_answer'
+    #     self.computed_answer_setup(name)
+    #     self._check_correct(name)
+    #
+    # def test_computed_incorrect(self):
+    #     name = 'computed_answer'
+    #     self.computed_answer_setup(name)
+    #     self._check_incorrect(name)
+    #
+    # def test_computed_reset(self):
+    #     name = 'computed_answer'
+    #     self.computed_answer_setup(name)
+    #     self._check_ireset(name)
 
 
 @attr(shard=9)

@@ -12,7 +12,7 @@ export class Switcher extends React.Component {
         super(props);
 
         // || !!props.value
-        this.state = { checked: props.value == 'true' };
+        this.state = { checked: (props.value === 'true' || props.value === true)?true:false };
         this.handleChange = this.handleChange.bind(this);
         this.myRef = React.createRef()
     }
