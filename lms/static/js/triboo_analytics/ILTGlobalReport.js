@@ -70,6 +70,7 @@ export default class ILTGlobalReport extends BaseReport {
                  {this.props.children}
                  <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
+                          doubleScroll
                 />
             </>
         )
