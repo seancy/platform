@@ -70,7 +70,6 @@ class ReportTypeAndCourseReport extends React.Component {
   }
 
   onSectionChange (state) {
-    console.log('onSectionChange', state) // TODELETE
     this.setState(state, this.fireOnChange)
     if (state.selectedEnrollments) this.checkLimit()
   }
@@ -78,7 +77,6 @@ class ReportTypeAndCourseReport extends React.Component {
   fireOnChange () {
     const {onChange} = this.props
     const {reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate, selectedEnrollments, limit} = this.state
-    console.log('emit end', this.state) // TODELETE
     onChange && onChange(reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate, selectedEnrollments, limit)
   }
 
