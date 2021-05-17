@@ -1,4 +1,4 @@
-function user_create_edit(user_id, profile_fields, country_options, lang_options, date_format) {
+function user_create_edit(user_id, profile_fields, country_options, lang_options, date_format, platform_level_options) {
 
     Vue.component("switch-button", {
       template: '<div class="switch-button-control">\n' +
@@ -154,7 +154,8 @@ function user_create_edit(user_id, profile_fields, country_options, lang_options
             deleting_user: false,
             objects_to_delete: {},
             editting_info: false,
-            editting_permissions: false
+            editting_permissions: false,
+            platform_level_options: platform_level_options
         },
         methods: {
             toggleSubTab: function(e) {

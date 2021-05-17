@@ -32,6 +32,7 @@
         country_options = ${country_options | n, dump_js_escaped_json},
         lang_options = ${lang_options | n, dump_js_escaped_json},
         date_format = ${date_format | n, dump_js_escaped_json},
+        platform_level_options = ${platform_level_options | n, dump_js_escaped_json},
         user_id;
     if (isNaN(path_split[path_split.length-2])) {
         user_id = ""
@@ -43,7 +44,7 @@
     convert country_options, lang_options to json object
     country_options = [{text:'country1', value:'1'}, {text:'country2', value:'2'} ]
     **/
-    user_create_edit(user_id, profile_fields, country_options, lang_options, date_format);
+    user_create_edit(user_id, profile_fields, country_options, lang_options, date_format, platform_level_options);
     sessionStorage.setItem('unsaved', '0');
     $('a').not(".management-container a").on('click', function (e) {
         if (sessionStorage.unsaved === '1') {
@@ -622,12 +623,7 @@ ${HTML(render_bundle('ReactRenderer'))}
                             ${_("Platform Access")}
                             <p>${_("Designates the level of permissions the user has.")}</p>
                         </label>
-                        <%
-                            platform_level_options = [{'text':_('Learner'), 'value':'0'}, {'text':_('Studio Admin'), 'value':'1'}, {'text':_('Platform Admin'), 'value':'2'}]
-                            if request.user.is_superuser:
-                                platform_level_options.append({'text': _('Super Platform Admin'), 'value':'3'})
-                        %>
-                        <dropdown :data="${platform_level_options}" :value="platform_level"
+                        <dropdown :data="platform_level_options" :value="platform_level"
                         v-on:change="function(e, val) { $data.platform_level=val; detect_change('platform_level') }"/>
                         <select id="platform-level" v-model="platform_level" v-on:change="detect_change('platform_level')">
                             <option value="0">${_("Learner")}</option>
