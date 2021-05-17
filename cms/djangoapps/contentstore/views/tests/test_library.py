@@ -295,7 +295,7 @@ class UnitTestLibraries(CourseTestCase):
         lib.advanced_modules = ['lti']
         lib.save()
         templates = [template['type'] for template in get_component_templates(lib, library=True)]
-        self.assertIn('problem', templates)
+        self.assertIn('quiz', templates)
         self.assertNotIn('discussion', templates)
         self.assertNotIn('advanced', templates)
 

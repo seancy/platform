@@ -35,13 +35,25 @@
 
                 ModuleEdit.prototype.events = {
                     'click .edit-button': 'clickEditButton',
+                    //'click .show-or-hide-button': 'switchStatus',
+                    //'click .icon-show-hide': 'triggerToggle',
+                    'click .show-or-hide-button': 'triggerToggle',
                     'click .delete-button': 'onDelete'
                 };
 
+                ModuleEdit.prototype.triggerToggle = function(e) {
+                    this.options.onToggle && this.options.onToggle(e);
+                }
+
                 ModuleEdit.prototype.initialize = function() {
                     this.onDelete = this.options.onDelete;
+                    //this.$el.addClass('status-invisible')
                     return this.render();
                 };
+
+                /*ModuleEdit.prototype.switchStatus = function(e) {
+                    alert('test')
+                }*/
 
                 ModuleEdit.prototype.loadDisplay = function() {
                     var xblockElement;
@@ -97,6 +109,7 @@
                     event.preventDefault();
                     modal = new EditXBlockModal();
                     return modal.edit(this.$el, this.model, {
+                        title: gettext('Page'),
                         refresh: _.bind(this.render, this)
                     });
                 };

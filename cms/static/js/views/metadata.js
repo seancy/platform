@@ -98,6 +98,7 @@ function(Backbone, BaseView, _, MetadataModel, AbstractEditor, FileUpload, Uploa
         events: {
             'change input': 'updateModel',
             'keypress .setting-input': 'showClearButton',
+            //temporary comment, please keep it.
             'click .setting-clear': 'clear'
         },
 
@@ -144,10 +145,11 @@ function(Backbone, BaseView, _, MetadataModel, AbstractEditor, FileUpload, Uploa
             TranscriptUtils.Storage.set('edx_video_id', this.getValueFromEditor());
         },
 
-        clear: function() {
+        //temporary comment, please keep it.
+        /*clear: function() {
             this.model.setValue('');
             this.inputChange();
-        },
+        },*/
 
         getData: function() {
             return [{mode: 'edx_video_id', type: 'edx_video_id', video: this.getValueFromEditor()}];
@@ -263,6 +265,25 @@ function(Backbone, BaseView, _, MetadataModel, AbstractEditor, FileUpload, Uploa
 
     Metadata.Option = AbstractEditor.extend({
 
+        initialize: function(){
+            AbstractEditor.prototype.initialize.apply(this);
+
+            if (!this.template) return;
+            setTimeout($.proxy(function(){
+                var val = this.model.getDisplayValue()?"true":"false",
+                    $switcherWrapper = this.$el.find('.switcher-wrapper')
+                var $select = $switcherWrapper.prev(), switcher = $switcherWrapper[0]
+                this.switcherEnabled = $select.find('option').toArray().every(function(p) {
+                    return ['true', 'false', 'True', 'False'].includes($(p).val())
+                })
+                if (switcher && this.switcherEnabled) {
+                    this.switcher = new LearningTribes.Switcher(switcher, val, $.proxy(function(checked){
+                        this.isChecked = checked ?"True":"False"
+                        this.updateModel()
+                    }, this))
+                }
+            }, this), 500)
+        },
         events: {
             'change select': 'updateModel',
             'click .setting-clear': 'clear'
@@ -270,7 +291,16 @@ function(Backbone, BaseView, _, MetadataModel, AbstractEditor, FileUpload, Uploa
 
         templateName: 'metadata-option-entry',
 
+        render:function() {
+            if (!this.switcherEnabled) {
+                Metadata.Option.__super__.render.apply(this, arguments)
+            }
+        },
+
         getValueFromEditor: function() {
+            if (this.switcherEnabled) {
+                return this.isChecked;
+            }
             var selectedText = this.$el.find('#' + this.uniqueId).find(':selected').text();
             var selectedValue;
             _.each(this.model.getOptions(), function(modelValue) {
@@ -597,6 +627,7 @@ function(Backbone, BaseView, _, MetadataModel, AbstractEditor, FileUpload, Uploa
 
             // Rerender when the license model changes
             this.listenTo(this.licenseModel, 'change', this.setLicense);
+            this.$el.addClass('licence')
             this.render();
         },
 

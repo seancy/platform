@@ -28,6 +28,30 @@ class UserPartitionList(List):
                 for user_partition in values]
 
 
+class SHOWANSWER(object):
+    """
+    Constants for when to show answer
+    """
+    ALWAYS = "always"
+    ANSWERED = "answered"
+    ATTEMPTED = "attempted"
+    CLOSED = "closed"
+    FINISHED = "finished"
+    PAST_DUE = "past_due"
+    CORRECT_OR_PAST_DUE = "correct_or_past_due"
+    NEVER = "never"
+
+
+class RANDOMIZATION(object):
+    """
+    Constants for problem randomization
+    """
+    ALWAYS = "always"
+    ONRESET = "onreset"
+    NEVER = "never"
+    PER_STUDENT = "per_student"
+
+
 class InheritanceMixin(XBlockMixin):
     """Field definitions for inheritable fields."""
 
@@ -98,6 +122,16 @@ class InheritanceMixin(XBlockMixin):
             'Valid values are "always", "answered", "attempted", "closed", '
             '"finished", "past_due", "correct_or_past_due", and "never".'
         ),
+        values=[
+            {"display_name": _("Always"), "value": SHOWANSWER.ALWAYS},
+            {"display_name": _("Answered"), "value": SHOWANSWER.ANSWERED},
+            {"display_name": _("Attempted"), "value": SHOWANSWER.ATTEMPTED},
+            {"display_name": _("Closed"), "value": SHOWANSWER.CLOSED},
+            {"display_name": _("Finished"), "value": SHOWANSWER.FINISHED},
+            {"display_name": _("Correct or Past Due"), "value": SHOWANSWER.CORRECT_OR_PAST_DUE},
+            {"display_name": _("Past Due"), "value": SHOWANSWER.PAST_DUE},
+            {"display_name": _("Never"), "value": SHOWANSWER.NEVER}
+        ],
         scope=Scope.settings,
         default="finished",
     )
@@ -124,6 +158,12 @@ class InheritanceMixin(XBlockMixin):
             'script to identify and randomize values in most of the problems in your course. '
             'Valid values are "always", "onreset", "never", and "per_student".'
         ),
+        values=[
+            {"display_name": _("Always"), "value": RANDOMIZATION.ALWAYS},
+            {"display_name": _("On Reset"), "value": RANDOMIZATION.ONRESET},
+            {"display_name": _("Never"), "value": RANDOMIZATION.NEVER},
+            {"display_name": _("Per Learner"), "value": RANDOMIZATION.PER_STUDENT}
+        ],
         scope=Scope.settings,
         default="never",
     )
@@ -169,7 +209,7 @@ class InheritanceMixin(XBlockMixin):
     )
     video_speed_optimizations = Boolean(
         display_name=_("Enable video caching system"),
-        help=_("Enter true or false. If true, video caching will be used for HTML5 videos."),
+        help=_("Indicate if video caching will be used for HTML5 videos."),
         default=True,
         scope=Scope.settings
     )
@@ -205,9 +245,9 @@ class InheritanceMixin(XBlockMixin):
     show_reset_button = Boolean(
         display_name=_("Show Reset Button for Problems"),
         help=_(
-            "Enter true or false. If true, problems in the course default to always displaying a 'Reset' button. "
-            "You can override this in each problem's settings. All existing problems are affected when "
-            "this course-wide setting is changed."
+            " Indicate if problems in the course default to always displaying "
+            "a 'Reset' button. You can override this in each problem's settings. "
+            "All existing problems are affected when this course-wide setting is changed."
         ),
         scope=Scope.settings,
         default=default_reset_button

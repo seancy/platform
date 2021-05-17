@@ -54,7 +54,7 @@ class StudioPageTestCase(CourseTestCase):
         )
         self.validate_html_for_action_button(
             html,
-            '<span data-tooltip="Drag to reorder" class="drag-handle action"></span>',
+            '<span data-tooltip="Drag to reorder" class="drag-handle action',
             can_reorder
         )
         self.validate_html_for_action_button(
@@ -69,7 +69,7 @@ class StudioPageTestCase(CourseTestCase):
         )
         self.validate_html_for_action_button(
             html,
-            '<button data-tooltip="Delete" class="btn-default delete-button action-button">',
+            'Delete',
             can_duplicate
         )
         self.validate_html_for_action_button(

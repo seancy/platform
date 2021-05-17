@@ -2933,7 +2933,7 @@ class CourseReminder():
         descriptor = modulestore().get_course(course_id)
         if descriptor:
             return len(descriptor.reminder_info) > 0 or \
-                   (descriptor.periodic_reminder_enabled and descriptor.periodic_reminder_day > 0)
+                   (descriptor.periodic_reminder_enabled and descriptor.periodic_reminder_day)
         return False
 
     def get_course_with_reminders(self):
@@ -3134,7 +3134,7 @@ class CourseReminder():
         delta = self.TIME_NOW - created
         send = False
 
-        if descriptor.periodic_reminder_enabled and descriptor.periodic_reminder_day > 0:
+        if descriptor.periodic_reminder_enabled and descriptor.periodic_reminder_day:
             if delta.days > 0 and delta.days % descriptor.periodic_reminder_day == 0:
                 send = True
         elif delta.days in descriptor.reminder_info:

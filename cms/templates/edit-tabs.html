@@ -38,10 +38,12 @@
       <h3 class="sr">${_("Page Actions")}</h3>
       <ul>
         <li class="nav-item">
-          <a href="#" class="button new-button new-tab"><span class="icon fa fa-plus" aria-hidden="true"></span> ${_("New Page")}</a>
+          <a href="#" class="button new-button new-tab">
+            <span class="icon fal fa-plus" aria-hidden="true" ></span> ${_("New Page")}</a>
         </li>
         <li class="nav-item">
-          <a href="${lms_link}" rel="external" class="button view-button view-live-button">${_("View Live")}</a>
+          <a href="${lms_link}" rel="external" class="button view-button view-live-button">
+            <span class="icon fal fa-eye" aria-hidden="true" ></span> ${_("View Live")}</a>
         </li>
       </ul>
     </nav>
@@ -61,6 +63,11 @@
         <article class="unit-body">
 
           <div class="tab-list">
+
+            <div class="header">
+              <span class="name">Pages</span>
+              <span class="action">Action</span>
+            </div>
             <ol class="course-nav-list course components">
 
               % for tab in tabs_to_render:
@@ -104,6 +111,7 @@
                       </div>
 
                       <div class="course-nav-item-actions wrapper-actions-list">
+                        <i class="far fa-ellipsis-h"></i>
                         <ul class="actions-list">
 
                         % if tab.is_hideable:
@@ -115,6 +123,8 @@
                               <input type="checkbox" class="toggle-checkbox" data-tooltip="${_('Show/hide page')}" />
                             % endif
                             <div class="action-button"><span class="icon fa fa-eye" aria-hidden="true"></span><span class="icon fa fa-eye-slash"></span></div>
+                            <span class="label-show-to-all">${_("Show to all")}</span>
+                            <span class="label-hide-from-all">${_("Hide from all")}</span>
                           </li>
                         % endif
 
@@ -140,7 +150,8 @@
           </div>
 
           <div class="add-pages">
-              <p>${_("You can add additional custom pages to your course.")} <a href="#" class="button new-button new-tab"><span class="icon fa fa-plus" aria-hidden="true"></span>${_("Add a New Page")}</a></p>
+            <a href="#" class="button new-button new-tab"><span class="icon fa fa-plus-circle" aria-hidden="true"></span>${_("Add a New Page")}</a>
+              ##<p>${_("You can add additional custom pages to your course.")} </p>
           </div>
         </article>
       </div>
@@ -149,7 +160,7 @@
     <aside class="content-supplementary" role="complementary">
       <div class="bit">
         <h3 class="title-3">${_("What are pages?")}</h3>
-        <p>${_("Pages are listed horizontally at the top of your course. Default pages (Home, Course, Discussion, Wiki, and Progress) are followed by textbooks and custom pages that you create.")}</p>
+        <p>${_("Pages are listed horizontally at the top of your course. Default pages (Home, Course, Discussion and Progress) are followed by textbooks if you add one and custom pages that you create.")}</p>
       </div>
       <div class="bit">
         <h3 class="title-3">${_("Custom pages")}</h3>
@@ -157,7 +168,7 @@
       </div>
       <div class="bit">
         <h3 class="title-3">${_("How do pages look to learners in my course?")}</h3>
-        <p>${_("Learners see the default and custom pages at the top of your course and use these links to navigate.")} <br /> <a rel="modal" href="#preview-lms-staticpages">${_("See an example")}</a></p>
+        <p>${_("Learners see the default and custom pages at the top of your course presentation or course about pages and use these links to navigate.")} <br /> <a rel="modal" href="#preview-lms-staticpages">${_("See an example")}</a></p>
       </div>
     </aside>
 

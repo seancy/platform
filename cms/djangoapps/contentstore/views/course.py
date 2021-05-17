@@ -53,6 +53,7 @@ from contentstore.utils import (
     delete_course
 )
 from contentstore.views.entrance_exam import create_entrance_exam, delete_entrance_exam, update_entrance_exam
+from contentstore.views.settings_data_config import get_advanced_settings_data
 from course_action_state.managers import CourseActionStateItemNotFoundError
 from course_action_state.models import CourseRerunState, CourseRerunUIStateManager
 from course_creators.views import add_user_with_status_unrequested, get_course_creator_status
@@ -561,8 +562,6 @@ def course_listing(request):
             u'can_edit': has_studio_write_access(request.user, library.location.library_key),
         }
 
-    split_archived = settings.FEATURES.get(u'ENABLE_SEPARATE_ARCHIVED_COURSES', False)
-    active_courses, archived_courses = _process_courses_list(courses_iter, in_process_course_actions, split_archived)
     in_process_course_actions = [format_in_process_course_view(uca) for uca in in_process_course_actions]
 
     #orgs = SiteConfiguration.get_all_orgs()
@@ -576,8 +575,7 @@ def course_listing(request):
 
     return render_to_response(u'index.html', {
         u'orgs': orgs,
-        u'courses': active_courses,
-        u'archived_courses': archived_courses,
+        u'courses': courses_iter,
         u'in_process_course_actions': in_process_course_actions,
         u'libraries_enabled': LIBRARIES_ENABLED,
         u'libraries': [format_library_for_view(lib) for lib in libraries],
@@ -1221,7 +1219,10 @@ def settings_handler(request, course_key_string):
                 'is_programmatic_enrollment_enabled': False,
                 'enable_delete_course': False,
                 'export_url': reverse_course_url('export_handler', course_key),
-                'homepage_url': reverse_url('homepage')
+                'homepage_url': reverse_url('homepage'),
+                'optionObject': {'both': 'full public', 'about': 'accessible by URL', 'none': 'private'},
+                'visibility_catalog': {'options': ['both', 'about', 'none'], 'help_info':
+                    CourseFields.catalog_visibility.help}
             }
 
             if configuration_helpers.get_value('ENABLE_PROGRAMMATIC_ENROLLMENT',
@@ -1234,6 +1235,11 @@ def settings_handler(request, course_key_string):
                     'enrollment_learning_groups': enrollment_learning_groups,
                     'is_programmatic_enrollment_enabled': True
                 })
+
+            is_edit_course_number_enabled = configuration_helpers.get_value('ENABLE_EDIT_COURSE_NUMBER', False)
+            settings_context.update({
+                'is_edit_course_number_enabled': is_edit_course_number_enabled
+            })
 
             site_config_course_tags = configuration_helpers.get_value('COURSE_TAGS', {})
             if site_config_course_tags and isinstance(site_config_course_tags, dict):
@@ -1320,6 +1326,7 @@ def grading_handler(request, course_key_string, grader_index=None):
                 'course_details': course_details,
                 'grading_url': reverse_course_url('grading_handler', course_key),
                 'is_credit_course': is_credit_course(course_key),
+                'asset_callback_url': reverse_course_url('assets_handler', course_key)
             })
         elif 'application/json' in request.META.get('HTTP_ACCEPT', ''):
             if request.method == 'GET':
@@ -1406,10 +1413,11 @@ def advanced_settings_handler(request, course_key_string):
     with modulestore().bulk_operations(course_key):
         course_module = get_course_and_check_access(course_key, request.user)
         if 'text/html' in request.META.get('HTTP_ACCEPT', '') and request.method == 'GET':
-
+            course_metadata = CourseMetadata.fetch(course_module)
             return render_to_response('settings_advanced.html', {
                 'context_course': course_module,
-                'advanced_dict': CourseMetadata.fetch(course_module),
+                'advanced_dict': course_metadata,
+                'advanced_group': get_advanced_settings_data(request.user, course_metadata),
                 'advanced_settings_url': reverse_course_url('advanced_settings_handler', course_key)
             })
         elif 'application/json' in request.META.get('HTTP_ACCEPT', ''):

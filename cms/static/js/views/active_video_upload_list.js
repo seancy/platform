@@ -18,6 +18,7 @@ define([
             CONVERSION_FACTOR_GBS_TO_BYTES = 1000 * 1000 * 1000;
         ActiveVideoUploadListView = BaseView.extend({
             tagName: 'div',
+            className: "form-wrapper",
             events: {
                 'click .file-drop-area': 'chooseFile',
                 'dragleave .file-drop-area': 'dragleave',
@@ -26,8 +27,10 @@ define([
 
             uploadHeader: gettext('Upload Videos'),
             uploadText: HtmlUtils.interpolateHtml(
-                gettext('Drag and drop or {spanStart}browse your computer{spanEnd}.'),
+                gettext('{emptySpanStart}Drag and drop{emptySpanEnd} or {spanStart}browse from your computer{spanEnd}'),
                 {
+                    emptySpanStart:HtmlUtils.HTML('<span>'),
+                    emptySpanEnd:HtmlUtils.HTML('</span>'),
                     spanStart: HtmlUtils.HTML('<span class="upload-text-link">'),
                     spanEnd: HtmlUtils.HTML('</span>')
                 }

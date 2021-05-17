@@ -86,6 +86,9 @@ class CourseDetails(object):
         self.course_order = None
         self.course_mandatory_enabled = ''
         self.enrollment_learning_groups = [] # used for automatically enrollment course by user learning group
+        self.display_coursenumber = ''
+        self.catalog_visibility = 'both'
+        self.is_new = False
 
     @classmethod
     def fetch_about_attribute(cls, course_key, attribute):
@@ -145,6 +148,9 @@ class CourseDetails(object):
         course_details.course_order = course_descriptor.course_order
         course_details.course_mandatory_enabled = course_descriptor.course_mandatory_enabled
         course_details.enrollment_learning_groups = course_descriptor.enrollment_learning_groups
+        course_details.display_coursenumber = course_descriptor.display_coursenumber
+        course_details.catalog_visibility = course_descriptor.catalog_visibility
+        course_details.is_new = course_descriptor.is_new
 
         # Default course license is "All Rights Reserved"
         course_details.license = getattr(course_descriptor, "license", "all-rights-reserved")
@@ -365,6 +371,22 @@ class CourseDetails(object):
 
         if 'enrollment_learning_groups' in jsondict and jsondict['enrollment_learning_groups'] != descriptor.enrollment_learning_groups:
             descriptor.enrollment_learning_groups = jsondict['enrollment_learning_groups']
+            dirty = True
+
+        if 'display_coursenumber' in jsondict and jsondict['display_coursenumber'] != descriptor.display_coursenumber:
+            descriptor.display_coursenumber = jsondict['display_coursenumber']
+            dirty = True
+
+        if 'catalog_visibility' in jsondict and jsondict['catalog_visibility'] != descriptor.catalog_visibility:
+            descriptor.catalog_visibility = jsondict['catalog_visibility']
+            dirty = True
+
+        if 'is_new' in jsondict and jsondict['is_new'] != descriptor.is_new:
+            descriptor.is_new = jsondict['is_new']
+            dirty = True
+
+        if 'title' in jsondict and jsondict['title'] != descriptor.display_name:
+            descriptor.display_name = jsondict['title']
             dirty = True
 
         if dirty:

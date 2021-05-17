@@ -44,7 +44,7 @@ define([
                                 // or that are marked as Upload Complete
                                 var isActive = activeVideos.where({videoId: video.get('edx_video_id')});
                                 return isActive.length === 0 ||
-                                       isActive[0].get('status') === ActiveVideoUpload.STATUS_COMPLETE;
+                                       isActive[0].get('status') === ActiveVideoUpload.STATUS_COMPLETED;
                             }),
                             updatedView = new PreviousVideoUploadListView({
                                 videoImageUploadURL: videoImageUploadURL,

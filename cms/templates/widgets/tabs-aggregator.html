@@ -3,12 +3,14 @@
     <section class="editor-with-tabs">
      <div class="edit-header">
         <span class="component-name"></span>
-        <ul class="${'editor-tabs' if (len(tabs) != 1) else 'editor-single-tab-name' }">
-        % for tab in tabs:
-            <li class="inner_tab_wrap"><a href="#tab-${html_id}-${loop.index}" class="tab ${'current' if tab.get('current', False) else ''}" data-tab_name="${tab['name']}">${_(tab['name'])}</a></li>
-        % endfor
-        </ul>
       </div>
+        <div class="tabs-header modal-tabs">
+            <ul class="${'editor-tabs' if (len(tabs) != 1) else 'editor-single-tab-name' } settings-tabs-header">
+            % for tab in tabs:
+                <li class="inner_tab_wrap settings-tab-buttons"><button href="#tab-${html_id}-${loop.index}" class="tab ${'current' if tab.get('current', False) else ''} settings-tab-button" data-tab_name="${tab['name']}">${_(tab['name'])}</button></li>
+            % endfor
+            </ul>
+        </div>
       <div class="tabs-wrapper">
        % for tab in tabs:
         <div class="component-tab ${'is-inactive' if not tab.get('current', False) else ''}" id="tab-${html_id}-${loop.index}" >

@@ -11,7 +11,7 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/modals/base_mod
         var EditXBlockModal = BaseModal.extend({
             events: _.extend({}, BaseModal.prototype.events, {
                 'click .action-save': 'save',
-                'click .action-modes a': 'changeMode'
+                'click .action-modes button': 'changeMode'
             }),
 
             options: $.extend({}, BaseModal.prototype.options, {
@@ -24,7 +24,7 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/modals/base_mod
             }),
 
             initialize: function() {
-                BaseModal.prototype.initialize.call(this);
+                BaseModal.prototype.initialize.call(this, {displayReturnIcon: false, stickActionButtonsToTop: false});
                 this.template = this.loadTemplate('edit-xblock-modal');
                 this.editorModeButtonTemplate = this.loadTemplate('editor-mode-button');
             },
@@ -43,7 +43,8 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/modals/base_mod
                 this.render();
                 this.show();
 
-                // Hide the action bar until we know which buttons we want
+                // Hide the action bar until we know which buttons we want;
+                // but this method will hide the button of modals like checkboxes, so if you need to enable this code, please contact me.
                 this.getActionBar().hide();
 
                 // Display the xblock after the modal is shown as there are some xblocks
@@ -80,11 +81,13 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/modals/base_mod
                 if (editorView.hasCustomTabs()) {
                     // Hide the modal's header as the custom editor provides its own
                     this.$('.modal-header').hide();
+                    this.$('.modal-tab-modes').hide();
 
                     // Update the custom editor's title
                     editorView.$('.component-name').text(title);
                 } else {
                     this.$('.modal-window-title').text(title);
+                    //temporary comment, please keep it.
                     if (editorView.getDataEditor() && editorView.getMetadataEditor()) {
                         this.addDefaultModes();
                         this.selectMode(editorView.mode);
@@ -125,9 +128,10 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/modals/base_mod
                         displayName = gettext('Component');
                     }
                 }
-                return interpolate(this.options.titleFormat, {title: displayName}, true);
+                return interpolate(this.options.titleFormat, {title: this.editOptions.title || displayName}, true);
             },
 
+            //temporary comment, please keep it.
             addDefaultModes: function() {
                 var defaultModes, i, mode;
                 defaultModes = this.editorView.getDefaultModes();
@@ -149,7 +153,7 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/modals/base_mod
                 var editorView = this.editorView,
                     buttonSelector;
                 editorView.selectMode(mode);
-                this.$('.editor-modes a').removeClass('is-set');
+                this.$('.editor-modes button').removeClass('is-set');
                 if (mode) {
                     buttonSelector = '.' + mode + '-button';
                     this.$(buttonSelector).addClass('is-set');
@@ -190,6 +194,7 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/modals/base_mod
                 this.editorView.notifyRuntime('modal-hidden');
             },
 
+            //temporary comment, please keep it.
             addModeButton: function(mode, displayName) {
                 var buttonPanel = this.$('.editor-modes');
                 buttonPanel.append(this.editorModeButtonTemplate({

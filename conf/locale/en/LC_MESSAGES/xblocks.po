@@ -1067,3 +1067,522 @@ msgstr ""
 msgid "Free Text"
 msgstr ""
 
+#: XBlock: xblock-edflex
+#: edflex-xblock/edflex/edflex.py
+msgid "External Resource"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Instructor Led Training"
+msgstr ""
+
+#: XBlock: edx_xblock_scorm
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py: 66
+msgid "Display name for this module"
+msgstr ""
+
+#: XBlock: edx_xblock_scorm
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:82
+msgid "Does this SCORM need to be scored?"
+msgstr ""
+
+#: XBlock: edx_xblock_scorm
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:90
+msgid "Icon"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Icon be used in course page"
+msgstr ""
+
+#: XBlock: edx_xblock_scorm
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:120
+msgid "SCORM module in .zip format"
+msgstr ""
+
+#: XBlock: xblock-pdf
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Size limit: "
+msgstr ""
+
+#: XBlock: edx_xblock_scorm
+#: edx_xblock_scorm/scormxblock/static/scormxblock.py:109
+msgid "Aspect ratio of this module"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-pdf/pdf/templates/html/pdf_edit.html
+msgid "Enter the prompt for the user."
+msgstr ""
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:36
+msgid ""
+"\n"
+"                    This text will be displayed for the user as some extra "
+"feedback after they have\n"
+"                    submitted their response to the poll.\n"
+"                "
+msgstr ""
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:44
+msgid "Private Results"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: poll/public/html/poll_edit.html:53
+msgid "If this is activated, the platform will not display results of the poll to the user."
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html
+msgid "Maximum Submissions"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html
+msgid ""
+"\n"
+"                    If you change an answer's text, all students who voted for that choice will have their votes updated to\n"
+"                    the new text. You'll want to avoid changing an answer from something like 'True' to 'False', accordingly.\n"
+"                    If you delete an answer, any votes for that answer will also be deleted. Students whose choices are deleted\n"
+"                    may vote again, but will not lose course progress.\n"
+"                "
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/public/handlebars/poll_studio.handlebars
+msgid "Image URL"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/handlebars/poll_studio.handlebars
+msgid "Image alternative text"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/handlebars/poll_studio.handlebars
+msgid ""
+"You can make limited use of Markdown in answer texts, preferably only bold "
+"and italics."
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html:97
+msgid "Add Answer"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: xblock-poll/poll/public/html/poll_edit.html:101
+msgid "Add Question"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop.html
+msgid "Loading drag and drop problem."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Basic Settings"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Show title"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background Image"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Provide custom image"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Generate image automatically"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Describe this zone to non-visual users."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "width"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "height"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Align dropped items to the left, center, or right."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Maximum items per zone"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "This setting limits the number of items that can be dropped into a single zone."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Item definitions"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Use text that is clear and descriptive of the item to be placed."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Success feedback"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Error feedback"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Show advanced settings"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/js_templates.html
+msgid "Preferred width"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "Specify preferred width as percentage of the background image width. Leave blank for automatic width."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/default_data.py
+msgid "Drag the items onto the image above."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "PROBLEM"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Standard mode: the problem provides immediate feedback each time a learner drops an item on a target zone. Assessment mode: the problem provides feedback only after a learner drops all available items on target zones."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Defines the number of points the problem is worth."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Problem text"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Introductory feedback"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Final feedback"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background URL"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Change background"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/js_templates.html
+msgid "For example, 'http://example.com/background.png' or '/static/background.png'."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Background description"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid ""
+"\n"
+"                            Please provide a description of the image for non-visual users.\n"
+"                            The description should provide sufficient information to allow anyone\n"
+"                            to solve the problem even without seeing the image.\n"
+"                        "
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Zone labels"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Zone borders"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Display label names on the image"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Display zone borders on the image"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/templates/html/drag_and_drop_edit.html
+msgid "Add a zone"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/templates/html/drag_and_drop_edit.html
+msgid "Items"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Item background color"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "The background color of draggable items in the problem (example: 'blue' or '#0000ff')."
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/drag_and_drop_v2.py
+msgid "Item text color"
+msgstr ""
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2.py
+msgid "Text color to use for draggable items (example: 'white' or '#ffffff')."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:57
+msgid "Enter your response to the prompt."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:93
+msgid "Your response (required)"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:105
+msgid "Enter your response to the prompt above."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: edx-ora2/openassessment/templates/openassessmentblock/response/oa_response.html
+msgid "Save your progress"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response_submitted.html:32
+msgid ""
+"Your response has been submitted. You will receive your grade after all "
+"steps are complete and your response is fully assessed."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/response/oa_response.html:46
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html:46
+msgid "IN PROGRESS"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: edx-ora2/openassessment/templates/openassessmentblock/peer/oa_peer_waiting.html
+msgid ""
+"All available peer responses have been assessed. Check back later to see if "
+"more learners have submitted responses. You will receive your grade after "
+"you've completed all the steps for this problem and your peers have assessed"
+" your response."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_incomplete.html:42
+#, python-format
+msgid ""
+"\n"
+"                                    This assignment is in progress. All submitted peer responses have been assessed. Check back later to see if more learners have submitted responses. You still need to complete the %(start_link)speer assessment%(end_link)s step.\n"
+"                                "
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/message/oa_message_incomplete.html:11
+msgid ""
+"This assignment is in progress. Complete the learner training step to move "
+"on."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/grade/oa_grade_incomplete.html:27
+msgid "You have not completed all the steps of this problem."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:6
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:17
+msgid "Manage Individual Learners"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:7
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:44
+msgid "View Assignment Statistics"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/instructor_dashboard/oa_grade_available_responses.html:15
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:9
+#: openassessment/templates/openassessmentblock/staff_area/oa_staff_area.html:126
+msgid "Grade Available Responses"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/peer/oa_peer_unavailable.html:16
+#: openassessment/templates/openassessmentblock/response/oa_response_unavailable.html:17
+#: openassessment/templates/openassessmentblock/self/oa_self_unavailable.html:17
+#: openassessment/templates/openassessmentblock/student_training/student_training_unavailable.html:16
+#: openassessment/xblock/staff_assessment_mixin.py:99
+#: openassessment/xblock/staff_assessment_mixin.py:123
+msgid "Not Available"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Registration Deadline"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Does this scorm, need to be scored?"
+msgstr ""
+
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/ilt.py
+msgid "Enter a class description."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Assignment Type"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Select assignment type defined in Course Grading section on which you want to generate an Intermediate Certificate"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Success Threshold"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the percentage to obtain the Intermediate Certificate. Any student with a total score above the success threshold will be able to generate the Intermediate Certificate."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the name of your certificate"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Issue Date"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Enter the Issue date to appear on certificate. Leave blank to use the quizz completion date."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Assignment Type override"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Leave blank to use the Assignment type name or provide a different name here."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Platform Name override"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "Leave blank to use the default platform name or provide a different name here."
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "HTML Template"
+msgstr ""
+
+#: XBlock: xblock-certificate
+#: xblock-certificate/icxblock/static/html/icxblock_edit.html
+msgid "HTML template to use when generating intermediate certificate. Include style to customise the appearance of the message, including color, font size, etc."
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Your answer"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Learn to Assess Responses"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Assess Peers"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Assess Your Response"
+msgstr ""
+
+#: XBlock: edx-ora2
+#: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
+msgid "Not completed"
+msgstr ""

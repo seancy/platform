@@ -422,6 +422,20 @@ class AccountCreationForm(forms.Form):
         }
 
 
+class AdminPanelAccountCreation(AccountCreationForm):
+    _NAME_TOO_SHORT_MSG = _("A legal name must be a minimum of two characters long.")
+    name = forms.CharField(
+        min_length=accounts_settings.NAME_MIN_LENGTH,
+        error_messages={
+            "required": _NAME_TOO_SHORT_MSG,
+            "min_length": _NAME_TOO_SHORT_MSG,
+        },
+        validators=[validate_name]
+    )
+    lt_gdpr = forms.BooleanField()
+    lt_exempt_status = forms.BooleanField()
+
+
 def get_registration_extension_form(*args, **kwargs):
     """
     Convenience function for getting the custom form set in settings.REGISTRATION_EXTENSION_FORM.

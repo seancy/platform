@@ -128,25 +128,26 @@ from openedx.core.djangolib.markup import HTML, Text
             <ul>
                 <li class="nav-item">
                     <a href="#" class="button button-new" data-category="chapter" data-parent="${context_course.location}" data-default-name="${_('Section')}" title="${_('Click to add a new section')}">
-                        <span class="icon fa fa-plus" aria-hidden="true"></span>${_('New Section')}
+                        <span class="icon fal fa-plus" aria-hidden="true"></span>${_('New Section')}
                     </a>
                 </li>
                 %if reindex_link:
                     <li class="nav-item">
                         <a href="${reindex_link}" class="button button-reindex" data-category="reindex" title="${_('Reindex current course')}">
-                            <span class="icon-arrow-right" aria-hidden="true"></span>${_('Reindex')}
+                            <span class="icon fal fa-cabinet-filing icon-arrow-right" aria-hidden="true"></span>${_('Reindex')}
                         </a>
                     </li>
                 %endif
                 <li class="nav-item">
                     <a href="#" class="button button-toggle button-toggle-expand-collapse collapse-all is-hidden">
-                        <span class="collapse-all"><span class="icon fa fa-arrow-up" aria-hidden="true"></span> <span class="label">${_("Collapse All Sections")}</span></span>
-                        <span class="expand-all"><span class="icon fa fa-arrow-down" aria-hidden="true"></span> <span class="label">${_("Expand All Sections")}</span></span>
+                        <span class="collapse-all"><span class="icon fal fa-arrow-up" aria-hidden="true"></span> <span class="label">${_("Collapse All Sections")}</span></span>
+                        <span class="expand-all"><span class="icon fal fa-arrow-down" aria-hidden="true"></span> <span class="label">${_("Expand All Sections")}</span></span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="${lms_link}" rel="external" class="button view-button view-live-button"
-                       title="${_('Click to open the courseware in the LMS in a new tab')}">${_("View Live")}</a>
+                       title="${_('Click to open the courseware in the LMS in a new tab')}">
+                        <span class="icon fal fa-eye" aria-hidden="true"></span>${_("View Live")}</a>
                 </li>
             </ul>
         </nav>
@@ -158,21 +159,19 @@ from openedx.core.djangolib.markup import HTML, Text
         <article class="content-primary" role="main">
             <div class="course-status">
                 <div class="status-release">
-                    <h2 class="status-release-label">${_("Course Start Date")}</h2>
-                    <br>
+                    <h2 class="status-release-label">${_("Course Start Date")}:</h2>
                     <p class="status-release-value">${course_release_date}</p>
                     <ul class="status-actions">
                       <li class="action-item action-edit">
                         <a href="${settings_url}" class="edit-button action-button" data-tooltip="${_("Edit Start Date")}">
-                            <span class="icon fa fa-pencil" aria-hidden="true"></span>
+                            <span class="icon fal fa-pencil" aria-hidden="true"></span>
                             <span class="action-button-text sr">${_("Edit Start Date")}</span>
                         </a>
                       </li>
                     </ul>
                 </div>
                 <div class="status-pacing">
-                    <h2 class=status-pacing-label>${_("Course Pacing")}</h2>
-                    <br>
+                    <h2 class=status-pacing-label>${_("Course Pacing")}:</h2>
                     % if context_course.self_paced:
                         <p class="status-pacing-value">${_("Self-Paced")}</p>
                     % else:
@@ -202,7 +201,7 @@ from openedx.core.djangolib.markup import HTML, Text
                             "enable_quality": ${should_show_checklists_quality(request.user, context_course.id) | n, dump_js_escaped_json}
                         }
                     </%static:studiofrontend>
-                     
+
                 </div>
                 % endif
             </div>

@@ -40,7 +40,7 @@ class WordCloudFields(object):
         display_name=_("Display Name"),
         help=_("The display name for this component."),
         scope=Scope.settings,
-        default="Word cloud"
+        default=_("Word Cloud")
     )
     instructions = String(
         display_name=_("Instructions"),

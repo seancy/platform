@@ -19,6 +19,7 @@ from rest_framework.permissions import IsAuthenticated
 from six import text_type
 
 import accounts
+from .api import get_user_account_info
 from django_comment_common.models import Role
 from openedx.core.djangoapps.user_api.accounts.api import check_account_exists
 from openedx.core.djangoapps.user_api.api import (
@@ -33,7 +34,7 @@ from openedx.core.djangoapps.user_api.serializers import CountryTimeZoneSerializ
 from openedx.core.lib.api.authentication import SessionAuthenticationAllowInactiveUser
 from openedx.core.lib.api.permissions import ApiKeyHeaderPermission
 from student.cookies import set_logged_in_cookies
-from student.views import AccountValidationError, create_account_with_params
+from student.views import AccountValidationError, admin_panel_account_creation, create_account_with_params
 from util.json_request import JsonResponse
 
 
@@ -176,6 +177,85 @@ class RegistrationView(APIView):
     @method_decorator(sensitive_post_parameters("password"))
     def dispatch(self, request, *args, **kwargs):
         return super(RegistrationView, self).dispatch(request, *args, **kwargs)
+
+
+class AdminPanelRegistration(APIView):
+    """HTTP end-points for creating a new user in Admin Panel. """
+    authentication_classes = []
+
+    @method_decorator(ensure_csrf_cookie)
+    def get(self, request):
+        return HttpResponse(RegistrationFormFactory().get_admin_panel_registration_form(request).to_json(),
+                            content_type="application/json")
+
+    @method_decorator(csrf_exempt)
+    def post(self, request):
+        """Create the user's account.
+
+        You must send all required form fields with the request.
+
+        You can optionally send a "course_id" param to indicate in analytics
+        events that the user registered while enrolling in a particular course.
+
+        Arguments:
+            request (HTTPRequest)
+
+        Returns:
+            HttpResponse: 200 on success
+            HttpResponse: 400 if the request is not valid.
+            HttpResponse: 409 if an account with the given username or email
+                address already exists
+            HttpResponse: 403 operation not allowed
+        """
+        data = request.data.copy()
+
+        email = data.get('email')
+        username = data.get('username')
+        errors = []
+
+        # Handle duplicate email/username
+        conflicts = check_account_exists(email=email, username=username)
+        if conflicts:
+            conflict_messages = {
+                "email": accounts.EMAIL_CONFLICT_MSG.format(email_address=email),
+                "username": accounts.USERNAME_CONFLICT_MSG.format(username=username),
+            }
+            for conf in conflicts:
+                errors.append(conflict_messages[conf])
+
+        # Backwards compatibility: the student view expects both
+        # terms of service and honor code values.  Since we're combining
+        # these into a single checkbox, the only value we may get
+        # from the new view is "honor_code".
+        # Longer term, we will need to make this more flexible to support
+        # open source installations that may have separate checkboxes
+        # for TOS, privacy policy, etc.
+        if data.get("honor_code") and "terms_of_service" not in data:
+            data["terms_of_service"] = data["honor_code"]
+
+        try:
+            user = admin_panel_account_creation(request, data)
+        except AccountValidationError as err:
+            errors.append(text_type(err))
+        except ValidationError as err:
+            # Should only get non-field errors from this function
+            assert NON_FIELD_ERRORS not in err.message_dict
+            # Only return first error for each field
+            errors.extend(err.messages)
+        except PermissionDenied:
+            return HttpResponseForbidden(_("Account creation not allowed."))
+
+        if errors:
+            errors = list(set(errors))
+            return JsonResponse({'error': errors}, status=409)
+        response = get_user_account_info(user)
+        response['user_id'] = user.id
+        return JsonResponse(response)
+
+    @method_decorator(transaction.non_atomic_requests)
+    @method_decorator(sensitive_post_parameters("password"))
+    def dispatch(self, request, *args, **kwargs):
+        return super(AdminPanelRegistration, self).dispatch(request, *args, **kwargs)
 
 
 class PasswordResetView(APIView):

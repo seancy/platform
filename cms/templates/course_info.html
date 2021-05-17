@@ -15,7 +15,7 @@ from openedx.core.djangolib.js_utils import (
 
 <%block name="header_extras">
 <link rel="stylesheet" type="text/css" href="${static.url('js/vendor/timepicker/jquery.timepicker.css')}" />
-% for template_name in ["course_info_update", "course_info_handouts"]:
+% for template_name in ["course_info_update", "course_info_handouts", "no-updates"]:
   <script type="text/template" id="${template_name}-tpl">
     <%static:include path="js/${template_name}.underscore" />
   </script>
@@ -47,7 +47,7 @@ from openedx.core.djangolib.js_utils import (
         <h3 class="sr">${_('Page Actions')}</h3>
         <ul>
           <li class="nav-item">
-            <a href="#" class=" button new-button new-update-button" disabled><span class="icon fa fa-plus" aria-hidden="true"></span> ${_('New Update')}</a>
+            <a href="#" class=" button new-button new-update-button" disabled><span class="icon fal fa-plus" aria-hidden="true"></span> ${_('New Update')}</a>
           </li>
         </ul>
       </nav>
@@ -73,6 +73,10 @@ from openedx.core.djangolib.js_utils import (
           <article class="course-updates" id="course-update-view">
             <ol class="update-list" id="course-update-list"></ol>
           </article>
+        </div>
+        <div class="course-complementary">
+          <h4 class="title">${_('Course Updates')}</h4>
+          <p>${_('Use course updates to notify learners of important dates or exams, highlight particular discussions in the forums, announce schedule changes, and respond to learner questions. You can add or edit updates.')}</p>
         </div>
         <div class="sidebar course-handouts" id="course-handouts-view"></div>
       </div>

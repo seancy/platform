@@ -32,13 +32,14 @@ define([
 
             render: function() {
                 // Assemble the render view for this model.
-                $('.course-instructor-details-fields').empty();
+                $('.course-instructor-details-fields').find('li').remove(); //.empty();
                 var self = this;
+                var $actions = $(self.el).find('.actions')
                 $.each(this.model.get('instructor_info').instructors, function(index, data) {
-                    $(self.el).append(self.template({
+                    $(self.template({
                         data: data,
                         index: index
-                    }));
+                    })).insertBefore($actions)
                 });
 
                 // Avoid showing broken image on mistyped/nonexistent image

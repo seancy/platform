@@ -37,7 +37,7 @@ define(
             },
 
             showUploadFailureMessage: function() {
-                return new PromptView.Warning({
+                return new PromptView.Error({
                     title: gettext('Your file could not be uploaded'),
                     message: this.model.get('failureMessage'),
                     actions: {

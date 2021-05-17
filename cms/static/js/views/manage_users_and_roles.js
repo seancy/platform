@@ -258,6 +258,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview',
 
             createUserFormSubmit: function(event) {
                 event.preventDefault();
+                event.stopPropagation();
                 var self = this;
                 var email = this.$userEmailInput.val().trim();
                 var emailCheck = this.checkEmail(email);

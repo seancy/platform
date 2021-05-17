@@ -172,9 +172,9 @@ define(
             }
 
             if (current.state === STATE.SUCCESS) {
-                $checkmark.removeClass('fa-square-o').addClass('fa-check-square-o');
+                $checkmark.removeClass('fa-circle').addClass('fa-check-circle');
             } else {
-                $checkmark.removeClass('fa-check-square-o').addClass('fa-square-o');
+                $checkmark.removeClass('fa-check-circle').addClass('fa-circle');
             }
         };
 

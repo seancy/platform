@@ -39,6 +39,16 @@ define(['domReady', 'jquery', 'underscore', 'js/utils/cancel_on_escape', 'js/vie
             error: 'error'
         });
 
+        var setNavigationButtonsStatus = function(status) {
+            var $navActions = $('.mast .nav-actions')
+            if (status) {
+                $navActions.removeClass('hidden')
+            }else{
+                $navActions.addClass('hidden')
+            }
+
+        }
+
         var saveNewCourse = function(e) {
             e.preventDefault();
 
@@ -65,6 +75,7 @@ define(['domReady', 'jquery', 'underscore', 'js/utils/cancel_on_escape', 'js/vie
                 $('#course_creation_error').html('<p>' + errorMessage + '</p>');
                 $('.new-course-save').addClass('is-disabled').attr('aria-disabled', true);
             });
+            setNavigationButtonsStatus(true)
         };
 
         var rtlTextDirection = function() {
@@ -94,6 +105,8 @@ define(['domReady', 'jquery', 'underscore', 'js/utils/cancel_on_escape', 'js/vie
                 $('#' + addType + '_creation_error').html('');
                 $('.create-' + addType + ' .wrap-error').removeClass('is-shown');
                 $('.new-' + addType + '-save').off('click');
+
+                setNavigationButtonsStatus(true)
             };
         };
 
@@ -105,15 +118,17 @@ define(['domReady', 'jquery', 'underscore', 'js/utils/cancel_on_escape', 'js/vie
             $('.new-course-button').addClass('is-disabled').attr('aria-disabled', true);
             $('.new-course-save').addClass('is-disabled').attr('aria-disabled', true);
             $newCourse = $('.wrapper-create-course').addClass('is-shown');
-            $cancelButton = $newCourse.find('.new-course-cancel');
+            $cancelButton = $newCourse.find('.new-course-cancel, .close-icon');
             $courseName = $('.new-course-name');
             $courseName.focus().select();
             $('.new-course-save').on('click', saveNewCourse);
             $cancelButton.bind('click', makeCancelHandler('course'));
+            $('.cover', $newCourse).bind('click', makeCancelHandler('course'))
             CancelOnEscape($cancelButton);
             CreateCourseUtils.setupOrgAutocomplete();
             CreateCourseUtils.configureHandlers();
             rtlTextDirection();
+            setNavigationButtonsStatus(false)
         };
 
         var saveNewLibrary = function(e) {
@@ -147,14 +162,16 @@ define(['domReady', 'jquery', 'underscore', 'js/utils/cancel_on_escape', 'js/vie
             $('.new-library-button').addClass('is-disabled').attr('aria-disabled', true);
             $('.new-library-save').addClass('is-disabled').attr('aria-disabled', true);
             var $newLibrary = $('.wrapper-create-library').addClass('is-shown');
-            var $cancelButton = $newLibrary.find('.new-library-cancel');
+            var $cancelButton = $newLibrary.find('.new-library-cancel, .close-icon');
             var $libraryName = $('.new-library-name');
             $libraryName.focus().select();
             $('.new-library-save').on('click', saveNewLibrary);
             $cancelButton.bind('click', makeCancelHandler('library'));
+            $('.cover', $newLibrary).bind('click', makeCancelHandler('library'))
             CancelOnEscape($cancelButton);
 
             CreateLibraryUtils.configureHandlers();
+            setNavigationButtonsStatus(false)
         };
 
         var showTab = function(tab) {

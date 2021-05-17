@@ -1357,8 +1357,42 @@ ADVANCED_PROBLEM_TYPES = [
         'boilerplate_name': None
     }
 ]
+# OFFICIAL_ADVANCED_MODULES = [
+#         "annotatable",
+#         "drag-and-drop-v2",
+#         "icxblock",
+#         "ilt",
+#         "lbmdonexblock",
+#         "library_content",
+#         "lti",
+#         "openassessment",
+#         "pdf",
+#         "personalitytest",
+#         "poll",
+#         "scormxblock",
+#         "survey",
+#         "ubcpi",
+#         "videoalpha",
+#         "edflex",
+#         "word_cloud",
+#         "iframe",
+#     ],
+OFFICIAL_ADVANCED_MODULES = [
+        "drag-and-drop-v2",
+        "icxblock",
+        "ilt",
+        "library_content",
+        "openassessment",
+        "pdf",
+        "poll",
+        "scormxblock",
+        "survey",
+        "videoalpha",
+        "edflex",
+        "word_cloud",
+        "iframe",
+]
 COURSE_ADVANCED_MODULES = []
-
 
 # Files and Uploads type filter values
 

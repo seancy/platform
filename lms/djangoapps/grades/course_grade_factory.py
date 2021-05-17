@@ -16,6 +16,7 @@ from openedx.core.djangoapps.signals.signals import COURSE_GRADE_CHANGED, COURSE
 from openedx.core.lib.gating.api import get_subsection_completion_percentage_with_gradebook_edit
 from student.models import CourseEnrollment
 from xmodule.modulestore.django import modulestore
+from util.course import get_badge_url
 
 from .config import assume_zero_if_absent, should_persist_grades
 from .course_data import CourseData
@@ -405,7 +406,7 @@ class CourseGradeFactory(object):
                         'section_name': section.display_name,
                         'section_url': section.url_name,
                         'threshold': grader['threshold'],
-                        'trophy_img': grader['short_label']
+                        'trophy_img': get_badge_url(course_key, grader)
                     }
                     trophy['passed'] = trophy['result'] >= trophy['threshold']
                     trophies.append(trophy)

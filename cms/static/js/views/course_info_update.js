@@ -17,13 +17,13 @@ define(['tinymce',
                 'click .new-update-button': 'onNew',
                 'click .save-button': 'onSave',
                 'click .cancel-button': 'onCancel',
-                'click .post-actions > .edit-button': 'onEdit',
-                'click .post-actions > .delete-button': 'onDelete'
+                'click .post-actions .edit-button': 'onEdit',
+                'click .post-actions .delete-button': 'onDelete'
             },
 
             initialize: function() {
                 this.template = this.loadTemplate('course_info_update');
-
+                this.emptyTemplate = this.loadTemplate('no-updates');
                 // when the client refetches the updates as a whole, re-render them
                 this.listenTo(this.collection, 'reset', this.render);
                 this.listenTo(this.collection, 'invalid', this.handleValidationError);
@@ -33,7 +33,7 @@ define(['tinymce',
                 // iterate over updates and create views for each using the template
                 var updateList = this.$el.find('#course-update-list'),
                     self = this;
-                $(updateList).empty();
+                updateList.empty();
                 if (this.collection.length > 0) {
                     this.collection.each(function(update, index) {
                         try {
@@ -57,18 +57,11 @@ define(['tinymce',
                     });
                     self.initEditor(this.options.langCode);
                 } else {
+                    updateList.html(this.emptyTemplate())
                     // If the collection is empty enable the New update button
                     self.$el.find('.new-update-button').removeAttr('disabled');
                 }
 
-                // Hide Update forms that are not for new updates with the editing class
-                updateList.children().each(function(index, updateElement) {
-                    var $updateElement = $(updateElement);
-                    var updateForm = $updateElement.find('.new-update-form');
-                    if ($updateElement.length > 0 && !$updateElement.hasClass('editing')) {
-                        $(updateForm).hide();
-                    }
-                });
                 return this;
             },
 
@@ -159,6 +152,11 @@ define(['tinymce',
                 var targetModel = this.eventModel(event);
                 var $textArea = this.$currentPost.find('.new-update-content').first();
                 Tinymce.activeEditor.save();
+                var $updateList = this.$el.find('.update-list')
+                if (this.collection.length > 0) {
+                    $updateList.addClass('hide-no-content')
+                }
+
                 targetModel.set({
                     title: this.$currentPost.find('.title').val(),
                     // translate short-form date (for input) into long form date (for display)
@@ -173,9 +171,9 @@ define(['tinymce',
                 saving.show();
                 var ele = this.modelDom(event);
                 targetModel.save({}, {
-                    success: function() {
+                    success: $.proxy(function() {
                         saving.hide();
-                    },
+                    },this),
                     error: function() {
                         ele.remove();
                     }
@@ -254,6 +252,10 @@ define(['tinymce',
                                             success: function() {
                                                 self.render();
                                                 deleting.hide();
+                                                var $updateList = self.$el.find('.update-list')
+                                                if (self.collection.length <= 0) {
+                                                    $updateList.removeClass('hide-no-content')
+                                                }
                                             },
                                             reset: true
                                         });

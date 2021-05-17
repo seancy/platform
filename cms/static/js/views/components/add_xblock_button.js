@@ -7,6 +7,7 @@ define(['js/views/baseview'],
                 this.template = this.loadTemplate('add-xblock-component-button');
                 this.$el.html(
                     this.template({
+                        help: this.options.help,
                         type: this.model.type,
                         templates: this.model.templates,
                         display_name: this.model.display_name

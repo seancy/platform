@@ -6,7 +6,8 @@ define(['edx-ui-toolkit/js/utils/html-utils',
     'common/js/components/views/feedback_notification',
     'common/js/components/views/feedback_alert',
     'js/views/baseview',
-    'jquery.smoothScroll'],
+    //'jquery.smoothScroll'
+    ],
     function(HtmlUtils, BaseView, _, $, gettext, NotificationView, AlertView) {
         var ValidatingView = BaseView.extend({
     // Intended as an abstract class which catches validation errors on the model and
@@ -146,14 +147,14 @@ define(['edx-ui-toolkit/js/utils/html-utils',
                 this.saved = new AlertView.Confirmation({
                     title: title || defaultTitle,
                     message: message,
-                    closeIcon: false
+                    closeIcon: true
                 });
                 this.saved.show();
-                $.smoothScroll({
+                /*$.smoothScroll({
                     offset: 0,
                     easing: 'swing',
                     speed: 1000
-                });
+                });*/
             },
 
             saveView: function() {

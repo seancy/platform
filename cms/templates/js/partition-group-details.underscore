@@ -5,10 +5,22 @@
                 <span class="ui-toggle-expansion icon fa fa-caret-<% if (showContentGroupUsages){ print('down'); } else { print('right'); } %>" aria-hidden="true"></span>
                 <%- name %>
             </a>
+            <% if (!_.isUndefined(id)) { %>
+                 <div class="group-configuration-id"
+                     ><span class="group-configuration-label"><%- gettext('ID') %>: </span
+                     ><span class="group-configuration-value"><%- id %></span
+                 ></div>
+             <% } %>
+
         </h3>
+        <% if (!showContentGroupUsages) { %>
+        <span class="usage-count">
+             <%- usageCountMessage %>
+         </span>
+        <% } %>
     </header>
 
-   <ol class="collection-info group-configuration-info group-configuration-info-<% if(showContentGroupUsages){ print('block'); } else { print('inline'); } %>">
+   <!--<ol class="collection-info group-configuration-info group-configuration-info-<% if(showContentGroupUsages){ print('block'); } else { print('inline'); } %>">
      <% if (!_.isUndefined(id)) { %>
          <li class="group-configuration-id"
              ><span class="group-configuration-label"><%- gettext('ID') %>: </span
@@ -20,20 +32,21 @@
              <%- usageCountMessage %>
          </li>
      <% } %>
-   </ol>
+   </ol>-->
 
-    <ul class="actions group-configuration-actions">
+    <i class="far fa-ellipsis-h"></i>
+    <ul class="actions action-menu group-configuration-actions">
         <% if (!restrictEditing) { %>
             <li class="action action-edit">
-                <button class="edit"><span class="icon fa fa-pencil" aria-hidden="true"></span> <%- gettext("Edit") %></button>
+                <button class="edit"><span class="icon fal fa-edit" aria-hidden="true"></span> <%- gettext("Edit") %></button>
             </li>
             <% if (_.isEmpty(usage)) { %>
                 <li class="action action-delete wrapper-delete-button" data-tooltip="<%- gettext('Delete') %>">
-                    <button class="delete action-icon" title="<%- gettext('Delete') %>"><span class="icon fa fa-trash-o" aria-hidden="true"></span></button>
+                    <button class="delete action-icon" title="<%- gettext('Delete') %>"><span class="icon fal fa-trash-alt" aria-hidden="true"></span> <%- gettext("Delete") %></button>
                 </li>
             <% } else { %>
                 <li class="action action-delete wrapper-delete-button" data-tooltip="<%- gettext('Cannot delete when in use by a unit') %>">
-                    <button class="delete action-icon is-disabled" disabled="disabled" title="<%- gettext('Delete') %>"><span class="icon fa fa-trash-o" aria-hidden="true"></span></button>
+                    <button class="delete action-icon is-disabled" disabled="disabled" title="<%- gettext('Delete') %>"><span class="icon fa fa-trash-o" aria-hidden="true"></span> <%- gettext("Delete") %></button>
                 </li>
             <% } %>
         <% } %>

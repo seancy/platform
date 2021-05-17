@@ -136,10 +136,19 @@ def edit_tab_handler(course_item, request):
             {"error": "Tab with id_locator '{0}' does not exist.".format(tab_id_locator)}, status=400
         )
 
-    if 'is_hidden' in request.json:
+    if not isinstance(tab, StaticTab) and 'is_hidden' in request.json:
         # set the is_hidden attribute on the requested tab
         tab.is_hidden = request.json['is_hidden']
         modulestore().update_item(course_item, request.user.id)
+    elif isinstance(tab, StaticTab) and 'course_staff_only' in request.json:
+        # set the course_staff_only attribute on the requested tab, also sync with StaticTabDescriptor's attr
+        tab.course_staff_only = request.json['course_staff_only']
+        modulestore().update_item(course_item, request.user.id)
+        xblock_item = UsageKey.from_string(tab_id_locator['tab_locator'])
+        tab_xblock = modulestore().get_item(xblock_item)
+        if tab_xblock:
+            tab_xblock.course_staff_only = request.json['course_staff_only']
+            modulestore().update_item(tab_xblock, request.user.id)
     else:
         raise NotImplementedError('Unsupported request to edit tab: {0}'.format(request.json))
 

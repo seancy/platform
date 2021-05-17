@@ -235,6 +235,7 @@ class VideosHandlerTestCase(VideoUploadTestMixin, CourseTestCase):
                     'created',
                     'duration',
                     'status',
+                    'status_class',
                     'course_video_image_url',
                     'transcripts',
                     'transcription_status'
@@ -252,7 +253,7 @@ class VideosHandlerTestCase(VideoUploadTestMixin, CourseTestCase):
         (
             [
                 'edx_video_id', 'client_video_id', 'created', 'duration',
-                'status', 'course_video_image_url', 'transcripts', 'transcription_status',
+                'status', 'status_class', 'course_video_image_url', 'transcripts', 'transcription_status',
             ],
             [
                 {
@@ -268,7 +269,7 @@ class VideosHandlerTestCase(VideoUploadTestMixin, CourseTestCase):
         (
             [
                 'edx_video_id', 'client_video_id', 'created', 'duration',
-                'status', 'course_video_image_url', 'transcripts', 'transcription_status',
+                'status', 'status_class', 'course_video_image_url', 'transcripts', 'transcription_status',
             ],
             [
                 {

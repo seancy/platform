@@ -2,7 +2,7 @@
     <h3 class="assets-title"><%- gettext("Previous Uploads") %></h3>
     <div class="wrapper-encodings-download">
       <a href="<%- encodingsDownloadUrl %>">
-        <%- gettext("Download available encodings (.csv)") %>
+        <i class="fal fa-download"></i><span><%- gettext("Download (.csv)") %></span>
       </a>
     </div>
     <div class="assets-table video-table">

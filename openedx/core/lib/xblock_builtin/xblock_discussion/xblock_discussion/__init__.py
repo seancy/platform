@@ -44,7 +44,7 @@ class DiscussionXBlock(XBlock, StudioEditableXBlockMixin, XmlParserMixin):
     display_name = String(
         display_name=_("Display Name"),
         help=_("The display name for this component."),
-        default="Discussion",
+        default=_("Discussion"),
         scope=Scope.settings
     )
     discussion_category = String(

@@ -1,0 +1,777 @@
+<%namespace name='static' file='/static_content.html'/>
+<%!
+    import json
+    from datetime import datetime
+    from django.utils.translation import ugettext as _, ungettext, pgettext
+    from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+    from openedx.core.djangolib.js_utils import dump_js_escaped_json
+    from openedx.core.djangoapps.lang_pref.api import released_languages
+    from student.roles import STUDIO_ADMIN_ACCESS_GROUP
+    from django_countries import countries
+    from django.urls import reverse
+    from openedx.core.djangolib.markup import HTML
+    from openedx.core.djangoapps.user_api.api import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP, CREHANA_DENIED_GROUP
+    from webpack_loader.templatetags.webpack_loader import render_bundle
+    from lms.djangoapps.external_catalog.utils import get_edflex_configuration, get_crehana_configuration
+
+    country_options = [{'text': v, 'value': k} for k,v in countries]
+    lang_options = [{'text': i.name, 'value': i.code} for i in released_languages()]
+%>
+<%inherit file="../main.html" />
+<%static:css group='style-course-vendor'/>
+<%block name="pagetitle">${_("Admin Panel")}</%block>
+<%block name="bodyclass">view-admin-panel</%block>
+
+<%block name="js_extra">
+% if route in ("user_create", "user_edit"):
+<script type="text/javascript" src="${static.url('js/admin_panel/admin_panel.js')}"></script>
+<script>
+    var current_path = location.pathname,
+        path_split = current_path.split('/'),
+        profile_fields = ${profile_fields | n, dump_js_escaped_json},
+        country_options = ${country_options | n, dump_js_escaped_json},
+        lang_options = ${lang_options | n, dump_js_escaped_json},
+        date_format = ${date_format | n, dump_js_escaped_json},
+        user_id;
+    if (isNaN(path_split[path_split.length-2])) {
+        user_id = ""
+    }
+    else {
+        user_id = path_split[path_split.length-2]
+    }
+    /*
+    convert country_options, lang_options to json object
+    country_options = [{text:'country1', value:'1'}, {text:'country2', value:'2'} ]
+    **/
+    user_create_edit(user_id, profile_fields, country_options, lang_options, date_format);
+    sessionStorage.setItem('unsaved', '0');
+    $('a').not(".management-container a").on('click', function (e) {
+        if (sessionStorage.unsaved === '1') {
+            e.preventDefault();
+            LearningTribes.confirmation.show({
+               message: gettext("There are unsaved changes"),
+               confirmationText: gettext('Continue without saving'),
+               cancelationText: gettext('Go back'),
+               confirmationCallback: function() {
+                   window.location = e.target.href;
+               },
+               cancelationCallback: function () {
+                   return false
+               }
+           });
+        }
+    })
+</script>
+% endif
+${HTML(render_bundle('QuestionMark'))}
+${HTML(render_bundle('ReactRenderer'))}
+<script>
+
+    setTimeout(function() {
+        if ($('.select-action-status').length) {
+            function handleChange(e) {
+                var $input = $('.select-action-status').next()
+                $input.val(e.value)
+            }
+            new ReactRenderer({
+                component: Dropdown,
+                selector: '.select-action-status',
+                componentName: 'Dropdown',
+                props: {
+                    placeHolderStr:'${_("Action")}',
+                    onChange:handleChange,
+                    data:[{text:gettext('Activate'), value:'1'}, {text:gettext('Deactivate'), value:'2'}]
+                }
+              });
+        }
+        /*
+        LearningTribes.Notification.Info({
+            //element:$('#page-notification')[0],
+            title:"You've made some changes",
+            message:'Your changes will not take effect until you save your progress.',
+            cancelText:'Cancel1',
+            confirmText:'Save1',
+            onCancel:function(){
+                console.log('cancel')
+                //return false;
+            },
+            onConfirm:function(e){
+                console.log('confirm')
+                //return false;
+                setTimeout(function(){
+
+                    LearningTribes.Notification.Error({
+                        title:"You've made some changes",
+                        message:'Your changes will not take effect until you save your progress.',
+                        cancelText:'Cancel1',
+                        confirmText:'Save1',
+                        onCancel:function(){
+                            console.log('cancel')
+                            //return false;
+                        },
+                        onConfirm:function(e){
+                            console.log('confirm')
+                            //return false;
+                        }
+                    } )
+                }, 4000)
+            }
+        } )
+        */
+    },500)
+
+
+    $(".paginator select").change(function () {
+       var endpoint = $(this).data('endpoint') + $(this).val();
+       window.location = endpoint;
+    });
+    $(".dropdown-toggle").click(function () {
+        $(".dropdown-menu").slideToggle()
+    });
+    $(".column-check-box input").on('click', function () {
+        if ($(this).hasClass("check-all")) {
+            $(".column-check-box input:not(:disabled)").not(this).prop("checked", this.checked)
+        }
+    });
+    $("button.btn-apply").on('click', function () {
+        if ($(".column-check-box input:checked").length == 0 || $("select.actions").val() == '0') {
+            return
+        }
+        var user_list = [];
+        $(".column-check-box input:checked").each(function () {
+            var $parent = $(this).parent().parent();
+            if ($parent[0].dataset.id != undefined) {
+                user_list.push($parent[0].dataset.id)
+            }
+            var $status = $parent.find('.column-status span');
+            if ($status.length == 0) { return }
+            if ($("#action-status").val() == '1') {
+                $status.html($status.html().replace('Inactive','Active'));
+                $status.removeClass("Inactive-user").addClass("Active-user");
+            } else {
+                $status.html($status.html().replace('Active','Inactive'));
+                $status.removeClass("Active-user").addClass("Inactive-user");
+            }
+        });
+        var end_point = "/user_api/v1/account/admin_panel/users/update_user_status/";
+        $.ajax({
+            url: end_point,
+            type: "POST",
+            data: {
+                action: $("#action-status").val(),
+                user_list: JSON.stringify(user_list)
+            },
+            success: function () {
+                if ($("#action-status").val() == '1') {
+                    LearningTribes.Notification.Info({
+                        title:"User activated",
+                        message:'The user account has been activated.',
+                    })
+                } else {
+                    LearningTribes.Notification.Info({
+                        title:"User deactivated",
+                        message:'The user account has been deaactivated.',
+                    })
+                }
+            },
+            error: function (data) {
+                if ($("#action-status").val() == '1') {
+                    LearningTribes.Notification.Error({
+                        title:"User activated",
+                        message:'The user account has been activated.',
+                    })
+                } else {
+                    LearningTribes.Notification.Error({
+                        title:"User deactivated",
+                        message:'The user account has been deaactivated.',
+                    })
+                }
+            }
+        })
+    })
+</script>
+</%block>
+
+<div id="admin-panel">
+    <!--<div id="page-notification"></div>-->
+
+    <section class="banner">
+        <section class="welcome-wrapper">
+            <h2>${_("Admin Panel")}</h2>
+        </section>
+    </section>
+
+    <div class="tabs-wrapper">
+        <ul class="tabs request-tab">
+            <li><a class="pending-tab active" href="/admin_panel/users" v-on:click="chooseTab('pending')">${_("USER MANAGEMENT")}</a></li>
+            <li style="display: none;"><a class="enrollment-tab" href="javascript:void(0);" v-on:click="chooseTab('enrollment')">${_("PLATFORM CUSTOMIZATION")}</a></li>
+        </ul>
+    </div>
+    % if route == "user_list":
+    <div class="action-group">
+        <form class="user-search" method="get" action="${reverse('admin_panel_user_list')}">
+            <input class="search-input" name="name" value="${search_string}" placeholder="${_('Search')}..." type="text">
+            <button class="button input-submit" type="submit" title="${_('Search')}">
+                <span class="icon fal fa-search"></span>
+            </button>
+        </form>
+        <!--class="actions"-->
+        <select >
+            <option value="0">${_("Action")}</option>
+            <option value="1">${_("Activate")}</option>
+            <option value="2">${_("Deactivate")}</option>
+        </select>
+        <span class="select-wrapper select-action-status"></span><input type="hidden" id="action-status" />
+        <div class="buttons">
+            <button class="btn-apply">${_("Apply")}</button>
+            <a class="btn-add-user" href="${reverse('admin_panel_user_create')}">
+                <i class="fal fa-plus"></i>
+                ${_("Add User")}
+            </a>
+        </div>
+    </div>
+    % endif
+    <%
+        if route == "user_list":
+            container_class = "column-container"
+        else:
+            container_class = "row-container"
+    %>
+    <div class="management-container ${container_class}">
+        % if route == "user_list":
+        <%
+            orders = ['u', 'e', 'f', 'l', 's', 'a']
+            order_prefix = '/admin_panel/users'
+            if search_string:
+                order_prefix = '/admin_panel/users?name={}&order='.format(search_string)
+            else:
+                order_prefix = '/admin_panel/users?order='
+            order_urls = []
+            for o in orders:
+                order_query = o
+                if o == current_order:
+                    order_query = '-' + o
+                    class_name = 'sorted ascending'
+                elif o in current_order:
+                    class_name = 'sorted descending'
+                else:
+                    class_name = ''
+                order_urls.append((class_name, order_prefix + order_query))
+        %>
+        <div v-if="!deleting_user" class="users">
+            <table id="user-list">
+                <thead>
+                    <tr>
+                        <th class="column-check-box"><input class="check-all" type="checkbox" id="box-header"><label for="box-header"></label></th>
+                        <th class="column-username">
+                            <a class="order-link ${order_urls[0][0]}" href="${order_urls[0][1]}">
+                                ${_("Username")}
+                                <div class="toggle"></div>
+                            </a>
+                        </th>
+                        <th class="column-email">
+                            <a class="order-link ${order_urls[1][0]}" href="${order_urls[1][1]}">
+                                ${_("Email")}
+                                <div class="toggle"></div>
+                            </a>
+                        </th>
+                        <th class="column-first-name">
+                            <a class="order-link ${order_urls[2][0]}" href="${order_urls[2][1]}">
+                                ${_("First Name")}
+                                <div class="toggle"></div>
+                            </a>
+                        </th>
+                        <th class="column-last-name">
+                            <a class="order-link ${order_urls[3][0]}" href="${order_urls[3][1]}">
+                                ${_("Last Name")}
+                                <div class="toggle"></div>
+                            </a>
+                        </th>
+                        <th class="column-status">
+                            <a class="order-link ${order_urls[4][0]}" href="${order_urls[4][1]}">
+                                ${_("Status")}
+                                <div class="toggle"></div>
+                            </a>
+                        </th>
+                        <th class="column-level">
+                            <a class="order-link ${order_urls[5][0]}" href="${order_urls[5][1]}">
+                                ${_("Access Level")}
+                                <div class="toggle"></div>
+                            </a>
+                        </th>
+                        <th class="column-edit">${_("Edit")}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    % for user in user_list:
+                    <%
+                        status = "Active" if user.is_active else "Inactive"
+                        disabled = ""
+                        if current_order not in ['a', '-a']:
+                            user_groups = [group.name for group in user.groups.all()]
+                            if user.is_superuser:
+                                user.level = 3  # super admin
+                            elif user.is_staff:
+                                user.level = 2  # platform admin
+                            elif STUDIO_ADMIN_ACCESS_GROUP in user_groups:
+                                user.level = 1 # studio admin
+                            else:
+                                user.level = 0
+                        if user.level == 3:
+                            level = _("Super Platform Admin")
+                            level_class = "superadmin"
+                            if not request.user.is_superuser:
+                                disabled = "disabled"
+                        elif user.level == 2:
+                            level = _("Platform Admin")
+                            level_class = "platform-admin"
+                        elif user.level == 1:
+                            level = _("Studio Admin")
+                            level_class = "studio-admin"
+                        else:
+                            level = ungettext("Learner", "Learners", 1)
+                            level_class = "learner"
+                    %>
+                    <tr class="user-row" data-id="${user.id}">
+                        <td class="column-check-box"><input type="checkbox" ${disabled} id="box-${user.id}"><label for="box-${user.id}"></label></td>
+                        <td class="column-username"><a class="user-link ${disabled}" href="${reverse('admin_panel_user_edit', kwargs={'user_id': user.id})}">${user.username}</a></td>
+                        <td class="column-email">${user.email}</td>
+                        <td class="column-first-name">${user.first_name}</td>
+                        <td class="column-last-name">${user.last_name}</td>
+                        <td class="column-status"><span class="${status}-user"><i class="fas fa-circle"></i>${_(status)}</span></td>
+                        <td class="column-level"><span class="${level_class}"><i class="fas fa-circle"></i>${level}</span></td>
+                        <td class="column-edit"><a class="edit-link ${disabled}" href="${reverse('admin_panel_user_edit', kwargs={'user_id': user.id})}"><i class="fal fa-edit"></i></a></td>
+                    </tr>
+                    % endfor
+                </tbody>
+            </table>
+        </div>
+        <div v-if="!deleting_user" class="paginator">
+            <%
+                has_prev = False
+                has_next = False
+                if page_obj.number > 1:
+                    has_prev = True
+                if page_obj.number < paginator.num_pages:
+                    has_next = True
+                current_path = request.get_full_path()
+                if '?' in current_path > 1:
+                    if 'page' in current_path:
+                        page_prefix = current_path.split('page=')[0] + 'page='
+                    else:
+                        page_prefix = current_path + '&page='
+                else:
+                    page_prefix = current_path + '?page='
+            %>
+            % if has_prev:
+            <a href="${page_prefix}${page_obj.number - 1}">&#10094;</a>
+            % else:
+            <p class="previous disabled">&#10094;</p>
+            % endif
+            <p>
+                ${_("Page")}
+                <select data-endpoint="${page_prefix}">
+                % for i in paginator.page_range:
+                    % if i == page_obj.number:
+                    <option selected value="${i}">${i}</option>
+                    % else:
+                    <option value="${i}">${i}</option>
+                    % endif
+                % endfor
+                </select>
+                ${_("of")} ${paginator.num_pages}
+            </p>
+
+            % if has_next:
+            <a href="${page_prefix}${page_obj.number + 1}">&#10095;</a>
+            % else:
+            <p class="next disabled">&#10094;</p>
+            % endif
+        </div>
+        % elif route in ("user_create", "user_edit"):
+        <div v-if="!deleting_user" class="edit-search">
+            <div class="search-wrapper">
+                <form class="user-search" method="post" @submit="search">
+                    <input class="search-input" v-model="query" name="query" placeholder="${_('Search')}..." type="text">
+                    <button class="button input-submit" type="submit" title="${_('Search')}">
+                        <span class="icon fal fa-search"></span>
+                    </button>
+                </form>
+                <ul v-if="search_result.length > 0" class="search-result">
+                    <li v-for="(user, idx) in search_result" v-on:click="click_user(user)" v-bind:id="'user-'+user.user_id" class="search-result-item">
+                        <div class="init-letter">
+                            <span>{{ user.username[0] }}</span>
+                        </div>
+                        <div class="user-names">
+                            <p class="user-first-name" v-bind:title="user.username">
+                                {{ user.username }}
+                                <i class="fal fa-check"></i>
+                            </p>
+                            <p class="user-email" v-bind:title="user.email">{{ user.email }}</p>
+                            <p class="user-full-name" v-bind:title="user.name">{{ user.name }}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div v-if="show_more" class="view-more">
+                    <a href="${reverse('admin_panel_user_list')}">${_("View more")} &nbsp;></a>
+                </div>
+            </div>
+        </div>
+        <div v-if="!deleting_user" class="user-info">
+            <div class="info-username">
+                <a id="info-tabs"></a>
+                <label for="username">${_("Username")}:</label>
+                <span v-if="current_user" id="username">{{ username }}</span>
+                <div v-else class="field-input">
+                    <input id="username" v-model="username" v-on:change="detect_change('username')">
+                    <span class="help">${_("Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.")}</span>
+                </div>
+            </div>
+
+            <div class="info-detail">
+                <ul class="tabs">
+                    <li class="personal-info-tab active" v-on:click="switch_tab('personal-info')">${_("Personal Info")}</li>
+                    <li class="permissions-tab" v-on:click="switch_tab('permissions')">${_("Permissions")}</li>
+                    <li class="bulk-registration-tab" v-on:click="switch_tab('bulk-registration')">${_("Bulk Registration")}</li>
+                </ul>
+                <ul class="personal-info details">
+                    <li>
+                        <label for="email">${_("Email Address")}:</label>
+                        <div class="field-input">
+                            <input id="email" v-model="email" v-on:change="detect_change('email')">
+                            <span class="help">${_("Required")}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <%
+                            password_helper = "Required."
+                            extra_helper = []
+                            complexity_helper = []
+                            min_len = settings.PASSWORD_MIN_LENGTH
+                            max_len = settings.PASSWORD_MAX_LENGTH
+                            complexity = settings.PASSWORD_COMPLEXITY
+                            if min_len:
+                                extra_helper.append("minimum length {}".format(min_len))
+                            if max_len:
+                                extra_helper.append("maximum length {}".format(max_len))
+                            for k,v in complexity.items():
+                                if k in ["DIGITS", "LOWER", "PUNCTUATION", "UPPER"]:
+                                    if v > 0:
+                                        k = k.lower()
+                                        if k in ["lower", "upper"]:
+                                            k = k + " case"
+                                        complexity_helper.append(str(v) + " " + k)
+                            if complexity_helper:
+                                complexity_helper = ", ".join(complexity_helper)
+                                complexity_helper = "at least " + complexity_helper
+                                extra_helper.append(complexity_helper)
+                            if extra_helper:
+                                extra_helper = "; ".join(extra_helper)
+                                extra_helper = extra_helper.capitalize()
+                            else:
+                                extra_helper = ""
+                            password_helper = password_helper + " " + extra_helper
+                        %>
+                        <label for="password">${_("Password")}:</label>
+                        <div v-if="update_password" class="field-input">
+                            <input id="password" type="password" v-model="password" v-on:change="detect_change('password')">
+                            <span class="help">${password_helper}</span>
+                        </div>
+                        <div v-else class="button-wrapper">
+                            <a id="password" class="update-password" href="javascript: void(0);" v-on:click="update_password=true">${_("Update Password")}</a>
+                        </div>
+                    </li>
+                    <li v-if="update_password">
+                        <label for="password-confirm">${_("Password Confirmation")}:</label>
+                        <input id="password-confirm" v-model="password_confirm" type="password" placeholder="${_('Enter the same password as before, for verification')}">
+                    </li>
+                    <li>
+                        <label for="first-name">${_("First Name")}:</label>
+                        <div class="field-input">
+                            <input id="first-name" v-model="first_name" v-on:change="detect_change('first_name')">
+                            <span class="help">${_("Required")}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <label for="last-name">${_("Last Name")}:</label>
+                        <div class="field-input">
+                            <input id="last-name" v-model="last_name" v-on:change="detect_change('last_name')">
+                            <span class="help">${_("Required")}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <label for="name">${_("Name")}:</label>
+                        <div class="field-input">
+                            <input id="name" v-model="name" v-on:change="detect_change('name')">
+                            <span class="help">${_("Required")}</span>
+                        </div>
+                    </li>
+                    <li v-if="'gender' in profile_fields">
+                        <label for="gender">${_("Gender")}:</label>
+                        <dropdown v-bind:data="genderData" v-on:change="function(e, val) { $data.gender=val; detect_change('gender') }"
+                                  :value="gender"/>
+                        <span class="select-wrapper select-gender"></span>
+                        <input type="hidden">
+                        <select id="gender" v-model="gender" v-on:change="detect_change('gender')">
+                            <option value="m">${_("Male")}</option>
+                            <option value="f">${_("Female")}</option>
+                            <option value="o">${_("Other/Prefer Not to Say")}</option>
+                        </select>
+                    </li>
+                    <li v-if="'year_of_birth' in profile_fields">
+                        <label for="year-of-birth">${_("Year of Birth")}:</label>
+                        <dropdown v-bind:data="year_of_birth_options" :value="year_of_birth"
+                         v-on:change="function(e, val) { $data.year_of_birth=val; detect_change('year_of_birth') }"/>
+                        <input type="hidden">
+                        <select id="year-of-birth" v-model="year_of_birth" v-on:change="detect_change('year_of_birth')">
+                            <option v-for="(year, idx) in year_of_birth_options" v-bind:value="year.value">{{ year.name }}</option>
+                        </select>
+                    </li>
+                    <li v-if="'language' in profile_fields">
+                        <label for="language">${_("Language")}:</label>
+                        <dropdown v-bind:data="lang_options" :value="language"
+                        v-on:change="function(e, val) { $data.language=val; detect_change('language') }"/>
+                    </li>
+                    <li v-if="'country' in profile_fields">
+                        <label for="country">${_("Country")}:</label>
+                        <dropdown v-bind:data="country_options" :value="country" v-on:change="function(e, val) { $data.country=val; detect_change('country') }"/>
+                    </li>
+                    <li v-if="'lt_custom_country' in profile_fields">
+                        <label for="lt-custom-country">${_("Custom Country")}:</label>
+                        <input id="lt-custom-country" v-model="lt_custom_country" v-on:change="detect_change('lt_custom_country')">
+                    </li>
+                    <li v-if="'city' in profile_fields">
+                        <label for="city">${_("City")}:</label>
+                        <input id="city" v-model="city" v-on:change="detect_change('city')">
+                    </li>
+                    <li v-if="'location' in profile_fields">
+                        <label for="location">${_("Location")}:</label>
+                        <input id="location" v-model="location" v-on:change="detect_change('location')">
+                    </li>
+                    <li v-if="'lt_address' in profile_fields">
+                        <label for="lt-address">${pgettext('user.profile', 'Address')}:</label>
+                        <input id="lt-address" v-model="lt_address" v-on:change="detect_change('lt_address')">
+                    </li>
+                    <li v-if="!(lt_address_2 === undefined)">
+                        <label for="lt-address-2">${_("Address 2")}:</label>
+                        <input id="lt-address-2" v-model="lt_address_2" v-on:change="detect_change('lt_address_2')">
+                    </li>
+                    <li v-if="'lt_phone_number' in profile_fields">
+                        <label for="lt-phone-number">${_("Phone Number")}:</label>
+                        <input id="lt-phone-number" v-model="lt_phone_number" v-on:change="detect_change('lt_phone_number')">
+                    </li>
+                    <li>
+                        <label>${_("GDPR")}:</label>
+                        <switch-button v-model="lt_gdpr" v-on:toggle="detect_change('lt_gdpr')"></switch-button>
+                    </li>
+                    <li v-if="'lt_company' in profile_fields">
+                        <label for="lt-company">${_("Company")}:</label>
+                        <input id="lt-company" v-model="lt_company" v-on:change="detect_change('lt_company')">
+                    </li>
+                    <li v-if="'lt_employee_id' in profile_fields">
+                        <label for="lt-employee-id">${_("Employee ID")}:</label>
+                        <input id="lt-employee-id" v-model="lt_employee_id" v-on:change="detect_change('lt_employee_id')">
+                    </li>
+                    <li v-if="'lt_hire_date' in profile_fields">
+                        <label for="lt-hire-date">${_("Hire Date")}:</label>
+                        <div class="hire_date-wrapper"><datepicker id="lt-hire-date" v-model="lt_hire_date" v-on:input="detect_change('lt_hire_date')"></datepicker></div>
+                    </li>
+                    <li v-if="'lt_level' in profile_fields">
+                        <label for="lt-level">${_("Level")}:</label>
+                        <input id="lt-level" v-model="lt_level" v-on:change="detect_change('lt_level')">
+                    </li>
+                    <li v-if="'lt_job_code' in profile_fields">
+                        <label for="lt-job-code">${_("Job Code")}:</label>
+                        <input id="lt-job-code" v-model="lt_job_code" v-on:change="detect_change('lt_job_code')">
+                    </li>
+                    <li v-if="'lt_job_description' in profile_fields">
+                        <label for="lt-job-description">${_("Job Description")}:</label>
+                        <input id="lt-job-description" v-model="lt_job_description" v-on:change="detect_change('lt_job_description')">
+                    </li>
+                    <li v-if="'lt_department' in profile_fields">
+                        <label for="lt-department">${_("Department")}:</label>
+                        <input id="lt-department" v-model="lt_department" v-on:change="detect_change('lt_department')">
+                    </li>
+                    <li v-if="'lt_supervisor' in profile_fields">
+                        <label for="lt-supervisor">${_("Supervisor")}:</label>
+                        <input id="lt-supervisor" v-model="lt_supervisor" v-on:change="detect_change('lt_supervisor')">
+                    </li>
+                    <li v-if="'lt_learning_group' in profile_fields">
+                        <label for="lt-learning-group">${_("Learning Group")}:</label>
+                        <input id="lt-learning-group" v-model="lt_learning_group" v-on:change="detect_change('lt_learning_group')">
+                    </li>
+                    <li>
+                        <label>${_("Exempt Status")}:</label>
+                        <switch-button v-model="lt_exempt_status" v-on:toggle="detect_change('lt_exempt_status')"></switch-button>
+                    </li>
+                    <li v-if="'lt_comments' in profile_fields">
+                        <label for="lt-comments">${_("Comments")}:</label>
+                        <input id="lt-comments" v-model="lt_comments" v-on:change="detect_change('lt_comments')">
+                    </li>
+                </ul>
+                <ul class="permissions details" style="display: none">
+                    <li>
+                        <label>
+                            ${_("Active")}
+                            <p>${_("Designates whether this user should be treated as Active. <br>Unselect this instead of deleting accounts.")}</p>
+                        </label>
+                        <switch-button v-model="is_active" v-on:toggle="detect_change('is_active')"></switch-button>
+                    </li>
+                    <li>
+                        <label for="platform-level">
+                            ${_("Platform Access")}
+                            <p>${_("Designates the level of permissions the user has.")}</p>
+                        </label>
+                        <%
+                            platform_level_options = [{'text':_('Learner'), 'value':'0'}, {'text':_('Studio Admin'), 'value':'1'}, {'text':_('Platform Admin'), 'value':'2'}]
+                            if request.user.is_superuser:
+                                platform_level_options.append({'text': _('Super Platform Admin'), 'value':'3'})
+                        %>
+                        <dropdown :data="${platform_level_options}" :value="platform_level"
+                        v-on:change="function(e, val) { $data.platform_level=val; detect_change('platform_level') }"/>
+                        <select id="platform-level" v-model="platform_level" v-on:change="detect_change('platform_level')">
+                            <option value="0">${_("Learner")}</option>
+                            <option value="1">${_("Studio Admin")}</option>
+                            <option value="2">${_("Platform Admin")}</option>
+                            % if request.user.is_superuser:
+                            <option value="3">${_("Platform Super Admin")}</option>
+                            % endif
+                        </select>
+                    </li>
+                    <li>
+                        <label for="analytics-access">
+                            ${_("Analytics")}
+                            <p>${_("Configure your user Analytics access.")}</p>
+                        </label>
+                        <select id="analytics-access" v-model="analytics_access" v-on:change="detect_change('analytics_access')">
+                            <option value="0">${_("None")}</option>
+                            <option value="1">${_("Restricted")}</option>
+                            <option value="2">${_("Full Access")}</option>
+                        </select>
+                        <dropdown :data="analytics_access_options" :value="analytics_access"
+                        v-on:change="function(e, val) { $data.analytics_access=val; detect_change('analytics_access') }"/>
+                    </li>
+                    <%
+                        user_groups = [group.name for group in request.user.groups.all()]
+                        catalog_denied = CATALOG_DENIED_GROUP in user_groups
+                        edflex_denied = EDFLEX_DENIED_GROUP in user_groups
+                        crehana_denied = CREHANA_DENIED_GROUP in user_groups
+                        catalog_enabled = configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False))
+                        external_catalog_enabled = configuration_helpers.get_value(
+                            'ENABLE_EXTERNAL_CATALOG', settings.FEATURES.get('ENABLE_EXTERNAL_CATALOG', False)
+                        )
+                        edflex_enabled = configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG', settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False))
+                        crehana_enabled = configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False))
+                        is_edflex_enabled = edflex_enabled or (external_catalog_enabled and all(get_edflex_configuration().values()))
+                        is_crehana_enabled = crehana_enabled or (external_catalog_enabled and all(get_crehana_configuration().values()))
+                    %>
+                    % if catalog_enabled:
+                        <li>
+                            <label>
+                                ${_("Internal Catalog Access")}
+                            </label>
+                            <switch-button v-model="catalog_access" v-on:toggle="detect_change('catalog_access')"></switch-button>
+                        </li>
+                    % endif
+                    % if is_edflex_enabled and not edflex_denied:
+                    <li>
+                        <label>
+                            ${_("External Catalog - Edflex Access")}
+                        </label>
+                        <switch-button v-model="edflex_access" v-on:toggle="detect_change('edflex_access')"></switch-button>
+                    </li>
+                    % endif
+                    % if is_crehana_enabled and not crehana_denied:
+                    <li>
+                        <label>
+                            ${_("External Catalog - Crehana Access")}
+                        </label>
+                        <switch-button v-model="crehana_access" v-on:toggle="detect_change('crehana_access')"></switch-button>
+                    </li>
+                    % endif
+                </ul>
+                <ul class="bulk-registration details" style="display: none">
+                    <div class="search-wrapper">
+                        <form class="user-search">
+                            <input class="search-input" v-model="enrollment_search" placeholder="${_('Search')}..." type="text">
+                            <button class="button input-submit" type="submit" title="${_('Search')}">
+                                <span class="icon fal fa-search"></span>
+                            </button>
+                        </form>
+                    </div>
+                    <h3 @click="toggleSubTab" class="enrollment-titles">
+                        <span :class="{enrolled:true, active:activeSubTab=='enrolled'}">${_("Is currently enrolled in ...")}</span>
+                        <span :class="{unenrolled:true, active:activeSubTab=='unenrolled'}">${_("Could be enrolled in ...")}</span>
+                    </h3>
+                    <div class="enrollments">
+                        <ul :class="{'currently-enrolled':true, visible:activeSubTab == 'enrolled'}">
+                            <h3>${_("Is currently enrolled in ...")}</h3>
+                            <div class="class-list-wrapper">
+                                <li v-for="(enrollment, idx) in enrolled_by_search">
+                                    <div class="enrollment-info">
+                                        <p class="display-name">{{ enrollment.name }}</p>
+                                        <p class="enrollment-date">${_("Enrollment Date")}: {{ enrollment.created }}</p>
+                                        <p class="enrollment-date">${_("Completion Date")}: {{ enrollment.completed }}</p>
+                                    </div>
+                                    <div class="enrollment-button">
+                                        <i class="fal fa-times-circle" v-on:click="toggle_enrollment('unenroll', enrollment.course_id, idx)"></i>
+                                    </div>
+                                </li>
+                            </div>
+                            <span class="result-number">{{ enrolled_by_search.length }} {{ trans("Results") }}</span>
+                        </ul>
+                        <ul :class="{'not-enrolled':true, visible:activeSubTab == 'unenrolled'}">
+                            <h3>${_("Could be enrolled in ...")}</h3>
+                            <div class="class-list-wrapper">
+                                <li v-for="(course, idx) in not_enrolled_by_search">
+                                    <div class="enrollment-info">
+                                        <p class="display-name">{{ course.name }}</p>
+                                    </div>
+                                    <div class="enrollment-button">
+                                        <i class="fal fa-plus-circle" v-on:click="toggle_enrollment('enroll', course.course_id, idx)"></i>
+                                    </div>
+                                </li>
+                            </div>
+                            <span class="result-number">{{ not_enrolled_by_search.length }} {{ trans("Results") }}</span>
+                        </ul>
+                    </div>
+                </ul>
+
+                <div class="confirmation-buttons">
+                    <button v-if="current_user" class="delete-user" v-on:click="delete_user()">
+                        <i class="fal fa-trash-alt"></i>
+                        ${_("Delete")}
+                    </button>
+                    <button class="save-button" v-on:click="save()">${_("Save")}</button>
+                    <button v-if="current_user" class="cancel-button" v-on:click="cancel">${_("Cancel")}</button>
+                    <button v-else class="cancel-button" style="display: block;" v-on:click="cancel">${_("Cancel")}</button>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="delete-user-page" style="display: none;">
+            <aside class="delete-illustration">
+                <figure>
+                    <img src="${static.url('images/admin-panel/delete-user.jpg')}">
+                </figure>
+            </aside>
+            <article>
+                <h1>${_("Delete user")}</h1>
+                <p>{{ trans("Are you sure you want to delete the user") }} "{{ username }}"?</p>
+                <p>${_("All the following related items will be deleted")}</p>
+                <h2>${_("Summary")}</h2>
+                <ul>
+                    <li v-for="(value, name) in objects_to_delete">
+                        {{ name }}: {{ value }}
+                    </li>
+                </ul>
+
+                <div class="cancel-buttons-wrapper">
+                    <button class="cancel-delete" v-on:click="cancel_delete()">${_("Cancel")}</button>
+                    <button class="confirm-delete" v-on:click="confirm_delete()">${_("Confirm")}</button>
+                </div>
+            </article>
+        </div>
+        % endif
+    </div>
+</div>
