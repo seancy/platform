@@ -7,7 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import IntegerField, Case, Value, When, Q
 from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext
+from django.utils.translation import ugettext as _
 from django.views.generic import ListView
 from edxmako.shortcuts import render_to_response
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
@@ -84,7 +84,7 @@ class AdminPanel(ListView):
 
 
 def get_date_format():
-    date_format = ugettext("NUMBERIC_SHORT_DATE_SLASH")
+    date_format = _("NUMBERIC_SHORT_DATE_SLASH")
     if date_format == "NUMBERIC_SHORT_DATE_SLASH":
         date_format = "%Y/%m/%d"
     js_date_format = date_format.replace("%Y", 'yy').replace("%m", "mm").replace("%d", "dd")
@@ -97,8 +97,12 @@ def create_user(request):
         'ANALYTICS_USER_PROPERTIES',
         settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {})
     )
+    platform_level_options = [{'text': _('Learner'), 'value': '0'}, {'text': _('Studio Admin'), 'value': '1'},
+                              {'text': _('Platform Admin'), 'value': '2'}]
+    if request.user.is_superuser:
+        platform_level_options.append({'text': _('Super Platform Admin'), 'value': '3'})
     context = {"route": "user_create", "user_id": "", "profile_fields": profile_fields,
-               "date_format": get_date_format()[1]}
+               "date_format": get_date_format()[1], "platform_level_options": platform_level_options}
     return render_to_response("admin_panel/admin_panel.html", context)
 
 
@@ -111,6 +115,10 @@ def edit_user(request, user_id):
         'ANALYTICS_USER_PROPERTIES',
         settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {})
     )
+    platform_level_options = [{'text': _('Learner'), 'value': '0'}, {'text': _('Studio Admin'), 'value': '1'},
+                              {'text': _('Platform Admin'), 'value': '2'}]
+    if request.user.is_superuser:
+        platform_level_options.append({'text': _('Super Platform Admin'), 'value': '3'})
     context = {"route": "user_edit", "user_id": user_id, "profile_fields": profile_fields,
-               "date_format": get_date_format()[1]}
+               "date_format": get_date_format()[1], "platform_level_options": platform_level_options}
     return render_to_response("admin_panel/admin_panel.html", context)
