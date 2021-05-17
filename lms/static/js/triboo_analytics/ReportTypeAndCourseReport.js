@@ -45,7 +45,7 @@ class ReportTypeAndCourseReport extends React.Component {
   changeLimitByFormat () {
     const $el = $('#table-export-selection input[name=format]:checked')[0]
     if (!$el) return
-    const limit = el.value == 'xls' ? 65000 : 300000
+    const limit = $el.value == 'xls' ? 65000 : 300000
     this.setState({limit}, this.fireOnChange)
     this.checkLimit()
   }
@@ -69,6 +69,7 @@ class ReportTypeAndCourseReport extends React.Component {
   }
 
   onSectionChange (state) {
+    console.log('onSectionChange', state) // TODELETE
     this.setState(state, this.fireOnChange)
     if (state.selectedEnrollments) this.checkLimit()
   }
@@ -76,6 +77,7 @@ class ReportTypeAndCourseReport extends React.Component {
   fireOnChange () {
     const {onChange} = this.props
     const {reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate, selectedEnrollments, limit} = this.state
+    console.log('emit end', this.state) // TODELETE
     onChange && onChange(reportTypeValue, selectedCourses, selectedKeyValues, startDate, endDate, selectedEnrollments, limit)
   }
 
@@ -116,6 +118,7 @@ function ReportTypeSection ({report_types, reportType, reportTypeValue, onChange
   return (
     <div className="custom-section" id="report_type_section">
       <button className="section-button accordion-trigger"
+        type="button"
         aria-expanded="true"
         aria-controls="report_section_contents"
         id="report_section">
@@ -129,7 +132,7 @@ function ReportTypeSection ({report_types, reportType, reportTypeValue, onChange
         </div>
       </div>
       <div id="report_bar" className="reports label-bar is-collapsed is-hidden">
-        {reportTypeValue && <button className="filter-option option-label">
+        {reportTypeValue && <button className="filter-option option-label" type="button">
           <span className="query">{gettext(reportType.text)}</span>
         </button>}
       </div>
@@ -144,6 +147,10 @@ function CourseSection ({courses, isMultiple, hideCourseReportInfo, hideCourseRe
   const optionRender = (text, item) => `${text} (${item.course_enrollments || '0'})`
 
   const fireOnChange = useCallback(() => {
+    console.log('emit', { // TODELETE
+      selectedCourses,
+      selectedEnrollments,
+    })
     onChange && onChange({
       selectedCourses,
       selectedEnrollments,
@@ -151,6 +158,7 @@ function CourseSection ({courses, isMultiple, hideCourseReportInfo, hideCourseRe
   }, [selectedCourses, selectedEnrollments])
 
   const handleCourseSelect = useCallback((selectedCourses) => {
+    console.log('selectedCourses', selectedCourses) // TODELETE
     setSelectedCourses(selectedCourses)
     setSelectedEnrollments(isMultiple
       ? selectedCourses.reduce((r, c) => r + c.course_enrollments, 0)
@@ -162,6 +170,7 @@ function CourseSection ({courses, isMultiple, hideCourseReportInfo, hideCourseRe
   return (
     <div className={`custom-section${hideCourseReportSelect ? ' hidden' : ''}`} id="custom_course_section">
       <button className="section-button accordion-trigger"
+        type="button"
         aria-expanded="false"
         aria-controls="course_section_contents"
         id="course_section">
@@ -179,10 +188,10 @@ function CourseSection ({courses, isMultiple, hideCourseReportInfo, hideCourseRe
         </div>
       </div>
       <div id="course_bar" className="courses label-bar is-collapsed">
-        {isMultiple && selectedCourses.map(({key, value, text}) => (<button className="filter-option option-label" >
+        {isMultiple && selectedCourses.map(({key, value, text}) => (<button className="filter-option option-label" type="button">
           <span className="query">{`${text}`}</span>
         </button>))}
-        {!isMultiple && selectedCourses.text && <button className="filter-option option-label" >
+        {!isMultiple && selectedCourses.text && <button className="filter-option option-label" type="button">
           <span className="query">{`${selectedCourses.text}`}</span>
         </button>}
       </div>
@@ -230,6 +239,7 @@ function FilterSection ({onChange}) {
   return (
     <div className="custom-section" id="filter-section">
       <button className="section-button accordion-trigger"
+        type="button"
         aria-expanded="false"
         aria-controls="filter_section_contents"
         id="filter_section">
@@ -265,18 +275,18 @@ function FilterSection ({onChange}) {
       </div>
       <div id="filter-bar2" className="filters label-bar is-collapsed">
         {selectedKeyValues.map(({key, value, text}) => (
-          <button key={key} className="filter-option option-label" onClick={stopEvent}>
+          <button key={key} className="filter-option option-label" onClick={stopEvent} type="button">
             <span className="query">{`${text}:${value}`}</span>
           </button>
         ))}
         {startDate && (
-          <button className="filter-option option-label start-date" onClick={stopEvent}>
+          <button className="filter-option option-label start-date" onClick={stopEvent} type="button">
             <span className="query">{startDate}</span>
           </button>
         )}
         {(startDate && endDate) ? <span>-</span> : ''}
         {endDate && (
-          <button className="filter-option option-label end-date" onClick={stopEvent}>
+          <button className="filter-option option-label end-date" onClick={stopEvent} type="button">
             <span className="query">{endDate}</span>
           </button>
         )}

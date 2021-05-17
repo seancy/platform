@@ -191,8 +191,6 @@ export class CustomizedReport {
     })
 
     this.reportTypeAndCourseInit()
-
-    listen('button', '', e => e.preventDefault())
   }
 
   preventDefault (e) {
