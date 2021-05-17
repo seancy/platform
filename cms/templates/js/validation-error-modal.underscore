@@ -16,8 +16,6 @@
         <%= gettext("Please check the following validation feedbacks and reflect them in your course settings:")%></p>
     </div>
 
-    <hr>
-
     <ul class = "error-list">
         <% _.each(response, function(value, index, list) { %>
 

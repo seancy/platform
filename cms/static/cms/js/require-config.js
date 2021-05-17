@@ -82,7 +82,7 @@
     }
 
     require.config({
-        // NOTE: baseUrl has been previously set in cms/static/templates/base.html
+        // NOTE: baseUrl has been previously set in cms/templates/base.html
         waitSeconds: 60,
         paths: {
             'domReady': 'js/vendor/domReady',
@@ -91,6 +91,7 @@
             'jquery': 'common/js/vendor/jquery',
             'jquery-migrate': 'common/js/vendor/jquery-migrate',
             'jquery.ui': 'js/vendor/jquery-ui.min',
+            'jquery.ui.touch': 'js/vendor/jquery.ui.touch-punch.min',
             'jquery.form': 'js/vendor/jquery.form',
             'jquery.markitup': 'js/vendor/markitup/jquery.markitup',
             'jquery.leanModal': 'js/vendor/jquery.leanModal',

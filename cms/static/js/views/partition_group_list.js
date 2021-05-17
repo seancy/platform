@@ -24,6 +24,12 @@ define([
 
         emptyMessage: gettext('You have not created any content groups yet.'),
 
+        createHeaderView:function(){
+            return $('<div class="header">\n' +
+                '              <span class="name">Content Groups</span>\n' +
+                '              <span class="action">Action</span>\n' +
+                '            </div>');
+        },
         createItemView: function(options) {
             return new PartitionGroupItemView(_.extend({}, options, {scheme: this.scheme}));
         }

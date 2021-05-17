@@ -148,6 +148,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/xblock', 'js/views/metadata
                     dataEditor = this.getDataEditor(),
                     metadataEditor = this.getMetadataEditor();
                 if (dataEditor) {
+                    //these code can't be commented, if it did, the editor of some xblock like word cloud won't display.
                     this.setEditorActivation(dataEditor, showEditor);
                 }
                 if (metadataEditor) {
@@ -159,6 +160,10 @@ define(['jquery', 'underscore', 'gettext', 'js/views/xblock', 'js/views/metadata
             setEditorActivation: function(editor, isActive) {
                 editor.removeClass('is-active').removeClass('is-inactive');
                 editor.addClass(isActive ? 'is-active' : 'is-inactive');
+                // this code may cause text editor display a duplicated view, so please don't enable until we found out why this happend, If someone can help, that would be nice.
+                /*var $codeMirror = editor.find('.row .CodeMirror')
+                $codeMirror.removeClass('is-active').removeClass('is-inactive');
+                $codeMirror.addClass(isActive ? 'is-active' : 'is-inactive');*/
             }
         });
 

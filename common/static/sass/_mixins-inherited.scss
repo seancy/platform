@@ -143,16 +143,16 @@
 
   &.disabled,
   &.is-disabled {
-    border: 1px solid $gray-l1 !important;
-    border-radius: 3px !important;
-    background: $gray-l1 !important;
-    color: $gray-d1 !important;
+    border: 1px solid $gray-l1; // !important;
+    border-radius: 3px; // !important;
+    background: $gray-l1; // !important;
+    color: $gray-d1; // !important;
     pointer-events: none;
     cursor: none;
 
     &:hover,
     &:focus {
-      box-shadow: 0 0 0 0 !important;
+      box-shadow: 0 0 0 0; // !important;
     }
   }
 
@@ -179,9 +179,9 @@
   }
 
   &.disabled, &.is-disabled {
-    border: 1px solid $green-l3 !important;
-    background: $green-l3 !important;
-    color: $white !important;
+    border: 1px solid $green-l3; // !important;
+    background: $green-l3; // !important;
+    color: $white; // !important;
     box-shadow: none;
   }
 }
@@ -202,9 +202,9 @@
 
   &.disabled, &.is-disabled {
     box-shadow: none;
-    border: 1px solid $blue-l3 !important;
-    background: $blue-l3 !important;
-    color: $white !important;
+    border: 1px solid $blue-l3; // !important;
+    background: $blue-l3; // !important;
+    color: $white; // !important;
   }
 }
 
@@ -224,9 +224,9 @@
 
   &.disabled, &.is-disabled {
     box-shadow: none;
-    border: 1px solid $red-l3 !important;
-    background: $red-l3 !important;
-    color: $white !important;
+    border: 1px solid $red-l3; // !important;
+    background: $red-l3; // !important;
+    color: $white; // !important;
   }
 }
 
@@ -246,9 +246,9 @@
 
   &.disabled, &.is-disabled {
     box-shadow: none;
-    border: 1px solid $pink-l3 !important;
-    background: $pink-l3 !important;
-    color: $white !important;
+    border: 1px solid $pink-l3; //!important;
+    background: $pink-l3; // !important;
+    color: $white; // !important;
   }
 }
 
@@ -268,9 +268,9 @@
   }
 
   &.disabled, &.is-disabled {
-    border: 1px solid $orange-l3 !important;
-    background: $orange-l2 !important;
-    color: $gray-l1 !important;
+    border: 1px solid $orange-l3; // !important;
+    background: $orange-l2; // !important;
+    color: $gray-l1; // !important;
     box-shadow: none;
   }
 }

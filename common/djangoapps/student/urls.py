@@ -51,6 +51,12 @@ urlpatterns = [
         views.course_run_refund_status,
         name="course_run_refund_status"),
     url(r'^enrolled_ilt_sessions$', views.get_enrolled_ilt, name="enrolled_ilt_sessions"),
+    url(r'^admin_panel/users/?$', views.AdminPanel.as_view(), name="admin_panel_user_list"),
+    url(r'^admin_panel/users/create/$', views.create_user, name="admin_panel_user_create"),
+    url(r'^admin_panel/users/(?P<user_id>[0-9]+)/$', views.edit_user, name="admin_panel_user_edit"),
+    url(r'^admin_panel/users/(?P<user_id>[0-9]+)/password/$',
+        views.admin_panel_user_password_reset,
+        name="admin_panel_user_password_reset")
 ]
 
 # enable automatic login

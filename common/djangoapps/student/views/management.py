@@ -19,6 +19,7 @@ from django.contrib import messages
 from django.contrib.auth import login as django_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AnonymousUser, User
+from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import password_reset_confirm, password_reset_complete
 from django.urls import reverse
 from django.core.validators import ValidationError, validate_email
@@ -30,7 +31,7 @@ from django.shortcuts import redirect
 from django.template.context_processors import csrf
 from django.template.response import TemplateResponse
 from django.utils.encoding import force_bytes, force_text
-from django.utils.http import base36_to_int, urlsafe_base64_encode
+from django.utils.http import base36_to_int, urlsafe_base64_encode, int_to_base36
 from django.utils.translation import get_language, ungettext
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
@@ -71,7 +72,12 @@ from openedx.core.djangoapps.user_api.preferences import api as preferences_api
 from openedx.core.djangoapps.user_api.config.waffle import PREVENT_AUTH_USER_WRITES, SYSTEM_MAINTENANCE_MSG, waffle
 from openedx.core.djangolib.markup import HTML, Text
 from student.cookies import set_logged_in_cookies
-from student.forms import AccountCreationForm, PasswordResetFormNoActive, get_registration_extension_form
+from student.forms import (
+    AccountCreationForm,
+    PasswordResetFormNoActive,
+    get_registration_extension_form,
+    AdminPanelAccountCreation
+)
 from student.helpers import (
     DISABLE_UNENROLL_CERT_STATES,
     AccountValidationError,
@@ -107,6 +113,7 @@ from util.db import outer_atomic
 from util.email_utils import send_mail_with_alias as send_mail
 from util.json_request import JsonResponse
 from util.password_policy_validators import SecurityPolicyError, validate_password
+from .admin_panel import get_date_format
 
 log = logging.getLogger("edx.student")
 
@@ -128,6 +135,39 @@ REGISTRATION_UTM_PARAMETERS = {
 REGISTRATION_UTM_CREATED_AT = 'registration_utm_created_at'
 # used to announce a registration
 REGISTER_USER = Signal(providing_args=["user", "registration"])
+FULL_USER_PROFILE_FIELDS = [
+    'name',
+    'service_id',
+    'language',
+    'location',
+    'year_of_birth',
+    'gender',
+    'level_of_education',
+    'mailing_address',
+    'city',
+    'country',
+    'goals',
+    'bio',
+    'lt_custom_country',
+    'lt_area',
+    'lt_sub_area',
+    'lt_address',
+    'lt_address_2',
+    'lt_phone_number',
+    'lt_gdpr',
+    'lt_company',
+    'lt_employee_id',
+    'lt_hire_date',
+    'lt_level',
+    'lt_job_code',
+    'lt_job_description',
+    'lt_department',
+    'lt_supervisor',
+    'lt_learning_group',
+    'lt_exempt_status',
+    'lt_comments',
+    'lt_ilt_supervisor'
+]
 
 
 def csrf_token(context):
@@ -826,6 +866,164 @@ def create_account_with_params(request, params):
     return new_user
 
 
+@transaction.non_atomic_requests
+def admin_panel_account_creation(request, params):
+    """
+    Given a request and a dict of parameters (which may or may not have come
+    from the request), create an account for the requesting user, including
+    creating a comments service user object and sending an activation email.
+    This also takes external/third-party auth into account, updates that as
+    necessary, and authenticates the user for the request's session.
+
+    Does not return anything.
+
+    Raises AccountValidationError if an account with the username or email
+    specified by params already exists, or ValidationError if any of the given
+    parameters is invalid for any other reason.
+
+    Issues with this code:
+    * It is non-transactional except where explicitly wrapped in atomic to
+      alleviate deadlocks and improve performance. This means failures at
+      different places in registration can leave users in inconsistent
+      states.
+    * Third-party auth passwords are not verified. There is a comment that
+      they are unused, but it would be helpful to have a sanity check that
+      they are sane.
+    * The user-facing text is rather unfriendly (e.g. "Username must be a
+      minimum of two characters long" rather than "Please use a username of
+      at least two characters").
+    * Duplicate email raises a ValidationError (rather than the expected
+      AccountValidationError). Duplicate username returns an inconsistent
+      user message (i.e. "An account with the Public Username '{username}'
+      already exists." rather than "It looks like {username} belongs to an
+      existing account. Try again with a different username.") The two checks
+      occur at different places in the code; as a result, registering with
+      both a duplicate username and email raises only a ValidationError for
+      email only.
+    """
+    # Copy params so we can modify it; we can't just do dict(params) because if
+    # params is request.POST, that results in a dict containing lists of values
+    params = dict(params.items())
+
+    # Can't have terms of service for certain SHIB users, like at Stanford
+    registration_fields = getattr(settings, 'REGISTRATION_EXTRA_FIELDS', {})
+    tos_required = (
+        registration_fields.get('terms_of_service') != 'hidden' or
+        registration_fields.get('honor_code') != 'hidden'
+    )
+
+    form = AdminPanelAccountCreation(
+        data=params,
+        extra_fields={},
+        extended_profile_fields=FULL_USER_PROFILE_FIELDS,
+        enforce_password_policy=True,
+        tos_required=tos_required,
+    )
+
+    third_party_provider = None
+
+    # Perform operations within a transaction that are critical to account creation
+    with outer_atomic(read_committed=True):
+        # first, create the account
+        errors = form.errors
+        if errors:
+            raise ValidationError(errors)
+        user = User(
+            username=form.cleaned_data["username"],
+            email=form.cleaned_data["email"],
+            is_active=True,
+            first_name=params.get("first_name", ""),
+            last_name=params.get("last_name", "")
+        )
+        user.set_password(form.cleaned_data["password"])
+        user.save()
+
+        profile_properties = {key: form.cleaned_data.get(key) for key in FULL_USER_PROFILE_FIELDS}
+        if not form.cleaned_data.get("lt_hire_date"):
+            profile_properties["lt_hire_date"] = None
+        else:
+            profile_properties['lt_hire_date'] = datetime.datetime.strptime(
+                profile_properties['lt_hire_date'], get_date_format()[0]
+            )
+        profile = UserProfile(
+            user=user,
+            **profile_properties
+        )
+        profile.save()
+        registration = Registration()
+        registration.register(user)
+        registration.activate()
+
+    # Perform operations that are non-critical parts of account creation
+    create_or_set_user_attribute_created_on_site(user, request.site)
+    preferences_api.set_user_preference(user, LANGUAGE_KEY, get_language())
+
+    if settings.FEATURES.get('ENABLE_DISCUSSION_EMAIL_DIGEST'):
+        try:
+            enable_notifications(user)
+        except Exception:  # pylint: disable=broad-except
+            log.exception("Enable discussion notifications failed for user {id}.".format(id=user.id))
+
+    dog_stats_api.increment("common.student.account_created")
+
+    # Track the user's registration
+    if hasattr(settings, 'LMS_SEGMENT_KEY') and settings.LMS_SEGMENT_KEY:
+        tracking_context = tracker.get_tracker().resolve_context()
+        identity_args = [
+            user.id,
+            {
+                'email': user.email,
+                'username': user.username,
+                'name': profile.name,
+                # Mailchimp requires the age & yearOfBirth to be integers, we send a sane integer default if falsey.
+                'age': profile.age or -1,
+                'yearOfBirth': profile.year_of_birth or datetime.datetime.now(UTC).year,
+                'education': profile.level_of_education_display,
+                'address': profile.mailing_address,
+                'gender': profile.gender_display,
+                'country': text_type(profile.country),
+            }
+        ]
+
+        if hasattr(settings, 'MAILCHIMP_NEW_USER_LIST_ID'):
+            identity_args.append({
+                "MailChimp": {
+                    "listId": settings.MAILCHIMP_NEW_USER_LIST_ID
+                }
+            })
+
+        analytics.identify(*identity_args)
+
+        analytics.track(
+            user.id,
+            "edx.bi.user.account.registered",
+            {
+                'category': 'conversion',
+                'label': params.get('course_id'),
+                'provider': third_party_provider.name if third_party_provider else None
+            },
+            context={
+                'ip': tracking_context.get('ip'),
+                'Google Analytics': {
+                    'clientId': tracking_context.get('client_id')
+                }
+            }
+        )
+
+    # Announce registration
+    REGISTER_USER.send(sender=None, user=user, registration=registration)
+
+    create_comments_service_user(user)
+
+    try:
+        record_registration_attributions(request, user)
+    # Don't prevent a user from registering due to attribution errors.
+    except Exception:   # pylint: disable=broad-except
+        log.exception('Error while attributing cookies to user registration.')
+
+    return user
+
+
 def skip_activation_email(user, do_external_auth, running_pipeline, third_party_provider):
     """
     Return `True` if activation email should be skipped.
@@ -1138,6 +1336,103 @@ def uidb36_to_uidb64(uidb36):
     except ValueError:
         uidb64 = '1'  # dummy invalid ID (incorrect padding for base64)
     return uidb64
+
+
+def admin_panel_user_password_reset(request, user_id):
+    platform_name = {
+        "platform_name": configuration_helpers.get_value('PLATFORM_NAME', settings.PLATFORM_NAME)
+    }
+
+    user = User.objects.get(id=user_id)
+    uidb36 = int_to_base36(int(user_id))
+    uidb64 = uidb36_to_uidb64(uidb36)
+    token = default_token_generator.make_token(user)
+    post_reset_redirect = reverse("admin_panel_user_edit", kwargs={"user_id": user_id})
+    if UserRetirementRequest.has_user_requested_retirement(user):
+        # Refuse to reset the password of any user that has requested retirement.
+        context = {
+            'validlink': True,
+            'form': None,
+            'title': _('Password reset unsuccessful'),
+            'err_msg': _('Error in resetting your password.'),
+        }
+        context.update(platform_name)
+        return TemplateResponse(
+            request, 'registration/password_reset_confirm.html', context
+        )
+
+    if waffle().is_enabled(PREVENT_AUTH_USER_WRITES):
+        context = {
+            'validlink': False,
+            'form': None,
+            'title': _('Password reset unsuccessful'),
+            'err_msg': SYSTEM_MAINTENANCE_MSG,
+        }
+        context.update(platform_name)
+        return TemplateResponse(
+            request, 'registration/password_reset_confirm.html', context
+        )
+
+    if request.method == 'POST':
+        password = request.POST['new_password1']
+
+        try:
+            validate_password(password, user=user)
+        except ValidationError as err:
+            # We have a password reset attempt which violates some security
+            # policy, or any other validation. Use the existing Django template to communicate that
+            # back to the user.
+            context = {
+                'validlink': True,
+                'form': None,
+                'title': _('Password reset unsuccessful'),
+                'err_msg': err.message,
+            }
+            context.update(platform_name)
+            return TemplateResponse(
+                request, 'registration/password_reset_confirm.html', context
+            )
+
+        # remember what the old password hash is before we call down
+        old_password_hash = user.password
+
+        response = password_reset_confirm(
+            request, uidb64=uidb64, token=token, post_reset_redirect=post_reset_redirect, extra_context=platform_name
+        )
+
+        # If password reset was unsuccessful a template response is returned (status_code 200).
+        # Check if form is invalid then show an error to the user.
+        # Note if password reset was successful we get response redirect (status_code 302).
+        if response.status_code == 200:
+            form_valid = response.context_data['form'].is_valid() if response.context_data['form'] else False
+            if not form_valid:
+                log.warning(
+                    u'Unable to reset password for user [%s] because form is not valid. '
+                    u'A possible cause is that the user had an invalid reset token',
+                    user.username,
+                )
+                response.context_data['err_msg'] = _('Error in resetting your password. Please try again.')
+                return response
+
+        # get the updated user
+        updated_user = User.objects.get(id=user_id)
+
+        # did the password hash change, if so record it in the PasswordHistory
+        if updated_user.password != old_password_hash:
+            entry = PasswordHistory()
+            entry.create(updated_user)
+
+    else:
+        response = password_reset_confirm(
+            request, uidb64=uidb64, token=token, post_reset_redirect=post_reset_redirect, extra_context=platform_name
+        )
+
+        response_was_successful = response.context_data.get('validlink')
+        if response_was_successful and not user.is_active:
+            user.is_active = True
+            user.save()
+
+    return response
 
 
 def password_reset_confirm_wrapper(request, uidb36=None, token=None):

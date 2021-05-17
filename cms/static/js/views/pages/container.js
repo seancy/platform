@@ -5,11 +5,11 @@
 define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/pages/base_page',
     'common/js/components/utils/view_utils', 'js/views/container', 'js/views/xblock',
     'js/views/components/add_xblock', 'js/views/modals/edit_xblock', 'js/views/modals/move_xblock_modal',
-    'js/models/xblock_info', 'js/views/xblock_string_field_editor', 'js/views/xblock_access_editor',
-    'js/views/pages/container_subviews', 'js/views/unit_outline', 'js/views/utils/xblock_utils'],
+    'js/models/xblock_info', 'js/views/xblock_string_field_editor', 'js/views/xblock_access_editor', 'js/views/info-board',
+    'js/views/pages/container_subviews', 'js/views/unit_outline', 'js/views/utils/xblock_utils', 'edx-ui-toolkit/js/utils/string-utils'],
     function($, _, Backbone, gettext, BasePage, ViewUtils, ContainerView, XBlockView, AddXBlockComponent,
-          EditXBlockModal, MoveXBlockModal, XBlockInfo, XBlockStringFieldEditor, XBlockAccessEditor,
-          ContainerSubviews, UnitOutlineView, XBlockUtils) {
+          EditXBlockModal, MoveXBlockModal, XBlockInfo, XBlockStringFieldEditor, XBlockAccessEditor, InfoBoard,
+          ContainerSubviews, UnitOutlineView, XBlockUtils, StringUtils) {
         'use strict';
         var XBlockContainerPage = BasePage.extend({
             // takes XBlockInfo as a model
@@ -20,7 +20,8 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/pages/base_page
                 'click .duplicate-button': 'duplicateXBlock',
                 'click .move-button': 'showMoveXBlockModal',
                 'click .delete-button': 'deleteXBlock',
-                'click .new-component-button': 'scrollToNewComponentButtons'
+                'click .new-component-button': 'scrollToNewComponentButtons',
+                'click .unit-location': 'copyUnitLocation'
             },
 
             options: {
@@ -51,6 +52,12 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/pages/base_page
                         el: this.$('.wrapper-xblock-field')
                     });
                     this.accessEditor.render();
+
+                    this.InfoBoard = new InfoBoard({
+                        model: this.model,
+                        el: this.$('.info-board')
+                    });
+                    this.InfoBoard.render();
                 }
                 if (this.options.action === 'new') {
                     this.nameEditor.$('.xblock-field-value-edit').click();
@@ -72,6 +79,7 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/pages/base_page
                     this.xblockPublisher = new ContainerSubviews.Publisher({
                         el: this.$('#publish-unit'),
                         model: this.model,
+                        //renderAccessEditor: this.accessEditor.render,
                         // When "Discard Changes" is clicked, the whole page must be re-rendered.
                         renderPage: this.render
                     });
@@ -376,7 +384,25 @@ define(['jquery', 'underscore', 'backbone', 'gettext', 'js/views/pages/base_page
             scrollToNewComponentButtons: function(event) {
                 event.preventDefault();
                 $.scrollTo(this.$('.add-xblock-component'), {duration: 250});
-            }
+            },
+
+            copyUnitLocation: function(event) {
+                event.preventDefault();
+                var unitId = this.model.get('id');
+                var splitId= unitId.split('@');
+                var unitLocation = splitId[splitId.length-1];
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val(unitLocation).select();
+                document.execCommand("copy");
+                $temp.remove();
+                var copiedMessage = StringUtils.interpolate(
+                   gettext('\nCopied the Unit Location: \n{unitLocation}\n\nTo create a link to this unit from an HTML component in this course, enter "/jump_to_id/<location ID>" as the URL value.'), {
+                       unitLocation: unitLocation
+                   }
+               );
+                alert(copiedMessage);
+            },
         });
 
         return XBlockContainerPage;

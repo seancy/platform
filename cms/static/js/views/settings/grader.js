@@ -8,6 +8,7 @@ define(['js/views/validation',
         var GraderView = ValidatingView.extend({
     // Model class is CMS.Models.Settings.CourseGrader
             events: {
+                'change .file-upload-box': 'uploadFile',
                 'input input': 'updateModel',
                 'input textarea': 'updateModel',
         // Leaving change in as fallback for older browsers
@@ -28,12 +29,37 @@ define(['js/views/validation',
                 return this;
             },
             fieldToSelectorMap: {
+                badge_url: 'course-grading-badge-url',
                 type: 'course-grading-assignment-name',
                 short_label: 'course-grading-assignment-shortname',
                 min_count: 'course-grading-assignment-totalassignments',
                 drop_count: 'course-grading-assignment-droppable',
                 weight: 'course-grading-assignment-gradeweight',
                 threshold: 'course-grading-assignment-threshold'
+            },
+            uploadFile: function(e) {
+                var $file = $(e.currentTarget), $hiddenBox = $file.next();
+                const data = new FormData();
+                data.append('file', $file[0].files[0]);
+
+                fetch(
+                    this.options.asset_callback_url, {
+                      credentials: 'same-origin',
+                      method: 'post',
+                      body: data,
+                      headers: {
+                        'Accept': 'application/json',
+                        'X-CSRFToken': $.cookie('csrftoken')
+                      }
+                    }
+                ).then((response) => {
+                  if (response.ok) {
+                    return response.json().then((json) => {
+                        $hiddenBox.val(json.asset.url)
+                        this.model.set('badge_url', json.asset.url)
+                    });
+                  }
+                });
             },
             updateModel: function(event) {
         // HACK to fix model sometimes losing its pointer to the collection [I think I fixed this but leaving

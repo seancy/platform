@@ -31,16 +31,27 @@
 
 </div>
 
+    <!--depends on the design, solid style is need-->
+    <i class="action-icon far fa-ellipsis-h"></i>
 
 <ul  class="actions textbook-actions">
     <li class="action action-view">
-        <a href="//<%- CMS.URL.LMS_BASE %>/courses/<%- course.id %>/pdfbook/<%- bookindex %>/" class="view"><%- gettext("View Live") %></a>
+        <a href="//<%- CMS.URL.LMS_BASE %>/courses/<%- course.id %>/pdfbook/<%- bookindex %>/" class="view">
+            <i class="icon fal fa-wifi" aria-hidden="true" />
+            <%- gettext("View Live") %>
+        </a>
     </li>
     <li class="action action-edit">
-        <button class="edit"><%- gettext("Edit") %></button>
+        <button class="edit">
+            <i class="icon fal fa-edit" aria-hidden="true" />
+            <%- gettext("Edit") %>
+        </button>
     </li>
     <li class="action action-delete">
-        <button class="delete action-icon" title="<%- gettext('Delete') %>"><span class="icon fa fa-trash-o" aria-hidden="true" ></span></button>
+        <button class="delete action-icon" title="<%- gettext('Delete') %>">
+            <i class="icon fal fa-trash-alt" aria-hidden="true" />
+            <%- gettext('Delete') %>
+        </button>
     </li>
 </ul>
 

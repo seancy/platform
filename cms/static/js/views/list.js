@@ -48,6 +48,9 @@ define([
                 restrictEditing: this.restrictEditing
             }));
 
+            if (this.createHeaderView){
+                this.$(this.listContainerCss).append(this.createHeaderView());
+            }
             this.collection.each(function(model) {
                 this.$(this.listContainerCss).append(
                     this.createItemView({model: model, restrictEditing: this.restrictEditing}).render().el
@@ -82,7 +85,7 @@ define([
             // If items already exist, just append one new.
             // Otherwise re-render the empty list HTML.
             if (this.collection.length > 1) {
-                this.$(this.listContainerCss).append(view.render().el);
+                this.$(this.listContainerCss).find('.header').after(view.render().el);
             } else {
                 this.render();
             }
@@ -107,6 +110,7 @@ define([
         },
 
         onRemoveItem: function() {
+            this.trigger('onRemove')
             if (this.collection.length === 0) {
                 this.render();
             }

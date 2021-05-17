@@ -47,7 +47,7 @@
                 '%s courses found',
                 count
             );
-                this.$message.html(interpolate(msg, [count]));
+                this.$message.html('(' + interpolate(msg, [count]) + ')');
             },
 
             showNotFoundMessage: function(term) {

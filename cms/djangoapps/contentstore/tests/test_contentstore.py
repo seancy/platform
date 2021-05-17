@@ -695,8 +695,7 @@ class MiscCourseTests(ContentStoreTestCase):
         # page response HTML
         self.check_components_on_page(
             ADVANCED_COMPONENT_TYPES,
-            ['Word cloud', 'Annotation', 'Text Annotation', 'Video Annotation', 'Image Annotation',
-             'split_test'],
+            ['Word Cloud'],
         )
 
     @ddt.data('/Fake/asset/displayname', '\\Fake\\asset\\displayname')
@@ -793,7 +792,7 @@ class MiscCourseTests(ContentStoreTestCase):
         shutil.rmtree(root_dir)
 
     def test_advanced_components_require_two_clicks(self):
-        self.check_components_on_page(['word_cloud'], ['Word cloud'])
+        self.check_components_on_page(['word_cloud'], ['Word Cloud'])
 
     def test_malformed_edit_unit_request(self):
         # just pick one vertical

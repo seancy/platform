@@ -9,14 +9,9 @@
                 slide_speed: 900,
                 show: function() {
                     SystemFeedbackView.prototype.show.apply(this, arguments);
-                    this.$el.hide();
-                    this.$el.slideDown(this.slide_speed);
                     return this;
                 },
                 hide: function() {
-                    this.$el.slideUp({
-                        duration: this.slide_speed
-                    });
                     setTimeout(_.bind(SystemFeedbackView.prototype.hide, this, arguments),
                            this.slideSpeed);
                 }

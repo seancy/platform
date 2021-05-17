@@ -37,7 +37,7 @@ AVAILABLE_CHOICES = {
 }
 
 
-class UserPropertiesHelper():
+class UserPropertiesHelper(object):
     def __init__(self, analytics_user_properties={}):
         self.possible_choices_db_prefix = []
         self.possible_choices = []
@@ -57,12 +57,10 @@ class UserPropertiesHelper():
         self.possible_choices.sort(key=lambda choice: choice[1])
         self.possible_choices_db_prefix.sort(key=lambda choice: choice[1])
 
-
     def get_possible_choices(self, db_prefix=True):
         if db_prefix:
             return self.possible_choices_db_prefix
         return self.possible_choices
-
 
     def get_initial_choices(self):
         return self.initial_choices

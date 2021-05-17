@@ -10167,14 +10167,14 @@ msgstr "Kursinhalte nach Kursenddatum verbergen"
 
 #: cms/templates/js/content-visibility-editor.underscore:20
 msgid ""
-"After the course\\'s end date has passed, learners can no longer access "
+"After the course's end date has passed, learners can no longer access "
 "subsection content. The subsection remains included in grade calculations."
 msgstr ""
 "Nach Ablauf des Enddatums des Kurses können die Lernenden nicht mehr auf die Inhalte des Unterabschnitts zugreifen. Der Unterabschnitt bleibt in der Notenberechnung einbezogen."
 
 #: cms/templates/js/content-visibility-editor.underscore:22
 msgid ""
-"After the subsection\\'s due date has passed, learners can no longer access "
+"After the subsection's due date has passed, learners can no longer access "
 "its content. The subsection remains included in grade calculations."
 msgstr ""
 "Nach Ablauf der Fälligkeit des Unterabschnitts können die Lernenden nicht mehr auf den Inhalt zugreifen. Der Unterabschnitt bleibt in der Notenberechnung einbezogen."
@@ -10540,6 +10540,14 @@ msgid ""
 "next to assignments on a learner's Progress page."
 msgstr ""
 "Diese Kurzbezeichnung für den Aufgabentyp (z.B. HW oder Midterm) erscheint neben den Aufgaben auf der Fortschrittsseite eines Lernenden."
+
+#: cms/templates/js/course_grade_policy.underscore:26
+msgid "Upload a badge"
+msgstr "Laden Sie ein Abzeichen hoch "
+
+#: cms/templates/js/course_grade_policy.underscore:59
+msgid "Expected size: 200px by 200px"
+msgstr "Erwartete Größe: 200px x 200px "
 
 #: cms/templates/js/course_grade_policy.underscore:15
 msgid "Threshold"
@@ -11202,12 +11210,12 @@ msgid "Promote another member to Admin to remove your admin rights"
 msgstr "Ein weiteres Mitglied zum Administrator befördern, um eigene Administratorrechte zu entfernen"
 
 #: cms/templates/js/team-member.underscore:35
-msgid "Add {role} Access"
+msgid "Add {role} access"
 msgstr "{role} Zugang hinzufügen"
 
 #: cms/templates/js/team-member.underscore:35
-msgid "Remove {role} Access"
-msgstr "{role} Zugang entfernen"
+msgid "Remove {role} access"
+msgstr "Entfernen Sie den {role}"
 
 #: cms/templates/js/team-member.underscore:44
 msgid "Delete the user, {username}"
@@ -11620,6 +11628,18 @@ msgstr "Kategorie"
 #: lms/templates/discovery/facet.underscore
 msgid "Mandatory"
 msgstr "Unterzeichner"
+
+#: lms/templates/discovery/facet.underscore
+msgid "start"
+msgstr "start"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "current"
+msgstr "in Bearbeitung"
+
+#: lms/templates/discovery/facet_option.underscore
+msgid "future"
+msgstr "zukunft"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "true"
@@ -12214,3 +12234,248 @@ msgstr "Titel A-Z"
 #: lms/static/js/discovery/views/sort_button.js
 msgid "Title Z-A"
 msgstr "Titel Z-A"
+
+# cms/static/js/views/components/components.json
+msgid "Add content to your course, such as text, video, SCORM module, PDF..."
+msgstr "Fügen Sie Ihrem Kurs Inhalte wie Text, Video, SCORM-Modul und PDF ..."
+
+# cms/static/js/views/components/components.json
+msgid "Train your learners with collaborative activities and add discussion forum"
+msgstr "Trainieren Sie Ihre Lernenden mit gemeinsamen Aktivitäten und fügen Sie ein Diskussionsforum hinzu."
+
+# cms/static/js/views/components/components.json
+msgid "Combine online content with face-to-face or virtual sessions"
+msgstr "Kombinieren Sie Online-Inhalte mit persönlichen oder virtuellen Sitzungen"
+
+# cms/static/js/views/components/components.json
+msgid "Create different type of quiz to test learners and also evaluate their knowledge"
+msgstr "Erstellen Sie verschiedene Arten von Quiz, um die Lernenden zu testen und ihr Wissen zu bewerten."
+
+# cms/static/js/views/components/components.json
+msgid "Use Text component to add and format text, links, images, and more."
+msgstr "Verwenden Sie die Textkomponente, um Text, Links, Bilder und mehr hinzuzufügen und zu formatieren."
+
+# cms/static/js/views/components/components.json
+msgid "Add this component to display PDF in iframe."
+msgstr "Fügen Sie diese Komponente hinzu, um PDF im Iframe anzuzeigen."
+
+# cms/static/js/views/components/components.json
+msgid "Work directly with HTML code and/or add iFrame code."
+msgstr "Arbeiten Sie direkt mit HTML-Code und / oder fügen Sie iFrame-Code hinzu."
+
+# cms/static/js/views/components/components.json
+msgid "Add videos to your course, you can also set subtitles, allow download and configure other options."
+msgstr "Fügen Sie Ihrem Kurs Videos hinzu. Sie können auch Untertitel festlegen, den Download zulassen und andere Optionen konfigurieren."
+
+# cms/static/js/views/components/components.json
+msgid "Use this component to add e-learning modules to your course. E-learning modules must be in 2004 or 1.2 format."
+msgstr "Verwenden Sie diese Komponente, um Ihrem Kurs E-Learning-Module hinzuzufügen. E-Learning-Module müssen im Format 2004 oder 1.2 vorliegen."
+
+# cms/static/js/views/components/components.json
+msgid "Add the best external resources (Podcast, Article, Video or MOOC) curated from our team of experts."
+msgstr "Fügen Sie die besten externen Ressourcen (Podcast, Artikel, Video oder MOOC) hinzu, die von unserem Expertenteam zusammengestellt wurden."
+
+# cms/static/js/views/components/components.json
+msgid "Include poll in your course to gather learners’ opinions. You can configure one question and multiple possible answers. If you need to ask multiple questions, use the Survey component."
+msgstr "Nehmen Sie eine Umfrage in Ihren Kurs auf, um die Meinungen der Lernenden zu sammeln. Sie können eine Frage und mehrere mögliche Antworten konfigurieren. Wenn Sie mehrere Fragen stellen müssen, verwenden Sie die Umfragekomponente."
+
+# cms/static/js/views/components/components.json
+msgid "Include survey in your course to collect learner responses to multiple questions. If you need to ask only one question, use the Poll component."
+msgstr "Nehmen Sie eine Umfrage in Ihren Kurs auf, um Antworten von Lernenden auf mehrere Fragen zu sammeln. Wenn Sie nur eine Frage stellen müssen, verwenden Sie die Umfragekomponente."
+
+# cms/static/js/views/components/components.json
+msgid "Use word cloud component to let learners enter words into a field in response to a question or prompt. The words then appear instantly as a colorful graphic."
+msgstr "Verwenden Sie die Wortwolkenkomponente, damit die Lernenden als Antwort auf eine Frage oder Aufforderung Wörter in ein Feld eingeben können. Die Wörter werden dann sofort als farbenfrohe Grafik angezeigt."
+
+# cms/static/js/views/components/components.json
+msgid "Add discussion components to ask questions related to the course content and give learners a chance to respond and interact on a specific subject."
+msgstr "Fügen Sie Diskussionskomponenten hinzu, um Fragen zum Kursinhalt zu stellen und den Lernenden die Möglichkeit zu geben, auf ein bestimmtes Thema zu antworten und zu interagieren."
+
+# cms/static/js/views/components/components.json
+msgid "Create and monitor face-to-face or virtual sessions."
+msgstr "Erstellen und überwachen Sie persönliche oder virtuelle Sitzungen."
+
+# cms/static/js/views/components/components.json
+msgid "Add any type of basic types of quiz with this blank component."
+msgstr "Fügen Sie mit dieser leeren Komponente alle Arten von grundlegenden Quizarten hinzu."
+
+# cms/static/js/views/components/components.json
+msgid "Use this component to add a preformatted checkbox question. Learners will have to select one or more options from a list of possible answers."
+msgstr "Verwenden Sie diese Komponente, um eine vorformatierte Kontrollkästchenfrage hinzuzufügen. Die Lernenden müssen eine oder mehrere Optionen aus einer Liste möglicher Antworten auswählen."
+
+# cms/static/js/views/components/components.json
+msgid "Use this component to add a preformatted dropdown question. Learners will have to select one answer from a dropdown list."
+msgstr "Verwenden Sie diese Komponente, um eine vorformatierte Dropdown-Frage hinzuzufügen. Die Lernenden müssen eine Antwort aus einer Dropdown-Liste auswählen."
+
+# cms/static/js/views/components/components.json
+msgid "Use this component to add a preformatted multiple choice question. Learners will have to select one answer from a list of choices that appear directly below the question."
+msgstr "Verwenden Sie diese Komponente, um eine vorformatierte Multiple-Choice-Frage hinzuzufügen. Die Lernenden müssen eine Antwort aus einer Liste von Auswahlmöglichkeiten auswählen, die direkt unter der Frage angezeigt werden."
+
+# cms/static/js/views/components/components.json
+msgid "Use this component to add a preformatted text input question. Learners will have to enter a short text answer to a question."
+msgstr "Verwenden Sie diese Komponente, um eine vorformatierte Texteingabefrage hinzuzufügen. Die Lernenden müssen eine kurze Textantwort auf eine Frage eingeben."
+
+# cms/static/js/views/components/components.json
+msgid "Use this component to add a preformatted numerical input question. Learners will have to write an answer that include only integers, fractions, and a few common constants and operators."
+msgstr "Verwenden Sie diese Komponente, um eine vorformatierte numerische Eingabefrage hinzuzufügen. Die Lernenden müssen eine Antwort schreiben, die nur Ganzzahlen, Brüche und einige allgemeine Konstanten und Operatoren enthält."
+
+# cms/static/js/views/components/components.json
+msgid "Add this type of quiz to let learners answer to a question by dragging text or images to a specific location on an image."
+msgstr "Fügen Sie diese Art von Quiz hinzu, damit die Lernenden eine Frage beantworten können, indem Sie Text oder Bilder an eine bestimmte Stelle auf einem Bild ziehen."
+
+# cms/static/js/views/components/components.json
+msgid "Use this component, also known as a \"pointing on a picture\" quiz, to ask learners to click inside a defined region in an image."
+msgstr "Verwenden Sie diese Komponente, die auch als\" Zeigen auf ein Bild \"-Quiz bezeichnet wird, um die Lernenden aufzufordern, in einen definierten Bereich in einem Bild zu klicken."
+
+# cms/static/js/views/components/components.json
+msgid "Create randomized quiz that make use of components from content libraries."
+msgstr "Erstellen Sie ein zufälliges Quiz, bei dem Komponenten aus Inhaltsbibliotheken verwendet werden."
+
+# cms/static/js/views/components/components.json
+msgid "Use Open response assessments component to ask questions that might not have definite answers, such as text responses. It includes both peer assessments and self-assessments."
+msgstr "Verwenden Sie die Komponente\" Offene Antwortbewertungen \", um Fragen zu stellen, auf die möglicherweise keine eindeutigen Antworten vorliegen, z. B. Textantworten. Sie umfasst sowohl Peer-Bewertungen als auch Selbstbewertungen."
+
+# cms/static/js/views/components/components.json
+msgid "Add this component to grant an intermediate certificate to a learner after quiz completion."
+msgstr "Fügen Sie diese Komponente hinzu, um einem Lernenden nach Abschluss des Quiz ein Zwischenzertifikat zu erteilen."
+
+#: XBlock: xblock-drag-and-drop-v2
+#: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
+msgid "Feedback"
+msgstr "Feedback"
+
+#: cms/templates/js/course-instructor-details.underscore:17
+msgid "Dimension limit: 100px by 100px"
+msgstr "Dimensionsbegrenzung: 100px x 100px"
+
+#: cms/templates/js/info-board.underscore:4
+msgid "Unit Location"
+msgstr "Standort der Einheit"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Schedule Your Course"
+msgstr "Planen Sie Ihren Kurs"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "E-commerce"
+msgstr "E-Commerce"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Target Your Learners"
+msgstr "Richten Sie sich an Ihre Lernenden"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Graded Activities"
+msgstr "Benotete Aktivitäten"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Certificates"
+msgstr "Zertifikate"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Discussions"
+msgstr "Diskussionen"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Pages"
+msgstr "Seiten"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Wiki"
+msgstr "Wiki"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Basic Information"
+msgstr "Allgemeine Informationen"
+
+#: cms/static/js/views/settings/advanced.js
+msgid "Content"
+msgstr "Inhalt"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Full Access"
+msgstr "Voller Zugriff"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Restricted"
+msgstr "Beschränkt"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Successfully enrolled"
+msgstr "Erfolgreich eingeschrieben"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "The user have been successfully enrolled."
+msgstr "Der Benutzer wurde erfolgreich registriert."
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Unenroll Confirmation Request"
+msgstr "Bestätigungsanforderung abmelden"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Are you sure you want to unenroll?"
+msgstr "Sind Sie sicher, dass Sie Ihren Benutzer abmelden möchten?"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Successfully unenrolled"
+msgstr "Erfolgreich abgemeldet"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "The user is no longer enrolled in the course(s)."
+msgstr "Der Benutzer ist nicht mehr für die Kurse angemeldet."
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Error while creating account"
+msgstr "Fehler beim Erstellen des Kontos"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Username field cannot be empty."
+msgstr "Das Feld Benutzername darf nicht leer sein."
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Password field cannot be empty."
+msgstr "Das Passwortfeld darf nicht leer sein."
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "The two password fields didn't match."
+msgstr "Die beiden Passwortfelder stimmten nicht überein."
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Invalid email format"
+msgstr "Ungültiges Email-Format"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Error while saving user personal data"
+msgstr "Fehler beim Speichern der persönlichen Benutzerdaten"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Delete User Request"
+msgstr "Benutzeranforderung löschen"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Are you sure about delete your user?"
+msgstr "Sind Sie sicher, dass Sie Ihren Benutzer löschen möchten?"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Email field cannot be empty."
+msgstr "Das E-Mail-Feld darf nicht leer sein."
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Add permissions to the user created"
+msgstr "Fügen Sie dem erstellten Benutzer Berechtigungen hinzu"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Go to permissions"
+msgstr "Gehen Sie zu Berechtigungen"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Not now"
+msgstr "Nicht jetzt"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Are you sure you want to delete the user"
+msgstr "Möchten Sie die Verwendung"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "The user has been successfully deleted."
+msgstr "Der Benutzer wurde erfolgreich gelöscht."

@@ -88,6 +88,7 @@ class TestVideoYouTube(TestVideo):
             'download_video_link': u'example.mp4',
             'handout': None,
             'id': self.item_descriptor.location.html_id(),
+            'is_in_studio': True,
             'metadata': json.dumps(OrderedDict({
                 'autoAdvance': False,
                 'saveStateUrl': self.item_descriptor.xmodule_runtime.ajax_url + '/save_user_state',
@@ -117,6 +118,7 @@ class TestVideoYouTube(TestVideo):
                 'completionPercentage': 0.95,
                 'publishCompletionUrl': self.get_handler_url('publish_completion', ''),
             })),
+            'streams': u'0.75:jNCf2gIqpeE,1.00:ZwkTiUPN0mg,1.25:rsq9auxASqI,1.50:kMyNdzVHHgg',
             'track': None,
             'transcript_download_format': u'srt',
             'transcript_download_formats_list': [
@@ -169,6 +171,7 @@ class TestVideoNonYouTube(TestVideo):
             'download_video_link': u'example.mp4',
             'handout': None,
             'id': self.item_descriptor.location.html_id(),
+            'is_in_studio': True,
             'metadata': json.dumps(OrderedDict({
                 'autoAdvance': False,
                 'saveStateUrl': self.item_descriptor.xmodule_runtime.ajax_url + '/save_user_state',
@@ -198,6 +201,7 @@ class TestVideoNonYouTube(TestVideo):
                 'completionPercentage': 0.95,
                 'publishCompletionUrl': self.get_handler_url('publish_completion', ''),
             })),
+            'streams': '',
             'track': None,
             'transcript_download_format': u'srt',
             'transcript_download_formats_list': [
@@ -330,6 +334,8 @@ class TestGetHtmlMethod(BaseTestXmodule):
             'handout': None,
             'id': self.item_descriptor.location.html_id(),
             'metadata': '',
+            'is_in_studio': True,
+            'streams': '',
             'track': None,
             'transcript_download_format': u'srt',
             'transcript_download_formats_list': [
@@ -448,6 +454,8 @@ class TestGetHtmlMethod(BaseTestXmodule):
             'handout': None,
             'id': self.item_descriptor.location.html_id(),
             'metadata': self.default_metadata_dict,
+            'is_in_studio': True,
+            'streams': self.default_metadata_dict['streams'],
             'track': None,
             'transcript_download_format': u'srt',
             'transcript_download_formats_list': [
@@ -577,7 +585,9 @@ class TestGetHtmlMethod(BaseTestXmodule):
                 {'display_name': 'Text (.txt) file', 'value': 'txt'}
             ],
             'poster': 'null',
-            'metadata': metadata
+            'metadata': metadata,
+            'is_in_studio': True,
+            'streams': metadata['streams'],
         }
 
         DATA = SOURCE_XML.format(
@@ -750,6 +760,8 @@ class TestGetHtmlMethod(BaseTestXmodule):
             ],
             'poster': 'null',
             'metadata': metadata,
+            'is_in_studio': True,
+            'streams': metadata['streams'],
         }
 
         # pylint: disable=invalid-name
@@ -861,6 +873,8 @@ class TestGetHtmlMethod(BaseTestXmodule):
                 {'display_name': 'Text (.txt) file', 'value': 'txt'}
             ],
             'poster': 'null',
+            'is_in_studio': True,
+            'streams': self.default_metadata_dict['streams'],
         }
         initial_context['metadata']['duration'] = None
 
@@ -1106,8 +1120,6 @@ class TestVideoDescriptorInitialization(BaseTestXmodule):
                 data='<video display_name="Video" download_video="true" edx_video_id="12345-67890">[]</video>'
             )
             context = self.item_descriptor.get_context()
-        print("----------------- context['transcripts_basic_tab_metadata']['video_url']['value']: ", context['transcripts_basic_tab_metadata']['video_url']['value'])
-        print("----------------- video_url: ", video_url)
         self.assertEqual(context['transcripts_basic_tab_metadata']['video_url']['value'], video_url)
 
     @ddt.data(
@@ -2088,6 +2100,8 @@ class TestVideoWithBumper(TestVideo):
                 'completionPercentage': 0.95,
                 'publishCompletionUrl': self.get_handler_url('publish_completion', ''),
             })),
+            'is_in_studio': True,
+            'streams': u'0.75:jNCf2gIqpeE,1.00:ZwkTiUPN0mg,1.25:rsq9auxASqI,1.50:kMyNdzVHHgg',
             'track': None,
             'transcript_download_format': u'srt',
             'transcript_download_formats_list': [
@@ -2163,6 +2177,8 @@ class TestAutoAdvanceVideo(TestVideo):
                 'completionPercentage': 0.95,
                 'publishCompletionUrl': self.get_handler_url('publish_completion', ''),
             })),
+            'is_in_studio': True,
+            'streams': u'0.75:jNCf2gIqpeE,1.00:ZwkTiUPN0mg,1.25:rsq9auxASqI,1.50:kMyNdzVHHgg',
             'track': None,
             'transcript_download_format': u'srt',
             'transcript_download_formats_list': [

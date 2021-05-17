@@ -1,13 +1,15 @@
+import json
 from base64 import b64encode
 from datetime import timedelta
 from hashlib import sha1
-import json
 
 from contentstore.signals.signals import GRADING_POLICY_CHANGED
 from eventtracking import tracker
-from openedx.core.djangoapps.content.block_structure.api import clear_course_from_cache
 from track.event_transaction_utils import create_new_event_transaction_id
+from util.course import get_badge_url
 from xmodule.modulestore.django import modulestore
+
+from openedx.core.djangoapps.content.block_structure.api import clear_course_from_cache
 
 GRADING_POLICY_CHANGED_EVENT_TYPE = 'edx.grades.grading_policy_changed'
 
@@ -20,7 +22,8 @@ class CourseGradingModel(object):
     # This comes up when accessing kvs data and caches during kvs saves and modulestore writes.
     def __init__(self, course_descriptor):
         self.graders = [
-            CourseGradingModel.jsonize_grader(i, grader) for i, grader in enumerate(course_descriptor.raw_grader)
+            CourseGradingModel.jsonize_grader(i, grader, course_descriptor.id) for i, grader in enumerate(
+                course_descriptor.raw_grader)
         ]  # weights transformed to ints [0..100]
         self.grade_cutoffs = course_descriptor.grade_cutoffs
         self.grace_period = CourseGradingModel.convert_set_grace_period(course_descriptor)
@@ -45,7 +48,7 @@ class CourseGradingModel(object):
         descriptor = modulestore().get_course(course_key)
         index = int(index)
         if len(descriptor.raw_grader) > index:
-            return CourseGradingModel.jsonize_grader(index, descriptor.raw_grader[index])
+            return CourseGradingModel.jsonize_grader(index, descriptor.raw_grader[index], course_key)
 
         # return empty model
         else:
@@ -55,7 +58,8 @@ class CourseGradingModel(object):
                     "drop_count": 0,
                     "short_label": None,
                     "weight": 0,
-                    "threshold": 100
+                    "threshold": 100,
+                    "badge_url": ""
                     }
 
     @staticmethod
@@ -253,13 +257,14 @@ class CourseGradingModel(object):
                   "drop_count": int(json_grader.get('drop_count', 0)),
                   "short_label": json_grader.get('short_label', None),
                   "weight": float(json_grader.get('weight', 0)) / 100.0,
-                  "threshold": float(json_grader.get('threshold', 100)) / 100.0
+                  "threshold": float(json_grader.get('threshold', 100)) / 100.0,
+                  "badge_url": json_grader.get('badge_url', '')
                   }
 
         return result
 
     @staticmethod
-    def jsonize_grader(i, grader):
+    def jsonize_grader(i, grader, course=None):
         # Warning: converting weight to integer might give unwanted results due
         # to the reason how floating point arithmetic works
         # e.g, "0.29 * 100 = 28.999999999999996"
@@ -270,7 +275,8 @@ class CourseGradingModel(object):
             "drop_count": grader.get('drop_count', 0),
             "short_label": grader.get('short_label', ""),
             "weight": grader.get('weight', 0) * 100,
-            "threshold": grader.get('threshold', 1) * 100
+            "threshold": grader.get('threshold', 1) * 100,
+            "badge_url": grader.get('badge_url', '') if course is None else get_badge_url(course, grader)
         }
 
 

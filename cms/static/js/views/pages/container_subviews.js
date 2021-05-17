@@ -106,7 +106,10 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
             events: {
                 'click .action-publish': 'publish',
                 'click .action-discard': 'discardChanges',
-                'click .action-staff-lock': 'toggleStaffLock'
+                'click .action-staff-lock': 'toggleStaffLock',
+                'click #publish_button': 'togglePublishList',
+                'click #preview_button': 'togglePreviewList',
+                'click .button-view-link': 'hidePreviewList'
             },
 
             // takes XBlockInfo as a model
@@ -116,6 +119,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
                 this.template = this.loadTemplate('publish-xblock');
                 this.model.on('sync', this.onSync, this);
                 this.renderPage = this.options.renderPage;
+                $(document.body).on('click', $.proxy(this.hideAllLists, this));
             },
 
             onSync: function(model) {
@@ -147,11 +151,15 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
                             releaseDateFrom: this.model.get('release_date_from'),
                             hasExplicitStaffLock: this.model.get('has_explicit_staff_lock'),
                             staffLockFrom: this.model.get('staff_lock_from'),
+                            isUnitPage: this.model.get('is_unit_page'),
+                            draftPreviewLink: this.model.get('draft_preview_link'),
+                            publishedPreviewLink: this.model.get('published_preview_link'),
                             course: window.course,
                             HtmlUtils: HtmlUtils
                         })
                     )
                 );
+                new LearningTribes.QuestionMark(this.$el.find('.question-mark-wrapper')[0]);
 
                 return this;
             },
@@ -257,6 +265,57 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
             checkStaffLock: function(check) {
                 this.$('.action-staff-lock i').removeClass('fa-check-square-o fa-square-o');
                 this.$('.action-staff-lock i').addClass(check ? 'fa-check-square-o' : 'fa-square-o');
+            },
+
+            togglePublishList: function() {
+                var publishlist = this.$('#publish_list');
+                var previewList = this.$('#preview_list');
+                if (publishlist.hasClass('is-hidden')) {
+                    publishlist.removeClass('is-hidden')
+                } else {
+                    publishlist.addClass('is-hidden')
+                }
+                previewList.addClass('is-hidden')
+            },
+
+            togglePreviewList: function() {
+                var previewList = this.$('#preview_list');
+                var publishlist = this.$('#publish_list');
+                if (previewList.hasClass('is-hidden')) {
+                    previewList.removeClass('is-hidden')
+                } else {
+                    previewList.addClass('is-hidden')
+                }
+                publishlist.addClass('is-hidden');
+                var viewLiveAction = this.$('#button_view_live');
+                if (this.model.get('published')) {
+                    viewLiveAction.removeClass(disabledCss).attr('aria-disabled', false);
+                } else {
+                    viewLiveAction.addClass(disabledCss).attr('aria-disabled', true);
+                }
+            },
+
+            hidePreviewList: function() {
+                console.log('hidePreviewList');
+                this.$('.action-dropdown-list').addClass('is-hidden')
+            },
+
+            hideAllLists: function(e) {
+                var actionButtons = this.$('.action-list-button');
+                var actionDropdownList = this.$('.action-dropdown-list');
+                for (let i = 0; i < actionButtons.length ; i++) {
+                    var button = $(actionButtons[i]);
+                    if (button && button.find(e.target).length > 0) {
+                        return
+                    }
+                }
+                for (let i = 0; i < actionDropdownList.length ; i++) {
+                    var dropDownlist = $(actionDropdownList[i]);
+                    if (dropDownlist && dropDownlist.find(e.target).length > 0) {
+                        return
+                    }
+                }
+                this.$('.action-dropdown-list').addClass('is-hidden')
             }
         });
 

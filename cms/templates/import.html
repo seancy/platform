@@ -41,58 +41,78 @@ else:
 </div>
 
 <div class="wrapper-content wrapper">
+    <section class="illustration-intro-controls">
+        <div class="illustration">
+          <img src="${static.url(u'images/import-illustration.png')}" alt="">
+        </div>
+        <div class="intro-controls">
+            <div class="introduction">
+                <h2 class="title">
+                %if library:
+                    ${_("Import My Library Content")}
+                %else:
+                    ${_("Import My Course Content")}
+                %endif
+                </h2>
+
+                <div class="copy">
+                ## Translators: ".tar.gz" is a file extension, and files with that extension are called "gzipped tar files": these terms should not be translated
+                %if library:
+                    <p>${Text(_("Be sure you want to import a library before continuing. The contents of the imported library will replace the contents of the existing library. {em_start}You cannot undo a library import{em_end}. Before you proceed, we recommend that you export the current library, so that you have a backup copy of it.")).format(em_start=HTML('<strong>'), em_end=HTML("</strong>"))}</p>
+                    <p>${_("The library that you import must be in a .tar.gz file (that is, a .tar file compressed with GNU Zip). This .tar.gz file must contain a library.xml file. It may also contain other files.")}</p>
+                    <p>${_("The import process has five stages. During the first two stages, you must stay on this page. You can leave this page after the Unpacking stage has completed. We recommend, however, that you don't make important changes to your library until the import operation has completed.")}</p>
+                %else:
+                    <p>${Text(_("Be sure you want to import a course before continuing. The contents of the imported course will replace the contents of the existing course. {em_start}You cannot undo a course import{em_end}. Before you proceed, we recommend that you export the current course, so that you have a backup copy of it.")).format(em_start=HTML('<strong>'), em_end=HTML("</strong>"))}</p>
+                    <p>${_("The course that you import must be in a .tar.gz file (that is, a .tar file compressed with GNU Zip). This .tar.gz file must contain a course.xml file. It may also contain other files.")}</p>
+                    <p>${_("The import process has five stages. During the first two stages, you must stay on this page. You can leave this page after the Unpacking stage has completed. We recommend, however, that you don't make important changes to your course until the import operation has completed.")}</p>
+                %endif
+                </div>
+
+              </div>
+            <form id="fileupload" method="post" enctype="multipart/form-data" class="import-form">
+
+                <p class="error-block"></p>
+
+                <a href="#" class="action action-choose-file choose-file-button">
+                  ##<span class="icon fa fa-upload" aria-hidden="true"></span>
+                  <span class="copy">${_("Choose a File to Import")}</span>
+                </a>
+
+                ## Translators: ".tar.gz" is a file extension, and files with that extension are called "gzipped tar files": these terms should not be translated
+                <p class="comment">
+                    %if library:
+                        ${_("Select a .tar.gz File to Replace Your Library Content")}
+                    %else:
+                        ${_("Select a .tar.gz File to Replace Your Course Content")}
+                    %endif
+                </p>
+
+                <div class="wrapper wrapper-file-name file-name-block">
+                    <h3 class="title">
+                      <span class="label">${_("File Chosen:")}</span>
+                      <span class="file-name"></span>
+                    </h3>
+
+                  <input type="file" name="course-data" class="file-input" />
+
+                  <input type="submit"
+                  %if library:
+                      value="${_('Replace my library with the selected file')}"
+                  %else:
+                      value="${_('Replace my course with the selected file')}"
+                  %endif
+                   class="submit-button" id="replace-courselike-button" />
+                </div>
+
+
+              </form>
+
+        </div>
+    </section>
   <section class="content">
     <article class="content-primary" role="main">
-      <div class="introduction">
-        ## Translators: ".tar.gz" is a file extension, and files with that extension are called "gzipped tar files": these terms should not be translated
-        %if library:
-            <p>${Text(_("Be sure you want to import a library before continuing. The contents of the imported library will replace the contents of the existing library. {em_start}You cannot undo a library import{em_end}. Before you proceed, we recommend that you export the current library, so that you have a backup copy of it.")).format(em_start=HTML('<strong>'), em_end=HTML("</strong>"))}</p>
-            <p>${_("The library that you import must be in a .tar.gz file (that is, a .tar file compressed with GNU Zip). This .tar.gz file must contain a library.xml file. It may also contain other files.")}</p>
-            <p>${_("The import process has five stages. During the first two stages, you must stay on this page. You can leave this page after the Unpacking stage has completed. We recommend, however, that you don't make important changes to your library until the import operation has completed.")}</p>
-        %else:
-            <p>${Text(_("Be sure you want to import a course before continuing. The contents of the imported course will replace the contents of the existing course. {em_start}You cannot undo a course import{em_end}. Before you proceed, we recommend that you export the current course, so that you have a backup copy of it.")).format(em_start=HTML('<strong>'), em_end=HTML("</strong>"))}</p>
-            <p>${_("The course that you import must be in a .tar.gz file (that is, a .tar file compressed with GNU Zip). This .tar.gz file must contain a course.xml file. It may also contain other files.")}</p>
-            <p>${_("The import process has five stages. During the first two stages, you must stay on this page. You can leave this page after the Unpacking stage has completed. We recommend, however, that you don't make important changes to your course until the import operation has completed.")}</p>
-        %endif
-
-      </div>
-
-      <form id="fileupload" method="post" enctype="multipart/form-data" class="import-form">
-
-        ## Translators: ".tar.gz" is a file extension, and files with that extension are called "gzipped tar files": these terms should not be translated
-        <h2 class="title">
-            %if library:
-                ${_("Select a .tar.gz File to Replace Your Library Content")}
-            %else:
-                ${_("Select a .tar.gz File to Replace Your Course Content")}
-            %endif
-        </h2>
-
-        <p class="error-block"></p>
-
-        <a href="#" class="action action-choose-file choose-file-button">
-          <span class="icon fa fa-upload" aria-hidden="true"></span>
-          <span class="copy">${_("Choose a File to Import")}</span>
-        </a>
-
-        <div class="wrapper wrapper-file-name file-name-block">
-            <h3 class="title">
-              <span class="label">${_("File Chosen:")}</span>
-              <span class="file-name"></span>
-            </h3>
-
-          <input type="file" name="course-data" class="file-input" />
-
-          <input type="submit"
-          %if library:
-              value="${_('Replace my library with the selected file')}"
-          %else:
-              value="${_('Replace my course with the selected file')}"
-          %endif
-           class="submit-button" id="replace-courselike-button" />
-        </div>
-
-        <div class="wrapper wrapper-status is-hidden">
+        <!--is-hidden-->
+      <div class="wrapper wrapper-status ">
           <h3 class="title">
               %if library:
                   ${_("Library Import Status")}
@@ -102,10 +122,11 @@ else:
           </h3>
 
           <ol class="status-progress list-progress">
-            <li class="item-progresspoint item-progresspoint-upload is-complete">
+              <!--is-complete-->
+            <li class="item-progresspoint item-progresspoint-upload is-not-started">
               <span class="deco status-visual">
-                <span class="icon fa fa-cog" aria-hidden="true"></span>
-                <span class="icon fa fa-warning" aria-hidden="true"></span>
+                <span class="icon fa fa-circle" aria-hidden="true"></span>
+                <span class="icon fa fa-exclamation-circle" aria-hidden="true"></span>
               </span>
 
               <div class="status-detail">
@@ -117,10 +138,11 @@ else:
               </div>
             </li>
 
-            <li class="item-progresspoint item-progresspoint-unpack is-started">
+              <!--is-started-->
+            <li class="item-progresspoint item-progresspoint-unpack is-not-started">
               <span class="deco status-visual">
-                <span class="icon fa fa-cog" aria-hidden="true"></span>
-                <span class="icon fa fa-warning" aria-hidden="true"></span>
+                <span class="icon fa fa-circle" aria-hidden="true"></span>
+                <span class="icon fa fa-exclamation-circle" aria-hidden="true"></span>
               </span>
 
               <div class="status-detail">
@@ -132,8 +154,8 @@ else:
 
             <li class="item-progresspoint item-progresspoint-verify is-not-started">
               <span class="deco status-visual">
-                <span class="icon fa fa-cog" aria-hidden="true"></span>
-                <span class="icon fa fa-warning" aria-hidden="true"></span>
+                <span class="icon fa fa-circle" aria-hidden="true"></span>
+                <span class="icon fa fa-exclamation-circle" aria-hidden="true"></span>
               </span>
 
               <div class="status-detail">
@@ -144,8 +166,8 @@ else:
 
             <li class="item-progresspoint item-progresspoint-import is-not-started">
               <span class="deco status-visual">
-                <span class="icon fa fa-cog" aria-hidden="true"></span>
-                <span class="icon fa fa-warning" aria-hidden="true"></span>
+                <span class="icon fa fa-circle" aria-hidden="true"></span>
+                <span class="icon fa fa-exclamation-circle" aria-hidden="true"></span>
               </span>
 
               <div class="status-detail">
@@ -167,7 +189,7 @@ else:
             </li>
             <li class="item-progresspoint item-progresspoint-success has-actions is-not-started">
               <span class="deco status-visual">
-                <span class="icon fa fa-square-o" aria-hidden="true"></span>
+                <span class="icon fa fa-check-circle" aria-hidden="true"></span>
               </span>
 
               <div class="status-detail">
@@ -183,22 +205,25 @@ else:
                     %endif
                 </p>
 
-                <ul class="list-actions">
-                  <li class="item-action">
-                    <a href="${successful_import_redirect_url}" id="view-updated-button" class="action action-primary">
-                        %if library:
-                            ${_("View Updated Library")}
-                        %else:
-                            ${_("View Updated Outline")}
-                        %endif
-                    </a>
-                  </li>
-                </ul>
+
               </div>
             </li>
           </ol>
         </div>
-      </form>
+
+        <ul class="list-actions">
+          <li class="item-action">
+            <a href="${successful_import_redirect_url}" id="view-updated-button" class="action action-primary">
+                %if library:
+                    ${_("View Updated Library")}
+                %else:
+                    ${_("View Updated Outline")}
+                %endif
+            </a>
+          </li>
+        </ul>
+
+
     </article>
 
   %if library:
@@ -225,7 +250,7 @@ else:
 
       <div class="bit">
         <h3 class="title-3">${_("What content is imported?")}</h3>
-        <p>${_("The following content is imported.")}</p>
+        <p>${_("The following content is imported:")}</p>
         <ul>
           <li>${_("Course content and structure")}</li>
           <li>${_("Course dates")}</li>
@@ -233,10 +258,14 @@ else:
           <li>${_("Any group configurations")}</li>
           <li>${_("Settings on the Advanced Settings page, including MATLAB API keys and LTI passports")}</li>
         </ul>
-        <p>${_("The following content is not imported.")}</p>
+        <p>${HTML(_("The following content is {b_start}not imported{b_end}:").format(
+                        b_start=HTML('<b>'),
+                        b_end=HTML("</b>")
+                      ))}</p>
         <ul>
           <li>${_("Learner-specific content, such as learner grades and discussion forum data")}</li>
           <li>${_("The course team")}</li>
+          <li>${_("E-learning module (SCORM).")}</li>
         </ul>
       </div>
 

@@ -11,10 +11,9 @@ export default function EditTabsFactory(courseLocation, explicitUrl) {
         var model = new TabsModel({
                 id: courseLocation,
                 explicit_url: explicitUrl
-            }),
-            editView;
+            });
 
-        editView = new TabsEditView({
+        new TabsEditView({
             el: $('.tab-list'),
             model: model,
             mast: $('.wrapper-mast')

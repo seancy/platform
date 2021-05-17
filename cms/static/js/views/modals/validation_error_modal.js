@@ -18,8 +18,8 @@ define(['jquery', 'underscore', 'gettext', 'js/views/modals/base_modal'],
             }),
 
             addActionButtons: function() {
-                this.addActionButton('undo', gettext('Undo Changes'), true);
                 this.addActionButton('cancel', gettext('Change Manually'));
+                this.addActionButton('undo', gettext('Undo Changes'), true);
             },
 
             render: function() {

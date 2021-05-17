@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from openedx.core.djangolib.js_utils import js_escaped_string
 %>
 
-% if display_name is not UNDEFINED and display_name is not None and display_name != '':
+% if display_name is not UNDEFINED and display_name is not None and display_name != '' and not is_in_studio:
     <div class="block-header-wrapper video-header-wrapper">
         <h3 class="hd hd-2">${display_name}</h3>
     </div>
@@ -13,6 +13,7 @@ from openedx.core.djangolib.js_utils import js_escaped_string
     <hr class="sep-line">
 % endif
 
+% if streams or video_id:
 <div
     id="video_${id}"
     class="video closed"
@@ -92,6 +93,25 @@ from openedx.core.djangolib.js_utils import js_escaped_string
     </div>
     % endif
 </div>
+% elif is_in_studio:
+<!--<p class="video-default-text component-default-text">
+    ${_('Add videos to your course, you can also set subtitles, allow download and configure other options.')}
+</p>-->
+<div class="colorful-boxes">
+    <div class="blue-block">
+        <span class="icon"><span class="fal fa-video"></span></span>
+        <strong>${_('Use Video Component')}</strong>
+        <p>${_('Add videos to your course, you can also set subtitles, allow download and configure other options.')}</p>
+    </div>
+    <div class="yellow-block">
+        <span class="icon"><span class="fal fa-play"></span></span>
+        <strong>${_('You are now ready')}</strong>
+        <p>${_('Add a video by clicking on the pencil icon.')}</p>
+    </div>
+</div>
+% endif
+
+
 % if cdn_eval:
 <script>
   //TODO: refactor this js into a separate file.

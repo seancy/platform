@@ -45,7 +45,10 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
                 periodic_reminder_day: 1,
                 course_order: '',
                 course_mandatory_enabled: '',
-                enrollment_learning_groups: []
+                enrollment_learning_groups: [],
+                display_coursenumber: '',
+                catalog_visibility: '',
+                is_new: false
             },
 
             validate: function(newattrs) {

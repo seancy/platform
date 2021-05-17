@@ -365,7 +365,7 @@ class GroupConfiguration(object):
         if content_group_configuration is None:
             content_group_configuration = UserPartition(
                 id=generate_int_id(MINIMUM_GROUP_ID, MYSQL_MAX_INT, GroupConfiguration.get_used_ids(course)),
-                name=CONTENT_GROUP_CONFIGURATION_NAME,
+                name=_(CONTENT_GROUP_CONFIGURATION_NAME),
                 description=CONTENT_GROUP_CONFIGURATION_DESCRIPTION,
                 groups=[],
                 scheme_id=COHORT_SCHEME

@@ -10,8 +10,9 @@
  *   saved by this view.  Note this may be a parent model.
  */
 define([
-    'js/views/baseview', 'common/js/components/utils/view_utils', 'underscore', 'gettext'
-], function(BaseView, ViewUtils, _, gettext) {
+    'js/views/baseview', 'common/js/components/utils/view_utils', 'common/js/components/views/feedback_notification',
+    'underscore', 'gettext'
+], function(BaseView, ViewUtils, NotificationView, _, gettext) {
     'use strict';
 
     var ListItemEditorView = BaseView.extend({
@@ -31,6 +32,16 @@ define([
 
             this.setValues();
             if (!this.model.isValid() || !this.getSaveableModel().isValid()) {
+
+                var notificationView;
+                notificationView = new NotificationView.Error({
+                    title: gettext((this.model.validationError || this.getSaveableModel().validationError).message)
+                });
+                notificationView.show();
+                setTimeout(function(){
+                    notificationView.hide();
+                }, 2000)
+
                 return false;
             }
 

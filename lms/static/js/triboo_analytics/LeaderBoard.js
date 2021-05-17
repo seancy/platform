@@ -1,5 +1,5 @@
 import React from 'react';
-import Dropdown from 'se-react-dropdown'
+import Dropdown from 'lt-react-dropdown'
 import {get, pick} from 'lodash'
 
 //for leader board page.
@@ -194,7 +194,7 @@ export class LeaderSideBoard extends React.Component {
                             return (<tr key={index}>
                                 <td><strong>{`${index + 1}.`}</strong></td>
                                 <td><img src={`${item.Portrait}`}
-                                         alt=""/>{item.Name}</td>
+                                         alt=""/><span className="name">{item.Name}</span></td>
                                 <td><strong>{item.Points}</strong> <span>points</span></td>
                             </tr>)
                         })}

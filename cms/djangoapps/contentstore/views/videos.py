@@ -143,11 +143,15 @@ class StatusDisplayStrings(object):
         "transcription_in_progress": _TRANSCRIPTION_IN_PROGRESS,
         "transcript_ready": _TRANSCRIPT_READY,
     }
-
     @staticmethod
     def get(val_status):
         """Map a VAL status string to a localized display string"""
-        return _(StatusDisplayStrings._STATUS_MAP.get(val_status, StatusDisplayStrings._UNKNOWN))    # pylint: disable=translation-of-non-string
+        return _(StatusDisplayStrings._STATUS_MAP.get(val_status, StatusDisplayStrings._UNKNOWN))
+
+    @staticmethod
+    def get_class(val_status):
+        """Map a VAL status string to a localized display string"""
+        return StatusDisplayStrings._STATUS_MAP.get(val_status, StatusDisplayStrings._UNKNOWN)  # pylint: disable=translation-of-non-string
 
 
 @expect_json
@@ -555,6 +559,25 @@ def convert_video_status(video, is_video_encodes_ready=False):
     return status
 
 
+def get_video_status_class(video, is_video_encodes_ready=False):
+    """
+    Get class for video status to style the status column
+    """
+    now = datetime.now(video.get('created', datetime.now().replace(tzinfo=UTC)).tzinfo)
+
+    if video['status'] == 'upload' and (now - video['created']) > timedelta(hours=MAX_UPLOAD_HOURS):
+        new_status = 'upload_failed'
+        status = StatusDisplayStrings.get_class(new_status)
+    elif video['status'] == 'invalid_token':
+        status = StatusDisplayStrings.get_class('youtube_duplicate')
+    elif is_video_encodes_ready or video['status'] == 'transcript_ready':
+        status = StatusDisplayStrings.get_class('file_complete')
+    else:
+        status = StatusDisplayStrings.get_class(video['status'])
+
+    return status
+
+
 def _get_videos(course):
     """
     Retrieves the list of videos from VAL corresponding to this course.
@@ -579,6 +602,7 @@ def _get_videos(course):
             if not video['transcripts'] and is_video_encodes_ready else
             ''
         )
+        video['status_class'] = get_video_status_class(video, is_video_encodes_ready)
         # Convert the video status.
         video['status'] = convert_video_status(video, is_video_encodes_ready)
 
@@ -599,7 +623,7 @@ def _get_index_videos(course):
     course_id = unicode(course.id)
     attrs = [
         'edx_video_id', 'client_video_id', 'created', 'duration',
-        'status', 'courses', 'transcripts', 'transcription_status',
+        'status', 'status_class', 'courses', 'transcripts', 'transcription_status',
     ]
 
     def _get_values(video):

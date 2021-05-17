@@ -30,7 +30,7 @@
         SettingsGradersFactory(
             _.extend(${dump_js_escaped_json(course_details, cls=CourseSettingsEncoder) | n},
                 {is_credit_course: ${is_credit_course | n, dump_js_escaped_json}}),
-            "${grading_url | n, js_escaped_string}"
+            "${grading_url | n, js_escaped_string}", "${asset_callback_url}"
         );
     });
 </%block>
@@ -63,7 +63,7 @@
                 <span class="tip tip-stacked">
                   ${_("Learner is required to complete 100% course progress and earn the minimum passing score to successfully pass the course.")}
                 </span>
-                <div>
+                <div class="radio-input">
                   <input type="radio" id="default-completion-rule" value="default">
                   <span></span>
                 </div>
@@ -131,6 +131,7 @@
                 <label for="course-minimum_grade_credit">${_("Minimum Credit-Eligible Grade:")}</label>
                 <input type="text" class="short time input-minimum-grade" id="course-minimum_grade_credit" value="0" placeholder="80" autocomplete="off" aria-describedby="minimum_grade_description"/>
                 <span class="minimum-grade-percentage-sign">%</span>
+                <span class="question-mark-wrapper" data-title="${_("Must be greater than or equal to the course passing grade")}"></span>
                 <span class="tip tip-inline" id="minimum_grade_description">${_("Must be greater than or equal to the course passing grade")}</span>
               </li>
             </ol>
@@ -148,6 +149,7 @@
             <li class="field text" id="field-course-grading-graceperiod">
               <label for="course-grading-graceperiod">${_("Grace Period on Deadline:")}</label>
               <input type="text" class="short time" id="course-grading-graceperiod" value="00:00" placeholder="HH:MM" autocomplete="off" />
+              <span class="question-mark-wrapper" data-title="${_("Leeway on due dates")}"></span>
               <span class="tip tip-inline">${_("Leeway on due dates")}</span>
             </li>
           </ol>

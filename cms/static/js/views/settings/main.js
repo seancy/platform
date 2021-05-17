@@ -1,9 +1,9 @@
-define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui', 'tinymce', 'js/utils/date_utils',
+define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui', 'tinymce', 'js/utils/date_utils',
     'js/models/uploads', 'js/views/uploads', 'js/views/license', 'js/models/license',
     'common/js/components/views/feedback_notification', 'jquery.timepicker', 'date', 'gettext',
     'js/views/learning_info', 'js/views/instructor_info', 'js/views/reminder_info', 'js/views/course_tags_info',
     'edx-ui-toolkit/js/utils/string-utils'],
-       function(ValidatingView, CodeMirror, _, $, ui, tinymce, DateUtils, FileUploadModel,
+       function(PromptView,ValidatingView, CodeMirror, _, $, ui, tinymce, DateUtils, FileUploadModel,
                 FileUploadDialog, LicenseView, LicenseModel, NotificationView,
                 timepicker, date, gettext, LearningInfoView, InstructorInfoView, ReminderInfoView, CourseTagsInfo, StringUtils) {
            'use strict';
@@ -29,7 +29,9 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    'click #course-order-increase': 'increaseCourseOrder',
                    'click #course-order-decrease': 'decreaseCourseOrder',
                    'click .add-course-tags': 'addCourseTags',
-                   'click .delete-course-btn': 'deleteCourse'
+                   'click .delete-course-btn': 'deleteCourse',
+                   'click .schedule .pacing li':'selectRadiobox',
+                   'click #field-course-number .editing-icon': 'displayEditingBox'
                },
 
                initialize: function(options) {
@@ -38,9 +40,11 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.$el.find('#course-category').val(this.model.get('course_category'));
                    //this.$el.find('#course-country').val(this.model.get('course_country'));
                    this.$el.find('#course-language').val(this.model.get('language'));
-                   this.$el.find('#course-organization').val(this.model.get('org'));
-                   this.$el.find('#course-number').val(this.model.get('course_id'));
-                   this.$el.find('#course-name').val(this.model.get('run'));
+                   this.$el.find('#catalog-visibility').val(this.model.get('catalog_visibility'));
+                   this.$el.find('#course-organization').text(this.model.get('org'));
+                   this.$el.find('#course-number').text(this.model.get('course_id'));
+                   this.$el.find('#course-display-number').val(this.model.get('display_coursenumber'));
+                   this.$el.find('#course-name').text(this.model.get('run'));
                    this.$el.find('.set-date').datepicker({dateFormat: 'm/d/yy'});
 
         // Avoid showing broken image on mistyped/nonexistent image
@@ -53,6 +57,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
 
                    this.listenTo(this.model, 'invalid', this.handleValidationError);
                    this.listenTo(this.model, 'change', this.showNotificationBar);
+                   this.model.on('change:intro_video', $.proxy(this.updateIntroductionVideoStatus, this))
                    this.selectorToField = _.invert(this.fieldToSelectorMap);
         // handle license separately, to avoid reimplementing view logic
                    this.licenseModel = new LicenseModel({asString: this.model.get('license')});
@@ -112,6 +117,56 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
 
                    this.exportUrl = options.exportUrl;
                    this.homepageUrl = options.homepageUrl;
+
+                   this.makeNavigationScrollable();
+
+                   this.updateIntroductionVideoStatus();
+               },
+               updateIntroductionVideoStatus: function() {
+                   if (!_.isEmpty(this.model.get('intro_video'))){
+                       this.$el.find('#upload-course-introduction-video').hide();
+                   }
+               },
+               displayEditingBox:function() {
+                   var $field = $('#field-course-number')
+                   $field.addClass('editing')
+               },
+               generalInfoInit: function(){
+                   var displayCourseNumber = this.model.get('display_coursenumber')
+                   var $field = $('#field-course-number')
+                   if (displayCourseNumber) {
+                       $field.addClass('editing')
+                   }else {
+                       $field.removeClass('editing')
+                   }
+               },
+               makeNavigationScrollable:function(){
+                   /*document.addEventListener('scroll', function(event){
+                       var $nav = $('.content-nav')
+                       if (window.scrollY > 80) {
+                           $nav.addClass('is-fixed')
+                       }else{
+                           $nav.removeClass('is-fixed')
+                       }
+                   })*/
+               },
+               applyElements:function(){
+                   _.each($('.content-primary').find('.question-mark-wrapper'), function(wrapper){
+                        new LearningTribes.QuestionMark(wrapper, $(wrapper).data('title'));
+                    })
+
+                   var that = this;
+                   var mandatorySwitcher = $('#field-course-mandatory').find('.switcher')[0];
+                    new LearningTribes.Switcher(mandatorySwitcher, $(mandatorySwitcher).next().is(':checked'),
+                        function(checked){
+                        that.model.set('course_mandatory_enabled', checked)
+                    })
+
+                   var newCourseSwitcher = $('#field-is-new-course').find('.switcher')[0];
+                    new LearningTribes.Switcher(newCourseSwitcher, $(newCourseSwitcher).next().is(':checked'),
+                        function(checked){
+                        that.model.set('is_new', checked)
+                    })
                },
 
                render: function() {
@@ -216,13 +271,26 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    } else {
                        this.$('#' + this.fieldToSelectorMap.course_mandatory_enabled).removeAttr('checked');
                    }
+                   if (this.model.get('is_new')) {
+                       this.$('#' + this.fieldToSelectorMap.course_new_course_enabled).attr('checked', this.model.get('is_new'));
+                   } else {
+                       this.$('#' + this.fieldToSelectorMap.course_new_course_enabled).removeAttr('checked');
+                   }
 
                    this.$('#' + this.fieldToSelectorMap.entrance_exam_minimum_score_pct).val(this.model.get('entrance_exam_minimum_score_pct'));
 
                    var selfPacedButton = this.$('#course-pace-self-paced'),
                        instructorPacedButton = this.$('#course-pace-instructor-paced'),
                        paceToggleTip = this.$('#course-pace-toggle-tip');
-                   (this.model.get('self_paced') ? selfPacedButton : instructorPacedButton).attr('checked', true);
+                   var $activeRadio = (this.model.get('self_paced') ? selfPacedButton : instructorPacedButton)
+                   $activeRadio.prop('checked', true)
+                       .closest('.field').addClass('active')
+                       .siblings().removeClass('active');
+
+                   /*var $wrapper = $(e.currentTarget)
+                   $wrapper.addClass('active').siblings().removeClass('active')*/
+
+                   //(this.model.get('self_paced') ? selfPacedButton : instructorPacedButton).trigger("selected").trigger('click')
                    if (this.model.canTogglePace()) {
                        selfPacedButton.removeAttr('disabled');
                        instructorPacedButton.removeAttr('disabled');
@@ -260,16 +328,19 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    this.course_tags_info_view.render();
 
                    this.applyElements();
+                   this.generalInfoInit();
 
                    return this;
                },
-               applyElements:function(){
-                   _.each($('.content-primary').find('.question-mark-wrapper'), function(wrapper){
-                        new LearningTribes.QuestionMark(wrapper, $(wrapper).data('title'));
-                    })
+               selectRadiobox:function(e){
+                   var $wrapper = $(e.currentTarget)
+                   $wrapper.addClass('active').siblings().removeClass('active')
+                   $wrapper.find('input[type="radio"]').prop('checked',true).change()
+
                },
                fieldToSelectorMap: {
                    language: 'course-language',
+                   course_test: 'course-test',
                    start_date: 'course-start',
                    end_date: 'course-end',
                    course_category: 'course-category',
@@ -306,7 +377,9 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    course_order: 'course-order',
                    course_order_increase: 'course-order-increase',
                    course_order_decrease: 'course-order-decrease',
-                   course_mandatory_enabled: 'course-mandatory-enabled'
+                   course_mandatory_enabled: 'course-mandatory-enabled',
+                   course_new_course_enabled: 'course-new-course-enabled',
+                   catalog_visibility: 'catalog-visibility'
                },
 
                addLearningFields: function() {
@@ -396,21 +469,37 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                    var dialogContent = dialogId({exportUrl: this.exportUrl});
                    var requestUrl = this.model.urlRoot;
                    var homepageUrl = this.homepageUrl;
-                   LearningTribes.confirmation.show({ /* global LearningTribes */
-                       message: dialogContent,
-                       confirmationText: gettext('I want to delete the course'),
-                       cancelationText: gettext('Cancel'),
-                       confirmationCallback: function() {
-                           $.ajax({
-                               type: 'DELETE',
-                               url: requestUrl
-                           }).done(function() {
-                               self.location.href = homepageUrl;
-                           }).fail(function() {
-                               self.location.href = homepageUrl;
-                           });
-                       }
-                   });
+                   new PromptView.Warning({
+                        title: null,
+                        message: dialogContent,
+                        actions: {
+                            primary: {
+                                text: gettext('I want to delete the course'),
+                                click: function(prompt) {
+                                    $.ajax({
+                                       type: 'DELETE',
+                                       url: requestUrl
+                                   }).done(function() {
+                                       self.location.href = homepageUrl;
+                                   }).fail(function() {
+                                       self.location.href = homepageUrl;
+                                   });
+
+                                    prompt.hide();
+                                    //operation();
+                                }
+                            },
+                            secondary: {
+                                text: gettext('Cancel'),
+                                click: function(prompt) {
+                                    /*if (onCancelCallback) {
+                                        onCancelCallback();
+                                    }*/
+                                    return prompt.hide();
+                                }
+                            }
+                        }
+                    }).show();
                },
 
                updateModel: function(event) {
@@ -438,6 +527,11 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                            instructors = this.model.get('instructor_info').instructors.slice(0);
                        instructors[index][field] = value;
                        this.model.set('instructor_info', {instructors: instructors});
+                       this.showNotificationBar();
+                       break;
+                   case 'course-display-number':
+                       value = $(event.currentTarget).val();
+                       this.model.set('display_coursenumber', value);
                        this.showNotificationBar();
                        break;
                    case 'course-instructor-image-' + index:
@@ -484,12 +578,20 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        var previewsource = this.model.set_videosource($(event.currentTarget).val());
                        clearTimeout(this.videoTimer);
                        this.videoTimer = setTimeout(_.bind(function() {
+                           var $button = this.$el.find('#upload-course-introduction-video')
                            if (previewsource == null) {
                                this.$el.find('.current-course-introduction-video iframe').attr('src', '').show();
                                this.$el.find('.current-course-introduction-video video').hide();
+                               $button.show();
                            } else if (previewsource.includes('//www.youtube.com/embed/')) {
                                this.$el.find('.current-course-introduction-video iframe').attr('src', previewsource).show();
                                this.$el.find('.current-course-introduction-video video').hide();
+                               if (previewsource === '') {
+                                   this.$el.find('.current-course-introduction-video .video-error').show();
+                               } else {
+                                   this.$el.find('.current-course-introduction-video .video-error').hide();
+                               }
+                               $button.hide();
                            } else {
                                this.$el.find('.current-course-introduction-video iframe').hide();
                                this.$el.find('.current-course-introduction-video video').show().find('source')
@@ -500,6 +602,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                                } else {
                                    this.$el.find('.current-course-introduction-video .video-error').hide();
                                }
+                               $button.hide();
                            }
                            if (this.model.has('intro_video')) {
                                this.$el.find('.remove-course-introduction-video').show();
@@ -533,6 +636,8 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        }
                        break;
 
+                   case 'catalog-visibility':
+                   case 'course-new-course-enabled':
                    case 'course-order':
                    case 'course-mandatory-enabled':
                    case 'periodic-reminder-enabled':
@@ -622,6 +727,7 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        this.$el.find('#' + this.fieldToSelectorMap.intro_video).val('');
                        this.$el.find('.remove-course-introduction-video').hide();
                    }
+                   this.$el.find('#upload-course-introduction-video').show();
                },
                codeMirrors: {},
                codeMirrorize: function(e, forcedTarget) {
@@ -721,6 +827,11 @@ define(['js/views/validation', 'codemirror', 'underscore', 'jquery', 'jquery.ui'
                        image_key = 'video_thumbnail_image_name';
                        image_path_key = 'video_thumbnail_image_asset_path';
                        break;
+                   /*case 'upload-course-introduction-video':
+                       event.stopPropagation();
+                       event.preventDefault();
+                       return false;
+                       break;*/
                    }
 
                    var upload = new FileUploadModel({

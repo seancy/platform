@@ -1,6 +1,6 @@
 <form class="file-upload-form">
     <div class="file-drop-area">
-        <span class="icon fa fa-cloud-upload" aria-hidden="true"></span>
+        <span class="icon fad fa-cloud-upload" aria-hidden="true"></span>
         <div class="text-container">
             <div class="video-uploads-header"><%- uploadHeader %></div>
             <div class="video-upload-text"><%= uploadText %></div>

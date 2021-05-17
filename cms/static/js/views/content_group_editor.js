@@ -13,6 +13,7 @@ function(ListItemEditorView, _) {
         className: 'content-group-edit collection-edit',
         events: {
             submit: 'setAndClose',
+            'click .add-collection-name label i': 'cancel',
             'click .action-cancel': 'cancel'
         },
 

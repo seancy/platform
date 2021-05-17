@@ -9,6 +9,7 @@ define(
 
             initialize: function(options) {
                 this.template = HtmlUtils.template(previousVideoUploadListTemplate);
+                this.emptyTemplate = this.loadTemplate('no-videos');
                 this.encodingsDownloadUrl = options.encodingsDownloadUrl;
                 this.videoImageUploadEnabled = options.videoImageSettings.video_image_upload_enabled;
                 this.itemViews = this.collection.map(function(model) {
@@ -27,7 +28,8 @@ define(
 
             render: function() {
                 var $el = this.$el,
-                    $tabBody;
+                    $tabBody,
+                    $videoTable;
 
                 HtmlUtils.setHtml(
                     this.$el,
@@ -37,10 +39,15 @@ define(
                     })
                 );
 
-                $tabBody = $el.find('.js-table-body');
-                _.each(this.itemViews, function(view) {
-                    $tabBody.append(view.render().$el);
-                });
+                if (this.itemViews.length > 0) {
+                    $tabBody = $el.find('.js-table-body');
+                    _.each(this.itemViews, function(view) {
+                        $tabBody.append(view.render().$el);
+                    });
+                } else {
+                    $videoTable = $el.find('.video-table');
+                    $videoTable.html(this.emptyTemplate());
+                }
                 return this;
             }
         });
