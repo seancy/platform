@@ -284,7 +284,6 @@ export class CustomizedReport {
   }
 
   onToggleSection (event) {
-    console.log('onToggle') // TODELETE
     const sectionToggleButton = event.currentTarget
     const sectionToggleButtons = document.querySelectorAll('.section-button')
     if (sectionToggleButton.classList.contains('accordion-trigger')) {
