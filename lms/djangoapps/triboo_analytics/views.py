@@ -183,7 +183,6 @@ def new_request_copy(request_copy):
 def get_kwargs(data):
     kwargs = {}
 
-    query_tuples = []
     for queried_string, field in data.get('query_tuples'):
         if queried_string:
             prop = field.split('_', 1)[1]
