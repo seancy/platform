@@ -10,12 +10,6 @@ from opaque_keys.edx.keys import AssetKey
 from opaque_keys.edx.locator import InvalidKeyError
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
-from triboo_analytics.models import (
-    Badge,
-    CourseDailyReport,
-    LearnerCourseJsonReport,
-    LearnerSectionJsonReport,
-)
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
 
@@ -75,6 +69,12 @@ def remove_course_reports(course_key):
     """
     Delete all reports related to the course.
     """
+    from triboo_analytics.models import (
+        Badge,
+        CourseDailyReport,
+        LearnerCourseJsonReport,
+        LearnerSectionJsonReport,
+    )
     Badge.objects.filter(course_id=course_key).delete()
     CourseDailyReport.objects.filter(course_id=course_key).delete()
     LearnerCourseJsonReport.objects.filter(course_id=course_key).delete()
