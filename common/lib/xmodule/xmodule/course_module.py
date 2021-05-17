@@ -48,6 +48,9 @@ DEFAULT_COURSE_VISIBILITY_IN_CATALOG = getattr(
 
 DEFAULT_MOBILE_AVAILABLE = getattr(settings, 'DEFAULT_MOBILE_AVAILABLE', False)
 
+OFFICIAL_ADVANCED_MODULES = getattr(settings, 'OFFICIAL_ADVANCED_MODULES', [])
+DEFAULT_ADVANCED_MODULES = getattr(settings, 'COURSE_ADVANCED_MODULES', [])
+
 
 class StringOrDate(Date):
     def from_json(self, value):
@@ -410,8 +413,8 @@ class CourseFields(object):
     )
     advanced_modules = List(
         display_name=_("Advanced Module List"),
-        values=settings.OFFICIAL_ADVANCED_MODULES,
-        default=settings.COURSE_ADVANCED_MODULES,
+        values=OFFICIAL_ADVANCED_MODULES,
+        default=DEFAULT_ADVANCED_MODULES,
         help=_("Select the names of the advanced modules to use in your course."),
         scope=Scope.settings
     )
