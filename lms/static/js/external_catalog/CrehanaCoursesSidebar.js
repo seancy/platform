@@ -151,10 +151,10 @@ class StarCheckboxGroup extends React.Component {
         }
 
         return (
-            <CheckboxWrapperEx className={'se-react-checkbox-group ' + (this.props.className || '')}>
+            <CheckboxWrapperEx className={'lt-react-checkbox-group ' + (this.props.className || '')}>
                 {data.map(item => {
                     var stars = [];
-                    const id = 'star-se-react-checkbox-group-box' + item.value;
+                    const id = 'star-lt-react-checkbox-group-box' + item.value;
                     for(var i = 1; i <= 5; i++) {
                         if( item.value >= i ) {
                             stars.push(<i className="fa fa-star"></i>);
