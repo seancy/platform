@@ -95,7 +95,7 @@ def get_badge_url(course_key, grader):
             # keep compatibility with old badge image url get(use the same name with grade's
             # short label.
             for img_type in ('.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'):
-                asset_key = course_key.make_asset_key('asset', str(grader['short_label']) + img_type)
+                asset_key = course_key.make_asset_key('asset', grader['short_label'].encode('utf-8').decode('utf-8') + img_type)
                 content = contentstore().find(asset_key, throw_on_not_found=False)
                 if content is not None:
                     return StaticContent.serialize_asset_key_with_slash(asset_key)
