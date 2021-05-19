@@ -12807,3 +12807,7 @@ msgstr "Möchten Sie die Verwendung"
 #: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "The user has been successfully deleted."
 msgstr "Der Benutzer wurde erfolgreich gelöscht."
+
+#: platform/cms/static/js/views/settings/main.js
+msgid "Course Title can't be empty"
+msgstr "Kurstitel darf nicht leer sein"

@@ -386,7 +386,7 @@ class VideoModule(VideoFields, VideoTranscriptsMixin, VideoStudentViewHandlers, 
             'transcript_download_format': transcript_download_format,
             'transcript_download_formats_list': self.descriptor.fields['transcript_download_format'].values,
             'license': getattr(self, "license", None),
-            'streams': self.youtube_streams,
+            'streams': self.youtube_streams or self.html5_sources,
             'video_id': self.edx_video_id,
             'is_in_studio': is_in_studio,
         }

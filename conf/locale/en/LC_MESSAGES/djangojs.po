@@ -12185,3 +12185,7 @@ msgstr ""
 #: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "There is unsaved user permission data"
 msgstr ""
+
+#: platform/cms/static/js/views/settings/main.js
+msgid "Course Title can't be empty"
+msgstr ""

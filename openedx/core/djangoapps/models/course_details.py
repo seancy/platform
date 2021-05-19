@@ -385,7 +385,7 @@ class CourseDetails(object):
             descriptor.is_new = jsondict['is_new']
             dirty = True
 
-        if 'title' in jsondict and jsondict['title'] != descriptor.display_name:
+        if 'title' in jsondict and jsondict['title'] and jsondict['title'] != descriptor.display_name:
             descriptor.display_name = jsondict['title']
             dirty = True
 
