@@ -12491,3 +12491,7 @@ msgstr "您确定要删除该用户"
 #: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "The user has been successfully deleted."
 msgstr "用户已被成功删除。"
+
+#: platform/cms/static/js/views/settings/main.js
+msgid "Course Title can't be empty"
+msgstr "课程标题不能为空"

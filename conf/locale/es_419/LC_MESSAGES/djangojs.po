@@ -12951,3 +12951,7 @@ msgstr "¿Está seguro de que desea eliminar el uso"
 #: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "The user has been successfully deleted."
 msgstr "El usuario ha sido eliminado correctamente."
+
+#: platform/cms/static/js/views/settings/main.js
+msgid "Course Title can't be empty"
+msgstr "El título del curso no puede estar en blanco"
