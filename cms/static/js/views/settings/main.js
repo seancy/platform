@@ -57,7 +57,7 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
 
                    this.listenTo(this.model, 'invalid', this.handleValidationError);
                    this.listenTo(this.model, 'change', this.showNotificationBar);
-                   this.model.on('change:intro_video', $.proxy(this.updateIntroductionVideoStatus, this))
+                   this.model.on('change:intro_video', $.proxy(this.updateIntroductionVideoStatus, this));
                    this.selectorToField = _.invert(this.fieldToSelectorMap);
         // handle license separately, to avoid reimplementing view logic
                    this.licenseModel = new LicenseModel({asString: this.model.get('license')});
@@ -128,12 +128,12 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    }
                },
                displayEditingBox:function() {
-                   var $field = $('#field-course-number')
+                   var $field = $('#field-course-number');
                    $field.addClass('editing')
                },
                generalInfoInit: function(){
-                   var displayCourseNumber = this.model.get('display_coursenumber')
-                   var $field = $('#field-course-number')
+                   var displayCourseNumber = this.model.get('display_coursenumber');
+                   var $field = $('#field-course-number');
                    if (displayCourseNumber) {
                        $field.addClass('editing')
                    }else {
@@ -153,14 +153,14 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                applyElements:function(){
                    _.each($('.content-primary').find('.question-mark-wrapper'), function(wrapper){
                         new LearningTribes.QuestionMark(wrapper, $(wrapper).data('title'));
-                    })
+                    });
 
                    var that = this;
                    var mandatorySwitcher = $('#field-course-mandatory').find('.switcher')[0];
                     new LearningTribes.Switcher(mandatorySwitcher, $(mandatorySwitcher).next().is(':checked'),
                         function(checked){
                         that.model.set('course_mandatory_enabled', checked)
-                    })
+                    });
 
                    var newCourseSwitcher = $('#field-is-new-course').find('.switcher')[0];
                     new LearningTribes.Switcher(newCourseSwitcher, $(newCourseSwitcher).next().is(':checked'),
@@ -282,7 +282,7 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    var selfPacedButton = this.$('#course-pace-self-paced'),
                        instructorPacedButton = this.$('#course-pace-instructor-paced'),
                        paceToggleTip = this.$('#course-pace-toggle-tip');
-                   var $activeRadio = (this.model.get('self_paced') ? selfPacedButton : instructorPacedButton)
+                   var $activeRadio = (this.model.get('self_paced') ? selfPacedButton : instructorPacedButton);
                    $activeRadio.prop('checked', true)
                        .closest('.field').addClass('active')
                        .siblings().removeClass('active');
@@ -333,8 +333,8 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    return this;
                },
                selectRadiobox:function(e){
-                   var $wrapper = $(e.currentTarget)
-                   $wrapper.addClass('active').siblings().removeClass('active')
+                   var $wrapper = $(e.currentTarget);
+                   $wrapper.addClass('active').siblings().removeClass('active');
                    $wrapper.find('input[type="radio"]').prop('checked',true).change()
 
                },
@@ -578,7 +578,7 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                        var previewsource = this.model.set_videosource($(event.currentTarget).val());
                        clearTimeout(this.videoTimer);
                        this.videoTimer = setTimeout(_.bind(function() {
-                           var $button = this.$el.find('#upload-course-introduction-video')
+                           var $button = this.$el.find('#upload-course-introduction-video');
                            if (previewsource == null) {
                                this.$el.find('.current-course-introduction-video iframe').attr('src', '').show();
                                this.$el.find('.current-course-introduction-video video').hide();
@@ -649,6 +649,19 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    case 'course-category':
                    case 'course-effort':
                    case 'course-title':
+                       var oldTitle = this.model.get('title');
+                       var newTitle = $(event.currentTarget).val();
+                       if (newTitle === "") {
+                           new NotificationView.Error({
+                               title: gettext("Error"),
+                               message: gettext("Course Title can't be empty"),
+                               closeIcon: true
+                           }).show();
+                           $(event.currentTarget).val(oldTitle);
+                       } else {
+                           this.setField(event);
+                       }
+                       break;
                    case 'course-subtitle':
                    case 'course-short-description':
                        this.setField(event);
@@ -677,7 +690,6 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                        });
                        this.model.set('vendor', checkedValue);
                    } else if (name === 'course-country' && event.type === 'change') {
-                       console.log("country");
                        var current_countries = Array.from(this.model.get('course_country')),
                            selected_value = event.currentTarget.value;
                        if (event.currentTarget.checked) {
