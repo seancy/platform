@@ -329,6 +329,21 @@
       if (document.getElementById('uvchart-select')) {
         document.getElementById('uvchart-select').addEventListener('change', function (event) {drawUVChart(event.target.value)})
       }
+      function debounce(f, time) {
+          var debounced = null;
+          return function () {
+              var args = [];
+              for (var _i = 0; _i < arguments.length; _i++) {
+                  args[_i] = arguments[_i];
+              }
+              clearTimeout(debounced);
+              debounced = setTimeout(function () { return f.apply(void 0, args); }, time);
+          };
+      }
+      window.addEventListener('resize', debounce(function () {
+        var selector = document.getElementById('uvchart-select')
+        if (selector) drawUVChart(selector.value)
+      }, 200))
     </script>
 % endif
 % if average_complete_time_csv and len(average_complete_time_csv) > 0:
