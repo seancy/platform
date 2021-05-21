@@ -539,7 +539,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <label for="course-language">${_("Course Language")}</label>
                 <span class="tip tip-stacked">${_("Identify the course language here. This is used to assist users find courses that are taught in a specific language.")}</span>
                 <select id="course-language">
-
+                    <option value=""></option>
                   % for lang, label in language_options:
                     <option value="${lang}">${label}</option>
                   % endfor
