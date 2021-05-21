@@ -290,6 +290,20 @@
 ##    new CourseReport();
 ##</%static:webpack>
 
+<script type="text/javascript">
+function debounce(f, time) {
+  var debounced = null;
+  return function () {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      args[_i] = arguments[_i];
+    }
+    clearTimeout(debounced);
+    debounced = setTimeout(function () { return f.apply(void 0, args); }, time);
+  };
+}
+</script>
+
 % if course_report:
     <script type="text/javascript" src="${static.url('js/triboo_analytics/echarts.min.js')}"></script>
     <script type="text/javascript" src="${static.url('js/triboo_analytics/charts.js')}"></script>
@@ -303,12 +317,16 @@
         ['${_("Unsuccessful")}', ${course_report.failed}],
       ];
 
-      drawGaugeChart('pieChart', pieChartData, [
-        '--analytics-not-started-color',
-        '--analytics-in-progress-color',
-        '--analytics-finished-color',
-        '--analytics-failed-color',
-      ])
+      function drawProgressChart () {
+        drawGaugeChart('pieChart', pieChartData, [
+          '--analytics-not-started-color',
+          '--analytics-in-progress-color',
+          '--analytics-finished-color',
+          '--analytics-failed-color',
+        ])
+      }
+      drawProgressChart()
+      window.addEventListener('resize', debounce(drawProgressChart))
     </script>
 % endif
 % if unique_visitors_csv and len(unique_visitors_csv) > 0:
@@ -329,17 +347,6 @@
       if (document.getElementById('uvchart-select')) {
         document.getElementById('uvchart-select').addEventListener('change', function (event) {drawUVChart(event.target.value)})
       }
-      function debounce(f, time) {
-          var debounced = null;
-          return function () {
-              var args = [];
-              for (var _i = 0; _i < arguments.length; _i++) {
-                  args[_i] = arguments[_i];
-              }
-              clearTimeout(debounced);
-              debounced = setTimeout(function () { return f.apply(void 0, args); }, time);
-          };
-      }
       window.addEventListener('resize', debounce(function () {
         var selector = document.getElementById('uvchart-select')
         if (selector) drawUVChart(selector.value)
@@ -349,8 +356,12 @@
 % if average_complete_time_csv and len(average_complete_time_csv) > 0:
     <script type="text/javascript">
       var completeTimeChartCsvData = "date,value\n" + "${average_complete_time_csv}";
-      drawSimplifiedChart('completetimeChart', completeTimeChartCsvData, '--analytics-learners-chart-color');
+      function drawCompleteTimeChart () {
+        drawSimplifiedChart('completetimeChart', completeTimeChartCsvData, '--analytics-learners-chart-color');
+      }
+      drawCompleteTimeChart()
       lightTrendingMark('.analytics-widget-completetime .analytics-widget__caption-mark', completeTimeChartCsvData)
+      window.addEventListener('resize', debounce(drawCompleteTimeChart))
     </script>
 % endif
 <script type="text/javascript">

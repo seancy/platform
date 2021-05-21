@@ -222,6 +222,20 @@
     </div>
 </main>
 
+<script type="text/javascript">
+function debounce(f, time) {
+  var debounced = null;
+  return function () {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      args[_i] = arguments[_i];
+    }
+    clearTimeout(debounced);
+    debounced = setTimeout(function () { return f.apply(void 0, args); }, time);
+  };
+}
+</script>
+
 % if microsite_report and unique_visitors_csv:
     <script type="text/javascript">
         function drawUVChart (by) {
@@ -240,17 +254,6 @@
         if (document.getElementById('uvchart-select')) {
           document.getElementById('uvchart-select').addEventListener('change', function (event) {drawUVChart(event.target.value)})
         }
-        function debounce(f, time) {
-            var debounced = null;
-            return function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                clearTimeout(debounced);
-                debounced = setTimeout(function () { return f.apply(void 0, args); }, time);
-            };
-        }
         window.addEventListener('resize', debounce(function () {
           var selector = document.getElementById('uvchart-select')
           if (selector) drawUVChart(selector.value)
@@ -264,17 +267,21 @@
           ['${_("mobile")}', ${microsite_report.total_time_spent_on_mobile}],
         ]
 
-        drawGaugeChart('gaugeChart', platformDistributionData, [
-          '--analytics-desktop-color',
-          '--analytics-mobile-color',
-        ], {
-          tooltip: {
-            trigger: 'item',
-            formatter: function (params) {
-              return params.name + ' ' + params.percent * 2 + '%'
-            }
-          },
-        });
+        function drawPlatformDistributionChart () {
+          drawGaugeChart('gaugeChart', platformDistributionData, [
+            '--analytics-desktop-color',
+            '--analytics-mobile-color',
+          ], {
+            tooltip: {
+              trigger: 'item',
+              formatter: function (params) {
+                return params.name + ' ' + params.percent * 2 + '%'
+              }
+            },
+          });
+        }
+        drawPlatformDistributionChart()
+        window.addEventListener('resize', debounce(drawPlatformDistributionChart))
     </script>
 % endif
 % if users_by_country_csv:
@@ -286,14 +293,22 @@
 % if users_csv_data and len(users_csv_data) > 0:
     <script type="text/javascript">
       var usersChartCsvData = "date,value\n" + "${users_csv_data}";
-      drawSimplifiedChart('usersChart', usersChartCsvData, '--analytics-learners-chart-color');
+      function drawUsersChart () {
+        drawSimplifiedChart('usersChart', usersChartCsvData, '--analytics-learners-chart-color');
+      }
+      drawUsersChart()
       lightTrendingMark('.analytics-widget-learners .analytics-widget__caption-mark', usersChartCsvData)
+      window.addEventListener('resize', debounce(drawUsersChart))
     </script>
 % endif
 % if average_time_spent_csv and len(average_time_spent_csv) > 0:
     <script type="text/javascript">
       var timeSpentChartCsvData = "date,value\n" + "${average_time_spent_csv}";
-      drawSimplifiedChart('timeSpentChart', timeSpentChartCsvData, '--analytics-learners-chart-color');
+      function drawTimeSpentChart () {
+        drawSimplifiedChart('timeSpentChart', timeSpentChartCsvData, '--analytics-learners-chart-color');
+      }
+      drawTimeSpentChart()
       lightTrendingMark('.analytics-widget-timespent .analytics-widget__caption-mark', timeSpentChartCsvData)
+      window.addEventListener('resize', debounce(drawTimeSpentChart))
     </script>
 % endif
