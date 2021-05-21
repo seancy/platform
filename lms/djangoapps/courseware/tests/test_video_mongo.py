@@ -126,6 +126,7 @@ class TestVideoYouTube(TestVideo):
                 {'display_name': 'Text (.txt) file', 'value': 'txt'}
             ],
             'poster': 'null',
+            'video_id': u'',
         }
 
         self.assertEqual(
@@ -201,7 +202,7 @@ class TestVideoNonYouTube(TestVideo):
                 'completionPercentage': 0.95,
                 'publishCompletionUrl': self.get_handler_url('publish_completion', ''),
             })),
-            'streams': '',
+            'streams': [u'example.mp4', u'example.webm'],
             'track': None,
             'transcript_download_format': u'srt',
             'transcript_download_formats_list': [
@@ -209,6 +210,7 @@ class TestVideoNonYouTube(TestVideo):
                 {'display_name': 'Text (.txt) file', 'value': 'txt'}
             ],
             'poster': 'null',
+            'video_id': u'',
         }
 
         self.assertEqual(
@@ -343,6 +345,7 @@ class TestGetHtmlMethod(BaseTestXmodule):
                 {'display_name': 'Text (.txt) file', 'value': 'txt'}
             ],
             'poster': 'null',
+            'video_id': u'',
         }
 
         for data in cases:
@@ -376,7 +379,8 @@ class TestGetHtmlMethod(BaseTestXmodule):
                     track_url if data['expected_track_url'] == u'a_sub_file.srt.sjson' else data['expected_track_url']
                 ),
                 'id': self.item_descriptor.location.html_id(),
-                'metadata': json.dumps(metadata)
+                'metadata': json.dumps(metadata),
+                'streams': [u'example.mp4', u'example.webm'],
             })
 
             self.assertEqual(
@@ -463,6 +467,7 @@ class TestGetHtmlMethod(BaseTestXmodule):
                 {'display_name': 'Text (.txt) file', 'value': 'txt'}
             ],
             'poster': 'null',
+            'video_id': u'',
         }
         initial_context['metadata']['duration'] = None
 
@@ -486,7 +491,8 @@ class TestGetHtmlMethod(BaseTestXmodule):
             expected_context.update({
                 'id': self.item_descriptor.location.html_id(),
                 'download_video_link': data['result'].get('download_video_link'),
-                'metadata': json.dumps(expected_context['metadata'])
+                'metadata': json.dumps(expected_context['metadata']),
+                'streams': data['result'].get('sources', []),
             })
 
             self.assertEqual(
@@ -588,6 +594,7 @@ class TestGetHtmlMethod(BaseTestXmodule):
             'metadata': metadata,
             'is_in_studio': True,
             'streams': metadata['streams'],
+            'video_id': u'mock item',
         }
 
         DATA = SOURCE_XML.format(
@@ -626,7 +633,8 @@ class TestGetHtmlMethod(BaseTestXmodule):
         expected_context.update({
             'id': self.item_descriptor.location.html_id(),
             'download_video_link': data['result']['download_video_link'],
-            'metadata': json.dumps(expected_context['metadata'])
+            'metadata': json.dumps(expected_context['metadata']),
+            'streams': [u'example.mp4', u'example.webm'],
         })
 
         self.assertEqual(
@@ -658,6 +666,7 @@ class TestGetHtmlMethod(BaseTestXmodule):
         # context returned by get_html when provided with above data
         # expected_context, a dict to assert with context
         context, expected_context = self.helper_get_html_with_edx_video_id(data)
+
         self.assertEqual(
             context,
             self.item_descriptor.xmodule_runtime.render_template('video.html', expected_context)
@@ -689,6 +698,8 @@ class TestGetHtmlMethod(BaseTestXmodule):
         # context returned by get_html when provided with above data
         # expected_context, a dict to assert with context
         context, expected_context = self.helper_get_html_with_edx_video_id(data)
+        expected_context['video_id'] = u"{} ".format(edx_video_id)
+
         self.assertEqual(
             context,
             self.item_descriptor.xmodule_runtime.render_template('video.html', expected_context)
@@ -787,7 +798,9 @@ class TestGetHtmlMethod(BaseTestXmodule):
         expected_context.update({
             'id': self.item_descriptor.location.html_id(),
             'download_video_link': data['result']['download_video_link'],
-            'metadata': json.dumps(expected_context['metadata'])
+            'metadata': json.dumps(expected_context['metadata']),
+            'video_id': data['edx_video_id'].decode('utf-8'),
+            'streams': [u'example.mp4', u'example.webm'],
         })
         return context, expected_context
 
@@ -899,7 +912,10 @@ class TestGetHtmlMethod(BaseTestXmodule):
             expected_context.update({
                 'id': self.item_descriptor.location.html_id(),
                 'download_video_link': data['result'].get('download_video_link'),
-                'metadata': json.dumps(expected_context['metadata'])
+                'metadata': json.dumps(expected_context['metadata']),
+                'video_id': data['edx_video_id'].decode('utf-8'),
+                'streams': [u'http://example.com/example.mp4',
+                            u'http://example.com/example.webm'],
             })
 
             self.assertEqual(
@@ -2111,7 +2127,8 @@ class TestVideoWithBumper(TestVideo):
             'poster': json.dumps(OrderedDict({
                 'url': 'http://img.youtube.com/vi/ZwkTiUPN0mg/0.jpg',
                 'type': 'youtube'
-            }))
+            })),
+            'video_id': u'',
         }
 
         expected_content = self.item_descriptor.xmodule_runtime.render_template('video.html', expected_context)
@@ -2185,7 +2202,8 @@ class TestAutoAdvanceVideo(TestVideo):
                 {'display_name': 'SubRip (.srt) file', 'value': 'srt'},
                 {'display_name': 'Text (.txt) file', 'value': 'txt'}
             ],
-            'poster': 'null'
+            'poster': 'null',
+            'video_id': u'',
         }
         return context
 
