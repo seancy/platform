@@ -506,6 +506,20 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    var value;
                    var index = event.currentTarget.getAttribute('data-index');
                    switch (event.currentTarget.id) {
+                   case 'course-title':
+                       var oldTitle = this.model.get('title');
+                       var newTitle = $(event.currentTarget).val();
+                       if (newTitle === "") {
+                           new NotificationView.Error({
+                               title: gettext("Error"),
+                               message: gettext("Course Title can't be empty"),
+                               closeIcon: true
+                           }).show();
+                           $(event.currentTarget).val(oldTitle);
+                       } else {
+                           this.setField(event);
+                       }
+                       break;
                    case 'course-learning-info-' + index:
                        value = $(event.currentTarget).val();
                        var learningInfo = this.model.get('learning_info');
@@ -648,20 +662,6 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    case 'course-language':
                    case 'course-category':
                    case 'course-effort':
-                   case 'course-title':
-                       var oldTitle = this.model.get('title');
-                       var newTitle = $(event.currentTarget).val();
-                       if (newTitle === "") {
-                           new NotificationView.Error({
-                               title: gettext("Error"),
-                               message: gettext("Course Title can't be empty"),
-                               closeIcon: true
-                           }).show();
-                           $(event.currentTarget).val(oldTitle);
-                       } else {
-                           this.setField(event);
-                       }
-                       break;
                    case 'course-subtitle':
                    case 'course-short-description':
                        this.setField(event);

@@ -150,9 +150,10 @@ from pipeline_mako import render_require_js_path_overrides
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', '${ga_acct | n, js_escaped_string}');
+      setTimeout(function () {
+        gtag('js', new Date());
+        gtag('config', '${ga_acct | n, js_escaped_string}');
+      }, 1000);
     </script>
 % endif
 

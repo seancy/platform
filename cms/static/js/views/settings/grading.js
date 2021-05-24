@@ -81,7 +81,7 @@ define(['js/views/validation',
                         }, this);
                     },
                     this);
-                var asset_callback_url = this.options.asset_callback_url
+                var asset_callback_url = this.options.asset_callback_url;
                 gradeCollection.each(function (gradeModel) {
                     HtmlUtils.append(gradelist, self.template({model: gradeModel}));
                     var newEle = gradelist.children().last();
@@ -198,7 +198,7 @@ define(['js/views/validation',
                                 //index: index,
                                 descriptor: cutoff.designation,
                                 width: nextWidth,
-                                contenteditable: true,
+                                contenteditable: false,
                                 removable: removable
                             })
                         );
@@ -227,7 +227,7 @@ define(['js/views/validation',
                 }));
                 _.each($('.content-primary').find('.question-mark-wrapper'), function(wrapper){
                     new LearningTribes.QuestionMark(wrapper, $(wrapper).data('title'));
-                })
+                });
                 gradelist.children().last().resizable({
                     handles: 'e',
                     containment: 'parent',
@@ -343,7 +343,7 @@ define(['js/views/validation',
                 var newGradeHtml = this.gradeCutoffTemplate({
                     descriptor: this.GRADES[gradeLength],
                     width: targetWidth,
-                    contenteditable: true,
+                    contenteditable: false,
                     removable: true
                 });
                 var gradeDom = this.$el.find('.grades');
