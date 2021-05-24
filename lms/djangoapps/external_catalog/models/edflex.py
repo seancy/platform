@@ -3,15 +3,11 @@ External catalog used for "find courses" page.
 """
 
 from django.db import models
-from ..utils import get_edflex_configuration
 
 
 class EdflexCategory(models.Model):
-    edflex_configuration = get_edflex_configuration()
-    default_language = edflex_configuration['locale'][0]
-
     category_id = models.CharField(max_length=255)
-    language = models.CharField(default=default_language, max_length=255)
+    language = models.CharField(default='en', max_length=255)
     name = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True, db_index=True, null=True)
     modified = models.DateTimeField(auto_now=True, db_index=True, null=True)
