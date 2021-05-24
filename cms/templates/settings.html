@@ -609,7 +609,6 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
           </div>
           % endif
 
-          % if is_programmatic_enrollment_enabled:
             <a name="course-programmatic-enrollments2"></a>
             <div id="course-programmatic-enrollments" class="group-settings course-programmatic-enrollments">
               <header>
@@ -654,6 +653,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 ## </li>
                 ## % endif
 
+                % if is_programmatic_enrollment_enabled:
                 <li class="field-group programmtic-enrollments">
                   <header>
                     <h3>${_('Programmatic Enrollments')}</h3>
@@ -696,6 +696,7 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                     % endif
                   </ul>
                 </li>
+                % endif
 
                 % if about_page_editable:
                 <li class="field-group note note-promotion note-promotion-courseURL has-actions">
@@ -735,7 +736,6 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 % endif
               </ol>
             </div>
-          % endif
 
           <a name="course-reminders2"></a>
           <div id="course-reminders" class="group-settings course-reminders">
