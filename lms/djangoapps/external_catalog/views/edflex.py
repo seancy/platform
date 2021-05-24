@@ -115,10 +115,10 @@ def _get_courses(request):
     """
     edflex_configuration = get_edflex_configuration()
     configured_languages = edflex_configuration['locale']
-    if not request.user.is_authenticated:
-        platform_language = configured_languages[0]
-    else:
+    if request.user.is_authenticated:
         platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
+    else:
+        platform_language = configured_languages[0]
 
     status = 'success'
     message = ''
@@ -239,8 +239,11 @@ def edflex_catalog_handler(request):
         )
 
     elif request.META.get('CONTENT_TYPE', '') == 'application/json':
-        platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
         configured_languages = edflex_configuration['locale']
+        if request.user.is_authenticated:
+            platform_language = UserPreference.get_value(request.user, 'pref-lang', default='en').split('_')[0]
+        else:
+            platform_language = configured_languages[0]
         return JsonResponse(_get_facet(FILTERS, platform_language, configured_languages))
     return HttpResponseNotAllowed(['GET'])
 
