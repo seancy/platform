@@ -13,6 +13,7 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
 from xmodule.contentstore.content import StaticContent
 from xmodule.contentstore.django import contentstore
 
+
 log = logging.getLogger(__name__)
 
 COURSE_SHARING_UTM_PARAMETERS = {
@@ -69,13 +70,15 @@ def remove_course_reports(course_key):
     Delete all reports related to the course.
     """
     from triboo_analytics.models import (
-        LearnerCourseDailyReport,
-        LearnerSectionReport,
-        CourseDailyReport
+        Badge,
+        CourseDailyReport,
+        LearnerCourseJsonReport,
+        LearnerSectionJsonReport,
     )
-    LearnerCourseDailyReport.objects.filter(course_id=course_key).delete()
-    LearnerSectionReport.objects.filter(course_id=course_key).delete()
+    Badge.objects.filter(course_id=course_key).delete()
     CourseDailyReport.objects.filter(course_id=course_key).delete()
+    LearnerCourseJsonReport.objects.filter(course_id=course_key).delete()
+    LearnerSectionJsonReport.objects.filter(course_id=course_key).delete()
 
 
 def get_badge_url(course_key, grader):

@@ -92,26 +92,30 @@
           </figure>
         </div>
 
+        <%
+          user_groups = [group.name for group in user.groups.all()]
+        %>
+
         <nav class="nav-colophon" aria-label="${_('About')}">
           <h6>${_('Navigation')}</h6>
           <ol>
               <li><a href="${reverse('dashboard')}">${_('Dashboard')}</a></li>
 
             % if (configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False)) \
-              and CATALOG_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+              and CATALOG_DENIED_GROUP not in user_groups):
               <li><a href="${marketing_link('COURSES')}">${_("Explore")}</a></li>
             % endif
 
             % if (configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG', settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False)) \
               and configuration_helpers.get_value('EDFLEX_URL', None) \
-              and EDFLEX_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+              and EDFLEX_DENIED_GROUP not in user_groups):
               <li><a href="${reverse('edflex_catalog')}">${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}</a></li>
             % endif
 
               <li><a href="${reverse('learnlight_catalog')}">${_("Languages")}</a></li>
 
             % if (configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False)) \
-              and CREHANA_DENIED_GROUP not in [group.name for group in user.groups.all()]):
+              and CREHANA_DENIED_GROUP not in user_groups):
               <li><a href="${reverse('crehana_catalog')}">${configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')}</a></li>
             % endif
 
@@ -127,8 +131,12 @@
         <%
           can_see_studio_link = studio_access_role(user)
           can_see_analytics_link = (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
-                and (ANALYTICS_ACCESS_GROUP in [group.name for group in user.groups.all()] \
-                  or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in user.groups.all()]))
+                and (user.is_staff or ANALYTICS_ACCESS_GROUP in user_groups \
+                  or ANALYTICS_LIMITED_ACCESS_GROUP in user_groups))
+          if user.is_staff or ANALYTICS_ACCESS_GROUP in user_groups:
+            analytics_href = reverse('analytics_microsite')
+          elif ANALYTICS_LIMITED_ACCESS_GROUP in user_groups:
+            analytics_href = reverse('analytics_course')
         %>
         <nav class="nav-other-systems">
           % if can_see_studio_link or can_see_analytics_link:
@@ -138,7 +146,7 @@
                 <li><a href="//${configuration_helpers.get_value('SITE_CMS_DOMAIN_NAME', settings.CMS_BASE)}" target="_blank">${_('Studio')}</a></li>
               % endif
               % if can_see_analytics_link:
-                <li><a href="${reverse('analytics_microsite')}">${_("Analytics")}</a></li>
+                <li><a href="${analytics_href}">${_("Analytics")}</a></li>
               % endif
                 <li><a href="https://csc.learning-tribes.com" target="_blank">Customer Success Center</a></li>
                 <li><a href="${reverse('admin_panel_user_list')}">${_("Admin Panel")}</a></li>

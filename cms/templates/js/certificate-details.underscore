@@ -5,7 +5,7 @@
         </h3>
     </header>
 
-   <ol class="collection-info certificate-info certificate-info-<% if(showDetails){ print('block'); } else { print('inline'); } %>">
+   <ol class="collection-info certificate-info certificate-info-<% if (showDetails){ print('block'); } else { print('inline'); } %>">
      <% if (!_.isUndefined(id)) { %>
          <li class="sr certificate-id">
             <span class="certificate-label"><%- gettext('ID') %>: </span>

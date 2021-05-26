@@ -39,7 +39,7 @@ ${static.css(group='style-xmodule-annotations', raw=True)}
 // TODO: Fix indentation in the following block
 (function (require) {
     var init = function() {
-    function onClickHideInstructions(){
+    function onClickHideInstructions() {
 		//Reset function if there is more than one event handler
 		$(this).off();
 		$(this).on('click',onClickHideInstructions);
@@ -59,7 +59,7 @@ ${static.css(group='style-xmodule-annotations', raw=True)}
 	for (var index = 0; index <= 9; index += 1) uri += parts[index]+"/"; //Get the unit url
 	//Change uri in cms
 	var lms_location = $('.sidebar .preview-button').attr('href');
-	if (typeof lms_location!='undefined'){
+	if (typeof lms_location!='undefined') {
 		uri = window.location.protocol;
 		for (var index = 0; index <= 9; index += 1) uri += lms_location.split("/")[index]+"/"; //Get the unit url
 	}
@@ -96,7 +96,7 @@ ${static.css(group='style-xmodule-annotations', raw=True)}
                     var token, tokens, _i, _len;
                     if (annotation.permissions) {
                       tokens = annotation.permissions[action] || [];
-                      if (is_staff){
+                      if (is_staff) {
                       	return true;
                       }
                       if (tokens.length === 0) {

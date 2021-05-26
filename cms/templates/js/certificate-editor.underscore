@@ -9,7 +9,7 @@
     <div class="wrapper-form">
         <fieldset class="collection-fields certificate-fields">
             <legend class="sr"><%- gettext("Certificate Information") %></legend>
-            <div class="sr input-wrap field text required add-collection-name add-certificate-name <% if(error && error.attributes && error.attributes.name) { print('error'); } %>">
+            <div class="sr input-wrap field text required add-collection-name add-certificate-name <% if (error && error.attributes && error.attributes.name) { print('error'); } %>">
                 <label for="certificate-name-<%- uniqueId %>"><%- gettext("Certificate Name") %></label>
                 <input id="certificate-name-<%- uniqueId %>" class="collection-name-input input-text" name="certificate-name" type="text" placeholder="<%- gettext("Name of the certificate") %>" value="<%- name %>" aria-describedby="certificate-name-<%-uniqueId %>-tip" />
                 <span id="certificate-name-<%- uniqueId %>-tip" class="tip tip-stacked"><%- gettext("Name of the certificate") %></span>

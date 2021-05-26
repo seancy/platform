@@ -60,7 +60,7 @@
                 return this.meanings[key] && this.meanings[key].name || key;
             },
 
-            title:function(key){
+            title: function(key) {
                 return this.titleMeanings[key];
             },
 

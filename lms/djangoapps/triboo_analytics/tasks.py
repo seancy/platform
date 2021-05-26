@@ -30,8 +30,12 @@ from opaque_keys.edx.keys import CourseKey, UsageKey
 from student.models import CourseEnrollment
 from util.file import course_filename_prefix_generator
 from xmodule.modulestore.django import modulestore
-import models
-import tables
+from . import models
+from . import tables
+from django.http import HttpResponseNotFound
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+
 
 logger = logging.getLogger('triboo_analytics')
 
@@ -68,18 +72,33 @@ def path_to(course_key, user_id, filename=''):
     return os.path.join(prefix, filename)
 
 
-def links_for(storage, course_id, user, report):
-    report_dir = path_to(course_id, user.id)
+def links_for_all(storage, user):
+    orgs = configuration_helpers.get_current_site_orgs()
+    if not orgs:
+        return HttpResponseNotFound()
+    course_overviews = CourseOverview.objects.none()
+
+    for org in orgs:
+        org_course_overviews = CourseOverview.objects.filter(org=org, start__lte=timezone.now())
+        course_overviews = course_overviews | org_course_overviews
+
+    course_ids = [o.id for o in course_overviews]
+    files = []
+    for course_id in course_ids:
+        report_dir = path_to(course_id, user.id)
+        try:
+            _, filenames = storage.listdir(report_dir)
+        except OSError:
+            filenames = []
+        if filenames:
+            files.extend([(filename, os.path.join(report_dir, filename)) for filename in filenames])
+
+    report_dir = path_to(None, user.id)
     try:
         _, filenames = storage.listdir(report_dir)
     except OSError:
-        # Django's FileSystemStorage fails with an OSError if the course
-        # dir does not exist; other storage types return an empty list.
-        return []
-    if course_id:
-        files = [(filename, os.path.join(report_dir, filename)) for filename in filenames]
-    else:
-        files = []
+        filenames = []
+    for report in ['course_summary', 'learner', 'ilt', 'my_transcript']:
         filename_start = report
         if report == "my_transcript":
             filename_start = "transcript_%s" % user.username
@@ -105,6 +124,11 @@ def upload_file_to_store(user_id, course_key, filename, export_format, content, 
         if course_key:
             _filename = "{}_{}".format(course_filename_prefix_generator(course_key),
                                   _filename)
+        if not course_key and filename.startswith('summary'):
+            _filename = "{}_{}_{}.{}".format('course',
+                                             filename,
+                                             timezone.now().strftime("%Y-%m-%d-%H%M"),
+                                             export_format)
 
     path = path_to(course_key, user_id, _filename)
     report_store.store_content(
@@ -114,20 +138,64 @@ def upload_file_to_store(user_id, course_key, filename, export_format, content, 
     tracker.emit(REPORT_REQUESTED_EVENT_NAME, {"report_type": _filename})
 
 
+def convert_period_format(kwargs):
+    date_tuple = json.loads(kwargs['start__range'])
+    from_date = pytz.utc.localize(datetime.strptime(date_tuple[0], "%Y-%m-%d %H:%M:%S %Z"))
+    to_date = pytz.utc.localize(datetime.strptime(date_tuple[1], "%Y-%m-%d %H:%M:%S %Z"))
+    kwargs['start__range'] = (from_date, to_date)
+    return kwargs
+
+
 def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_input, action_name):
     from .views import (
-        get_ilt_report_table,
-        get_ilt_learner_report_table,
         get_transcript_table,
-        get_course_progress_table,
-        get_course_time_spent_table,
-        get_table
+        get_table_data,
+        get_progress_table_data,
+        get_time_spent_table_data,
+        get_ilt_global_table_data,
+        get_ilt_learner_table_data,
+        get_customized_table,
     )
 
     if not TableExport.is_valid_format(_task_input['export_format']):
         raise UnsupportedExportFormatError()
 
-    if _task_input['report_name'] == "transcript":
+    table = []
+
+    if _task_input['report_name'] != "transcript":
+        kwargs = _task_input['report_args']['filter_kwargs']
+        exclude = _task_input['report_args']['exclude']
+
+        if 'to_date' in kwargs.keys():
+            kwargs['to_date'] = datetime.strptime(kwargs['to_date'], "%Y-%m-%d").date()
+        if 'from_date' in kwargs.keys():
+            kwargs['from_date'] = datetime.strptime(kwargs['from_date'], "%Y-%m-%d").date()
+
+        if 'course_id' in kwargs.keys():
+            kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
+
+    if _task_input['report_name'] in ["summary_report", "learner_report"]:
+        report_cls = getattr(models, _task_input['report_args']['report_cls'])
+        table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+        logger.info("LAETITIA -- export course summary report or learner > call get_table_data")
+        table = get_table_data(report_cls, table_cls, kwargs, exclude, by_period=True)
+
+    elif _task_input['report_name'] == "progress_report":
+        logger.info("LAETITIA -- export course progress report > call get_table_data")
+        table, _ = get_progress_table_data(kwargs['course_id'], kwargs, exclude)
+
+    elif _task_input['report_name'] == "time_spent_report":
+        logger.info("LAETITIA -- export course time spent report > call get_table_data")
+        table, _ = get_time_spent_table_data(kwargs['course_id'], kwargs, exclude)
+
+    elif _task_input['report_name'] == "ilt_global_report":
+        table = get_ilt_global_table_data(kwargs)
+
+    elif _task_input['report_name'] == "ilt_learner_report":
+        logger.info("LAETITIA -- export ilt report > call get_table_data")
+        table = get_ilt_learner_table_data(kwargs, exclude)
+
+    elif _task_input['report_name'] == "transcript":
         if _task_input['report_args']['last_update'].endswith('UTC'):
             datetime_format = "%Y-%m-%d %H:%M:%S UTC"
         else:
@@ -135,36 +203,18 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
         table, _ = get_transcript_table(_task_input['report_args']['orgs'],
                                         _task_input['report_args']['user_id'],
                                         datetime.strptime(_task_input['report_args']['last_update'], datetime_format))
-    
-    elif _task_input['report_name'] == "ilt_global_report":
-        table, _ = get_ilt_report_table(_task_input['report_args']['orgs'])
 
-    elif _task_input['report_name'] == "ilt_learner_report":
-        table, _ = get_ilt_learner_report_table(_task_input['report_args']['orgs'],
-                                                _task_input['report_args']['filter_kwargs'],
-                                                _task_input['report_args']['exclude'])
+    elif _task_input['report_name'] == "summary_report_multiple":
+        logger.info("LAETITIA -- export course summary MULTIPLE report > call get_table_data")
+        report_cls = getattr(models, _task_input['report_args']['report_cls'])
+        table_cls = getattr(tables, _task_input['report_args']['table_cls'])
+        courses_selected = _task_input['report_args'].get('courses_selected', None)
+        course_keys = [CourseKey.from_string(_id) for _id in courses_selected.split(',')]
+        kwargs['course_id__in'] = course_keys
+        logger.info("LAETITIA -- export course summary MULTIPLE report > call get_table_data")
+        table, _ = get_customized_table(report_cls, kwargs, table_cls, exclude)
 
-    else:
-        kwargs = _task_input['report_args']['filter_kwargs']
-        exclude = _task_input['report_args']['exclude']
-        if _task_input['report_name'] == "progress_report":
-            enrollments = CourseEnrollment.objects.filter(is_active=True,
-                                                          course_id=course_id,
-                                                          user__is_active=True,
-                                                          **kwargs).prefetch_related('user')
-            table, _ = get_course_progress_table(course_id, enrollments, kwargs, exclude)
-        elif _task_input['report_name'] == "time_spent_report":
-            table, _ = get_course_time_spent_table(course_id, kwargs, exclude)
-        else:
-            report_cls = getattr(models, _task_input['report_args']['report_cls'])
-            table_cls = getattr(tables, _task_input['report_args']['table_cls'])
-            if 'date_time' in kwargs.keys():
-                kwargs['date_time'] = datetime.strptime(kwargs['date_time'], "%Y-%m-%d")
-            if 'course_id' in kwargs.keys():
-                kwargs['course_id'] = CourseKey.from_string(kwargs['course_id'])
-            table, _ = get_table(report_cls, kwargs, table_cls, exclude)
-
-
+    logger.info("LAETITIA -- about to export")
     exporter = TableExport(_task_input['export_format'], table)
     content = exporter.export()
 
@@ -179,6 +229,9 @@ def upload_export_table(_xmodule_instance_args, _entry_id, course_id, _task_inpu
                              content,
                              _task_input['report_args']['username'])
     else:
+        if _task_input['report_name'] == 'summary_report_multiple':
+            _task_input['report_name'] = 'summary_report'
+        logger.info("LAETITIA -- about to upload file %s" % _task_input['report_name'])
         upload_file_to_store(_task_input['user_id'],
                              course_id,
                              _task_input['report_name'],

@@ -15,6 +15,12 @@ from six import text_type
 from course_modes.models import CourseMode
 from django_comment_common.models import assign_default_role
 from django_comment_common.utils import seed_permissions_roles
+from triboo_analytics.models import (
+    LearnerCourseJsonReport,
+    LearnerSectionJsonReport,
+    LearnerBadgeJsonReport,
+    CourseDailyReport
+)
 from openedx.core.djangoapps.site_configuration.models import SiteConfiguration
 from student import auth
 from student.models import CourseEnrollment
@@ -80,6 +86,16 @@ def remove_all_instructors(course_key):
     staff_role.remove_users(*staff_role.users_with_role())
     instructor_role = CourseInstructorRole(course_key)
     instructor_role.remove_users(*instructor_role.users_with_role())
+
+
+def remove_course_reports(course_key):
+    """
+    Delete all reports related to the course.
+    """
+    LearnerCourseJsonReport.objects.filter(course_id=course_key).delete()
+    LearnerSectionJsonReport.objects.filter(course_id=course_key).delete()
+    LearnerBadgeJsonReport.objects.filter(badge__course_id=course_key).delete()
+    CourseDailyReport.objects.filter(course_id=course_key).delete()
 
 
 def delete_course(course_key, user_id, keep_instructors=False, **kwargs):

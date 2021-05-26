@@ -10753,7 +10753,7 @@ msgstr "àrea"
 #: lms/templates/triboo_analytics/course.html:147
 #: lms/templates/triboo_analytics/ilt.html:57
 #: lms/templates/triboo_analytics/learner.html:43
-msgid "Select the user properties you want to display"
+msgid "Select the user properties to display"
 msgstr "Selecione a biblioteca da qual você deseja extrair o conteúdo."
 
 #: lms/djangoapps/triboo_analytics/models.py:1138
@@ -10815,15 +10815,13 @@ msgstr "Certificado inválido"
 
 #: lms/djangoapps/triboo_analytics/views.py:527
 msgid ""
-"The export report is currently being created. When it's ready, the report "
-"will appear in your report list at the bottom of the page. You will be able "
-"to download the report when it is complete, it can take several minutes to "
-"appear."
+"The report is being exported. Note that this operation can take several minutes. When the report will be ready, it "
+"will appear in the list of reports ready to download under the cloud icon in the menu bar and you will be able "
+"to download it."
 msgstr ""
-"O relatório de exportação está sendo criado no momento. Quando estiver pronto, ele"
-"aparecerá na sua lista de relatórios na parte inferior da página. Você poderá"
-"baixar o relatório quando estiver concluído, pode levar alguns minutos para"
-"aparecer."
+"O relatório está sendo exportado. Observe que esta operação pode levar alguns minutos. "
+"Quando o relatório estiver pronto, ele aparecerá na lista de relatórios prontos para download "
+"sob o ícone da nuvem na barra de menus e você poderá fazer o download."
 
 #: lms/djangoapps/triboo_analytics/views.py:548
 msgid "No report to export."
@@ -18168,9 +18166,6 @@ msgstr "Conta"
 msgid "Leaderboard"
 msgstr "Entre os melhores"
 
-msgid "My learning transcript"
-msgstr "Minha transcrição de aprendizagem"
-
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
@@ -18470,8 +18465,8 @@ msgid "posts"
 msgstr "postagens"
 
 #: lms/templates/dashboard.html:164
-msgid "View my learning transcript"
-msgstr "Baixar transcrição"
+msgid "My learning transcript"
+msgstr "Minha transcrição"
 
 #: lms/templates/dashboard.html:168
 msgid "Continue Learning..."
@@ -25002,12 +24997,10 @@ msgid "Download CSV of Certificates Issued"
 msgstr "Baixar CSV dos certificados emitidos"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:104
-#: lms/templates/triboo_analytics/download.html:6
 msgid "Reports Available for Download"
 msgstr "Relatórios disponíveis para download"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:106
-#: lms/templates/triboo_analytics/download.html:7
 msgid ""
 "The reports listed below are available for download. A link to every report "
 "remains available on this page, identified by the UTC date and time of "
@@ -25033,7 +25026,6 @@ msgstr ""
 "dia."
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:117
-#: lms/templates/triboo_analytics/download.html:9
 msgid ""
 "{strong_start}Note{strong_end}: To keep learner data secure, you cannot save "
 "or email these links for direct access. Copies of links expire within 5 "
@@ -27494,37 +27486,94 @@ msgstr "Analytics - Relatório do Curso"
 msgid "Let's have a look at your learning data"
 msgstr "Vamos dar uma olhada nos seus dados de aprendizado"
 
-#: lms/templates/triboo_analytics/course.html:24
-#: lms/templates/triboo_analytics/ilt.html:24
-#: lms/templates/triboo_analytics/learner.html:23
-#: lms/templates/triboo_analytics/microsite.html:29
-#: lms/templates/triboo_analytics/transcript.html:23
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/microsite.html:28
 msgid "Global Report"
-msgstr "Relatórios Disponíveis"
+msgstr "Relatório Global"
 
+#: lms/templates/triboo_analytics/microsite.html:40
+#: lms/templates/triboo_analytics/course.html:64
+msgid "Show:"
+msgstr "Mostrar :"
+
+#: lms/templates/triboo_analytics/microsite.html:42
+#: lms/templates/triboo_analytics/course.html:66
+msgid "Daily"
+msgstr "por dia"
+
+
+
+#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/course.html:67
+msgid "Weekly"
+msgstr "por semana"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/course.html:68
+msgid "Monthly"
+msgstr "por mês"
+
+#: lms/templates/triboo_analytics/microsite.html:145
+#: lms/templates/triboo_analytics/microsite.html:175
+#: lms/templates/triboo_analytics/course.html:250
+msgid "Comparison between today's value and yesterday's"
+msgstr "Comparação entre o valor de hoje e o de ontem"
+
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
-#: lms/templates/triboo_analytics/ilt.html:25
-#: lms/templates/triboo_analytics/learner.html:24
-#: lms/templates/triboo_analytics/microsite.html:30
-#: lms/templates/triboo_analytics/transcript.html:24
 msgid "Course Report"
-msgstr "Exportação de curso"
+msgstr "Relatório do Curso"
 
-#: lms/templates/triboo_analytics/course.html:27
-#: lms/templates/triboo_analytics/ilt.html:27
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Summary Report"
+msgstr "Relatório do curso - Resumo"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Progress Report"
+msgstr "Relatório do curso - Progresso"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Time Spent Report"
+msgstr "Relatório do curso - Tempo gasto"
+
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/learner.html:26
-#: lms/templates/triboo_analytics/microsite.html:32
-#: lms/templates/triboo_analytics/transcript.html:26
 msgid "Learner Report"
-msgstr "Saiba mais"
+msgstr "Relatório do Aluno"
 
-#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/ilt.html:29
-#: lms/templates/triboo_analytics/learner.html:28
-#: lms/templates/triboo_analytics/microsite.html:34
-#: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
-msgstr "ILT Relatórios"
+msgstr "ILT Relatório"
+
+#: lms/templates/triboo_analytics/customized.html:18
+msgid "Analytics - Customized Report"
+msgstr "Analytics - Relatório Customizado"
+
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customized Report"
+msgstr "Relatório Customizado"
+
+#: lms/templates/triboo_analytics/download.html
+msgid "Reports ready to download"
+msgstr "Relatórios prontos para download"
+
+#: lms/templates/triboo_analytics/download.html
+msgid "No reports available"
+msgstr "Nenhum relatório disponível"
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customize your report by configuring each step."
+msgstr "Personalize seu relatório configurando cada etapa."
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Note: If no user properties are selected, default properties will be used."
+msgstr "Atenção: Se nenhuma propriedade de usuário estiver selecionada, as propriedades padrão serão usadas."
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Choose the export format"
+msgstr "Escolha o formato de exportação"
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
@@ -27540,6 +27589,10 @@ msgstr "Ir"
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
 msgstr "Tempo médio para passar por este curso"
+
+#: lms/templates/triboo_analytics/course.html:143
+msgid "Learner Status"
+msgstr "Status de aluno"
 
 #: lms/templates/triboo_analytics/course.html:76
 #: lms/templates/triboo_analytics/my_transcript.html:268
@@ -27619,7 +27672,7 @@ msgstr "Quantas Vezes Utilizado"
 
 #: lms/templates/triboo_analytics/microsite.html:79
 msgid "Desktop"
-msgstr "Área de Trabalho"
+msgstr "Desktop"
 
 #: lms/templates/triboo_analytics/microsite.html:80
 msgid "Mobile"
@@ -30015,6 +30068,10 @@ msgid ""
 "Average time it took to learners to complete the course with 100% progress"
 msgstr "Tempo médio que os alunos levaram para completar o curso com 100% de progresso"
 
+#: lms/templates/triboo_analytics/course.html:76
+msgid "Number of different visitors who opened the course per day"
+msgstr "Número de visitantes diferentes que abriram o curso por dia"
+
 #: lms/templates/triboo_analytics/course.html:80
 msgid ""
 "Average total score of the learners who completed the course with 100% "
@@ -30041,19 +30098,14 @@ msgstr "Alunos que estão matriculados no curso, mas não o acessaram ainda"
 
 #: lms/templates/triboo_analytics/course.html:123
 msgid ""
-"Leaners who completed the course with 100% progress and a total score "
+"Learners who completed the course with 100% progress and a total score "
 "passing the minimum required score"
 msgstr "Alunos que completaram o curso com 100% de progresso e uma pontuação total passando da pontuação mínima exigida"
 
 #: lms/templates/triboo_analytics/course.html:159
-msgid "Leaners who completed the course with 100% progress but with "
+msgid "Learners who completed the course with 100% progress but with "
 "a total score below the minimum required score to validate the course"
 msgstr "Alunos que completaram o curso com 100% de progresso, mas com uma pontuação total abaixo da pontuação mínima necessária para validar o curso"
-
-#: lms/templates/triboo_analytics/course.html:174
-msgid "Cumulative number of enrollments over time"
-msgstr "Número de matrículas acumuladas ao longo do tempo"
-
 
 #: lms/templates/triboo_analytics/my_transcript.html:262
 msgid "Number of courses you are enrolled in"

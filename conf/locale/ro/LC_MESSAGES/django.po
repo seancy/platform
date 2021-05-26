@@ -9284,7 +9284,7 @@ msgstr ""
 #: lms/djangoapps/triboo_analytics/forms.py:81
 #: lms/templates/triboo_analytics/course.html:150
 #: lms/templates/triboo_analytics/learner.html:43
-msgid "Select the user properties you want to display"
+msgid "Select the user properties to display"
 msgstr ""
 
 #: lms/djangoapps/triboo_analytics/views.py:224
@@ -12820,7 +12820,7 @@ msgid "posts"
 msgstr ""
 
 #: lms/templates/dashboard.html:162
-msgid "View my learning transcript"
+msgid "My learning transcript"
 msgstr ""
 
 #: lms/templates/dashboard.html:253 lms/templates/my_courses.html:233

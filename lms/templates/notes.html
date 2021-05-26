@@ -105,7 +105,7 @@ from django.urls import reverse
                             var token, tokens, _i, _len;
                             if (annotation.permissions) {
                               tokens = annotation.permissions[action] || [];
-                              if (is_staff){
+                              if (is_staff) {
                                   return true;
                               }
                               if (tokens.length === 0) {

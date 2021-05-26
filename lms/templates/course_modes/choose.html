@@ -42,7 +42,7 @@ from openedx.core.djangolib.markup import HTML, Text
             });
 
             % if use_ecommerce_payment_flow:
-            $('input[name=verified_mode]').click(function(e){
+            $('input[name=verified_mode]').click(function(e) {
                 e.preventDefault();
                 window.location.href = '${ecommerce_payment_page | n, js_escaped_string}?sku=' +
                 encodeURIComponent('${sku | n, js_escaped_string}');

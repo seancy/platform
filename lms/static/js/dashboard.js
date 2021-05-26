@@ -38,7 +38,7 @@ const Dashboard = function () {
             || ((document.body.offsetWidth >= 1200))
     }
 
-    function courseSwiperInit(){
+    function courseSwiperInit() {
       new Swiper('.my-courses', {
           slidesPerView: 'auto',
           spaceBetween: 13,
@@ -63,7 +63,7 @@ const Dashboard = function () {
       });
     }
 
-    function bookmarkSwiperInit(){
+    function bookmarkSwiperInit() {
         new Swiper('.my-bookmarks', {
           slidesPerView: 'auto',
           spaceBetween: 13,
@@ -80,7 +80,7 @@ const Dashboard = function () {
       });
     }
 
-    $(".my-courses .swiper-button-next").on("click",function(){
+    $(".my-courses .swiper-button-next").on("click",function() {
         var courseSwiper = document.querySelector('.my-courses').swiper
         var width = courseSwiper.slides.outerWidth()
         var index = courseSwiper.realIndex
@@ -88,7 +88,7 @@ const Dashboard = function () {
         console.log('wid', width, 'index', index, 'translate', translate)
     })
 
-    $(".my-bookmarks .swiper-button-next").on("click",function(){
+    $(".my-bookmarks .swiper-button-next").on("click",function() {
         var bookmarkSwiper = document.querySelector('.my-bookmarks').swiper
         var space_between = bookmarkSwiper.params.spaceBetween
         var width = bookmarkSwiper.slides.outerWidth()

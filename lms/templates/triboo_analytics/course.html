@@ -6,6 +6,10 @@
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
     from triboo_analytics.models import CourseStatus, format_time_spent
+
+    import json
+    from openedx.core.djangolib.markup import HTML
+    from webpack_loader.templatetags.webpack_loader import render_bundle
 %>
 
 <%block name="pagetitle">${_("Analytics - Course Report")}</%block>
@@ -13,318 +17,351 @@
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="main-container">
         <%include file="banner_nav.html" args="active_page='course'" />
+
+        ${HTML(render_bundle('CourseReport'))}
+        ${HTML(render_bundle('ReactRenderer'))}
+        ${HTML(render_bundle('NumberLocale'))}
+
         <section class="analytics-wrapper course">
           <div class="report-wrapper">
-                <div class="analytics-header">
-                  % if courses:
-                    <form action="${reverse('analytics_course')}" method="get">
-                        <label for="course_id">${_("Please select a course to see your report:")}</label>
-                        <select name="course_id">
-                        % for cid, course_title in courses:
-                          % if cid == course_id:
-                            <option value="${cid}" selected="selected">${course_title}</option>
-                          % else:
-                            <option value="${cid}">${course_title}</option>
-                          % endif
-                        % endfor
-                        </select>
-                        <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
-                        <input type="submit" value="${_("Go")}">
-                    </form>
-                  % endif
-                </div>
-                <div class="analytics-header">
-                  % if error_message:
-                    <p class="error">${error_message}</p>
-                  % endif
-                  % if course_name:
-                    <a href="${reverse('info', args=[course_id])}"><h2>${course_name}</h2></a>
-                  % endif
-                </div>
-            % if course_report:
-                <div class="analytics-basic-wrapper">
-                    <div class="analytics-float-wrapper">
-                        <div class="analytics-basic-wrapper">
-                            <div class="analytics-widget-24 analytics-figure">
-                                ${static.renderReact(
-                                  component="QuestionMark",
-                                  id="id-enrollments",
-                                  props={
-                                    'class':'question-mark',
-                                    'tooltip': gettext('Number of learners enrolled in the course. The learners have been registered by an Admin or self-registered via the catalog'),
-                                  }
-                                )}
-                                <p class="figure">${course_report.enrollments}</p>
-                                <p class="title">${ungettext("Enrollment", "Enrollments", course_report.enrollments)}</p>
-                            </div>
-                            <div class="analytics-widget-24 analytics-figure">
-                                ${static.renderReact(
-                                  component="QuestionMark",
-                                  id="id-average-time",
-                                  props={
-                                    'class':'question-mark',
-                                    'tooltip': gettext('Average time it took to learners to complete the course with 100% progress'),
-                                  }
-                                )}
-                                <p class="figure">${format_time_spent(course_report.average_complete_time)}</p>
-                                <p class="title">${_("Average time to complete the course")}</p>
-                            </div>
-                        </div>
-                        <div class="analytics-basic-wrapper">
-                            <div class="analytics-widget-24 analytics-figure">
-                                ${static.renderReact(
-                                  component="QuestionMark",
-                                  id="id-average-final-score",
-                                  props={
-                                    'class':'question-mark',
-                                    'tooltip': gettext('Average total score of the learners who completed the course with 100% progress'),
-                                  }
-                                )}
-                                <p class="figure">${course_report.average_final_score}&nbsp;%</p>
-                                <p class="title">${_("Average Final Score")}</p>
-                            </div>
-                            <div class="analytics-widget-24 analytics-figure">
-                                ${static.renderReact(
-                                  component="QuestionMark",
-                                  id="id-posts",
-                                  props={
-                                    'class':'question-mark',
-                                    'tooltip': gettext('Number of posts/answers/comments written in the course discussions/forums'),
-                                  }
-                                )}
-                                <p class="figure">${course_report.posts}</p>
-                                <p class="title">${ungettext("Post", "Posts", course_report.posts)}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="analytics-float-wrapper analytics-piechart-wrapper">
-                      <div class="analytics-widget-24 analytics-piechart">
-                          ${static.renderReact(
-                              component="QuestionMark",
-                              id="id-donuts-chart",
-                              props={
-                                'class':'question-mark',
-                                'tooltip': gettext('Proportion of learners according to their course status'),
-                              }
-                            )}
+              <h3>${_("Course Report")}</h3>
+              <div class="analytics-header" id="course-report-dropdown"></div>
+            % if courses:
+              <script type="text/javascript">
+                new ReactRenderer({
+                  component: CourseReportDropdown,
+                  selector: '#course-report-dropdown',
+                  componentName: 'CourseReportDropdown',
+                  props: {
+                      'token':'${ csrf_token }',
+                      'submitText':'${_("Go")}',
+                      'labelText':'${_("Please select a course to see your report:")}',
 
-                        <div id="pieChart">
-                            <svg></svg>
-                        </div>
-                        <div class="legend">
-                            <div class="status-label">
-                                <span class="finished">&#9679;</span>
-                                ${_(CourseStatus.verbose_names[CourseStatus.finished])}
-                                ${static.renderReact(
-                                  component="QuestionMark",
-                                  id="id-finished-2",
-                                  props={
-                                    'class':'status-message',
-                                    'tooltip': gettext('Leaners who completed the course with 100% progress and a total score passing the minimum required score'),
-                                  }
-                                )}
-                            </div>
-                            <div class="status-label">
-                                <span class="failed">&#9679;</span>
-                                ${_(CourseStatus.verbose_names[CourseStatus.failed])}
-                                ${static.renderReact(
-                                  component="QuestionMark",
-                                  id="id-failed",
-                                  props={
-                                    'class':'status-message',
-                                    'tooltip': gettext('Leaners who completed the course with 100% progress but with a total score below the minimum required score to validate the course'),
-                                  }
-                                )}
-                            </div>
-                            <div class="status-label">
-                                <span class="in-progress">&#9679;</span>
-                                ${_(CourseStatus.verbose_names[CourseStatus.in_progress])}
-                                ${static.renderReact(
-                                  component="QuestionMark",
-                                  id="id-in-progress",
-                                  props={
-                                    'class':'status-message',
-                                    'tooltip': gettext("Learners who started to visit the course but haven't completed it yet"),
-                                  }
-                                )}
-                            </div>
-                            <div class="status-label">
-                                <span class="not-started">&#9679;</span>
-                                ${_(CourseStatus.verbose_names[CourseStatus.not_started])}
-                                ${static.renderReact(
-                                  component="QuestionMark",
-                                  id="id-not-started",
-                                  props={
-                                    'class':'status-message',
-                                    'tooltip': gettext("Learners who are enrolled in the course but haven't visited it yet"),
-                                  }
-                                )}
-                            </div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-              % if len(enrollments_csv_data) > 0:
-                <div class="analytics-widget-100 analytics-linechart">
-                    ${static.renderReact(
-                      component="QuestionMark",
-                      id="id-number-of-enrollments",
-                      props={
-                        'class':'question-mark',
-                        'tooltip': gettext('Cumulative number of enrollments over time'),
-                      }
-                    )}
-                    <h3>${_("Number of Enrollments")}</h3>
-                    <div class="line-chart-wrapper">
-                        <div id="lineChart">
-                            <svg>
-                                <defs>
-                                    <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
-                                      <stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
-                                      <stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-              % endif
-                <div class="last-update">
-                  <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                </div>
+                      'data':${json.dumps([{'value': item[0], 'text':item[1]} for item in courses]) | n},
+                      'value':'${course_id}',
+                      'url':'${reverse("analytics_course")}'
+                    }
+                });
+              </script>
+             % endif
 
-              <%
-              summary_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'summary'}))
-              progress_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'progress'}))
-              time_spent_url = "%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course_id, 'report': 'time_spent'}))
-              %>
-              % if learner_course_table:
-                <ul class="analytics-nav">
-                    <li class="nav-item active">${_("Summary")}</li>
-                    <li class="nav-item"><a href="${progress_url}">${_("Progress")}</a></li>
-                    <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
-                </ul>
-              % elif learner_course_progress_table:
-                  <ul class="analytics-nav">
-                      <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
-                      <li class="nav-item active">${_("Progress")}</li>
-                      <li class="nav-item"><a href="${time_spent_url}">${_("Time Spent")}</a></li>
-                  </ul>
-              % elif learner_course_time_spent_table:
-                  <ul class="analytics-nav">
-                      <li class="nav-item"><a href="${summary_url}">${_("Summary")}</a></li>
-                      <li class="nav-item"><a href="${progress_url}">${_("Progress")}</a></li>
-                      <li class="nav-item active">${_("Time Spent")}</li>
-                  </ul>
-              % endif
-
-                <form class="table-filter-form" action="${reverse('analytics_course')}" method="get">
-                    ${filter_form}
-                    % for key, value in query_dict.items():
-                        <input type="hidden" value="${value}" name="${key}"/>
-                    % endfor
-                    <input type="submit" value="${_("Filter")}"/>
-                </form>
-                <form class="clear-filter-form" action="${reverse('analytics_course')}" method="get">
-                    <span style="display: none">${filter_form}</span>
-                    <input type="hidden" value="1" name="clear">
-                    <input type="hidden" value="" name="query_string">
-                    <input type="hidden" value="Name" name="queried_field">
-                    <button type="submit" id="clear-all-filters" class="clear-filters reset-button">
-                        <i class="fa fa-refresh icon"></i>${_("Reset")}
-                    </button>
-                </form>
-              <div class="filter-forms">
-              % for query_string, queried_field, queried_field_name in query_triples:
-                <form class="delete-filter-form" action="${reverse('analytics_course')}" method="get">
-                    <span style="display: none">${filter_form}</span>
-                    <input type="hidden" value="1" name="delete">
-                    % for key, value in query_dict.items():
-                        <input type="hidden" value="${value}" name="${key}"/>
-                    % endfor
-                    <input type="hidden" value="${query_string}" name="query_string">
-                    <input type="hidden" value="${queried_field_name}" name="queried_field">
-                    <button type="submit" class="delete-filter">
-                        <span class="query">${_(queried_field)}: ${query_string}</span>
-                        <span aria-hidden="true" class="fa fa-times"></span>
-                    </button>
-                </form>
-              % endfor
+              <div class="analytics-header">
+                % if error_message:
+                  <p class="error">${error_message}</p>
+                % endif
+                % if course_name:
+                  <a href="${reverse('info', args=[course_id])}"><h2><i class="fal fa-file-alt"></i>${course_name}</h2></a>
+                % endif
               </div>
-                <form class="table-user-properties-form" action="${reverse('analytics_course')}" method="get">
-                    <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
-                    <div id="user-properties-selection">
-                        ${user_properties_form}
-                        % for key, value in query_dict.items():
-                            <input type="hidden" value="${value}" name="${key}"/>
-                        % endfor
-                        <input type="submit" value="${_("Go")}"/>
-                    </div>
-                </form>
+            % if course_report:
+              <div class="analytics-widgets">
+                % if len(unique_visitors_csv) > 0:
+                  <div class="analytics-basic-wrapper analytics-basic-wrapper--grow">
+                      <section class="analytics-widget analytics-linechart analytics-widget-enrollmentschart analytics-widget--row2">
+                          <div class="analytics-widget__caption">
+                              <h3>${_("Number of Unique Visitors")}</h3>
+                              <div class="analytics-widget__caption-select">
+                                  <label for="uvchart-select">${_("Show:")}</label>
+                                  <select name="by" id="uvchart-select">
+                                      <option value="by-day">${_("Daily")}</option>
+                                      <option value="by-week">${_("Weekly")}</option>
+                                      <option value="by-month">${_("Monthly")}</option>
+                                  </select>
+                              </div>
+                              ${static.renderReact(
+                                component="QuestionMark",
+                                id="id-number-of-unique-course-visitors",
+                                props={
+                                  'class':'question-mark',
+                                  'tooltip': gettext('Number of different visitors who opened the course per day'),
+                                }
+                              )}
+                          </div>
+                          <main>
+                              <div class="analytics-widget__chart" id="lineChart"></div>
+                          </main>
+                      </section>
+                  </div>
+                % endif
+                  <div class="analytics-basic-wrapper analytics-basic-wrapper--shrink">
+                      <section class="analytics-widget analytics-figure analytics-widget-enrollments analytics-widget--col1">
+                          <div class="analytics-widget__caption">
+                              <h3>${ungettext("Enrollment", "Enrollments", course_report.enrollments)}</h3>
+                              ${static.renderReact(
+                                component="QuestionMark",
+                                id="id-enrollments",
+                                props={
+                                  'class':'question-mark',
+                                  'tooltip': gettext('Number of learners enrolled in the course. The learners have been registered by an Admin or self-registered via the catalog'),
+                                }
+                              )}
+                          </div>
+                          <main>
+                              <p class="figure" id="figure-enrollments"></p>
+                              <script type="text/javascript">
+                                new ReactRenderer({
+                                  component: NumberLocale,
+                                  selector: '#figure-enrollments',
+                                  props: {
+                                    value: ${course_report.enrollments},
+                                    languageCode: '${LANGUAGE_CODE}',
+                                  }
+                                })
+                              </script>
+                          </main>
+                      </section>
 
-              % if learner_course_table:
-                <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_table 'triboo_analytics/table.html' %}" %>
-                ${Template(tpl).render(Context({'learner_course_table': learner_course_table,
-                                                'request': request,
-                                                'row_count': row_count}))}
+                      <section class="analytics-widget analytics-figure analytics-widget-averagescore analytics-widget--col1">
+                          <div class="analytics-widget__caption">
+                              <h3>${_("Average Final Score")}</h3>
+                              ${static.renderReact(
+                                component="QuestionMark",
+                                id="id-average-final-score",
+                                props={
+                                  'class':'question-mark',
+                                  'tooltip': gettext('Average total score of the learners who completed the course with 100% progress'),
+                                }
+                              )}
+                          </div>
+                          <main>
+                              <p class="figure"><span id="figure-averagescore"></span>%</p>
+                              <script type="text/javascript">
+                                new ReactRenderer({
+                                  component: NumberLocale,
+                                  selector: '#figure-averagescore',
+                                  props: {
+                                    value: ${course_report.average_final_score},
+                                    languageCode: '${LANGUAGE_CODE}',
+                                  }
+                                })
+                              </script>
+                          </main>
+                      </section>
 
-              % elif learner_course_progress_table:
-                <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_progress_table 'triboo_analytics/table.html' %}" %>
-                ${Template(tpl).render(Context({'learner_course_progress_table': learner_course_progress_table,
-                                                'request': request,
-                                                'row_count': row_count}))}
+                      <section class="analytics-widget analytics-gaugechart analytics-widget-statuschart analytics-widget--col2">
+                          <div class="analytics-widget__caption">
+                              <h3>${_("Learner Status")}</h3>
+                              ${static.renderReact(
+                                component="QuestionMark",
+                                id="id-donuts-chart",
+                                props={
+                                  'class':'question-mark',
+                                  'tooltip': gettext('Proportion of learners according to their course status'),
+                                }
+                              )}
+                          </div>
+                          <div class="analytics-widget__content">
+                              <main>
+                                  <div class="analytics-widget__chart" id="pieChart"></div>
+                              </main>
+                              <aside>
+                                  <div class="legend">
+                                      <div class="legend__item">
+                                          <span class="not-started">&#9679;</span>
+                                          <div>${_(CourseStatus.verbose_names[CourseStatus.not_started])}</div>
+                                          <div>
+                                            ${static.renderReact(
+                                              component="QuestionMark",
+                                              id="id-not-started",
+                                              props={
+                                                'class':'status-message',
+                                                'tooltip': gettext("Learners who are enrolled in the course but haven't visited it yet"),
+                                              }
+                                            )}
+                                          </div>
+                                      </div>
+                                      <div class="legend__item">
+                                        <span class="in-progress">&#9679;</span>
+                                        <div>${_(CourseStatus.verbose_names[CourseStatus.in_progress])}</div>
+                                        <div>
+                                          ${static.renderReact(
+                                            component="QuestionMark",
+                                            id="id-in-progress",
+                                            props={
+                                              'class':'status-message',
+                                              'tooltip': gettext("Learners who started to visit the course but haven't completed it yet"),
+                                            }
+                                          )}
+                                        </div>
+                                      </div>
+                                      <div class="legend__item">
+                                        <span class="finished">&#9679;</span>
+                                        <div>${_(CourseStatus.verbose_names[CourseStatus.finished])}</div>
+                                        <div>
+                                          ${static.renderReact(
+                                            component="QuestionMark",
+                                            id="id-finished-2",
+                                            props={
+                                              'class':'status-message',
+                                              'tooltip': gettext('Learners who completed the course with 100% progress and a total score passing the minimum required score'),
+                                            }
+                                          )}
+                                        </div>
+                                      </div>
+                                      <div class="legend__item">
+                                        <span class="failed">&#9679;</span>
+                                        <div>${_(CourseStatus.verbose_names[CourseStatus.failed])}</div>
+                                        <div>
+                                          ${static.renderReact(
+                                            component="QuestionMark",
+                                            id="id-failed",
+                                            props={
+                                              'class':'status-message',
+                                              'tooltip': gettext('Learners who completed the course with 100% progress but with a total score below the minimum required score to validate the course'),
+                                            }
+                                          )}
+                                        </div>
+                                      </div>
+                                  </div>
+                              </aside>
+                          </div>
+                      </section>
 
-              % elif learner_course_time_spent_table:
-                <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_course_time_spent_table 'triboo_analytics/table-double-header.html' %}" %>
-                ${Template(tpl).render(Context({'learner_course_time_spent_table': learner_course_time_spent_table,
-                                                'request': request,
-                                                'row_count': row_count}))}
-              % endif
+                      <section class="analytics-widget analytics-figure analytics-widget-post analytics-widget--col1">
+                          <div class="analytics-widget__caption">
+                              <h3>${ungettext("Post", "Posts", course_report.posts)}</h3>
+                              ${static.renderReact(
+                                component="QuestionMark",
+                                id="id-posts",
+                                props={
+                                  'class':'question-mark',
+                                  'tooltip': gettext('Number of posts/answers/comments written in the course discussions/forums'),
+                                }
+                              )}
+                          </div>
+                          <main>
+                              <p class="figure" id="figure-posts"></p>
+                              <script type="text/javascript">
+                                new ReactRenderer({
+                                  component: NumberLocale,
+                                  selector: '#figure-posts',
+                                  props: {
+                                    value: ${course_report.posts},
+                                    languageCode: '${LANGUAGE_CODE}',
+                                  }
+                                })
+                              </script>
+                          </main>
+                      </section>
 
-              <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
+                      <section class="analytics-widget analytics-figure analytics-widget-completetime analytics-widget--col2">
+                          <div class="analytics-widget__caption">
+                              <h3>${_("Average time to complete the course")}
+                                <i class="analytics-widget__caption-mark far" title="${_("Comparison between today's value and yesterday's")}"></i>
+                              </h3>
+                              ${static.renderReact(
+                                component="QuestionMark",
+                                id="id-average-time",
+                                props={
+                                  'class':'question-mark',
+                                  'tooltip': gettext('Average time it took to learners to complete the course with 100% progress'),
+                                }
+                              )}
+                          </div>
+                          <main>
+                              <p class="figure" id="figure-completetime">${format_time_spent(course_report.average_complete_time)}</p>
+                              <div class="analytics-widget__chart" id="completetimeChart"></div>
+                          </main>
+                      </section>
+                  </div>
+
             % endif
+            ## ${HTML(render_bundle('CourseReport'))}
+            ## ${HTML(render_bundle('ReactRenderer'))}
+            <div id="course-report"></div>
+            <script type="text/javascript">
+              new ReactRenderer({
+                component: CourseReport,
+                selector: '#course-report',
+                componentName: 'CourseReport',
+                props: {
+                    last_update:'${context.get("last_update", "")}',
+                    defaultLanguage: '${request.LANGUAGE_CODE}',
+                    token:'${ csrf_token }',
+                  }
+              });
+            </script>
           </div>
         </section>
     </div>
 </main>
 
+##<%static:webpack entry="CourseReport">
+##    new CourseReport();
+##</%static:webpack>
+
+<script type="text/javascript">
+function debounce(f, time) {
+  var debounced = null;
+  return function () {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+      args[_i] = arguments[_i];
+    }
+    clearTimeout(debounced);
+    debounced = setTimeout(function () { return f.apply(void 0, args); }, time);
+  };
+}
+</script>
+
 % if course_report:
-    <!-- load the d3.js library -->
-    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script type="text/javascript" src="${static.url('js/triboo_analytics/echarts.min.js')}"></script>
     <script type="text/javascript" src="${static.url('js/triboo_analytics/charts.js')}"></script>
 
     <!-- the script -->
     <script type="text/javascript">
-    var pieChartData = [
-      {
-        color       : 'green',
-        value       : ${course_report.finished},
-        percent     : ${course_report.finished} / ${course_report.enrollments}
-      },
-      {
-        color       : 'red',
-        value       : ${course_report.failed},
-        percent     : ${course_report.failed} / ${course_report.enrollments}
-      },
-      {
-        color       : 'orange',
-        value       : ${course_report.in_progress},
-        percent     : ${course_report.in_progress} / ${course_report.enrollments}
-      },
-      {
-        color       : 'gray',
-        value       : ${course_report.not_started},
-        percent     : ${course_report.not_started} / ${course_report.enrollments}
-      }
-    ];
+      var pieChartData = [
+        ['${_("Not started")}', ${course_report.not_started}],
+        ['${_("In progress")}', ${course_report.in_progress}],
+        ['${_("Successful")}', ${course_report.finished}],
+        ['${_("Unsuccessful")}', ${course_report.failed}],
+      ];
 
-    drawPieChart('pieChart', pieChartData);
+      function drawProgressChart () {
+        drawGaugeChart('pieChart', pieChartData, [
+          '--analytics-not-started-color',
+          '--analytics-in-progress-color',
+          '--analytics-finished-color',
+          '--analytics-failed-color',
+        ])
+      }
+      drawProgressChart()
+      window.addEventListener('resize', debounce(drawProgressChart))
     </script>
 % endif
-% if enrollments_csv_data and len(enrollments_csv_data) > 0:
+% if unique_visitors_csv and len(unique_visitors_csv) > 0:
     <script type="text/javascript">
-        var lineChartCsvData = "date,value\n" + "${enrollments_csv_data}";
-        drawLineChart('lineChart', lineChartCsvData, 0, 0);
+      function drawUVChart (by) {
+        function fetchUVChartData (by) {
+            if (by === 'by-week') return "${unique_visitors_csv['per_week']}"
+            if (by === 'by-month') return "${unique_visitors_csv['per_month']}"
+            return "${unique_visitors_csv['per_day']}"
+        }
+        var lineChartCsvData = "date,value\n" + fetchUVChartData(by)
+        drawLineChart('lineChart', lineChartCsvData, '--analytics-line-chart-color', '${LANGUAGE_CODE}')
+        return lineChartCsvData
+      }
+
+      drawUVChart('by-day')
+
+      if (document.getElementById('uvchart-select')) {
+        document.getElementById('uvchart-select').addEventListener('change', function (event) {drawUVChart(event.target.value)})
+      }
+      window.addEventListener('resize', debounce(function () {
+        var selector = document.getElementById('uvchart-select')
+        if (selector) drawUVChart(selector.value)
+      }, 200))
+    </script>
+% endif
+% if average_complete_time_csv and len(average_complete_time_csv) > 0:
+    <script type="text/javascript">
+      var completeTimeChartCsvData = "date,value\n" + "${average_complete_time_csv}";
+      function drawCompleteTimeChart () {
+        drawSimplifiedChart('completetimeChart', completeTimeChartCsvData, '--analytics-learners-chart-color');
+      }
+      drawCompleteTimeChart()
+      lightTrendingMark('.analytics-widget-completetime .analytics-widget__caption-mark', completeTimeChartCsvData)
+      window.addEventListener('resize', debounce(drawCompleteTimeChart))
     </script>
 % endif
 <script type="text/javascript">
@@ -337,11 +374,9 @@
       menu.slideToggle();
     });
 
-    $(window).on("load", function () {
-        console.log("after load");
-        $("#id_query_string").val("");
-        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
+    $(window).on("load", function() {
+        $(".table-filter-form #id_query_string").val("");
+        $(".table-filter-form #id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
     });
   });
 </script>
-

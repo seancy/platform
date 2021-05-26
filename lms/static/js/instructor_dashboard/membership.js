@@ -23,12 +23,12 @@ such that the value can be defined later than this assignment (file load order).
         /* eslint-enable */
 
     var removeLoading = function ($target) {
-        return function(){
+        return function() {
             $target.parent().removeClass('loading-wrapper');
         }
     }
 
-    var startLoading = function(e){
+    var startLoading = function(e) {
         var $target = $(e.currentTarget);
         $target.parent().addClass('loading-wrapper');
         return $target;
@@ -185,7 +185,7 @@ such that the value can be defined later than this assignment (file load order).
                     var $revokeBtn, labelTrans;
                     labelTrans = gettext('Revoke access');
 
-                    $revokeBtn = $(_.template('<div class="revoke"><span class="icon fa fa-times-circle" aria-hidden="true"></span> <%- label %></div>')({  // eslint-disable-line max-len
+                    $revokeBtn = $(_.template('<div class="revoke"><span class="icon fal fa-times-circle" aria-hidden="true"></span> <%- label %></div>')({  // eslint-disable-line max-len
                         label: labelTrans
                     }), {
                         class: 'revoke'
@@ -341,7 +341,7 @@ such that the value can be defined later than this assignment (file load order).
                 autoenrollviacsv.processing = true;
                 event.preventDefault();
                 data = new FormData();
-                if (autoenrollviacsv.activeFiles && autoenrollviacsv.activeFiles.length>0){
+                if (autoenrollviacsv.activeFiles && autoenrollviacsv.activeFiles.length>0) {
                     data.append('students_list', autoenrollviacsv.activeFiles[0]);
                 }
                 var $target = startLoading(event);
@@ -382,7 +382,7 @@ such that the value can be defined later than this assignment (file load order).
 
         }
 
-        AutoEnrollmentViaCsv.prototype.refreshFileInfo = function(){
+        AutoEnrollmentViaCsv.prototype.refreshFileInfo = function() {
             var fileSize = (this.activeFiles[0].size/1000).toFixed(3);
             this.$file_size.text(fileSize+'KB');
             var fileName = this.activeFiles[0] ? this.activeFiles[0].name : '';
@@ -391,14 +391,14 @@ such that the value can be defined later than this assignment (file load order).
             this.$progress_bar.find('i').width(0+'%');
         }
 
-        AutoEnrollmentViaCsv.prototype.initAdditionalFileUploader = function(){
+        AutoEnrollmentViaCsv.prototype.initAdditionalFileUploader = function() {
             var $form = this.$container;
             var form = $form[0];
             const stopEvent = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
-            'drag dragstart dragend dragover dragenter dragleave drop'.split(' ').forEach(function(eventName){
+            'drag dragstart dragend dragover dragenter dragleave drop'.split(' ').forEach(function(eventName) {
                 form.addEventListener(eventName, stopEvent, false)
             })
 
@@ -523,7 +523,7 @@ such that the value can be defined later than this assignment (file load order).
                 autoupdateviacsv.processing = true;
                 event.preventDefault();
                 data = new FormData();
-                if (autoupdateviacsv.activeFiles && autoupdateviacsv.activeFiles.length>0){
+                if (autoupdateviacsv.activeFiles && autoupdateviacsv.activeFiles.length>0) {
                     data.append('students_list', autoupdateviacsv.activeFiles[0]);
                 }
                 var $target = startLoading(event);
@@ -562,7 +562,7 @@ such that the value can be defined later than this assignment (file load order).
             this.initAdditionalFileUploader();
         }
 
-        AutoUpdateViaCsv.prototype.refreshFileInfo = function(){
+        AutoUpdateViaCsv.prototype.refreshFileInfo = function() {
             var fileSize = (this.activeFiles[0].size/1000).toFixed(3);
             this.$file_size.text(fileSize+'KB');
             var fileName = this.activeFiles[0] ? this.activeFiles[0].name : '';
@@ -571,7 +571,7 @@ such that the value can be defined later than this assignment (file load order).
             this.$progress_bar.find('i').width(0+'%');
         }
 
-        AutoUpdateViaCsv.prototype.initAdditionalFileUploader = function(){
+        AutoUpdateViaCsv.prototype.initAdditionalFileUploader = function() {
             var $form = this.$container;
             var form = $form[0];
             const stopEvent = function (e) {

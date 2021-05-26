@@ -29,7 +29,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
     help_link = doc_link
 
   user_groups = [group.name for group in user.groups.all()]
-  if ANALYTICS_ACCESS_GROUP in user_groups:
+  if user.is_staff or ANALYTICS_ACCESS_GROUP in user_groups:
     analytics_href = reverse('analytics_microsite')
   elif ANALYTICS_LIMITED_ACCESS_GROUP in user_groups:
     analytics_href = reverse('analytics_course')
@@ -93,7 +93,7 @@ from student.roles import studio_access_role, ilt_supervisor_role
         </div>
 
       % if (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
-        and (ANALYTICS_ACCESS_GROUP in user_groups or ANALYTICS_LIMITED_ACCESS_GROUP in user_groups)):
+        and (user.is_staff or ANALYTICS_ACCESS_GROUP in user_groups or ANALYTICS_LIMITED_ACCESS_GROUP in user_groups)):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab analytics-tab">
           <a class="tab-nav-link" href="${analytics_href}" title="${_('Tracking learners and courses analytics')}">
             <span class="label"><span class="icon fal fa-analytics" aria-hidden="true"></span></span>

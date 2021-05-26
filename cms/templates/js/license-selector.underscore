@@ -7,13 +7,13 @@
         <% _.each(licenseInfo, function(license, licenseType) { %>
             <li class="license-type" data-license="<%- licenseType %>">
                 <button name="license-<%- licenseType %>"
-                        class="action license-button <% if(model.type === licenseType) { print("is-selected"); } %>"
+                        class="action license-button <% if (model.type === licenseType) { print("is-selected"); } %>"
                         aria-pressed="<%- (model.type === licenseType).toString() %>"
                         <% if (license.tooltip) { %>data-tooltip="<%- license.tooltip %>"<% } %>>
                     <%- license.name %>
                 </button>
                 <p class="tip">
-                    <% if(license.url) { %>
+                    <% if (license.url) { %>
                         <a href="<%- license.url %>" target="_blank">
                             <%= gettext("Learn more about {license_name}")
                                         .replace("{license_name}", license.name)
@@ -28,7 +28,7 @@
     </ul>
 
 <% var license = licenseInfo[model.type]; %>
-<% if(license && !_.isEmpty(license.options)) { %>
+<% if (license && !_.isEmpty(license.options)) { %>
     <div class="wrapper-license-options">
         <h4 class="label setting-label">
             <%- gettext("Options for {license_name}").replace("{license_name}", license.name) %>
@@ -52,8 +52,8 @@
                                id="<%- model.type %>-<%- optionKey %>"
                                name="<%- model.type %>-<%- optionKey %>"
                                aria-describedby="<%- optionKey %>-explanation"
-                               <% if(optionSelected) { print('checked="checked"'); } %>
-                               <% if(optionDisabled) { print('disabled="disabled"'); } %>
+                               <% if (optionSelected) { print('checked="checked"'); } %>
+                               <% if (optionDisabled) { print('disabled="disabled"'); } %>
                         />
                         <label for="<%- model.type %>-<%- optionKey %>" class="option-name">
                             <%- optionInfo.name %>

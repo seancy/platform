@@ -23,13 +23,18 @@ var edx = edx || {};
         }, this))
     }
 
-    initialize.prototype.show = function (content) {
+    initialize.prototype.show = function (content, delay) {
         this.$el.find('.dialog-content').html(content);
         this.$bg.removeClass('hide')
         this.$el.removeClass('hide');
+        if (delay) {
+            setTimeout(()=>{
+                this.hide()
+            }, delay)
+        }
     }
 
-    initialize.prototype.hide = function(){
+    initialize.prototype.hide = function() {
         this.$bg.addClass('hide');
         this.$el.addClass('hide');
     }
@@ -47,7 +52,7 @@ var edx = edx || {};
             this.destroy();
             cancelCallback && cancelCallback();
             commonCallback2 && commonCallback2();
-            if (messageIsObject){
+            if (messageIsObject) {
                 const { cancelationCallback, commonCallback}=message;
                 cancelationCallback && cancelationCallback();
                 commonCallback && commonCallback();
@@ -57,7 +62,7 @@ var edx = edx || {};
             this.destroy();
             confirmationCallback && confirmationCallback();
             commonCallback2 && commonCallback2();
-            if (messageIsObject){
+            if (messageIsObject) {
                 const {confirmationCallback, commonCallback}=message;
                 confirmationCallback && confirmationCallback();
                 commonCallback && commonCallback();
@@ -73,18 +78,18 @@ var edx = edx || {};
             $secondary = this.$el.find('.btn-secondary')
         $primary.on('click', confirm)
         $secondary.on('click', cancel)
-        if (messageIsObject){
-            if (message.confirmationText){
+        if (messageIsObject) {
+            if (message.confirmationText) {
                 $primary.val(message.confirmationText)
             }
-            if (message.cancelationText){
+            if (message.cancelationText) {
                 $secondary.val(message.cancelationText)
             }
         }
 
         const $dialogContent = this.$el.find('.dialog-content')
-        if (messageIsObject){
-            if (typeof(message.message) == 'object'){
+        if (messageIsObject) {
+            if (typeof(message.message) == 'object') {
                 $dialogContent.append(message.message)
             }else{
                 $dialogContent.html(message.message)
@@ -94,7 +99,7 @@ var edx = edx || {};
         }
     }
 
-    Confirmation.prototype.destroy = function(){
+    Confirmation.prototype.destroy = function() {
         this.$el.remove();
         this.$bg.remove();
     }
@@ -102,8 +107,8 @@ var edx = edx || {};
     edx.dialog = LearningTribes.dialog = new initialize();
     edx.confirmation = LearningTribes.confirmation = {
         _confirmation:null,
-        show:function (message, confirmationCallback, cancelCallback) {
-            if (this._confirmation == null){
+        show: function (message, confirmationCallback, cancelCallback) {
+            if (this._confirmation == null) {
                 this._confirmation = new Confirmation (message, confirmationCallback, cancelCallback, $.proxy(function () {
                     this._confirmation = null;
                 }, this))

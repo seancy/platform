@@ -307,7 +307,7 @@ $(function () {
         }
     });
 
-    $grade_detail_graph.focusout(function(){
+    $grade_detail_graph.focusout(function() {
         $("#tooltip").remove();
     });
   }

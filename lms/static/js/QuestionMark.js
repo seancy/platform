@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom'
 
-
 class Notification extends React.Component {
     constructor(props) {
         super(props);
@@ -61,35 +60,36 @@ class Notification extends React.Component {
 class QuestionMark extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { username: '' };
-
         this.myRef = React.createRef();
 
-        this.handleResize = this.handleResize.bind(this);
-
-        window.addEventListener('resize', this.handleResize)
-
-        setTimeout(this.handleResize,500)
+        this.handleResize = this.handleResize.bind(this)
     }
 
     handleResize(e) {
-        //if (!this.myRef.root) return;
-        if (this.myRef && this.myRef.root && this.myRef.root.getBoundingClientRect) {
-            let docWidth = document.body.offsetWidth,
-                elementX = this.myRef.root.getBoundingClientRect().x,
-                offsetVal = 0;
-            if (docWidth - elementX < 100){
-                offsetVal = docWidth-elementX
-            }
-            this.myRef.root.querySelector('.after').style.marginLeft = `-${offsetVal}px`
+        if (!this.myRef.current) return
+
+        const docWidth = document.body.offsetWidth
+        const elementX = this.myRef.current.getBoundingClientRect().x
+        if (docWidth - elementX < 100){
+          this.myRef.current.classList.add('icon-question--left')
+        } else {
+          this.myRef.current.classList.remove('icon-question--left')
         }
     }
 
-    render() {
+    componentDidMount () {
+      window.addEventListener('resize', this.handleResize)
+      this.handleResize()
+    }
 
+    componentWillUnmount () {
+      window.removeEventListener('resize', this.handleResize)
+    }
+
+    render() {
         return (
             <div className="wrapper">
-            <span ref="root" className="icon-question">
+            <span ref={this.myRef} className="icon-question">
                 <span className="before"></span>
                 <i className="fas fa-question-circle"></i>
                 <span className="after" dangerouslySetInnerHTML={{__html:this.props.tooltip}}></span>

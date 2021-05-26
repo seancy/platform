@@ -372,7 +372,7 @@ function iltValidation() {
                     $(".approved-requests").show();
                     $(".declined-requests").hide();
                     $(".enrollment-panel").hide();
-                } else if (tab === 'declined'){
+                } else if (tab === 'declined') {
                     $(".pending-tab").removeClass("active");
                     $(".pending-requests").hide();
                     $(".approved-tab").removeClass("active");

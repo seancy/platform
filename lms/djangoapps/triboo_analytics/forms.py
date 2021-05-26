@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from datetime import datetime, timedelta
+from pytz import utc
 from django import forms
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext_lazy
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
 
 AVAILABLE_CHOICES = {
@@ -37,24 +41,31 @@ AVAILABLE_CHOICES = {
 }
 
 
-class UserPropertiesHelper(object):
-    def __init__(self, analytics_user_properties={}):
+class UserPropertiesHelper():
+    def __init__(self):
+        config_properties = configuration_helpers.get_value('ANALYTICS_USER_PROPERTIES',
+                                                            settings.FEATURES.get('ANALYTICS_USER_PROPERTIES', {}))
+
         self.possible_choices_db_prefix = []
         self.possible_choices = []
         self.initial_choices = ["user_name"]
+        self.possible_choices2 = []
         for prop in AVAILABLE_CHOICES.keys():
-            if prop in analytics_user_properties.keys():
+            if prop in config_properties.keys():
                 prefix = "user_"
                 db_prefix = "user__"
                 if prop not in ['email', 'username', 'date_joined']:
                     db_prefix += "profile__"
 
                 self.possible_choices.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop]))
+                self.possible_choices2.append(("%s%s" % (prefix, prop), AVAILABLE_CHOICES[prop], config_properties[prop]))
                 self.possible_choices_db_prefix.append(("%s%s" % (db_prefix, prop), AVAILABLE_CHOICES[prop]))
 
-                if analytics_user_properties[prop] == "default":
+                if config_properties[prop] == "default":
                     self.initial_choices.append("%s%s" % (prefix, prop))
+
         self.possible_choices.sort(key=lambda choice: choice[1])
+        self.possible_choices2.sort(key=lambda choice: choice[1])
         self.possible_choices_db_prefix.sort(key=lambda choice: choice[1])
 
     def get_possible_choices(self, db_prefix=True):
@@ -62,17 +73,28 @@ class UserPropertiesHelper(object):
             return self.possible_choices_db_prefix
         return self.possible_choices
 
+    def get_possible_choices2(self, db_prefix=True):
+        return self.possible_choices2
+
+    def get_name_value_mapping(self):
+        d = dict()
+        for c in self.possible_choices:
+            d[c[1]] = c[0]
+        return d
+
     def get_initial_choices(self):
         return self.initial_choices
 
 
 class TableFilterForm(forms.Form):
-    query_string = forms.CharField(required=False, initial='', label=_('Query'))
     queried_field = forms.ChoiceField(required=False, label=_('Field'))
+    query_string = forms.CharField(required=False, initial='', label=_('Query'))
 
     course_id = forms.CharField(widget=forms.HiddenInput(), required=False)
     report = forms.CharField(widget=forms.HiddenInput(), required=False)
     selected_properties = forms.CharField(widget=forms.MultipleHiddenInput(), required=False)
+    from_day = forms.CharField(widget=forms.HiddenInput(), required=False)
+    to_day = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, data=None, choices=[]):
         super(TableFilterForm, self).__init__(data)
@@ -83,7 +105,7 @@ class UserPropertiesForm(forms.Form):
     selected_properties = forms.MultipleChoiceField(
         required=False,
         widget=forms.CheckboxSelectMultiple,
-        label=_('Select the user properties you want to display')
+        label=_('Select the user properties to display')
     )
 
     course_id = forms.CharField(widget=forms.HiddenInput(), required=False)
