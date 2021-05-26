@@ -9,7 +9,7 @@
 </a>
 <button class="button activate-cert">
     <span>
-    <% if(!is_active) { %>
+    <% if (!is_active) { %>
         <%= gettext("Activate") %></span>
     <% } else { %>
         <%= gettext("Deactivate") %></span>

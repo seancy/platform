@@ -1,12 +1,15 @@
 {
   "plugins": [
-    "transform-object-assign",
-    "transform-object-rest-spread"
+    "@babel/plugin-transform-object-assign",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
   ],
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
+        "useBuiltIns": "entry",
+        "corejs": 3,
         "targets": {
           "browsers": [
             "last 2 versions",
@@ -16,6 +19,6 @@
         "modules": false
       }
     ],
-    "babel-preset-react"
+    "@babel/preset-react"
   ]
 }

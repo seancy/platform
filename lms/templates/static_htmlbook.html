@@ -40,7 +40,7 @@ from openedx.core.djangolib.js_utils import (
         }
 
         var onComplete = function() {};
-        if(options.notesEnabled) {
+        if (options.notesEnabled) {
             onComplete = function(url) {
                 return function() {
                     $('#viewerContainer').trigger('notes:init', [url, "${storage | n, js_escaped_string}", "${token | n, js_escaped_string}"]);

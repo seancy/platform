@@ -14,9 +14,9 @@ function createMobileMenu() {
         mobileNavItem.removeAttr('role');
         mobileNavItem.find('a').attr('role', 'menuitem');
         // xss-lint: disable=javascript-jquery-append
-        if (mobileNavItem.hasClass('dropdown-item')){
+        if (mobileNavItem.hasClass('dropdown-item')) {
             $('.userinfo-mobile-menu').append(mobileNavItem);
-        }else{
+        } else {
             $('.mobile-menu').append(mobileNavItem);
         }
     });

@@ -11,7 +11,7 @@ from openedx.core.djangolib.js_utils import (
 
 <%block name="js_extra">
 <script type="text/javascript">
-  $(function(){
+  $(function() {
       new Tab('${id | n, js_escaped_string}', ${items | n, dump_js_escaped_json});
   });
 </script>

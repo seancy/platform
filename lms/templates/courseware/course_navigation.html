@@ -60,7 +60,7 @@ if course is not None:
                 %>
                 <li>
                   <a class="${instructor_link_class}" href="${reverse('instructor_dashboard', kwargs={'course_id': unicode(course.id)})}" title="${_('View Instructor Dashboard')}">
-                    <i class="far fa-cog"></i>
+                    <i class="fal fa-cog"></i>
                   </a>
                 </li>
               % endif
@@ -68,16 +68,16 @@ if course is not None:
               % if studio_access_role(request.user) and studio_url is not None:
                 <li>
                   <a class="instructor-info-action" href="${studio_url}" target="_blank" title="${_('Edit the Course')}">
-                    <i class="far fa-pen"></i><span class="sr">${_('View About Page in studio')}</span>
+                    <i class="fal fa-pen"></i><span class="sr">${_('View About Page in studio')}</span>
                   </a>
                 </li>
               % endif
               % if (configuration_helpers.get_value('ENABLE_ANALYTICS', settings.FEATURES.get('ENABLE_ANALYTICS', False)) \
-              and (ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()] \
+              and (request.user.is_staff or ANALYTICS_ACCESS_GROUP in [group.name for group in request.user.groups.all()] \
               or ANALYTICS_LIMITED_ACCESS_GROUP in [group.name for group in request.user.groups.all()])):
                 <li>
                   <a class="instructor-info-action" href="${"%s?%s" % (reverse('analytics_course'), urlencode({'course_id': course.id}))}" title="${_('Course Report')}">
-                    <i class="far fa-analytics"></i>
+                    <i class="fal fa-analytics"></i>
                   </a>
                 </li>
               % endif

@@ -2,7 +2,7 @@
 /* eslint-disable */
 (function() {
   var StudentNotes,
-    bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+    bind = function(fn, me) { return function() { return fn.apply(me, arguments); }; };
 
   StudentNotes = (function() {
     StudentNotes.prototype._debug = false;

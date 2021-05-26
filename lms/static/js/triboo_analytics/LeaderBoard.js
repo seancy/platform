@@ -27,14 +27,14 @@ export class LeaderBoard extends React.Component {
         return <Dropdown sign='caret' data={months} onChange={this._handlePeriodChange.bind(this)}/>
     }
 
-    _handlePeriodChange(item){
+    _handlePeriodChange(item) {
         this.fetchData(item.value)
     }
 
-    fetchData(period){
+    fetchData(period) {
         const {cacheObj}=this.state
         this.setState({isLoading:true})
-        if (!cacheObj[period]){
+        if (!cacheObj[period]) {
             fetch(`/analytics/leaderboard/json/?period=${period}`)
                 .then(res=>res.json())
                 .then(({list, mission, lastUpdate, totalUser})=>{
@@ -48,7 +48,7 @@ export class LeaderBoard extends React.Component {
                         }
                     })
                 })
-        }else{
+        } else {
             const currentObj = cacheObj[period]
             let obj = { list: currentObj.list, lastUpdate:currentObj.lastUpdate, isLoading:false}
             this.setState(obj)
@@ -165,7 +165,7 @@ export class LeaderSideBoard extends React.Component {
         this.fetchData('', 5)
     }
 
-    fetchData(period, top){
+    fetchData(period, top) {
         fetch(`/analytics/leaderboard/json/?period=${period}&top=${top}`)
             .then(res=>res.json())
             .then(({list})=>{

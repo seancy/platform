@@ -2,7 +2,7 @@
 /* eslint-disable */
 // TODO: Examine all of the xss-lint exceptions (https://openedx.atlassian.net/browse/PLAT-2084)
 (function() {
-  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var bind = function(fn, me) { return function() { return fn.apply(me, arguments); }; };
 
   this.Tab = (function() {
     function Tab(id1, items) {

@@ -43,7 +43,7 @@ course_sections = blocks.get('children')
                         <span class="fa fa-chevron-right ${ 'fa-rotate-90' if section_is_auto_opened else '' }" aria-hidden="true"></span>
                         <h3 class="section-title">${ section['display_name'] }</h3>
             % if section.get('complete'):
-                            <span class="complete-checkmark far fa-check-circle"></span>
+                            <span class="complete-checkmark fal fa-check-circle"></span>
             % endif
                     </button>
                     <ol class="outline-item accordion-panel ${ '' if section_is_auto_opened else 'is-hidden' }"
@@ -119,9 +119,9 @@ course_sections = blocks.get('children')
                                             % endif
                                         </h4>
                     % if subsection.get('complete'):
-                                        <span class="complete-checkmark far fa-check-circle"></span>
+                                        <span class="complete-checkmark fal fa-check-circle"></span>
                     % elif subsection['id'] in overridden_subsection_keys:
-                                        <span class="complete-checkmark far fa-flag-checkered" title="${_('Completed by gradebook edit')}"></span>
+                                        <span class="complete-checkmark fal fa-flag-checkered" title="${_('Completed by gradebook edit')}"></span>
                     % endif
                 % endif
                                         <div class="details">
@@ -164,7 +164,7 @@ course_sections = blocks.get('children')
                                                         ></span>
                         % endif
                     % else:
-                                                    <span class="far fa-trophy"></span>
+                                                    <span class="fal fa-trophy"></span>
                                                     ## non-graded section, we just show the exam format and the due date
                                                     ## this is the standard case in edx-platform
                                                     <span
@@ -202,9 +202,9 @@ course_sections = blocks.get('children')
                                               </div>
                                             </div>
                         % if vertical.get('complete'):
-                                                <span class="complete-checkmark far fa-check-circle"></span>
+                                                <span class="complete-checkmark fal fa-check-circle"></span>
                         % elif subsection['id'] in overridden_subsection_keys:
-                                                <span class="complete-checkmark far fa-flag-checkered" title="${_('Completed by gradebook edit')}"></span>
+                                                <span class="complete-checkmark fal fa-flag-checkered" title="${_('Completed by gradebook edit')}"></span>
                         % endif
                                         </a>
                                     </li>

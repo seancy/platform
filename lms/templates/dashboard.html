@@ -163,19 +163,19 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
           <section class="whiteboard">
             <div class="completed-courses">
               <a href="${reverse('my_courses', kwargs={'tab': 'finished'})}">
-                <i class="far fa-file-alt"></i>
+                <i class="fal fa-file-alt"></i>
                 <h2>${nb_completed_courses}</h2>
                 <p>${_("completed courses")}</p>
               </a>
             </div>
             <div class="badges-obtained">
-              <i class="far fa-trophy"></i>
+              <i class="fal fa-trophy"></i>
               <h2>${nb_badges_obtained}</h2>
               <p>${_("badges obtained")}</p>
             </div>
             % if is_discussion_enabled(None):
             <div class="nb_posts">
-              <i class="far fa-comment-alt-lines"></i>
+              <i class="fal fa-comment-alt-lines"></i>
               <h2>${nb_posts}</h2>
               <p>${_("posts")}</p>
             </div>
@@ -453,7 +453,7 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
               bookmarkSwiperInit();
             }
 
-            function courseSwiperInit(){
+            function courseSwiperInit() {
               new Swiper('.my-courses', {
                   slidesPerView: 'auto',
                   spaceBetween: 13,
@@ -470,7 +470,7 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
               });
             }
 
-            function bookmarkSwiperInit(){
+            function bookmarkSwiperInit() {
                 new Swiper('.my-bookmarks', {
                   slidesPerView: 'auto',
                   spaceBetween: 13,
@@ -487,7 +487,7 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
               });
             }
 
-            $(".my-courses .swiper-button-next").on("click",function(){
+            $(".my-courses .swiper-button-next").on("click",function() {
                 var courseSwiper = document.querySelector('.my-courses').swiper
                 var width = courseSwiper.slides.outerWidth()
                 var index = courseSwiper.realIndex
@@ -495,7 +495,7 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
                 console.log('wid', width, 'index', index, 'translate', translate)
             })
 
-            $(".my-bookmarks .swiper-button-next").on("click",function(){
+            $(".my-bookmarks .swiper-button-next").on("click",function() {
                 var bookmarkSwiper = document.querySelector('.my-bookmarks').swiper
                 var space_between = bookmarkSwiper.params.spaceBetween
                 var width = bookmarkSwiper.slides.outerWidth()

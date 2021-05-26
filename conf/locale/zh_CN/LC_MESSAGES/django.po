@@ -10071,6 +10071,18 @@ msgstr "{username}用户未选修与该团队相关的课程。"
 msgid "Date Joined"
 msgstr "加入日期"
 
+#: lms/djangoapps/triboo_analytics/forms.py:13
+msgid "Education"
+msgstr "教育水平"
+
+#: lms/djangoapps/triboo_analytics/forms.py:15
+msgid "Commercial Zone"
+msgstr "商业地带"
+
+#: lms/djangoapps/triboo_analytics/forms.py:16
+msgid "Commercial Region"
+msgstr "商业地区"
+
 #: lms/djangoapps/triboo_analytics/forms.py:15
 msgctxt "user.profile"
 msgid "Address"
@@ -10128,6 +10140,10 @@ msgstr "部门"
 msgid "Supervisor"
 msgstr "主管"
 
+#: lms/djangoapps/triboo_analytics/forms.py:31
+msgid "ILT Supervisor"
+msgstr "ILT 主管"
+
 #: lms/djangoapps/triboo_analytics/forms.py:27
 #: openedx/core/djangoapps/user_api/api.py:969
 msgid "Learning Group"
@@ -10148,8 +10164,8 @@ msgstr "字段"
 #: lms/djangoapps/triboo_analytics/forms.py:81
 #: lms/templates/triboo_analytics/course.html:150
 #: lms/templates/triboo_analytics/learner.html:43
-msgid "Select the user properties you want to display"
-msgstr "选择您想要展示的用户属性。"
+msgid "Select the user properties to display"
+msgstr "选择您想要展示的用户属性"
 
 #: lms/djangoapps/triboo_analytics/views.py:224
 #: lms/djangoapps/triboo_analytics/views.py:555
@@ -10196,13 +10212,12 @@ msgstr "无效的导出格式"
 
 #: lms/djangoapps/triboo_analytics/views.py:511
 msgid ""
-"The export report is currently being created. When it's ready, the report "
-"will appear in your report list at the bottom of the page. You will be able "
-"to download the report when it is complete, it can take several minutes to "
-"appear."
+"The report is being exported. Note that this operation can take several minutes. When the report will be ready, it "
+"will appear in the list of reports ready to download under the cloud icon in the menu bar and you will be able "
+"to download it."
 msgstr ""
-"当前正在创建导出报表。准备就绪后，报表将显示在页面底部的报表列表中。完成后，"
-"您将能够下载报告，可能需要几分钟才能显示。"
+"当前正在创建导出报表。 请注意，此操作可能需要几分钟。准备就绪后，它将显示在菜单栏中云图标下准备下载的报告列表中，"
+"您将能够下载报告。"
 
 #: lms/djangoapps/triboo_analytics/views.py:532
 msgid "No report to export."
@@ -13529,9 +13544,6 @@ msgstr "账户"
 msgid "Leaderboard"
 msgstr "排行榜"
 
-msgid "My learning transcript"
-msgstr "我的学习成绩单"
-
 #: cms/templates/widgets/header.html:226 cms/templates/widgets/header.html:239
 #: lms/templates/navigation/navbar-authenticated.html:55
 #: lms/templates/navigation/bootstrap/navbar-authenticated.html:78
@@ -13827,8 +13839,8 @@ msgid "posts"
 msgstr "发布的帖子"
 
 #: lms/templates/dashboard.html:162
-msgid "View my learning transcript"
-msgstr "查看我的学习报告"
+msgid "My learning transcript"
+msgstr "我的学习报告"
 
 #: lms/templates/dashboard.html:168
 msgid "Continue Learning..."
@@ -19917,12 +19929,10 @@ msgid "Download CSV of Certificates Issued"
 msgstr "下载已颁发证书的 CSV"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:104
-#: lms/templates/triboo_analytics/download.html:6
 msgid "Reports Available for Download"
 msgstr "报告已可供下载"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:106
-#: lms/templates/triboo_analytics/download.html:7
 msgid ""
 "The reports listed below are available for download. A link to every report "
 "remains available on this page, identified by the UTC date and time of "
@@ -19943,7 +19953,6 @@ msgstr ""
 "动后提交的作答将在后续的报告中体现。报告每天生成多次。"
 
 #: lms/templates/instructor/instructor_dashboard_2/data_download.html:117
-#: lms/templates/triboo_analytics/download.html:9
 msgid ""
 "{strong_start}Note{strong_end}: To keep learner data secure, you cannot save "
 "or email these links for direct access. Copies of links expire within 5 "
@@ -22246,34 +22255,96 @@ msgstr ""
 msgid "Analytics - Course Report"
 msgstr "分析 - 课程报告"
 
-#: lms/templates/triboo_analytics/course.html:24
-#: lms/templates/triboo_analytics/learner.html:21
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/microsite.html:28
-#: lms/templates/triboo_analytics/transcript.html:23
 msgid "Global Report"
 msgstr "总体报告"
 
+#: lms/templates/triboo_analytics/microsite.html:40
+#: lms/templates/triboo_analytics/course.html:64
+msgid "Show:"
+msgstr "按："
+
+#: lms/templates/triboo_analytics/microsite.html:42
+#: lms/templates/triboo_analytics/course.html:66
+msgid "Daily"
+msgstr "日"
+
+#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/course.html:67
+msgid "Weekly"
+msgstr "周"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/course.html:68
+msgid "Monthly"
+msgstr "月"
+
+#: lms/templates/triboo_analytics/microsite.html:145
+#: lms/templates/triboo_analytics/microsite.html:175
+#: lms/templates/triboo_analytics/course.html:250
+msgid "Comparison between today's value and yesterday's"
+msgstr "今天的数据和昨天相比"
+
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/course.html:25
-#: lms/templates/triboo_analytics/learner.html:22
-#: lms/templates/triboo_analytics/microsite.html:29
-#: lms/templates/triboo_analytics/transcript.html:24
 msgid "Course Report"
 msgstr "课程报告"
 
-#: lms/templates/triboo_analytics/course.html:27
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Summary Report"
+msgstr "课程概要报告"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Progress Report"
+msgstr "课程进度报告"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Time Spent Report"
+msgstr "课程学习时长报告"
+
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/learner.html:24
-#: lms/templates/triboo_analytics/microsite.html:31
-#: lms/templates/triboo_analytics/transcript.html:26
 msgid "Learner Report"
 msgstr "学员报告"
 
-#: lms/templates/triboo_analytics/course.html:29
+#: lms/templates/triboo_analytics/banner_nav.html
 #: lms/templates/triboo_analytics/ilt.html:29
-#: lms/templates/triboo_analytics/learner.html:28
-#: lms/templates/triboo_analytics/microsite.html:34
-#: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
 msgstr "ILT 报告"
+
+#: lms/templates/triboo_analytics/customized.html:18
+msgid "Analytics - Customized Report"
+msgstr "分析 - 自定义报告"
+
+#: lms/templates/triboo_analytics/banner_nav.html
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customized Report"
+msgstr "自定义报告"
+
+#: lms/templates/triboo_analytics/download.html
+msgid "Reports ready to download"
+msgstr "下载就绪的报告"
+
+#: lms/templates/triboo_analytics/download.html
+msgid "No reports available"
+msgstr "没有可用的报告"
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customize your report by configuring each step."
+msgstr "设置以下步骤来自定义您的报告。"
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Note: If no user properties are selected, default properties will be used."
+msgstr "注意：如果您没有选择任何用户属性，那么使用的将是默认属性。"
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Choose the export format"
+msgstr "选择导出格式"
+
+#: lms/static/js/triboo_analytics/customized.html
+msgid "{format} report"
+msgstr "{format} 报告"
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
@@ -22283,11 +22354,15 @@ msgstr "选择一个课程查看学习报告："
 #: lms/templates/triboo_analytics/course.html:153
 #: lms/templates/triboo_analytics/learner.html:46
 msgid "Go"
-msgstr "前往"
+msgstr "完成"
 
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
 msgstr "完成课程的平均时间"
+
+#: lms/templates/triboo_analytics/course.html:143
+msgid "Learner Status"
+msgstr "学员进度"
 
 #: lms/templates/triboo_analytics/course.html:76
 #: lms/templates/triboo_analytics/my_transcript.html:268
@@ -28508,6 +28583,10 @@ msgid ""
 "Average time it took to learners to complete the course with 100% progress"
 msgstr "学生完成课程所用的平均时间"
 
+#: lms/templates/triboo_analytics/course.html:76
+msgid "Number of different visitors who opened the course per day"
+msgstr "每天打开课程的人数"
+
 #: lms/templates/triboo_analytics/course.html:80
 msgid ""
 "Average total score of the learners who completed the course with 100% "
@@ -28534,19 +28613,14 @@ msgstr "已注册但未开始的学生"
 
 #: lms/templates/triboo_analytics/course.html:123
 msgid ""
-"Leaners who completed the course with 100% progress and a total score "
+"Learners who completed the course with 100% progress and a total score "
 "passing the minimum required score"
 msgstr "已完成课程且成绩合格的学生"
 
 #: lms/templates/triboo_analytics/course.html:159
-msgid "Leaners who completed the course with 100% progress but with "
+msgid "Learners who completed the course with 100% progress but with "
 "a total score below the minimum required score to validate the course"
 msgstr "已完成课程但成绩不合格的学生"
-
-#: lms/templates/triboo_analytics/course.html:174
-msgid "Cumulative number of enrollments over time"
-msgstr "累计注册学生数"
-
 
 #: lms/templates/triboo_analytics/my_transcript.html:262
 msgid "Number of courses you are enrolled in"

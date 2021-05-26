@@ -46,10 +46,10 @@ describe('Calculator', function() {
   });
 
   describe('toggle', function() {
-    it('focuses the input when toggled', function(done){
+    it('focuses the input when toggled', function(done) {
 
       const self = this;
-      const focus = function(){
+      const focus = function() {
         const deferred = $.Deferred();
 
         // Since the focus is called asynchronously, we need to

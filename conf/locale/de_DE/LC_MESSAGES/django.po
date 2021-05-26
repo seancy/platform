@@ -3400,7 +3400,7 @@ msgstr "Wählen Sie die Sprache Ihres Kurses. "
 #: common/lib/xmodule/xmodule/course_module.py:710
 #: cms/templates/settings.html:344
 msgid "Course Country"
-msgstr "Kursverlauf"
+msgstr "Kursland"
 
 #: common/lib/xmodule/xmodule/course_module.py:711
 msgid "Specify the country of your course."
@@ -7793,7 +7793,7 @@ msgstr "Erweiterungen"
 #: lms/templates/triboo_analytics/microsite.html:23
 #: lms/templates/triboo_analytics/transcript.html:18
 msgid "Analytics"
-msgstr "Analytics"
+msgstr "Analytik"
 
 #: lms/djangoapps/instructor/views/instructor_dashboard.py:834
 msgid "Metrics"
@@ -9839,7 +9839,107 @@ msgstr "Feld"
 #: lms/templates/triboo_analytics/ilt.html:57
 #: lms/templates/triboo_analytics/learner.html:43
 msgid "Select the user properties you want to display"
-msgstr "Wählen Sie die Bibliothek aus, aus der Sie Inhalt aufzeichnen möchten."
+msgstr "Wählen Sie die anzuzeigenden Benutzereigenschaften aus"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course name"
+msgstr "Kursname"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Current Score"
+msgstr "Momentaner Punktestand"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Total Time Spent"
+msgstr "Gesamtzeit"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Completion Date"
+msgstr "Fertigstellungstermin"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollments"
+msgstr "Einschreibung"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Successful"
+msgstr "Erfolgreich"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Unsuccessful"
+msgstr "Erfolglos"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Last Login"
+msgstr "Letzte Anmeldung"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Geographical area"
+msgstr "Geografisches Gebiet"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zone/Region"
+msgstr "Zone / Region"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course tags"
+msgstr "Kurs-Tags"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Course code"
+msgstr "Kurscode"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Session ID"
+msgstr "Sitzungs-ID"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start date"
+msgstr "Startdatum"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Start time"
+msgstr "Startzeit"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End date"
+msgstr "Enddatum"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "End time"
+msgstr "Endzeit"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Duration (in hours)"
+msgstr "Dauer (in Stunden)"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Max capacity"
+msgstr "Maximale Kapazität"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Enrollees"
+msgstr "Eingetragen"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendees"
+msgstr "Teilnehmer"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Attendance sheet"
+msgstr "Anwesenheitsliste"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location name"
+msgstr "Standortname"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Location address"
+msgstr "Standortadresse"
+
+#: lms/templates/triboo_analytics/table.html
+msgid "Zip code"
+msgstr "Postleitzahl"
 
 #: lms/djangoapps/triboo_analytics/models.py:1138
 msgid "Accepted"
@@ -9852,6 +9952,12 @@ msgstr "Bestätigung"
 #: lms/djangoapps/triboo_analytics/models.py:1140
 msgid "Refused"
 msgstr "Abgelehnt"
+
+#: lms/djangoapps/triboo_analytics/forms.py:81
+#: lms/templates/triboo_analytics/course.html:150
+#: lms/templates/triboo_analytics/learner.html:43
+msgid "Select the user properties to display"
+msgstr "Wählen Sie die anzuzeigenden Benutzereigenschaften aus"
 
 #: lms/djangoapps/triboo_analytics/views.py:240
 #: lms/djangoapps/triboo_analytics/views.py:571
@@ -13951,7 +14057,7 @@ msgstr "Komprimierung der exportierten Daten und Vorbereitung für den Download"
 
 #: cms/templates/export.html:161 cms/templates/import.html:175
 msgid "Success"
-msgstr "Operation Erfolgreich"
+msgstr "Erfolgreich"
 
 #: cms/templates/export.html:166
 msgid "Your exported library can now be downloaded"
@@ -16558,7 +16664,7 @@ msgstr "Ladevorgang"
 #: lms/templates/emails/ilt_enrolled_email_message.txt:33
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:37
 msgid "Location ID"
-msgstr "Pfad ID"
+msgstr "Standort-ID"
 
 #: cms/templates/course_outline.html:13 cms/templates/course_outline.html:123
 #: cms/templates/course_outline.html:217
@@ -17701,7 +17807,7 @@ msgstr "Kursauswahl"
 
 #: lms/templates/my_courses.html:139
 msgid "Not started"
-msgstr "Noch nicht beantwortet"
+msgstr "Noch nicht begonnen"
 
 #: lms/templates/my_courses.html:140
 msgid "Started"
@@ -22752,12 +22858,12 @@ msgstr "Hat der Kurs bereits begonnen?"
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:56
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:62
 msgid "Yes"
-msgstr "Yeah "
+msgstr "Ja"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:56
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:64
 msgid "No"
-msgstr "Nö"
+msgstr "Nein"
 
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html:60
 msgid "Has the course ended?"
@@ -25294,7 +25400,7 @@ msgstr ""
 
 #: lms/templates/triboo_analytics/course.html:11
 msgid "Analytics - Course Report"
-msgstr "Analyse - Kursbericht"
+msgstr "Analytik - Kursbericht"
 
 #: lms/templates/triboo_analytics/course.html:19
 #: lms/templates/triboo_analytics/ilt.html:19
@@ -25311,13 +25417,51 @@ msgstr "Ihre Lerndaten"
 msgid "Global Report"
 msgstr "Verfügbare Berichte"
 
+#: lms/templates/triboo_analytics/microsite.html:40
+#: lms/templates/triboo_analytics/course.html:64
+msgid "Show:"
+msgstr "Anzeigen:"
+
+#: lms/templates/triboo_analytics/microsite.html:42
+#: lms/templates/triboo_analytics/course.html:66
+msgid "Daily"
+msgstr "Täglich"
+
+#: lms/templates/triboo_analytics/microsite.html:43
+#: lms/templates/triboo_analytics/course.html:67
+msgid "Weekly"
+msgstr "Wöchentlich"
+
+#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/course.html:68
+msgid "Monthly"
+msgstr "Monatlich"
+
+#: lms/templates/triboo_analytics/microsite.html:145
+#: lms/templates/triboo_analytics/microsite.html:175
+#: lms/templates/triboo_analytics/course.html:250
+msgid "Comparison between today's value and yesterday's"
+msgstr "Vergleich zwischen dem heutigen und dem gestrigen Wert"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Summary Report"
+msgstr "Kursbericht - Zusammenfassung"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Progress Report"
+msgstr "Kursbericht - Fortschritt"
+
+#: lms/templates/triboo_analytics/views.py
+msgid "Course Time Spent Report"
+msgstr "Kursbericht - Zeitaufwand"
+
 #: lms/templates/triboo_analytics/course.html:27
 #: lms/templates/triboo_analytics/ilt.html:27
 #: lms/templates/triboo_analytics/learner.html:26
 #: lms/templates/triboo_analytics/microsite.html:32
 #: lms/templates/triboo_analytics/transcript.html:26
 msgid "Learner Report"
-msgstr "Teilnehmer"
+msgstr "Lernbericht"
 
 #: lms/templates/triboo_analytics/course.html:29
 #: lms/templates/triboo_analytics/ilt.html:29
@@ -25325,7 +25469,40 @@ msgstr "Teilnehmer"
 #: lms/templates/triboo_analytics/microsite.html:34
 #: lms/templates/triboo_analytics/transcript.html:28
 msgid "ILT Report"
-msgstr "Meldungen"
+msgstr "Bericht zu Präsenztraining"
+
+#: lms/templates/triboo_analytics/customized.html:18
+msgid "Analytics - Customized Report"
+msgstr "Analytik - Kundenspezifischer Bericht"
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customized Report"
+msgstr "Kundenspezifischer Bericht"
+
+#: lms/templates/triboo_analytics/download.html
+msgid "Reports ready to download"
+msgstr "Berichte zum Herunterladen bereit"
+
+#: lms/templates/triboo_analytics/download.html
+msgid "No reports available"
+msgstr "Keine Berichte verfügbar"
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Customize your report by configuring each step."
+msgstr "Passen Sie Ihren Bericht an, indem Sie jeden Schritt konfigurieren."
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Note: If no user properties are selected, default properties will be used."
+msgstr "Hinweis: Wenn keine Benutzereigenschaften ausgewählt sind, werden Standardeigenschaften verwendet."
+
+#: lms/templates/triboo_analytics/customized.html
+msgid "Choose the export format"
+msgstr "Wählen Sie das Exportformat"
+
+#: lms/static/js/triboo_analytics/customized.html
+msgid "{format} report"
+msgstr "{format}-Bericht"
+
 
 #: lms/templates/triboo_analytics/course.html:37
 msgid "Please select a course to see your report:"
@@ -25341,6 +25518,10 @@ msgstr "Gut"
 #: lms/templates/triboo_analytics/course.html:70
 msgid "Average time to complete the course"
 msgstr "Bewährter Motivator für den Abschluss des Kurses"
+
+#: lms/templates/triboo_analytics/course.html:143
+msgid "Learner Status"
+msgstr "Lernerstatus"
 
 #: lms/templates/triboo_analytics/course.html:76
 #: lms/templates/triboo_analytics/my_transcript.html:268
@@ -25379,7 +25560,7 @@ msgstr "Genutzt"
 
 #: lms/templates/triboo_analytics/ilt.html:11
 msgid "Analytics - ILT Report"
-msgstr "Analyse - Bericht zu Präsenztraining"
+msgstr "Analytik - Bericht zu Präsenztraining"
 
 #: lms/templates/triboo_analytics/ilt.html:40
 #: lms/templates/triboo_analytics/ilt.html:52
@@ -25393,11 +25574,11 @@ msgstr "Teilnehmerbericht zu Präsenztraining"
 
 #: lms/templates/triboo_analytics/learner.html:10
 msgid "Analytics - Learner Report"
-msgstr "Analyse - Teilnehmerbericht"
+msgstr "Analytik - Teilnehmerbericht"
 
 #: lms/templates/triboo_analytics/microsite.html:16
 msgid "Analytics - Global Report"
-msgstr "Verfügbare Berichte"
+msgstr "Analytik - Verfügbare Berichte"
 
 #: lms/templates/triboo_analytics/microsite.html:51
 msgid "Certificate Delivered"
@@ -25415,7 +25596,7 @@ msgstr "Anzahl der Plätze"
 
 #: lms/templates/triboo_analytics/microsite.html:74
 msgid "Device Use"
-msgstr "Genutzt"
+msgstr "Geräteverwendung"
 
 #: lms/templates/triboo_analytics/microsite.html:79
 msgid "Desktop"
@@ -25423,7 +25604,7 @@ msgstr "Desktop"
 
 #: lms/templates/triboo_analytics/microsite.html:80
 msgid "Mobile"
-msgstr "Mobile"
+msgstr "Mobil"
 
 #: lms/templates/triboo_analytics/microsite.html:86
 msgid "Active Learners Location"
@@ -25439,7 +25620,7 @@ msgstr "Bitte geben Sie einen Grund an. Feld darf nicht leer sein."
 
 #: lms/templates/triboo_analytics/my_transcript.html:121
 msgid "Analytics - Learning Transcript"
-msgstr "Analyse - Teilnehmerprotokoll"
+msgstr "Analytik - Teilnehmerprotokoll"
 
 #: lms/templates/triboo_analytics/my_transcript.html:213
 #: lms/templates/triboo_analytics/transcript.html:35
@@ -25497,7 +25678,7 @@ msgstr "Gesamtzeit, die mit Kursarbeit verbracht wurde"
 
 #: lms/templates/triboo_analytics/process_waiver_request.html:9
 msgid "Analytics - Process Waiver Request"
-msgstr "Analyse - Prozess Freistellungsantrag"
+msgstr "Analytik - Prozess Freistellungsantrag"
 
 #: lms/templates/triboo_analytics/process_waiver_request.html:35
 msgid "Forwarding to gradebook page ... "
@@ -25505,7 +25686,7 @@ msgstr "Weiterleiten an Seite für Noteneinträge ..."
 
 #: lms/templates/triboo_analytics/transcript.html:11
 msgid "Analytics - Learner Transcript"
-msgstr "Analyse - Teilnehmerprotokoll"
+msgstr "Analytik - Teilnehmerprotokoll"
 
 #: lms/templates/triboo_analytics/transcript.html:40
 msgid "Learning Transcript of"
@@ -27716,6 +27897,7 @@ msgstr "Diesen Kurs als Gasthörer belegen"
 msgid "Course Report"
 msgstr "Kurs exportieren"
 
+
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:27
 #: openedx/features/course_experience/templates/course_experience/course-outline-fragment.html:190
 #: remove the duplicated one
@@ -27937,14 +28119,6 @@ msgid ""
 msgstr ""
 "Hiermit möchten wir Sie darüber informieren, dass Ihr Klassenraumtraining {ilt_name} auf eine andere Sitzung am {start} in {location} ({address}, {city} {zipcode}) verlegt wurde."
 
-#: lms/templates/triboo_analytics/courseware.html
-msgid "Successful"
-msgstr "Operation Erfolgreich"
-
-#: lms/templates/triboo_analytics/courseware.html
-msgid "Unsuccessful"
-msgstr "Erfolgreich"
-
 #: lms/templates/triboo_analytics/microsite.html:44
 msgid "Number of learners enrolled in a course"
 msgstr "Sie sind in diesem Kurs eingeschrieben"
@@ -27991,6 +28165,10 @@ msgid ""
 msgstr ""
 "Durchschnittlicher Zeitaufwand der Teilnehmer zum Absolvieren des Kurses mit einem Fortschritt von 100 %"
 
+#: lms/templates/triboo_analytics/course.html:76
+msgid "Number of different visitors who opened the course per day"
+msgstr "Anzahl der verschiedenen Besucher, die den Kurs pro Tag eröffnet haben"
+
 #: lms/templates/triboo_analytics/course.html:80
 msgid ""
 "Average total score of the learners who completed the course with 100% "
@@ -28018,21 +28196,17 @@ msgstr "Sie müssen angemeldet sein, um die Inhalte dieser Seite sehen zu könne
 
 #: lms/templates/triboo_analytics/course.html:123
 msgid ""
-"Leaners who completed the course with 100% progress and a total score "
+"Learners who completed the course with 100% progress and a total score "
 "passing the minimum required score"
 msgstr ""
 "Teilnehmer, die den Kurs mit einem Fortschritt von 100 % abgeschlossen und dabei die erforderliche Mindestpunktzahl erreicht haben."
 
 #: lms/templates/triboo_analytics/course.html:159
 msgid ""
-"Leaners who completed the course with 100% progress but with a total score "
+"Learners who completed the course with 100% progress but with a total score "
 "below the minimum required score to validate the course"
 msgstr ""
 "Teilnehmer, die den Kurs zwar mit einem Fortschritt von 100 % abgeschlossen haben, aber die erforderliche Mindestpunktzahl zum Bestehen des Kurses nicht erreicht haben."
-
-#: lms/templates/triboo_analytics/course.html:174
-msgid "Cumulative number of enrollments over time"
-msgstr "Geben Sie eine Anzahl der Zugangscodes ein"
 
 #: lms/templates/triboo_analytics/my_transcript.html:262
 msgid "Number of courses you are enrolled in"

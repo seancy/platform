@@ -55,7 +55,7 @@ from openedx.core.djangolib.markup import HTML, Text
 <%block name="js_extra">
    <script type="text/javascript">
       $(window).load(function() {
-         if(getParameterByName('next')) {
+         if (getParameterByName('next')) {
               $('#login').trigger("click");
          }
       })

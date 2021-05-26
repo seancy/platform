@@ -4,6 +4,11 @@
     from django.utils.translation import ugettext as _
     from django.core.urlresolvers import reverse
     from django.template import Template, Context
+
+    import json
+    from openedx.core.djangolib.markup import HTML
+    from webpack_loader.templatetags.webpack_loader import render_bundle
+    import urlparse
 %>
 
 <%block name="pagetitle">${_("Analytics - Learner Report")}</%block>
@@ -12,65 +17,25 @@
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="main-container">
         <%include file="banner_nav.html" args="active_page='learner'" />
-        <section class="analytics-wrapper learner">
-            <div class="report-wrapper">
-              % if learner_table:
-                  <div class="last-update">
-                    <i class="fa fa-history"></i>${_("Please, note that these reports are not live. Last update:")} ${last_update}
-                  </div>
 
-                <form class="table-filter-form" action="${reverse('analytics_learner')}" method="get">
-                    ${filter_form}
-                    % for key, value in query_dict.items():
-                        <input type="hidden" value="${value}" name="${key}"/>
-                    % endfor
-                    <input type="submit" value="${_("Filter")}"/>
-                </form>
-                <form class="clear-filter-form" action="${reverse('analytics_learner')}" method="get">
-                    <span style="display: none">${filter_form}</span>
-                    <input type="hidden" value="1" name="clear">
-                    <input type="hidden" value="" name="query_string">
-                    <input type="hidden" value="Name" name="queried_field">
-                    <button type="submit" id="clear-all-filters" class="clear-filters reset-button">
-                        <i class="fa fa-refresh icon"></i>${_("Reset")}
-                    </button>
-                </form>
-                <div class="filter-forms">
-                % for query_string, queried_field, queried_field_name in query_triples:
-                <form class="delete-filter-form" action="${reverse('analytics_learner')}" method="get">
-                    <span style="display: none">${filter_form}</span>
-                    <input type="hidden" value="1" name="delete">
-                    % for key, value in query_dict.items():
-                        <input type="hidden" value="${value}" name="${key}"/>
-                    % endfor
-                    <input type="hidden" value="${query_string}" name="query_string">
-                    <input type="hidden" value="${queried_field_name}" name="queried_field">
-                    <button type="submit" class="delete-filter">
-                        <span class="query">${_(queried_field)}: ${query_string}</span>
-                        <span aria-hidden="true" class="fa fa-times"></span>
-                    </button>
-                </form>
-                % endfor
-                </div>
-
-                  <form class="table-user-properties-form" action="${reverse('analytics_learner')}" method="get">
-                      <a href="#" id="toggle-user-properties"><i class="fa fa-angle-double-down"></i> ${_("Select the user properties you want to display")}</a>
-                      <div id="user-properties-selection">
-                            ${user_properties_form}
-                            % for key, value in query_dict.items():
-                                <input type="hidden" value="${value}" name="${key}"/>
-                            % endfor
-                            <input type="submit" value="${_("Go")}"/>
-                      </div>
-                  </form>
-                  <% tpl = "{% load render_table from django_tables2 %}{% render_table learner_table 'triboo_analytics/table.html' %}" %>
-                  ${Template(tpl).render(Context({'learner_table': learner_table, 'request': request, 'row_count': row_count}))}
-
-
-                  <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
-              %endif
-            </div>
-        </section>
+        ${HTML(render_bundle('LearnerReport'))}
+        ${HTML(render_bundle('ReactRenderer'))}
+        <div id="learner-report"></div>
+        <input type="hidden" name="csrfmiddlewaretoken" value="${ csrf_token }">
+        <script type="text/javascript">
+          new ReactRenderer({
+            component: LearnerReport,
+            selector: '#learner-report',
+            componentName: 'LearnerReport',
+            props: {
+                ## filters: ${json.dumps([{'value': item[0].encode("utf-8"), 'text':item[1].encode("utf-8"), 'checked':'true'} for item in filters_data])},
+                defaultLanguage: '${request.LANGUAGE_CODE}',
+                last_update: '${last_update}',
+                token:'${ csrf_token }',
+                learner_table: ${('true' if learner_table else 'false')}
+              }
+          });
+        </script>
     </div>
 </main>
 
@@ -84,10 +49,9 @@
       menu.slideToggle();
     });
 
-    $(window).on("load", function () {
-        console.log("after load");
-        $("#id_query_string").val("");
-        $("#id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
+    $(window).on("load", function() {
+        $(".table-filter-form #id_query_string").val("");
+        $(".table-filter-form #id_queried_field").find("option[value='user__profile__name']").attr("selected",true)
     });
   });
 </script>

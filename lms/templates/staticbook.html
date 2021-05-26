@@ -24,10 +24,10 @@ from openedx.core.djangolib.js_utils import (
 <script>
 var page = ${page | n, dump_js_escaped_json};
 
-$(document).ready(function(){
-   if(!page) {
+$(document).ready(function() {
+   if (!page) {
      cookie_page = $.cookie("book_page");
-     if(cookie_page) {
+     if (cookie_page) {
        goto_page(cookie_page);
      }
    }
@@ -38,10 +38,10 @@ function goto_page(n) {
   Logger.log("book", {"type":"gotopage","old":page,"new":n});
   page=n;
   var prefix = "";
-  if(n<100) {
+  if (n<100) {
     prefix="0";
   }
-  if(n<10) {
+  if (n<10) {
     prefix="00";
   }
   $("#bookpage").attr("src","${book_url | n, js_escaped_string}p"+prefix+n+".png");
@@ -50,20 +50,20 @@ function goto_page(n) {
 
 function prev_page() {
   var newpage=page-1;
-  if(newpage < ${start_page | n, dump_js_escaped_json}) newpage=${start_page | n, dump_js_escaped_json};
+  if (newpage < ${start_page | n, dump_js_escaped_json}) newpage=${start_page | n, dump_js_escaped_json};
   goto_page(newpage);
   Logger.log("book", {"type":"prevpage","new":page});
 }
 
 function next_page() {
   var newpage=page+1;
-  if(newpage > ${end_page | n, dump_js_escaped_json}) newpage=${end_page | n, dump_js_escaped_json};
+  if (newpage > ${end_page | n, dump_js_escaped_json}) newpage=${end_page | n, dump_js_escaped_json};
   goto_page(newpage);
   Logger.log("book", {"type":"nextpage","new":page});
 }
 
-$("#open_close_accordion a").click(function(){
-  if ($(".book-wrapper").hasClass("closed")){
+$("#open_close_accordion a").click(function() {
+  if ($(".book-wrapper").hasClass("closed")) {
     $(".book-wrapper").removeClass("closed");
   } else {
     $(".book-wrapper").addClass("closed");

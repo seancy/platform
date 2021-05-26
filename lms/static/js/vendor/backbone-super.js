@@ -63,7 +63,7 @@
     return wrapper;
   };
 
-	var ctor = function(){}, inherits = function(parent, protoProps, staticProps) {
+	var ctor = function() {}, inherits = function(parent, protoProps, staticProps) {
         var child, parentProto = parent.prototype;
 
 		// The constructor function for the new subclass is either defined by you
@@ -72,7 +72,7 @@
 		if (protoProps && protoProps.hasOwnProperty('constructor')) {
 			child = protoProps.constructor;
 		} else {
-			child = function(){ return parent.apply(this, arguments); };
+			child = function() { return parent.apply(this, arguments); };
 		}
 
 		// Inherit class (static) properties from parent.

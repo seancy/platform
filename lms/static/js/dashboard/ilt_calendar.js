@@ -22,7 +22,7 @@
 
   Calendar.prototype.drawHeader = function() {
     var self = this;
-    if(!this.header) {
+    if (!this.header) {
       //Create the header elements
       this.header = createElement('div', 'header');
       this.header.className = 'header';
@@ -54,7 +54,7 @@
     console.log('111');
     var self = this,
         name_list = moment.weekdaysShort();
-    if(!this.day_names) {
+    if (!this.day_names) {
       console.log('222');
       this.day_names = createElement('div', 'day-names');
       for (var i = 0; i < name_list.length; i++) {
@@ -68,7 +68,7 @@
 
   Calendar.prototype.drawMonth = function() {
     var self = this;
-    if(this.month) {
+    if (this.month) {
       this.oldMonth = this.month;
       this.oldMonth.className = 'month out ' + (!self.next ? 'next' : 'prev');
       this.oldMonth.addEventListener('webkitAnimationEnd', function() {
@@ -106,7 +106,7 @@
     var clone = this.current.clone();
     var dayOfWeek = clone.day();
 
-    if(!dayOfWeek) { return; }
+    if (!dayOfWeek) { return; }
 
     clone.subtract('days', dayOfWeek+1);
 
@@ -119,7 +119,7 @@
     var clone = this.current.clone().add('months', 1).subtract('days', 1);
     var dayOfWeek = clone.day();
 
-    if(dayOfWeek === 6) { return; }
+    if (dayOfWeek === 6) { return; }
 
     for(var i = dayOfWeek; i < 6 ; i++) {
       this.drawDay(clone.add('days', 1));
@@ -136,7 +136,7 @@
   }
 
   Calendar.prototype.getWeek = function(day) {
-    if(!this.week || day.day() === 0) {
+    if (!this.week || day.day() === 0) {
       this.week = createElement('div', 'week');
       this.month.appendChild(this.week);
     }
@@ -174,7 +174,7 @@
     var number = createElement('span', 'day-number', day.format('DD'));
 
     var dayEvents = this.events.reduce(function(memo, ev) {
-      if(ev.start_date.isSame(day, 'day') || ev.end_date.isSame(day, 'day') || day.isBetween(ev.start_date, ev.end_date)) {
+      if (ev.start_date.isSame(day, 'day') || ev.end_date.isSame(day, 'day') || day.isBetween(ev.start_date, ev.end_date)) {
         memo.push(ev);
       }
       return memo;
@@ -193,7 +193,7 @@
 
   Calendar.prototype.getDayClass = function(day) {
     var classes = ['day', 'weekday-'+day.day()];
-    if(day.month() !== this.current.month()) {
+    if (day.month() !== this.current.month()) {
       classes.push('other');
     } else if (today.isSame(day, 'day')) {
       classes.push('today');
@@ -207,13 +207,13 @@
     var currentOpened = document.querySelector('.ilt-details');
 
     //Check to see if there is an open detais box on the current row
-    if(currentOpened && currentOpened.parentNode === el.parentNode) {
+    if (currentOpened && currentOpened.parentNode === el.parentNode) {
       details = currentOpened;
       arrow = document.querySelector('.arrow');
     } else {
       //Close the open events on differnt week row
       //currentOpened && currentOpened.parentNode.removeChild(currentOpened);
-      if(currentOpened) {
+      if (currentOpened) {
         currentOpened.addEventListener('webkitAnimationEnd', function() {
           currentOpened.parentNode.removeChild(currentOpened);
         });
@@ -242,7 +242,7 @@
     }
 
     var todaysEvents = this.events.reduce(function(memo, ev) {
-        if(ev.start_date.isSame(day, 'day') || ev.end_date.isSame(day, 'day') || day.isBetween(ev.start_date, ev.end_date)) {
+        if (ev.start_date.isSame(day, 'day') || ev.end_date.isSame(day, 'day') || day.isBetween(ev.start_date, ev.end_date)) {
           memo.push(ev);
         }
         return memo;
@@ -416,7 +416,7 @@
     var self = this;
     event_list.innerHTML = '';
     var upcomingEvents = this.events.reduce(function(memo, ev) {
-      if(today.isSameOrBefore(ev.end_date, 'day')) {
+      if (today.isSameOrBefore(ev.end_date, 'day')) {
         memo.push(ev);
       }
       return memo;
@@ -563,7 +563,7 @@
       wrapper.appendChild(div);
     });
 
-    if(!events.length) {
+    if (!events.length) {
       var div = createElement('div', 'event empty');
       var span = createElement('span', '', gettext('No Events'));
 
@@ -571,7 +571,7 @@
       wrapper.appendChild(div);
     }
 
-    if(currentWrapper) {
+    if (currentWrapper) {
       currentWrapper.className = 'events out';
       currentWrapper.addEventListener('webkitAnimationEnd', function() {
         currentWrapper.parentNode.removeChild(currentWrapper);
@@ -599,7 +599,7 @@
     var calendars = this.events.map(function(e) {
       return e.calendar + '|' + e.color;
     }).reduce(function(memo, e) {
-      if(memo.indexOf(e) === -1) {
+      if (memo.indexOf(e) === -1) {
         memo.push(e);
       }
       return memo;
@@ -627,10 +627,10 @@
 
   function createElement(tagName, className, innerText) {
     var ele = document.createElement(tagName);
-    if(className) {
+    if (className) {
       ele.className = className;
     }
-    if(innerText) {
+    if (innerText) {
       ele.innderText = ele.textContent = innerText;
     }
     return ele;

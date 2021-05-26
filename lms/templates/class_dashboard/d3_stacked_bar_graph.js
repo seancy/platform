@@ -145,7 +145,7 @@ edx_d3CreateStackedBarGraph = function(parameters, svg, divTooltip) {
         maxYRange = valueTotal;
     }
 
-    if (state.xRange == undefined){
+    if (state.xRange == undefined) {
       if (bXIsOrdinal)
         state.xRange = aryXRange;
       else
@@ -158,7 +158,7 @@ edx_d3CreateStackedBarGraph = function(parameters, svg, divTooltip) {
     if (state.yRange.length < 2)
       state.yRange[1] = maxYRange;
 
-    if (state.colorRange == undefined){
+    if (state.colorRange == undefined) {
       if (bColorIsOrdinal)
         state.colorRange = aryColorRange;
       else
@@ -374,7 +374,7 @@ edx_d3CreateStackedBarGraph = function(parameters, svg, divTooltip) {
         graph.divTooltip.style("top", top+"px")
           .style("left", left+"px");
       })
-      .on("mouseout", function(d){
+      .on("mouseout", function(d) {
         graph.divTooltip.style("visibility", "hidden")
       });
 

@@ -3,8 +3,12 @@ import pytz
 import time
 from datetime import datetime, timedelta
 import logging
-from triboo_analytics.models import MicrositeDailyReport, LearnerVisitsDailyReport, \
-                                get_day_limits
+from triboo_analytics.models import (
+    CourseDailyReport,
+    MicrositeDailyReport,
+    LearnerVisitsDailyReport,
+    get_day_limits
+)
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
 
 
@@ -42,7 +46,10 @@ if __name__ == '__main__':
             logger.info("reports for %s" % day)
             day_start, day_end = get_day_limits(day)
             LearnerVisitsDailyReport.generate_day_reports(day)
-            orgs = [result['org'] for result in CourseOverview.objects.filter(start__lte=day).values('org').distinct()]
+            overviews = CourseOverview.objects.filter(start__lte=day)
+            orgs = [result['org'] for result in overviews.values('org').distinct()]
+            for overview in overviews:
+                CourseDailyReport.update_or_create_unique_visitors(day, overview.id)
             for org in orgs:
                 MicrositeDailyReport.update_or_create_unique_visitors(day, org)
 

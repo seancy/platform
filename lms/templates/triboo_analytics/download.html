@@ -2,36 +2,37 @@
     from django.utils.translation import ugettext as _
     from openedx.core.djangolib.markup import HTML, Text
 %>
-<div id="report-downloads">
-    <h3>${_("Reports Available for Download")}</h3>
-    <p>${_("The reports listed below are available for download. A link to every report remains available on this page, identified by the UTC date and time of generation. Reports are not deleted, so you will always be able to access previously generated reports from this page.")}</p>
-    <p>
-        ${Text(_("{strong_start}Note{strong_end}: To keep learner data secure, you cannot save or email these links for direct access. Copies of links expire within 5 minutes.")).format(
-            strong_start=HTML("<strong>"),
-            strong_end=HTML("</strong>"),
-        )}
-    </p>
+<ul class="actions">
+    <li class="download-item-container">
+        <a class="download-item" href="#" alt="${_('Reports ready to download')}" title="${_('Reports ready to download')}">
+            <i class="fal fa-cloud-download-alt"></i>
+            <span class="red-dot hidden"></span>
+        </a>
+        <div id="report-file-list" class="dropdown-download-menu" data-endpoint="${ list_table_downloads_url }"></div>
+    </li>
+</ul>
 
-    <ul id="report-file-list" data-endpoint="${ list_table_downloads_url }">
-
-    </ul>
-
-
-</div>
 <script type="text/javascript">
     $(document).ready(function () {
         function listDownloads() {
             var elem = $('#report-file-list');
             $.ajax(elem.attr('data-endpoint'), {
                 success: function (data) {
+                    if (elem.children().length < data.download.length) {
+                        var downloadIcon = $('a.download-item')
+                        if (downloadIcon) downloadIcon.addClass('red-dot')
+                    }
                     var links = $.map(data.download, function (f) {
-                        var icon = $('<i></i>', {class: 'fa fa-download'});
                         var link = $('<a></a>', {href: f[1], text: f[0]});
+                        var icon = $('<i></i>', {class: 'fal fa-file-chart-line'});
                         link.prepend(icon)
-                        var li = $('<li></li>');
-                        li.html(link);
-                        return li;
+                        var div = $('<div></div>', {class: 'dropdown-download-item'});
+                        div.html(link);
+                        return div;
                     });
+                    if (links.length <= 0) {
+                        links.push('<div><h3>${_("No reports available")}</h3></div>')
+                    }
                     elem.html(links);
                 }
             })
@@ -40,6 +41,21 @@
         $(window).unload(function () {
             clearInterval(inter);
         });
+        $('#report-file-list').html('<div><h3>${_("No reports available")}</h3></div>')
         listDownloads();
+
+        $('.actions .download-item').on('click', function(e) {
+                var $download = $(e.currentTarget)
+                if ($download.hasClass('showing')) {
+                    $download.removeClass('showing')
+                } else {
+                    $download.addClass('showing')
+                }
+        })
+        $('.actions .download-item-container').on('hover', function (e) {
+          var downloadIcon = $('a.download-item')
+          if (downloadIcon) downloadIcon.removeClass('red-dot')
+        })
+
     });
 </script>

@@ -4,7 +4,7 @@
 <script type="text/javascript" src="${static.url('js/staff_debug_actions.js')}"></script>
 <script type="text/javascript">
 
-function setup_debug(element_id, edit_link, staff_context){
+function setup_debug(element_id, edit_link, staff_context) {
     var staffDebugTrigger = $('#' + element_id + '_trig'),
         xqaLogTrigger = $('#' + element_id + '_xqa_log'),
         historyTrigger = $("#" + element_id + "_history_trig"),
@@ -56,7 +56,7 @@ function setup_debug(element_id, edit_link, staff_context){
       })
 }
 
-function sendlog(element_id, edit_link, staff_context){
+function sendlog(element_id, edit_link, staff_context) {
 
     var xqaLog = {
             authkey: staff_context.xqa_key,
@@ -91,7 +91,7 @@ function sendlog(element_id, edit_link, staff_context){
     return false;
 };
 
-function getlog(element_id, staff_context){
+function getlog(element_id, staff_context) {
 
     var xqaQuery = {
         authkey: staff_context.xqa_key,

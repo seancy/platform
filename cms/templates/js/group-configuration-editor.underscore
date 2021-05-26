@@ -7,7 +7,7 @@
     <div class="wrapper-form">
         <fieldset class="collection-fields group-configuration-fields">
             <legend class="sr"><%- gettext("Group Configuration information") %></legend>
-            <div class="input-wrap field text required add-collection-name add-group-configuration-name <% if(error && error.attributes && error.attributes.name) { print('error'); } %>">
+            <div class="input-wrap field text required add-collection-name add-group-configuration-name <% if (error && error.attributes && error.attributes.name) { print('error'); } %>">
                 <label for="group-configuration-name-<%- uniqueId %>"><%- gettext("Group Configuration Name") %></label><%
                 if (!_.isUndefined(id)) {
                     %><span class="group-configuration-id">
