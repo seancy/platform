@@ -58,7 +58,7 @@
     "raw-loader": "0.5.1",
     "react": "^16.8.4",
     "react-autobind": "^1.0.6",
-    "react-dom": "^16.8.4",
+    "react-dom": "^16.14.0",
     "react-infinite-scroll-component": "^5.1.0",
     "react-native-listener": "^1.0.2",
     "react-redux": "5.0.7",
