@@ -1732,7 +1732,7 @@ class MicrositeDailyReport(UnicodeMixin, ReportMixin, UniqueVisitorsMixin, TimeM
 
         for org, ids in course_ids_by_org.iteritems():
             logger.info("microsite report for org=%s" % org)
-            nb_users = len(user_ids_by_org[org]['total'])
+            nb_users = len(user_ids_by_org[org]['total']) if org in user_ids_by_org.keys() else 0
             finished = finished_by_org.get(org, 0)
             cls.update_or_create(org, ids, nb_users, finished)
 
