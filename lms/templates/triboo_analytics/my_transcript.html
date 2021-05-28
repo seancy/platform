@@ -207,7 +207,12 @@
 
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="main-container">
-        <%include file="banner_nav.html" args="active_page=''" />
+        <section class="banner">
+            <section class="welcome-wrapper">
+                <h2>${_("Learning Transcript")}</h2>
+                <h3>${_("Let's have a look at your learning data")}</h3>
+            </section>
+        </section>
 
         ${HTML(render_bundle('Transcript'))}
         ${HTML(render_bundle('ReactRenderer'))}
