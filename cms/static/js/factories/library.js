@@ -1,3 +1,4 @@
+import 'js/factories/lt_library'
 import * as $ from 'jquery';
 import * as _ from 'underscore';
 import * as XBlockInfo from 'js/models/xblock_info';
