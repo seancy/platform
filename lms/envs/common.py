@@ -179,6 +179,9 @@ FEATURES = {
     # Enable instructor dash to submit background tasks
     'ENABLE_INSTRUCTOR_BACKGROUND_TASKS': True,
 
+    # Enable instructor problem score editing in Staff Debug
+    'ENABLE_INSTRUCTOR_PROBLEM_SCORE_EDITING': True,
+
     # Enable instructor to assign individual due dates
     # Note: In order for this feature to work, you must also add
     # 'courseware.student_field_overrides.IndividualStudentOverrideProvider' to
