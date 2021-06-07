@@ -5,6 +5,7 @@ import DataList from "lt-react-data-list"
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
 import {pick} from "lodash";
+import {DatalistToolbarFooter} from './Common'
 
 export default class ILTLearnerReport extends BaseReport {
     constructor(props) {
@@ -20,12 +21,12 @@ export default class ILTLearnerReport extends BaseReport {
         dataUrl:'/analytics/ilt/json/'
     }
 
-    getConfig() {
+    getFields () {
         const propertiesFields = this.getOrderedProperties()
         const translationRender={
             render:v=>gettext(v)
         }
-        return {...{
+        return {
             fields: [
 
                 {name: gettext('Geographical area'), fieldName: 'Geographical area', ...translationRender},
@@ -64,21 +65,26 @@ export default class ILTLearnerReport extends BaseReport {
                 {name: gettext('Overnight stay address'), fieldName: 'Overnight stay address'},
                 {name: gettext('Comment'), fieldName: 'Comment'}
             ],
-        }, ...this.getBaseConfig()}
+        }
+    }
+
+    getConfig() {
+        return {...this.getBaseConfig()}
     }
 
     render() {
         const config = this.getConfig()
         return (
             <>
-                <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
+                <Toolbar onChange={data => this.toolbarDataUpdate(data, 'isExcluded')}
                          onGo={this.startExport.bind(this)}
                          {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}
                          periodTooltip={gettext('Filter the sessions starting in the selected period.')}/>
-                 {this.props.children}
+                <DatalistToolbarFooter lastUpdate={this.props.last_update} onApply={this.applyQuery.bind(this)} disabled={this.state.applyDisabled} />
                 <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
+                          fields={this.state.fields}
                           doubleScroll
                 />
             </>

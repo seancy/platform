@@ -26,7 +26,7 @@ class CourseReport extends React.Component {
         const urlParams = new URLSearchParams(location.search)
         const course_id = urlParams.get('course_id')
         //const token = urlParams.get('csrfmiddlewaretoken')  please keep it.
-        const common_props = {...pick(this.props, 'defaultLanguage', 'token'), ...{
+        const common_props = {...pick(this.props, 'defaultLanguage', 'token', 'last_update'), ...{
             course_id,
             defaultToolbarData:this.state.toolbarData,
             defaultActiveTabName:this.state.activeTabName,

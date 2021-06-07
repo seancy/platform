@@ -20,4 +20,12 @@ const StatusRender = (value) => {
     return value && value.indexOf('%') < 0 ? `${value}%` : value
 
 }
-export {LastUpdate,StatusRender,PercentRender}
+
+const DatalistToolbarFooter = ({lastUpdate, onApply, disabled}) => (
+  <p className="last-update">
+      <span className="fal fa-sync-alt"></span>{gettext('Please, note that these reports are not live. Last update:')} {lastUpdate}
+      <input type="button" class="apply-trigger" value="Apply" onClick={onApply} disabled={disabled}></input>
+  </p>
+)
+
+export {LastUpdate,StatusRender,PercentRender, DatalistToolbarFooter}

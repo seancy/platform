@@ -22,7 +22,7 @@ const debounce = (f, time) => {
 export class Toolbar extends React.Component {
     constructor(props) {
         super(props);
-        this.fireOnChange = debounce(this.doFireChange.bind(this), 1000).bind(this)
+        this.fireOnChange = debounce(this.doFireChange.bind(this), 100).bind(this)
 
         const {enabledItems}=props
         const toolbarItems = this.getToolbarItems(enabledItems)
@@ -84,6 +84,11 @@ export class Toolbar extends React.Component {
     export() {
         const {onGo}=this.props
         onGo && onGo(this.state.exportType)
+
+        if (window.listenDownloads) {
+            const cancel = window.listenDownloads((data, foundNewFile) => foundNewFile && cancel())
+            window.addEventListener('beforeunload', cancel)
+        }
     }
 
     fireExportTypeChange() {
