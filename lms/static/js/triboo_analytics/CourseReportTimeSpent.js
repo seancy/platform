@@ -4,6 +4,7 @@ import DataList from "lt-react-data-list";
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
 import {pick, flatten} from "lodash";
+import {DatalistToolbarFooter} from './Common'
 
 export default class CourseReportTimeSpent extends BaseReport {
     constructor(props) {
@@ -57,16 +58,8 @@ export default class CourseReportTimeSpent extends BaseReport {
     }
 
     getConfig() {
-        const propertiesFields = this.getOrderedProperties()
-        const {dynamicFields, subFields}=this.getDynamicFields()
-
         return {...{
             keyField:"ID",
-            fields:[
-                {name: gettext('Name'), fieldName: 'Name'},
-                ...propertiesFields,
-                ...dynamicFields
-            ], subFields,
             cellRender:v=>{
                 if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')) {
                     const arr = v.split(':')
@@ -82,15 +75,16 @@ export default class CourseReportTimeSpent extends BaseReport {
         const config = this.getConfig()
         return (
             <>
-                <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
+                <Toolbar onChange={data => this.toolbarDataUpdate(data, 'isExcluded')}
                          onGo={this.startExport.bind(this)}
                          {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}
                          periodTooltip={gettext('Display the time learners spent in the course during the selected period '
                                               + 'for learners who visited the course during this period.')}/>
-                 {this.props.children}
+                <DatalistToolbarFooter lastUpdate={this.props.last_update} onApply={this.applyQuery.bind(this)} disabled={this.state.applyDisabled} />
                 <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
+                          fields={this.state.fields}
                           doubleScroll
                 />
             </>

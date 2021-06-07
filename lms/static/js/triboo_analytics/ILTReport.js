@@ -18,7 +18,7 @@ export class ILTReport extends React.Component {
 
     render() {
         const {defaultLanguage,token} = this.props
-        const commonProps = {...pick(this.props, 'defaultLanguage', 'token'), ...{
+        const commonProps = {...pick(this.props, 'defaultLanguage', 'token', 'last_update'), ...{
             defaultToolbarData:this.state.toolbarData,
             defaultActiveTabName:this.state.activeTabName,
             onTabSwitch:activeTabName=>{

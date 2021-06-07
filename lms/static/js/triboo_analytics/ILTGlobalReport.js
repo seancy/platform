@@ -5,6 +5,7 @@ import DataList from "lt-react-data-list"
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
 import {pick} from "lodash";
+import {DatalistToolbarFooter} from './Common'
 
 export default class ILTGlobalReport extends BaseReport {
     constructor(props) {
@@ -20,11 +21,11 @@ export default class ILTGlobalReport extends BaseReport {
         dataUrl:'/analytics/ilt/json/'
     }
 
-    getConfig() {
+    getFields () {
         const translationRender={
             render:v=>gettext(v)
         }
-        return {...{
+        return {
             fields: [
                 {name: gettext('Geographical area'), fieldName: 'Geographical area', ...translationRender},
                 {name: gettext('Course country'), fieldName: 'Course country', ...translationRender},
@@ -55,21 +56,27 @@ export default class ILTGlobalReport extends BaseReport {
                 {name: gettext('Zip code'), fieldName: 'Zip code'},
                 {name: gettext('City'), fieldName: 'City'},
             ],
-        }, ...this.getBaseConfig()}
+        }
+    }
+
+    getConfig() {
+        return {...this.getBaseConfig()}
     }
 
     render() {
         const config = this.getConfig()
         return (
             <>
-                <Toolbar onChange={this.toolbarDataUpdate.bind(this)} enabledItems={['period','export']}
+                <Toolbar onChange={data => this.toolbarDataUpdate(data, 'isExcluded')}
+                    enabledItems={['period','export']}
                      onGo={this.startExport.bind(this)}
                      {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                      onInit={properties=>this.setState({properties})}
                      periodTooltip={gettext('Filter the sessions starting in the selected period.')}/>
-                 {this.props.children}
+                <DatalistToolbarFooter lastUpdate={this.props.last_update} onApply={this.applyQuery.bind(this)} disabled={this.state.applyDisabled} />
                  <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
+                          fields={this.state.fields}
                           doubleScroll
                 />
             </>

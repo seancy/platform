@@ -2,9 +2,9 @@
 import React from 'react';
 import {Toolbar} from './Toolbar'
 import DataList from "lt-react-data-list"
-import {PaginationConfig, ReportType} from "./Config";
+import {ReportType} from "./Config";
 import BaseReport from './BaseReport'
-import {pick} from 'lodash'
+import {DatalistToolbarFooter} from './Common'
 
 export class LearnerReport extends BaseReport {
     constructor(props) {
@@ -21,15 +21,9 @@ export class LearnerReport extends BaseReport {
         dataUrl:'/analytics/learner/json/'
     }
 
-    getConfig() {
-        const propertiesFields = this.getOrderedProperties()
-        return {...{
-            fields: [
-                {name: gettext('Name'), fieldName: 'Name', render:(value)=>{
-                    return <div dangerouslySetInnerHTML={{__html: value}} />
-                }},
-                ...propertiesFields,
-
+    getDynamicFields () {
+        return {
+            dynamicFields: [
                 {name: gettext('Enrollments'), fieldName: 'Enrollments'},
                 {name: gettext('Successful'), fieldName: 'Successful'},
                 {name: gettext('Unsuccessful'), fieldName: 'Unsuccessful'},
@@ -40,8 +34,12 @@ export class LearnerReport extends BaseReport {
                 {name: gettext('Posts'), fieldName: 'Posts'},
                 {name: gettext('Total Time Spent'), fieldName: 'Total Time Spent'},
                 {name: gettext('Last Login'), fieldName: 'Last Login'}
-            ],
-        }, ...this.getBaseConfig()}
+            ]
+        }
+    }
+
+    getConfig() {
+        return {...this.getBaseConfig()}
     }
 
     render() {
@@ -50,7 +48,7 @@ export class LearnerReport extends BaseReport {
             <section className="analytics-wrapper learner">
                 <div className="report-wrapper">
                     <Toolbar
-                        onChange={this.toolbarDataUpdate.bind(this)}
+                        onChange={data => this.toolbarDataUpdate(data, 'isExcluded')}
                              onGo={this.startExport.bind(this)}
                              onInit={properties=>this.setState({properties})}
                              periodTooltip={gettext('Display the state of learners at the end of the selected period '
@@ -59,11 +57,10 @@ export class LearnerReport extends BaseReport {
                                                  + 'during the selected period.')}>
                         <h3>{gettext('Learner Report')}</h3>
                     </Toolbar>
-                    <p className="last-update">
-                        <span className="fal fa-sync-alt"></span>{gettext('Please, note that these reports are not live. Last update:')} {this.props.last_update}
-                    </p>
+                    <DatalistToolbarFooter lastUpdate={this.props.last_update} onApply={this.applyQuery.bind(this)} disabled={this.state.applyDisabled} />
                     <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                               enableRowsCount={true} {...config}
+                              fields={this.state.fields}
                               doubleScroll
                     />
                 </div>

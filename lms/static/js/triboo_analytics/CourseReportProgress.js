@@ -3,6 +3,7 @@ import {Toolbar} from "./Toolbar";
 import DataList from "lt-react-data-list";
 import {PaginationConfig, ReportType} from "./Config";
 import BaseReport from './BaseReport'
+import {DatalistToolbarFooter} from './Common'
 import {flatten, pick} from "lodash";
 
 export default class CourseReportProgress extends BaseReport {
@@ -57,16 +58,8 @@ export default class CourseReportProgress extends BaseReport {
     }
 
     getConfig() {
-        const propertiesFields = this.getOrderedProperties()
-        const {dynamicFields, subFields}=this.getDynamicFields()
-
         return {...{
             keyField:"ID",
-            fields:[
-                {name: gettext('Name'), fieldName: 'Name'},
-                ...propertiesFields,
-                ...dynamicFields
-            ],subFields,
             cellRender:(v, row, item)=>{
                 if (v == 'Yes' || v == 'No') {
                     return (<><span className={"trophy-" + (v == 'Yes'?'yes fa fa-check':'no fa fa-times')}></span></> )
@@ -83,15 +76,17 @@ export default class CourseReportProgress extends BaseReport {
         const config = this.getConfig()
         return (
             <>
-                <Toolbar onChange={this.toolbarDataUpdate.bind(this)}
+                <Toolbar onChange={data => this.toolbarDataUpdate(data, 'isExcluded')}
                          onGo={this.startExport.bind(this)}
                          {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}
                          periodTooltip={gettext('Display the progress of learners at the end of the selected period '
                                              + 'for learners who visited the course during this period.')}/>
-                 {this.props.children}
+                <DatalistToolbarFooter lastUpdate={this.props.last_update} onApply={this.applyQuery.bind(this)} disabled={this.state.applyDisabled} />
                 <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
+                          fields={this.state.fields}
+                          subFields={this.state.subFields}
                           doubleScroll
                 />
             </>

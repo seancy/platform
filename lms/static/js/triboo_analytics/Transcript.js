@@ -29,10 +29,9 @@ export class Transcript extends BaseReport {
         return matches && matches.length ? {user_id: matches[1]} : {}
     }
 
-    getConfig() {
+    getFields () {
         const statusRender = { render:StatusRender}, percentRender = { render:PercentRender}
-        return {...{
-            enableRowsCount:true,
+        return {
             fields: [
                 {name: 'Course Title', fieldName: 'Course Title', render:(value)=>{
                     return <div dangerouslySetInnerHTML={{__html: value}} />
@@ -46,6 +45,12 @@ export class Transcript extends BaseReport {
                 {name: 'Enrollment Date', fieldName: 'Enrollment Date'},
                 {name: 'Completion Date', fieldName: 'Completion Date'}
             ],
+        }
+    }
+
+    getConfig() {
+        return {...{
+            enableRowsCount:true,
         }, ...this.getBaseConfig()}
     }
 
@@ -66,6 +71,7 @@ export class Transcript extends BaseReport {
                 {!disable_last_update && <LastUpdate last_update={last_update} />}
                 <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={defaultLanguage}
                           {...config}
+                          fields={this.state.fields}
                           doubleScroll
                 />
             </>

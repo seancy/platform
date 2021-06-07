@@ -22,6 +22,9 @@ export default class BaseReport extends React.Component{
             totalData: {},
             rowsCount: 0,
             xhrFetchData: null,
+            fields: [],
+            subFields: undefined,
+            applyDisabled: true,
         }
 
         this.myRef = React.createRef()
@@ -37,36 +40,71 @@ export default class BaseReport extends React.Component{
             endDate == '') ) {
             this.fetchData(1)
         }
+
+        this.updateFields()
+    }
+
+    getFields () {
+        const propertiesFields = this.getOrderedProperties()
+        const {dynamicFields, subFields} = this.getDynamicFields()
+        return {
+            fields: [
+                {name: gettext('Name'), fieldName: 'Name', render:(value)=>{
+                    return <div dangerouslySetInnerHTML={{__html: value}} />
+                }},
+
+                ...propertiesFields,
+
+                ...dynamicFields,
+            ],
+            subFields,
+        }
+    }
+
+    getDynamicFields () {
+        return {
+            dynamicFields: [],
+        }
+    }
+
+    updateFields () {
+        this.setState(this.getFields())
     }
 
     toolbarDataUpdate(toolbarData, isExcluded) {
-        this.setState(()=>{
-            return {
-                toolbarData
-            }
-        },()=>{
-            if (!isExcluded) {
-                this.fetchData(1)
-                this.myRef.current.resetPage(1)
-            }
+        this.setState(() => ({
+            toolbarData,
+            applyDisabled: false,
+        }), () => {
+            if (!isExcluded) this.applyQuery()
+
             const {onChange} = this.props
             onChange && onChange(this.state.toolbarData)
+        })
+    }
+
+    applyQuery () {
+        this.fetchData(1)
+        this.updateFields()
+        this.myRef.current.resetPage(1)
+        this.setState({
+            applyDisabled: true,
         })
     }
 
     getOrderedProperties() {
         const {data}=this.state;
         const {selectedProperties}=this.state.toolbarData;
-        let properties=selectedProperties && selectedProperties.length ?
-            selectedProperties : this.state.properties.filter(p=>p.type == 'default')
+        const properties = selectedProperties && selectedProperties.length
+            ? selectedProperties
+            : this.state.properties.filter(p => p.type === 'default')
+
         let orderedProperties = []
         if (data && data.length > 0) {
             const firstRow = data[0]
             const propertiesValues = properties.map(p=>p.value)
             orderedProperties = Object.keys(firstRow)
-                .filter(key=>{
-                    return propertiesValues.includes(key);
-                })
+                .filter(key => propertiesValues.includes(key))
                 .map(key=>{
                     const item = properties.find(p=>p.value == key)
                     return item || {text:key, value:key}

@@ -257,7 +257,11 @@ export class CustomizedReport {
       }
     })
     console.log('data', data)
-    return await $.post({
+    if (window.listenDownloads) {
+        const cancel = window.listenDownloads((data, foundNewFile) => foundNewFile && cancel())
+        window.addEventListener('beforeunload', cancel)
+    }
+    return $.post({
       url: 'export/',
       data: JSON.stringify(data),
     })

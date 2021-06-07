@@ -14,11 +14,12 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        function listDownloads() {
+        function listDownloads(onSuccess) {
             var elem = $('#report-file-list');
             $.ajax(elem.attr('data-endpoint'), {
                 success: function (data) {
-                    if (elem.children().length < data.download.length) {
+                    var foundNewFile = elem.children().length < data.download.length
+                    if (foundNewFile) {
                         var downloadIcon = $('a.download-item')
                         if (downloadIcon) downloadIcon.addClass('red-dot')
                     }
@@ -34,15 +35,31 @@
                         links.push('<div><h3>${_("No reports available")}</h3></div>')
                     }
                     elem.html(links);
+
+                    if (onSuccess) onSuccess(data, foundNewFile)
                 }
             })
         }
-        var inter = setInterval(listDownloads, 10 * 1000);
-        $(window).unload(function () {
-            clearInterval(inter);
-        });
-        $('#report-file-list').html('<div><h3>${_("No reports available")}</h3></div>')
         listDownloads();
+
+        $('#report-file-list').html('<div><h3>${_("No reports available")}</h3></div>')
+
+        var listenDownloadsTimeout = null
+        function listenDownloads (onSuccess) {
+          if (listenDownloadsTimeout) return
+          var listen = function () {
+            listDownloads(function (data, foundNewFile) {
+              listenDownloadsTimeout = setTimeout(listen, 5 * 1000)
+              if (onSuccess) onSuccess(data, foundNewFile)
+            })
+          }
+          listen()
+          return function cancel () {
+            clearTimeout(listenDownloadsTimeout)
+            listenDownloadsTimeout = null
+          }
+        }
+        window.listenDownloads = listenDownloads
 
         $('.actions .download-item').on('click', function(e) {
                 var $download = $(e.currentTarget)
@@ -56,6 +73,5 @@
           var downloadIcon = $('a.download-item')
           if (downloadIcon) downloadIcon.removeClass('red-dot')
         })
-
     });
 </script>
