@@ -811,7 +811,7 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
     def get_by_day(cls, to_date=None, **kwargs):
         try:
             r = cls.objects.get(is_active=True, **kwargs)
-            if date_time:
+            if to_date:
                 day_key = dt2key(to_date)
                 record = cls.get_record(r.records, day_key)
                 return LearnerCourseDailyReportMockup(r, record)
