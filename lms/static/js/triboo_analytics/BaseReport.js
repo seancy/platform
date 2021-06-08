@@ -72,9 +72,9 @@ export default class BaseReport extends React.Component{
     }
 
     toolbarDataUpdate(toolbarData, isExcluded) {
-        this.setState(() => ({
+        this.setState(prev => ({
             toolbarData,
-            applyDisabled: false,
+            applyDisabled: isExcluded === true && prev.applyDisabled,
         }), () => {
             if (!isExcluded) this.applyQuery()
 
