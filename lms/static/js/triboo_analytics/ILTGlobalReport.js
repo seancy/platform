@@ -67,7 +67,7 @@ export default class ILTGlobalReport extends BaseReport {
         const config = this.getConfig()
         return (
             <>
-                <Toolbar onChange={data => this.toolbarDataUpdate(data, 'isExcluded')}
+                <Toolbar onChange={(data, isExcluded) => this.toolbarDataUpdate(data, isExcluded || 'isExcluded')}
                     enabledItems={['period','export']}
                      onGo={this.startExport.bind(this)}
                      {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}

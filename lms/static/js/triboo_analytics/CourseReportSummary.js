@@ -49,7 +49,7 @@ export default class CourseReportSummary extends BaseReport {
         const config = this.getConfig()
         return (
             <>
-                <Toolbar onChange={data => this.toolbarDataUpdate(data, 'isExcluded')}
+                <Toolbar onChange={(data, isExcluded) => this.toolbarDataUpdate(data, isExcluded || 'isExcluded')}
                          onGo={this.startExport.bind(this)}
                          {...pick(this.props, ['onTabSwitch', 'defaultToolbarData', 'defaultActiveTabName'])}
                          onInit={properties=>this.setState({properties})}

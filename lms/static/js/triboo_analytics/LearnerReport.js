@@ -48,7 +48,7 @@ export class LearnerReport extends BaseReport {
             <section className="analytics-wrapper learner">
                 <div className="report-wrapper">
                     <Toolbar
-                        onChange={data => this.toolbarDataUpdate(data, 'isExcluded')}
+                        onChange={(data, isExcluded) => this.toolbarDataUpdate(data, isExcluded || 'isExcluded')}
                              onGo={this.startExport.bind(this)}
                              onInit={properties=>this.setState({properties})}
                              periodTooltip={gettext('Display the state of learners at the end of the selected period '

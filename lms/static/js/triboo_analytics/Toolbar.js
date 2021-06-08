@@ -27,8 +27,6 @@ export class Toolbar extends React.Component {
         const {enabledItems}=props
         const toolbarItems = this.getToolbarItems(enabledItems)
         this.state = {
-            timer:null,
-
             selectedFilterItems:[],
             selectedProperties:[],
             startDate:'',
@@ -92,16 +90,12 @@ export class Toolbar extends React.Component {
     }
 
     fireExportTypeChange() {
-        this.state.timer && clearTimeout(this.state.timer)
-        this.setState({
-            timer:setTimeout(()=>{
-                this.doFireChange(true)
-            },500)
-        })
+        setTimeout(() => {
+            this.doFireChange(true)
+        }, 100)
     }
 
     doFireChange(isExcluded=false) {
-        this.setState({timer:null})
         const {onChange}=this.props
         const json = pick(this.state, 'selectedFilterItems','selectedProperties', 'startDate','endDate', 'activeButton', 'exportType')
         onChange && onChange(json, isExcluded);
