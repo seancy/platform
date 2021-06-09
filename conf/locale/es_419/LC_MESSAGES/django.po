@@ -31130,6 +31130,10 @@ msgid "Access to all courses (1000+ courses and 9+ career areas)"
 msgstr "Acceso a todos los cursos ( +1000 cursos y +9 carreras)"
 
 # master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Access to all courses (2000+ courses)"
+msgstr "Acceso a todos los cursos (+2.000)"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Certifications"
 msgstr "Certificación"
 
@@ -31147,11 +31151,11 @@ msgstr "BÁSICO"
 
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "FREE"
-msgstr "GRATIS"
+msgstr "GRATUITA"
 
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Access to a community of 10,000+ active members"
-msgstr "Acceso a la comunidad +10,000 usuarios"
+msgstr "Acceso a la comunidad (+10,000 usuarios)"
 
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Personalized learning lists, updated weekly"
@@ -31160,6 +31164,38 @@ msgstr "Actualización constante de listas de aprendizaje personalizadas"
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "Learning in the flow of life - anytime, anywhere"
 msgstr "Aprendizaje en el flow 24/7, en cualquier momento y lugar"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "BASIC SUBSCRIPTION"
+msgstr "AFILIACIÓN BÁSICA"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "MONTHLY SUBSCRIPTION"
+msgstr "AFILIACIÓN MENSUAL"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "YEARLY SUBSCRIPTION"
+msgstr "AFILIACIÓN ANNUAL"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "INSTITUTIONAL SUBSCRIPTION"
+msgstr "AFILIACIÓN INSTITUCIONAL"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Let's Talk"
+msgstr "Hablemos"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "{price} USD / YEAR"
+msgstr "{price} USD / AÑO"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Enterprises"
+msgstr "Empresas"
+
+# master-griky: lms/templates/student_account/branding_login_and_register.html
+msgid "Universities"
+msgstr "Universidades"
 
 #: lms/templates/dashboard.html
 msgid "Back to Calendar"
