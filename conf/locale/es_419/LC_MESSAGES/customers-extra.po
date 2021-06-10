@@ -199,7 +199,7 @@ msgstr "AFILIACIÓN MENSUAL"
 
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "YEARLY SUBSCRIPTION"
-msgstr "AFILIACIÓN ANNUAL"
+msgstr "AFILIACIÓN ANUAL"
 
 # master-griky: lms/templates/student_account/branding_login_and_register.html
 msgid "INSTITUTIONAL SUBSCRIPTION"
