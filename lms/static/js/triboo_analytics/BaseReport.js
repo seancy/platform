@@ -204,7 +204,7 @@ export default class BaseReport extends React.Component{
                         totalData: json.total, //{email: 'total:', first_name: json.total},
                         rowsCount: json.pagination.rowsCount
                     }
-                })
+                }, this.updateFields)
             },
             error:(json)=>{
                 this.setState((s, p) => {
