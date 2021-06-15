@@ -61,7 +61,7 @@ export default class CourseReportTimeSpent extends BaseReport {
         return {...{
             keyField:"ID",
             cellRender:v=>{
-                if ((v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')) {
+                if (typeof v === 'string' && (v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')) {
                     const arr = v.split(':')
                     return (<><span className={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}</> )
                 } else {
