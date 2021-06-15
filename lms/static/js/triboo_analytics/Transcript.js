@@ -16,12 +16,12 @@ export class Transcript extends BaseReport {
             properties:[],
         };
         console.log(pick(this.state, ['userID']))
-    }
 
-    setting = {
-        extraParams: this.getExtraParams(),
-        reportType:ReportType.TRAN_SCRIPT,
-        dataUrl:'/analytics/transcript/json/'
+        this.setting = {
+            extraParams: this.getExtraParams(),
+            reportType:ReportType.TRAN_SCRIPT,
+            dataUrl: props.dataUrl || '/analytics/transcript/json/',
+        }
     }
 
     getExtraParams() {
@@ -36,6 +36,11 @@ export class Transcript extends BaseReport {
                 {name: 'Course Title', fieldName: 'Course Title', render:(value)=>{
                     return <div dangerouslySetInnerHTML={{__html: value}} />
                 }},
+                ...(this.props.withGradebookLink ? [{
+                    name: ' ', fieldName: 'Gradebook Link', render:(value)=>{
+                        return <div dangerouslySetInnerHTML={{__html: value}} />
+                    }
+                }] : []),
                 {name: 'Status', fieldName: 'Status', ...statusRender, className:'status'},
                 {name: 'Progress', fieldName: 'Progress', ...percentRender},
                 {name: 'Badges', fieldName: 'Badges'},

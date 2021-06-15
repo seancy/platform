@@ -166,10 +166,7 @@ class TranscriptTable(_OrderMixin, _RenderMixin, tables.Table):
                                               extra_columns)
         self.html_links = html_links
         self.titles = {ov.id: ov.display_name for ov in CourseOverview.objects.all()}
-
-
-    def before_render(self, request):
-        self.path = request.path
+        self.request = request
 
 
     def render_course_title(self, record, value, bound_column):
@@ -200,7 +197,7 @@ class TranscriptTableWithGradeLink(TranscriptTable):
                 <span class="fal fa-clipboard-list-check"></span>
             </a>
         '''
-    gradebook_link = tables.TemplateColumn(gradebook_template, verbose_name='')
+    gradebook_link = tables.TemplateColumn(gradebook_template, verbose_name='Gradebook Link')
     enrollment_date = tables.Column(verbose_name='Enrollment Date')
     completion_date = tables.Column(verbose_name='Completion Date')
 
@@ -219,9 +216,6 @@ class TranscriptTableWithGradeLink(TranscriptTable):
         unlocalize = ('course_title', 'gradebook_link', 'progress', 'badges', 'current_score', 'total_time_spent',
                       'enrollment_date', 'completion_date')
 
-    def before_render(self, request):
-        self.path = request.path
-        self.request_user = request.user
 
     def render_gradebook_link(self, record, value, bound_column, bound_row):
         record_course = modulestore().get_course(record.course_id)
@@ -233,7 +227,7 @@ class TranscriptTableWithGradeLink(TranscriptTable):
             bound_column=bound_column,
             bound_row=bound_row
         )
-        return column_render if InstructorDashboardTab.is_enabled(record_course, self.request_user) else ""
+        return column_render if InstructorDashboardTab.is_enabled(record_course, self.request.user) else ""
 
 
 class UserBaseTable(tables.Table):
@@ -405,7 +399,7 @@ def get_progress_table_class(badges):
     for badge_hash, grading_rule, section_name in badges:
         verbose_name = "%s ▸ %s" % (grading_rule.encode('utf-8'), section_name.encode('utf-8'))
         # attributes[badge_hash] = HeaderColumn(verbose_name=verbose_name, colspan=3)
-        attributes["%s_success" % badge_hash] = ProgressSuccessColumn(verbose_name=("%s / %sSuccess" % (verbose_name, _("Success"))))
+        attributes["%s_success" % badge_hash] = ProgressSuccessColumn(verbose_name=("%s / %s" % (verbose_name, _("Success"))))
         attributes["%s_score" % badge_hash] = AvgPercentFooterColumn(verbose_name=("%s / %s" % (verbose_name, _("Score"))))
         attributes["%s_successdate" % badge_hash] = ProgressSuccessDateColumn(verbose_name=("%s / %s" % (verbose_name, _("Date"))))
 
@@ -459,7 +453,7 @@ def get_time_spent_table_class(chapters, sections):
 
     def render_user_country(self, value):
         return dict(countries)[value]
-        
+
     attributes['render_user_country'] = render_user_country
 
     return type("TimeSpentTable", (_OrderMixin, UserBaseTable,), attributes)
@@ -993,4 +987,3 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
 
     def render_attendee(self, value):
         return "Yes" if value else "No"
-

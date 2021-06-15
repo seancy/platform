@@ -234,7 +234,9 @@
                     props: {
                         defaultLanguage: '${request.LANGUAGE_CODE}',
                         last_update: '${last_update}',
-                        token:'${ csrf_token }'
+                        token:'${ csrf_token }',
+                        dataUrl: '/analytics/learner_transcript/json/',
+                        withGradebookLink: true,
                       }
                   });
                 </script>

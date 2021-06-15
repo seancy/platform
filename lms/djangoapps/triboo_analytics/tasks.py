@@ -88,23 +88,18 @@ def links_for_all(storage, user):
         report_dir = path_to(course_id, user.id)
         try:
             _, filenames = storage.listdir(report_dir)
+            for filename in filenames:
+                files.append((filename, os.path.join(report_dir, filename)))
         except OSError:
-            filenames = []
-        if filenames:
-            files.extend([(filename, os.path.join(report_dir, filename)) for filename in filenames])
+            pass
 
     report_dir = path_to(None, user.id)
     try:
         _, filenames = storage.listdir(report_dir)
-    except OSError:
-        filenames = []
-    for report in ['course_summary', 'learner', 'ilt', 'my_transcript']:
-        filename_start = report
-        if report == "my_transcript":
-            filename_start = "transcript_%s" % user.username
         for filename in filenames:
-            if filename.startswith(filename_start):
-                files.append((filename, os.path.join(report_dir, filename)))
+            files.append((filename, os.path.join(report_dir, filename)))
+    except OSError:
+        pass
 
     files.sort(key=lambda f: storage.modified_time(f[1]), reverse=True)
     return [(filename, storage.url(full_path)) for filename, full_path in files]
