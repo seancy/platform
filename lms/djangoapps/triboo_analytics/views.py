@@ -271,14 +271,14 @@ def get_ilt_period_kwargs(data, orgs, as_string=False):
     return kwargs, exclude
 
 
-def get_transcript_table(orgs, user_id, last_update, html_links=False, sort=None, with_gradebook_link=False):
+def get_transcript_table(orgs, user_id, last_update, request=None, html_links=False, sort=None, with_gradebook_link=False):
     queryset = LearnerCourseJsonReport.objects.none()
     for org in orgs:
         new_queryset = LearnerCourseJsonReport.filter_by_day(org=org, user_id=user_id)
         queryset = queryset | new_queryset
     order_by = get_order_by(TranscriptTable, sort)
     if with_gradebook_link:
-        return TranscriptTableWithGradeLink(queryset, html_links=html_links, order_by=order_by), queryset
+        return TranscriptTableWithGradeLink(queryset, html_links=html_links, order_by=order_by, request=request), queryset
     return TranscriptTable(queryset, html_links=html_links, order_by=order_by), queryset
 
 
@@ -507,6 +507,7 @@ def _transcript_view(user, request, template, report_type, with_gradebook_link=F
         learner_course_table, learner_course_reports = get_transcript_table(orgs,
                                                                             user.id,
                                                                             last_update,
+                                                                            request=request,
                                                                             html_links=True,
                                                                             with_gradebook_link=with_gradebook_link)
         config_tables(request, learner_course_table)
@@ -558,12 +559,7 @@ def _transcript_view(user, request, template, report_type, with_gradebook_link=F
         )
 
 
-@transaction.non_atomic_requests
-@analytics_on
-@analytics_member_required
-@ensure_csrf_cookie
-@cache_control(no_cache=True, no_store=True, must_revalidate=True)
-def transcript_view_data(request):
+def _transcript_view_data(request, with_gradebook_link=False):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
         return JsonResponseBadRequest({"message": _("Response Not Found.")})
@@ -585,11 +581,13 @@ def transcript_view_data(request):
     if last_reportlog:
         last_update = last_reportlog.created
 
-        learner_course_table, learner_course_reports = get_transcript_table(orgs, 
+        learner_course_table, learner_course_reports = get_transcript_table(orgs,
                                                                             user_id,
                                                                             last_update,
+                                                                            request=request,
                                                                             html_links=True,
-                                                                            sort=data.get('sort'))
+                                                                            sort=data.get('sort'),
+                                                                            with_gradebook_link=with_gradebook_link)
         summary_columns = ['Progress',
                            'Current Score',
                            'Badges',
@@ -599,6 +597,22 @@ def transcript_view_data(request):
                          data.get('page', {}),
                          summary_columns,
                          column_order)
+
+
+@transaction.non_atomic_requests
+@analytics_on
+@analytics_member_required
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def transcript_view_data(request):
+    return _transcript_view_data(request, with_gradebook_link=True)
+
+
+@transaction.non_atomic_requests
+@ensure_csrf_cookie
+@cache_control(no_cache=True, no_store=True, must_revalidate=True)
+def my_transcript_view_data(request):
+    return _transcript_view_data(request)
 
 
 @login_required
@@ -1048,7 +1062,7 @@ def course_view(request):
 
         # logger.info("LAETITIA -- unique_visitors_csv = %s" % unique_visitors_csv)
         # logger.info("LAETITIA -- average_complete_time_csv = %s" % average_complete_time_csv)
- 
+
         return render_to_response(
             "triboo_analytics/course.html",
             {
@@ -1106,7 +1120,7 @@ def course_view_data(request):
 
         if report == "course_summary":
             logger.info("LAETITIA -- Course Summary kwargs=%s" % filter_kwargs)
-            table = get_table_data(LearnerCourseJsonReport, CourseTable, filter_kwargs, exclude, 
+            table = get_table_data(LearnerCourseJsonReport, CourseTable, filter_kwargs, exclude,
                                    by_period=True, sort=data.get('sort'))
             summary_columns = ['Progress',
                                'Current Score',
@@ -1815,4 +1829,3 @@ def leaderboard_view(request):
         raise Http404
     data = {}
     return render_to_response("triboo_analytics/leaderboard.html", data)
-

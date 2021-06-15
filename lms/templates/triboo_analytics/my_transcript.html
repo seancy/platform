@@ -213,6 +213,11 @@
                 <h3>${_("Let's have a look at your learning data")}</h3>
             </section>
         </section>
+        <nav>
+            <ol class="tabs analytics-tabs"></ol>
+            <%include file="download.html" args="list_table_downloads_url=list_table_downloads_url" />
+        </nav>
+
 
         ${HTML(render_bundle('Transcript'))}
         ${HTML(render_bundle('ReactRenderer'))}
