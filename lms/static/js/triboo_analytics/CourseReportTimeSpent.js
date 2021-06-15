@@ -60,14 +60,6 @@ export default class CourseReportTimeSpent extends BaseReport {
     getConfig() {
         return {...{
             keyField:"ID",
-            cellRender:v=>{
-                if (typeof v === 'string' && (v.startsWith('Yes') || v.startsWith('No')) && v.includes(':')) {
-                    const arr = v.split(':')
-                    return (<><span className={"trophy-no fa fa-"+ (v.startsWith('Yes')?'check':'times')}></span> {arr[1]}</> )
-                } else {
-                    return v
-                }
-            },
         }, ...this.getBaseConfig()}
     }
 
@@ -85,6 +77,7 @@ export default class CourseReportTimeSpent extends BaseReport {
                 <DataList useFontAwesome={true} ref={this.myRef} className="data-list" defaultLanguage={this.props.defaultLanguage}
                           enableRowsCount={true} {...config}
                           fields={this.state.fields}
+                          subFields={this.state.subFields}
                           doubleScroll
                 />
             </>
