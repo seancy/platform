@@ -13,7 +13,7 @@ export default class BaseReport extends React.Component{
             properties:[],
 
             //storing toolbar data
-            toolbarData: {},
+            toolbarData: props.defaultToolbarData || {},
 
             //ajax result
             message:'',
@@ -31,16 +31,7 @@ export default class BaseReport extends React.Component{
     }
 
     componentDidMount() {
-        const toolbarData = get(this, 'props.defaultToolbarData', {})
-        const {selectedFilterItems=[], selectedProperties=[], startDate='', endDate=''} = toolbarData
-        if (Object.keys(toolbarData).length <= 0 ||
-            (selectedFilterItems.length <= 0 &&
-            selectedProperties.length <= 0  &&
-            startDate == '' &&
-            endDate == '') ) {
-            this.fetchData(1)
-        }
-
+        this.fetchData(1)
         this.updateFields()
     }
 
