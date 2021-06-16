@@ -74,9 +74,9 @@ module.exports = Merge.smart({
         ProgramListFactory: ['babel-polyfill', './lms/static/js/learner_dashboard/program_list_factory.js'],
         UnenrollmentFactory: ['babel-polyfill', './lms/static/js/learner_dashboard/unenrollment_factory.js'],
         CompletionOnViewService: ['babel-polyfill', './lms/static/completion/js/CompletionOnViewService.js'],
-        ExternalCatalog: ['babel-polyfill', './lms/static/js/external_catalog/ExternalCatalog.jsx'],
+        EdflexCatalogCourses: ['babel-polyfill', './lms/static/js/external_catalog/EdflexCatalogCourses.jsx'],
         CrehanaCatalogCourses: ['babel-polyfill', './lms/static/js/external_catalog/CrehanaCatalogCourses.jsx'],
-        CrehanaCatalogCoursesOverview: ['babel-polyfill', './lms/static/js/external_catalog/CrehanaCatalogCoursesOverview.jsx'],
+        ExternalCatalogOverview: ['babel-polyfill', './lms/static/js/external_catalog/ExternalCatalogOverview.jsx'],
 
         // Features
         CourseGoals: ['babel-polyfill', './openedx/features/course_experience/static/course_experience/js/CourseGoals.js'],

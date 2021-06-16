@@ -25,7 +25,7 @@ log = logging.getLogger(__name__)
 
 class OverviewPage(View):
     """Overview Page interface for CREHANA"""
-    TEMPLATE_PATH = r'external_catalog/crehana_catalog_overview.html'
+    TEMPLATE_PATH = r'external_catalog/external_catalog_overview.html'
 
     @method_decorator(login_required)
     @method_decorator(ensure_csrf_cookie)

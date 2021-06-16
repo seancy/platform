@@ -4,7 +4,7 @@ import {CoursesSideBar} from './CrehanaCoursesSidebar'
 import {CoursesContainer} from './CrehanaCoursesContainer'
 
 
-class CrehanaCatalogCourses extends React.Component {
+export class CrehanaCatalogCourses extends React.Component {
     constructor(props) {
         super(props);
         let sidebarStatus = true;
@@ -274,5 +274,3 @@ class CrehanaCatalogCourses extends React.Component {
         )
     }
 }
-
-export {CrehanaCatalogCourses};

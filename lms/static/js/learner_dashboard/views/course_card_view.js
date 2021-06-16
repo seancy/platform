@@ -8,6 +8,7 @@ import CertificateStatusView from './certificate_status_view';
 import ExpiredNotificationView from './expired_notification_view';
 import CourseEnrollView from './course_enroll_view';
 import EntitlementView from './course_entitlement_view';
+import CourseCardModel from '../models/course_card_model';
 
 import pageTpl from '../../../templates/learner_dashboard/course_card.underscore';
 
@@ -42,6 +43,7 @@ class CourseCardView extends Backbone.View {
   render() {
     const data = $.extend(this.model.toJSON(), {
       enrolled: this.context.enrolled || '',
+      formatLanguageString: language => CourseCardModel.formatLanguage(language),
     });
     HtmlUtils.setHtml(this.$el, this.tpl(data));
     this.postRender();

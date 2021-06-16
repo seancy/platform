@@ -3,16 +3,15 @@
         <header class="course-image">
             <div class="cover-image">
                 <img src="<%- image_url %>" alt="<%-content.display_name%><%- content.number %>" class="<%=!image_url?'hidden':''%>" />
-              <% //if (language != "") { %>
-                <img src="/static/images/country-icons/<%- language %>.png" alt="<%- language %>"
-                     class="<%=language == ''?'hidden ':''%>course-language">
-              <% //} %>
             </div>
             <% if (course_mandatory_enabled) { %>
             <div class="course-mandatory"><i class="fa fa-exclamation"></i></div>
             <% } %>
             <% //if (course_category) { %>
             <div class="<%=!course_category?'hidden ':''%>course-category"><%- gettext(course_category) %></div>
+            <% //} %>
+            <% //if (language != "") { %>
+            <div class="<%=language == ''?'hidden ':''%>course-language"><%- formatLanguageString(language) %></div>
             <% //} %>
         </header>
         <section class="course-info" aria-hidden="true">

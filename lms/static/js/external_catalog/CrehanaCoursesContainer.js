@@ -1,49 +1,8 @@
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
+import {CrehanaCourseCard} from './ExternalCourseCard'
 
-class CourseCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
-
-    render() {
-        const {image, duration, languages, rating, title, url} = this.props;
-        var langs = [];
-        for(var i = 0; i < languages.length; i++) {
-            langs.push(<img src={`/static/images/country-icons/${languages[i]}.png`}/>);
-        }
-        var hhmmArray = new Date(duration*1000).toISOString().substr(11, 5).split(":");
-        const hh = parseInt(hhmmArray[0]);
-        const mm = parseInt(hhmmArray[1]);
-        return (
-            <div className="courses-listing-item">
-                <a href={`courses/crehana_catalog?next_url=${url}`} target="_blank">
-                    <div className="card-image-wrapper" style={{backgroundImage:'url('+image+')'}}>
-                        {langs}
-                    </div>
-                    <div className="extra">
-                        <ul className="tags">
-                            <li className={'active_crehana'}>{gettext("CREHANA")}</li>
-                        </ul>
-                        <span className="star-score">
-                            <i className="fa fa-star"></i>
-                            <span className="score">{parseFloat(rating).toFixed(2)}</span>
-                        </span>
-                    </div>
-                    <h4 title={title}>{title}</h4>
-                    <div className="sub-info">
-                        {duration && (<span className="duration">
-                            <i className="fal fa-clock"></i>
-                            <span>{ hh === 0 ? gettext('${min} min').replace('${min}', mm) : mm === 0 ? gettext('${hour} hours').replace('${hour}', hh): gettext('${hour} h $(min) m').replace('${hour}', hh).replace('$(min)', mm)}</span>
-                        </span>)}
-                    </div>
-                </a>
-            </div>
-        )
-    }
-}
 
 class InfiniteManuallyScroll extends InfiniteScroll {
     constructor(props) {
@@ -55,7 +14,7 @@ class InfiniteManuallyScroll extends InfiniteScroll {
     }
 }
 
-class CoursesContainer extends React.Component {
+export class CoursesContainer extends React.Component {
     constructor(props) {
         super(props);
 
@@ -111,7 +70,7 @@ class CoursesContainer extends React.Component {
         const items = [];
         data.forEach((course, index) => {
             items.push(
-                <CourseCard key={`id-${index}`}
+                <CrehanaCourseCard key={`id-${index}`}
                             systemLanguage={this.props.language}
                             {...course}
                 />
@@ -162,5 +121,3 @@ class CoursesContainer extends React.Component {
         )
     }
 }
-
-export {CoursesContainer}

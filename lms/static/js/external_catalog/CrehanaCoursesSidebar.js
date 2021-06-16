@@ -1,7 +1,6 @@
 import React from "react";
 import Dropdown from "lt-react-dropdown"
 import CheckboxGroup from 'lt-react-checkbox-group'
-import Cookies from "js-cookie";
 import _ from 'underscore';
 import PropTypes from 'prop-types'
 import styled from 'styled-components'

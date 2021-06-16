@@ -11,13 +11,10 @@ export class LanguageSelector {
         /* For each element, create a new DIV that will act as the selected item: */
         let dropdown = this.dropdown = document.createElement("div");
         dropdown.setAttribute("class", "select-selected");
-        let icon = document.createElement("img");
         let span = document.createElement("span");
-        dropdown.appendChild(icon);
         dropdown.appendChild(span);
         let selectedItem = selElmnt.children[selElmnt.selectedIndex];
         span.innerText = selectedItem.innerText;
-        icon.src = selectedItem.getAttribute('imageSrc');
         wrapper.appendChild(dropdown);
 
         /* For each element, create a new DIV that will contain the option list: */
@@ -29,13 +26,10 @@ export class LanguageSelector {
             /* For each option in the original select element,
             create a new DIV that will act as an option item: */
             let item = document.createElement("li");
-            let img = document.createElement("img");
             let span = document.createElement("span");
-            item.appendChild(img);
             item.appendChild(span);
             const option = selElmnt.options[j];
             span.innerText = option.innerHTML;
-            img.src = option.getAttribute('imagesrc');
 
             if (j == selectedIndex) {
                 item.classList.add('same-as-selected');
@@ -69,14 +63,11 @@ export class LanguageSelector {
         /* When an item is clicked, update the original select box,
         and the selected item: */
         let span = this.dropdown.querySelector('span');
-        let icon = this.dropdown.querySelector('img');
 
         let li = e.currentTarget;
         let liSpan = li.querySelector('span');
-        let liIcon = li.querySelector('img');
 
         span.innerText = liSpan.innerText;
-        icon.setAttribute('src', liIcon.getAttribute('src'));
 
         //this.panel.querySelector('li').classList.remove('same-as-selected');
         this.panel.querySelectorAll('li').forEach(li=> li.classList.remove('same-as-selected'))
