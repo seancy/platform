@@ -18,6 +18,17 @@
             return DateUtils.localize(context);
         }
 
+        function formatLanguage (language, userPreferences) {
+            if (!window.Intl || !window.Intl.DisplayNames) return language
+
+            const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+            const displayLanguage = (userPreferences || {})['pref-lang'] || (document.querySelector('#footer-language-select option[selected]') || {}).value
+
+            const languageNames = new Intl.DisplayNames([displayLanguage || 'en'], {type: 'language'})
+            return capitalize(languageNames.of((language || 'en').split(/[-_]/)[0]))
+        }
+
         return Backbone.View.extend({
 
             tagName: 'li',
@@ -74,6 +85,7 @@
                         }
                     }
                 }
+                data.formatLanguageString = language => formatLanguage(language, this.model.userPreferences),
                 this.$el.html(this.tpl(data));
                 return this;
             }

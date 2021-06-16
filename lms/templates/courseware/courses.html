@@ -123,12 +123,13 @@
 
   % if external_button_url:
   ${static.renderReact(
-      component="ExternalCatalog",
+      component="ExternalCatalogOverview",
       id="my-modal",
       props={
+          'language': user_language,
           'external_button_url': external_button_url
       },
-      componentName="Courses"
+      componentName="ExternalCoursesModal"
     )
   }
   % endif

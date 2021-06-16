@@ -2,7 +2,7 @@
 
 <%!
 import urllib
-
+from babel import Locale
 from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.urls import reverse
@@ -97,9 +97,6 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         <a href="${course_url}" data-course-key="${enrollment.course_id}" class="cover" tabindex="-1">
           <img src="${course_overview.image_urls['small']}" class="course-image" alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" />
         </a>
-      % if course_language:
-        <img src="/static/images/country-icons/${course_language}.png" alt="${course_language}" class="course-language">
-      % endif
       % if display_course_modes_on_dashboard and course_verified_certs.get('display_mode') != 'audit':
         <span class="sts-enrollment" title="${course_verified_certs.get('enrollment_title')}">
           <span class="label">${_("Enrolled as: ")}</span>
@@ -114,6 +111,9 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
       % endif
       % if course_category:
       <div class="course-category">${_(course_category)}</div>
+      % endif
+      % if course_language:
+      <div class="course-language">${Locale.parse(course_language.replace('_', '-'), sep='-').get_language_name(user_language).capitalize()}</div>
       % endif
     </div>
     <div class="wrapper-course-details">
@@ -144,27 +144,6 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                 <h2 class="course-title" id="course-title-${enrollment.course_id}">
                   <a data-course-key="${enrollment.course_id}" href="${course_url}">${course_overview.display_name_with_default}</a>
                 </h2>
-                <div class="progress-icon">
-                    <svg class="progress-ring" data-percent="${progress}">
-                        <defs>
-                          <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%" filterUnits="userSpaceOnUse">
-                            <feGaussianBlur in="SourceAlpha" stdDeviation="2"/> <!-- stdDeviation is how much to blur -->
-                            <feOffset dx="5" dy="5" result="offsetblur"/>
-                            <feOffset dx="-5" dy="-5" result="offsetblur"/>
-                            <feMerge>
-                              <feMergeNode/>
-                              <feMergeNode in="SourceGraphic"/>
-                              <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                          </filter>
-                        </defs>
-                        <circle class="progress-ring__circle-bg" r="12" cx="20" cy="19"/>
-                        <circle class="progress-ring__circle" r="12" cx="17" cy="20"/>
-                    </svg>
-                    <div>
-                      <span class="percent">${progress}%</span>
-                    </div>
-                </div>
             </section>
             <span class="info-date-block-container">
                 % if is_unfulfilled_entitlement:
@@ -213,10 +192,8 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
         <section class="sub-info">
             <div class="badge">
                 <i class="fal fa-trophy"></i>
-                <span>${ungettext(
-                    '{num} badge', '{num} badges', nb_of_badges).format(num=nb_of_badges)}</span>
+                <span>${nb_of_badges}</span>
             </div>
-            <div class="spliter"></div>
             <%
                   duration_availability = False
                   if course_duration:
@@ -228,18 +205,27 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
                   duration = float(duration_context[0]) if '.' in duration_context[0] else int(duration_context[0])
                   duration_unit = duration_context[1]
             %>
+            <div class="spliter"></div>
             <div class="duration">
                 <i class="fal fa-clock"></i>
                 % if duration_unit.startswith('minute'):
-                  <span>${ungettext('{num} minute', '{num} minutes', duration).format(num=duration)}</span>
+                  <span>${ungettext('{num} m', '{num} m', duration).format(num=duration)}</span>
                 % elif duration_unit.startswith('hour'):
-                  <span>${ungettext('{num} hour', '{num} hours', duration).format(num=duration)}</span>
+                  <span>${ungettext('{num} h', '{num} h', duration).format(num=duration)}</span>
                 % elif duration_unit.startswith('day'):
-                  <span>${ungettext('{num} day', '{num} days', duration).format(num=duration)}</span>
+                  <span>${ungettext('{num} d', '{num} d', duration).format(num=duration)}</span>
                 % endif
             </div>
             % endif
         </section>
+
+        <div class="progress-icon">
+            <div class="progress-ring" data-percent="${progress}">
+                <div class="progress-bar" style="width: ${progress}%;"></div>
+            </div>
+            <div><span class="percent">${progress}%</span></div>
+        </div>
+
         <div class="wrapper-course-actions">
           <div class="course-actions">
 

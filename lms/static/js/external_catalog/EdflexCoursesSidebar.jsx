@@ -1,95 +1,7 @@
 import React from "react";
 import Dropdown from "lt-react-dropdown"
 import CheckboxGroup from 'lt-react-checkbox-group'
-import Cookies from "js-cookie";
 import _ from 'underscore';
-
-//events: onRemove,
-class SelectTags extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            value: '',
-            selectedList: []
-        }
-    }
-
-    fireChange() {
-        const {onChange} = this.props
-        onChange && onChange(this.state.selectedList)
-    }
-
-    _handleKeyDown(e) {
-        if (e.key == 'Enter') {
-            this.append(e)
-            //if (this.props.stopEventSpread) {
-            e.preventDefault();
-            e.stopPropagation()
-            return false;
-            //}
-        }
-    }
-
-    removeSelected(item) {
-        const {onRemove} = this.props
-        this.setState(state => {
-            const selectedList = state.selectedList.filter(p => (p != item))
-
-            return {
-                selectedList
-            }
-        }, () => {
-            const {selectedList} = this.state
-            onRemove && onRemove(selectedList)
-            this.fireChange()
-        })
-
-    }
-
-    updateValue(e) {
-        this.setState({
-            value: e.target.value
-        })
-    }
-
-    append() {
-        const {onEnter} = this.props
-        const callback = () => {
-            this.setState({
-                value: ''
-            })
-            onEnter && onEnter(this.state.selectedList)
-            this.fireChange()
-        }
-        this.setState(({selectedList, value}) => {
-            const list = selectedList.concat(value)
-            return {
-                selectedList: list
-            }
-        }, callback)
-    }
-
-    render() {
-        const {selectedList} = this.state;
-        return <div className="searching-field">
-            <div className="input-wrapper">
-                <input type="text"
-                       value={this.state.value}
-                       onChange={this.updateValue.bind(this)}
-                       onKeyDown={this._handleKeyDown.bind(this)}
-                       placeholder={gettext("Search")}
-                />
-                <i className="fal fa-search"></i>
-            </div>
-            <ul className={"tags" + (selectedList.length <= 0 ? ' hidden' : '')}>
-                {selectedList.map(item => (
-                    <li key={`${item}`}><span>{item}</span><i className="fa fa-times-circle"
-                                                              onClick={this.removeSelected.bind(this, item)}/></li>
-                ))}
-            </ul>
-        </div>
-    }
-}
 
 class Filter extends React.Component {
     constructor(props) {
@@ -171,7 +83,7 @@ class DropdownPanel extends React.Component {
 
 }
 
-class SideBar extends React.Component {
+export class SideBar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -252,7 +164,7 @@ class SideBar extends React.Component {
     }
 
     render() {
-        const {status, resources, courseCategories, courseTypes, languages} = this.props
+        const {status, courseCategories, courseTypes, languages} = this.props
         const optionRender = text => gettext(text)
         return (
             <aside className={`sidebar ${status ? '' : ' hide-status'} ${this.state.initializing?' hidden':''}`}>
@@ -290,5 +202,3 @@ class SideBar extends React.Component {
         )
     }
 }
-
-export {SideBar}
