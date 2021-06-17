@@ -113,7 +113,7 @@ from util.course import get_link_for_about_page, get_encoded_course_sharing_utm_
       <div class="course-category">${_(course_category)}</div>
       % endif
       % if course_language:
-      <div class="course-language">${Locale.parse(course_language.replace('_', '-'), sep='-').get_language_name(user_language).capitalize()}</div>
+      <div class="course-language">${Locale.parse(course_language.replace('_', '-'), sep='-').get_language_name((user_language or '').split('-')[0] or 'en').capitalize()}</div>
       % endif
     </div>
     <div class="wrapper-course-details">
