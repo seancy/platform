@@ -1368,7 +1368,6 @@ OFFICIAL_ADVANCED_MODULES = [
         "scormxblock",
         "survey",
         "videoalpha",
-        "edflex",
         "word_cloud",
         "iframe",
 ]
