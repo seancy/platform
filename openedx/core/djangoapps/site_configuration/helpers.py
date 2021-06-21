@@ -205,7 +205,7 @@ def get_current_site_orgs():
     # Make sure we have a list
     if course_org_filter and not isinstance(course_org_filter, list):
         course_org_filter = [course_org_filter]
-    return sorted(course_org_filter)
+    return sorted(course_org_filter) if course_org_filter else None
 
 
 def get_all_orgs():
