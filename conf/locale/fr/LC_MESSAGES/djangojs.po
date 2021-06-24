@@ -12995,11 +12995,11 @@ msgid "You have won ${value} point(s)."
 msgstr "Vous avez gagné ${value} point(s)."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo, for the first time"
+msgid "Log into Triboo, for the first time"
 msgstr "Connexion à la plateforme pour la première fois"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgid "Log into Triboo everyday, for at least 30 minutes"
 msgstr "Connexion quotidienne successive pendant 30 minutes"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -13011,15 +13011,15 @@ msgid "Answering graded activity"
 msgstr "Obtention d'un badge"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Awarded points on completion of each unit"
+msgid "Complete a unit"
 msgstr "Point bonus de complétion d'une unité"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Accessing the first course"
+msgid "Access your first course"
 msgstr "Accès à un cours"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Completion of each course"
+msgid "Complete a course"
 msgstr "Complétion d'un cours"
 
 #: master-cofidis: lms/static/js/views/login_role_check.js
@@ -13374,6 +13374,14 @@ msgstr "Utilisez le composant d'évaluation des réponses ouvertes pour poser de
 msgid "Add this component to grant an intermediate certificate to a learner after quiz completion."
 msgstr "Ajoutez ce composant pour délivrer un certificat intermédiaire à un apprenant une fois le quiz terminé et réussi."
 
+# cms/static/js/views/components/components.json
+msgid "Integrate remote learning tools, such as applications and textbooks, into your course with the learning tools interoperability (LTI) component. The LTI component supports tools with the LTI 1.1 and LTI 1.3 specifications."
+msgstr "Intégrez des outils d'apprentissage à distance, tels que des applications et des manuels, dans votre cours avec le composant Learning Tools Interoperability (LTI). Le composant LTI prend en charge les outils avec les spécifications LTI 1.1 et LTI 1.3."
+
+# cms/static/js/views/components/components.json
+msgid "Add this component to ask learners to confirm the completion of an activity or action on the platform."
+msgstr "Ajoutez ce composant pour demander aux apprenants de confirmer l'achèvement d'une activité ou d'une action sur la plateforme."
+
 #: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Feedback"
@@ -13518,3 +13526,15 @@ msgstr "L'utilisateur a été supprimé avec succès."
 #: platform/cms/static/js/views/settings/main.js
 msgid "Course Title can't be empty"
 msgstr "Le titre du cours ne peut pas être vide"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "My Challenges"
+msgstr "Mes défis"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Download the ranking"
+msgstr "Télécharger le classement"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
+msgstr "L'export que vous êtes sur le point de télécharger tiendra compte de la sélection de la période que vous avez faite en haut du tableau du classement."

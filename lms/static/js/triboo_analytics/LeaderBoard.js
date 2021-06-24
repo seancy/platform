@@ -1,207 +1,219 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import Dropdown from 'lt-react-dropdown'
-import {get, pick} from 'lodash'
 
-//for leader board page.
-export class LeaderBoard extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            cacheObj:{},
-            isLoading: false,
-            ...pick(props, ['lastUpdate', 'totalUser', 'mission', 'list'])
-        };
-    }
+const useNumberLocaleFormatter = languageCode => useMemo(() => new Intl.NumberFormat(languageCode), [languageCode])
 
-    componentDidMount() {
-        this.fetchData('')
-    }
+// for leader board page.
+const Ranks = ({list, totalUser, lastUpdate, isLoading, languageCode}) => {
+  const forceLastItemActive = (index) => {
+    // const isForceActive = list.filter(p=>p.Active).length <= 0
+    // return index == list.length - 1 && isForceActive ? true : false
+    return false
+  }
+  const numberLocaleFormatter = useNumberLocaleFormatter(languageCode)
 
-    getPeriodFilter () {
-        const months = [
-            {text: gettext('All'), value: 'all'},
-            {text: gettext('Week'), value: 'week'},
-            {text: gettext('Month'), value: 'month'},
-        ]
-        return <Dropdown sign='caret' data={months} onChange={this._handlePeriodChange.bind(this)}/>
-    }
-
-    _handlePeriodChange(item) {
-        this.fetchData(item.value)
-    }
-
-    fetchData(period) {
-        const {cacheObj}=this.state
-        this.setState({isLoading:true})
-        if (!cacheObj[period]) {
-            fetch(`/analytics/leaderboard/json/?period=${period}`)
-                .then(res=>res.json())
-                .then(({list, mission, lastUpdate, totalUser})=>{
-                    let obj = { list, lastUpdate, mission, totalUser, isLoading:false}
-                    this.setState(obj)
-                    this.setState(prevState=>{
-                        const tempObj=prevState.cacheObj
-                        tempObj[period]={list, lastUpdate}
-                        return {
-                            cacheObj:tempObj
-                        }
-                    })
-                })
-        } else {
-            const currentObj = cacheObj[period]
-            let obj = { list: currentObj.list, lastUpdate:currentObj.lastUpdate, isLoading:false}
-            this.setState(obj)
-        }
-
-    }
-
-    getRank() {
-        const {list, totalUser, lastUpdate} = this.state;
-
-        const forceLastItemActive = (index)=>{
-            const isForceActive = list.filter(p=>p.Active).length <= 0
-            // return index == list.length - 1 && isForceActive ? true : false
-            return false
-        }
-
-        return <div className={'rank' + (this.state.isLoading ?' loading':'')}>
-            <table>
-                <thead>
-                <tr>
-                    <th>{gettext('Position')}</th>
-                    <th>{gettext('Name')}</th>
-                    <th>{gettext('Points')}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {list.map((item, index) => {
-                    return (<tr key={index} {...(item.Active || forceLastItemActive(index) ? {className:'active'}:{})}>
-                        <td className={item.OrderStatus}>{`${item.Rank}.`}</td>
-                        <td><img src={`${item.Portrait}`}
-                                 alt=""/><b>{item.Name}</b><time>{item.DateStr}</time></td>
-                        <td><strong>{item.Points} {gettext('pt.')}</strong></td>
-                    </tr>)
-                })}
-                </tbody>
-            </table>
-            <div className="loading-block"><i className="fas fa-spinner fa-spin"></i></div>
-            <div className="last-update">
-                <i className="fa fa-user"></i>
-                <small>{gettext('There are currently ${totalUser} learners. Last update: ${lastUpdate}.').replace(/(\${totalUser})/, totalUser).replace(/(\${lastUpdate})/, lastUpdate)}</small>
-            </div>
-        </div>
-    }
-
-    getMission() {
-        const getMissionItem = (key) => {
-            const originalValue = get(this.state, `mission.${key}`, '')
-            const {message, times} = get(this.props, `missionConfig.${key}`, {})
-            const value = originalValue * times
-            return {message, times, value}
-        }
-        return <aside className="mission">
-            <h2>{gettext('Missions')}</h2>
-            <div className="table-wrapper">
-                <table>
-                    <thead><tr><th>{gettext('Missions')}</th><th>{gettext('Points')}</th></tr></thead>
-                    <tbody>
-                    {Object.keys(this.props.missionConfig).map(key => {
-                        const {message, times, value} = getMissionItem(key)
-                        return <tr key={key}>
-                            <td>
-                                <div>{message}</div>
-                                <small>{gettext('You have won ${value} point(s).').replace(/(\${value})/, value)}</small>
-                            </td>
-                            <td>+{times}</td>
-                        </tr>
-                    })}
-                    </tbody>
-                </table>
-            </div>
-        </aside>
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <section className="banner">
-                    <section className="welcome-wrapper">
-                        <h2>{gettext("Leaderboard")}</h2>
-                    </section>
-                </section>
-                <section className="headline-lists">
-                    <section className="headline">
-                        <h2>{gettext('Leaderboard')}</h2>
-                        <div className="period">
-                            <span>{gettext('Ranking')}</span>
-                            <i>|</i>
-                            {this.getPeriodFilter()}
-                        </div>
-
-                    </section>
-                    <section className="lists">
-                        {this.getRank()}
-                        {this.getMission()}
-                    </section>
-                </section>
-
-            </React.Fragment>
-        )
-    }
+  return (
+    <div className={'rank' + (isLoading ? ' loading' : '')}>
+      <table>
+        <thead>
+          <tr>
+            <th>{gettext('Position')}</th>
+            <th>{gettext('Name')}</th>
+            <th>{gettext('Points')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list.map((item, index) => (
+            <tr key={index} {...(item.Active || forceLastItemActive(index) ? {className: 'active'} : {})}>
+              <td className={item.OrderStatus}>{`${item.Rank}`}</td>
+              <td><img src={`${item.Portrait}`} alt="" /><b>{item.Name}</b><time>{item.DateStr}</time></td>
+              <td><strong>{numberLocaleFormatter.format(item.Points)} {gettext('pt.')}</strong></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="loading-block"><i className="fas fa-spinner fa-spin"></i></div>
+      <div className="last-update">
+        <i className="fa fa-user"></i>
+        <small>{gettext(`There are currently ${totalUser} learners. Last update: ${lastUpdate}.`)}</small>
+      </div>
+    </div>
+  )
 }
 
-//for dashboard's leader side board
-export class LeaderSideBoard extends React.Component {
-    constructor(props) {
-        super(props);
+const Missions = ({missionConfig, mission}) => {
+  return (
+    <aside className="mission">
+      <h2>{gettext('My Challenges')}</h2>
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>{gettext('My Challenges')}</th>
+              <th>{gettext('Points')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(missionConfig).map(([key, {message, times, icon = 'fal fa-user'}]) => (
+              <tr key={key}>
+                <td>
+                  <div className="mission__icon-wrapper"><i className={icon}></i></div>
+                  <div className="mission__text-wrapper">
+                    <div>{message}</div>
+                    <small>{gettext(`You have won ${mission[key] * times || 0} point(s).`)}</small>
+                  </div>
+                </td>
+                <td>+{times}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="download-actions-wrapper">
+        <button className="action-primary">
+          <span className="button-text">{gettext('Download the ranking')}</span>
+          <span className="button-icon">
+            <i className="far fa-chevron-down"></i>
+          </span>
+        </button>
+        <ul className="action-dropdown-list is-hidden">
+          <li className="action-item">
+            <a className="action-csv" data-format="csv" href="">CSV</a>
+          </li>
+          <li className="action-item">
+            <a className="action-excel" data-format="xls" href="">Excel</a>
+          </li>
+        </ul>
+      </div>
+      <p className="export-info">{gettext('The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table.')}</p>
+      <div className="dropdown-download-menu" data-endpoint="/analytics/list_table_downloads/leaderboard"></div>
+    </aside>
+  )
+}
 
-        this.state = {
-            list:[]
-        }
-    }
+export const LeaderBoard = ({missionConfig, lastUpdate, totalUser, mission, list, languageCode}) => {
+  const [state, setState] = useState({
+    cacheObj: {},
+    isLoading: true,
+    lastUpdate,
+    totalUser,
+    mission,
+    list,
+  })
+  const deriveState = state => setState(prevState => Object.assign(prevState, state))
 
-    componentDidMount() {
-        this.fetchData('', 5)
-    }
+  const fetchData = useCallback((period, top=50) => {
+    const { cacheObj } = state
+    deriveState({isLoading: true})
 
-    fetchData(period, top) {
-        fetch(`/analytics/leaderboard/json/?period=${period}&top=${top}`)
-            .then(res=>res.json())
-            .then(({list})=>{
-                this.setState({ list })
-            })
+    if (!cacheObj[period]) {
+      fetch(`/analytics/leaderboard/json/?period=${period}&top=${top}`)
+        .then(res => res.json())
+        .then(({list, mission, lastUpdate, totalUser}) => {
+          setState(prevState => ({
+            ...prevState,
+            list,
+            lastUpdate,
+            mission,
+            totalUser,
+            isLoading: false,
+            cacheObj: {
+              ...prevState.cacheObj,
+              [period]: {list, lastUpdate},
+            }
+          }))
+        })
+    } else {
+      const {list, lastUpdate} = cacheObj[period]
+      deriveState({
+        list,
+        lastUpdate,
+        isLoading: false
+      })
     }
+  })
 
-    render() {
-        return (
-            <React.Fragment>
-                <div className="title">
-                    <h3>{gettext('Leaderboard')}</h3>
-                    <a href="/analytics/leaderboard/">{gettext('Show more')} <i className="far fa-chevron-right"></i> </a>
-                </div>
-                <div className="board-content">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>{gettext('Position')}</th>
-                            <th>{gettext('Name')}</th>
-                            <th>{gettext('Points')}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {this.state.list.map((item, index) => {
-                            return (<tr key={index}>
-                                <td><strong>{`${index + 1}.`}</strong></td>
-                                <td><img src={`${item.Portrait}`}
-                                         alt=""/><span className="name">{item.Name}</span></td>
-                                <td><strong>{item.Points}</strong> <span>points</span></td>
-                            </tr>)
-                        })}
-                        </tbody>
-                    </table>
-                </div>
-            </React.Fragment>
-        )
-    }
+  useEffect(() => {
+    fetchData('')
+  }, [])
+
+  const handlePeriodChange = useCallback((item) => {
+    fetchData(item.value)
+  })
+
+  const periodOptions = [
+    {text: gettext('All'), value: 'all'},
+    {text: gettext('Week'), value: 'week'},
+    {text: gettext('Month'), value: 'month'},
+  ]
+
+  return (
+    <React.Fragment>
+      <section className="banner">
+        <section className="welcome-wrapper">
+          <h2>{gettext('Leaderboard')}</h2>
+        </section>
+      </section>
+      <section className="headline-lists">
+        <section className="headline">
+          <h2>{gettext('Leaderboard')}</h2>
+          <div className="period">
+            <span>{gettext('Ranking')}</span>
+            <i>|</i>
+            <Dropdown sign='caret' data={periodOptions} onChange={handlePeriodChange} />
+          </div>
+
+        </section>
+        <section className="lists">
+          <Ranks {...state} languageCode={languageCode} />
+          <Missions missionConfig={missionConfig} mission={mission} />
+        </section>
+      </section>
+    </React.Fragment>
+  )
+}
+
+// for dashboard's leader side board
+export const LeaderSideBoard = ({languageCode}) => {
+  const [list, setList] = useState([])
+  const fetchData = useCallback((period, top) =>
+    fetch(`/analytics/leaderboard/json/?period=${period}&top=${top}`)
+      .then(res => res.json())
+      .then(({list}) => setList(list))
+  )
+  const numberLocaleFormatter = useNumberLocaleFormatter(languageCode)
+
+  useEffect(() => {
+    fetchData('', 5)
+  }, [])
+
+  return (
+    <React.Fragment>
+      <div className="title">
+        <h3>{gettext('Leaderboard')}</h3>
+        <a href="/analytics/leaderboard/">{gettext('Show more')} <i className="far fa-chevron-right"></i> </a>
+      </div>
+      <div className="board-content">
+        <table>
+          <thead>
+            <tr>
+              <th>{gettext('Position')}</th>
+              <th>{gettext('Name')}</th>
+              <th>{gettext('Points')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((item, index) => (
+              <tr key={index}>
+                <td><strong>{`${index + 1}.`}</strong></td>
+                <td><img src={`${item.Portrait}`} alt="" /><span className="name">{item.Name}</span></td>
+                <td><strong>{numberLocaleFormatter.format(item.Points)}</strong> <span>points</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </React.Fragment>
+  )
 }

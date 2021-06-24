@@ -16,6 +16,9 @@
 
     country_options = [{'text': v, 'value': k} for k,v in countries]
     lang_options = [{'text': i.name, 'value': i.code} for i in released_languages()]
+    orgs = configuration_helpers.get_current_site_orgs()
+    orgs = "+".join(orgs)
+    org_options = [{"text": orgs, "value": orgs}, {"text": "LT dev", "value": "LT-dev"}, {"text": "LT tester", "value": "LT-tester"}]
 %>
 <%inherit file="../main.html" />
 <%static:css group='style-course-vendor'/>
@@ -33,6 +36,7 @@
         lang_options = ${lang_options | n, dump_js_escaped_json},
         date_format = ${date_format | n, dump_js_escaped_json},
         platform_level_options = ${platform_level_options | n, dump_js_escaped_json},
+        org_options = ${org_options | n, dump_js_escaped_json},
         user_id;
     if (isNaN(path_split[path_split.length-2])) {
         user_id = ""
@@ -44,7 +48,7 @@
     convert country_options, lang_options to json object
     country_options = [{text:'country1', value:'1'}, {text:'country2', value:'2'} ]
     **/
-    user_create_edit(user_id, profile_fields, country_options, lang_options, date_format, platform_level_options);
+    user_create_edit(user_id, profile_fields, country_options, lang_options, date_format, platform_level_options, org_options);
     sessionStorage.setItem('unsaved', '0');
     $('a').not(".management-container a").on('click', function (e) {
         if (sessionStorage.unsaved === '1') {
@@ -507,6 +511,13 @@ ${HTML(render_bundle('ReactRenderer'))}
                             <span class="help">${_("Required")}</span>
                         </div>
                     </li>
+                    % if request.user.profile.org == "LT-dev":
+                    <li>
+                        <label for="org">${_("Orgnization")}</label>
+                        <dropdown v-bind:data="org_options" v-on:change="function(e, val) { $data.org=val; detect_change('org') }"
+                                  :value="org"/>
+                    </li>
+                    % endif
                     <li v-if="'gender' in profile_fields">
                         <label for="gender">${_("Gender")}:</label>
                         <dropdown v-bind:data="genderData" v-on:change="function(e, val) { $data.gender=val; detect_change('gender') }"

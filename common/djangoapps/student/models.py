@@ -461,6 +461,8 @@ class UserProfile(models.Model):
     allow_certificate = models.BooleanField(default=1)
     bio = models.CharField(blank=True, null=True, max_length=3000, db_index=False)
     profile_image_uploaded_at = models.DateTimeField(null=True, blank=True)
+    # this field is used to filter users in leaderboard and admin panel
+    org = models.CharField(null=True, blank=True, db_index=True, max_length=255)
 
     lt_custom_country = models.CharField(verbose_name='Custom Country', max_length=255, blank=True, null=True)
     lt_area = models.CharField(verbose_name='Commercial Zone', max_length=255, blank=True, null=True)

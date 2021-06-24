@@ -31517,3 +31517,8 @@ msgstr "Um nome legal deve ter no mínimo dois caracteres."
 #: platform/lms/templates/admin_panel/admin_panel.html
 msgid "All the following related items will be deleted"
 msgstr "Todos os seguintes itens relacionados serão excluídos"
+
+#: XBlock: lbmdonexblock
+#: xblock-done/lbmdonexblock/lbmdonexblock.py
+msgid "Check Button"
+msgstr "Botão de verificação"

@@ -104,7 +104,7 @@ from .tables import (
     UserBaseTable,
 )
 from .tasks import generate_export_table as generate_export_table_task, links_for_all, \
-    send_waiver_request_email
+    send_waiver_request_email, generate_leaderboard_report_task, links_for_leaderboard
 
 
 DEFAULT_LEADERBOARD_TOP = 10
@@ -162,7 +162,10 @@ def config_tables(request, *tables):
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 def list_table_downloads(_request, report='', course_id=None):
     report_store = ReportStore.from_config(config_name='TRIBOO_ANALYTICS_REPORTS')
-    links = links_for_all(report_store.storage, _request.user)
+    if report == "leaderboard":
+        links = links_for_leaderboard(report_store.storage, _request.user)
+    else:
+        links = links_for_all(report_store.storage, _request.user)
 
     response_payload = {'download': links}
     return JsonResponse(response_payload)
@@ -1721,11 +1724,30 @@ def get_properties(request):
 def leaderboard_data(request):
     if not configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
         return JsonResponse(status=404)
-    data = {}
-    top_list = []
     period = request.GET.get('period')
     top = int(request.GET.get('top', DEFAULT_LEADERBOARD_TOP))
-    query_set = LeaderBoardView.objects.filter(user__is_staff=False).select_related('user__profile')
+    orgs = configuration_helpers.get_current_site_orgs()
+    orgs = "+".join(orgs)
+    data = _leaderboard_data(request, period, orgs, top)
+    return JsonResponse(data)
+
+
+@login_required
+def leaderboard_view(request):
+    from scripts.user_org_migration import migrate_normal_users
+    migrate_normal_users()
+    if not configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
+        raise Http404
+    data = {"list_table_downloads_url": reverse('list_table_downloads', kwargs={'report': 'leaderboard'})}
+    return render_to_response("triboo_analytics/leaderboard.html", data)
+
+
+def _leaderboard_data(request, period, orgs, top=None):
+    data = {}
+    top_list = []
+    query_set = LeaderBoardView.objects.filter(
+        Q(user__profile__org=orgs) | Q(user__profile__org=None) &
+        Q(user__is_staff=False)).select_related('user__profile')
     total_user = query_set.count()
     if period in ['week', 'month']:
         order_by = '-current_{}_score'.format(period)
@@ -1733,7 +1755,7 @@ def leaderboard_data(request):
     else:
         query_set = query_set.order_by('-total_score')
 
-    result_set = query_set[:top] if top <= total_user else query_set
+    result_set = query_set[:top] if top is not None and top <= total_user else query_set
     if top == LEADERBOARD_DASHBOARD_TOP:
         for i in result_set:
             try:
@@ -1744,7 +1766,7 @@ def leaderboard_data(request):
                       "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
                       "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_DATE_TIME")}
             top_list.append(detail)
-        return JsonResponse({"list": top_list})
+
     else:
         request_user_included = False
         real_time_rank = 0
@@ -1774,17 +1796,24 @@ def leaderboard_data(request):
                 name = i.user.profile.name or i.user.username
             except:
                 name = i.user.username
-            detail = {"Points": point, "Name": name, "Rank": real_time_rank,
-                      "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
-                      "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE")}
-            if status and real_time_rank <= 3:
-                detail["OrderStatus"] = status
-            if i.user == request.user:
-                detail["Active"] = True
-                data["mission"] = i.get_leaderboard_detail()
-                request_user_included = True
+
+            if top is None:
+                detail = {"position": real_time_rank, "first_name": i.user.first_name,
+                          "last_name": i.user.last_name,
+                          "date_of_user_creation": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE"),
+                          "points": point}
+            else:
+                detail = {"Points": point, "Name": name, "Rank": real_time_rank,
+                          "Portrait": get_profile_image_urls_for_user(i.user, request=request)["medium"],
+                          "DateStr": strftime_localized(i.user.date_joined, "NUMBERIC_SHORT_DATE")}
+                if status and real_time_rank <= 3:
+                    detail["OrderStatus"] = status
+                if i.user == request.user:
+                    detail["Active"] = True
+                    data["mission"] = i.get_leaderboard_detail()
+                    request_user_included = True
             top_list.append(detail)
-        if not request_user_included and top < total_user and not request.user.is_staff:
+        if not request_user_included and top is not None and top < total_user and not request.user.is_staff:
             personal_rank = top
             for i in query_set[top:]:
                 personal_rank += 1
@@ -1807,25 +1836,45 @@ def leaderboard_data(request):
                     top_list.append(detail)
                     data["mission"] = i.get_leaderboard_detail()
                     break
-        elif request.user.is_staff:
+        elif request and request.user.is_staff:
             staff_leaderboard = LeaderBoardView.objects.filter(user=request.user)
             if staff_leaderboard.exists():
                 staff_leaderboard = staff_leaderboard.first()
                 data['mission'] = staff_leaderboard.get_leaderboard_detail()
-
     last_updated = query_set.aggregate(Max("last_updated"))
-
     data.update({
         "list": top_list,
         "lastUpdate": strftime_localized(last_updated['last_updated__max'], "NUMBERIC_DATE_TIME"),
         "totalUser": total_user
     })
-    return JsonResponse(data)
+
+    return data
 
 
 @login_required
-def leaderboard_view(request):
+@require_POST
+def generate_leaderboard_report(request):
     if not configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
-        raise Http404
-    data = {}
-    return render_to_response("triboo_analytics/leaderboard.html", data)
+        return JsonResponse(status=404)
+    period = request.POST.get('period')
+    file_format = request.POST.get('format')
+    orgs = configuration_helpers.get_current_site_orgs()
+    orgs = "+".join(orgs)
+    try:
+        generate_leaderboard_report_task.apply_async(
+            kwargs={
+                "period": period,
+                "user_id": request.user.id,
+                "username": request.user.username,
+                "file_format": file_format,
+                "orgs": orgs
+            }
+        )
+    except Exception as e:
+        return JsonResponseBadRequest({"message": _("Error while generating leaderboard report, "
+                                                    "please try again later.")})
+
+    return JsonResponse({"message": _("The report is being exported. Note that this operation can take "
+                                      "several minutes. When the report will be ready, it will appear "
+                                      "in the list of reports ready to download under the cloud icon "
+                                      "in the menu bar and you will be able to download it.")})

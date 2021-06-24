@@ -10,10 +10,16 @@ define(['jquery', 'js/views/baseview', 'edx-ui-toolkit/js/utils/html-utils'],
 
             render() {
                 const {display_name, category, GroupConfig}=this.props;
+                var image_url = `/static/studio/images/component-images/${category}.png`;
+                if (category === 'lbmdonexblock') {
+                    image_url = `/static/studio/images/component-images/${category}.gif`;
+                } else if (category === 'lti') {
+                    image_url = '';
+                }
                 return (
                     <React.Fragment>
                         <figure>
-                            <img src={`/static/studio/images/component-images/${category}.png`} />
+                            <img src={`${image_url}`} />
                         </figure>
                         <h5>{gettext(display_name)}</h5>
                         <p>{gettext(GroupConfig[category]) || 'no comments'}</p>

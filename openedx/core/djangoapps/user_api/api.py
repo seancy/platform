@@ -58,6 +58,7 @@ FULL_USER_PROFILE_FIELDS = [
     'goals',
     'allow_certificate',
     'bio',
+    'org',
     'lt_custom_country',
     'lt_area',
     'lt_sub_area',
@@ -1146,7 +1147,8 @@ def get_user_account_info(user):
         "first_name": user.first_name,
         "last_name": user.last_name,
         "is_active": user.is_active,
-        "user_id": user.id
+        "user_id": user.id,
+        "org": user.profile.org
     }
     user_groups = [group.name for group in user.groups.all()]
 

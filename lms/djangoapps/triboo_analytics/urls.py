@@ -43,8 +43,9 @@ urlpatterns = [
 
     url(r'^export/$', views.export_tables, name='analytics_export_tables'),
 
-    url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt|global|customized)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
+    url(r'^list_table_downloads/(?P<report>my_transcript|transcript|learner|course|ilt|global|customized|leaderboard)(?:/{})?/$'.format(settings.COURSE_ID_PATTERN),
         views.list_table_downloads, name='list_table_downloads'),
 
     url(r'^leaderboard/$', views.leaderboard_view, name='analytics_leaderboard'),
+    url(r'^leaderboard_export/$', views.generate_leaderboard_report, name='analytics_leaderboard_export')
 ]

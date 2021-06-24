@@ -1370,6 +1370,7 @@ OFFICIAL_ADVANCED_MODULES = [
         "videoalpha",
         "word_cloud",
         "iframe",
+        "lbmdonexblock"
 ]
 COURSE_ADVANCED_MODULES = []
 

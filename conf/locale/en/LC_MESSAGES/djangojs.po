@@ -11764,11 +11764,11 @@ msgid "You have won ${value} point(s)."
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo, for the first time"
+msgid "Log into Triboo, for the first time"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgid "Log into Triboo everyday, for at least 30 minutes"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -11780,15 +11780,15 @@ msgid "Answering graded activity"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Awarded points on completion of each unit"
+msgid "Complete a unit"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Accessing the first course"
+msgid "Access your first course"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Completion of each course"
+msgid "Complete a course"
 msgstr ""
 
 # lms/static/js/certificates/intermediate_certificates.js
@@ -12025,6 +12025,14 @@ msgstr ""
 msgid "Add this component to grant an intermediate certificate to a learner after quiz completion."
 msgstr ""
 
+# cms/static/js/views/components/components.json
+msgid "Integrate remote learning tools, such as applications and textbooks, into your course with the learning tools interoperability (LTI) component. The LTI component supports tools with the LTI 1.1 and LTI 1.3 specifications."
+msgstr ""
+
+# cms/static/js/views/components/components.json
+msgid "Add this component to ask learners to confirm the completion of an activity or action on the platform."
+msgstr ""
+
 #: XBlock: xblock-drag-and-drop-v2
 #: xblock-drag-and-drop-v2/drag_and_drop_v2/public/js/drag_and_drop.js
 msgid "Feedback"
@@ -12188,4 +12196,16 @@ msgstr ""
 
 #: platform/cms/static/js/views/settings/main.js
 msgid "Course Title can't be empty"
+msgstr ""
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "My Challenges"
+msgstr ""
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Download the ranking"
+msgstr ""
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
 msgstr ""

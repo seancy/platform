@@ -1586,3 +1586,8 @@ msgstr ""
 #: openassessment/templates/openassessmentblock/self/oa_self_assessment.html
 msgid "Not completed"
 msgstr ""
+
+#: XBlock: lbmdonexblock
+#: xblock-done/lbmdonexblock/lbmdonexblock.py
+msgid "Check Button"
+msgstr ""
