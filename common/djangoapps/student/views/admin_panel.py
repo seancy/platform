@@ -42,7 +42,12 @@ class AdminPanel(ListView):
         return context
 
     def get_queryset(self):
-        object_list = self.model.objects.all().prefetch_related("groups")
+        orgs = configuration_helpers.get_current_site_orgs()
+        orgs = "+".join(orgs)
+        user_filter = Q(profile__org=orgs) | Q(profile__org=None)
+        if self.request.user.profile.org in ["LT-dev", "LT-tester"]:
+            user_filter = user_filter | Q(profile__org="LT-tester")
+        object_list = self.model.objects.filter(user_filter).prefetch_related("groups")
         name = self.request.GET.get('name', '')
         if name:
             object_list = object_list.filter(

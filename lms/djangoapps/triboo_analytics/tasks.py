@@ -72,6 +72,15 @@ def path_to(course_key, user_id, filename=''):
     return os.path.join(prefix, filename)
 
 
+def links_for_leaderboard(storage, user):
+    files = []
+    report_dir = path_to("leaderboard_key", user.id)
+    _, filenames = storage.listdir(report_dir)
+    files.extend([(filename, os.path.join(report_dir, filename)) for filename in filenames])
+    files.sort(key=lambda f: storage.modified_time(f[1]), reverse=True)
+    return [(filename, storage.url(full_path)) for filename, full_path in files]
+
+
 def links_for_all(storage, user):
     orgs = configuration_helpers.get_current_site_orgs()
     if not orgs:
@@ -125,7 +134,10 @@ def upload_file_to_store(user_id, course_key, filename, export_format, content, 
                                              timezone.now().strftime("%Y-%m-%d-%H%M"),
                                              export_format)
 
-    path = path_to(course_key, user_id, _filename)
+    if filename.startswith("Leaderboard"):
+        path = path_to("leaderboard_key", user_id, _filename)
+    else:
+        path = path_to(course_key, user_id, _filename)
     report_store.store_content(
         path,
         content
@@ -247,6 +259,28 @@ def generate_export_table(entry_id, xmodule_instance_args):
 
     task_fn = partial(upload_export_table, xmodule_instance_args)
     return run_main_task(entry_id, task_fn, action_name)
+
+
+@task(
+    base=LoggedPersistOnFailureTask,
+    routing_key=settings.HIGH_PRIORITY_QUEUE
+)
+def generate_leaderboard_report_task(period, user_id, username, file_format, orgs):
+    from .views import _leaderboard_data
+    data = _leaderboard_data(request=None, period=period, orgs=orgs)
+    data_table = tables.LeaderboardTable(data['list'])
+    exporter = TableExport(file_format, data_table)
+    content = exporter.export()
+    if period in ['month', 'week']:
+        file_name = "Leaderboard_{} Ranking".format(period.capitalize())
+    else:
+        file_name = "Leaderboard_All"
+    upload_file_to_store(user_id,
+                         "",
+                         file_name,
+                         file_format,
+                         content,
+                         username)
 
 
 @receiver(post_save, sender=BlockCompletion)

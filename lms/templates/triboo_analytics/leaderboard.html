@@ -16,36 +16,48 @@ ${HTML(render_bundle('LeaderBoard'))}
 ${HTML(render_bundle('ReactRenderer'))}
 <div id="leader-board"></div>
 <script type="text/javascript">
-  const leaderBoardData = {
+  var leaderBoardData = {
     missionConfig: {
       first_login: {
-          times: 10,
-          message: gettext('Logging into Triboo, for the first time')
+        times: 10,
+        message: gettext('Log into Triboo, for the first time'),
+        icon: 'fas fa-grin-wink',
       },
       everyday_least_30: {
-          times: 5,
-          message: gettext('Logging into Triboo everyday, for at least 30 minutes')
-      },
-      answering_non_graded: {
-          times: 1,
-          message: gettext('Answering non-graded activity')
-      },
-      answering_graded: {
-          times: 3,
-          message: gettext('Answering graded activity')
-      },
-      unit_completed: {
-          times: 1,
-          message: gettext('Awarded points on completion of each unit')
+        times: 5,
+        message: gettext('Log into Triboo everyday, for at least 30 minutes'),
+        icon: 'fal fa-history',
       },
       accessing_first_course: {
-          times: 5,
-          message: gettext('Accessing the first course')
+        times: 5,
+        message: gettext('Access your first course'),
+        icon: 'fal fa-flag',
+      },
+      answering_non_graded: {
+        times: 1,
+        message: gettext('Complete activities'),
+        icon: 'fas fa-badge-check',
+      },
+      answering_graded: {
+        times: 3,
+        message: gettext('Try to win a badge'),
+        icon: 'fal fa-gamepad',
+      },
+      unit_completed: {
+        times: 1,
+        message: gettext('Complete a unit'),
+        icon: 'fal fa-play-circle',
       },
       course_completed: {
-          times: 15,
-          message: gettext('Completion of each course')
+        times: 15,
+        message: gettext('Complete a course'),
+        icon: 'fas fa-file-certificate',
       },
+      // learning_path_completed: {
+      //   times: 15,
+      //   message: gettext('Complete a Learning Path'),
+      //   icon: 'fal fa-road',
+      // },
     },
 
     //data
@@ -79,7 +91,89 @@ ${HTML(render_bundle('ReactRenderer'))}
     selector: '#leader-board',
     componentName: 'LeaderBoard',
     props: {
+      languageCode: '${LANGUAGE_CODE}',
       ...leaderBoardData
     }
+  });
+
+  $(".action-item a").click(function (e) {
+    e.preventDefault();
+    var format = $(this).data('format')
+    $.ajax({
+      type: 'POST',
+      url: '/analytics/leaderboard_export/',
+      data: {period: $(".select .text").html().toLowerCase(), format: format},
+      success: function (data) {
+        LearningTribes.dialog.show(data.message);
+        $(".action-primary").click();
+        var cancel = window.listenDownloads(function(data, foundNewFile) {
+          return foundNewFile && cancel();
+        });
+        window.addEventListener('beforeunload', cancel);
+      },
+      fail: function (data) {
+        LearningTribes.dialog.show(data.message);
+        $(".action-primary").click()
+      }
+    })
+  })
+
+  $(".action-primary").on("click", function () {
+    var $dropdown_list = $(".action-dropdown-list");
+    if ($dropdown_list.hasClass("is-hidden")) {
+      $dropdown_list.removeClass("is-hidden")
+    } else {
+      $dropdown_list.addClass("is-hidden")
+    }
+  });
+</script>
+<script>
+  $(document).ready(function () {
+      function listDownloads(onSuccess) {
+          var elem = $('.dropdown-download-menu');
+          $.ajax(elem.attr('data-endpoint'), {
+              success: function (data) {
+                  var foundNewFile = elem.children().length < data.download.length
+                  if (foundNewFile) {
+                      var downloadIcon = $('a.download-item')
+                      if (downloadIcon) downloadIcon.addClass('red-dot')
+                  }
+                  var links = $.map(data.download, function (f) {
+                      var link = $('<a></a>', {href: f[1], text: f[0]});
+                      var icon = $('<i></i>', {class: 'fal fa-file-chart-line'});
+                      link.prepend(icon)
+                      var div = $('<div></div>', {class: 'dropdown-download-item'});
+                      div.html(link);
+                      return div;
+                  });
+                  if (links.length <= 0) {
+                      links.push('<div><h3>${_("No reports available")}</h3></div>')
+                  }
+                  elem.html(links);
+
+                  if (onSuccess) onSuccess(data, foundNewFile)
+              }
+          })
+      }
+      listDownloads();
+
+      $('#report-file-list').html('<div><h3>${_("No reports available")}</h3></div>')
+
+      var listenDownloadsTimeout = null
+      function listenDownloads (onSuccess) {
+        if (listenDownloadsTimeout) return
+        var listen = function () {
+          listDownloads(function (data, foundNewFile) {
+            listenDownloadsTimeout = setTimeout(listen, 15 * 1000)
+            if (onSuccess) onSuccess(data, foundNewFile)
+          })
+        }
+        listen()
+        return function cancel () {
+          clearTimeout(listenDownloadsTimeout)
+          listenDownloadsTimeout = null
+        }
+      }
+      window.listenDownloads = listenDownloads;
   });
 </script>

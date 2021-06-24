@@ -987,3 +987,11 @@ class IltLearnerTable(IltBaseTable, UserBaseTable):
 
     def render_attendee(self, value):
         return "Yes" if value else "No"
+
+
+class LeaderboardTable(tables.Table):
+    position = tables.Column(verbose_name="Position")
+    first_name = tables.Column(verbose_name="First Name")
+    last_name = tables.Column(verbose_name="Last Name")
+    date_of_user_creation = tables.Column(verbose_name="Date of user creation")
+    points = tables.Column(verbose_name="Points")

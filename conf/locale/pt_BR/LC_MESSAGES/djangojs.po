@@ -12879,11 +12879,11 @@ msgid "You have won ${value} point(s)."
 msgstr "Você ganhou ${value} ponto(s)."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo, for the first time"
+msgid "Log into Triboo, for the first time"
 msgstr "Entrando no Triboo pela primeira vez"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgid "Log into Triboo everyday, for at least 30 minutes"
 msgstr "Entrando no Triboo todos os dias, por pelo menos 30 minutos"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -12895,15 +12895,15 @@ msgid "Answering graded activity"
 msgstr "Respondendo atividade classificada"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Awarded points on completion of each unit"
+msgid "Complete a unit"
 msgstr "Pontos atribuídos pela conclusão de cada unidade"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Accessing the first course"
+msgid "Access your first course"
 msgstr "Acessando o primeiro curso"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Completion of each course"
+msgid "Complete a course"
 msgstr "Conclusão de cada curso"
 
 #: master-cofidis: lms/static/js/views/login_role_check.js
@@ -13391,3 +13391,15 @@ msgstr "O usuário foi excluído com sucesso."
 #: platform/cms/static/js/views/settings/main.js
 msgid "Course Title can't be empty"
 msgstr "O título do curso não pode ficar vazio"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "My Challenges"
+msgstr "Meus desafios"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Download the ranking"
+msgstr "Descarregar a classificação"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
+msgstr "A exportação que está prestes a descarregar terá em conta a selecção de classificação que fez no topo da tabela de classificação."

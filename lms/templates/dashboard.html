@@ -280,8 +280,9 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
               selector: '#leader-side-board',
               componentName: 'LeaderSideBoard',
               props: {
+                languageCode: '${LANGUAGE_CODE}',
                 ...leaderBoardData
-                }
+              }
             });
           </script>
           % endif

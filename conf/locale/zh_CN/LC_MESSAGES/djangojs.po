@@ -12318,11 +12318,11 @@ msgid "You have won ${value} point(s)."
 msgstr "你赢得了 ${value} 分"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo, for the first time"
+msgid "Log into Triboo, for the first time"
 msgstr "第一次登录平台"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgid "Log into Triboo everyday, for at least 30 minutes"
 msgstr "每天登录平台至少30分钟"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -12334,15 +12334,15 @@ msgid "Answering graded activity"
 msgstr "回答有得分的问题"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Awarded points on completion of each unit"
+msgid "Complete a unit"
 msgstr "完成每个单元获取的分数"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Accessing the first course"
+msgid "Access your first course"
 msgstr "打开第一门课"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Completion of each course"
+msgid "Complete a course"
 msgstr "完成每一门课"
 
 #: master-cofidis: lms/static/js/views/login_role_check.js
@@ -12826,3 +12826,15 @@ msgstr "用户已被成功删除。"
 #: platform/cms/static/js/views/settings/main.js
 msgid "Course Title can't be empty"
 msgstr "课程标题不能为空"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "My Challenges"
+msgstr "我的挑战"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Download the ranking"
+msgstr "下载排行榜"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
+msgstr "你要下载的报告将会根据你选择的排行榜周期来导出。"

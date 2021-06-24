@@ -1,4 +1,4 @@
-function user_create_edit(user_id, profile_fields, country_options, lang_options, date_format, platform_level_options) {
+function user_create_edit(user_id, profile_fields, country_options, lang_options, date_format, platform_level_options, org_options) {
 
     Vue.component("switch-button", {
       template: '<div class="switch-button-control">\n' +
@@ -155,7 +155,9 @@ function user_create_edit(user_id, profile_fields, country_options, lang_options
             objects_to_delete: {},
             editting_info: false,
             editting_permissions: false,
-            platform_level_options: platform_level_options
+            platform_level_options: platform_level_options,
+            org: org_options[0].value,
+            org_options: org_options
         },
         methods: {
             toggleSubTab: function(e) {
@@ -208,6 +210,7 @@ function user_create_edit(user_id, profile_fields, country_options, lang_options
                     submit_data.terms_of_service = this.terms_of_service;
                     submit_data.honor_code = this.honor_code;
                     submit_data.lt_gdpr = this.lt_gdpr;
+                    submit_data.org = this.org;
                     submit_data.lt_exempt_status = this.lt_exempt_status;
                     submit_url = creation_url;
                     action = 'create'
@@ -437,6 +440,7 @@ function user_create_edit(user_id, profile_fields, country_options, lang_options
                 self.analytics_access = data.analytics_access;
                 self.currently_enrolled = data.currently_enrolled;
                 self.not_enrolled = data.not_enrolled;
+                self.org = data.org;
                 self.update_password = false;
                 self.editting_info = false;
                 self.editting_permissions = false;

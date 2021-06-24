@@ -12133,11 +12133,11 @@ msgid "You have won ${value} point(s)."
 msgstr "Sie haben ${value} Punkt(e) gewonnen."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo, for the first time"
+msgid "Log into Triboo, for the first time"
 msgstr "Anmeldung bei Triboo, zum ersten Mal"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgid "Log into Triboo everyday, for at least 30 minutes"
 msgstr "Anmeldung bei Triboo täglich, für mindestens 30 Minuten"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -12149,13 +12149,13 @@ msgid "Answering graded activity"
 msgstr "Beantworten einer bewerteten Aktivität"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Awarded points on completion of each unit"
+msgid "Complete a unit"
 msgstr "Erreichte Punkte nach Abschluss jeder Einheit"
 
-msgid "Accessing the first course"
-msgstr "%s Kurs ansehen"
+msgid "Access your first course"
+msgstr "Greifen Sie auf Ihren ersten Kurs zu"
 
-msgid "Completion of each course"
+msgid "Complete a course"
 msgstr "Nicht kursbezogen"
 
 # lms/static/js/certificates/intermediate_certificates.js
@@ -12811,3 +12811,15 @@ msgstr "Der Benutzer wurde erfolgreich gelöscht."
 #: platform/cms/static/js/views/settings/main.js
 msgid "Course Title can't be empty"
 msgstr "Kurstitel darf nicht leer sein"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "My Challenges"
+msgstr "Meine Herausforderungen"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Download the ranking"
+msgstr "Download der Rangliste"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
+msgstr "Der Export, den Sie gerade herunterladen, berücksichtigt die Auswahl der Rangliste, die Sie oben in der Ranglisten-Tabelle getroffen haben."

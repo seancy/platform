@@ -148,6 +148,7 @@ FULL_USER_PROFILE_FIELDS = [
     'country',
     'goals',
     'bio',
+    'org',
     'lt_custom_country',
     'lt_area',
     'lt_sub_area',

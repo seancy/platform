@@ -11764,11 +11764,11 @@ msgid "You have won ${value} point(s)."
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo, for the first time"
+msgid "Log into Triboo, for the first time"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgid "Log into Triboo everyday, for at least 30 minutes"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -11780,15 +11780,15 @@ msgid "Answering graded activity"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Awarded points on completion of each unit"
+msgid "Complete a unit"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Accessing the first course"
+msgid "Access your first course"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Completion of each course"
+msgid "Complete a course"
 msgstr ""
 
 # lms/static/js/certificates/intermediate_certificates.js
@@ -12188,4 +12188,16 @@ msgstr ""
 
 #: platform/cms/static/js/views/settings/main.js
 msgid "Course Title can't be empty"
+msgstr ""
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "My Challenges"
+msgstr ""
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Download the ranking"
+msgstr ""
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
 msgstr ""

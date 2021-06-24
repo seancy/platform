@@ -12773,11 +12773,11 @@ msgid "You have won ${value} point(s)."
 msgstr "Has ganado ${value} punto(s)."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo, for the first time"
+msgid "Log into Triboo, for the first time"
 msgstr "Iniciar sesión en Triboo, por primera vez"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Logging into Triboo everyday, for at least 30 minutes"
+msgid "Log into Triboo everyday, for at least 30 minutes"
 msgstr "Iniciar sesión en Triboo todos los días, durante al menos 30 minutos"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -12789,15 +12789,15 @@ msgid "Answering graded activity"
 msgstr "Responder a la actividad calificada"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Awarded points on completion of each unit"
+msgid "Complete a unit"
 msgstr "Puntos otorgados al completar cada unidad"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Accessing the first course"
+msgid "Access your first course"
 msgstr "Accediendo al primer curso"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
-msgid "Completion of each course"
+msgid "Complete a course"
 msgstr "Finalización de cada curso"
 
 #: master-cofidis: lms/static/js/views/login_role_check.js
@@ -13285,3 +13285,15 @@ msgstr "El usuario ha sido eliminado correctamente."
 #: platform/cms/static/js/views/settings/main.js
 msgid "Course Title can't be empty"
 msgstr "El título del curso no puede estar en blanco"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "My Challenges"
+msgstr "Mis retos"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Download the ranking"
+msgstr "Descargar la clasificación"
+
+#: platform/lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
+msgstr "La exportación que vas a descargar tendrá en cuenta la selección de la clasificación que has hecho en la parte superior de la tabla de clasificación."
