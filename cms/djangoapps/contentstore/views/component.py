@@ -62,6 +62,7 @@ def _component_category(category, type, available_advanced_keys=[]):
                 'edflex',
                 'scormxblock',
                 'iframe',
+                'lti',
             ]
         },
         learner_activities={
@@ -70,6 +71,7 @@ def _component_category(category, type, available_advanced_keys=[]):
                 'poll',
                 'survey',
                 'word_cloud',
+                'lbmdonexblock',
             ]
         },
         blended_learning={
