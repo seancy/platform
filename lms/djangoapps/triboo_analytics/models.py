@@ -1082,7 +1082,7 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                     cls.objects.update_or_create(user=enrollment.user,
                                                  course_id=enrollment.course_id,
                                                  section_key=section_combined_url,
-                                                 defaults={'section_name': section_combined_display_name,
+                                                 defaults={'section_name': section_combined_display_name.encode('utf-8'),
                                                            'total_time_spent': new_record['total_time_spent'],
                                                            'records': "{%s}" % cls.recordify(dt2key(), new_record_str)})
 
