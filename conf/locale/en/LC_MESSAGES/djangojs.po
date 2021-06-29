@@ -3304,8 +3304,7 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: common/static/bundles/SingleSupportForm.js:445
-#: lms/djangoapps/support/static/support/jsx/logged_in_user.jsx:70
+#: common/static/bundles/SingleSupportForm.js:382
 msgid "Details"
 msgstr ""
 
@@ -9540,7 +9539,8 @@ msgstr ""
 msgid "Display the state of learners at the end of the selected period for learners who visited the platform during this period. The total time spent shows the time learners spent on the platform during the selected period."
 msgstr ""
 
-#: lms/static/js/triboo_analytics/LearnerReport.js
+#: common/static/bundles/LearnerReport.js:140
+#: lms/static/js/triboo_analytics/LearnerReport.js:58
 msgid "Learner Report"
 msgstr ""
 
@@ -9548,7 +9548,8 @@ msgstr ""
 msgid "Course Report"
 msgstr ""
 
-#: lms/static/js/triboo_analytics/ILTReport.js
+#: common/static/bundles/ILTReport.js:546
+#: lms/static/js/triboo_analytics/ILTReport.js:36
 msgid "ILT Report"
 msgstr ""
 
@@ -11600,7 +11601,7 @@ msgstr ""
 msgid "Use Current Transcript"
 msgstr ""
 
-#: lms/templates/discovery/facet.underscore
+#: common/static/bundles/InternalCatalog.js:1138
 msgid "Availability"
 msgstr ""
 
@@ -11718,18 +11719,40 @@ msgid "Time format HH:MM expected"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/LeaderBoard.js:227
+#: common/static/bundles/LeaderBoard.js:231
+#: common/static/bundles/LeaderBoard.js:284
+#: lms/static/js/triboo_analytics/LeaderBoard.js:155
+#: lms/static/js/triboo_analytics/LeaderBoard.js:160
+#: lms/static/js/triboo_analytics/LeaderBoard.js:194
 msgid "Leaderboard"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/CrehanaCatalogCourses.js:614
+#: common/static/bundles/EdflexCatalogCourses.js:541
+#: common/static/bundles/ExternalCatalog.js:289
+#: common/static/bundles/LeaderBoard.js:286
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js:118
+#: lms/static/js/triboo_analytics/LeaderBoard.js:195
 msgid "Show more"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/LeaderBoard.js:164
+#: common/static/bundles/LeaderBoard.js:290
+#: lms/static/js/triboo_analytics/LeaderBoard.js:21
+#: lms/static/js/triboo_analytics/LeaderBoard.js:201
 msgid "Position"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/LeaderBoard.js:164
+#: common/static/bundles/LeaderBoard.js:209
+#: common/static/bundles/LeaderBoard.js:290
+#: lms/static/js/triboo_analytics/LeaderBoard.js:23
+#: lms/static/js/triboo_analytics/LeaderBoard.js:54
+#: lms/static/js/triboo_analytics/LeaderBoard.js:203
 msgid "Points"
 msgstr ""
 
@@ -11819,7 +11842,13 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: lms/static/js/external_catalog/ExternalCatalog.jsx
+#: common/static/bundles/CrehanaCatalog.js:654
+#: common/static/bundles/CrehanaCatalogCategories.js:872
+#: common/static/bundles/CrehanaCatalogCourses.js:391
+#: common/static/bundles/CrehanaCatalogCoursesOverview.js:114
+#: common/static/bundles/EdflexCatalogCourses.js:356
+#: common/static/bundles/ExternalCatalog.js:772
+#: common/static/bundles/ExternalCatalogOverview.js:48
 msgid "Explore"
 msgstr ""
 
@@ -12208,4 +12237,60 @@ msgstr ""
 
 #: platform/lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
+msgstr ""
+
+#: common/static/bundles/CrehanaCatalog.js:481
+#: common/static/bundles/CrehanaCatalogCategories.js:698
+#: common/static/bundles/CrehanaCatalogCourses.js:138
+#: common/static/bundles/EdflexCatalogCourses.js:143
+#: common/static/bundles/ExternalCatalog.js:559
+msgid "French"
+msgstr ""
+
+#: common/static/bundles/CrehanaCatalog.js:481
+#: common/static/bundles/CrehanaCatalogCategories.js:698
+#: common/static/bundles/CrehanaCatalogCourses.js:139
+#: common/static/bundles/EdflexCatalogCourses.js:144
+#: common/static/bundles/ExternalCatalog.js:560
+msgid "English"
+msgstr ""
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Communication"
+msgstr ""
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Customer Relations"
+msgstr ""
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Human Resources"
+msgstr ""
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Leadership and Management"
+msgstr ""
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "People Skills"
+msgstr ""
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Sales"
+msgstr ""
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Work Environment"
+msgstr ""
+
+#: platform/lms/templates/instructor/instructor_dashboard_2/certificate-bulk-white-list.underscore
+msgid "Import CSV file"
+msgstr ""
+
+#: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
+msgid "Certificate exceptions group selection"
+msgstr ""
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Area of Development"
 msgstr ""

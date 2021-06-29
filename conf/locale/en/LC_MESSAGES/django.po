@@ -2197,8 +2197,7 @@ msgstr ""
 msgid "Closed"
 msgstr ""
 
-#: common/lib/xmodule/xmodule/capa_base.py:145
-#: lms/templates/my_courses.html:141
+#: lms/templates/my_courses.html:110
 msgid "Finished"
 msgstr ""
 
@@ -5940,8 +5939,8 @@ msgstr ""
 msgid "Textbooks"
 msgstr ""
 
-#: lms/djangoapps/courseware/tabs.py:331
 #: lms/templates/courseware/course_about.html:125
+#: lms/templates/courseware/course_print.html:177
 msgid "Overview"
 msgstr ""
 
@@ -15822,9 +15821,13 @@ msgstr ""
 msgid "Course Run:"
 msgstr ""
 
-#: cms/templates/index.html:321 lms/templates/sysadmin_dashboard.html:59
+#: cms/templates/index.html:372 cms/templates/index.html:407
+#: cms/templates/index.html:419 lms/templates/sysadmin_dashboard.html:59
 #: lms/templates/sysadmin_dashboard_gitlogs.html:116
-#: lms/templates/courseware/courses.html:33
+#: lms/templates/courseware/courses.html:43
+#: lms/templates/external_catalog/crehana_catalog_courses.html:17
+#: lms/templates/external_catalog/external_catalog.html:17
+#: lms/templates/external_catalog/external_catalog_overview.html:17
 #: lms/templates/header/navbar-not-authenticated.html:30
 #: lms/templates/navigation/navbar-authenticated.html:22
 #: lms/templates/navigation/navbar-not-authenticated.html:21
@@ -15912,10 +15915,10 @@ msgstr ""
 msgid "Requirements"
 msgstr ""
 
-#: cms/templates/studio_xblock_wrapper.html:129
-#: lms/templates/help_modal.html:293 lms/templates/help_modal.html:302
+#: cms/templates/studio_xblock_wrapper.html:132
+#: lms/templates/help_modal.html:291 lms/templates/help_modal.html:300
 #: lms/templates/module-error.html:22
-#: lms/templates/instructor/instructor_dashboard_2/certificates.html:190
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:232
 msgid "Details"
 msgstr ""
 
@@ -15972,6 +15975,7 @@ msgstr ""
 msgid "Account"
 msgstr ""
 
+#: lms/templates/header/user_dropdown.html:62
 msgid "Leaderboard"
 msgstr ""
 
@@ -16259,16 +16263,16 @@ msgstr ""
 msgid "Welcome to your dashboard"
 msgstr ""
 
-#: lms/templates/dashboard.html:150
+#: lms/templates/dashboard.html:168
 msgid "completed courses"
 msgstr ""
 
-#: lms/templates/dashboard.html:156
+#: lms/templates/dashboard.html:174
 msgid "badges obtained"
 msgstr ""
 
-#: lms/templates/dashboard.html:161
-#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:139
+#: lms/templates/dashboard.html:180
+#: openedx/features/course_experience/templates/course_experience/course-home-fragment.html:142
 msgid "posts"
 msgstr ""
 
@@ -16303,7 +16307,7 @@ msgstr ""
 msgid "My Bookmarks"
 msgstr ""
 
-#: lms/templates/dashboard.html:320
+#: lms/templates/dashboard.html:516
 msgid "My upcoming ILT sessions"
 msgstr ""
 
@@ -16440,8 +16444,8 @@ msgstr ""
 msgid "Navigation"
 msgstr ""
 
-#: lms/templates/footer.html:96
-#: lms/templates/header/navbar-authenticated.html:48
+#: lms/templates/footer.html:100 lms/templates/courseware/courses.html:55
+#: lms/templates/header/navbar-authenticated.html:54
 msgid "Explore"
 msgstr ""
 
@@ -16905,15 +16909,20 @@ msgstr ""
 msgid "Raw data:"
 msgstr ""
 
-#: lms/templates/my_courses.html:138
+#: lms/templates/my_courses.html:107
 msgid "All courses"
 msgstr ""
 
-#: lms/templates/my_courses.html:139
+#: lms/templates/my_courses.html:108
+#: lms/templates/triboo_analytics/course.html:314
+#: lms/templates/triboo_analytics/my_transcript.html:479
+#: lms/templates/triboo_analytics/my_transcript_pdf.html:221
+#: lms/templates/triboo_analytics/transcript.html:260
+#: lms/templates/triboo_analytics/transcript_pdf.html:222
 msgid "Not started"
 msgstr ""
 
-#: lms/templates/my_courses.html:140
+#: lms/templates/my_courses.html:109
 msgid "Started"
 msgstr ""
 
@@ -18985,7 +18994,7 @@ msgid ""
 msgstr ""
 
 #: lms/templates/courseware/course_about.html:130
-#: lms/templates/courseware/course_navigation.html:86
+#: lms/templates/courseware/course_navigation.html:62
 msgid "View Instructor Dashboard"
 msgstr ""
 
@@ -21735,13 +21744,17 @@ msgstr ""
 msgid "Has the course started?"
 msgstr ""
 
-#: lms/templates/instructor/instructor_dashboard_2/course_info.html:56
-#: lms/templates/instructor/instructor_dashboard_2/course_info.html:62
+#: lms/templates/courseware/ilt_all_validations_page.html:69
+#: lms/templates/courseware/ilt_all_validations_page.html:186
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html:61
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html:67
 msgid "Yes"
 msgstr ""
 
-#: lms/templates/instructor/instructor_dashboard_2/course_info.html:56
-#: lms/templates/instructor/instructor_dashboard_2/course_info.html:64
+#: lms/templates/courseware/ilt_all_validations_page.html:71
+#: lms/templates/courseware/ilt_all_validations_page.html:188
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html:61
+#: lms/templates/instructor/instructor_dashboard_2/course_info.html:69
 msgid "No"
 msgstr ""
 
@@ -24170,15 +24183,14 @@ msgstr ""
 msgid "Analytics - Course Report"
 msgstr ""
 
-#: lms/templates/triboo_analytics/course.html:19
-#: lms/templates/triboo_analytics/ilt.html:19
-#: lms/templates/triboo_analytics/learner.html:18
-#: lms/templates/triboo_analytics/microsite.html:24
+#: lms/templates/triboo_analytics/banner_nav.html:17
+#: lms/templates/triboo_analytics/my_transcript.html:213
 msgid "Let's have a look at your learning data"
 msgstr ""
 
-#: lms/templates/triboo_analytics/banner_nav.html
-#: lms/templates/triboo_analytics/microsite.html:29
+#: lms/templates/triboo_analytics/banner_nav.html:27
+#: lms/templates/triboo_analytics/banner_nav.html:29
+#: lms/templates/triboo_analytics/microsite.html:31
 msgid "Global Report"
 msgstr ""
 
@@ -24187,18 +24199,18 @@ msgstr ""
 msgid "Show:"
 msgstr ""
 
-#: lms/templates/triboo_analytics/microsite.html:42
 #: lms/templates/triboo_analytics/course.html:66
+#: lms/templates/triboo_analytics/microsite.html:42
 msgid "Daily"
 msgstr ""
 
-#: lms/templates/triboo_analytics/microsite.html:43
 #: lms/templates/triboo_analytics/course.html:67
+#: lms/templates/triboo_analytics/microsite.html:43
 msgid "Weekly"
 msgstr ""
 
-#: lms/templates/triboo_analytics/microsite.html:44
 #: lms/templates/triboo_analytics/course.html:68
+#: lms/templates/triboo_analytics/microsite.html:44
 msgid "Monthly"
 msgstr ""
 
@@ -24208,8 +24220,12 @@ msgstr ""
 msgid "Comparison between today's value and yesterday's"
 msgstr ""
 
-#: lms/templates/triboo_analytics/banner_nav.html
-#: lms/templates/triboo_analytics/course.html:25
+#: lms/templates/courseware/course_navigation.html:79
+#: lms/templates/triboo_analytics/banner_nav.html:32
+#: lms/templates/triboo_analytics/banner_nav.html:34
+#: lms/templates/triboo_analytics/banner_nav.html:55
+#: lms/templates/triboo_analytics/banner_nav.html:57
+#: lms/templates/triboo_analytics/course.html:27
 msgid "Course Report"
 msgstr ""
 
@@ -24229,13 +24245,13 @@ msgstr ""
 msgid "Course Time Spent Report"
 msgstr ""
 
-#: lms/templates/triboo_analytics/banner_nav.html
-#: lms/templates/triboo_analytics/learner.html:26
+#: lms/templates/triboo_analytics/banner_nav.html:37
+#: lms/templates/triboo_analytics/banner_nav.html:39
 msgid "Learner Report"
 msgstr ""
 
-#: lms/templates/triboo_analytics/banner_nav.html
-#: lms/templates/triboo_analytics/ilt.html:29
+#: lms/templates/triboo_analytics/banner_nav.html:43
+#: lms/templates/triboo_analytics/banner_nav.html:45
 msgid "ILT Report"
 msgstr ""
 
@@ -24354,15 +24370,16 @@ msgid_plural "Certificates Delivered"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lms/templates/triboo_analytics/microsite.html:55
+#: lms/templates/triboo_analytics/microsite.html:174
 msgid "Average Time Spent Per Active Learner"
 msgstr ""
 
-#: lms/templates/triboo_analytics/microsite.html:61
+#: lms/templates/triboo_analytics/course.html:62
+#: lms/templates/triboo_analytics/microsite.html:38
 msgid "Number of Unique Visitors"
 msgstr ""
 
-#: lms/templates/triboo_analytics/microsite.html:74
+#: lms/templates/triboo_analytics/microsite.html:119
 msgid "Device Use"
 msgstr ""
 
@@ -24374,7 +24391,7 @@ msgstr ""
 msgid "Mobile"
 msgstr ""
 
-#: lms/templates/triboo_analytics/microsite.html:86
+#: lms/templates/triboo_analytics/microsite.html:196
 msgid "Active Learners Location"
 msgstr ""
 
@@ -26452,7 +26469,7 @@ msgstr ""
 msgid "Blended learning"
 msgstr ""
 
-# edx_xblock_scorm/scormxblock/static/html/scormxblock.html
+#: lms/templates/header/user_dropdown.html:47
 msgid "points"
 msgstr ""
 
@@ -26821,7 +26838,7 @@ msgstr ""
 msgid "Unsuccessful"
 msgstr ""
 
-#: lms/templates/triboo_analytics/microsite.html:44
+#: lms/templates/triboo_analytics/microsite.html:152
 msgid "Number of learners enrolled in a course"
 msgstr ""
 
@@ -26835,7 +26852,7 @@ msgid ""
 " and a passing total score"
 msgstr ""
 
-#: lms/templates/triboo_analytics/microsite.html:34
+#: lms/templates/triboo_analytics/microsite.html:71
 msgid "Number of courses created and available"
 msgstr ""
 
@@ -27046,19 +27063,19 @@ msgstr ""
 msgid "Upcoming Session"
 msgstr ""
 
-#: lms/templates/dashboard.html
+#: lms/templates/dashboard.html:528
 msgid "No upcoming sessions planned"
 msgstr ""
 
-#: lms/templates/dashboard.html
+#: lms/templates/dashboard.html:529
 msgid "Sign up for an ILT session."
 msgstr ""
 
-#: lms/templates/dashboard.html
+#: lms/templates/dashboard.html:530
 msgid "It will appear in your calendar."
 msgstr ""
 
-#: lms/templates/dashboard.html
+#: lms/templates/dashboard.html:531
 msgid "Let's start"
 msgstr ""
 
@@ -27954,7 +27971,7 @@ msgstr ""
 msgid "Drag and Drop"
 msgstr ""
 
-#: platform/lms/templates/admin_panel/admin_panel.html
+#: lms/templates/admin_panel/admin_panel.html:303
 msgid "Access Level"
 msgstr ""
 
@@ -28022,14 +28039,59 @@ msgstr ""
 msgid "All the following related items will be deleted"
 msgstr ""
 
-#: platform/lms/templates/admin_panel/admin_panel.html
+#: lms/templates/admin_panel/admin_panel.html:334
+#: lms/templates/admin_panel/admin_panel.html:641
 msgid "Studio Admin"
 msgstr ""
 
 #: platform/lms/templates/admin_panel/admin_panel.html
-msgid "PLatform Admin"
+msgid "Super Platform Admin"
 msgstr ""
 
-#: platform/lms/templates/admin_panel/admin_panel.html
-msgid "Super Platform Admin"
+#: lms/templates/admin_panel/admin_panel.html:331
+#: lms/templates/admin_panel/admin_panel.html:642
+msgid "Platform Admin"
+msgstr ""
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py:772
+msgid "Data Download"
+msgstr ""
+
+#: lms/templates/footer.html:143 lms/templates/admin_panel/admin_panel.html:25
+#: lms/templates/admin_panel/admin_panel.html:205
+msgid "Admin Panel"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:627
+msgid "Active"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:627
+msgid "Inactive"
+msgstr ""
+
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:40
+msgid "by recent activity"
+msgstr ""
+
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "by most votes"
+msgstr ""
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:250
+msgid "Certificate Exceptions"
+msgstr ""
+
+#: lms/templates/discussion/_thread_list_template.html:53
+msgid "Subject"
+msgstr ""
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Topic"
+msgstr ""
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Author"
 msgstr ""
