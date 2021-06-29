@@ -12874,7 +12874,3 @@ msgstr "导入 CSV 文件"
 #: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
 msgid "Certificate exceptions group selection"
 msgstr "证书例外组选择"
-
-#: platform/lms/templates/discovery/facet_option.underscore
-msgid "Area of Development"
-msgstr "发展领域"
