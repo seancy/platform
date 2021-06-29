@@ -3356,10 +3356,9 @@ msgstr "Wie können wir Ihnen helfen, {username}?"
 msgid "Subject"
 msgstr "Betreff"
 
-#: common/static/bundles/SingleSupportForm.js:445
-#: lms/djangoapps/support/static/support/jsx/logged_in_user.jsx:70
+#: common/static/bundles/SingleSupportForm.js:382
 msgid "Details"
-msgstr "Details"
+msgstr "Einzelheiten"
 
 #: common/static/bundles/SingleSupportForm.js:452
 #: lms/djangoapps/support/static/support/jsx/logged_in_user.jsx:73
@@ -4899,8 +4898,8 @@ msgstr ""
 #: lms/static/js/discovery/views/search_form.js:47, javascript-format
 msgid "%s course found"
 msgid_plural "%s courses found"
-msgstr[0] "Kursnummer"
-msgstr[1] "Kursnummer"
+msgstr[0] "Kurs gefunden"
+msgstr[1] "Kurse gefunden"
 
 #: lms/static/js/discovery/views/search_form.js:56
 #, javascript-format
@@ -7990,7 +7989,7 @@ msgstr "Zertifikat für den Nutzer erneut generieren"
 
 #: lms/djangoapps/support/static/support/templates/certificates_results.underscore:44
 msgid "Generate"
-msgstr "Erstellen"
+msgstr "Generieren"
 
 #: lms/djangoapps/support/static/support/templates/certificates_results.underscore:45
 msgid "Generate the user's certificate"
@@ -9808,17 +9807,19 @@ msgstr "Zeigen Sie die Zeit an, die Lernende während des ausgewählten Zeitraum
 msgid "Display the state of learners at the end of the selected period for learners who visited the platform during this period. The total time spent shows the time learners spent on the platform during the selected period."
 msgstr "Zeigen Sie den Status der Lernenden am Ende des ausgewählten Zeitraums für Lernende an, die die Plattform während dieses Zeitraums besucht haben. Die Gesamtzeit zeigt die Zeit, die die Lernenden während des ausgewählten Zeitraums auf der Plattform verbracht haben."
 
-#: lms/static/js/triboo_analytics/LearnerReport.js
+#: common/static/bundles/LearnerReport.js:140
+#: lms/static/js/triboo_analytics/LearnerReport.js:58
 msgid "Learner Report"
-msgstr "Lernbericht"
+msgstr "Teilnehmer Report"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "Course Report"
-msgstr "Kursbericht"
+msgstr "Kurs Report"
 
-#: lms/static/js/triboo_analytics/ILTReport.js
+#: common/static/bundles/ILTReport.js:546
+#: lms/static/js/triboo_analytics/ILTReport.js:36
 msgid "ILT Report"
-msgstr "Bericht zu Präsenztraining"
+msgstr "Präsenztraining Report"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Global Report"
@@ -11921,17 +11922,17 @@ msgstr ""
 msgid "Use Current Transcript"
 msgstr "Nutze aktuelles Transkript"
 
-#: lms/templates/discovery/facet.underscore
+#: common/static/bundles/InternalCatalog.js:1138
 msgid "Availability"
-msgstr "Sichtbarkeit"
+msgstr "Verfügbarkeit"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Current"
-msgstr "Aktuelle Registerkarte"
+msgstr "Aktuelle Kurse"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "New"
-msgstr "Neu"
+msgstr "Neue Kurse"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Starts soon"
@@ -11947,7 +11948,7 @@ msgstr "Präsenztraining"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Future"
-msgstr "Künftig"
+msgstr "Zukünftige Kurse"
 
 #: lms/templates/discovery/facet.underscore
 msgid "Tag"
@@ -11959,7 +11960,7 @@ msgstr "Kategorie"
 
 #: lms/templates/discovery/facet.underscore
 msgid "Mandatory"
-msgstr "Unterzeichner"
+msgstr "Pflichtkurse"
 
 #: lms/templates/discovery/facet.underscore
 msgid "start"
@@ -12005,10 +12006,20 @@ msgstr "Entwurf"
 msgid "Published"
 msgstr "Veröffentlichen"
 
+#: common/static/bundles/CrehanaCatalog.js:481
+#: common/static/bundles/CrehanaCatalogCategories.js:698
+#: common/static/bundles/CrehanaCatalogCourses.js:139
+#: common/static/bundles/EdflexCatalogCourses.js:144
+#: common/static/bundles/ExternalCatalog.js:560
 #: lms/templates/discovery/facet_option.underscore
 msgid "English"
 msgstr "Englisch"
 
+#: common/static/bundles/CrehanaCatalog.js:481
+#: common/static/bundles/CrehanaCatalogCategories.js:698
+#: common/static/bundles/CrehanaCatalogCourses.js:138
+#: common/static/bundles/EdflexCatalogCourses.js:143
+#: common/static/bundles/ExternalCatalog.js:559
 #: lms/templates/discovery/facet_option.underscore
 msgid "French"
 msgstr "Französisch"
@@ -12096,13 +12107,26 @@ msgstr "Zeitformat HH:MM erforderlich"
 msgid "Leaderboard"
 msgstr "Rangliste"
 
+# lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/CrehanaCatalogCourses.js:614
+#: common/static/bundles/EdflexCatalogCourses.js:541
+#: common/static/bundles/ExternalCatalog.js:289
+#: common/static/bundles/LeaderBoard.js:286
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js:118
+#: lms/static/js/triboo_analytics/LeaderBoard.js:195
 msgid "Show more"
-msgstr "Notizen anzeigen"
+msgstr "Mehr anzeigen"
 
 msgid "Position"
 msgstr "Abschnitt"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/LeaderBoard.js:164
+#: common/static/bundles/LeaderBoard.js:209
+#: common/static/bundles/LeaderBoard.js:290
+#: lms/static/js/triboo_analytics/LeaderBoard.js:23
+#: lms/static/js/triboo_analytics/LeaderBoard.js:54
+#: lms/static/js/triboo_analytics/LeaderBoard.js:203
 msgid "Points"
 msgstr "Punkte"
 
@@ -12386,9 +12410,15 @@ msgstr "video"
 msgid "Continue"
 msgstr "Fortsetzen"
 
-#: lms/static/js/external_catalog/ExternalCatalog.jsx
+#: common/static/bundles/CrehanaCatalog.js:654
+#: common/static/bundles/CrehanaCatalogCategories.js:872
+#: common/static/bundles/CrehanaCatalogCourses.js:391
+#: common/static/bundles/CrehanaCatalogCoursesOverview.js:114
+#: common/static/bundles/EdflexCatalogCourses.js:356
+#: common/static/bundles/ExternalCatalog.js:772
+#: common/static/bundles/ExternalCatalogOverview.js:48
 msgid "Explore"
-msgstr "Kursauswahl"
+msgstr "Kurskatalog"
 
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "External Resources"
@@ -12831,3 +12861,43 @@ msgstr "Download der Rangliste"
 #: platform/lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
 msgstr "Der Export, den Sie gerade herunterladen, berücksichtigt die Auswahl der Rangliste, die Sie oben in der Ranglisten-Tabelle getroffen haben."
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Communication"
+msgstr "Kommunikation"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Customer Relations"
+msgstr "Kundenbeziehungen"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Human Resources"
+msgstr "Humanressourcen"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Leadership and Management"
+msgstr "Führung und Management"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "People Skills"
+msgstr "Soziale Kompetenz"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Sales"
+msgstr "Der Umsatz"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Work Environment"
+msgstr "Arbeitsumgebung"
+
+#: platform/lms/templates/instructor/instructor_dashboard_2/certificate-bulk-white-list.underscore
+msgid "Import CSV file"
+msgstr "CSV-Datei importieren"
+
+#: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
+msgid "Certificate exceptions group selection"
+msgstr "Auswahl der Gruppengruppen für Zertifikatausnahmen"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Area of Development"
+msgstr "Entwicklungsbereich"

@@ -8,7 +8,7 @@
             <i class="fal fa-file-csv"></i>
             <label for="browseBtn-bulk-csv"><%- gettext("Drag and drop") %></label>
             <b><%- gettext("or") %></b>
-            <button class="btn-blue upload-csv-button"><i class="fal fa-upload"></i><span><%- gettext("Importer CSV file") %></span></button>
+            <button class="btn-blue upload-csv-button"><i class="fal fa-upload"></i><span><%- gettext("Import CSV file") %></span></button>
             <div class="file-browse btn btn-primary" aria-hidden="true">
                 <input class="file_field" id="browseBtn-bulk-csv" name="students_list" type="file" accept=".csv"/>
 

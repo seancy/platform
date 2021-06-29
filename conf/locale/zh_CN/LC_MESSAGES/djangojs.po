@@ -12838,3 +12838,43 @@ msgstr "下载排行榜"
 #: platform/lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
 msgstr "你要下载的报告将会根据你选择的排行榜周期来导出。"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Communication"
+msgstr "沟通"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Customer Relations"
+msgstr "客户关系"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Human Resources"
+msgstr "人力资源"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Leadership and Management"
+msgstr "领导与管理"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "People Skills"
+msgstr "人际交往能力"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Sales"
+msgstr "销售"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Work Environment"
+msgstr "工作环境"
+
+#: platform/lms/templates/instructor/instructor_dashboard_2/certificate-bulk-white-list.underscore
+msgid "Import CSV file"
+msgstr "导入 CSV 文件"
+
+#: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
+msgid "Certificate exceptions group selection"
+msgstr "证书例外组选择"
+
+#: platform/lms/templates/discovery/facet_option.underscore
+msgid "Area of Development"
+msgstr "发展领域"

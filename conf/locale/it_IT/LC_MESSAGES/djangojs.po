@@ -12157,14 +12157,32 @@ msgid "Time format HH:MM expected"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/LeaderBoard.js:227
+#: common/static/bundles/LeaderBoard.js:231
+#: common/static/bundles/LeaderBoard.js:284
+#: lms/static/js/triboo_analytics/LeaderBoard.js:155
+#: lms/static/js/triboo_analytics/LeaderBoard.js:160
+#: lms/static/js/triboo_analytics/LeaderBoard.js:194
 msgid "Leaderboard"
-msgstr ""
+msgstr "Classifica"
 
+# lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/CrehanaCatalogCourses.js:614
+#: common/static/bundles/EdflexCatalogCourses.js:541
+#: common/static/bundles/ExternalCatalog.js:289
+#: common/static/bundles/LeaderBoard.js:286
+#: lms/static/js/external_catalog/CrehanaCoursesContainer.js:118
+#: lms/static/js/triboo_analytics/LeaderBoard.js:195
 msgid "Show more"
-msgstr ""
+msgstr "Mostra di più"
 
+# lms/static/js/triboo_analytics/LeaderBoard.js
+#: common/static/bundles/LeaderBoard.js:164
+#: common/static/bundles/LeaderBoard.js:290
+#: lms/static/js/triboo_analytics/LeaderBoard.js:21
+#: lms/static/js/triboo_analytics/LeaderBoard.js:201
 msgid "Position"
-msgstr ""
+msgstr "Posizione"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Points"

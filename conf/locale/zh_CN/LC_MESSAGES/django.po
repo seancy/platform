@@ -30051,3 +30051,51 @@ msgstr "有效的名字必须至少两个字符长。"
 #: platform/lms/templates/admin_panel/admin_panel.html
 msgid "All the following related items will be deleted"
 msgstr "以下所有相关项目将被删除"
+
+#: lms/templates/admin_panel/admin_panel.html:331
+#: lms/templates/admin_panel/admin_panel.html:642
+msgid "Platform Admin"
+msgstr "平台管理员"
+
+#: lms/djangoapps/instructor/views/instructor_dashboard.py:772
+msgid "Data Download"
+msgstr "数据下载"
+
+#: lms/templates/footer.html:143 lms/templates/admin_panel/admin_panel.html:25
+#: lms/templates/admin_panel/admin_panel.html:205
+msgid "Admin Panel"
+msgstr "管理面板"
+
+#: lms/templates/admin_panel/admin_panel.html:627
+msgid "Active"
+msgstr "激活"
+
+#: lms/templates/admin_panel/admin_panel.html:627
+msgid "Inactive"
+msgstr "未激活"
+
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:40
+msgid "by recent activity"
+msgstr "按照最近活动"
+
+#. Translators: This is a menu option for sorting forum threads
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "by most votes"
+msgstr "按照最多投票数"
+
+#: lms/templates/instructor/instructor_dashboard_2/certificates.html:250
+msgid "Certificate Exceptions"
+msgstr "证书例外"
+
+#: lms/templates/discussion/_thread_list_template.html:53
+msgid "Subject"
+msgstr "科目"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Topic"
+msgstr "主题"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Author"
+msgstr "作者"

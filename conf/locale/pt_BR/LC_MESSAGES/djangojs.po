@@ -13411,3 +13411,11 @@ msgstr "Descarregar a classificação"
 #: platform/lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
 msgstr "A exportação que está prestes a descarregar terá em conta a selecção de classificação que fez no topo da tabela de classificação."
+
+#: platform/lms/templates/instructor/instructor_dashboard_2/certificate-bulk-white-list.underscore
+msgid "Import CSV file"
+msgstr "Importar arquivo CSV"
+
+#: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
+msgid "Certificate exceptions group selection"
+msgstr "Seleção do grupo de exceção para o certificado"

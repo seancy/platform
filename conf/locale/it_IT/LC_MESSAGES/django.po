@@ -16874,6 +16874,7 @@ msgstr "Scegli la lingua"
 msgid "Account"
 msgstr "Account"
 
+#: lms/templates/header/user_dropdown.html:62
 msgid "Leaderboard"
 msgstr "Classifica"
 
@@ -21054,8 +21055,8 @@ msgstr "È possibile cambiare sessione fino al {entitlement_expiration_date} ."
 #: lms/templates/dashboard/_dashboard_course_listing.html:215
 msgid "{num} badge"
 msgid_plural "{num} badges"
-msgstr[0] "{num} badge"
-msgstr[1] "{num} badge"
+msgstr[0] "{num} distintivo"
+msgstr[1] "{num} distintivi"
 
 #: lms/templates/dashboard/_dashboard_course_listing.html:256
 msgid "I'm taking {course_name} online with {facebook_brand}. Check it out!"
@@ -21542,6 +21543,18 @@ msgstr "Link per la creazione di una password non valido"
 #: lms/templates/discussion/_thread_list_template.html:44
 msgid "by most votes"
 msgstr "per la maggior parte dei voti"
+
+#: lms/templates/discussion/_thread_list_template.html:53
+msgid "Subject"
+msgstr "Soggetto"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Topic"
+msgstr "Argomento"
+
+#: lms/templates/discussion/_thread_list_template.html:44
+msgid "Author"
+msgstr "Autore"
 
 #: lms/templates/edxnotes/edxnotes.html:13
 msgid "Learner Notes"
@@ -28041,8 +28054,9 @@ msgstr "Polacco"
 msgid "Spanish"
 msgstr "Spagnolo"
 
+#: lms/templates/header/user_dropdown.html:47
 msgid "points"
-msgstr "punti"
+msgstr "punti "
 
 msgid "completed"
 msgstr "completato"
@@ -28532,8 +28546,9 @@ msgstr "Apparirà nel tuo calendario."
 msgid "Let's start"
 msgstr "Non iniziati"
 
+# lms/templates/courses_list.html
 msgid "Show more"
-msgstr "Mostra Note"
+msgstr "Mostra di più"
 
 #: XBlock: utils
 msgid "SCORM module exceeds maximum size of %(limit)s MB."
