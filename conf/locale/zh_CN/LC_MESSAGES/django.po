@@ -30057,10 +30057,6 @@ msgstr "以下所有相关项目将被删除"
 msgid "Platform Admin"
 msgstr "平台管理员"
 
-#: lms/djangoapps/instructor/views/instructor_dashboard.py:772
-msgid "Data Download"
-msgstr "数据下载"
-
 #: lms/templates/footer.html:143 lms/templates/admin_panel/admin_panel.html:25
 #: lms/templates/admin_panel/admin_panel.html:205
 msgid "Admin Panel"
@@ -30073,16 +30069,6 @@ msgstr "激活"
 #: lms/templates/admin_panel/admin_panel.html:627
 msgid "Inactive"
 msgstr "未激活"
-
-#. Translators: This is a menu option for sorting forum threads
-#: lms/templates/discussion/_thread_list_template.html:40
-msgid "by recent activity"
-msgstr "按照最近活动"
-
-#. Translators: This is a menu option for sorting forum threads
-#: lms/templates/discussion/_thread_list_template.html:44
-msgid "by most votes"
-msgstr "按照最多投票数"
 
 #: lms/templates/instructor/instructor_dashboard_2/certificates.html:250
 msgid "Certificate Exceptions"
