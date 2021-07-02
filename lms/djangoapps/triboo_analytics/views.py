@@ -362,9 +362,9 @@ def get_progress_table_data(course_key, filter_kwargs, exclude, sort=None):
     columns = []
     for b in _badges:
         badge_name = "%s ▸ %s" % (b.grading_rule, b.section_name)
-        columns.append("%s / Success" % badge_name)
-        columns.append("%s / Score" % badge_name)
-        columns.append("%s / Date" % badge_name)
+        columns.append("%s / %s" % (badge_name, _('Success')))
+        columns.append("%s / %s" % (badge_name, _('Score')))
+        columns.append("%s / %s" % (badge_name, _('Date')))
     order_by = get_order_by(ProgressTable, sort)
     return ProgressTable(dataset, exclude=exclude, order_by=order_by), columns
 
