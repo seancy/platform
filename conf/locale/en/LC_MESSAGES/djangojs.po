@@ -11877,10 +11877,6 @@ msgid "External"
 msgstr ""
 
 #: lms/static/js/external_catalog/ExternalCatalog.jsx
-msgid "Filters"
-msgstr ""
-
-#: lms/static/js/external_catalog/ExternalCatalog.jsx
 msgid "Type of content"
 msgstr ""
 
