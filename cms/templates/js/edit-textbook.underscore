@@ -5,7 +5,7 @@
       <% if (error && error.message) { %>
         <div id="edit_textbook_error" class="message message-status message-status error is-shown" name="edit_textbook_error">
           <span class="feedback-symbol fa fa-warning" aria-hidden="true"></span>
-          <div class="copy"><p><%- gettext(error.message) %></p></div>
+          <div class="copy"><h2><%- gettext(error.message) %></h2></div>
         </div>
       <% } %>
 
