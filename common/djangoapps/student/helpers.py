@@ -619,11 +619,19 @@ def do_create_account(form, custom_form=None):
         raise ValidationError(errors)
 
     proposed_username = form.cleaned_data["username"]
-    user = User(
-        username=proposed_username,
-        email=form.cleaned_data["email"],
-        is_active=False
-    )
+    user_param = {
+        'username': proposed_username,
+        'email': form.cleaned_data["email"],
+        'is_active': False
+    }
+    first_name = form.cleaned_data.get('first_name', None)
+    last_name = form.cleaned_data.get('last_name', None)
+    if first_name:
+        user_param['first_name'] = first_name
+    if last_name:
+        user_param['last_name'] = last_name
+
+    user = User(**user_param)
     user.set_password(form.cleaned_data["password"])
     registration = Registration()
 
