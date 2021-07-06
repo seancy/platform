@@ -19,7 +19,7 @@ DJANGO_PO = "django.po"
 DJANGO_JS_PO = "djangojs.po"
 DJANGO_MO = "django.mo"
 DJANGO_JS_MO = "djangojs.mo"
-LANGUAGES = ["es_419", "fr", "pt_BR", "zh_CN", "eo", "it_IT", "de_DE"]  # "eo" is only used for test.
+LANGUAGES = ["es_419", "fr", "pt_BR", "zh_CN", "eo", "it_IT", "de_DE", "tr_TR"]  # "eo" is only used for test.
 
 logging.basicConfig(level=logging.INFO)
 
