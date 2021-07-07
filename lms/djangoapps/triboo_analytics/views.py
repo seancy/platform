@@ -1734,11 +1734,12 @@ def leaderboard_data(request):
 
 @login_required
 def leaderboard_view(request):
-    from scripts.user_org_migration import migrate_normal_users
-    migrate_normal_users()
+    user_groups = [group.name for group in request.user.groups.all()]
+    able_to_download = request.user.is_staff or ANALYTICS_ACCESS_GROUP in user_groups or \
+                    ANALYTICS_LIMITED_ACCESS_GROUP in user_groups
     if not configuration_helpers.get_value("ENABLE_LEADERBOARD", False):
         raise Http404
-    data = {"list_table_downloads_url": reverse('list_table_downloads', kwargs={'report': 'leaderboard'})}
+    data = {"able_to_download": able_to_download}
     return render_to_response("triboo_analytics/leaderboard.html", data)
 
 
@@ -1746,7 +1747,7 @@ def _leaderboard_data(request, period, orgs, top=None):
     data = {}
     top_list = []
     query_set = LeaderBoardView.objects.filter(
-        Q(user__profile__org=orgs) | Q(user__profile__org=None) &
+        (Q(user__profile__org=orgs) | Q(user__profile__org=None)) &
         Q(user__is_staff=False)).select_related('user__profile')
     total_user = query_set.count()
     if period in ['week', 'month']:
