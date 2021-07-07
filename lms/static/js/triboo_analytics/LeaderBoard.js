@@ -42,7 +42,7 @@ const Ranks = ({list, totalUser, lastUpdate, isLoading, languageCode}) => {
   )
 }
 
-const Missions = ({missionConfig, mission}) => {
+const Missions = ({missionConfig, mission, downloadable}) => {
   return (
     <aside className="mission">
       <h2>{gettext('My Challenges')}</h2>
@@ -70,29 +70,35 @@ const Missions = ({missionConfig, mission}) => {
           </tbody>
         </table>
       </div>
-      <div className="download-actions-wrapper">
-        <button className="action-primary">
-          <span className="button-text">{gettext('Download the ranking')}</span>
-          <span className="button-icon">
-            <i className="far fa-chevron-down"></i>
-          </span>
-        </button>
-        <ul className="action-dropdown-list is-hidden">
-          <li className="action-item">
-            <a className="action-csv" data-format="csv" href="">CSV</a>
-          </li>
-          <li className="action-item">
-            <a className="action-excel" data-format="xls" href="">Excel</a>
-          </li>
-        </ul>
-      </div>
-      <p className="export-info">{gettext('The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table.')}</p>
-      <div className="dropdown-download-menu" data-endpoint="/analytics/list_table_downloads/leaderboard"></div>
+      {downloadable ?
+          <>
+          <div className="download-actions-wrapper">
+            <button className="action-primary">
+              <span className="button-text">{gettext('Download the ranking')}</span>
+              <span className="button-icon">
+                <i className="far fa-chevron-down"></i>
+              </span>
+            </button>
+            <ul className="action-dropdown-list is-hidden">
+              <li className="action-item">
+                <a className="action-csv" data-format="csv" href="">CSV</a>
+              </li>
+              <li className="action-item">
+                <a className="action-excel" data-format="xls" href="">Excel</a>
+              </li>
+            </ul>
+          </div>
+          <p className="export-info">{gettext('The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table.')}</p>
+          <div className="dropdown-download-menu" data-endpoint="/analytics/list_table_downloads/leaderboard"></div>
+          </>
+          :
+          null
+      }
     </aside>
   )
 }
 
-export const LeaderBoard = ({missionConfig, lastUpdate, totalUser, mission, list, languageCode}) => {
+export const LeaderBoard = ({missionConfig, lastUpdate, totalUser, mission, list, languageCode, downloadable}) => {
   const [state, setState] = useState({
     cacheObj: {},
     isLoading: true,
@@ -167,7 +173,7 @@ export const LeaderBoard = ({missionConfig, lastUpdate, totalUser, mission, list
         </section>
         <section className="lists">
           <Ranks {...state} languageCode={languageCode} />
-          <Missions missionConfig={missionConfig} mission={mission} />
+          <Missions missionConfig={missionConfig} mission={state.mission} downloadable={downloadable} />
         </section>
       </section>
     </React.Fragment>

@@ -7,6 +7,7 @@
   from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
   from openedx.core.djangolib.markup import HTML
   from webpack_loader.templatetags.webpack_loader import render_bundle
+  from openedx.core.djangolib.js_utils import dump_js_escaped_json
 %>
 
 <%block name="pagetitle">${_("LeaderBoard")}</%block>
@@ -59,7 +60,7 @@ ${HTML(render_bundle('ReactRenderer'))}
       //   icon: 'fal fa-road',
       // },
     },
-
+    downloadable: ${able_to_download | n, dump_js_escaped_json},
     //data
     lastUpdate: '2044-11-21 21:30:00',
     totalUser: 1200,
