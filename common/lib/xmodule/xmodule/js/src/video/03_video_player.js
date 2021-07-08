@@ -411,7 +411,7 @@ function(HTML5Video, HTML5HLSVideo, Resizer, HLS, _, Time) {
     }
 
     function setPlaybackRate(newSpeed) {
-        this.videoPlayer.player.setPlaybackRate(newSpeed);
+        this.videoPlayer.player.setPlaybackRate(parseFloat(newSpeed));
     }
 
     function onSpeedChange(newSpeed) {
