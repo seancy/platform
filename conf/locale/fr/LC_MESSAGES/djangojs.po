@@ -9539,7 +9539,7 @@ msgstr "S'inscrire avec edX"
 
 #: lms/templates/student_account/login.underscore:13
 msgid "Welcome to your training platform, log in to find your learning space!"
-msgstr "Bienvenue sur votre plateforme de formation, connectez-vous pour trouver votre espace d'apprentissage !"
+msgstr "Bienvenue sur votre plateforme de formation, connectez-vous pour accéder à votre espace d'apprentissage! "
 
 #: lms/templates/student_account/login.underscore:22
 msgid "Sign in to continue learning as {email}"
@@ -12974,12 +12974,12 @@ msgstr "Missions"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
-msgstr "Il y a au total ${totalUser} utilisateurs dans ce classement. Dernière mise à jour: ${lastUpdate}."
+msgstr "Il y a actuellement ${totalUser} apprenants. Dernière mise à jour: ${lastUpdate}."
 
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "All"
-msgstr "Classement total"
+msgstr "Tout"
 
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -13012,7 +13012,7 @@ msgstr "Obtention d'un badge"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Complete a unit"
-msgstr "Point bonus de complétion d'une unité"
+msgstr "Compléter une unité"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Access your first course"
@@ -13020,7 +13020,7 @@ msgstr "Accès à un cours"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Complete a course"
-msgstr "Complétion d'un cours"
+msgstr "Terminer un cours"
 
 #: master-cofidis: lms/static/js/views/login_role_check.js
 msgid "Are you a manager?"
@@ -13546,3 +13546,11 @@ msgstr "Importer un fichier CSV"
 #: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
 msgid "Certificate exceptions group selection"
 msgstr "Sélection du groupe d'exceptions pour le certificat"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Complete activities"
+msgstr "Compléter une activité"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Try to win a badge"
+msgstr "Essayer de remporter un badge"

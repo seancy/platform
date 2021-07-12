@@ -36,7 +36,7 @@ const Ranks = ({list, totalUser, lastUpdate, isLoading, languageCode}) => {
       <div className="loading-block"><i className="fas fa-spinner fa-spin"></i></div>
       <div className="last-update">
         <i className="fa fa-user"></i>
-        <small>{gettext(`There are currently ${totalUser} learners. Last update: ${lastUpdate}.`)}</small>
+        <small>{gettext('There are currently ${totalUser} learners. Last update: ${lastUpdate}.').replace('${totalUser}', totalUser).replace('${lastUpdate}', lastUpdate)}</small>
       </div>
     </div>
   )
@@ -61,7 +61,7 @@ const Missions = ({missionConfig, mission, downloadable}) => {
                   <div className="mission__icon-wrapper"><i className={icon}></i></div>
                   <div className="mission__text-wrapper">
                     <div>{message}</div>
-                    <small>{gettext(`You have won ${mission[key] * times || 0} point(s).`)}</small>
+                    <small>{gettext('You have won ${value} point(s).').replace('${value}', mission[key] * times || 0)}</small>
                   </div>
                 </td>
                 <td>+{times}</td>

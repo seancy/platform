@@ -12683,7 +12683,7 @@ msgstr "Chineza"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Portuguese"
-msgstr "Portugheză"
+msgstr "Português"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "German"
@@ -12834,7 +12834,7 @@ msgstr "Selecione o conteúdo de sua escolha"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Leaderboard"
-msgstr "Painel de gestão"
+msgstr "Classificação"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Show more"
@@ -12858,7 +12858,7 @@ msgstr "Missões"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
-msgstr "Atualmente existem ${totalUser} alunos. Última atualização: ${lastUpdate}."
+msgstr "Existem actualmente ${totalUser} alunos. Última actualização: ${lastUpdate}."
 
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -12876,7 +12876,7 @@ msgstr "Mês"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "You have won ${value} point(s)."
-msgstr "Você ganhou ${value} ponto(s)."
+msgstr "Ganhou ${value} ponto(s)."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Log into Triboo, for the first time"
@@ -13419,3 +13419,11 @@ msgstr "Importar arquivo CSV"
 #: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
 msgid "Certificate exceptions group selection"
 msgstr "Seleção do grupo de exceção para o certificado"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Complete activities"
+msgstr "Actividades completas"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Try to win a badge"
+msgstr "Tente ganhar um distintivo"

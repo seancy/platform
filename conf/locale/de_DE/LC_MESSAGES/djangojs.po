@@ -4898,8 +4898,8 @@ msgstr ""
 #: lms/static/js/discovery/views/search_form.js:47, javascript-format
 msgid "%s course found"
 msgid_plural "%s courses found"
-msgstr[0] "Kurs gefunden"
-msgstr[1] "Kurse gefunden"
+msgstr[0] "%s Kurs gefunden"
+msgstr[1] "%s Kurse gefunden"
 
 #: lms/static/js/discovery/views/search_form.js:56
 #, javascript-format
@@ -12138,7 +12138,7 @@ msgstr "Dimensionen"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
-msgstr "Derzeit gibt es ${totalUser} Teilnehmer. Letzte Aktualisierung: ${lastUpdate}."
+msgstr "Derzeit gibt es ${totalUser} Lernende. Letzte Aktualisierung: ${lastUpdate}."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "All"
@@ -12158,7 +12158,7 @@ msgstr "Sie haben ${value} Punkt(e) gewonnen."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Log into Triboo, for the first time"
-msgstr "Anmeldung bei Triboo, zum ersten Mal"
+msgstr "Melden Sie sich bei Triboo an, zum ersten Mal"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Log into Triboo everyday, for at least 30 minutes"
@@ -12901,3 +12901,11 @@ msgstr "Auswahl der Gruppengruppen für Zertifikatausnahmen"
 #: platform/lms/templates/discovery/facet_option.underscore
 msgid "Area of Development"
 msgstr "Entwicklungsbereich"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Complete activities"
+msgstr "Vollständige Aktivitäten"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Try to win a badge"
+msgstr "Versuchen Sie, ein Abzeichen zu gewinnen"

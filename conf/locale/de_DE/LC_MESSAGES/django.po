@@ -6266,16 +6266,15 @@ msgid ""
 msgstr ""
 "Sie sind im Honor Modus eingeschrieben. Im Honor Modus werden Ihnen keine Zertifikate ausgestellt."
 
-#: lms/djangoapps/courseware/views/views.py:160
+#: lms/djangoapps/courseware/views/views.py:171
 msgid "We're working on it..."
-msgstr "Wir arbeiten dran..."
+msgstr "Wir arbeiten daran..."
 
-#: lms/djangoapps/courseware/views/views.py:162
+#: lms/djangoapps/courseware/views/views.py:173
 msgid ""
 "We're creating your certificate. You can keep working in your courses and a "
 "link to it will appear here and on your Dashboard when it is ready."
-msgstr ""
-"Wir erstellen Ihr Zertifikat. Sie können in Ihren Kursen weiterlernen. Ein Link zum Zertifikat wird hier und auf der Seite \"Meine Kurse\" erscheinen, sobald es erstellt ist."
+msgstr "Wir schaffen Ihr Zertifikat. Sie halten in Ihren Kursen arbeiten und einen Link, um es hier und auf Ihrem Dashboard angezeigt werden, wenn es fertig ist."
 
 #: lms/djangoapps/courseware/views/views.py:171
 msgid "Your certificate has been invalidated"
@@ -6285,14 +6284,14 @@ msgstr "Ihr Zertifikat wurde entwertet und ist somit ungültig."
 msgid "Please contact your course team if you have any questions."
 msgstr "Bei Fragen wenden Sie sich bitte an Ihr Kursteam."
 
-#: lms/djangoapps/courseware/views/views.py:179
+#: lms/djangoapps/courseware/views/views.py:190
 msgid "Congratulations, you qualified for a certificate!"
-msgstr "Gratulation, du hast Dich für ein Zertifikat qualifiziert!"
+msgstr "Herzlichen Glückwunsch, Sie für ein Zertifikat qualifiziert!"
 
-#: lms/djangoapps/courseware/views/views.py:180
-#: lms/djangoapps/courseware/views/views.py:201
+#: lms/djangoapps/courseware/views/views.py:191
+#: lms/djangoapps/courseware/views/views.py:212
 msgid "You've earned a certificate for this course."
-msgstr "Sie haben ein Zertifikat für diesen Kurs erhalten."
+msgstr "Sie haben ein Zertifikat für diesen Kurs verdient."
 
 #: lms/djangoapps/courseware/views/views.py:187
 msgid "Certificate unavailable"
@@ -15307,7 +15306,7 @@ msgstr ""
 #: cms/templates/manage_users.html:102
 msgid ""
 "This user can edit the course but cannot manage the course team (cannot add "
-"a new member or change other members' access). They are courseco-authors. "
+"a new member or change other members' access). They are course co-authors. "
 "They have also full writing and editing privileges on all course content."
 msgstr ""
 "Dieser Benutzer kann den Kurs bearbeiten, aber das Kursteam nicht verwalten (kein neues Mitglied hinzufügen oder den Zugriff anderer Mitglieder ändern). Sie sind Mitautoren des Kurses. Sie verfügen außerdem über vollständige Schreib- und Bearbeitungsrechte für alle Kursinhalte. Alle Mitglieder des Kursteams kann auf Inhalte in Studio und im LMS zugreifen, wird jedoch nicht automatisch für den Kurs angemeldet. "
@@ -20109,6 +20108,10 @@ msgstr "Einschreibung ist geschlossen"
 msgid "Add to Cart <span>({price} USD)</span>"
 msgstr "Den Kurs {course_name} zum Warenkorb hinzufügen <span>({price} USD)</span>"
 
+#: lms/templates/courseware/course_banner.html:189
+msgid "Print Course"
+msgstr "Kurs drucken"
+
 #: lms/templates/courseware/course_navigation.html:69
 msgid "Course Material"
 msgstr "Kursmaterial"
@@ -20507,7 +20510,7 @@ msgid "Download Your Certificate"
 msgstr "Lade Dein Zertifikat herunter"
 
 #: lms/templates/courseware/progress.html:83
-#: lms/templates/courseware/progress_badges.html:78
+#: lms/templates/courseware/progress_badges.html:62
 msgid "Request Certificate"
 msgstr "Zertifikat anfordern"
 
@@ -29692,3 +29695,53 @@ msgstr "Thema"
 #: lms/templates/discussion/_thread_list_template.html:44
 msgid "Author"
 msgstr "Autor"
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgctxt "xblock-ilt"
+msgid "Dear"
+msgstr "Liebe/ Lieber"
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "We are writing to remind you your enrollment in the Instructor Led Training virtual training on {start_date}."
+msgstr "Wir schreiben, um Sie an Ihre Anmeldung zum virtuellen Training am {start_date} zu erinnern."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "SCHEDULE:"
+msgstr "ZEITPLAN:"
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "The training begins on {start_date} at {start_hour} {timezone}."
+msgstr "Das Training beginnt am {start_date} um {start_hour} {timezone}."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "We recommend you to connect few minutes before the training begins."
+msgstr "Wir empfehlen Ihnen, einige Minuten vor Beginn des Trainings eine Verbindung herzustellen."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "The training ends on {end_date} at {end_hour} {timezone}."
+msgstr "Das Training endet am {end_date} um {end_hour} {timezone}."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "Total duration of the training: {duration_time} hour(s)."
+msgstr "Gesamtdauer des Trainings: {duration_time} Stunde (n)."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "LOCATION OF THE TRAINING: <a href='{location}'>{location}</a>"
+msgstr "ORT DER AUSBILDUNG: <a href='{location}'>{location}</a>"
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgctxt "xblock-ilt"
+msgid "See you soon."
+msgstr "Bis bald."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "Click <a href='{unit_url}'>here</a> to view your enrollment on {platform_name}."
+msgstr "Klicken Sie <a href='{unit_url}'>hier</a>, um Ihre Registrierung unter {platform_name} anzuzeigen."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "This is an automatically generated email, please do not reply."
+msgstr "Dies ist eine automatisch generierte E-Mail. Bitte antworten Sie nicht."
+
+#: lms/templates/emails/ilt_virtual_session_hourly_reminder_email_message.txt
+msgid "Your virtual training is about to start in approximately one hour."
+msgstr "Ihr virtuelles Training beginnt in ungefähr einer Stunde."
