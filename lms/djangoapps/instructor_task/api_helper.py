@@ -49,10 +49,10 @@ class QueueConnectionError(Exception):
         super(QueueConnectionError, self).__init__(message)
 
 
-def _task_is_running(course_id, task_type, task_key):
+def _task_is_running(course_id, task_type, task_key, requester):
     """Checks if a particular task is already running"""
     running_tasks = InstructorTask.objects.filter(
-        course_id=course_id, task_type=task_type, task_key=task_key
+        course_id=course_id, task_type=task_type, task_key=task_key, requester=requester
     )
     # exclude states that are "ready" (i.e. not "running", e.g. failure, success, revoked):
     for state in READY_STATES:
@@ -85,7 +85,7 @@ def _reserve_task(course_id, task_type, task_key, task_input, requester):
     put in further safeguards.
     """
 
-    if _task_is_running(course_id, task_type, task_key):
+    if _task_is_running(course_id, task_type, task_key, requester):
         log.warning("Duplicate task found for task_type %s and task_key %s", task_type, task_key)
         error_message = generate_already_running_error_message(task_type)
         raise AlreadyRunningError(error_message)
