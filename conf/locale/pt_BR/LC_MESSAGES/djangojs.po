@@ -12683,7 +12683,7 @@ msgstr "Chineza"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Portuguese"
-msgstr "Portugheză"
+msgstr "Português"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "German"

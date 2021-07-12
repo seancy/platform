@@ -6276,16 +6276,15 @@ msgid ""
 msgstr ""
 "Sei iscritto/a al percorso onorario per questo corso. Il percorso onorario non include un certificato."
 
-#: lms/djangoapps/courseware/views/views.py:162
+#: lms/djangoapps/courseware/views/views.py:171
 msgid "We're working on it..."
 msgstr "Ci stiamo lavorando..."
 
-#: lms/djangoapps/courseware/views/views.py:164
+#: lms/djangoapps/courseware/views/views.py:173
 msgid ""
 "We're creating your certificate. You can keep working in your courses and a "
 "link to it will appear here and on your Dashboard when it is ready."
-msgstr ""
-"Stiamo creando il tuo certificato. Puoi continuare a lavorare sui tuoi corsi e un link apparirà qui e sul tuo cruscotto quando sarà pronto."
+msgstr "Stiamo creando il certificato. Si può continuare a lavorare nei vostri corsi e un link ad esso apparirà qui e sul cruscotto quando è pronto."
 
 #: lms/djangoapps/courseware/views/views.py:173
 msgid "Your certificate has been invalidated"
@@ -6295,14 +6294,14 @@ msgstr "Il tuo certificato è stato annullato"
 msgid "Please contact your course team if you have any questions."
 msgstr "Contatta il gruppo del tuo corso per qualsiasi domanda."
 
-#: lms/djangoapps/courseware/views/views.py:181
+#: lms/djangoapps/courseware/views/views.py:190
 msgid "Congratulations, you qualified for a certificate!"
-msgstr "Congratulazioni, ti sei qualificato/a per un certificato!"
+msgstr "Complimenti, ti qualifichi per un certificato!"
 
-#: lms/djangoapps/courseware/views/views.py:182
-#: lms/djangoapps/courseware/views/views.py:203
+#: lms/djangoapps/courseware/views/views.py:191
+#: lms/djangoapps/courseware/views/views.py:212
 msgid "You've earned a certificate for this course."
-msgstr "Hai ottenuto un certificato per questo corso."
+msgstr "Hai guadagnato un certificato per questo corso."
 
 #: lms/djangoapps/courseware/views/views.py:189
 msgid "Certificate unavailable"
@@ -20198,6 +20197,10 @@ msgstr "L'iscrizione è Chiusa"
 msgid "Add to Cart <span>({price} USD)</span>"
 msgstr "Aggiungi al carrello <span>({price} USD)</span>"
 
+#: lms/templates/courseware/course_banner.html:189
+msgid "Print Course"
+msgstr "Stampa Corso"
+
 #: lms/templates/courseware/course_navigation.html:45
 msgid "Course Material"
 msgstr "Materiale del corso"
@@ -20652,9 +20655,9 @@ msgid "Download Your Certificate"
 msgstr "Scarica il tuo certificato"
 
 #: lms/templates/courseware/progress.html:83
-#: lms/templates/courseware/progress_badges.html:74
+#: lms/templates/courseware/progress_badges.html:62
 msgid "Request Certificate"
-msgstr "Richiesta certificato"
+msgstr "Richiesta di certificato"
 
 #: lms/templates/courseware/progress.html:97
 msgid "Requirements for Course Credit"
@@ -29682,3 +29685,53 @@ msgstr "Tutti i seguenti elementi correlati verranno eliminati"
 #: xblock-done/lbmdonexblock/lbmdonexblock.py
 msgid "Check Button"
 msgstr "Pulsante di controllo"
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgctxt "xblock-ilt"
+msgid "Dear"
+msgstr "Gentile"
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "We are writing to remind you your enrollment in the Instructor Led Training virtual training on {start_date}."
+msgstr "Ti scriviamo per ricordarti la tua iscrizione al corso di formazione virtuale in {start_date}."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "SCHEDULE:"
+msgstr "PROGRAMMA:"
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "The training begins on {start_date} at {start_hour} {timezone}."
+msgstr "La formazione inizia il {start_date} alle {start_hour} {timezone}."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "We recommend you to connect few minutes before the training begins."
+msgstr "Ti consigliamo di connetterti pochi minuti prima dell'inizio della formazione."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "The training ends on {end_date} at {end_hour} {timezone}."
+msgstr "La formazione termina il {end_date} alle {end_hour} {timezone}."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "Total duration of the training: {duration_time} hour(s)."
+msgstr "Durata totale della formazione: {duration_time} ore."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "LOCATION OF THE TRAINING: <a href='{location}'>{location}</a>"
+msgstr "LUOGO DI FORMAZIONE: <a href='{location}'>{location}</a>"
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgctxt "xblock-ilt"
+msgid "See you soon."
+msgstr "A presto."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "Click <a href='{unit_url}'>here</a> to view your enrollment on {platform_name}."
+msgstr "Fare clic <a href='{unit_url}'>qui</a> per visualizzare la registrazione su {platform_name}."
+
+#: lms/templates/emails/ilt_virtual_session_daily_reminder_email_message.txt
+msgid "This is an automatically generated email, please do not reply."
+msgstr "Questa è un'e-mail generata automaticamente, per favore non rispondere."
+
+#: lms/templates/emails/ilt_virtual_session_hourly_reminder_email_message.txt
+msgid "Your virtual training is about to start in approximately one hour."
+msgstr "La tua formazione virtuale inizierà tra circa un'ora."

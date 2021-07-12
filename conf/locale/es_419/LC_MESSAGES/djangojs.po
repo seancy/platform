@@ -9497,7 +9497,7 @@ msgstr "Registrarse a través de edX"
 #: lms/templates/student_account/login.underscore:13
 #: lms/templates/student_account/login.underscore
 msgid "Welcome to your training platform, log in to find your learning space!"
-msgstr "Bienvenido a tu plataforma de formación, acceda a encontrar tu espacio de aprendizaje!"
+msgstr "¡Bienvenido a su plataforma de formación, inicie sesión para encontrar su espacio de aprendizaje!"
 
 #: lms/templates/student_account/login.underscore:22
 msgid "Sign in to continue learning as {email}"
