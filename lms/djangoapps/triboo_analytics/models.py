@@ -499,7 +499,7 @@ class LearnerVisitsDailyReport(UnicodeMixin, ReportMixin, TimeModel):
 
     @classmethod
     def get_active_user_ids(cls, from_date, to_date, course_id=None):
-        logger.info("LAETITIA -- searching for visitors in [%s, %s[" % (from_date, to_date))
+        # logger.info("LAETITIA -- searching for visitors in [%s, %s[" % (from_date, to_date))
         if course_id:
             reports = cls.objects.filter(created__gte=from_date,
                                          created__lt=to_date,
@@ -667,13 +667,13 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
                     and (not user.last_login or user.last_login.date() < report_last_modified)
                     and course_last_update < report_last_modified
                     and enrollment.completed == report.completion_date):
-                    logger.info("LAETITIA -- LC report user_id=%d / gradebook=%s / login=%s / "\
-                        "course update=%s / completion=%s => NO UPDATE NEEDED" % (
-                        user.id,
-                        (not enrollment.gradebook_edit or enrollment.gradebook_edit.date() < report_last_modified),
-                        (not user.last_login or user.last_login.date() < report_last_modified),
-                        (course_last_update < report_last_modified),
-                        (enrollment.completed == report.completion_date)))
+                    # logger.info("LAETITIA -- LC report user_id=%d / gradebook=%s / login=%s / "\
+                    #     "course update=%s / completion=%s => NO UPDATE NEEDED" % (
+                    #     user.id,
+                    #     (not enrollment.gradebook_edit or enrollment.gradebook_edit.date() < report_last_modified),
+                    #     (not user.last_login or user.last_login.date() < report_last_modified),
+                    #     (course_last_update < report_last_modified),
+                    #     (enrollment.completed == report.completion_date)))
                     report_needs_update = False
                     report.records = cls.append_record(report.records, dt2key(), last_analytics_success_record)
                     report.is_active = True
@@ -682,7 +682,7 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
             badge_report_needs_update = True
             trophies_by_chapter = None
             if report_needs_update:
-                logger.info("LAETITIA -- LC report user_id=%d NEEDS UPDATE" % user.id)
+                # logger.info("LAETITIA -- LC report user_id=%d NEEDS UPDATE" % user.id)
                 with modulestore().bulk_operations(course_key):
                     total_time_spent = (LearnerVisitsDailyReport.objects.filter(
                                             user=user, course_id=course_key, created__gte=enrollment.created).aggregate(
@@ -724,8 +724,8 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
                         trophies_by_chapter = progress['trophies_by_chapter']
 
                     else:
-                        logger.warning('LAETITIA -- course=%s user_id=%d does not have progress info => empty report.' % (
-                            course_key, user.id))
+                        # logger.warning('LAETITIA -- course=%s user_id=%d does not have progress info => empty report.' % (
+                        #     course_key, user.id))
                         new_record = {"status": CourseStatus.not_started,
                                       "progress": 0,
                                       "badges": 0,
@@ -738,7 +738,7 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
 
                     new_record_str = cls.dump_record(new_record)
                     if report:
-                        logger.info("LAETITIA -- LC report user_id=%d SIMPLY ADD RECORD" % user.id)
+                        # logger.info("LAETITIA -- LC report user_id=%d SIMPLY ADD RECORD" % user.id)
                         report.status = new_record['status']
                         report.progress = new_record['progress']
                         report.badges = new_record['badges']
@@ -752,7 +752,7 @@ class LearnerCourseJsonReport(JsonReportMixin, TimeStampedModel):
                         report.save()
 
                     else:
-                        logger.info("LAETITIA -- LC report user_id=%d CREATE NEW REPORT" % user.id)
+                        # logger.info("LAETITIA -- LC report user_id=%d CREATE NEW REPORT" % user.id)
                         cls.objects.update_or_create(user=user,
                                                      course_id=course_key,
                                                      defaults={'org': course_key.org,
@@ -1055,8 +1055,8 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
             if key_last_analytics_success and report:
                 last_analytics_success_record = cls.get_record_str(report.records, key_last_analytics_success)
             if report and last_analytics_success_record and not needs_update:
-                logger.info("LAETITIA -- Section report user_id=%d / section=%s NO UPDATE NEEDED" % (
-                        enrollment.user.id, section_combined_url))
+                # logger.info("LAETITIA -- Section report user_id=%d / section=%s NO UPDATE NEEDED" % (
+                #         enrollment.user.id, section_combined_url))
                 report.records = cls.append_record(report.records, dt2key(), last_analytics_success_record)
                 report.is_active = True
                 report.save()
@@ -1069,51 +1069,22 @@ class LearnerSectionJsonReport(JsonReportMixin, TimeStampedModel):
                 new_record = {"total_time_spent": total_time_spent}
                 new_record_str = json.dumps(new_record)
                 if report:
-                    logger.info("LAETITIA -- Section report user_id=%d / section=%s SIMPLY ADD RECORD" % (
-                            enrollment.user.id, section_combined_url))
+                    # logger.info("LAETITIA -- Section report user_id=%d / section=%s SIMPLY ADD RECORD" % (
+                    #         enrollment.user.id, section_combined_url))
                     report.section_name = section_combined_display_name
                     report.total_time_spent = new_record['total_time_spent']
                     report.records = cls.append_record(report.records, dt2key(), new_record_str)
                     report.is_active = True
                     report.save()
                 else:
-                    logger.info("LAETITIA -- Section report user_id=%d / section=%s CREATE NEW REPORT" % (
-                            enrollment.user.id, section_combined_url))
+                    # logger.info("LAETITIA -- Section report user_id=%d / section=%s CREATE NEW REPORT" % (
+                    #         enrollment.user.id, section_combined_url))
                     cls.objects.update_or_create(user=enrollment.user,
                                                  course_id=enrollment.course_id,
                                                  section_key=section_combined_url,
                                                  defaults={'section_name': section_combined_display_name.encode('utf-8'),
                                                            'total_time_spent': new_record['total_time_spent'],
                                                            'records': "{%s}" % cls.recordify(dt2key(), new_record_str)})
-
-
-    # @classmethod
-    # def filter_by_day(cls, date_time=None, **kwargs):
-    #     reports = cls.objects.filter(is_active=True, **kwargs)
-    #     if date_time:
-    #         day_key = dt2key(date_time)
-    #         results = []
-    #         for r in reports:
-    #             record = cls.get_record(r.records, day_key)
-    #             total_time_spent = record['total_time_spent'] if record else 0
-    #             results.append(LearnerSectionDailyReportMockup(r, total_time_spent))
-    #         return results
-    #     return reports
-
-
-    # @classmethod
-    # def get_by_day(cls, date_time=None, **kwargs):
-    #     try:
-    #         r = cls.objects.get(is_active=True, **kwargs)
-    #         if date_time:
-    #             day_key = dt2key(date_time)
-    #             record = cls.get_record(r.records, day_key)
-    #             total_time_spent = record['total_time_spent'] if record else 0
-    #             return LearnerSectionDailyReportMockup(r, total_time_spent)
-    #         return r
-    #     except cls.DoesNotExist:
-    #         return None
-
 
 
     @classmethod
@@ -1303,8 +1274,8 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                                                   trophy['section_url'])
                 try:
                     badge = Badge.objects.get(course_id=course_key, badge_hash=badge_hash)
-                    logger.info("LAETITIA -- found Badge course=%s - progress trophy %s (%s %s)" % (
-                        course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
+                    # logger.info("LAETITIA -- found Badge course=%s - progress trophy %s (%s %s)" % (
+                    #     course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
 
                 except Badge.DoesNotExist:
                     badge, _ = Badge.objects.update_or_create(course_id=course_key,
@@ -1313,8 +1284,8 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                                                                      'grading_rule': trophy['section_format'],
                                                                      'section_name': trophy['section_name'],
                                                                      'threshold': (trophy['threshold'] * 100)})
-                    logger.info("LAETITIA -- create Badge course=%s - progress trophy %s (%s %s)" % (
-                        course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
+                    # logger.info("LAETITIA -- create Badge course=%s - progress trophy %s (%s %s)" % (
+                    #     course_key, badge_hash, chapter['chapter_name'], trophy['section_name']))
 
                 report = None
                 records = {}
@@ -1328,8 +1299,8 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                     last_analytics_success_record = cls.get_record_str(report.records, key_last_analytics_success)
 
                 if report and last_analytics_success_record and not needs_update:
-                    logger.info("LAETITIA -- Badge report user_id=%d / badge=%s NO UPDATE NEEDED" % (
-                        user.id, badge))
+                    # logger.info("LAETITIA -- Badge report user_id=%d / badge=%s NO UPDATE NEEDED" % (
+                    #     user.id, badge))
                     report.records = cls.append_record(report.records, dt2key(), last_analytics_success_record)
                     report.is_active = True
                     report.save()
@@ -1343,8 +1314,8 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                                   "success_date": success_date}
                     new_record_str = cls.dump_record(new_record)
                     if report:
-                        logger.info("LAETITIA -- Badge report user_id=%d / badge=%s SIMPLY ADD RECORD" % (
-                            user.id, badge))
+                        # logger.info("LAETITIA -- Badge report user_id=%d / badge=%s SIMPLY ADD RECORD" % (
+                        #     user.id, badge))
                         report.score = new_record['score']
                         report.success = new_record['success']
                         report.success_date = new_record['success_date']
@@ -1352,8 +1323,8 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
                         report.is_active = True
                         report.save()
                     else:
-                        logger.info("LAETITIA -- Badge report user_id=%d / badge=%s CREATE NEW REPORT" % (
-                            user.id, badge))
+                        # logger.info("LAETITIA -- Badge report user_id=%d / badge=%s CREATE NEW REPORT" % (
+                        #     user.id, badge))
                         cls.objects.update_or_create(user=user,
                                                      badge=badge,
                                                      defaults={'score': score,
@@ -1380,20 +1351,6 @@ class LearnerBadgeJsonReport(JsonReportMixin, TimeStampedModel):
             return LearnerBadgeDailyReportMockup(r, key_day)
         except cls.DoesNotExist:
             return None
-            
-
-    # @classmethod
-    # def list_filter_by_day(cls, date_time=None, **kwargs):
-    #     results = cls.filter_by_day(date_time, **kwargs)
-    #     dataset = {}
-    #     for res in results:
-    #         key = res.user.id
-    #         if key not in dataset.keys():
-    #             dataset[key] = {'user': res.user}
-    #         dataset[key]["%s_success" % res.badge.badge_hash] = res.success
-    #         dataset[key]["%s_score" % res.badge.badge_hash] = res.score
-    #         dataset[key]["%s_successdate" % res.badge.badge_hash] = res.success_date
-    #     return dataset.values()
 
 
     @classmethod
