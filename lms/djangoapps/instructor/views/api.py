@@ -474,7 +474,13 @@ def register_and_enroll_students_precheck(request, course_id):
                             .format(row_num=row_num, expected_length=expected_length)
                     })
                 continue
-
+            try:
+                student = [col.decode('utf-8') for col in student]
+            except UnicodeDecodeError:
+                row_errors.append({
+                    'response': _('Row #{row_num}: Invalid utf-8 characters').format(row_num=row_num)
+                })
+                continue
             first_name = student[LT_CSV['first_name']].strip()
             last_name = student[LT_CSV['last_name']].strip()
             username = student[LT_CSV['username']].strip()
@@ -601,7 +607,13 @@ def register_and_enroll_students(request, course_id):  # pylint: disable=too-man
                             .format(row_num=row_num, expected_length=expected_length)
                     })
                 continue
-
+            try:
+                student = [col.decode('utf-8') for col in student]
+            except UnicodeDecodeError:
+                row_errors.append({
+                    'response': _('Row #{row_num}: Invalid utf-8 characters').format(row_num=row_num)
+                })
+                continue
             first_name = student[LT_CSV['first_name']].strip()
             last_name = student[LT_CSV['last_name']].strip()
             username = student[LT_CSV['username']].strip()
