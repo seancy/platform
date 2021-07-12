@@ -15292,7 +15292,7 @@ msgstr ""
 #: cms/templates/manage_users.html:102
 msgid ""
 "This user can edit the course but cannot manage the course team (cannot add "
-"a new member or change other members' access). They are courseco-authors. "
+"a new member or change other members' access). They are course co-authors. "
 "They have also full writing and editing privileges on all course content."
 msgstr ""
 "Questo utente può modificare il corso ma non può gestire il team del corso (non può aggiungere un nuovo membro o modificare l'accesso di altri membri). Sono courseco-autori. Hanno anche pieni privilegi di scrittura e modifica su tutti i contenuti del corso. Tutti i membri del team del corso possono accedere ai contenuti in Studio e nell'LMS, ma non vengono automaticamente iscritti al corso. "

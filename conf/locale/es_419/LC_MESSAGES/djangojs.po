@@ -12752,7 +12752,7 @@ msgstr "Misiones"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
-msgstr "Actualmente hay ${totalUser} estudiantes. Última actualización: ${lastUpdate}."
+msgstr "Actualmente hay ${totalUser} alumnos. Última actualización: ${lastUpdate}."
 
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
@@ -13313,3 +13313,11 @@ msgstr "Importar archivo CSV"
 #: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
 msgid "Certificate exceptions group selection"
 msgstr "Selección del grupo de excepción para el certificado"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Complete activities"
+msgstr "Actividades completas"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Try to win a badge"
+msgstr "Intenta ganar una insignia"

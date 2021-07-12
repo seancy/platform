@@ -12290,3 +12290,11 @@ msgstr ""
 #: platform/lms/templates/discovery/facet_option.underscore
 msgid "Area of Development"
 msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Complete activities"
+msgstr ""
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Try to win a badge"
+msgstr ""

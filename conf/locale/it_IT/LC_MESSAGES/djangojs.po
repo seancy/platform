@@ -12186,40 +12186,40 @@ msgstr "Posizione"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Points"
-msgstr ""
+msgstr "Punti"
 
 msgid "Ranking"
-msgstr ""
+msgstr "Classifica"
 
 msgid "Missions"
 msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "There are currently ${totalUser} learners. Last update: ${lastUpdate}."
-msgstr ""
+msgstr "Attualmente ci sono ${totalUser} studenti. Ultimo aggiornamento: ${lastUpdate}."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "All"
-msgstr ""
+msgstr "Tutti"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Week"
-msgstr ""
+msgstr "Settimana"
 
 msgid "Month"
-msgstr ""
+msgstr "Mese"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "You have won ${value} point(s)."
-msgstr ""
+msgstr "Hai vinto ${value} punti."
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Log into Triboo, for the first time"
-msgstr ""
+msgstr "Accedi a Triboo, per la prima volta"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Log into Triboo everyday, for at least 30 minutes"
-msgstr ""
+msgstr "Entra in Triboo ogni giorno, per almeno 30 minuti"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Answering non-graded activity"
@@ -12231,14 +12231,14 @@ msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Complete a unit"
-msgstr ""
+msgstr "Completa un'unità"
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Access your first course"
-msgstr ""
+msgstr "Accedi al tuo primo corso"
 
 msgid "Complete a course"
-msgstr ""
+msgstr "Completa un corso"
 
 # lms/static/js/certificates/intermediate_certificates.js
 msgid ""
@@ -12806,3 +12806,11 @@ msgstr "Scarica la classifica"
 #: platform/lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "The export you are about to download will take into account the ranking selection you have made on the top of the leaderboard table."
 msgstr "L'esportazione che stai per scaricare terrà conto della selezione della classifica che hai fatto nella parte superiore della tabella delle classifiche."
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Complete activities"
+msgstr "Attività complete"
+
+# lms/static/js/triboo_analytics/LeaderBoard.js
+msgid "Try to win a badge"
+msgstr "Prova a vincere un distintivo"
