@@ -9,6 +9,7 @@
 <%
   course_discovery_enabled = settings.FEATURES.get('ENABLE_COURSE_DISCOVERY')
   crehana_title = configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')
+  anderspink_title = configuration_helpers.get_value('ANDERSPINK_RENAME', 'AndersPink')
   edflex_title = configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')
 %>
 
@@ -39,9 +40,10 @@ ${static.renderReact(
       id="main",
       props={
         'language': user_language,
-        'need_show_3_tabs': need_show_3_tabs,
         'crehana_title': crehana_title,
         'edflex_title': edflex_title,
+        'anderspink_title':anderspink_title,
+        'external_catalogs':external_catalogs
       }, noWrapper=True
     )
   }

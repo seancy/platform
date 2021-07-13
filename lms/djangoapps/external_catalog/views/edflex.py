@@ -18,9 +18,9 @@ from lms.djangoapps.external_catalog.models import EdflexCategory, EdflexResourc
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from openedx.core.djangoapps.user_api.models import UserPreference
 from ..utils import get_edflex_configuration
-from lms.djangoapps.external_catalog.utils import get_crehana_configuration
+from lms.djangoapps.external_catalog.utils import get_crehana_configuration, get_anderspink_configuration
 from student.triboo_groups import EDFLEX_DENIED_GROUP
-from student.triboo_groups import CREHANA_DENIED_GROUP
+from student.triboo_groups import CREHANA_DENIED_GROUP, ANDERSPINK_DENIED_GROUP
 from util.cache import cache_if_anonymous
 
 
@@ -224,17 +224,33 @@ def edflex_catalog_handler(request):
         raise Http404
 
     if 'text/html' in request.META.get('HTTP_ACCEPT', '') and request.method == 'GET':
-        need_show_3_tabs = all(
+        external_catalogs = []
+        external_catalogs.append({"name": "EDFLEX", "to" : "/edflex_catalog"})
+        
+        if all(
             (
                 all(get_crehana_configuration().values()),
-                request.user.is_authenticated,
                 CREHANA_DENIED_GROUP not in user_groups
             )
-        )
+        ):
+            external_catalogs.append({"name": "CREHANA", "to" : "/crehana_catalog"})
+        
+        if all(
+            (
+                all(get_anderspink_configuration().values()),
+                ANDERSPINK_DENIED_GROUP not in user_groups
+            )
+        ):
+            external_catalogs.append({"name": "ANDERSPINK", "to" : "/anderspink_catalog"})
+ 
+        
+        if not request.user.is_authenticated:
+           external_catalogs = []
+       
         return render_to_response(
             'external_catalog/external_catalog.html',
             {
-                'need_show_3_tabs': need_show_3_tabs
+                'external_catalogs': external_catalogs
             }
         )
 

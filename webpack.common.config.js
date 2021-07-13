@@ -78,6 +78,9 @@ module.exports = Merge.smart({
         CrehanaCatalogCourses: ['babel-polyfill', './lms/static/js/external_catalog/CrehanaCatalogCourses.jsx'],
         ExternalCatalogOverview: ['babel-polyfill', './lms/static/js/external_catalog/ExternalCatalogOverview.jsx'],
 
+        //AndersPink Integration
+        AndersPinkCatalogArticles : ['babel-polyfill', './lms/static/js/external_catalog/AndersPinkCatalog/AndersPinkCatalogArticles.jsx'],
+
         // Features
         CourseGoals: ['babel-polyfill', './openedx/features/course_experience/static/course_experience/js/CourseGoals.js'],
         CourseHome: ['babel-polyfill', './openedx/features/course_experience/static/course_experience/js/CourseHome.js'],

@@ -70,6 +70,44 @@ export function EdflexCourseCard ({image, duration, language, rating, title, pub
     )
 }
 
+export function AnderspinkArticleCard ({image, reading_time, language, author, date_published, title, url, systemLanguage}) {
+    return (
+        <div className="courses-listing-item">
+            <a href={url} target="_blank">
+                <div className="card-image-wrapper" style={{backgroundImage: 'url(' + image + ')'}}>
+                </div>
+            <div className="extra">
+                <ul className="tags">
+                     <li className={'active_anderspink'} >{gettext("ANDERS PINK")}</li>
+                </ul>
+                {author && 
+                    <span className="author" >
+                        <i className="fa fa-user"></i>
+                        <span className="name">{author}</span>
+                    </span>
+                        }
+            </div>
+                <h4 title={title}>{title}</h4>
+                <div className="sub-info">
+                    {reading_time && (<span className="duration">
+                        <i className="fal fa-clock"></i>
+                        <span>{formatDuration(reading_time)}</span>
+                    </span>)}
+                    <span className="date-str">
+                        <i className="fal fa-calendar-week"></i>
+                        <span>{formatDate(new Date(date_published), systemLanguage || 'en', '')}</span>
+                    </span>
+                    <span className="language">
+                        <i className="fal fa-globe"></i>
+                        <span>{formatLanguage(language, systemLanguage)}</span>
+                    </span>
+                </div>
+            </a>
+        </div>
+    )
+}
+
+
 function formatDuration (duration) {
     const hhmmArray = new Date(duration * 1000).toISOString().substr(11, 5).split(":")
     const hh = parseInt(hhmmArray[0])

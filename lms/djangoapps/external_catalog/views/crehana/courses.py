@@ -25,8 +25,9 @@ from lms.djangoapps.external_catalog.models import CrehanaResource
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from student.triboo_groups import EDFLEX_DENIED_GROUP
 from student.triboo_groups import CREHANA_DENIED_GROUP
+from student.triboo_groups import ANDERSPINK_DENIED_GROUP
 from util.json_request import JsonResponse, expect_json
-from ...utils import get_crehana_configuration
+from ...utils import get_crehana_configuration, get_anderspink_configuration
 from lms.djangoapps.external_catalog.utils import get_edflex_configuration
 
 
@@ -48,7 +49,21 @@ class SearchPage(View):
             tuple(get_crehana_configuration().values())
         )
 
+        is_anderspink_configuration_enabled = all(
+            tuple(get_anderspink_configuration().values())
+        )
+
         user_groups = {group.name for group in request.user.groups.all()}
+        external_catalogs = []
+
+        if all(
+            (
+                all(get_edflex_configuration().values()),
+                EDFLEX_DENIED_GROUP not in user_groups
+            )
+        ):
+            external_catalogs.append({"name": "EDFLEX", "to" : "/edflex_catalog"})
+
         if not all(
             (
                 is_external_catalog_button,
@@ -57,18 +72,24 @@ class SearchPage(View):
             )
         ):
             raise Http404   # Raise Exception if has any `False` in conditions
+        else:
+            external_catalogs.append({"name": "CREHANA", "to" : "/crehana_catalog"})
 
-        need_show_3_tabs = all(
+        if all(
             (
-                all(get_edflex_configuration().values()),
-                EDFLEX_DENIED_GROUP not in user_groups
+                is_anderspink_configuration_enabled,
+                ANDERSPINK_DENIED_GROUP not in user_groups
             )
-        )
+        ):
+            external_catalogs.append({"name": "ANDERSPINK", "to" : "/anderspink_catalog"})
 
+
+           
+        
         return render_to_response(
             self.TEMPLATE_PATH,
             {
-                'need_show_3_tabs': need_show_3_tabs
+                'external_catalogs':external_catalogs
             }
         )
 

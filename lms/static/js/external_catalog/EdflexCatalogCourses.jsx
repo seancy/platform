@@ -199,14 +199,16 @@ export class EdflexCatalogCourses extends React.Component {
 
     render() {
         const {sidebarStatus, courses, sidebarData} = this.state;
+        const {edflex_title, crehana_title, anderspink_title, external_catalogs} = this.props;
+
         const Switcher = props => {
             return <a href="/courses"><span className="switcher"><span className="round-button">{gettext("Internal")}</span><span className="round-button active">{gettext("External")}</span></span></a>
         };
+        
         const Categories = props => {
             return <div className="category_tabs">
                      <a href="/all_external_catalog" className="categories">{gettext("All")}</a>
-                     <a href="/edflex_catalog" className="current_category">{this.props.edflex_title}</a>
-                     <a href="/crehana_catalog" className="categories">{this.props.crehana_title}</a>
+                    {external_catalogs.map(item =>  <a key={item.name} href={item.to} className={item.name == "EDFLEX" ?"current_category" :  "categories"}>{item.name == "EDFLEX" ? edflex_title : item.name == "CREHANA" ? crehana_title : anderspink_title}</a>)}
                    </div>
         };
 
@@ -217,7 +219,7 @@ export class EdflexCatalogCourses extends React.Component {
                         <h2>{gettext("Explore")}</h2>
                         <Switcher/>
                     </section>
-                    {this.props.need_show_3_tabs && <Categories/>}
+                    {external_catalogs.length > 1 && <Categories/>}
                 </section>
                 <div className="courses-wrapper">
                     <SideBar

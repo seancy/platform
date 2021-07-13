@@ -10,9 +10,9 @@
     from django_countries import countries
     from django.urls import reverse
     from openedx.core.djangolib.markup import HTML
-    from openedx.core.djangoapps.user_api.api import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP, CREHANA_DENIED_GROUP
+    from openedx.core.djangoapps.user_api.api import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP, CREHANA_DENIED_GROUP, ANDERSPINK_DENIED_GROUP
     from webpack_loader.templatetags.webpack_loader import render_bundle
-    from lms.djangoapps.external_catalog.utils import get_edflex_configuration, get_crehana_configuration
+    from lms.djangoapps.external_catalog.utils import get_edflex_configuration, get_crehana_configuration, get_anderspink_configuration
 
     country_options = [{'text': v, 'value': k} for k,v in countries]
     lang_options = [{'text': i.name, 'value': i.code} for i in released_languages()]
@@ -663,15 +663,18 @@ ${HTML(render_bundle('ReactRenderer'))}
                         catalog_denied = CATALOG_DENIED_GROUP in user_groups
                         edflex_denied = EDFLEX_DENIED_GROUP in user_groups
                         crehana_denied = CREHANA_DENIED_GROUP in user_groups
+                        anderspink_denied = ANDERSPINK_DENIED_GROUP in user_groups
                         catalog_enabled = configuration_helpers.get_value('COURSES_ARE_BROWSABLE', settings.FEATURES.get('COURSES_ARE_BROWSABLE', False))
                         external_catalog_enabled = configuration_helpers.get_value(
                             'ENABLE_EXTERNAL_CATALOG', settings.FEATURES.get('ENABLE_EXTERNAL_CATALOG', False)
                         )
                         edflex_enabled = configuration_helpers.get_value('ENABLE_EDFLEX_CATALOG', settings.FEATURES.get('ENABLE_EDFLEX_CATALOG', False))
                         crehana_enabled = configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False))
+                        anderspink_enabled = configuration_helpers.get_value('ENABLE_ANDERSPINK_CATALOG', settings.FEATURES.get('ENABLE_ANDERSPINK_CATALOG', False))
                         is_edflex_enabled = edflex_enabled or (external_catalog_enabled and all(get_edflex_configuration().values()))
                         is_crehana_enabled = crehana_enabled or (external_catalog_enabled and all(get_crehana_configuration().values()))
-                    %>
+                        is_anderspink_enabled = anderspink_enabled or (external_catalog_enabled and all(get_anderspink_configuration().values()))
+                        %>
                     % if catalog_enabled:
                         <li>
                             <label>
@@ -694,6 +697,14 @@ ${HTML(render_bundle('ReactRenderer'))}
                             ${_("External Catalog - Crehana Access")}
                         </label>
                         <switch-button v-model="crehana_access" v-on:toggle="detect_change('crehana_access')"></switch-button>
+                    </li>
+                    % endif
+                    % if is_anderspink_enabled and not anderspink_denied:
+                    <li>
+                        <label>
+                            ${_("External Catalog - Anderspink Access")}
+                        </label>
+                        <switch-button v-model="anderspink_access" v-on:toggle="detect_change('anderspink_access')"></switch-button>
                     </li>
                     % endif
                 </ul>

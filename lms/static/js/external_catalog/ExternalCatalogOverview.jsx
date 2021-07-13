@@ -1,9 +1,10 @@
 import React from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
-import {CrehanaCourseCard, EdflexCourseCard} from './ExternalCourseCard'
+import {CrehanaCourseCard, EdflexCourseCard, AnderspinkArticleCard } from './ExternalCourseCard'
 
 
 export function ExternalCatalogOverview (props) {
+    const {edflex_title, crehana_title, anderspink_title, external_catalogs} = props;
     return (
         <section className="find-courses">
             <section className="banner">
@@ -11,7 +12,7 @@ export function ExternalCatalogOverview (props) {
                     <h2>{gettext("Explore")}</h2>
                     <Switcher />
                 </section>
-                <Categories edflex_title={props.edflex_title} crehana_title={props.crehana_title} />
+                <Categories edflex_title={edflex_title} crehana_title={crehana_title} anderspink_title={anderspink_title} external_catalogs={external_catalogs}/>
             </section>
             <div className="courses-wrapper overview_margin">
                 <OverviewCoursesContainer {...props} />
@@ -31,11 +32,10 @@ function Switcher () {
     )
 }
 
-function Categories ({edflex_title, crehana_title}) {
+function Categories ({edflex_title, crehana_title, anderspink_title, external_catalogs}) {
     return <div className="category_tabs">
         <a href="/all_external_catalog" className="current_category">{gettext("All")}</a>
-        <a href="/edflex_catalog" className="categories">{edflex_title}</a>
-        <a href="/crehana_catalog" className="categories">{crehana_title}</a>
+        {external_catalogs.map(item =>  <a key={item.name} href={item.to} className="categories">{item.name == "EDFLEX" ? edflex_title : item.name == "CREHANA" ? crehana_title : anderspink_title}</a>)}
     </div>
 }
 
@@ -56,51 +56,66 @@ class OverviewCoursesContainer extends React.Component {
 
     render () {
         try {
-            const {crehana_courses, edflex_courses, crehana_title, edflex_title} = this.props
-            const crehana_items = []
-            const edflex_items = []
-            JSON.parse(crehana_courses).forEach((course, index) => {
-                crehana_items.push(
-                    <CrehanaCourseCard key={`id-${index}`} systemLanguage={this.props.language}
-                        {...course}
-                    />
-                )
-            })
+            const {crehana_courses, edflex_courses, anderspink_courses, crehana_title, edflex_title, anderspink_title, external_catalogs, language} = this.props;
+            const crehana_items = [];
+            const edflex_items = [];
+            const anderspink_items = [];
+            const catalogContent = []
 
-            JSON.parse(edflex_courses).forEach((course, index) => {
-                edflex_items.push(
-                    <EdflexCourseCard key={`id-${index}`} systemLanguage={this.props.language}
-                        {...course}
+
+            if(crehana_courses){
+                crehana_courses.forEach((course, index) => {
+                crehana_items.push(
+                    <CrehanaCourseCard key={`id-${index}`}
+                                {...course} systemLanguage={language}
                     />
                 )
-            })
+                });
+                catalogContent["CREHANA"] = crehana_items
+            }
+
+            if(edflex_courses){
+                edflex_courses.forEach((course, index) => {
+                edflex_items.push(
+                    <EdflexCourseCard key={`id-${index}`}
+                                {...course} systemLanguage={language}
+                    />
+                )
+                });
+                catalogContent["EDFLEX"] = edflex_items
+
+            }
+            
+            if(anderspink_courses){
+
+                anderspink_courses.forEach((article, index) => {
+                   anderspink_items.push(
+                       <AnderspinkArticleCard key={`id-${index}`}
+                                   {...article} systemLanguage={language}
+                       />
+                   )   
+               });
+               catalogContent["ANDERSPINK"] = anderspink_items
+
+            }
 
             return (
+
                 <main className="course-container">
-                    <div>
-                        <span className={'category_name'}>{edflex_title}</span>
+                    {external_catalogs.map(catalog => <React.Fragment key={catalog.name}>
+                        <div>
+                        <span className={'category_name'}>{catalog.name == "EDFLEX" ? edflex_title : catalog.name == "CREHANA" ? crehana_title : anderspink_title}</span>
                         <span className={'view_all_button'}>
-                            <a className={'button_underline'} href="/edflex_catalog">{gettext("View all")}</a> &gt;
+                            <a className={'button_underline'} href={catalog.to}>{gettext("View all")}</a> &gt;
                         </span>
                     </div>
                     <InfiniteScroll
                         className={'courses-listing'}
-                        dataLength={edflex_items.length}
+                        dataLength={catalogContent[catalog.name].length}
                     >
-                        {edflex_items}
+                        {catalogContent[catalog.name]}
                     </InfiniteScroll>
-                    <div>
-                        <span className={'category_name'}>{crehana_title}</span>
-                        <span className={'view_all_button'}>
-                            <a className={'button_underline'} href="/crehana_catalog">{gettext("View all")}</a> &gt;
-                        </span>
-                    </div>
-                    <InfiniteScroll
-                        className={'courses-listing'}
-                        dataLength={crehana_items.length}
-                    >
-                        {crehana_items}
-                    </InfiniteScroll>
+                    </React.Fragment>)}
                 </main>
             )
         } catch (e) {
