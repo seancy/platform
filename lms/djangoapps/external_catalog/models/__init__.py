@@ -7,3 +7,7 @@ from .crehana import (
     CrehanaLanguage,
     CrehanaResource
 )
+from .anders_pink import (
+    AndersPinkBriefing,
+    AndersPinkArticle
+)

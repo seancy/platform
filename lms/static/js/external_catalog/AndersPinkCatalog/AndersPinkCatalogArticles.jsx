@@ -1,13 +1,12 @@
 import React from "react";
 import Cookies from "js-cookie";
-import {CoursesSideBar} from './CrehanaCoursesSidebar'
-import {CoursesContainer} from './CrehanaCoursesContainer'
+import {AnderspinkSidebar} from './AnderspinkSidebar';
+import {AndersPinkArticleContainer} from './AndersPinkArticleContainer'
 
 
-export class CrehanaCatalogCourses extends React.Component {
+export class AndersPinkCatalogArticles extends React.Component {
     constructor(props) {
         super(props);
-        
         let sidebarStatus = true;
         try {
             const triboo = localStorage.getItem('triboo');
@@ -20,12 +19,12 @@ export class CrehanaCatalogCourses extends React.Component {
             firstTimeLoading:true,
             sidebarStatus: sidebarStatus,
             sidebarData:{
-                courseCategories: [],
-                durations: [],
+                briefings: [],
+                reading_time: [],
                 languages: [],
                 ratingRange: []
             },
-            course_list: [],
+            article_list: [],
             searchParameters: {},
             isFetching: false,
             hasMore: false,
@@ -46,7 +45,8 @@ export class CrehanaCatalogCourses extends React.Component {
     }
 
     fetchSidebarData() {
-        fetch("/crehana_catalog/data", {
+
+        fetch("/anderspink_catalog/data", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export class CrehanaCatalogCourses extends React.Component {
             )
     }
 
-    parseSidebarData({categories, language, duration, rating_range}){
+    parseSidebarData({briefings, language, reading_time}){
         const sortFn = (a, b) => {
             if (a.text < b.text) {
                 return -1;
@@ -82,32 +82,24 @@ export class CrehanaCatalogCourses extends React.Component {
                 arr.splice(index, 1);
             }
         });
-        let prev_count = 0;
-        for (let i=0; i < rating_range.length; i++) {
-            let raw_number = rating_range[i].count;
-            if (i>0) {
-                rating_range[i].count = prev_count + rating_range[i].count;
-            }
-            prev_count += raw_number;
-        }
+  
         const genDuration = (durationLevel) => {
             if (durationLevel == 1) {
-                return '0 - 2 ' + gettext('hours');
+                return '0 - 3 ' + gettext('mins');
             } else if (durationLevel == 2) {
-                return '2 - 6 ' + gettext('hours');
+                return '3 - 5 ' + gettext('mins');
             } else if (durationLevel == 3) {
-                return '6 - 16 ' + gettext('hours');
+                return '5 - 8 ' + gettext('mins');
             } else if (durationLevel == 4) {
-                return '16 + ' + gettext('hours');
-            } else {
+                return '8 + ' + gettext('mins');
+             } else {
                 return 'unknow level';
             }
         };
         return {
-            courseCategories: categories.sort(sortFn),
-            durations: duration.map(p => ({text: genDuration(p.value), value: p.value, label: p.count})),
+            briefings: briefings.sort(sortFn),
+            reading_time: reading_time.map(p => ({text: genDuration(p.value), value: p.value, label: p.count})),
             languages: language.map(p => ({text: languageNameObj[p.value], value: p.value, label: p.count})),
-            ratingRange: rating_range.map(p => ({text: p.value, value: p.value, label: p.count}))
         }
     }
 
@@ -115,9 +107,8 @@ export class CrehanaCatalogCourses extends React.Component {
         const {
             filterValue,
             topic,
-            selectedDurations,
+            selectedReadingTime,
             selectedLanguages,
-            selectedRatingRange
         } = p || this.state.searchParameters;
         const {pageSize, pageNo, sort_type} = this.state;
         const obj = {
@@ -128,19 +119,18 @@ export class CrehanaCatalogCourses extends React.Component {
             sort_type: sort_type
         };
         if (topic && topic.value) {
-            obj.filter_content['categories'] = topic.text
+            obj.filter_content['briefing'] = topic.text
         }
-        if (selectedDurations && selectedDurations.length > 0) {
-            obj.filter_content['duration'] = selectedDurations.map(p => p.value)
+        if (selectedReadingTime && selectedReadingTime.length > 0) {
+            obj.filter_content['reading_time'] = selectedReadingTime.map(p => p.value)
         }
         if (selectedLanguages && selectedLanguages.length > 0) {
             obj.filter_content['language'] = selectedLanguages.map(p => p.value)
         }
-        if (selectedRatingRange && selectedRatingRange.length > 0) {
-            obj.filter_content['rating_range'] = selectedRatingRange.map(p => p.value)
-        }
+      
         this.setState({isFetching: true});
-        return fetch("/crehana_catalog/data", {
+
+        return fetch("/anderspink_catalog/data", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -151,19 +141,19 @@ export class CrehanaCatalogCourses extends React.Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    const {sidebar_data, course_list, course_count, search_content} = result;
+                    const {sidebar_data, article_list, article_count, search_content} = result;
                     this.setState(prev => {
                         return {
                             isFetching: false,
-                            recordCount: course_count,
+                            recordCount: article_count,
                             searchString: search_content,
-                            hasMore: this.getHasMore(course_count),
+                            hasMore: this.getHasMore(article_count),
                             sidebarData: this.parseSidebarData(sidebar_data),
-                            course_list: prev.course_list.concat(course_list)
+                            article_list: prev.article_list.concat(article_list)
                         }
                     });
                     document.getElementById('id_show_loading').style.display = 'none';
-                    if (this.getHasMore(course_count) || (0 === course_count && this.state.searchString != "")) {
+                    if (this.getHasMore(article_count) || (0 === article_count && this.state.searchString != "")) {
                         document.getElementById('id_show_more_btn').style.display = 'block';
                     }
                 },
@@ -174,17 +164,18 @@ export class CrehanaCatalogCourses extends React.Component {
                     searchString: '',
                     hasMore: false,
                     sidebarData: {},
-                    course_list: []
+                    article_list: []
                 });
                 console.error('Error:', error);
             })
     }
+    
 
     startFetch(searchParameters){
         this.setState({
             pageNo:1,
             searchParameters,
-            course_list:[]
+            article_list:[]
         },this.fetchData)
     }
 
@@ -194,14 +185,14 @@ export class CrehanaCatalogCourses extends React.Component {
         })
     }
 
-    getHasMore(course_count) {
+    getHasMore(article_count) {
         const {pageSize, pageNo} = this.state;
-        return ((pageSize * pageNo) < course_count)
+        return ((pageSize * pageNo) < article_count)
     }
 
     sortPage(sort_type) {
         this.setState(
-            {sort_type: sort_type, course_list: [], pageNo: 1},
+            {sort_type: sort_type, article_list: [], pageNo: 1},
             this.fetchData
         )
     }
@@ -228,9 +219,8 @@ export class CrehanaCatalogCourses extends React.Component {
     }
 
     render() {
-        const {sidebarStatus, course_list, sidebarData} = this.state;
+        const {sidebarStatus, article_list, sidebarData} = this.state;
         const {edflex_title, crehana_title, anderspink_title, external_catalogs} = this.props;
-
         const Switcher = props => {
             return <a href="/courses"><span className="switcher"><span
                 className="round-button">{gettext("Internal")}</span><span
@@ -239,7 +229,7 @@ export class CrehanaCatalogCourses extends React.Component {
         const Categories = props => {
             return <div className="category_tabs">
                      <a href="/all_external_catalog" className="categories">{gettext("All")}</a>
-                     {external_catalogs.map(item =>  <a key={item.name} href={item.to} className={item.name == "CREHANA" ?"current_category" :  "categories"}>{item.name == "EDFLEX" ? edflex_title : item.name == "CREHANA" ? crehana_title : anderspink_title}</a>)}
+                    {external_catalogs.slice(1).map(item =>  <a key={item.name} href={item.to} className={item.name == "ANDERSPINK" ?"current_category" :  "categories"}>{item.name == "EDFLEX" ? edflex_title : item.name == "CREHANA" ? crehana_title : anderspink_title}</a>)}
                    </div>
         };
 
@@ -251,18 +241,17 @@ export class CrehanaCatalogCourses extends React.Component {
                         <h2>{gettext("Explore")}</h2>
                         <Switcher/>
                     </section>
-                    {external_catalogs.length > 1 && <Categories/>}
+                    {external_catalogs.length > 2 && <Categories/>}
                 </section>
                 <div className="courses-wrapper">
-                    <CoursesSideBar
+                    <AnderspinkSidebar
                         {...sidebarData}
                         status={this.state.sidebarStatus}
                         onToggle={this.updateSidebarDisplayStatus.bind(this)}
                         onApply={this.startFetch.bind(this)}
                         onChange={this.startFetch.bind(this)}
                     />
-                    {/* <Switcher/> */}
-                    <CoursesContainer
+                    <AndersPinkArticleContainer
                         indent={sidebarStatus}
                         {..._.pick(this.state, ['hasMore', 'recordCount', 'searchString', 'firstTimeLoading'])}
                         {..._.pick(this.props, ['language'])}
@@ -271,10 +260,11 @@ export class CrehanaCatalogCourses extends React.Component {
                         onIndentClick={() => this.setState({sidebarStatus: true}, () => {
                             localStorage.setItem('triboo', JSON.stringify({sidebarStatus: true}))
                         })}
-                        data={course_list}
+                        data={article_list}
                     />
                 </div>
             </section>
         )
     }
 }
+

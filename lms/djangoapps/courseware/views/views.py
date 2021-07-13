@@ -48,6 +48,7 @@ import survey.views
 from branding.api import get_logo_url
 from student.triboo_groups import EDFLEX_DENIED_GROUP
 from student.triboo_groups import CREHANA_DENIED_GROUP
+from student.triboo_groups import ANDERSPINK_DENIED_GROUP
 from lms.djangoapps.certificates import api as certs_api
 from lms.djangoapps.certificates.models import CertificateStatuses, GeneratedCertificate
 from course_modes.models import CourseMode, get_course_prices
@@ -93,6 +94,7 @@ from lms.djangoapps.instructor.views.api import require_global_staff
 from lms.djangoapps.verify_student.services import IDVerificationService
 from lms.djangoapps.external_catalog.utils import get_edflex_configuration
 from lms.djangoapps.external_catalog.utils import get_crehana_configuration
+from lms.djangoapps.external_catalog.utils import get_anderspink_configuration
 from openedx.core.djangoapps.catalog.utils import get_programs, get_programs_with_type
 from openedx.core.djangoapps.certificates import api as auto_certs_api
 from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
@@ -243,7 +245,7 @@ def user_groups(user):
 def courses(request):
     """
     Render "find courses" page.  The course selection work is done in courseware.courses.
-
+    
     Logic:
         if [edflex catalog enable + edflex API config set] + user signed in:
            if [crehana catalog enable + crehana API config set]:
@@ -266,13 +268,23 @@ def courses(request):
     is_crehana_enabled = all(
         (enable_external_catalog_button, all(get_crehana_configuration().values()), CREHANA_DENIED_GROUP not in user_groups)
     )
-    external_button_url = r''   # `empty` means: hide `external catalog button`
 
-    if request.user.is_authenticated and (is_edflex_enabled or is_crehana_enabled):
-        if is_edflex_enabled and is_crehana_enabled:
+    is_anderspink_enabled = all(
+        (enable_external_catalog_button, all(get_anderspink_configuration().values()), ANDERSPINK_DENIED_GROUP not in user_groups)
+    )
+
+    external_catalogs_status = [is_edflex_enabled, is_crehana_enabled, is_anderspink_enabled]
+    external_catalogs_status = [n for n in external_catalogs_status if n != False]
+    external_button_url = r''   # `empty` means: hide `external catalog button`
+    
+
+    if request.user.is_authenticated and (is_edflex_enabled or is_crehana_enabled or is_anderspink_enabled):
+        if len(external_catalogs_status) > 1:
             external_button_url = r'/all_external_catalog'
         elif is_edflex_enabled:
             external_button_url = r'/edflex_catalog'
+        elif is_anderspink_enabled:
+            external_button_url = r'/anderspink_catalog'
         else:
             external_button_url = r'/crehana_catalog'
 

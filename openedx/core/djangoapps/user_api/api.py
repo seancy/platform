@@ -41,6 +41,7 @@ from util.date_utils import strftime_localized
 CATALOG_DENIED_GROUP = "Catalog Denied Users"
 EDFLEX_DENIED_GROUP = "EdFlex Denied Users"
 CREHANA_DENIED_GROUP = "Crehana Denied Users"
+ANDERSPINK_DENIED_GROUP = "Anderspink Denied Users"
 STUDIO_ADMIN_ACCESS_GROUP = "Studio Admin"
 ANALYTICS_ACCESS_GROUP = "Triboo Analytics Admin"
 ANALYTICS_LIMITED_ACCESS_GROUP = "Restricted Triboo Analytics Admin"
@@ -1172,18 +1173,22 @@ def get_user_account_info(user):
     catalog_access = True
     edflex_access = True
     crehana_access = True
+    anderspink_access = True
     if CATALOG_DENIED_GROUP in user_groups:
         catalog_access = False
     if EDFLEX_DENIED_GROUP in user_groups:
         edflex_access = False
     if CREHANA_DENIED_GROUP in user_groups:
         crehana_access = False
+    if ANDERSPINK_DENIED_GROUP in user_groups:
+        anderspink_access = False
 
     permissions = {
         "platform_level": platform_level,
         "catalog_access": catalog_access,
         "edflex_access": edflex_access,
         "crehana_access": crehana_access,
+        "anderspink_access":anderspink_access,
         "analytics_access": analytics_access
     }
 
@@ -1308,6 +1313,14 @@ def get_user_full_account_info(request, user_id):
                 user.groups.remove(crehana_denied_group)
             else:
                 user.groups.add(crehana_denied_group)
+
+        if "anderspink_access" in update:
+            anderspink_denied_group = Group.objects.get(name=ANDERSPINK_DENIED_GROUP)
+            anderspink_access = update.pop("anderspink_access")
+            if anderspink_access:
+                user.groups.remove(anderspink_denied_group)
+            else:
+                user.groups.add(anderspink_denied_group)
 
         if "analytics_access" in update:
             full_access_group = Group.objects.get(name=ANALYTICS_ACCESS_GROUP)  # Analytics

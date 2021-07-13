@@ -10,34 +10,31 @@
   course_discovery_enabled = settings.FEATURES.get('ENABLE_COURSE_DISCOVERY')
   crehana_title = configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')
   edflex_title = configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')
-  anderspink_title = configuration_helpers.get_value('ANDERSPINK_RENAME', 'Anders Pink')
-
-  %>
+  anderspink_title = configuration_helpers.get_value('ANDERSPINK_RENAME', 'AndersPink')
+%>
 
 <%namespace name='static' file='../static_content.html'/>
 
 <%block name="pagetitle">${_("Courses")}</%block>
 <%block name="bodyclass">view-external-catalog</%block>
-
+<%
+    print(need_show_3_tabs, external_catalogs)
+%>  
 <script type="application/javascript">
     window.COURSE_CATEGORIES = ${dict(settings.COURSE_CATEGORIES) | n, dump_js_escaped_json};
 </script>
 <main id="main" aria-label="Content" tabindex="-1">
 
-
 </main>
 
 ${static.renderReact(
-  component="ExternalCatalogOverview",
-  id="main", props={
-    'language': user_language,
-    'crehana_title': crehana_title,
-    'edflex_title': edflex_title,
-    'anderspink_title':anderspink_title,
-    'external_catalogs':external_catalogs,
-    'edflex_courses': edflex_courses,
-    'crehana_courses': crehana_courses,
-    'anderspink_courses':anderspink_courses
+      component="AndersPinkCatalogArticles",
+      id="main", props={
+        'language': user_language,
+        'crehana_title': crehana_title,
+        'edflex_title': edflex_title,
+        'anderspink_title':anderspink_title,
+        'external_catalogs':external_catalogs
       }, noWrapper=True
     )
   }

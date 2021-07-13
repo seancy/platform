@@ -9,3 +9,8 @@ from .crehana.courses import (
 )
 from .crehana.overview import OverviewPage as CoursesOverviewPage
 from .crehana.third_party import ThirdPartyRedirectionPage as CrehanaSSORedirectionPage
+
+from .anderspink.articles import (
+    Data as AndersPinkData,
+    SearchPage as AndersPinkSearchPage
+)
