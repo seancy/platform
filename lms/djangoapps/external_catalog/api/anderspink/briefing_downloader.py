@@ -35,7 +35,6 @@ class AndersPinkDownloader(_BasicBriefingAccessor):
     @exception_retry(retry_times=3)
     def get_articles(self, limit, offset, time, briefing):
         """Create a anders pink user with parameters & Return User Info."""
-        # article_list = []
 
         url = urljoin(
             self.base_api_url,
@@ -43,8 +42,6 @@ class AndersPinkDownloader(_BasicBriefingAccessor):
                                                                               offset=offset, time=time),
         )
         response = _http_get(url, headers=self._headers)
-        # response =
-        # article_list.append(response)
 
         return self._validate_and_return(response)
 
@@ -69,23 +66,15 @@ class AndersPinkDataCache(AndersPinkDownloader):
             *** Throw exception if still get error while downloading after retry ***
         """
         log.info('Anderspink briefing is downloading...')
-        # Caching for `briefing`
-        # self._briefing_cache = self.fetch_all_briefings()
 
-        # Caching for `article`
         briefings = self.get_briefings()
-        log.info(
-            'Downloaded, briefing count = {}'.format(
-                len(briefings)
-            )
-        )
-        self._briefing_cache.append(briefings)
+        self._briefing_cache = briefings.get('data', {}).get('owned_briefings', [])
+        log.info('Downloaded, briefing count = {}'.format(len(self._briefing_cache)))
 
-        for briefing in self._briefing_cache[0]['data'].get("owned_briefings", ()):
+        for briefing in self._briefing_cache:
             for i in range(0, 0xffff, self.FETCH_BATCH_SIZE):
                 try:
-                    articles = self.get_articles(
-                    self.FETCH_BATCH_SIZE, i, self.TIME, briefing)
+                    articles = self.get_articles(self.FETCH_BATCH_SIZE, i, self.TIME, briefing)
                     if not articles['data'].get('articles', ()):
                         break
 
@@ -93,12 +82,6 @@ class AndersPinkDataCache(AndersPinkDownloader):
                 except Exception as e:
                     log.info(str(e))
 
-        #         log.info('Articles = {}'.format(self._article_cache))
-        # log.info(
-        #     'Downloaded, briefing count = {}, article count = {}'.format(
-        #         len(self._briefing_cache), len(self._article_cache)
-        #     )
-        # )
 
     @property
     def briefings(self):

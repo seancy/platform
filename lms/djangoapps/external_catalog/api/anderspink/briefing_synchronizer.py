@@ -76,7 +76,7 @@ class BriefingSynchronizer(object):
             log.info('Saving Anderspink Briefings..........')
             for briefing in self.__data_cache.briefings:
                 self._save_briefing(briefing)
-            log.info('Saving Anderspink Briefings Saved!!!!!!!!!!!!!!')
+            log.info('Anderspink Briefings Saved!!!!!!!!!!!!!!')
             
         with transaction.atomic():
             # for briefing in self.__data_cache.briefings:
@@ -87,7 +87,7 @@ class BriefingSynchronizer(object):
             log.info('Saving Anderspink Articles..........')
             for article in self.__data_cache.articles:
                 self._save_article(article)
-            log.info('Saving Anderspink Articles Saved!!!!!!!!!!!!!!')
+            log.info('Anderspink Articles Saved!!!!!!!!!!!!!!')
             # 2. Deleting records with invalid date(field `updated_at`) in tables.
 
         log.info('Anderspink briefing synchronizer quit.')
