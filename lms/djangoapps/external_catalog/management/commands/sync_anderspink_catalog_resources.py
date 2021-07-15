@@ -9,7 +9,7 @@ from ...tasks import log
 from ...utils import get_anderspink_configuration
 
 
-# logger = ExternalCatalogLogger(r'anderspink_external_catalog_update.log').logger
+logger = ExternalCatalogLogger(r'anderspink_external_catalog_update.log').logger
 
 
 class Command(BaseCommand):
