@@ -22,10 +22,10 @@ class BriefingSynchronizer(object):
 
         self.__time_of_first_inserting = None
 
+
     @print_error_arguments
     def _save_article(self, articles):
         """Write into table `briefing` & `article`"""
-        
         for article in articles['data'].get('articles', ()):
 
             try:
@@ -33,7 +33,6 @@ class BriefingSynchronizer(object):
                     title_id=article['id'],
                     defaults={
                         'title': article['title'],
-                        
                         'image': article['image'],
                         'date_published': article['date_published'],
                         'url': article['url'],
@@ -53,10 +52,10 @@ class BriefingSynchronizer(object):
                 log.error(u"Database IntegrityError: %s" % str(e))
                 continue
 
+
     @print_error_arguments
     def _save_briefing(self, briefings):
-       
-        for briefing in briefings['data']['owned_briefings']:
+        for briefing in briefings:
             model_briefing, _ = AndersPinkBriefing.objects.update_or_create(
                 briefing_id=briefing['id'],
                 defaults={
@@ -66,28 +65,20 @@ class BriefingSynchronizer(object):
             log.info(u"Updated: Briefing ({id})".format(id=briefing['id']))
 
 
-        
     def run(self):
         """Download data from server & store the data into mysql."""
         log.info('Anderspink briefing synchronizer is running...')
-        # 0. Downloading & Caching data from server
         self.__data_cache.download()
+
         with transaction.atomic():
             log.info('Saving Anderspink Briefings..........')
-            for briefing in self.__data_cache.briefings:
-                self._save_briefing(briefing)
+            self._save_briefing(self.__data_cache.briefings)
             log.info('Anderspink Briefings Saved!!!!!!!!!!!!!!')
-            
+
         with transaction.atomic():
-            # for briefing in self.__data_cache.briefings:
-            #     self._save_briefing(briefing)
-            # 1. Updating / Creating brieifng into mysql
-            # for briefing in self.__data_cache.briefing:
-            #     self._save_categories(category, data_updated_time)
             log.info('Saving Anderspink Articles..........')
             for article in self.__data_cache.articles:
                 self._save_article(article)
             log.info('Anderspink Articles Saved!!!!!!!!!!!!!!')
-            # 2. Deleting records with invalid date(field `updated_at`) in tables.
 
         log.info('Anderspink briefing synchronizer quit.')
