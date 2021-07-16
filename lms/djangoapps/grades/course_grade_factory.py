@@ -488,3 +488,39 @@ class CourseGradeFactory(object):
             'trophies_by_chapter': trophies_by_chapter,
             'progress': progress
         }
+
+
+def get_total_score_possible(course_key, user, course_grade=None):
+    if not course_grade:
+        course_grade = CourseGradeFactory().read(user, course_key=course_key)
+    chapter_grades = course_grade.chapter_grades
+    possible_score = 0
+    chapter_result = {}
+    for chapter_id, chapter in chapter_grades.items():
+        chapter_block = modulestore().get_item(chapter_id)
+        now = datetime.now()
+        start_date = chapter_block.start
+        if start_date:
+            visible = now >= chapter_block.start.replace(tzinfo=None)
+        else:
+            visible = True
+        if not visible:
+            continue
+        chapter_result[chapter_id] = {"possible_score": 0, "subsections": []}
+        score = 0
+        for section in chapter['sections']:
+            if section.all_total.possible > 0:
+                score += section.all_total.possible
+                chapter_result[chapter_id]["subsections"].append(section.location)
+        chapter_result[chapter_id]["possible_score"] = score
+        possible_score += score
+    return chapter_result, possible_score
+
+
+def calculate_eucalyptus_progress(possible_all, subsection_grades):
+    possible_graded = 0
+    for i in subsection_grades:
+        possible_graded += i.possible_graded
+    if possible_all == 0:
+        return 0
+    return float(possible_graded) / float(possible_all)
