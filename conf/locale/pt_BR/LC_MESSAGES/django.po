@@ -10679,7 +10679,7 @@ msgstr "Região Comercial"
 #: lms/djangoapps/triboo_analytics/forms.py:19
 msgctxt "user.profile"
 msgid "Address"
-msgstr "Endereço 1"
+msgstr "Endereço"
 
 #: lms/djangoapps/triboo_analytics/forms.py:20
 #: lms/templates/shoppingcart/receipt.html:237
@@ -21984,7 +21984,7 @@ msgstr "Área/Região"
 #: lms/templates/emails/ilt_hotel_updated_email_message.txt:28
 msgctxt "xblock-ilt"
 msgid "Address"
-msgstr "Endereço 1"
+msgstr "Endereço"
 
 #: lms/templates/courseware/ilt_validation.html:78
 #: lms/templates/emails/ilt_confirmed_email_message.txt:27
@@ -31574,3 +31574,43 @@ msgstr "Este é um e-mail gerado automaticamente, por favor, não responder."
 #: lms/templates/emails/ilt_virtual_session_hourly_reminder_email_message.txt
 msgid "Your virtual training is about to start in approximately one hour."
 msgstr "Seu treinamento virtual iniciará em aproximadamente 01 hora."
+
+#: lms/templates/admin_panel/admin_panel.html:211
+msgid "USER MANAGEMENT"
+msgstr "Gestão de usuários"
+
+#: lms/templates/admin_panel/admin_panel.html:627
+msgid "Active"
+msgstr "Ativo"
+
+#: lms/templates/admin_panel/admin_panel.html:767
+msgid "Are you sure you want to delete the user \"{{username}}\"?"
+msgstr "Tem certeza de que deseja excluir o usuário \"{{username}}\"?"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "Minimum length"
+msgstr "Comprimento mínimo"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "maximum length"
+msgstr "comprimento máximo"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "at least"
+msgstr "pelo menos"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "digits"
+msgstr "dígito"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "upper case"
+msgstr "maiúscula"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "lower case"
+msgstr "minúscula"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "punctuation"
+msgstr "pontuação"

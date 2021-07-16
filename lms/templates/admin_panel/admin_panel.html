@@ -449,38 +449,42 @@ ${HTML(render_bundle('ReactRenderer'))}
                     </li>
                     <li>
                         <%
-                            password_helper = "Required."
-                            extra_helper = []
-                            complexity_helper = []
                             min_len = settings.PASSWORD_MIN_LENGTH
                             max_len = settings.PASSWORD_MAX_LENGTH
                             complexity = settings.PASSWORD_COMPLEXITY
-                            if min_len:
-                                extra_helper.append("minimum length {}".format(min_len))
-                            if max_len:
-                                extra_helper.append("maximum length {}".format(max_len))
-                            for k,v in complexity.items():
-                                if k in ["DIGITS", "LOWER", "PUNCTUATION", "UPPER"]:
-                                    if v > 0:
-                                        k = k.lower()
-                                        if k in ["lower", "upper"]:
-                                            k = k + " case"
-                                        complexity_helper.append(str(v) + " " + k)
-                            if complexity_helper:
-                                complexity_helper = ", ".join(complexity_helper)
-                                complexity_helper = "at least " + complexity_helper
-                                extra_helper.append(complexity_helper)
-                            if extra_helper:
-                                extra_helper = "; ".join(extra_helper)
-                                extra_helper = extra_helper.capitalize()
-                            else:
-                                extra_helper = ""
-                            password_helper = password_helper + " " + extra_helper
+                            complexity = {k: v for k, v in complexity.items() if k in ["DIGITS", "LOWER", "PUNCTUATION", "UPPER"] and v > 0}
+                            digits_num = complexity.get("DIGITS")
+                            upper_num = complexity.get("UPPER")
+                            lower_num = complexity.get("LOWER")
+                            punctuation_num = complexity.get("PUNCTUATION")
                         %>
                         <label for="password">${_("Password")}:</label>
                         <div v-if="update_password" class="field-input">
                             <input id="password" type="password" v-model="password" v-on:change="detect_change('password')">
-                            <span class="help">${password_helper}</span>
+                            <span class="help">
+                                ${_("Required")}. 
+                                % if min_len:
+                                    ${_("minimum length")} ${min_len}; 
+                                % endif
+                                % if max_len:
+                                    ${_("maximum length")} ${max_len}; 
+                                % endif
+                                % if complexity:
+                                    ${_("at least")} 
+                                    % if digits_num:
+                                        ${digits_num} ${_("digits")};
+                                    % endif
+                                    % if upper_num:
+                                        ${upper_num} ${_("upper case")};
+                                    % endif
+                                    % if lower_num:
+                                        ${lower_num} ${_("lower case")};
+                                    % endif
+                                    % if punctuation_num:
+                                        ${punctuation_num} ${_("punctuation")}
+                                    % endif
+                                % endif
+                            </span>
                         </div>
                         <div v-else class="button-wrapper">
                             <a id="password" class="update-password" href="javascript: void(0);" v-on:click="update_password=true">${_("Update Password")}</a>
@@ -775,7 +779,7 @@ ${HTML(render_bundle('ReactRenderer'))}
             </aside>
             <article>
                 <h1>${_("Delete user")}</h1>
-                <p>{{ trans("Are you sure you want to delete the user") }} "{{ username }}"?</p>
+                <p>${_('Are you sure you want to delete the user "{{username}}"?')}</p>
                 <p>${_("All the following related items will be deleted")}</p>
                 <h2>${_("Summary")}</h2>
                 <ul>

@@ -8812,7 +8812,7 @@ msgstr "Prénom"
 #: lms/djangoapps/student_account/views.py:366
 #: openedx/core/djangoapps/user_api/api.py:753
 msgid "Last Name"
-msgstr "Nom"
+msgstr "Nom de famille"
 
 #: lms/djangoapps/instructor_task/tasks_helper/enrollments.py:103
 #: lms/templates/shoppingcart/receipt.html:114
@@ -32628,3 +32628,43 @@ msgstr "Cliquez <a href='{unit_url}'>ici</a> pour voir votre inscription sur {pl
 #: lms/templates/emails/ilt_virtual_session_hourly_reminder_email_message.txt
 msgid "Your virtual training is about to start in approximately one hour."
 msgstr "Votre formation virtuelle va commencer dans environ une heure."
+
+#: lms/templates/admin_panel/admin_panel.html:211
+msgid "USER MANAGEMENT"
+msgstr "Gestion des utilisateurs"
+
+#: lms/templates/admin_panel/admin_panel.html:627
+msgid "Active"
+msgstr "Actif"
+
+#: lms/templates/admin_panel/admin_panel.html:767
+msgid "Are you sure you want to delete the user \"{{username}}\"?"
+msgstr "Êtes-vous sûr de vouloir supprimer l'utilisateur \"{{username}}\"?"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "Minimum length"
+msgstr "Longueur minimale :"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "maximum length"
+msgstr "longueur maximale :"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "at least"
+msgstr "au moins"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "digits"
+msgstr "chiffre"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "upper case"
+msgstr "majuscule"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "lower case"
+msgstr "minuscule"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "punctuation"
+msgstr "ponctuation"

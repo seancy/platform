@@ -13516,10 +13516,6 @@ msgid "Not now"
 msgstr "Pas maintenant"
 
 #: platform/lms/static/js/admin_panel/admin_panel.js
-msgid "Are you sure you want to delete the user"
-msgstr "Êtes-vous sûr de vouloir supprimer l'utilisation"
-
-#: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "The user has been successfully deleted."
 msgstr "L'utilisateur a été supprimé avec succès."
 
@@ -13554,3 +13550,27 @@ msgstr "Compléter une activité"
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Try to win a badge"
 msgstr "Essayer de remporter un badge"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Error while saving user personal data"
+msgstr "Erreur lors de l'enregistrement des données personnelles de l'utilisateur"
+
+#: lms/static/js/admin_panel/admin_panel.js
+msgid "User deleted"
+msgstr "Utilisateur supprimé"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Enroll Confirmation Request"
+msgstr "Demande de confirmation d'inscription"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Are you sure about enroll your user?"
+msgstr "Etes-vous sûr de l'inscription de votre utilisateur ?"
+
+#: lms/static/js/admin_panel/admin_panel.js:229
+msgid "First Name field cannot be empty."
+msgstr "Le champ Prénom ne peut pas être vide."
+
+#: lms/static/js/admin_panel/admin_panel.js:237
+msgid "Last Name field cannot be empty."
+msgstr "Le champ Nom de famille ne peut pas être vide."

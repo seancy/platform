@@ -450,7 +450,7 @@ msgstr "OK"
 #: common/static/bundles/commons.js:29599
 #: cms/templates/js/timed-examination-preference-editor.underscore:7
 msgid "None"
-msgstr "Kein Schulabschluss"
+msgstr "Keiner"
 
 #: cms/static/js/views/course_video_settings.js:471
 #: cms/static/js/views/metadata.js:328
@@ -10429,7 +10429,7 @@ msgstr "Vorschau des Zertifikats"
 
 #: cms/templates/js/certificate-web-preview.underscore:13
 msgid "Activate"
-msgstr "Aktivieren"
+msgstr "aktivieren Sie"
 
 #: cms/templates/js/certificate-web-preview.underscore:15
 msgid "Deactivate"
@@ -12839,10 +12839,6 @@ msgid "Not now"
 msgstr "Nicht jetzt"
 
 #: platform/lms/static/js/admin_panel/admin_panel.js
-msgid "Are you sure you want to delete the user"
-msgstr "Möchten Sie die Verwendung"
-
-#: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "The user has been successfully deleted."
 msgstr "Der Benutzer wurde erfolgreich gelöscht."
 
@@ -12909,3 +12905,23 @@ msgstr "Vollständige Aktivitäten"
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Try to win a badge"
 msgstr "Versuchen Sie, ein Abzeichen zu gewinnen"
+
+#: lms/static/js/admin_panel/admin_panel.js
+msgid "User deleted"
+msgstr "Benutzer gelöscht"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Enroll Confirmation Request"
+msgstr "Bestätigungsanforderung einschreiben"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Are you sure about enroll your user?"
+msgstr "Sind Sie sicher, dass Sie Ihren Benutzer anmelden?"
+
+#: lms/static/js/admin_panel/admin_panel.js:229
+msgid "First Name field cannot be empty."
+msgstr "Das Feld Vorname darf nicht leer sein."
+
+#: lms/static/js/admin_panel/admin_panel.js:237
+msgid "Last Name field cannot be empty."
+msgstr "Das Feld Nachname darf nicht leer sein."

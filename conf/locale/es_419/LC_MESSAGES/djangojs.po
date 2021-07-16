@@ -492,7 +492,7 @@ msgstr "De acuerdo"
 #: common/static/bundles/commons.js:21683
 #: cms/templates/js/timed-examination-preference-editor.underscore:7
 msgid "None"
-msgstr "Nada"
+msgstr "Ninguno"
 
 #: cms/static/js/views/course_video_settings.js:471
 #: cms/static/js/views/metadata.js:328
@@ -13283,10 +13283,6 @@ msgid "Not now"
 msgstr "Ahora no"
 
 #: platform/lms/static/js/admin_panel/admin_panel.js
-msgid "Are you sure you want to delete the user"
-msgstr "¿Está seguro de que desea eliminar el uso"
-
-#: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "The user has been successfully deleted."
 msgstr "El usuario ha sido eliminado correctamente."
 
@@ -13321,3 +13317,23 @@ msgstr "Actividades completas"
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Try to win a badge"
 msgstr "Intenta ganar una insignia"
+
+#: lms/static/js/admin_panel/admin_panel.js
+msgid "User deleted"
+msgstr "Usuario eliminado"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Enroll Confirmation Request"
+msgstr "Solicitud de confirmación de inscripción"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Are you sure about enroll your user?"
+msgstr "¿Está seguro de inscribir a su usuario?"
+
+#: lms/static/js/admin_panel/admin_panel.js:229
+msgid "First Name field cannot be empty."
+msgstr "El campo Nombre no puede estar vacío."
+
+#: lms/static/js/admin_panel/admin_panel.js:237
+msgid "Last Name field cannot be empty."
+msgstr "El campo Apellido no puede estar vacío."

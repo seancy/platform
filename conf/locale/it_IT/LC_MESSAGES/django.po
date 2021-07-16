@@ -3334,7 +3334,7 @@ msgstr "Chi siamo"
 #: common/lib/xmodule/xmodule/course_module.py:659
 #: cms/templates/settings.html:682
 msgid "None"
-msgstr "Nessuno"
+msgstr "Nessuna"
 
 #: common/lib/xmodule/xmodule/course_module.py:663
 msgid "Entrance Exam Enabled"
@@ -29735,3 +29735,43 @@ msgstr "Questa è un'e-mail generata automaticamente, per favore non rispondere.
 #: lms/templates/emails/ilt_virtual_session_hourly_reminder_email_message.txt
 msgid "Your virtual training is about to start in approximately one hour."
 msgstr "La tua formazione virtuale inizierà tra circa un'ora."
+
+#: lms/templates/admin_panel/admin_panel.html:211
+msgid "USER MANAGEMENT"
+msgstr "Gestione utenti"
+
+#: lms/templates/admin_panel/admin_panel.html:627
+msgid "Active"
+msgstr "Attivo"
+
+#: lms/templates/admin_panel/admin_panel.html:767
+msgid "Are you sure you want to delete the user \"{{username}}\"?"
+msgstr "Sei sicuro di voler eliminare l'utente \"{{username}}\"?"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "Minimum length"
+msgstr "Lunghezza minima"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "maximum length"
+msgstr "lunghezza massima"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "at least"
+msgstr "almeno"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "digits"
+msgstr "cifra"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "upper case"
+msgstr "maiuscola"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "lower case"
+msgstr "minuscola"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "punctuation"
+msgstr "punteggiatura"
