@@ -28149,3 +28149,39 @@ msgstr ""
 #: lms/templates/emails/ilt_virtual_session_hourly_reminder_email_message.txt
 msgid "Your virtual training is about to start in approximately one hour."
 msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:211
+msgid "USER MANAGEMENT"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:767
+msgid "Are you sure you want to delete the user \"{{username}}\"?"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "Minimum length"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "maximum length"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "at least"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "digits"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "upper case"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "lower case"
+msgstr ""
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "punctuation"
+msgstr ""

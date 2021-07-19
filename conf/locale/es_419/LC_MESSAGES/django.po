@@ -3631,7 +3631,7 @@ msgstr "Acerca de"
 #: common/lib/xmodule/xmodule/course_module.py:659
 #: cms/templates/settings.html:642
 msgid "None"
-msgstr "Nada"
+msgstr "Ninguno"
 
 #: common/lib/xmodule/xmodule/course_module.py:663
 msgid "Entrance Exam Enabled"
@@ -32161,7 +32161,7 @@ msgstr "Un nombre legal debe tener un mínimo de dos caracteres"
 
 #: platform/lms/templates/admin_panel/admin_panel.html
 msgid "All the following related items will be deleted"
-msgstr "Se eliminarán todos los siguientes elementos"
+msgstr "Se eliminarán todos los siguientes elementos relacionados"
 
 #: XBlock: lbmdonexblock
 #: xblock-done/lbmdonexblock/lbmdonexblock.py
@@ -32217,3 +32217,43 @@ msgstr "Este es un correo electrónico generado automáticamente. Por favor no r
 #: lms/templates/emails/ilt_virtual_session_hourly_reminder_email_message.txt
 msgid "Your virtual training is about to start in approximately one hour."
 msgstr "Su entrenamiento virtual está a punto de comenzar en aproximadamente una hora."
+
+#: lms/templates/admin_panel/admin_panel.html:211
+msgid "USER MANAGEMENT"
+msgstr "Gestión de usuarios"
+
+#: lms/templates/admin_panel/admin_panel.html:627
+msgid "Active"
+msgstr "Activo"
+
+#: lms/templates/admin_panel/admin_panel.html:767
+msgid "Are you sure you want to delete the user \"{{username}}\"?"
+msgstr "¿Está seguro de que desea eliminar el usuario \"{{username}}\"?"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "Minimum length"
+msgstr "Longitud mínima"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "maximum length"
+msgstr "longitud máxima"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "at least"
+msgstr "al menos"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "digits"
+msgstr "dígito"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "upper case"
+msgstr "mayúscula"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "lower case"
+msgstr "minúscula"
+
+#: lms/templates/admin_panel/admin_panel.html:473
+msgid "punctuation"
+msgstr "signo de puntuación"

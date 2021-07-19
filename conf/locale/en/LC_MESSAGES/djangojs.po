@@ -12188,10 +12188,6 @@ msgid "Not now"
 msgstr ""
 
 #: platform/lms/static/js/admin_panel/admin_panel.js
-msgid "Are you sure you want to delete the user"
-msgstr ""
-
-#: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "The user has been successfully deleted."
 msgstr ""
 
@@ -12297,4 +12293,22 @@ msgstr ""
 
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Try to win a badge"
+msgstr ""
+
+#: lms/static/js/admin_panel/admin_panel.js
+msgid "User deleted"
+msgstr ""
+
+#: XBlock: xblock-poll
+#: poll/public/handlebars/poll_results.handlebars:5
+#: poll/public/handlebars/survey_results.handlebars:4
+msgid "Results"
+msgstr ""
+
+#: lms/static/js/admin_panel/admin_panel.js:229
+msgid "First Name field cannot be empty."
+msgstr ""
+
+#: lms/static/js/admin_panel/admin_panel.js:237
+msgid "Last Name field cannot be empty."
 msgstr ""

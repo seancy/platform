@@ -605,3 +605,26 @@ def _get_subsection_percentage(subsection_grade):
     Returns the percentage value of the given subsection_grade.
     """
     return subsection_grade.percent_graded * 100.0
+
+
+def complete_subsection(subsection_usage_key, user):
+    """
+    Complete all blocks in the given subsection
+    """
+    from lms.djangoapps.grades.course_grade_factory import CourseGradeFactory
+    from lms.djangoapps.grades.signals.handlers import recalculate_course_completion_percentage
+    try:
+        subsection_structure = get_course_blocks(user, subsection_usage_key)
+        if any(subsection_structure):
+            completable_blocks = [
+                (block, 1) for block in subsection_structure
+                if block.block_type not in ['chapter', 'sequential', 'vertical', 'course']
+            ]
+            if completable_blocks:
+                signals.post_save.disconnect(receiver=recalculate_course_completion_percentage, sender=BlockCompletion)
+                BlockCompletion.objects.submit_batch_completion(
+                    user, subsection_usage_key.course_key, completable_blocks
+                )
+                CourseGradeFactory().update_course_completion_percentage(subsection_usage_key.course_key, user)
+    except ItemNotFoundError as err:
+        log.warning("Could not find course_block for subsection=%s error=%s", subsection_usage_key, err)

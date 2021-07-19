@@ -456,7 +456,7 @@ msgstr "OK"
 #: common/static/bundles/commons.js:21683
 #: cms/templates/js/timed-examination-preference-editor.underscore:7
 msgid "None"
-msgstr "Nessuno"
+msgstr "Nessuna"
 
 #: cms/static/js/views/course_video_settings.js:471
 #: cms/static/js/views/metadata.js:328
@@ -10477,11 +10477,11 @@ msgstr "Anteprima del certificato"
 
 #: cms/templates/js/certificate-web-preview.underscore:13
 msgid "Activate"
-msgstr "Attiva"
+msgstr "Attivare"
 
 #: cms/templates/js/certificate-web-preview.underscore:15
 msgid "Deactivate"
-msgstr "Disattiva"
+msgstr "Disattivare"
 
 #: cms/templates/js/container-access.underscore:9
 msgid "component"
@@ -12784,10 +12784,6 @@ msgid "Not now"
 msgstr "Non adesso"
 
 #: platform/lms/static/js/admin_panel/admin_panel.js
-msgid "Are you sure you want to delete the user"
-msgstr "Sei sicuro di voler eliminare l'uso"
-
-#: platform/lms/static/js/admin_panel/admin_panel.js
 msgid "The user has been successfully deleted."
 msgstr "L'utente è stato eliminato con successo."
 
@@ -12814,3 +12810,23 @@ msgstr "Attività complete"
 # lms/static/js/triboo_analytics/LeaderBoard.js
 msgid "Try to win a badge"
 msgstr "Prova a vincere un distintivo"
+
+#: lms/static/js/admin_panel/admin_panel.js
+msgid "User deleted"
+msgstr "Utente eliminato"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Enroll Confirmation Request"
+msgstr "Richiesta di conferma dell'iscrizione"
+
+#: platform/lms/static/js/admin_panel/admin_panel.js
+msgid "Are you sure about enroll your user?"
+msgstr "Sei sicuro di iscrivere il tuo utente?"
+
+#: lms/static/js/admin_panel/admin_panel.js:229
+msgid "First Name field cannot be empty."
+msgstr "Il campo Nome non può essere vuoto."
+
+#: lms/static/js/admin_panel/admin_panel.js:237
+msgid "Last Name field cannot be empty."
+msgstr "Il campo Cognome non può essere vuoto."
