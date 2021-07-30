@@ -286,7 +286,7 @@ def recalculate_course_completion_percentage(**kwargs):
     instance = kwargs['instance']
     course_key = instance.course_key
     user = User.objects.get(id=instance.user_id)
-    calculate_course_progress.apply_async(
+    calculate_course_progress.apply(
         kwargs={
             'course_id': unicode(course_key),
             'user_id': user.id
