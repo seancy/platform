@@ -694,19 +694,27 @@ def register_and_enroll_students(request, course_id):  # pylint: disable=too-man
                                             u'so course enrollment was blocked.', email, username)
                             else:
                                 year_of_birth = int(year_of_birth) if len(year_of_birth) > 0 else None
+                                # get use profile org
+                                orgs = configuration_helpers.get_current_site_orgs()
+                                if not orgs:
+                                    org = None
+                                else:
+                                    org = "+".join(orgs)
                                 user = lt_create_user_and_user_profile(
-                                        email, username, first_name, last_name, password,
-                                        gender, year_of_birth, language, country,
-                                        student[LT_CSV['city']].strip(),
-                                        student[LT_CSV['location']].strip(),
-                                        student[LT_CSV['company']].strip(),
-                                        student[LT_CSV['employee_id']].strip(),
-                                        hire_date,
-                                        student[LT_CSV['job_code']].strip(),
-                                        student[LT_CSV['department']].strip(),
-                                        student[LT_CSV['supervisor']].strip(),
-                                        student[LT_CSV['learning_group']].strip(),
-                                        student[LT_CSV['comments']].strip())
+                                    email, username, first_name, last_name, password,
+                                    gender, year_of_birth, language, country,
+                                    student[LT_CSV['city']].strip(),
+                                    student[LT_CSV['location']].strip(),
+                                    student[LT_CSV['company']].strip(),
+                                    student[LT_CSV['employee_id']].strip(),
+                                    hire_date,
+                                    student[LT_CSV['job_code']].strip(),
+                                    student[LT_CSV['department']].strip(),
+                                    student[LT_CSV['supervisor']].strip(),
+                                    student[LT_CSV['learning_group']].strip(),
+                                    student[LT_CSV['comments']].strip(),
+                                    org
+                                )
                                 create_manual_course_enrollment(user=user, course_id=course_id,
                                     mode=course_mode, enrolled_by=request.user, reason='Enrolling via csv upload',
                                     state_transition=UNENROLLED_TO_ENROLLED,)
@@ -1046,7 +1054,7 @@ def create_user_and_user_profile(email, username, name, country, password):
 def lt_create_user_and_user_profile(email, username, first_name, last_name,
     password, gender, year_of_birth, language, country, city, location,
     lt_company, lt_employee_id, lt_hire_date, lt_job_code, lt_department,
-    lt_supervisor, lt_learning_group, lt_comments):
+    lt_supervisor, lt_learning_group, lt_comments, org):
     user = User.objects.create_user(username, email, password)
     reg = Registration()
     reg.register(user)
@@ -1059,7 +1067,7 @@ def lt_create_user_and_user_profile(email, username, first_name, last_name,
     lt_update_profile(UserProfile(user=user), first_name, last_name,
         gender, year_of_birth, language, country, city, location,
         lt_company, lt_employee_id, lt_hire_date, lt_job_code, lt_department,
-        lt_supervisor, lt_learning_group, lt_comments)
+        lt_supervisor, lt_learning_group, lt_comments, org)
 
     return user
 
@@ -1067,7 +1075,7 @@ def lt_create_user_and_user_profile(email, username, first_name, last_name,
 def lt_update_profile(profile, first_name, last_name,
     gender, year_of_birth, language, country, city, location,
     lt_company, lt_employee_id, lt_hire_date, lt_job_code, lt_department,
-    lt_supervisor, lt_learning_group, lt_comments):
+    lt_supervisor, lt_learning_group, lt_comments, org=None):
     name = last_name + ' ' + first_name
     profile.name = name
     profile.gender = gender
@@ -1085,6 +1093,8 @@ def lt_update_profile(profile, first_name, last_name,
     profile.lt_supervisor = lt_supervisor
     profile.lt_learning_group = lt_learning_group
     profile.lt_comments = lt_comments
+    if org is not None:
+        profile.org = org
     client_service_id = configuration_helpers.get_value('CLIENT_SERVICE_ID', None)
     if client_service_id:
         profile.service_id = client_service_id
