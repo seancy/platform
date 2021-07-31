@@ -899,6 +899,10 @@ def course_about(request, course_id):
     with modulestore().bulk_operations(course_key):
         permission = get_permission_for_course_about()
 
+        if permission != "see_about_page" and not request.user.is_authenticated:
+            redirect_to = '/login?next={}'.format(reverse('about_course', args=[unicode(course_id)]).replace('+', '%2B'))
+            return redirect(redirect_to)
+
         course = get_course_with_access(request.user, permission, course_key)
         course_details = CourseDetails.populate(course)
         modes = CourseMode.modes_for_course_dict(course_key)
