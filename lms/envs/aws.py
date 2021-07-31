@@ -1233,7 +1233,7 @@ FEATURES['ENFORCE_PASSWORD_POLICY'] = True
 
 if FEATURES.get('ENABLE_SAML_IDP'):
     INSTALLED_APPS += ('djangosaml2idp',)
-    SAML_IDP_BASE_URL = 'https://uniminuto.learning-tribes.com/idp'
+    SAML_IDP_BASE_URL = AUTH_TOKENS.get('SAML_IDP_BASE_URL')
 
     SAML_IDP_CONFIG = {
         'debug' : DEBUG,
@@ -1257,7 +1257,7 @@ if FEATURES.get('ENABLE_SAML_IDP'):
         },
 
         'metadata': {
-            'remote': [{'url': 'https://uniminuto.edflex.com/en/saml/metadata.xml'}],
+            'remote': [{'url': AUTH_TOKENS.get('SAML_IDP_METADATA_REMOTE_URL')}],
         },
         # Signing
         'key_file': os.path.abspath('keys/saml-idp-private.key'),
@@ -1270,19 +1270,7 @@ if FEATURES.get('ENABLE_SAML_IDP'):
         'valid_for': 365 * 24,
     }
 
-    SAML_IDP_SPCONFIG = {
-        'https://uniminuto.edflex.com': {
-            'processor': 'djangosaml2idp.processors.BaseProcessor',
-            'attribute_mapping': {
-                # DJANGO: SAML
-                'uid': 'username',
-                'username': 'username',
-                'email': 'email',
-                'first_name': 'first_name',
-                'last_name': 'last_name'
-            }
-        }
-    }
+    SAML_IDP_SPCONFIG = AUTH_TOKENS.get('SAML_IDP_SPCONFIG')
 
 ###################### Default production settings ##############################
 FEATURES['ALLOW_PUBLIC_ACCOUNT_CREATION'] = False
