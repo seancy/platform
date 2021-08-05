@@ -173,7 +173,7 @@ def recalculate_subsection_grade_v3(self, **kwargs):
     time_limit=SUBSECTION_GRADE_TIMEOUT_SECONDS,
     max_retries=2,
     default_retry_delay=RETRY_DELAY_SECONDS,
-    routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
+    routing_key=settings.RECALCULATE_PROGRESS_ROUTING_KEY
 )
 def update_course_progress(self, **kwargs):
     """
@@ -245,7 +245,7 @@ def send_grade_override_email(self, **kwargs):
     time_limit=SUBSECTION_GRADE_TIMEOUT_SECONDS,
     max_retries=2,
     default_retry_delay=RETRY_DELAY_SECONDS,
-    routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
+    routing_key=settings.RECALCULATE_PROGRESS_ROUTING_KEY
 )
 def calculate_course_progress(self, **kwargs):
     """

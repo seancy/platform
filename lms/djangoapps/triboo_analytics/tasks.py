@@ -301,7 +301,7 @@ def handle_leader_board_activity(sender, instance, **kwargs):
     time_limit=300,
     max_retries=3,
     default_retry_delay=40,
-    routing_key=settings.RECALCULATE_GRADES_ROUTING_KEY
+    routing_key=settings.RECALCULATE_LEADERBOARD_ROUTING_KEY
 )
 def update_leader_board_activity(self, **kwargs):
     logger.info("#### {} #####".format(kwargs.get('block_id')))
@@ -399,7 +399,7 @@ def update_leader_board_activity(self, **kwargs):
         else:
             completed = False
         for child in children:
-            if child.block_type in ['discussion', 'library_content']:
+            if child.block_type in ['discussion', 'library_content'] or child == block_key:
                 continue
             completion = course_block_completions.get(child, None)
             if not completion:
