@@ -440,8 +440,17 @@ CELERY_QUEUES.update(
     }
 )
 
+# Queue to use for updating persistent grades
+RECALCULATE_GRADES_ROUTING_KEY = "edx.lms.core.grade"
+
+# Queue to use for updating course progress
+RECALCULATE_PROGRESS_ROUTING_KEY = "edx.lms.core.progress"
+
+# Queue to use for updating leaderboard
+RECALCULATE_LEADERBOARD_ROUTING_KEY = "edx.lms.core.leaderboard"
+
 # Queue to use for updating grades due to grading policy change
-POLICY_CHANGE_GRADES_ROUTING_KEY = ENV_TOKENS.get('POLICY_CHANGE_GRADES_ROUTING_KEY', LOW_PRIORITY_QUEUE)
+POLICY_CHANGE_GRADES_ROUTING_KEY = "edx.lms.core.high_mem"
 
 # Rate limit for regrading tasks that a grading policy change can kick off
 POLICY_CHANGE_TASK_RATE_LIMIT = ENV_TOKENS.get('POLICY_CHANGE_TASK_RATE_LIMIT', POLICY_CHANGE_TASK_RATE_LIMIT)

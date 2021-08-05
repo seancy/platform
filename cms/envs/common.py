@@ -1540,6 +1540,12 @@ MANDATORY_OPTIONS = (
 # Queue to use for updating persistent grades
 RECALCULATE_GRADES_ROUTING_KEY = LOW_PRIORITY_QUEUE
 
+# Queue to use for updating course progress
+RECALCULATE_PROGRESS_ROUTING_KEY = LOW_PRIORITY_QUEUE
+
+# Queue to use for updating leaderboard
+RECALCULATE_LEADERBOARD_ROUTING_KEY = LOW_PRIORITY_QUEUE
+
 # Queue to use for updating grades due to grading policy change
 POLICY_CHANGE_GRADES_ROUTING_KEY = LOW_PRIORITY_QUEUE
 
