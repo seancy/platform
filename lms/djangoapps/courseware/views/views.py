@@ -2968,12 +2968,14 @@ class CourseReminder():
         unfinished = CourseEnrollment.objects.filter(
             course_id__in=self.get_course_with_reminders(),
             is_active=True,
-            completed__isnull=True
+            completed__isnull=True,
+            user__is_active=True
         ).select_related('user')
 
         finished = CourseEnrollment.objects.filter(
             is_active=True,
-            completed__isnull=False
+            completed__isnull=False,
+            user__is_active=True
         ).select_related('user')
         return {
             "unfinished": unfinished,
@@ -3196,7 +3198,9 @@ class CourseReminder():
         """
         send email to students
         """
-        for enrollment in self.get_course_enrollment().get('finished'):
+        course_enrollment_all = self.get_course_enrollment()
+
+        for enrollment in course_enrollment_all['finished']:
             try:
                 self.send_re_enroll_email(enrollment)
             except Exception as e:
@@ -3204,5 +3208,5 @@ class CourseReminder():
                     user_id=enrollment.user_id,
                     course_id=enrollment.course_id
                 ))
-        for enrollment in self.get_course_enrollment().get('unfinished'):
+        for enrollment in course_enrollment_all['unfinished']:
             self.send_reminder_email(enrollment)
