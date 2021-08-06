@@ -351,6 +351,9 @@ urlpatterns += [
     # # overview of crehana catalog with different course resources
     url(r'^all_external_catalog$', external_catalog_views.CoursesOverviewPage.as_view(), name='all_external_catalog'),
 
+    # view of learnlight catalog
+    url(r'^courses/learnlight_catalog$', branding_views.learnlight_catalog, name='learnlight_catalog'),
+
     #About the course
     url(
         r'^courses/{}/about$'.format(

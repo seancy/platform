@@ -146,6 +146,7 @@ function user_create_edit(user_id, profile_fields, country_options, lang_options
             edflex_access: true,
             crehana_access: true,
             anderspink_access: true,
+            learnlight_access: true,
             analytics_access: "0",
             currently_enrolled: [],
             not_enrolled: [],
@@ -439,6 +440,7 @@ function user_create_edit(user_id, profile_fields, country_options, lang_options
                 self.edflex_access = data.edflex_access;
                 self.crehana_access = data.crehana_access;
                 self.anderspink_access = data.anderspink_access;
+                self.learnlight_access = data.learnlight_access;
                 self.analytics_access = data.analytics_access;
                 self.currently_enrolled = data.currently_enrolled;
                 self.not_enrolled = data.not_enrolled;
@@ -512,7 +514,7 @@ function user_create_edit(user_id, profile_fields, country_options, lang_options
                 } else {
                     $("button.cancel-button").show();
                     var permission_fields = ["is_active", "platform_level", "catalog_access",
-                        "edflex_access", "crehana_access","anderspink_access", "analytics_access"]
+                        "edflex_access", "crehana_access","anderspink_access", "learnlight_access", "analytics_access"]
                     if (permission_fields.includes(field)) {
                         this.editting_permissions = true;
                         this.editting_info = false;

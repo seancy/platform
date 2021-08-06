@@ -31,6 +31,10 @@ from util.json_request import JsonResponse
 from urllib import unquote
 from student.triboo_groups import CATALOG_DENIED_GROUP, EDFLEX_DENIED_GROUP
 
+from datetime import datetime
+from pytz import UTC
+from hashlib import sha1
+
 log = logging.getLogger(__name__)
 
 
@@ -328,3 +332,23 @@ def footer(request):
 
     else:
         return HttpResponse(status=406)
+
+
+@ensure_csrf_cookie
+@login_required
+@cache_if_anonymous()
+def learnlight_catalog(request):
+    learnlight_url = settings.LEARNLIGHT_URL
+    user_email = urllib.quote(request.user.email)
+    datetime_now = datetime.now(UTC)
+    date = datetime_now.strftime('%Y%m%d')
+    auth_key = settings.LEARNLIGHT_AUTH_KEY
+    token = sha1(user_email+date+auth_key).hexdigest()
+    auth_source = 'GLT'
+    query_string = '?authSource={auth_source}&authUser={user_email}&authToken={token}'.format(
+        auth_source=auth_source,
+        user_email=user_email,
+        token=token,
+    )
+    learnlight_url += query_string
+    return redirect(learnlight_url)
