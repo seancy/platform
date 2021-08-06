@@ -352,5 +352,3 @@ def learnlight_catalog(request):
     )
     learnlight_url += query_string
     return redirect(learnlight_url)
-
-
