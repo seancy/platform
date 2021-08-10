@@ -68,13 +68,6 @@ from student.roles import studio_access_role, ilt_supervisor_role
         </div>
       % endif
 
-        <div class="mobile-nav-item hidden-mobile nav-item nav-tab learnlight-tab">
-          <a class="tab-nav-link" target="_blank" href="${reverse('learnlight_catalog')}" title="${_('External content catalog')}">
-            <span class="label"><span class="icon far fa-caret-circle-right" aria-hidden="true"></span></span>
-            ${_("Languages")}
-          </a>
-        </div>
-
       % if (configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False)) \
         and CREHANA_DENIED_GROUP not in user_groups):
         <div class="mobile-nav-item hidden-mobile nav-item nav-tab crehana-tab">

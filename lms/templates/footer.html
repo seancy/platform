@@ -112,8 +112,6 @@
               <li><a href="${reverse('edflex_catalog')}">${configuration_helpers.get_value('EDFLEX_RENAME', 'EdFlex')}</a></li>
             % endif
 
-              <li><a href="${reverse('learnlight_catalog')}">${_("Languages")}</a></li>
-
             % if (configuration_helpers.get_value('ENABLE_CREHANA_CATALOG', settings.FEATURES.get('ENABLE_CREHANA_CATALOG', False)) \
               and CREHANA_DENIED_GROUP not in user_groups):
               <li><a href="${reverse('crehana_catalog')}">${configuration_helpers.get_value('CREHANA_RENAME', 'Crehana')}</a></li>
