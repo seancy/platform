@@ -21,6 +21,7 @@ AVAILABLE_CHOICES = {
     'lt_area': _('Commercial Zone'),
     'lt_sub_area': _('Commercial Region'),
     'city': _('City'),
+    'year_of_birth': _('Year of birth'),
     'location': pgettext_lazy('user.profile', 'Location'),
     'lt_address': pgettext_lazy('user.profile', 'Address'),
     'lt_address_2': _('Address 2'),

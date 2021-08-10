@@ -1299,11 +1299,9 @@ CREHANA_SECRET_KEY = AUTH_TOKENS.get('CREHANA_SECRET_KEY', '')
 FEATURES['ENABLE_CREHANA_CATALOG'] = False
 CREHANA_RENAME = "Crehana"
 
-
 ################ Learnlight catalog API ####################
-
 LEARNLIGHT_AUTH_KEY = AUTH_TOKENS.get("LEARNLIGHT_AUTH_KEY", "")
-
-# Enable Crehana catalog
 FEATURES['ENABLE_LEARNLIGHT_CATALOG'] = False
 LEARNLIGHT_RENAME = "Learnlight"
+LEARNLIGHT_URL = "https://app.learnlight.com/"
+LEARNLIGHT_AUTH_SOURCE = "GLT"
