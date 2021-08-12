@@ -1305,3 +1305,6 @@ FEATURES['ENABLE_LEARNLIGHT_CATALOG'] = False
 LEARNLIGHT_RENAME = "Learnlight"
 LEARNLIGHT_URL = "https://app.learnlight.com/"
 LEARNLIGHT_AUTH_SOURCE = "GLT"
+
+################ Enable Zendesk widget ####################
+FEATURES['ENABLE_ZENDESK_WIDGET'] = False
