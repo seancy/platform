@@ -1,3 +1,7 @@
+<%!
+from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+%>
+
 % if user.is_authenticated:
     <script>
         window.intercomSettings = {
@@ -37,4 +41,8 @@
             }
         })();
     </script>
-  % endif
+% endif
+
+% if configuration_helpers.get_value('ENABLE_ZENDESK_WIDGET', settings.FEATURES.get('ENABLE_ZENDESK_WIDGET', False)):
+    <script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=d95bfedc-19ec-4ea3-937f-c2cf0cbff31e"> </script>
+% endif
