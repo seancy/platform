@@ -249,7 +249,7 @@ msgstr ""
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-msgid "accommodation, preferences, specific diet ..."
+msgid "accommodation, preferences, specific diet..."
 msgstr ""
 
 #: XBlock: xblock-ilt

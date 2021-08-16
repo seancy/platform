@@ -12874,3 +12874,42 @@ msgstr "导入 CSV 文件"
 #: platform/lms/templates/instructor/instructor_dashboard_2/certificate-white-list.underscore
 msgid "Certificate exceptions group selection"
 msgstr "证书例外组选择"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Enroll"
+msgstr "注册"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "seat left"
+msgid_plural "seats left"
+msgstr[0] "个座位剩余"
+msgstr[1] "个座位剩余"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Accommodation Need"
+msgstr "住宿需求"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "accommodation, preferences, specific diet..."
+msgstr "住宿，喜好，饮食偏好..."
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of one way"
+msgstr "单程数"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of return"
+msgstr "往返数"
+
+#: lms/static/js/dashboard/ilt_calendar.js:763
+#: lms/static/js/dashboard/ilt_calendar.js:771
+msgid "ILT Enrollment"
+msgstr "ILT 注册"
+
+#: lms/static/js/dashboard/ilt_calendar.js:764
+msgid "Enrollment succeeded."
+msgstr "注册成功。"
+
+#: lms/static/js/dashboard/ilt_calendar.js:772
+msgid "Enrollment failed."
+msgstr "注册失败。"

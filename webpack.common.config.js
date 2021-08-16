@@ -57,6 +57,7 @@ module.exports = Merge.smart({
         PasswordResetConfirmation: ['babel-polyfill', './lms/static/js/student_account/components/PasswordResetConfirmation.jsx'],
         QuestionMark: ['babel-polyfill', './lms/static/js/QuestionMark.js'],
         NumberLocale: ['babel-polyfill', './lms/static/js/NumberLocale.js'],
+        VueraSwitcher: ['babel-polyfill', './lms/static/js/admin_panel/vuera-switcher.js'],
 
         PasswordCreateConfirmation: ['babel-polyfill', './lms/static/js/student_account/components/PasswordCreateConfirmation.jsx'],
         StudentAccountDeletion: ['babel-polyfill', './lms/static/js/student_account/components/StudentAccountDeletion.jsx'],

@@ -13574,3 +13574,43 @@ msgstr "Le champ Prénom ne peut pas être vide."
 #: lms/static/js/admin_panel/admin_panel.js:237
 msgid "Last Name field cannot be empty."
 msgstr "Le champ Nom de famille ne peut pas être vide."
+
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Enroll"
+msgstr "S'inscrire"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "seat left"
+msgid_plural "seats left"
+msgstr[0] "place restante"
+msgstr[1] "places restantes"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Accommodation Need"
+msgstr "Demande de réservation d'hôtel"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "accommodation, preferences, specific diet..."
+msgstr "hébergement, préférence, régime spécifique..."
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of one way"
+msgstr "Nombre d'aller"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of return"
+msgstr "Nombre de retour"
+
+#: lms/static/js/dashboard/ilt_calendar.js:763
+#: lms/static/js/dashboard/ilt_calendar.js:771
+msgid "ILT Enrollment"
+msgstr "Inscription ILT"
+
+#: lms/static/js/dashboard/ilt_calendar.js:764
+msgid "Enrollment succeeded."
+msgstr "L'inscription a réussi."
+
+#: lms/static/js/dashboard/ilt_calendar.js:772
+msgid "Enrollment failed."
+msgstr "L'inscription a échoué."

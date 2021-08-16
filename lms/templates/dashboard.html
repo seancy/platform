@@ -113,7 +113,11 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
   <%static:webpack entry="Dashboard">Dashboard()</%static:webpack>
 
   % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False):
+    ${HTML(render_bundle('QuestionMark'))}
+    ${HTML(render_bundle('VueraSwitcher'))}
     <script src="${static.url('js/dashboard/ics.deps.min.js')}"></script>
+    <script>window.iltAccommodationEnabled = "${bool(configuration_helpers.get_value('ILT_ACCOMMODATION_ENABLED', False))}"</script>
+    <script src="${static.url('js/admin_panel/modal.js')}"></script>
     <script src="${static.url('js/dashboard/ilt_calendar.js')}"></script>
   % endif
 </%block>
@@ -513,11 +517,19 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
         % if configuration_helpers.get_value('SHOW_ILT_CALENDAR', False) and len(course_enrollments) > 0:
           <div class="ilt-calendar" id="ilt-calendar">
             <div class="events-header">
-                <h2>${_("My upcoming ILT sessions")}</h2>
+                <h2>${_("Training Event")}</h2>
             </div>
             <div class="ilt-calendar-wrapper no-upcoming-session">
               <div id="calendar"></div>
               <div class="ilt-events-wrapper mobile-events">
+                % if configuration_helpers.get_value('SHOW_ILT_CALENDAR_TYPE_SWITCHER', True):
+                  <div class="ilt-events-type-switcher-wrapper">
+                    <div class="ilt-events-type-switcher">
+                      <div class="ilt-events-type active" data-type="all">${_("All sessions")}</div>
+                      <div class="ilt-events-type" data-type="my">${_("My sessions")}</div>
+                    </div>
+                  </div>
+                % endif
                 <div id="ilt-events" class="swiper-container">
                   <p class="back-to-calendar">
                     <i class="far fa-chevron-left"></i>
@@ -528,15 +540,14 @@ from webpack_loader.templatetags.webpack_loader import render_bundle
                       <p>${_("No upcoming sessions planned")}</p>
                       <h2>${_("Sign up for an ILT session.")}</h2>
                       <h2>${_("It will appear in your calendar.")}</h2>
-                      <a href="/my_courses" target="_blank">${_("Let's start")}</a>
                   </div>
                   <div class="ilt-events-list swiper-wrapper"></div>
                   <!-- Add Pagination -->
                 </div>
                 <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
               </div>
-              <div class="swiper-button-next"></div>
-              <div class="swiper-button-prev"></div>
             </div>
           </div>
         % endif
