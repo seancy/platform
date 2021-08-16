@@ -13028,7 +13028,7 @@ msgstr "Sem sessão disponível"
 
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"
-msgstr "Adicionar Artigo"
+msgstr "Adicionar ao calendário"
 
 
 #: wiki/models/article.py:262 wiki/models/pluginbase.py:38
@@ -13443,3 +13443,42 @@ msgstr "O campo Nome não pode estar vazio."
 #: lms/static/js/admin_panel/admin_panel.js:237
 msgid "Last Name field cannot be empty."
 msgstr "O campo Sobrenome não pode estar vazio."
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Enroll"
+msgstr "Matrícula"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "seat left"
+msgid_plural "seats left"
+msgstr[0] "assento restante"
+msgstr[1] "assentos restantes"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Accommodation Need"
+msgstr "Necessidades de Acomodação"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "accommodation, preferences, specific diet..."
+msgstr "acomodação, preferências, dieta específica ..."
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of one way"
+msgstr "Número de ida"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of return"
+msgstr "Número de devolução"
+
+#: lms/static/js/dashboard/ilt_calendar.js:763
+#: lms/static/js/dashboard/ilt_calendar.js:771
+msgid "ILT Enrollment"
+msgstr "Inscrição ILT"
+
+#: lms/static/js/dashboard/ilt_calendar.js:764
+msgid "Enrollment succeeded."
+msgstr "A inscrição foi bem-sucedida."
+
+#: lms/static/js/dashboard/ilt_calendar.js:772
+msgid "Enrollment failed."
+msgstr "A inscrição falhou."

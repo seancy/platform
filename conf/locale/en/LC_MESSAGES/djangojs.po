@@ -12312,3 +12312,42 @@ msgstr ""
 #: lms/static/js/admin_panel/admin_panel.js:237
 msgid "Last Name field cannot be empty."
 msgstr ""
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Enroll"
+msgstr ""
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "seat left"
+msgid_plural "seats left"
+msgstr[0] ""
+msgstr[1] ""
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Accommodation Need"
+msgstr ""
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "accommodation, preferences, specific diet..."
+msgstr ""
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of one way"
+msgstr ""
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of return"
+msgstr ""
+
+#: lms/static/js/dashboard/ilt_calendar.js:763
+#: lms/static/js/dashboard/ilt_calendar.js:771
+msgid "ILT Enrollment"
+msgstr ""
+
+#: lms/static/js/dashboard/ilt_calendar.js:764
+msgid "Enrollment succeeded."
+msgstr ""
+
+#: lms/static/js/dashboard/ilt_calendar.js:772
+msgid "Enrollment failed."
+msgstr ""

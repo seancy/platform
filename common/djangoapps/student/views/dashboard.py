@@ -146,9 +146,9 @@ def _allow_donation(course_modes, course_id, enrollment):
         DonationConfiguration.current().enabled
     )
     return (
-        donations_enabled and
-        enrollment.mode in course_modes[course_id] and
-        course_modes[course_id][enrollment.mode].min_price == 0
+            donations_enabled and
+            enrollment.mode in course_modes[course_id] and
+            course_modes[course_id][enrollment.mode].min_price == 0
     )
 
 
@@ -821,7 +821,7 @@ def student_dashboard(request):
     valid_verification_statuses = ['approved', 'must_reverify', 'pending', 'expired']
     display_sidebar_on_dashboard = (len(order_history_list) or
                                     (verification_status['status'] in valid_verification_statuses and
-                                    verification_status['should_display']))
+                                     verification_status['should_display']))
 
     # Filter out any course enrollment course cards that are associated with fulfilled entitlements
     for entitlement in [e for e in course_entitlements if e.enrollment_course_run is not None]:
@@ -887,7 +887,7 @@ def student_dashboard(request):
         'disable_courseware_js': True,
         'display_course_modes_on_dashboard': enable_verified_certificates and display_course_modes_on_dashboard,
         'display_sidebar_on_dashboard': display_sidebar_on_dashboard,
-        'display_sidebar_account_activation_message': not(user.is_active or hide_dashboard_courses_until_activated),
+        'display_sidebar_account_activation_message': not (user.is_active or hide_dashboard_courses_until_activated),
         'display_dashboard_courses': (user.is_active or not hide_dashboard_courses_until_activated),
         'empty_dashboard_message': empty_dashboard_message,
         'nb_completed_courses': len(completed_courses),
@@ -1078,7 +1078,6 @@ def my_courses(request, tab="all-courses"):
 @login_required
 @ensure_csrf_cookie
 def get_enrolled_ilt(request):
-
     user = request.user
 
     site_org_whitelist, site_org_blacklist = get_org_black_and_whitelist_for_site()
@@ -1088,6 +1087,7 @@ def get_enrolled_ilt(request):
 
     # get ilt xblocks data
     ilt_sessions = []
+    open_ilt_sessions = []
 
     ilt_session_dict = {}
 
@@ -1097,6 +1097,10 @@ def get_enrolled_ilt(request):
 
     all_enrolled_summaries = XModuleUserStateSummaryField.objects.filter(
         usage_id__in=ilt_session_dict, field_name='enrolled_users'
+    ).only("value", "usage_id")
+
+    all_enrolled_sessions = XModuleUserStateSummaryField.objects.filter(
+        usage_id__in=ilt_session_dict, field_name='sessions'
     ).only("value", "usage_id")
 
     for summary in all_enrolled_summaries:
@@ -1119,4 +1123,50 @@ def get_enrolled_ilt(request):
                     ilt_sessions.append(enrolled_session)
                     break
 
-    return JsonResponse({'ilt_sessions': ilt_sessions})
+    for summary in all_enrolled_sessions:
+        enrolled_users_value = {}
+        try:
+            enrolled_users = XModuleUserStateSummaryField.objects.get(field_name='enrolled_users',
+                                                                      usage_id=summary.usage_id)
+        except XModuleUserStateSummaryField.DoesNotExist:
+            pass
+        else:
+            enrolled_users_value = json.loads(enrolled_users.value)
+
+        user_is_enrolled = any(str(user.id) in v for k, v in enrolled_users_value.items())
+        if not user_is_enrolled:
+            value = json.loads(summary.value)
+            value = {k: v for k, v in value.items() if k != "counter"}
+            for k, v in value.items():
+                enrolled_users_in_this_session = enrolled_users_value.get(k, {})
+                seats_available = v['total_seats'] - len(enrolled_users_in_this_session)
+                ilt_block = ilt_session_dict[summary.usage_id]
+
+                deadline = 0 if not ilt_block.deadline else ilt_block.deadline
+                within_deadline = False
+                if datetime.datetime.strptime(v['start_at'],
+                                              '%Y-%m-%dT%H:%M') - datetime.datetime.now() < datetime.timedelta(
+                    days=deadline):
+                    within_deadline = True
+
+                if seats_available > 0 and not within_deadline:
+                    course = modulestore().get_course(ilt_block.course_id)
+                    section_id = ilt_block.get_parent().parent.block_id
+                    chapter_id = ilt_block.get_parent().get_parent().parent.block_id
+                    url = reverse('courseware_section', args=[unicode(ilt_block.course_id), chapter_id, section_id])
+                    enrollment_url = reverse('xblock_handler', kwargs={
+                        'course_id': unicode(ilt_block.course_id),
+                        'usage_id': unicode(summary.usage_id),
+                        'handler': 'toggle_enrollment',
+                    }).rstrip('/')
+                    v.update({
+                        'key': k,
+                        'title': ilt_block.display_name,
+                        'url': url,
+                        'enrollment_url': enrollment_url,
+                        'course': course.display_name,
+                        'seats_available': seats_available,
+                    })
+                    open_ilt_sessions.append(v)
+
+    return JsonResponse({'ilt_sessions': ilt_sessions, 'open_ilt_sessions': open_ilt_sessions})

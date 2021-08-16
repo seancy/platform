@@ -12195,7 +12195,7 @@ msgstr "Keine Beschreibung verfügbar"
 
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"
-msgstr "Kapitel hinzufügen"
+msgstr "Zum Kalender hinzufügen"
 
 #~ msgid "Hiding from Students"
 #~ msgstr "Vor Teilnehmern verbergen"
@@ -12925,3 +12925,42 @@ msgstr "Das Feld Vorname darf nicht leer sein."
 #: lms/static/js/admin_panel/admin_panel.js:237
 msgid "Last Name field cannot be empty."
 msgstr "Das Feld Nachname darf nicht leer sein."
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "Enroll"
+msgstr "Einschreiben"
+
+#: lms/static/js/dashboard/ilt_calendar.js
+msgid "seat left"
+msgid_plural "seats left"
+msgstr[0] "Sitz frei"
+msgstr[1] "Sitze frei"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Accommodation Need"
+msgstr "Unterkunftsbedarf"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "accommodation, preferences, specific diet..."
+msgstr "Unterkunft, Vorlieben, besondere Ernährung ..."
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of one way"
+msgstr "Anzahl der Hinfahrten"
+
+#: lms/static/js/dashboard/ilt_calendar.js:724
+msgid "Number of return"
+msgstr "Anzahl der Rückgaben"
+
+#: lms/static/js/dashboard/ilt_calendar.js:763
+#: lms/static/js/dashboard/ilt_calendar.js:771
+msgid "ILT Enrollment"
+msgstr "ILT Anmeldung"
+
+#: lms/static/js/dashboard/ilt_calendar.js:764
+msgid "Enrollment succeeded."
+msgstr "Die Registrierung war erfolgreich."
+
+#: lms/static/js/dashboard/ilt_calendar.js:772
+msgid "Enrollment failed."
+msgstr "Die Registrierung ist fehlgeschlagen."

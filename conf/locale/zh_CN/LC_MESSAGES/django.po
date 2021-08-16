@@ -13824,7 +13824,7 @@ msgstr "您好"
 
 #: lms/templates/dashboard.html:143
 msgid "Welcome to your dashboard"
-msgstr ""
+msgstr "欢迎来到您的课程面板"
 
 #: lms/templates/dashboard.html:149
 msgid "completed courses"
@@ -28131,6 +28131,11 @@ msgstr ""
 "输入电子邮件地址和/或用户名，用逗号或换行符分隔。您不会收到退回邮件的通知，因此请仔细检查拼写。学员将会被注册到所选课程"
 "中，并将会收到相关的电子邮件通知。"
 
+#: XBlock: xblock-ilt
+#: xblock-ilt/ilt/static/html/ilt.html
+msgid "Add or modify the hotel of the learners enrolled in the selected session. Learners will be notified by email when the session is confirmed."
+msgstr "添加或修改所选课程中注册学员的酒店。课程确认后，学员将收到电子邮件通知。"
+
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Manage ILT sessions"
 msgstr "管理ILT课程"
@@ -28172,7 +28177,7 @@ msgid "Your request has been refused. You can make a new demand."
 msgstr "您的请求已被拒绝。您可以重新选择。"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "accommodation, preferences, specific diet ..."
+msgid "accommodation, preferences, specific diet..."
 msgstr "住宿，喜好，饮食偏好..."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
@@ -30139,3 +30144,15 @@ msgstr "这是一封自动生成的电子邮件，请不要回复。"
 #: lms/templates/emails/ilt_virtual_session_hourly_reminder_email_message.txt
 msgid "Your virtual training is about to start in approximately one hour."
 msgstr "您的线上培训将在大约一小时后开始。"
+
+#: lms/templates/dashboard.html:516
+msgid "Training Event"
+msgstr "培训活动"
+
+#: lms/templates/dashboard.html:527
+msgid "All sessions"
+msgstr "所有课程"
+
+#: lms/templates/dashboard.html:528
+msgid "My sessions"
+msgstr "我的课程"

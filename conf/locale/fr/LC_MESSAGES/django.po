@@ -30271,13 +30271,13 @@ msgstr "Votre demande a été refusée. Vous pouvez cependant faire une nouvelle
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
-msgid "accommodation, preferences, specific diet ..."
-msgstr "hébergement, préférence, régime spécifique…"
+msgid "accommodation, preferences, specific diet..."
+msgstr "hébergement, préférence, régime spécifique..."
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
 msgid "Enroll"
-msgstr "Inscrire"
+msgstr "S'inscrire"
 
 #: XBlock: xblock-ilt
 #: xblock-ilt/ilt/static/html/ilt.html
@@ -32668,3 +32668,15 @@ msgstr "minuscule"
 #: lms/templates/admin_panel/admin_panel.html:473
 msgid "punctuation"
 msgstr "ponctuation"
+
+#: lms/templates/dashboard.html:516
+msgid "Training Event"
+msgstr "Mes évènements de formation"
+
+#: lms/templates/dashboard.html:527
+msgid "All sessions"
+msgstr "Toutes les sessions"
+
+#: lms/templates/dashboard.html:528
+msgid "My sessions"
+msgstr "Mes sessions"

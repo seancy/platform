@@ -20290,15 +20290,15 @@ msgstr "Verfügbare Berichte"
 
 #: lms/templates/courseware/ilt_validation.html:96
 msgid "Accommodation Need"
-msgstr "Anfrage für die Anpassungen zur Barrierefreiheit"
+msgstr "Unterkunftsbedarf"
 
 #: lms/templates/courseware/ilt_validation.html:125
 msgid "Number of one way"
-msgstr "Anzahl der Plätze"
+msgstr "Anzahl der Hinfahrten"
 
 #: lms/templates/courseware/ilt_validation.html:132
 msgid "Number of return"
-msgstr "Anzahl der Rückerstattungen"
+msgstr "Anzahl der Rückgaben"
 
 #: lms/templates/courseware/ilt_validation.html:146
 msgid "Accept the demand"
@@ -27510,7 +27510,7 @@ msgstr "PRÄSENZTRAINING"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Add to calendar"
-msgstr "Zum Artikel hinzufügen"
+msgstr "Zum Kalender hinzufügen"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "CHOOSE A SESSION TO ENROLL"
@@ -27616,14 +27616,6 @@ msgstr "Plätze"
 msgid "Area/Region"
 msgstr "Bereich/Region"
 
-#  msgid "Accommodation Need"
-#  msgstr ""
-#  msgid "Comment"
-#  msgstr ""
-#  msgid "Number of one way"
-#  msgstr ""
-#  msgid "Number of return"
-#  msgstr ""
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Hotel Booked"
 msgstr "Gebuchtes Hotel"
@@ -27645,8 +27637,8 @@ msgid "Your request has been refused. You can make a new demand."
 msgstr "Ihre Anfrage wurde abgelehnt. Sie können eine neue Anfrage übermitteln."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "accommodation, preferences, specific diet ..."
-msgstr "Unterkunft, besondere Wünsche, kulinarische Präferenzen ..."
+msgid "accommodation, preferences, specific diet..."
+msgstr "Unterkunft, Vorlieben, besondere Ernährung ..."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Enroll"
@@ -29781,3 +29773,15 @@ msgstr "Kleinbuchstabe"
 #: lms/templates/admin_panel/admin_panel.html:473
 msgid "punctuation"
 msgstr "Satzzeichen"
+
+#: lms/templates/dashboard.html:516
+msgid "Training Event"
+msgstr "Fortbildungsveranstaltung"
+
+#: lms/templates/dashboard.html:527
+msgid "All sessions"
+msgstr "Alle Sitzungen"
+
+#: lms/templates/dashboard.html:528
+msgid "My sessions"
+msgstr "Meine Sitzungen"

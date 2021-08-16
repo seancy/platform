@@ -22161,7 +22161,7 @@ msgstr "Número de una vía"
 
 #: lms/templates/courseware/ilt_validation.html:132
 msgid "Number of return"
-msgstr "Número de retorno"
+msgstr "Número de devolución"
 
 #: lms/templates/courseware/ilt_validation.html:146
 msgid "Accept the demand"
@@ -30016,14 +30016,6 @@ msgstr "Aberturas"
 msgid "Area/Region"
 msgstr "Área/Región"
 
-#  msgid "Accommodation Need"
-#  msgstr ""
-#  msgid "Comment"
-#  msgstr ""
-#  msgid "Number of one way"
-#  msgstr ""
-#  msgid "Number of return"
-#  msgstr ""
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Hotel Booked"
 msgstr "Hotel reservado"
@@ -30045,7 +30037,7 @@ msgid "Your request has been refused. You can make a new demand."
 msgstr "Su solicitud ha sido rechazada. Puedes hacer una nueva demanda."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "accommodation, preferences, specific diet ..."
+msgid "accommodation, preferences, specific diet..."
 msgstr "alojamiento, preferencias, dieta específica..."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
@@ -32253,3 +32245,15 @@ msgstr "minúscula"
 #: lms/templates/admin_panel/admin_panel.html:473
 msgid "punctuation"
 msgstr "signo de puntuación"
+
+#: lms/templates/dashboard.html:516
+msgid "Training Event"
+msgstr "Evento de formación"
+
+#: lms/templates/dashboard.html:527
+msgid "All sessions"
+msgstr "Todas las sesiones"
+
+#: lms/templates/dashboard.html:528
+msgid "My sessions"
+msgstr "Mis sesiones"

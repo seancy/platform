@@ -22004,11 +22004,11 @@ msgstr "Necessidades de Acomodação"
 
 #: lms/templates/courseware/ilt_validation.html:125
 msgid "Number of one way"
-msgstr "Número de Lugares"
+msgstr "Número de ida"
 
 #: lms/templates/courseware/ilt_validation.html:132
 msgid "Number of return"
-msgstr "Número de reembolsos"
+msgstr "Número de devolução"
 
 #: lms/templates/courseware/ilt_validation.html:146
 msgid "Accept the demand"
@@ -29676,7 +29676,7 @@ msgstr "TREINAMENTO LIDERADO POR INSTRUTOR"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Add to calendar"
-msgstr "Adicionar artigo"
+msgstr "Adicionar ao calendário"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "CHOOSE A SESSION TO ENROLL"
@@ -29787,14 +29787,6 @@ msgstr "Assentos"
 msgid "Area/Region"
 msgstr "Área/Região"
 
-#  msgid "Accommodation Need"
-#  msgstr ""
-#  msgid "Comment"
-#  msgstr ""
-#  msgid "Number of one way"
-#  msgstr ""
-#  msgid "Number of return"
-#  msgstr ""
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Hotel Booked"
 msgstr "Hotel Agendado"
@@ -29816,7 +29808,7 @@ msgid "Your request has been refused. You can make a new demand."
 msgstr "Sua solicitação foi recusada. Você pode fazer uma nova demanda."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-msgid "accommodation, preferences, specific diet ..."
+msgid "accommodation, preferences, specific diet..."
 msgstr "acomodação, preferências, dieta específica"
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
@@ -31614,3 +31606,15 @@ msgstr "minúscula"
 #: lms/templates/admin_panel/admin_panel.html:473
 msgid "punctuation"
 msgstr "pontuação"
+
+#: lms/templates/dashboard.html:516
+msgid "Training Event"
+msgstr "Evento de formação"
+
+#: lms/templates/dashboard.html:527
+msgid "All sessions"
+msgstr "Todas as sessões"
+
+#: lms/templates/dashboard.html:528
+msgid "My sessions"
+msgstr "Minhas sessões"
