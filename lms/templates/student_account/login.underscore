@@ -77,7 +77,7 @@
         <div class="email-login-link"><a href="#" class="email-login"><%- gettext("Sign in using email") %></a></div>
     </div>
 </article>
-<% if ( context.createAccountOption !== false && !context.syncLearnerProfileData && !(context.enterpriseName && context.currentProvider) ) { %>
+<% if ( context.allowRegistrationForm !== false && !context.syncLearnerProfileData && !(context.enterpriseName && context.currentProvider) ) { %>
 <div class="toggle-form">
     <span class="text"><%- gettext("First time here?") %></span>
     <a href="#login" class="form-toggle" data-type="register"><%- gettext("Create an Account.") %></a>
