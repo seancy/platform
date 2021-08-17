@@ -151,12 +151,22 @@ def login_and_registration_form(request, initial_mode="login"):
         initial_mode (string): Either "login" or "register".
 
     """
+    # for the SSO workflow: rely only on ALLOW_PUBLIC_ACCOUNT_CREATION
     account_creation_allowed = configuration_helpers.get_value(
         'ALLOW_PUBLIC_ACCOUNT_CREATION',
         settings.FEATURES.get('ALLOW_PUBLIC_ACCOUNT_CREATION', True)
     )
-    # Only forbid `register page` when `ALLOW_PUBLIC_ACCOUNT_CREATION` is False
-    if not account_creation_allowed and r'register' in initial_mode:
+    # for the login/register toggle: rely only on a new variable ALLOW_REGISTRATION_FORM
+    allow_registration_form = configuration_helpers.get_value(
+        'ALLOW_REGISTRATION_FORM',
+        settings.FEATURES.get('ALLOW_REGISTRATION_FORM', False)
+    )
+    """
+        when serving '/register':
+        if ALLOW_PUBLIC_ACCOUNT_CREATION or ALLOW_REGISTRATION_FORM: OK
+        else: redirect to '/login'
+    """
+    if not account_creation_allowed and not allow_registration_form and r'register' in initial_mode:
         return redirect(reverse('signin_user'))
 
     custom_third_party_domain = configuration_helpers.get_value('REDIRECT_THIRD_PART_DOMAIN', None)
@@ -242,7 +252,8 @@ def login_and_registration_form(request, initial_mode="login"):
             'login_form_desc': json.loads(form_descriptions['login']),
             'registration_form_desc': json.loads(form_descriptions['registration']),
             'password_reset_form_desc': json.loads(form_descriptions['password_reset']),
-            'account_creation_allowed': account_creation_allowed
+            'account_creation_allowed': account_creation_allowed,
+            'allow_registration_form': allow_registration_form
         },
         'login_redirect_url': redirect_to,  # This gets added to the query string of the "Sign In" button in header
         'responsive': True,
