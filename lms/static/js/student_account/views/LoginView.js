@@ -77,6 +77,7 @@
                         hasSecondaryProviders: this.hasSecondaryProviders,
                         platformName: this.platformName,
                         createAccountOption: this.createAccountOption,
+                        allowRegistrationForm: this.allowRegistrationForm,
                         pipelineUserDetails: this.pipelineUserDetails,
                         enterpriseName: this.enterpriseName,
                         static_url: this.static_url

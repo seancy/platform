@@ -137,6 +137,7 @@
                             supportURL: this.supportURL,
                             passwordResetSupportUrl: this.passwordResetSupportUrl,
                             createAccountOption: this.createAccountOption,
+                            allowRegistrationForm: this.allowRegistrationForm,
                             hideAuthWarnings: this.hideAuthWarnings,
                             pipelineUserDetails: this.pipelineUserDetails,
                             enterpriseName: this.enterpriseName,
