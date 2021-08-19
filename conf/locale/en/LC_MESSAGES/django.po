@@ -27072,7 +27072,7 @@ msgid "No upcoming sessions planned"
 msgstr ""
 
 #: lms/templates/dashboard.html:529
-msgid "Sign up for an ILT session."
+msgid "Sign up for a training event."
 msgstr ""
 
 #: lms/templates/dashboard.html:530
@@ -28187,7 +28187,7 @@ msgid "punctuation"
 msgstr ""
 
 #: lms/templates/dashboard.html:516
-msgid "Training Event"
+msgid "Training Events"
 msgstr ""
 
 #: lms/templates/dashboard.html:527
@@ -28196,4 +28196,8 @@ msgstr ""
 
 #: lms/templates/dashboard.html:528
 msgid "My sessions"
+msgstr ""
+
+#: lms/templates/dashboard.html:545
+msgid "There are currently no upcoming training events for the courses you are enrolled in."
 msgstr ""

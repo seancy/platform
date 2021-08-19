@@ -12190,8 +12190,8 @@ msgstr ""
 "Die Anzahl der zu exportierenden Zertifikate überschreitet 1.000. Bitte grenzen Sie Ihre Suche ein."
 
 #: lms/templates/dashboard.html
-msgid "No sessions available"
-msgstr "Keine Beschreibung verfügbar"
+msgid "There are no training events scheduled for this day."
+msgstr "Für diesen Tag sind keine Fortbildungsveranstaltungen geplant."
 
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"

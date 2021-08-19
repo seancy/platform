@@ -12247,8 +12247,8 @@ msgid ""
 msgstr ""
 
 #: lms/templates/dashboard.html
-msgid "No sessions available"
-msgstr ""
+msgid "There are no training events scheduled for this day."
+msgstr "Non ci sono eventi formativi in programma per questo giorno."
 
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"

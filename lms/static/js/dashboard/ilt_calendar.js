@@ -323,7 +323,7 @@
             location_id = createElement('span', 'ilt-event-location-id', ev.location_id),
             location_id_icon = createElement('i', 'far fa-map-marker-alt', ''),
             event_day = createElement('section', 'event-day', ''),
-            event_day_name = createElement('div', 'event-day-name', day.format('ddd')),
+            event_day_name = createElement('div', 'event-day-name', day.format('MMM')),
             event_day_number = createElement('h2', 'event-day-number', day.date()),
             regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 
@@ -407,7 +407,7 @@
         $('#ilt-calendar').find('.swiper-pagination').hide();
       }
     } else {
-      var empty_event = createElement('h3', 'ilt-empty-event', gettext('No sessions available'));
+      var empty_event = createElement('h3', 'ilt-empty-event', gettext('There are no training events scheduled for this day.'));
       event_list.appendChild(empty_event);
       $(".upcoming-session").addClass("hidden");
       $('.ilt-calendar-wrapper').find('.swiper-button-next').addClass("swiper-button-disabled");
@@ -456,7 +456,7 @@
               location_id = createElement('span', 'ilt-event-location-id', ev.location_id),
               location_id_icon = createElement('i', 'far fa-map-marker-alt', ''),
               event_day = createElement('section', 'event-day', ''),
-              event_day_name = createElement('div', 'event-day-name', clone_event_date.format('ddd')),
+              event_day_name = createElement('div', 'event-day-name', clone_event_date.format('MMM')),
               event_day_number = createElement('h2', 'event-day-number', clone_event_date.date()),
               regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 

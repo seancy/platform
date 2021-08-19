@@ -30291,19 +30291,19 @@ msgstr "Yakında"
 
 #: lms/templates/dashboard.html:528
 msgid "No upcoming sessions planned"
-msgstr ""
+msgstr "Yaklaşan oturum planlanmadı"
 
 #: lms/templates/dashboard.html:529
-msgid "Sign up for an ILT session."
-msgstr ""
+msgid "Sign up for a training event."
+msgstr "Bir eğitim etkinliğine kaydolun."
 
 #: lms/templates/dashboard.html:530
 msgid "It will appear in your calendar."
-msgstr ""
+msgstr "Takviminizde görünecektir."
 
 #: lms/templates/dashboard.html:531
 msgid "Let's start"
-msgstr ""
+msgstr "Hadi başlayalım"
 
 #, fuzzy
 msgid "Show more"
@@ -31671,3 +31671,7 @@ msgstr "Yetkilendir"
 
 #~ msgid "LMS"
 #~ msgstr "LMS"
+
+#: lms/templates/dashboard.html:545
+msgid "There are currently no upcoming training events for the courses you are enrolled in."
+msgstr "Şu anda kayıtlı olduğunuz kurslar için yaklaşan bir eğitim etkinliği bulunmamaktadır."
