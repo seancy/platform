@@ -29129,12 +29129,12 @@ msgid "No upcoming sessions planned"
 msgstr "没有计划的课程"
 
 #: lms/templates/dashboard.html
-msgid "Sign up for an ILT session."
-msgstr "注册一个ILT课程"
+msgid "Sign up for a training event."
+msgstr "注册一个培训活动。"
 
 #: lms/templates/dashboard.html
 msgid "It will appear in your calendar."
-msgstr "它将出现在你的日历中"
+msgstr "它会显示在您的日历中。"
 
 #: lms/templates/dashboard.html
 msgid "Let's start"
@@ -30146,7 +30146,7 @@ msgid "Your virtual training is about to start in approximately one hour."
 msgstr "您的线上培训将在大约一小时后开始。"
 
 #: lms/templates/dashboard.html:516
-msgid "Training Event"
+msgid "Training Events"
 msgstr "培训活动"
 
 #: lms/templates/dashboard.html:527
@@ -30156,3 +30156,7 @@ msgstr "所有课程"
 #: lms/templates/dashboard.html:528
 msgid "My sessions"
 msgstr "我的课程"
+
+#: lms/templates/dashboard.html:545
+msgid "There are currently no upcoming training events for the courses you are enrolled in."
+msgstr "在您当前注册的课程中无即将举行的培训活动。"

@@ -13023,8 +13023,8 @@ msgid "The number of certificates to export exceeds {upper_bound}. Please narrow
 msgstr "O número de certificados a serem exportados ultrapassa {upper_bound}. Restrinja sua seleção."
 
 #: lms/templates/dashboard.html
-msgid "No sessions available"
-msgstr "Sem sessão disponível"
+msgid "There are no training events scheduled for this day."
+msgstr "Não há eventos de formação agendados para este dia."
 
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"

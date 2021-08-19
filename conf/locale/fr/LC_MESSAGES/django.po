@@ -31804,8 +31804,8 @@ msgid "No upcoming sessions planned"
 msgstr "Aucune session à venir programmée"
 
 #: lms/templates/dashboard.html
-msgid "Sign up for an ILT session."
-msgstr "Inscrivez-vous à une session présentielle."
+msgid "Sign up for a training event."
+msgstr "Inscrivez-vous à un événement de formation."
 
 #: lms/templates/dashboard.html
 msgid "It will appear in your calendar."
@@ -32670,7 +32670,7 @@ msgid "punctuation"
 msgstr "ponctuation"
 
 #: lms/templates/dashboard.html:516
-msgid "Training Event"
+msgid "Training Events"
 msgstr "Mes évènements de formation"
 
 #: lms/templates/dashboard.html:527
@@ -32680,3 +32680,7 @@ msgstr "Toutes les sessions"
 #: lms/templates/dashboard.html:528
 msgid "My sessions"
 msgstr "Mes sessions"
+
+#: lms/templates/dashboard.html:545
+msgid "There are currently no upcoming training events for the courses you are enrolled in."
+msgstr "Il n’y a actuellement aucun événement de formation à venir pour les cours auxquels vous êtes inscrit."

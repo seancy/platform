@@ -12459,8 +12459,8 @@ msgid "The number of certificates to export exceeds {upper_bound}. Please narrow
 msgstr "要导出的证书数量超过了 {upper_bound}，请缩小查找范围。"
 
 #: lms/templates/dashboard.html
-msgid "No sessions available"
-msgstr "没有注册课程"
+msgid "There are no training events scheduled for this day."
+msgstr "当前日期未安排培训活动。"
 
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "Add to Calendar"
