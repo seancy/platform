@@ -124,7 +124,7 @@
            */
           visual: false,
           //, codemirror
-          plugins: "codesample, code, lists, image, textcolor, link",
+          plugins: "codesample, code, lists, image, textcolor, link, table",
           /*codemirror: {
             path: baseUrl + "/js/vendor"
           },*/
@@ -134,7 +134,7 @@
           We may want to add "styleselect" when we collect all styles used throughout the LMS
            */
           toolbar: "formatselect fontselect bold italic underline forecolor codesample " +
-            "alignleft aligncenter alignright alignjustify " +
+            "table alignleft aligncenter alignright alignjustify " +
             "bullist numlist outdent indent blockquote link unlink " +
             ((this.new_image_modal ? 'insertImage' : 'image') + " code"),
           toolbar_mode: 'wrap',
