@@ -5022,11 +5022,10 @@ msgid ""
 msgstr "Bu ders için iadenin son günü geçti, bu yüzden iade alamayacaksınız."
 
 #: lms/static/js/discovery/views/search_form.js:47
-#, fuzzy, javascript-format
 msgid "%s course found"
 msgid_plural "%s courses found"
-msgstr[0] "ders no"
-msgstr[1] "ders no"
+msgstr[0] "%s bulunan kurslar"
+msgstr[1] "%s bulunan kurslar"
 
 #: lms/static/js/discovery/views/search_form.js:56
 #, javascript-format
@@ -10198,7 +10197,7 @@ msgstr ""
 #: lms/static/js/triboo_analytics/ILTReport.js
 #: lms/static/js/triboo_analytics/LearnerReport.js
 msgid "Please, note that these reports are not live. Last update:"
-msgstr ""
+msgstr "Lütfen bu raporların yayında olmadığını unutmayın. Son güncelleme:"
 
 #: lms/static/js/triboo_analytics/CourseReport.js
 msgid "Summary"
@@ -10241,28 +10240,25 @@ msgstr ""
 
 #: common/static/bundles/LearnerReport.js:140
 #: lms/static/js/triboo_analytics/LearnerReport.js:58
-#, fuzzy
 msgid "Learner Report"
-msgstr "Bildirimi geri al"
+msgstr "Öğrenci raporu"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
-#, fuzzy
 msgid "Course Report"
 msgstr "Ders Başlangıcı"
 
 #: common/static/bundles/ILTReport.js:546
 #: lms/static/js/triboo_analytics/ILTReport.js:36
-#, fuzzy
 msgid "ILT Report"
-msgstr "Bildir"
+msgstr "ILT Raporu"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Global Report"
-msgstr ""
+msgstr "ILT Küresel Raporu"
 
 #: lms/static/js/triboo_analytics/ILTReport.js
 msgid "ILT Learner Report"
-msgstr ""
+msgstr "ILT Öğrenci Raporu"
 
 #: lms/static/js/triboo_analytics/ILTGlobalReport.js
 #: lms/static/js/triboo_analytics/ILTLearnerReport.js
@@ -10324,7 +10320,7 @@ msgstr "Bildirimi geri al"
 
 #: lms/static/js/triboo_analytics/BaseReport.js
 msgid "Total: * rows"
-msgstr ""
+msgstr "Toplam: * sira"
 
 #: lms/static/js/triboo_analytics/LearnerReport.js
 #, fuzzy
@@ -12568,13 +12564,12 @@ msgid "All countries"
 msgstr "Tüm üniteler"
 
 #: lms/templates/discovery/facet_option.underscore
-#, fuzzy
 msgid "France"
-msgstr "İptal"
+msgstr "Fransa"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Romania"
-msgstr ""
+msgstr "Romanya"
 
 #: lms/templates/discovery/facet_option.underscore
 msgid "Archived"
@@ -12754,9 +12749,8 @@ msgid "There are no training events scheduled for this day."
 msgstr "Bu ders için e-posta içerik geçmişi alınırken bir hata oluştu."
 
 #: lms/static/js/dashboard/ilt_calendar.js
-#, fuzzy
 msgid "Add to Calendar"
-msgstr "Bölüm Ekle"
+msgstr "Takvime ekle"
 
 #: cms/static/js/views/settings/main.js
 #, fuzzy
@@ -12864,35 +12858,32 @@ msgstr ""
 #: lms/static/js/external_catalog/CrehanaCoursesContainer.js
 #: lms/static/js/external_catalog/CourseContainer.js
 #: lms/static/js/discovery/views/sort_button.js
-#, fuzzy
 msgid "Sort by"
-msgstr "Sıralama şekli"
+msgstr "Göre sırala"
 
 #: lms/static/js/external_catalog/CrehanaCoursesContainer.js
 #: lms/static/js/external_catalog/CourseContainer.js
 #: lms/static/js/discovery/views/sort_button.js
 msgid "Most Recent"
-msgstr ""
+msgstr "En yeni"
 
 #: lms/static/js/external_catalog/CrehanaCoursesContainer.js
 #: lms/static/js/external_catalog/CourseContainer.js
 #: lms/static/js/discovery/views/sort_button.js
 msgid "Oldest"
-msgstr ""
+msgstr "En eski"
 
 #: lms/static/js/external_catalog/CrehanaCoursesContainer.js
 #: lms/static/js/external_catalog/CourseContainer.js
 #: lms/static/js/discovery/views/sort_button.js
-#, fuzzy
 msgid "Title A-Z"
-msgstr "Unvan"
+msgstr "Başlık A'dan Z'ye"
 
 #: lms/static/js/external_catalog/CrehanaCoursesContainer.js
 #: lms/static/js/external_catalog/CourseContainer.js
 #: lms/static/js/discovery/views/sort_button.js
-#, fuzzy
 msgid "Title Z-A"
-msgstr "Unvan"
+msgstr "Başlık Z-A"
 
 # cms/static/js/views/components/components.json
 msgid "Add content to your course, such as text, video, SCORM module, PDF..."
@@ -13345,33 +13336,30 @@ msgid "Last Name field cannot be empty."
 msgstr ""
 
 #: lms/static/js/dashboard/ilt_calendar.js
-#, fuzzy
 msgid "Enroll"
-msgstr "Kayıt olundu"
+msgstr "Kaydolun"
 
 #: lms/static/js/dashboard/ilt_calendar.js
 msgid "seat left"
 msgid_plural "seats left"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Koltuklar sol"
+msgstr[1] "Koltuklar sol"
 
 #: lms/static/js/dashboard/ilt_calendar.js:724
 msgid "Accommodation Need"
-msgstr ""
+msgstr "Konaklama İhtiyacı"
 
 #: lms/static/js/dashboard/ilt_calendar.js:724
 msgid "accommodation, preferences, specific diet..."
-msgstr ""
+msgstr "konaklama, tercihler, özel diyet ..."
 
 #: lms/static/js/dashboard/ilt_calendar.js:724
-#, fuzzy
 msgid "Number of one way"
-msgstr "Bırakılabilen Görev Sayısı"
+msgstr "Tek yön numarası"
 
 #: lms/static/js/dashboard/ilt_calendar.js:724
-#, fuzzy
 msgid "Number of return"
-msgstr "Öğrenci Sayısı"
+msgstr "Dönüş sayısı"
 
 #: lms/static/js/dashboard/ilt_calendar.js:763
 #: lms/static/js/dashboard/ilt_calendar.js:771

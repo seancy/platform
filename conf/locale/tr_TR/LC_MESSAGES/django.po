@@ -11035,8 +11035,8 @@ msgstr "/"
 #, python-format
 msgid "Total: %(nb_rows)s row"
 msgid_plural "Total: %(nb_rows)s rows"
-msgstr[0] "Toplam: %(nb_rows)s satır"
-msgstr[1] "Toplam: %(nb_rows)s satır"
+msgstr[0] "Toplam: %(nb_rows)s sira"
+msgstr[1] "Toplam: %(nb_rows)s sira"
 
 #: lms/templates/wiki/article.html:30
 msgid "Last modified:"
@@ -21823,11 +21823,11 @@ msgstr "Konaklama İhtiyacı"
 
 #: lms/templates/courseware/ilt_validation.html:125
 msgid "Number of one way"
-msgstr "Tek yön sayısı"
+msgstr "Tek yön numarası"
 
 #: lms/templates/courseware/ilt_validation.html:132
 msgid "Number of return"
-msgstr "İadelerin sayısı"
+msgstr "Dönüş sayısı"
 
 #: lms/templates/courseware/ilt_validation.html:146
 msgid "Accept the demand"
@@ -27067,7 +27067,7 @@ msgstr "indirim veya aktivasyon kodu"
 
 #: lms/templates/shoppingcart/shopping_cart.html:139
 msgid "Apply"
-msgstr "Uygula"
+msgstr "Uygulamak"
 
 #: lms/templates/shoppingcart/shopping_cart.html:144
 msgid "code has been applied"
@@ -27380,12 +27380,12 @@ msgstr "Derste Geçirilen Zaman Raporu"
 #: lms/templates/triboo_analytics/banner_nav.html:37
 #: lms/templates/triboo_analytics/banner_nav.html:39
 msgid "Learner Report"
-msgstr "Öğrenci Raporu"
+msgstr "Öğrenci raporu"
 
 #: lms/templates/triboo_analytics/banner_nav.html:43
 #: lms/templates/triboo_analytics/banner_nav.html:45
 msgid "ILT Report"
-msgstr "ILR Raporları"
+msgstr "ILT Raporu"
 
 #: lms/templates/triboo_analytics/customized.html:18
 msgid "Analytics - Customized Report"
@@ -27460,7 +27460,7 @@ msgstr[1] "Gönderiler"
 #: lms/templates/triboo_analytics/my_transcript.html:292
 #: lms/templates/triboo_analytics/transcript.html:84
 msgid "Please, note that these reports are not live. Last update:"
-msgstr "Lütfen bu raporların canlı olmadığını unutmayın. Son güncellenme:"
+msgstr "Lütfen bu raporların yayında olmadığını unutmayın. Son güncelleme:"
 
 #: lms/templates/triboo_analytics/course.html:124
 #: lms/templates/triboo_analytics/course.html:130
@@ -27482,12 +27482,12 @@ msgstr "Analitikler - ILT Raporu"
 #: lms/templates/triboo_analytics/ilt.html:40
 #: lms/templates/triboo_analytics/ilt.html:52
 msgid "ILT Global Report"
-msgstr "ILR Global Raporu"
+msgstr "ILT Küresel Raporu"
 
 #: lms/templates/triboo_analytics/ilt.html:41
 #: lms/templates/triboo_analytics/ilt.html:53
 msgid "ILT Learner Report"
-msgstr "ILR Öğrenci Raporu"
+msgstr "ILT Öğrenci Raporu"
 
 #: lms/templates/triboo_analytics/learner.html:10
 msgid "Analytics - Learner Report"
@@ -29654,9 +29654,8 @@ msgid "Your request has been refused. You can make a new demand."
 msgstr "Talebiniz reddedildi. Yeni bir talepte bulunabilirsiniz."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
-#, fuzzy
 msgid "accommodation, preferences, specific diet..."
-msgstr "Konaklama, tercihler, belirli beslenme düzeni ..."
+msgstr "konaklama, tercihler, özel diyet ..."
 
 #: XBlock: xblock-ilt xblock-ilt/ilt/static/html/ilt.html
 msgid "Enroll"
@@ -30393,13 +30392,12 @@ msgid "No upcoming sessions planned"
 msgstr "Planlanmış yaklaşan oturum yok"
 
 #: lms/templates/dashboard.html:529
-#, fuzzy
 msgid "Sign up for a training event."
-msgstr "ILT oturumuna kaydolun."
+msgstr "Bir ILT oturumu için kaydolun."
 
 #: lms/templates/dashboard.html:530
 msgid "It will appear in your calendar."
-msgstr "Takviminizde görünür."
+msgstr "Takviminizde görünecektir."
 
 #: lms/templates/dashboard.html:531
 msgid "Let's start"
@@ -31672,17 +31670,15 @@ msgstr "Eğitim"
 
 #: lms/templates/dashboard.html:516
 msgid "Training Events"
-msgstr ""
+msgstr "Eğitim etkinlikleri"
 
 #: lms/templates/dashboard.html:527
-#, fuzzy
 msgid "All sessions"
-msgstr "Tüm Tartışmalar"
+msgstr "Tüm oturumlar"
 
 #: lms/templates/dashboard.html:528
-#, fuzzy
 msgid "My sessions"
-msgstr "ILT oturumlarını yönet"
+msgstr "Seanslarım"
 
 #: lms/templates/dashboard.html:545
 msgid ""
