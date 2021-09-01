@@ -14,7 +14,15 @@
       dump_js_escaped_json, js_escaped_string
   )
   from openedx.core.djangolib.markup import HTML, Text
-%>
+  from django.conf import settings
+  import requests
+  %>
+  
+  <%!
+  anderspinks_boards_list = []
+  anderspinks_boards_list  = requests.get(settings.LMS_ROOT_URL + "/anderspink_boards")
+  anderspinks_boards_list = anderspinks_boards_list.json()["board_data"]["boards"]
+  %>
 
 <%block name="header_extras">
 % for template_name in ["basic-modal", "modal-button", "upload-dialog", "license-selector",\
@@ -25,6 +33,7 @@
   </script>
 % endfor
 </%block>
+
 
 <%block name="jsextra">
   <link rel="stylesheet" type="text/css" href="${static.url('js/vendor/timepicker/jquery.timepicker.css')}" />
@@ -558,6 +567,21 @@ CMS.URL.UPLOAD_ASSET = '${upload_asset_url | n, js_escaped_string}'
                 <span class="question-mark-wrapper"
                       data-title='${_("Identify the category of your course to assist users to filter courses with ease on the catalog and to better orient them during their training session.")}'></span>
               </li>
+              % if len(anderspinks_boards_list) > 0:
+              <li class="field" id="field-anderspink-boards">
+                <label for="anderspink-boards">${_("Anderspink Board")}</label>
+                <span class="tip tip-stacked">${_("Add Anderspink boards to the course.")}</span>
+                <select id="anderspink-boards" style="max-width: 200px;">
+                  <option value=""></option>
+                  % for board in anderspinks_boards_list:
+                  <option value="${board['value']}">${board["text"][0:50]}</option>
+                  % endfor
+                 
+                </select>
+                <span class="question-mark-wrapper"
+                data-title='${_("Add external article board")}'></span>
+              </li>
+              % endif
               <li class="field" id="field-course-vendor">
                 <label for="course-vendor">${_("Course Tags")}</label>
                 <span class="tip tip-stacked">${_("Add course tags to help users to find courses easily.")}</span>

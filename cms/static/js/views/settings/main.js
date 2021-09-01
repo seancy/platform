@@ -40,6 +40,7 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    this.$el.find('#course-category').val(this.model.get('course_category'));
                    //this.$el.find('#course-country').val(this.model.get('course_country'));
                    this.$el.find('#course-language').val(this.model.get('language'));
+                   this.$el.find('#anderspink-boards').val(this.model.get('anderspink_boards'));
                    this.$el.find('#catalog-visibility').val(this.model.get('catalog_visibility'));
                    this.$el.find('#course-organization').text(this.model.get('org'));
                    this.$el.find('#course-number').text(this.model.get('course_id'));
@@ -379,7 +380,8 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    course_order_decrease: 'course-order-decrease',
                    course_mandatory_enabled: 'course-mandatory-enabled',
                    course_new_course_enabled: 'course-new-course-enabled',
-                   catalog_visibility: 'catalog-visibility'
+                   catalog_visibility: 'catalog-visibility',
+                   anderspink_boards : 'anderspink-boards'
                },
 
                addLearningFields: function() {
@@ -664,6 +666,7 @@ define(['common/js/components/views/feedback_prompt', 'js/views/validation', 'co
                    case 'course-effort':
                    case 'course-subtitle':
                    case 'course-short-description':
+                   case 'anderspink-boards':
                        this.setField(event);
                        break;
                    case 'course-overview':

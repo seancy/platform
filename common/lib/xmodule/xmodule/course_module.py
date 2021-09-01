@@ -964,6 +964,13 @@ class CourseFields(object):
         scope=Scope.settings
     )
 
+    anderspink_boards = String(
+        display_name=_("Anderspink Boards"),
+        help=_("Add article from anderspink boards to a course"),
+        default="",
+        scope=Scope.settings
+    )
+
 
 class CourseModule(CourseFields, SequenceModule):  # pylint: disable=abstract-method
     """

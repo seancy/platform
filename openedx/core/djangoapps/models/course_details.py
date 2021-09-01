@@ -89,6 +89,7 @@ class CourseDetails(object):
         self.display_coursenumber = ''
         self.catalog_visibility = 'both'
         self.is_new = False
+        self.anderspink_boards = None
 
     @classmethod
     def fetch_about_attribute(cls, course_key, attribute):
@@ -151,6 +152,7 @@ class CourseDetails(object):
         course_details.display_coursenumber = course_descriptor.display_coursenumber
         course_details.catalog_visibility = course_descriptor.catalog_visibility
         course_details.is_new = course_descriptor.is_new
+        course_details.anderspink_boards = course_descriptor.anderspink_boards
 
         # Default course license is "All Rights Reserved"
         course_details.license = getattr(course_descriptor, "license", "all-rights-reserved")
@@ -387,6 +389,10 @@ class CourseDetails(object):
 
         if 'title' in jsondict and jsondict['title'] and jsondict['title'] != descriptor.display_name:
             descriptor.display_name = jsondict['title']
+            dirty = True
+        
+        if 'anderspink_boards' in  jsondict and jsondict['anderspink_boards'] != descriptor.anderspink_boards:
+            descriptor.anderspink_boards = jsondict['anderspink_boards']
             dirty = True
 
         if dirty:

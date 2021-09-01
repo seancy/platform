@@ -81,7 +81,7 @@ module.exports = Merge.smart({
 
         //AndersPink Integration
         AndersPinkCatalogArticles : ['babel-polyfill', './lms/static/js/external_catalog/AndersPinkCatalog/AndersPinkCatalogArticles.jsx'],
-
+        AnderspinkBoardArticles :['babel-polyfill', './lms/static/js/external_catalog/AndersPinkCatalog/AnderspinkBoardArticles.jsx'],
         // Features
         CourseGoals: ['babel-polyfill', './openedx/features/course_experience/static/course_experience/js/CourseGoals.js'],
         CourseHome: ['babel-polyfill', './openedx/features/course_experience/static/course_experience/js/CourseHome.js'],

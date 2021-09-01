@@ -14,3 +14,7 @@ from .anderspink.articles import (
     Data as AndersPinkData,
     SearchPage as AndersPinkSearchPage
 )
+
+from .anderspink.boards import (
+   BoardData as AnderspinkBoards
+)

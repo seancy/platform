@@ -9,5 +9,6 @@ from .crehana import (
 )
 from .anders_pink import (
     AndersPinkBriefing,
-    AndersPinkArticle
+    AndersPinkArticle,
+    AndersPinkBoard
 )

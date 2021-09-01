@@ -77,7 +77,7 @@ export function AnderspinkArticleCard ({image, reading_time, language, author, d
                 <div className="card-image-wrapper" style={{backgroundImage: 'url(' + image + ')'}}>
                 </div>
             <div className="extra">
-                <ul className="tags">
+                <ul style={{padding : 0}} className="tags">
                      <li className={'active_anderspink'} >{gettext("ANDERS PINK")}</li>
                 </ul>
                 {author && 

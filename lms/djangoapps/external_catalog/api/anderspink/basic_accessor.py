@@ -1,12 +1,12 @@
-
 class AndersPinkRequestException(Exception):
     pass
 
 
 class BasicBriefingAccessor(object):
-    def __init__(self, api_key, base_api_url, api_time):
+    def __init__(self, api_key, base_api_url, api_time, is_board_enabled):
         self._base_api_url = base_api_url
         self._api_time = api_time
+        self._is_board_enabled = is_board_enabled
         self._headers = {
             'X-Api-Key': api_key,
         }

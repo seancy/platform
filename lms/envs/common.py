@@ -2376,6 +2376,8 @@ INSTALLED_APPS = [
 
     # edflex-xblock
     'edflex',
+    'board_tab'
+
 ]
 
 ######################### CSRF #########################################

@@ -48,7 +48,8 @@ define(['backbone', 'underscore', 'gettext', 'js/models/validation_helpers', 'js
                 enrollment_learning_groups: [],
                 display_coursenumber: '',
                 catalog_visibility: '',
-                is_new: false
+                is_new: false,
+                anderspink_boards: ''
             },
 
             validate: function(newattrs) {

@@ -63,6 +63,7 @@ from student import views as student_views
 from student_account import views as student_account_views
 from track import views as track_views
 from util import views as util_views
+from board_tab.views import board
 
 if settings.DEBUG or settings.FEATURES.get('ENABLE_DJANGO_ADMIN_SITE'):
     django_autodiscover()
@@ -347,7 +348,8 @@ urlpatterns += [
      # # view of Anderspink catalog with different course resources
     url(r'^anderspink_catalog$', external_catalog_views.AndersPinkSearchPage.as_view(), name='anderspink_catalog_page'),
     url(r'^anderspink_catalog/data$', external_catalog_views.AndersPinkData.as_view(), name='anderspink_catalog_data'),
-
+    url(r'^anderspink_boards$', external_catalog_views.AnderspinkBoards.as_view(), name='anderspink_boards'),
+    url(r'^anderspink_boards/data$', external_catalog_views.AnderspinkBoards.as_view(), name='anderspink_boards'),
     # # overview of crehana catalog with different course resources
     url(r'^all_external_catalog$', external_catalog_views.CoursesOverviewPage.as_view(), name='all_external_catalog'),
 
@@ -518,6 +520,14 @@ urlpatterns += [
         ),
         courseware_views.progress,
         name='student_progress',
+    ),
+    
+    url(
+        r'^courses/{}/board$'.format(
+            settings.COURSE_ID_PATTERN,
+        ),
+        board,
+        name='board',
     ),
 
     url(
@@ -1217,3 +1227,4 @@ if settings.FEATURES.get('ENABLE_API_DOCS'):
     ]
 
 urlpatterns.extend(plugin_urls.get_patterns(plugin_constants.ProjectType.LMS))
+
