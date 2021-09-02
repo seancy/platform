@@ -37,7 +37,7 @@ class BriefingSynchronizer(object):
                         'image': article['image'],
                         'date_published': article['date_published'],
                         'url': article['url'],
-                        'author': article['author'] if article.get('author', None) else None,
+                        'author': str(article['author'].encode('unicode_escape')) if article.get('author', None) else None,
                         'language': article['language'],
                         'reading_time': article['reading_time'] if article.get('reading_time', None) else None,
                     },
