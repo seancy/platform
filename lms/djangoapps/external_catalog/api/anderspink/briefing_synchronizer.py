@@ -33,7 +33,7 @@ class BriefingSynchronizer(object):
                 model_article, _ = AndersPinkArticle.objects.update_or_create(
                     title_id=article['id'],
                     defaults={
-                        'title': article['title'],
+                        'title': str(article['title'].encode('unicode_escape')),
                         'image': article['image'],
                         'date_published': article['date_published'],
                         'url': article['url'],
